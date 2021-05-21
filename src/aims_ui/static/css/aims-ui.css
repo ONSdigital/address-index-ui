@@ -20,7 +20,7 @@ a:visited {
 }
 
 a:hover {
-  color: #4c2c92 ;
+  color: #4c2c92;
 }
 
 h1 {
@@ -116,7 +116,7 @@ input[type=submit], button {
 }
 
 input[type=submit]:hover {
-  background-color: #0a542b ;
+  background-color: #0a542b;
 }
 
 input:hover {
@@ -198,7 +198,12 @@ footer #footer-content .footer-copyright {
   background: url(/assets/images/open-government-licence.png) 0 0 no-repeat;
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 20 / 10), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min--moz-device-pixel-ratio: 2),
+  only screen and (-o-min-device-pixel-ratio: 20 / 10),
+  only screen and (min-device-pixel-ratio: 2),
+  only screen and (min-resolution: 192dpi),
+  only screen and (min-resolution: 2dppx) {
   #footer .open-government-licence .logo a {
     background-image: url(/assets/images/open-government-licence_2x.png);
     background-size: 41px 17px;
@@ -228,7 +233,6 @@ footer #footer-content .footer-copyright {
   border-left: 9px solid #033e58;
   margin: 0 0 30px -9px;
 }
-
 
 /* End of InfoBox styles */
 
@@ -368,9 +372,9 @@ p.toptext {
 }
 
 .sub-nav {
-  height: 30px ;
+  height: 30px;
   border: 0px;
-  background-color: transparent ;
+  background-color: transparent;
 }
 
 .beta-header {
@@ -389,12 +393,12 @@ p.toptext {
 }
 
 .sub-nav-heading {
-  padding: 0px ;
-  height: 50px ;
+  padding: 0px;
+  height: 50px;
 }
 
 .panel-title {
-  margin-bottom: 0px ;
+  margin-bottom: 0px;
   margin-left: 10px;
   text-align: left;
 }
@@ -477,13 +481,11 @@ p.toptext {
   padding-right: 14px;
 }
 
-.btn-clear:link,
-.btn-clear:active,
-.btn-clear:hover,
-.btn-clear:visited {
+.btn-clear:link, .btn-clear:active,
+.btn-clear:hover, .btn-clear:visited {
   height: 2em;
-  background-color: #353633 ;
-  border-color: #353633 ;
+  background-color: #353633;
+  border-color: #353633;
 }
 
 .btn-clear:focus {
@@ -518,16 +520,9 @@ input[type="radio"].form-control {
 
 input[type="radio"].form-control + label {
   margin: 0 20px 0 8px;
-
 }
 
-input[type="radio"]#format-paf.form-control {
-  width: 100px;
-  height: 40px;
-
-  background-color: gray;
-}
-
+input[type="radio"]#format-paf.form-control,
 input[type="radio"]#format.form-control {
   width: 100px;
   height: 40px;
@@ -546,7 +541,7 @@ input::-webkit-input-placeholder {
 }
 
 .panel-body {
-  margin-top: 2px ;
+  margin-top: 2px;
 }
 
 .panel-body-login {
@@ -563,8 +558,8 @@ input::-webkit-input-placeholder {
 }
 
 .index-nav {
-  margin: 5px 5px 5px 5px ;
-  width: 280px ;
+  margin: 5px 5px 5px 5px;
+  width: 280px;
   height: 222px;
   border: 1px solid #ddd;
   padding: 10px;
@@ -572,7 +567,7 @@ input::-webkit-input-placeholder {
 }
 
 .index-nav-error {
-  margin: 5px 5px 5px 5px ;
+  margin: 5px 5px 5px 5px;
   border: 1px solid #ddd;
   padding: 10px;
   float: left;
@@ -585,7 +580,7 @@ input::-webkit-input-placeholder {
 .index-nav-icon {
   padding-top: 40px;
   padding-bottom: 40px;
-  color: #BCC547 ;
+  color: #BCC547;
 }
 
 .index-p {
@@ -601,7 +596,7 @@ dl {
 }
 
 .alert-danger {
-  background-color: #ffe6e6 ;
+  background-color: #ffe6e6;
   color: #0066ff;
   text-decoration: underline;
   margin-left: 0px;
@@ -622,7 +617,7 @@ section.content {
   padding-bottom: 2px;
 }
 
-p.pad{
+p.pad {
   height: 10px;
 }
 
@@ -646,11 +641,11 @@ h3.green {
   padding-left: 7px;
 }
 
-div.matchResults{
+div.matchResults {
   width: 100%;
 }
 
-div.match-conf{
+div.match-conf {
   text-align: right;
   white-space: nowrap;
   float: right;
@@ -664,24 +659,24 @@ div.match-conf .hopper-score {
   margin-top: -20px;
 }
 
-div.uprn-txt{
+div.uprn-txt {
   white-space: nowrap;
   text-align: left;
   float: left;
 }
 
-div.map-link-txt{
+div.map-link-txt {
   text-align: right;
 }
 
-div.resultRow{
+div.resultRow {
   padding-top: 4px;
   padding-bottom: 4px;
   clear: both;
   min-height: 24px;
 }
 
-div.resultRow.formatted-address{
+div.resultRow.formatted-address {
   margin-top: 20px;
 }
 
@@ -690,7 +685,7 @@ div.resultRow.formatted-address{
 }
 
 .map-link-txt a:hover {
-  color: #4c2c92 ;
+  color: #4c2c92;
 }
 
 .clericalInfo a:link {
@@ -706,17 +701,17 @@ div.resultRow.formatted-address{
   margin-bottom: 6px;
 }
 
-p.messageDetail{
+p.messageDetail {
   margin-top: 0px;
   -webkit-margin-before: 0em;
   color: darkred;
 }
 
-p.errorBody{
+p.errorBody {
   color: darkred;
 }
 
-div.address-switch-buttons{
+div.address-switch-buttons {
   color: #aaa;
   text-align: left;
   background: #eee;
