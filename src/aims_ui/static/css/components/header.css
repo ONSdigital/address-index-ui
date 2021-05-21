@@ -54,7 +54,7 @@ span#header-site-brand-versioning-beta-mark {
 
 #header-navigation nav.nav-container-mobile {
   width: 100%;
-  background-color: #DFE0E2 ;
+  background-color: #DFE0E2;
   overflow: auto;
   clear: left;
   margin-left: 2px;
@@ -82,12 +82,12 @@ span#header-site-brand-versioning-beta-mark {
 }
 
 #header-navigation nav ul li a {
-  color: #666666 ;
+  color: #666666;
   text-decoration: none;
 }
 
 #header-navigation nav ul li a:hover {
-  color: #4c2c92 ;
+  color: #4c2c92;
   text-decoration: none;
 }
 
