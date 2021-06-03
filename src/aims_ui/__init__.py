@@ -4,10 +4,10 @@ import aims_ui.config.base as config_base
 
 app = Flask(__name__)
 
-ENV = os.environ.get('FLASK_ENV')
+ENV = os.getenv('FLASK_ENV')
 
 if ENV=='development':
-    import aims_ui.config.development as config_env
+    import aims_ui.config.dev as config_env
 elif ENV=='test':
     import aims_ui.config.test as config_env
 elif ENV=='prod':
