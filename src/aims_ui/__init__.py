@@ -18,3 +18,4 @@ else:
 app.config.from_object(config_base)
 app.config.from_object(config_env)
 
+print(app.config['DATABASE_URI'])
