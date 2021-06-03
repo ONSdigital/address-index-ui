@@ -1,2 +1,1 @@
 """FLASK BASE CONFIG"""
-
