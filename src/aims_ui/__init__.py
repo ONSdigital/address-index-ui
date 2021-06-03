@@ -8,9 +8,9 @@ ENV = os.getenv('FLASK_ENV')
 
 if ENV=='development':
     import aims_ui.config.dev as config_env
-elif ENV=='test':
+elif ENV=='testing':
     import aims_ui.config.test as config_env
-elif ENV=='prod':
+elif ENV=='production':
     import aims_ui.config.prod as config_env
 else:
     raise RuntimeError('invalid environment ' + ENV)
