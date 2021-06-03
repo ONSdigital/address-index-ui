@@ -1,5 +1,4 @@
 """FLASK DEVEOPMENT CONFIG"""
 
-SECRET_KEY=b'secretkey'
+SECRET_KEY = b'secretkey'
 DATABASE_URI = 'DEVURI'
-
