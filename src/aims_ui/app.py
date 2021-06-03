@@ -1,5 +1,6 @@
 from flask import Flask
 import os
+import aims_ui.config.base as config_base
 
 app = Flask(__name__)
 
@@ -14,4 +15,7 @@ elif ENV=='prod':
 else:
     raise Exception('invalid environment ' + ENV)
 
+app.config.from_object(config_base)
 app.config.from_object(config_env)
+
+print(app.config['DATABASE_URI'])
