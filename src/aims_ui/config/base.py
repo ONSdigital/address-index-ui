@@ -1,3 +1,2 @@
 """FLASK BASE CONFIG"""
 
-SECRET_KEY=b'secretkey123'
