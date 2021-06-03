@@ -13,7 +13,7 @@ elif ENV=='test':
 elif ENV=='prod':
     import aims_ui.config.prod as config_env
 else:
-    raise Exception('invalid environment ' + ENV)
+    raise RuntimeError('invalid environment ' + ENV)
 
 app.config.from_object(config_base)
 app.config.from_object(config_env)
