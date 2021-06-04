@@ -2,7 +2,6 @@
 import os
 
 SECRET_KEY = os.getenv('SECRET_KEY')
-DATABASE_URI = 'PRODURI'
 
-if SECRET_KEY is None:
+if not (SECRET_KEY := os.getenv('SECRET_KEY')):
     raise RuntimeError('no SECRET_KEY ENV variable set')

@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask
-import config.base as config_base
+from .config import base as config_base
 
 
 def create_app(test_config=None):
@@ -15,11 +15,11 @@ def create_app(test_config=None):
         app.config.from_mapping(test_config)
 
     if ENV == 'development':
-        import config.dev as config_env
+        from .config import dev as config_env
     elif ENV == 'testing':
-        import config.test as config_env
+        from .config import test as config_env
     elif ENV == 'production':
-        import config.prod as config_env
+        from .config import prod as config_env
     else:
         raise RuntimeError('invalid environment ' + ENV)
 
