@@ -9,22 +9,22 @@ def create_app(test_config=None):
 
     ENV = os.getenv('FLASK_ENV')
 
+    app.config.from_object(config_base)
+
     if test_config is None:
-        app.config.from_pyfile('config.py', silent=True)
+        if ENV == 'development':
+            from .config import dev as config_env
+        elif ENV == 'testing':
+            from .config import test as config_env
+        elif ENV == 'production':
+            from .config import prod as config_env
+        else:
+            raise RuntimeError('invalid environment ' + ENV)
+
+        app.config.from_object(config_env)
+
     else:
         app.config.from_mapping(test_config)
-
-    if ENV == 'development':
-        from .config import dev as config_env
-    elif ENV == 'testing':
-        from .config import test as config_env
-    elif ENV == 'production':
-        from .config import prod as config_env
-    else:
-        raise RuntimeError('invalid environment ' + ENV)
-
-    app.config.from_object(config_base)
-    app.config.from_object(config_env)
 
     try:
         os.makedirs(app.instance_path)
