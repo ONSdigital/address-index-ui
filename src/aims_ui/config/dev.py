@@ -1,0 +1,3 @@
+"""FLASK DEVEOPMENT CONFIG"""
+
+SECRET_KEY = b'secretkey'
