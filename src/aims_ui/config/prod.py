@@ -1,5 +1,5 @@
-import os
 """FLASK PROD CONFIG"""
+import os
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 DATABASE_URI = 'PRODURI'
