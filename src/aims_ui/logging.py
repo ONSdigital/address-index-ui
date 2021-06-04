@@ -9,7 +9,7 @@ def setup_logging(PLATFORM):
       }},
       'handlers': {'wsgi': {
           'class': 'logging.StreamHandler',
-          'stream': 'ext://flask.logging.wsgi_errors_stream',
+          'stream': 'sys.stdout',
           'formatter': 'default'
       }},
       'root': {
