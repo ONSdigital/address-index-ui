@@ -1,6 +1,6 @@
+from logging.config import dictConfig
 
-def setup_logging(PLATFORM):
-  from logging.config import dictConfig
+def setup_logging(platform):
 
   dictConfig({
       'version': 1,
@@ -9,7 +9,7 @@ def setup_logging(PLATFORM):
       }},
       'handlers': {'wsgi': {
           'class': 'logging.StreamHandler',
-          'stream': 'sys.stdout',
+          'stream': 'ext://sys.stdout', # Logging error occurs here, consider finding out correct location of stdout
           'formatter': 'default'
       }},
       'root': {
@@ -18,7 +18,7 @@ def setup_logging(PLATFORM):
       }
   })
 
-  if PLATFORM == 'GCP':
+  if platform == 'GCP':
     import google.cloud.logging
 
     client = google.cloud.logging.Client()
