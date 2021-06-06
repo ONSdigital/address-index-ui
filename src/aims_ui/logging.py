@@ -9,7 +9,7 @@ def setup_logging(platform):
       }},
       'handlers': {'wsgi': {
           'class': 'logging.StreamHandler',
-          'stream': 'ext://sys.stdout', # Logging error occurs here, consider finding out correct location of stdout
+          'stream': 'ext://sys.stdout', 
           'formatter': 'default'
       }},
       'root': {
