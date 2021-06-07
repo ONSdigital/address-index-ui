@@ -32,4 +32,4 @@ except OSError:
 
 @app.route('/info')
 def info():
-  return get_info() 
+  return get_info()
