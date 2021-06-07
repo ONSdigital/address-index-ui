@@ -2,9 +2,12 @@ import os
 
 from flask import Flask
 from .config import base as config_base
+from .logging import setup_logging
 
 
 def create_app(test_config=None):
+    setup_logging(os.getenv('PLATFORM'))
+
     app = Flask(__name__, instance_relative_config=False)
 
     ENV = os.getenv('FLASK_ENV')
