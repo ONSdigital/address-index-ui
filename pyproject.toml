@@ -7,3 +7,4 @@ build-backend = "setuptools.build_meta"
 
 [tools.yapf]
 based_on_style = "pep8"
+indent_width = 4
