@@ -3,8 +3,7 @@ import os
 from flask import Flask
 from .config import base as config_base
 from .logging import setup_logging
-from .routes import setup_routes
-
+from .info import get_info
 
 def create_app(test_config=None):
   setup_logging(os.getenv('PLATFORM'))
@@ -35,6 +34,8 @@ def create_app(test_config=None):
   except OSError:
     pass
 
-  setup_routes(app)
+  @app.route('/info')
+  def info():
+      return get_info(app)
 
   return app
