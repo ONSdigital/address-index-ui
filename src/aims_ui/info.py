@@ -1,3 +1,3 @@
 
-def get_info(app):
+def get_info():
   return 'Basic Information will go here'
