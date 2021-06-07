@@ -4,4 +4,6 @@ requires = [
     "wheel"
 ]
 build-backend = "setuptools.build_meta"
-STYLE="pep8"
+
+[tools.yapf]
+based_on_style = "pep8"
