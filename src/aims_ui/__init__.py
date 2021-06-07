@@ -29,7 +29,6 @@ try:
 except OSError:
   pass
 
-app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True 
 
 @app.route('/info')
 def info():
