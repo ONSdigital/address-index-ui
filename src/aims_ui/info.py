@@ -4,7 +4,7 @@ from flask import jsonify
 
 
 @app.route('/info')
-def get_info():
+def info():
   key_info = {}
   key_info['ENV'] = os.getenv('FLASK_ENV')
   key_info['PLATFORM'] = os.getenv('PLATFORM')

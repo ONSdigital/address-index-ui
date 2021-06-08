@@ -30,6 +30,3 @@ except OSError:
 
 from . import info
 
-
-def info():
-  return get_info()
