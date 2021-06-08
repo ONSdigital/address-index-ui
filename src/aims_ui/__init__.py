@@ -19,7 +19,7 @@ elif ENV == 'testing':
 elif ENV == 'production':
   from .config import prod as config_env
 else:
-  raise RuntimeError('invalid environment ' + ENV)
+  raise RuntimeError('invalid environment ' + str(ENV))
 
 app.config.from_object(config_env)
 
