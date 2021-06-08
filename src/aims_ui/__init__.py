@@ -3,7 +3,6 @@ import os
 from flask import Flask
 from .config import base as config_base
 from .logging import setup_logging
-from .info import get_info
 
 setup_logging(os.getenv('PLATFORM'))
 
@@ -29,7 +28,8 @@ try:
 except OSError:
   pass
 
+from . import info
 
-@app.route('/info')
+
 def info():
   return get_info()
