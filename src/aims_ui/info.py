@@ -1,12 +1,15 @@
 import os
+import logging
 from . import app
 from flask import jsonify
 from importlib_metadata import version
 
 def get_version():
-  possible_version = (version('flask'))
-
-  return possible_version
+  try:
+    return version('aims_ui')
+  except PackageNotFoundError as e:
+    logging.error('Package not found, try installing as a package')
+    return 'Unknown'
 
 @app.route('/info')
 def info():
