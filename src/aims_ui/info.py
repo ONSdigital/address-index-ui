@@ -4,9 +4,9 @@ from flask import jsonify
 from importlib_metadata import version
 
 def get_version():
-  print(version('aims_ui'))
+  possible_version = (version('flask'))
 
-  return "s"
+  return possible_version
 
 @app.route('/info')
 def info():
