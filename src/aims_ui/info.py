@@ -8,7 +8,7 @@ def get_version():
   try:
     return version('aims_ui')
   except PackageNotFoundError as e:
-    logging.error('Package not found, try installing as a package')
+    logging.warning('Unable to determine aims_ui version, aims_ui was not installed as a package')
     return 'Unknown'
 
 @app.route('/info')
