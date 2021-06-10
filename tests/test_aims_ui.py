@@ -12,12 +12,7 @@ def test_info_page(client):
     rv = client.get('/info')
     response_dict = json.loads(rv.data)
 
-    all_keys_present = True 
-    for key in required_keys:
-      if key not in response_dict.keys():
-        all_keys_present = False
-
-    assert all_keys_present
+    assert all(k in response_dict for k in required_keys)
 
 @pytest.fixture
 def client():
