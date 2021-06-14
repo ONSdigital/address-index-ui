@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% from 'components/input/_macro.njk' import onsInput %}
+{% from 'components/lists/_macro.njk' import onsList %}
+{% from 'components/panel/_macro.njk' import onsPanel %}
+{% from 'components/password/_macro.njk' import onsPassword %}
+
+{% set messages_dict=dict(get_flashed_messages()|groupby('level')) %}
+{% set field_messages_dict=dict(messages_dict['ERROR']|groupby('field')) %}
+
+{% set form =  {
+    'method': 'POST',
+    'attributes': {
+        'action': form_action
+    }
+} %}
+
+{% set user_input = onsInput({
+        'id': 'user',
+        'name': 'user',
+        'label': {
+            'text': 'Username',
+        }
+    })
+%}
+
+{% block main %}
+
+    <h1>AIMS-UI - Sign in</h1>
+
+    {% if messages_dict %}
+        {% include 'partials/messages.html' with context %}
+    {% endif %}
+
+    {% if 'user' in field_messages_dict %}
+        {% call
+            onsPanel({
+                'title': 'Please re-enter credentials',
+                'type': 'error'
+            })
+        %}
+        {{
+            onsList({
+                'id': 'incor_signin',
+                'classes': 'list--bare list--errors u-mb-s',
+                'itemsList': [
+                    {
+                        'text': 'Enter a valid user name and/or password'
+                    }
+                ]
+            })
+        }}
+        {{ user_input }}
+        <p class="field js-password">
+          <label class="label" for="password">Password</label>
+          <input type="password" id="password"  name="password" class="input input--text input-type__input js-typeahead-input u-mt-xs js-password-input" />
+          <span class="checkbox js-password-toggle-wrap checkbox--toggle u-d-no">
+                <input
+                    type="checkbox"
+                    id="password-toggle"
+                    class="checkbox__input js-checkbox js-password-toggle"
+                    value=""
+                    name="show-password"
+                >
+                <label id="password-toggle-label" class="checkbox__label " for="password-toggle">
+                    Show password
+                </label>
+            </span>
+        </p>
+        {% endcall %}
+    {% elif 'signin_first' in field_messages_dict %}
+        {% call
+        onsPanel({
+            'type': 'error'
+        })
+        %}
+        {{
+            onsList({
+                'id': 'incor_signin',
+                'classes': 'list--bare list--errors u-mb-s',
+                'itemsList': [
+                    {
+                        'text': 'Please sign in first before accessing website'
+                    }
+                ]
+            })
+        }}
+        {{ user_input }}
+        <p class="field js-password">
+          <label class="label" for="password">Password</label>
+          <input type="password" id="password"  name="password" class="input input--text input-type__input js-typeahead-input u-mt-xs js-password-input" />
+          <span class="checkbox js-password-toggle-wrap checkbox--toggle u-d-no">
+                <input
+                    type="checkbox"
+                    id="password-toggle"
+                    class="checkbox__input js-checkbox js-password-toggle"
+                    value=""
+                    name="show-password"
+                >
+                <label id="password-toggle-label" class="checkbox__label " for="password-toggle">
+                    Show password
+                </label>
+            </span>
+        </p>
+        {% endcall %}
+    {% else %}
+        {{ user_input }}
+        <p class="field js-password">
+          <label class="label" for="password">Password</label>
+          <input type="password" id="password"  name="password" class="input input--text input-type__input js-typeahead-input u-mt-xs js-password-input" />
+          <br>
+          <span class="checkbox js-password-toggle-wrap checkbox--toggle u-d-no">
+                <input
+                    type="checkbox"
+                    id="password-toggle"
+                    class="checkbox__input js-checkbox js-password-toggle"
+                    value=""
+                    name="show-password"
+                >
+                <label id="password-toggle-label" class="checkbox__label " for="password-toggle">
+                    Show password
+                </label>
+                <br>
+            </span>
+        </p>
+    {% endif %}
+
+    {{ onsButton({
+        'text': 'Sign In',
+        'classes': 'u-mb-xl',
+        'name': 'action[save_continue]'
+    }) }}
+{% endblock %}
