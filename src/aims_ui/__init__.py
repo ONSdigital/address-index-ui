@@ -30,3 +30,4 @@ except OSError:
 
 from . import info
 from . import login
+from . import index

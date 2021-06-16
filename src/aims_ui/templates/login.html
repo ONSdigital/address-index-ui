@@ -11,7 +11,14 @@
 {% block main %}
 
     <h1>AIMS-UI - Sign in</h1>
-          <label class="label" for="password">Password</label>
-          <input type="password" id="password"  name="password" class="input input--text input-type__input js-typeahead-input u-mt-xs js-password-input" />
+	<label class="label" for="username">Username</label>
+        <input type="username" id="username"  name="username" class="input" />
+
+        <label class="label" for="password">Password</label>
+        <input type="password" id="password"  name="password" class="input" />
+
+	<input type="submit" name="submit_button" value="Submit">
+
+
 {% endblock %}
 
