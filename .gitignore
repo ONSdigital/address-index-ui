@@ -8,6 +8,7 @@ __pycache__/
 
 # Jninja Templates
 components/
+layout
 
 # Distribution / packaging
 .Python
