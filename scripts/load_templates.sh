@@ -15,3 +15,4 @@ rm -r -f src/aims_ui/templates/layout
 mkdir -p src/aims_ui/templates/components/
 mv ${TEMP_DIR}/templates/templates/* src/aims_ui/templates/components/
 rm -rf ${TEMP_DIR}
+find src/aims_ui/templates/components/components -maxdepth 1 -exec mv {} .. \;
