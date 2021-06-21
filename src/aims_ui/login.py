@@ -20,8 +20,7 @@ def login():
 
     username = request.form.get('username')
     password = request.form.get('password')
-    # Login and validate the user.
-    # user should be an instance of your `User` class
+
     user = User()
     if user.is_authenticated(username, password):
       login_user(user) 
