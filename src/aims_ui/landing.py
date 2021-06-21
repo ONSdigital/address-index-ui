@@ -4,8 +4,8 @@ from flask import render_template
 from  flask_login import login_required
 
 @login_required
-@app.route('/')
-def index():
+@app.route('/landing')
+def landing():
 
 
-  return render_template('index.html')
+  return render_template('landing.html')

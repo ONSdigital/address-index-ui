@@ -4,7 +4,7 @@ from flask import Flask
 from flask_login import LoginManager
 from .config import base as config_base
 from .logging import setup_logging
-from .models import User
+from .models import User, users
 
 setup_logging(os.getenv('PLATFORM'))
 
@@ -19,7 +19,8 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.get(user_id)
+  maybe_user = next((user for user in users if user.id == user_id), None)
+  return maybe_user
 
 
 if ENV == 'development':
@@ -40,4 +41,4 @@ except OSError:
 
 from . import info
 from . import login
-from . import index
+from . import landing
