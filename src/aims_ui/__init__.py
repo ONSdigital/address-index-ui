@@ -1,8 +1,10 @@
 import os
 
 from flask import Flask
+from flask_login import LoginManager
 from .config import base as config_base
 from .logging import setup_logging
+from .models import User
 
 setup_logging(os.getenv('PLATFORM'))
 
@@ -11,6 +13,14 @@ app = Flask(__name__, instance_relative_config=False)
 ENV = os.getenv('FLASK_ENV')
 
 app.config.from_object(config_base)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
+
 
 if ENV == 'development':
   from .config import dev as config_env

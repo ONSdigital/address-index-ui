@@ -1,28 +1,34 @@
 import os
 from . import app
-from .database_resources.login_as_user import authenticate_user
-from flask import render_template, request, flash
+from flask_login import current_user, login_user
+from .models import User
+from flask import (
+    render_template, 
+    request, 
+    flash, 
+    abort, 
+    redirect,
+    url_for,)
+
 import sqlite3
 import hashlib, binascii, os
 
-@app.route('/auth/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-  if request.method == 'POST':
 
-    input_username = request.form.get('username')
-    input_password = request.form.get('password')
+  if request.method =='POST':
 
-    if authenticate_user(input_username, input_password):
-      flash("Login Successful")
-      print("AUTHENTICATED")
-    else:
-      flash("Login Successful")
-      print("ACCESS  DENIED FOR " + str(input_username))
+    username = request.form.get('username')
+    password = request.form.get('password')
+    # Login and validate the user.
+    # user should be an instance of your `User` class
+    user = User()
+    if user.is_authenticated(username, password):
+      login_user(user) 
 
-
-    return render_template('login.html')
-  else:
-    return render_template('login.html')
-
+      flash('Logged in successfully.')
+      return redirect(url_for('index'))
+  
+  return render_template('login.html')
 
 
