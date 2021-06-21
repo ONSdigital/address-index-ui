@@ -14,8 +14,8 @@
     'header': {
         'logoHref': 'https://www.ons.gov.uk/',
         'titleLogo': '/img/census-logo-en.svg',
-        'titleLogoAlt': 'ONS',
-        'titleLogoHref': '/',
+        'titleLogoAlt': 'Census 2021',
+        'titleLogoHref': '/microservices/indexclear',
     },
     } %}
 {%  else  %}
@@ -26,16 +26,16 @@
         'header': {
             'logoHref': 'https://www.ons.gov.uk/',
             'titleLogo': '/img/census-logo-en.svg',
-            'titleLogoAlt': 'ONS',
-            'titleLogoHref': '/',
+            'titleLogoAlt': 'Census 2021',
+            'titleLogoHref': '/microservices/indexclear',
             'navigation': 'Test1',
         },
-        'navigation': {
-            'id': 'main-nav',
-            'ariaLabel': 'Main menu',
-            'ariraListLabel': 'Navigation menu',
-            'currentPath': '/get-started',
-            'itemsList': header_html,
+        "navigation": {
+            "id": "main-nav",
+            "ariaLabel": "Main menu",
+            "ariraListLabel": "Navigation menu",
+            "currentPath": "/get-started",
+            "itemsList": header_html,
         }
     } %}
 {% endif %}
