@@ -13,7 +13,7 @@ from flask import (
 import sqlite3
 import hashlib, binascii, os
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
 
   if request.method =='POST':
@@ -26,7 +26,7 @@ def login():
       login_user(user) 
 
       flash('Logged in successfully.')
-      return redirect(url_for('index'))
+      return redirect(url_for('landing'))
   
   return render_template('login.html')
 
