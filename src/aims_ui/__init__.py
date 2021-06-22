@@ -4,7 +4,7 @@ from flask import Flask
 from flask_login import LoginManager
 from .config import base as config_base
 from .logging import setup_logging
-from .models import User, users
+from .models.user_model import User, users
 
 setup_logging(os.getenv('PLATFORM'))
 
@@ -42,3 +42,4 @@ except OSError:
 from . import info
 from . import login
 from . import landing
+from . import page_uprn

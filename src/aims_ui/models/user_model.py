@@ -1,4 +1,4 @@
-from .database_resources.login_as_user import authenticate_user
+from ..database_resources.login_as_user import authenticate_user
 from flask_login import UserMixin
 from six import text_type
 import uuid
