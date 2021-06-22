@@ -5,8 +5,8 @@ from flask_login import login_required
 from .models.get_endpoints import get_endpoints
 
 @login_required
-@app.route('/landing')
-def landing():
+@app.route('/uprn')
+def uprn():
 
 
-  return render_template('landing.html', endpoints = get_endpoints())
+  return render_template('uprn.html' )

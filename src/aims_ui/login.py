@@ -1,7 +1,7 @@
 import os
 from . import app
 from flask_login import current_user, login_user
-from .models import User
+from .models.user_model import User
 from flask import (
     render_template, 
     request, 
