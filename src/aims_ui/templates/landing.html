@@ -1,16 +1,10 @@
 {% extends 'base.html' %}
 
-{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
 {% from "components/card/_macro.njk" import onsCard %}
 
 
 
 {% block main %}
-
-{{ onsPhaseBanner({
-"badge": "BETA",
-"html": 'This is a new service – Your feedback will help us improve it.'})
-}}
 
 
 {% for endpoint in endpoints %}

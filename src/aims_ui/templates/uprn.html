@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% from "components/input/_macro.njk" import onsInput %}
+
+
+{% set form =  {
+	'method': 'POST',
+	'id': 'searchform',
+	'attributes': {
+	'action': form_action, }} %}
+
+{% block main %}
+
+
+<br>
+
+{{ onsInput ({
+	"id": "uprn_input",
+	"label" : { "text": "To get started, enter a UPRN." },
+	"searchButton": { "text": "Search",},
+	"charCheckLimit": {
+            "limit": 12,
+            "charCountOverLimitSingular": "{x} character too many",
+            "charCountOverLimitPlural": "{x} characters too many",
+            "charCountSingular": "You have {x} character remaining",
+            "charCountPlural": "You have {x} characters remaining" },
+	}) }}
+
+
+{% endblock %}
