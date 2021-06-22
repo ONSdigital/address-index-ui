@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% from "components/input/_macro.njk" import onsInput %}
+
+
+{% set form =  {
+	'method': 'POST',
+	'id': 'searchform',
+	'attributes': {
+	'action': form_action, }} %}
+
+{% block main %}
+
+
+<br>
+
+{{ onsInput({
+        "id": "text-width",
+        "classes": "input--w-8",
+        "autocomplete": "postal-code",
+	"searchButton": { "text": "Search",},
+        "label": { "text": "Postcode" } }) }}
+
+{% endblock %}

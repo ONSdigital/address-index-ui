@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd "${DIR}"/.. || exit
 
-DESIGN_SYSTEM_VERSION="14.3.0"
+DESIGN_SYSTEM_VERSION="28.1.0"
 
 TEMP_DIR=$(mktemp -d)
 
@@ -15,4 +15,4 @@ rm -r -f src/aims_ui/templates/layout
 mkdir -p src/aims_ui/templates/components/
 mv ${TEMP_DIR}/templates/templates/* src/aims_ui/templates/components/
 rm -rf ${TEMP_DIR}
-find src/aims_ui/templates/components/components -maxdepth 1 -exec mv {} .. \;
+rsync -a  src/aims_ui/templates/components/  src/aims_ui/templates/

@@ -5,11 +5,11 @@ from flask_login import login_required
 from .models.get_endpoints import get_endpoints
 
 @login_required
-@app.route('/uprn', methods=['GET', 'POST'])
-def uprn():
+@app.route('/address', methods=['GET', 'POST'])
+def address():
 
   if request.method =='POST':
     print(request)
 
 
-  return render_template('uprn.html' )
+  return render_template('address.html' )

@@ -1,41 +1,24 @@
 {% extends 'layout/_template.njk' %}
-{% from 'components/button/_macro.njk' import onsButton %}
+{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
+{% from "components/header/_macro.njk" import onsHeader %}
 
 
-{% if include_nav == False %}
-    {% if page_title %}
-        {% set page_title_value = page_title %}
-    {% else %}
-        {% set page_title_value = 'FSDR' %}
-    {% endif %}
-    {% set pageConfig = {
-    'title': page_title_value,
-    'theme': 'census',
-    'header': {
-        'logoHref': 'https://www.ons.gov.uk/',
-        'titleLogo': '/img/census-logo-en.svg',
-        'titleLogoAlt': 'Census 2021',
-        'titleLogoHref': '/microservices/indexclear',
-    },
-    } %}
-{%  else  %}
-    {% set page_title_value = page_title %}
-    {% set pageConfig = {
-        'title': page_title_value,
-        'theme': 'census',
-        'header': {
-            'logoHref': 'https://www.ons.gov.uk/',
-            'titleLogo': '/img/census-logo-en.svg',
-            'titleLogoAlt': 'Census 2021',
-            'titleLogoHref': '/microservices/indexclear',
-            'navigation': 'Test1',
-        },
-        "navigation": {
-            "id": "main-nav",
-            "ariaLabel": "Main menu",
-            "ariraListLabel": "Navigation menu",
-            "currentPath": "/get-started",
-            "itemsList": header_html,
-        }
-    } %}
-{% endif %}
+
+{% set pageConfig = {
+'title': "AIMS-UI",
+'header': {
+	"title": 'Page title',
+	"logoHref": '#0',
+	"mobileLogo": 'ons-logo-stacked-en',
+	"titleLogoHref": '#0'  },
+
+'phase':     onsPhaseBanner({
+        "badge": "BETA",
+        "html": 'This is a new service – your <a href="#feedback">feedback</a> will help us improve it.'
+    }),
+
+	} %}
+
+
+
+<h1> somethingiscool </h1>

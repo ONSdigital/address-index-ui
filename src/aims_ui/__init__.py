@@ -43,3 +43,5 @@ from . import info
 from . import login
 from . import landing
 from . import page_uprn
+from . import page_address
+from . import page_postcode
