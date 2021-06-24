@@ -14,6 +14,7 @@ class  Endpoint():
     self.url = url_for(str(url))
     self.description_text = description_text
     self.title_size =  title_size
+    self.nav_info = []
 
     if name_id is None:
       self.name_id = self.title

@@ -2,6 +2,7 @@ import os
 from . import app
 from flask_login import current_user, login_user
 from .models.user_model import User
+from .models.get_endpoints import get_endpoints
 from flask import (
     render_template, 
     request, 
@@ -28,6 +29,6 @@ def login():
       flash('Logged in successfully.')
       return redirect(url_for('landing'))
   
-  return render_template('login.html')
+  return render_template('login.html', endpoints = get_endpoints(), remove_nav=True)
 
 
