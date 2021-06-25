@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-{% from "components/input/_macro.njk" import onsInput %}
+{% from 'components/input/_macro.njk' import onsInput %}
+{% from 'components/panel/_macro.njk' import onsPanel %}
+{% from 'components/lists/_macro.njk' import onsList %}
 
 
 {% set form =  {
@@ -26,5 +28,21 @@
             "charCountPlural": "You have {x} characters remaining" },
 	}) }}
 
+{% if uprn_result == '' %}
+
+{% call
+    onsPanel({
+	'title': 'No Results Found',
+	'type': 'error'
+    }) %}
+{{ onsList({
+	'id': 'no_data_found',
+	'classes': 'list--bare list--errors u-mb-s',
+	'itemsList': [{
+		'text': 'No data found for that UPRN. Please verify that the number you entered was valid.', }]
+    }) }}
+
+	{% endcall %}
+{% endif %}
 
 {% endblock %}
