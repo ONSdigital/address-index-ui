@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
+{% from "components/input/_macro.njk" import onsInput %}
+
+
+{% set form =  {
+	'method': 'POST',
+	'id': 'searchform',
+	'attributes': {
+	'action': form_action, }} %}
+
+{% block main %}
+
+<br>
+
+<h1>Error no search for this function yet</h1>
+
+{% endblock %}
