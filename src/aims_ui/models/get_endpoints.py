@@ -43,5 +43,5 @@ def get_endpoints():
   for endpoint in endpoints:
     endpoint.nav_info = nav_info
 
-  return endpoints
+  return endpoints 
 

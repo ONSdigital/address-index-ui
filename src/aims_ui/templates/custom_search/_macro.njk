@@ -1,0 +1,47 @@
+{% macro customSearch(params) %}
+
+{% from 'components/input/_macro.njk' import onsInput %}
+{% from 'components/select/_macro.njk' import onsSelect %}
+{% from "components/checkboxes/_checkbox-macro.njk" import onsCheckbox %}
+{% from "components/button/_macro.njk" import onsButton %}
+
+{% for field in params.Fields %}
+<br>
+
+	{# Code to generate actual searchui here #}
+	{% if field.search_type == "input_box" %}
+	{{onsInput({
+		"id"   : field.database_name,
+		"name" : field.database_name,
+		"classes": field.classes,
+		"label": { "text": field.display_title,
+			   "description": field.description },
+		"value": field.previous_value,   })}}
+	{% elif field.search_type == "dropdown" %}
+	{{onsSelect({
+		"id"   : field.database_name,
+		"name" : field.database_name,
+		"label": { "text": field.display_title, 
+			   "description": field.description },
+		"options": field.dropdown_options })}}
+	{% elif field.search_type == "checkbox" %}
+	{{onsCheckbox({
+		"id": field.database_name,
+		"name": field.database_name,
+		"label": { "text": field.display_title, 
+			   "description": field.description },
+		"value": True,
+		"checked": field.checkbox_value,
+	})}}
+	<br>
+
+{% endif %}
+{% endfor %}
+
+<br>
+{# Add a search button on the end of the UI #}
+{{  onsButton({ 
+	"text": "Submit and search", }) }}
+	
+
+{% endmacro %}
