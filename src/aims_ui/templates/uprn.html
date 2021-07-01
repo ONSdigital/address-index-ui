@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
-{% from 'components/input/_macro.njk' import onsInput %}
+
 {% from 'components/panel/_macro.njk' import onsPanel %}
 {% from 'components/lists/_macro.njk' import onsList %}
+{% from 'custom_search/_macro.njk' import customSearch %}
 
 
 {% set form =  {
@@ -16,17 +17,13 @@
 
 <br>
 
-{{ onsInput ({
-	"id": "uprn_input",
-	"label" : { "text": "To get started, enter a UPRN." },
-	"searchButton": { "text": "Search",},
-	"charCheckLimit": {
-            "limit": 12,
-            "charCountOverLimitSingular": "{x} character too many",
-            "charCountOverLimitPlural": "{x} characters too many",
-            "charCountSingular": "You have {x} character remaining",
-            "charCountPlural": "You have {x} characters remaining" },
+
+{{ customSearch ({
+	"Fields": searchable_fields ,
+
+
 	}) }}
+
 
 {% if uprn_result == '' %}
 
