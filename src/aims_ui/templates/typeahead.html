@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 
-{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
 {% from "components/input/_macro.njk" import onsInput %}
-
+{% from 'custom_search/_macro.njk' import customSearch %}
 
 {% set form =  {
 	'method': 'POST',
@@ -14,6 +13,9 @@
 
 <br>
 
-<h1>Error no search for this function yet</h1>
+
+{{ customSearch ({ "Fields": searchable_fields , }) }}
+
+
 
 {% endblock %}
