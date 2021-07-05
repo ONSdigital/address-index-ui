@@ -3,10 +3,9 @@ from flask_login import UserMixin
 from six import text_type
 import uuid
 
-
 from flask_login import UserMixin
 
-users = []  
+users = []
 
 
 class User(UserMixin):
@@ -18,7 +17,7 @@ class User(UserMixin):
 
   def is_active(self):
     return True
-  
+
   def is_anonymous(self):
     return False
 
@@ -27,5 +26,3 @@ class User(UserMixin):
       return text_type(self.id)
     except AttributeError:
       raise NotImplementedError('No `id` attribute - override `get_id`')
-
-

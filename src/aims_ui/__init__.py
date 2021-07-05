@@ -17,6 +17,7 @@ app.config.from_object(config_base)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
 @login_manager.user_loader
 def load_user(user_id):
   maybe_user = next((user for user in users if user.id == user_id), None)
@@ -47,4 +48,4 @@ from . import page_address
 from . import page_postcode
 from . import page_typeahead
 from . import page_multiple_address
-from . import page_singlesearch 
+from . import page_singlesearch

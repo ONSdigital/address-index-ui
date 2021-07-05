@@ -3,6 +3,7 @@ from . import app
 from flask import jsonify
 from importlib_metadata import version, PackageNotFoundError
 
+
 def get_version():
   try:
     return version('aims_ui')
