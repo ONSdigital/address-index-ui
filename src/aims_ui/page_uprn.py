@@ -5,7 +5,7 @@ from . import app
 from .api_interaction import api
 from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
-
+import json
 
 @login_required
 @app.route('/uprn', methods=['GET', 'POST'])
@@ -26,16 +26,20 @@ def uprn():
   classification = get_val('classification')
   inc_historical_address_data = get_val('inc_historical_address_data')
   epoch = get_val('epoch')
+  uprn_input = get_val('uprn')
 
-  response = api(
+  uprn_result = api(
       '/addresses/uprn/',
-      {'uprn': request.form.get('uprn_input')},
-  )
-  print(response)
+      'uprn',
+      uprn_input, )
+
+  print(uprn_result.json())
+
 
   return render_template(
       'uprn.html',
       endpoints=get_endpoints(),
       serchable_fields=get_fields('uprn'),
-      uprn_result='',
+      uprn_result=uprn_result,
+      results_page=True,
   )

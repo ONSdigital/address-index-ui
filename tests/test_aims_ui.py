@@ -19,17 +19,18 @@ def test_static_pages_are_200(client):
     """Basic Check to see if pages are present, returning a 200, and also contain some form of content"""
     urls = [ 'uprn',
         'landing',
-        'address',
         'postcode',
+        'singlesearch',
         'typeahead',
         'multiple_address',
         ]
 
     for url in urls:
       response = client.get('/'+url)
-      response_dict = json.loads(response.data)
-      assert response.status_code == 200
-      assert response_dict != {}
+      if response.status_code == 404:
+        raise Exception(f'Page not found error for {url}, got response: {response}')
+
+      assert response.status_code < 400
   
 
 @pytest.fixture
