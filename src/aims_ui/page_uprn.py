@@ -39,7 +39,7 @@ def uprn():
   return render_template(
       'uprn.html',
       endpoints=get_endpoints(),
-      serchable_fields=get_fields('uprn'),
+      searchable_fields=get_fields('uprn'),
       uprn_result=uprn_result,
       results_page=True,
   )
