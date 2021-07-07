@@ -147,7 +147,7 @@ def get_fields(endpoint_name):
         common_fields['auxilary_search'],
     ])
 
-  elif endpoint_name == 'single_search':
+  elif endpoint_name == 'singlesearch':
     return ([
         Field(
             'name',
