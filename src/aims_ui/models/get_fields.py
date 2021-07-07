@@ -25,6 +25,7 @@ def get_fields(endpoint_name):
       Field('epoch',
             display_title='Epoch',
             search_type='dropdown',
+            classes='input--w-4',
             dropdown_options=get_options('epoch'),
             add_default_dropdown_option=False,
             description='Feel freeto Choose and Epoch from the dropdown menu'),

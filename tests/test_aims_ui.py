@@ -6,42 +6,46 @@ from flask import url_for
 
 from src import aims_ui
 
+
 def test_info_page(client):
-    """Test the info page exists, and the ENV variable is being displayed."""
-    required_keys = ['ENV','PLATFORM','VERSION']
+  """Test the info page exists, and the ENV variable is being displayed."""
+  required_keys = ['ENV', 'PLATFORM', 'VERSION']
 
-    rv = client.get('/info')
-    response_dict = json.loads(rv.data)
+  rv = client.get('/info')
+  response_dict = json.loads(rv.data)
 
-    assert all(k in response_dict for k in required_keys)
+  assert all(k in response_dict for k in required_keys)
+
 
 def test_static_pages_are_200(client):
-    """Basic Check to see if pages are present, returning a 200, and also contain some form of content"""
-    urls = [ 'uprn',
-        'landing',
-        'postcode',
-        'singlesearch',
-        'typeahead',
-        'multiple_address',
-        ]
+  """Basic Check to see if pages are present, returning a 200, and also contain some form of content"""
+  urls = [
+      'uprn',
+      'landing',
+      'postcode',
+      'singlesearch',
+      'typeahead',
+      'multiple_address',
+  ]
 
-    for url in urls:
-      response = client.get('/'+url)
-      if response.status_code == 404:
-        raise Exception(f'Page not found error for {url}, got response: {response}')
+  for url in urls:
+    response = client.get('/' + url)
+    if response.status_code == 404:
+      raise Exception(
+          f'Page not found error for {url}, got response: {response}')
 
-      assert response.status_code < 400
-  
+    assert response.status_code < 400
+
 
 @pytest.fixture
 def client():
-    db_fd, aims_ui.app.config['DATABASE'] = tempfile.mkstemp()
-    aims_ui.app.config['TESTING'] = True
+  db_fd, aims_ui.app.config['DATABASE'] = tempfile.mkstemp()
+  aims_ui.app.config['TESTING'] = True
 
-    with aims_ui.app.test_client() as client:
-        with aims_ui.app.app_context():
-            pass
-        yield client
+  with aims_ui.app.test_client() as client:
+    with aims_ui.app.app_context():
+      pass
+    yield client
 
-    os.close(db_fd)
-    os.unlink(aims_ui.app.config['DATABASE'])
+  os.close(db_fd)
+  os.unlink(aims_ui.app.config['DATABASE'])

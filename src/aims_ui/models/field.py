@@ -58,11 +58,7 @@ class Field:
 
       return final_dropdowns
 
-  def refresh_dropdown_status(self, value_to_change_to):
-    self.checkbox_value = value_to_change_to
-
-  def refresh_selected_dropdown(self, selected_value):
-    dropdown_values = [i.get('value') for i in self.dropdown_options]
-    dropdown_values.remove('blank')
-    self.dropdown_options = self.format_dropdown_options(
-        dropdown_values, selected_value=selected_value)
+  def set_dropdown_status(self, value_to_select):
+    for each_dict in self.dropdown_options:
+      if each_dict['value'] == value_to_select:
+        each_dict['selected'] = True

@@ -10,33 +10,9 @@
 {% set max_col = 1 %}
 
 
-{# If it's a results page then have the searchboxes arranged at the top #}
-{% if params.results_page %}
-	<table>
-{% endif %}
 
+<section class = "match-form-container" >
 {% for field in params.Fields %}
-
-	{% if params.results_page %}
-		{# Update  the col/row  values for the next  searchitem  #}
-		{% if col.value == max_col %}
-			{% set row.value = row.value + 1 %}
-			{% set col.value = 0 %}
-		{% else %}
-			{% set col.value = col.value + 1 %}
-		{% endif %}
-
-		{# If a  new row  required, start "tablerow" #}
-		{% if col.value == 0 %}
-			</tr>
-			<tr>
-			<td>
-		{% else %}
-			<td>
-		{% endif %}
-	{% endif %}
-
-
 
 	<br>
 	{# Code to generate actual searchui here #}
@@ -52,6 +28,7 @@
 	{{onsSelect({
 		"id"   : field.database_name,
 		"name" : field.database_name,
+		"classes": field.classes,
 		"label": { "text": field.display_title, 
 			   "description": field.description },
 		"options": field.dropdown_options })}}
@@ -59,6 +36,7 @@
 	{{onsCheckbox({
 		"id": field.database_name,
 		"name": field.database_name,
+		"classes": field.classes,
 		"label": { "text": field.display_title, 
 			   "description": field.description },
 		"value": True,
@@ -67,26 +45,6 @@
 	<br>
 
 
-	{% if params.results_page %}
-	      {# End table row/element #}
-		{% if col.value == 0 %}
-			<td>
-			{{onsInput({
-			"type": "hidden",
-			"classes": "u-d-no",
-			"id": "adlocation",
-			"name": "adlocation",
-			"value": adlocation,
-			"label": {
-			"text": "Enter some text",
-			"classes": "u-d-no"}})}}
-			</td>
-		{% else %}
-			</td>
-		{% endif %}
-		</table>
-	{% endif %}
-
 {% endif %}
 {% endfor %}
 
@@ -94,6 +52,25 @@
 {# Add a search button on the end of the UI #}
 {{  onsButton({ 
 	"text": "Search", }) }}
+
+</section>
+
 	
+
+{# If it's a results page then have the searchboxes arranged at the top #}
+{% if params.results_page %}
+<style>
+section.match-form-container {
+    background-color: #dfe0e2;
+  width: 100vw;
+  position: relative;
+  padding-left: 20vw;
+  left: -20vw;
+  padding-right: 40vw;
+  padding-bottom:5vh;
+}
+</style>
+{% endif %}
+
 
 {% endmacro %}

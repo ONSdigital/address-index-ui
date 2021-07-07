@@ -30,6 +30,6 @@ def singlesearch():
   return render_template(
       'single_search.html',
       endpoints=get_endpoints(),
-      serchable_fields=get_fields('single_search'),
+      searchable_fields=get_fields('single_search'),
       uprn_result='',
   )
