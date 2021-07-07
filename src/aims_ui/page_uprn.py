@@ -6,41 +6,43 @@ from .cookie_utils import save_input, load_input, get_all_inputs, delete_input, 
 from .api_interaction import api
 from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
+from .models.get_addresses import get_addresses
 import json
 
 
+page_name =  'uprn'
+
 @login_required
-@app.route('/uprn', methods=['GET', 'POST'])
+@app.route(f'/{page_name}', methods=['GET', 'POST'])
 def uprn():
 
   if request.method == 'GET':
     delete_input(session)
     return render_template(
-        'uprn.html',
-        searchable_fields=get_fields('uprn'),
-        endpoints=get_endpoints(called_from='uprn'),
+        f'{page_name}.html',
+        searchable_fields=get_fields(page_name),
+        endpoints=get_endpoints(called_from=page_name),
     )
 
-  searchable_fields = get_fields('uprn')
+  searchable_fields = get_fields(page_name)
   all_user_input = load_save_store_inputs(searchable_fields,request,session,)
 
 
-
-  
-  uprn_result = api(
+  result = api(
       '/addresses/uprn/',
-      'uprn',
-      all_user_input.get('uprn'),
+      page_name,
+      all_user_input.get(page_name),
   )
 
-  print(uprn_result.json())
-  uprn_result = 'Blank'
+  if result.status_code == 200:
+    matched_addresses = get_addresses(result.json(),page_name)
+  else:
+    matched_addresses = ''
 
   return render_template(
-      'uprn.html',
-      endpoints=get_endpoints(called_from='uprn'),
+      f'{page_name}.html',
+      endpoints=get_endpoints(called_from=page_name),
       searchable_fields=searchable_fields,
-      uprn_result=uprn_result,
       results_page=True,
-      matched_addresses=[1, 2, 3, 4, 5],
+      matched_addresses=matched_addresses,
   )
