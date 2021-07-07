@@ -4,23 +4,32 @@
 {% for address in params.matched_addresses %}
 
 <article class="result-short-form">
-<a href="url"><h2 class="saturn"> 82 Dingdong Lane, P85 QQQ </h2></a>
+<a href="url"><h2 class="saturn"> {{ address.formattedAddress.value }}</h2></a>
 <table> <tbody>
 
-{% for address_attribute in [1,5] %}
-<tr><td class="mars">UPRN</td>
-    <td class="venus">1282777369420</td>
-</tr>
-
+{% for attribute_name, address_attribute in address.__dict__.items() %}
+{% if address_attribute.show %}
+	<tr><td class="mars">{{ address_attribute.name }}</td>
+	    <td class="venus">{{ address_attribute.value }}</td>
+	</tr>
+{% endif %}
 {% endfor %}
 <tr>
 
-    <td class="mars"><a href="n">Location Map</a></td>
+    <td class="mars"><a href=" {{ 'https://www.google.com/maps/search/?api=1&query=' + address.geo.value.get('longitude') + ',' + address.geo.value.get('latitude')  }}"
+    >Location Map</a></td>
 
 </tr>
 
 </tbody> </table>
 </article>
+
+
+
+
+
+
+
 
 
 <style>
