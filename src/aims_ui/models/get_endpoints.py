@@ -7,7 +7,7 @@ def get_endpoints(called_from = None):
   endpoint_data = [
       {
           'title':
-          'Unique Property Refference Number',
+          'Unique Property Reference Number',
           'url':
           'uprn',
           'description_text':
