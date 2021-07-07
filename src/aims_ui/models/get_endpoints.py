@@ -2,7 +2,7 @@ from .endpoint import Endpoint
 from flask import url_for
 
 
-def get_endpoints():
+def get_endpoints(called_from = None):
   # Add new endpoints here for auto-creation on landing page
   endpoint_data = [
       {
@@ -58,6 +58,10 @@ def get_endpoints():
             endpoint.get('title_size', 3),
             endpoint.get('name_id'),
         ))
+
+  for endpoint in endpoints:
+    if endpoint.url_title == called_from:
+      endpoint.selected = True
 
   nav_info = [{
       'title': endpoint.title,
