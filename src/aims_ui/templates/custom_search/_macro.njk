@@ -53,6 +53,19 @@
 {{  onsButton({ 
 	"text": "Search", }) }}
 
+{# Add a clear filters button with a url to the currently selected endpoint #}
+{% for endpoint in params.endpoints %}
+  {% if endpoint.selected %}
+	{{ onsButton({
+		'text': 'Clear  filters',
+		'classes': 'btn--secondary',
+		'submitType': "loader",
+		'url': endpoint.url,
+	}) }}
+{% endif %}
+{% endfor %}
+
+
 </section>
 
 	

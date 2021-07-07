@@ -18,7 +18,7 @@ def uprn():
     return render_template(
         'uprn.html',
         searchable_fields=get_fields('uprn'),
-        endpoints=get_endpoints(),
+        endpoints=get_endpoints(called_from='uprn'),
         matched_addresses=[1, 2, 3, 4, 5],  # REMOVE THIS
     )
 
@@ -45,7 +45,7 @@ def uprn():
 
   return render_template(
       'uprn.html',
-      endpoints=get_endpoints(),
+      endpoints=get_endpoints(called_from='uprn'),
       searchable_fields=searchable_fields,
       uprn_result=uprn_result,
       results_page=True,
