@@ -1,0 +1,42 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+{% from './components/panel/_macro.njk' import onsPanel %}
+{% from './components/lists/_macro.njk' import onsList %}
+
+{% if messages | length == 1 %}
+    {% set errorTitle = 'There is a problem with your answer' %}
+{% else %}
+    {% set errorTitle = 'There are ' + messages | length | string + ' problems with your answer' %}
+{% endif %}
+
+{% set itemsList = [] %}
+
+{% for category, message in messages %}
+
+{% if itemsList.append( {
+                'text': message,
+                'index': true,
+                'url': '#' + category,
+                'classes': 'js-inpagelink'
+            } )
+%} {% endif %}
+
+{% endfor %}
+
+
+{% call
+    onsPanel({
+        'title': errorTitle,
+        'type': 'error'
+    })
+%}
+
+{{
+    onsList({
+        'element': 'ol',
+        'itemsList': itemsList
+    })
+}}
+{% endcall %}
+
+{% endwith %}

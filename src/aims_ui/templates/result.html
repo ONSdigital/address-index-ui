@@ -1,0 +1,226 @@
+{%- extends 'base-results.html' -%}
+
+{%- from "components/table/_macro.njk" import onsTable -%}
+
+{%- block main -%}
+
+{%- if uprnResult == "" -%}
+
+    <h1>Invalid UPRN</h1>
+    <p>The requested UPRN '{{uprn}}' was not found.</p>
+
+{%- else -%}
+
+{%- set gm_link -%}
+    <a href="https://maps.google.com/?q={{ uprnResult.response.address.geo.latitude }},{{ uprnResult.response.address.geo.longitude }}&ll={{ uprnResult.response.address.geo.latitude }},{{ uprnResult.response.address.geo.longitude }}&z=20&t=h" target="_blank" class="icon--external-link">Location map</a>
+{%- endset -%}
+
+{%- if classList != '' -%}
+    {%- for classification in classList.classifications -%}
+        {%- if classification.code == uprnResult.response.address.classificationCode -%}
+            {%- set classification_list -%}{{ classification.label }}{%- endset -%}
+        {%- endif -%}
+    {%- endfor -%}
+{%- else -%}
+    {%- set classification_list -%}{{ uprnResult.response.address.classificationCode }}{%- endset -%}
+{%- endif -%}
+
+    <h1>{{ uprnResult.response.address.formattedAddressNag }}</h1>
+
+    {{
+        onsTable({
+            'caption': 'Data for this address',
+            'id': 'basic-table',
+            'ths': [
+                {
+                    'value': 'Field'
+                },
+                {
+                    'value': 'Value'
+                }
+            ],
+            'trs': [
+                {
+                    'tds': [
+                        {
+                            'value': 'UPRN',
+                            'name': 'uprn'
+                        },
+                        {
+                            'value': uprnResult.response.address.uprn
+                        }
+                    ]
+                },
+                {
+                    'tds': [
+                        {
+                            'value': 'Local Authority address (NAG)',
+                            'name': 'local-authority-address'
+                        },
+                        {
+                            'value': uprnResult.response.address.formattedAddressNag
+                        }
+                    ]
+                },
+                {
+                    'tds': [
+                        {
+                            'value': 'Postal Address File (PAF)',
+                            'name': 'paf'
+                        },
+                        {
+                            'value': uprnResult.response.address.formattedAddressPaf
+                        }
+                    ]
+                },
+                {
+                    'tds': [
+                        {
+                            'value': 'Welsh Language (NAG)',
+                            'name': 'welsh-nag'
+                        },
+                        {
+                            'value': uprnResult.response.address.welshFormattedAddressNag
+                        }
+                    ]
+                },
+                {
+                    'tds': [
+                        {
+                            'value': 'Welsh Language (PAF)',
+                            'name': 'welsh-paf'
+                        },
+                        {
+                            'value': uprnResult.response.address.welshFormattedAddressPaf
+                        }
+                    ]
+                },
+                {
+                    'tds': [
+                        {
+                            'value': 'Classification',
+                            'name': 'classification-value'
+                        },
+                        {
+                            'value': classification_list
+                        }
+                    ]
+                },
+                {
+                    'tds': [
+                        {
+                            'value': 'Local Authority',
+                            'name': 'local-authority'
+                        },
+                        {
+                            'value': uprnResult.response.address.nag.0.localCustodianName.capitalize()
+                        }
+                    ]
+                },
+                {
+                    'tds': [
+                        {
+                            'value': 'Local Authority Code',
+                            'name': 'local-authority-code'
+                        },
+                        {
+                            'value': uprnResult.response.address.nag.0.localCustodianGeogCode
+                        }
+                    ]
+                },
+                {
+                    'tds': [
+                        {
+                            'value': 'Latitude',
+                            'name': 'latitude'
+                        },
+                        {
+                            'value': uprnResult.response.address.geo.latitude
+                        }
+                    ]
+                },
+                {
+                    'tds': [
+                        {
+                            'value': 'Longitude',
+                            'name': 'longitude'
+                        },
+                        {
+                            'value': uprnResult.response.address.geo.longitude
+                        }
+                    ]
+                },
+                {
+                    'tds': [
+                        {
+                            'value': 'Google Maps link',
+                            'name': 'google-maps-link'
+                        },
+                        {
+                            'value': gm_link
+                        }
+                    ]
+                }
+            ]
+        })
+    }}
+
+    {%- if uprnResult.response.address.relatives -%}
+        <h2>Address hierarchy</h2>
+        {%- for level in uprnResult.response.address.relatives -%}
+            {%- set table_caption = '' -%}
+            {%- if (level.level == 1) -%}
+                {%- set table_caption -%}Primary property ({{ level.siblings |count }}){%- endset -%}
+            {%- elif (level.level == 2) -%}
+                {%- set table_caption -%}Secondary properties ({{ level.siblings |count }}){%- endset -%}
+            {%- elif (level.level == 3) -%}
+                {%- set table_caption -%}Tertiary properties ({{ level.siblings |count }}){%- endset -%}
+            {%- elif (level.level == 4) -%}
+                {%- set table_caption -%}Quaternary properties ({{ level.siblings |count }}){%- endset -%}
+            {%- elif (level.level == 5) -%}
+                {%- set table_caption -%}Quinary properties ({{ level.siblings |count }}){%- endset -%}
+            {%- endif -%}
+
+            {%- set table_rows = [] -%}
+            {%- for sibling in level.siblings -%}
+                {%- for single_sibling in sibling_list -%}
+                    {%- if single_sibling.uprn==sibling -%}
+                        {{ table_rows.append(
+                            {
+                                'tds': [
+                                    {
+                                        'value': '<a href="' + url_for('result', uprn = sibling) + '">' + sibling|string + '</a>',
+                                        'name': sibling|string
+                                    },
+                                    {
+                                        'value': single_sibling.address
+                                    }
+                                ]
+                            }
+                        )|default("", True) }}
+                    {%- endif -%}
+                {%- endfor -%}
+
+            {%- endfor -%}
+            {{
+                onsTable({
+                    'caption': table_caption,
+                    'id': 'basic-table',
+                    'ths': [
+                        {
+                            'value': 'UPRN'
+                        },
+                        {
+                            'value': 'Address'
+                        }
+                    ],
+                    'trs': table_rows
+                })
+            }}
+
+        {%- endfor -%}
+    {%- endif -%}
+
+{%- endif -%}
+
+{%- endblock -%}

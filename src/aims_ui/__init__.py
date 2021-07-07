@@ -29,3 +29,5 @@ except OSError:
   pass
 
 from . import info
+from . import postcode
+from . import uprn

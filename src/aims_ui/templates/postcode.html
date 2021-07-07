@@ -1,0 +1,88 @@
+{%- extends 'base.html' -%}
+
+{%- set error_id = namespace(id='') -%}
+{%- set error_text = namespace(text='') -%}
+
+{%- if errors -%}
+    {%- for error in errors -%}
+
+        {%- set error_id.id = 'error_postcode' -%}
+        {%- set error_text.text = error -%}
+
+    {%- endfor -%}
+    {%- set error_postcode = {'id': error_id.id, 'text': error_text.text} -%}
+{%- else -%}
+    {%- set error_postcode = {} -%}
+{%- endif -%}
+
+{%- from 'components/question/_macro.njk' import onsQuestion -%}
+{%- from 'components/button/_macro.njk' import onsButton -%}
+{%- from 'components/input/_macro.njk' import onsInput -%}
+{%- from "components/collapsible/_macro.njk" import onsCollapsible -%}
+
+{%- set form =  {
+    'method': 'POST',
+    'attributes': {
+        'action': ''
+    }
+} -%}
+
+{%- set question_title = 'Search for an address by postcode' -%}
+{%- set question_description = '<p>To get started, enter an exact postcode</p>' -%}
+
+{%- block main -%}
+
+    {%- if get_flashed_messages() -%}
+        {%- include 'partials/messages.html' with context -%}
+    {%- endif -%}
+
+    {%- call onsQuestion({
+        'title': question_title,
+        'description': question_description
+    }) -%}
+
+        {{csrf_token}}
+
+        {{
+            onsInput({
+                'id': 'postcode',
+                'type': 'text',
+                'autocomplete': 'postal-code',
+                'classes': 'input--w-6',
+                'label': {
+                    'text': 'UK postcode'
+                },
+                'name': 'form_postcode',
+                'error': error_postcode
+            })
+        }}
+
+    {%- endcall -%}
+
+    {%- set content -%}
+        <p>If you live somewhere that is mobile, such as a canal boat or motorhome, contact us to request an access code.</p>
+    {%- endset -%}
+
+    {%- call onsCollapsible({
+            'id': 'collapsible',
+            'title': 'Advanced options',
+            'titleTag': 'h2',
+            'classes': 'u-mt-m',
+            'button': {
+                'close': 'Hide this',
+                'contextSuffix': 'content'
+            }
+        })
+    -%}
+        {{ content | safe }}
+    {%- endcall -%}
+
+    {{
+        onsButton({
+            'text': 'Search',
+            'classes': 'u-mt-l',
+            'submitType': 'loader'
+        })
+    }}
+
+{%- endblock -%}

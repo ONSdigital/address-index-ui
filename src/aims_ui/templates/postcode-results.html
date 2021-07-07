@@ -1,0 +1,190 @@
+{%- extends 'base-results.html' -%}
+
+{%- set error_id = namespace(id='') -%}
+{%- set error_text = namespace(text='') -%}
+
+{%- if errors -%}
+    {%- for error in errors -%}
+
+        {%- set error_id.id = 'error_postcode' -%}
+        {%- set error_text.text = error -%}
+
+    {%- endfor -%}
+    {%- set error_postcode = {'id': error_id.id, 'text': error_text.text} -%}
+{%- else -%}
+    {%- set error_postcode = {} -%}
+{%- endif -%}
+
+{%- from 'components/question/_macro.njk' import onsQuestion -%}
+{%- from 'components/button/_macro.njk' import onsButton -%}
+{%- from 'components/input/_macro.njk' import onsInput -%}
+{%- from 'components/checkboxes/_macro.njk' import onsCheckboxes -%}
+{%- from "components/panel/_macro.njk" import onsPanel -%}
+{%- from "components/pagination/_macro.njk" import onsPagination -%}
+
+{%- set form =  {
+    'method': 'POST',
+    'attributes': {
+        'action': ''
+    }
+} -%}
+
+{%- block main -%}
+
+    {%- if postcodeResults -%}
+
+        <div class="col-8@m u-mb-l">
+
+            <h1>Results for postcode {{ postcodeResults.response.postcode }}</h1>
+
+            {%- if get_flashed_messages() -%}
+                {%- include 'partials/messages.html' with context -%}
+            {%- endif -%}
+
+        </div>
+
+        <div>
+            <div class="grid grid--column@xxs@s u-mb-m@m">
+                <div class="grid__col col-4@m">
+                    {{csrf_token}}
+
+                    {{
+                        onsInput({
+                            'id': 'postcode',
+                            'type': 'text',
+                            'autocomplete': 'postal-code',
+                            'classes': 'input--w-6',
+                            'label': {
+                                'text': 'UK postcode'
+                            },
+                            'name': 'form_postcode',
+                            'error': error_postcode,
+                            'value': postcodeResults.response.postcode
+                        })
+                    }}
+                    {{
+                        onsCheckboxes({
+                            'legend': 'Historical data',
+                            'checkboxes': [
+                                {
+                                    'id': 'historical',
+                                    'classes': 'u-mb-m',
+                                    'name': 'form_postcode_historical',
+                                    'label': {
+                                        'text': 'Include historical data'
+                                    },
+                                    'classes': 'checkbox--toggle',
+                                    'checked': '',
+                                    'value': 'true'
+                                }
+                            ]
+                        })
+                    }}
+                    {{
+                        onsInput({
+                            'id': 'classification',
+                            'label': {
+                                'text': 'Classification',
+                                'classes': 'u-mt-l'
+                            },
+                            'name': 'form_classification_filter',
+                            'classes': 'input--w-6',
+                            'value': postcodeResults.response.filter
+                        })
+                    }}
+                    {{
+                        onsInput({
+                            'id': 'results_per_page',
+                            'label': {
+                                'text': 'Results per page',
+                                'classes': 'u-mt-l'
+                            },
+                            'name': 'form_results_per_page',
+                            'classes': 'input--w-6',
+                            'value': postcodeResults.response.limit
+                        })
+                    }}
+                    {{
+                        onsButton({
+                            'text': 'Search',
+                            'classes': 'u-mt-l',
+                            'submitType': 'loader'
+                        })
+                    }}
+                </div>
+                <div class="grid__col col-8@m">
+                    <div>
+                        {%- if postcodeResults.response.total == 1: -%}
+                            <h2>We have matched 1 address</h2>
+                        {%- elif postcodeResults.response.total == postcodeResults.response.sampleSize -%}
+                            <h2>We have matched at least {{ postcodeResults.response.total }} addresses</h2>
+                        {%- else: -%}
+                            <h2>We have matched {{ postcodeResults.response.total }} addresses</h2>
+                        {%- endif -%}
+                    </div>
+                    <ul class="list--bare">
+                        {%- for singleResult in postcodeResults.response.addresses -%}
+                            <li>
+                                <h2><a href="{{ url_for('result', uprn = singleResult.uprn) }}">{{ singleResult.formattedAddress }}</a></h2>
+                                <div>{{ singleResult.uprn }},
+                                    {{ singleResult.nag.0.localCustodianName }},
+                                    {{ singleResult.classificationCode }}
+                                </div>
+                            </li>
+                        {%- endfor -%}
+                    </ul>
+
+                    {{ page }}
+                    {{ maxPage }}
+                    {{ queryParams }}
+
+                    {%- set pages_array = [] -%}
+                    {%- for pageNumber in range(1, maxPage + 1) %}
+                        {%- if pageNumber == page -%}
+                            {{ pages_array.append(
+                                {
+                                    'url': '?page=' + pageNumber | string + queryParams,
+                                    'current': true
+                                }
+                            )|default("", True) }}
+                        {%- else -%}
+                            {{ pages_array.append(
+                                {
+                                    'url': '?page=' + pageNumber | string + queryParams
+                                }
+                            )|default("", True) }}
+                        {%- endif -%}
+                    {%- endfor -%}
+
+
+                    {{
+                        onsPagination({
+                            "previous": "Previous",
+                            "next": "Next",
+                            "pages": pages_array
+                        })
+                    }}
+
+
+                </div>
+            </div>
+        </div>
+
+    {%- else -%}
+
+        <div class="col-8@m u-mb-l">
+
+            <h1>We have encountered an issue</h1>
+
+            {%- call onsPanel({
+                    "type": 'warn'
+                })
+            -%}
+                Sorry, there was a problem loading addresses. We are working to fix the problem. Please try again later.
+            {%- endcall -%}
+
+        </div>
+
+    {%- endif -%}
+
+{%- endblock -%}

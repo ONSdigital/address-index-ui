@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Design System Templates
+src/aims_ui/templates/layout
+src/aims_ui/templates/components

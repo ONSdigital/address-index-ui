@@ -1,0 +1,37 @@
+{%- extends 'layout/_template.njk' -%}
+
+{%- if page_title -%}
+    {%- set page_title_value = page_title + ' - Address Index' -%}
+{%- else -%}
+    {%- set page_title_value = 'Address Index' -%}
+{%- endif -%}
+
+{%- if page_url and ('/start/' in page_url) and (page_url != '/start/') and (timeout != 'true') -%}
+    {%- set signout_button_value = {
+            'text': 'Exit',
+            'buttonStyle': 'exit',
+            'url': url('StartExit:get', display_region='en')
+        }
+    -%}
+{%- endif -%}
+
+{%- set footer_content = {
+        'copyrightDeclaration': {
+            'copyright': 'Crown copyright and database rights 2020 OS 100019153.',
+            'text': 'Use of address data is subject to the terms and conditions.'
+        }
+    }
+-%}
+
+{%- set pageConfig = {
+    'title': page_title_value,
+    'header': {
+        'logoHref': 'https://www.ons.gov.uk/',
+        'title': 'Address Index'
+    },
+    'signoutButton': signout_button_value,
+    'footer': footer_content,
+    'pageColNumber': '12',
+} -%}
+
+
