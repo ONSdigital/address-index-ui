@@ -4,6 +4,7 @@
 {% from 'components/panel/_macro.njk' import onsPanel %}
 {% from 'components/lists/_macro.njk' import onsList %}
 {% from 'custom_search/_macro.njk' import customSearch %}
+{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
 
 
 {% set form =  {
@@ -17,11 +18,13 @@
 
 <br>
 
-
-{{ customSearch ({ "Fields": searchable_fields , }) }}
+{{ customSearch ({ "Fields": searchable_fields,
+		   "endpoints": endpoints, 
+                   "results_page": results_page, }) }}
 
  
-{% if uprn_result == '' %}
+{% if matched_addresses == '' %}
+<br>
 
 {% call
     onsPanel({
@@ -32,10 +35,17 @@
 	'id': 'no_data_found',
 	'classes': 'list--bare list--errors u-mb-s',
 	'itemsList': [{
-		'text': 'No data found for that UPRN. Please verify that the number you entered was valid.', }]
+		'text': 'No data found for that Search. Please verify that the number you entered was valid.', }]
     }) }}
 
-	{% endcall %}
+{% endcall %}
+{% else %}
+<br>
+{{ customAddressInfo ({
+	'matched_addresses': matched_addresses,
+	}) }}
+
+
 {% endif %}
 
 {% endblock %}

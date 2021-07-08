@@ -29,9 +29,9 @@ def singlesearch():
 
 
   result = api(
-      '/addresses/uprn/',
+      '/addresses',
       page_name,
-      all_user_input.get(page_name),
+      all_user_input,
   )
 
   if result.status_code == 200:
