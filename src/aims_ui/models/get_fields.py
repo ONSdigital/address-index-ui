@@ -150,7 +150,7 @@ def get_fields(endpoint_name):
   elif endpoint_name == 'singlesearch':
     return ([
         Field(
-            'name',
+            'input',
             display_title='Enter search string',
             required=True,
             description=

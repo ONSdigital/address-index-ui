@@ -11,7 +11,7 @@ def get_addresses(json_response, called_from):
     address = response.get('address')
     addresses=[Address(address)]
   
-  elif called_from == 'postcode':
+  elif (called_from == 'postcode') or (called_from == 'singlesearch'):
     response = (json_response.get('response'))
     address_json = response.get('addresses')
 
