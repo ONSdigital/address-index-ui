@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% from 'components/input/_macro.njk' import onsInput %}
+{% from 'components/lists/_macro.njk' import onsList %}
+{% from 'components/panel/_macro.njk' import onsPanel %}
+{% from 'components/password/_macro.njk' import onsPassword %}
+
+{% set page_title_value = page_title %}
+
+{% block main %}
+
+    <h1>{{ page_title_value }}</h1>
+
+    {% call onsPanel({
+                "title": "Signed out",
+                "titleTag": "h1",
+                "type": "success"
+        }) %}
+        <p>You have successfully signed out</p>
+    {% endcall %}
+    <br>
+    <p>To sign back in</p>
+    {{ onsButton({
+        'text': 'Sign In',
+        'classes': 'u-mb-xl',
+        'url': '/signin'
+    }) }}
+{% endblock %}

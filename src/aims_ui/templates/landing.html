@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% from "components/card/_macro.njk" import onsCard %}
+
+
+
+{% block main %}
+
+
+{% for endpoint in endpoints %}
+	<br>
+	{{ onsCard({
+	    "id": 	endpoint.id,
+	    "textId": 	'text',
+	    "titleSize":endpoint.title_size,
+	    "title": 	endpoint.title,
+	    "url": 	endpoint.url,
+	    "text": 	endpoint.description_text,
+	}) }}
+	<br>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'layout/_template.njk' %}
+{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
+{% from "components/header/_macro.njk" import onsHeader %}
+
+{% set item_list = endpoints[0].nav_info  %}
+
+{% set pageConfig = {
+'title': "Address Index",
+	'header': {
+		"title": 'Address Index',
+		"logoHref": '#0',
+		"mobileLogo": 'ons-logo-stacked-en',
+		"titleLogoHref": '#0'  },
+
+	'phase': {
+		"badge": "BETA",
+		"html": 'This is a new service – your feedback will help us to improve it.'
+		},
+
+     	"navigation": {
+		"id": 'main-nav',
+		"ariaLabel": 'Main menu',
+		"ariaListLabel": 'Navigation menu',
+		"currentPath": '#home',
+		"itemsList": item_list,
+		}
+
+	} %}
+
+
+
