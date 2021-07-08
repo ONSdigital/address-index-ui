@@ -2,62 +2,35 @@ from .endpoint import Endpoint
 from flask import url_for
 
 
-def get_endpoints(called_from = None):
+def get_endpoints(called_from=None):
   # Add new endpoints here for auto-creation on landing page
-  endpoint_data = [
-      {
-          'title':
+  endpoints = [
+          Endpoint(
           'Unique Property Reference Number',
-          'url':
           'uprn',
-          'description_text':
-          "Search for a property via it's unique property refference number. This is a 12 didgit number which contains no characters",
-      },
-      {
-          'title':
+          "Search for a property via it's unique property refference number. This is a 12 didgit number which contains no characters",),
+
+          Endpoint(
           'Postcode',
-          'url':
           'postcode',
-          'description_text':
-          "Search for a property using it's postcode. This is effective and a valid postcode will return a list of possible addresses.",
-      },
-      {
-          'title':
+          "Search for a property using it's postcode. This is effective and a valid postcode will return a list of possible addresses.",),
+
+          Endpoint(
           'Single Search',
-          'url':
           'singlesearch',
-          'description_text':
-          "Search for a single address using a single word phrase or paragraph",
-      },
-      {
-          'title':
+          "Search for a single address using a single word phrase or paragraph",),
+
+          Endpoint(
           'Typeahead',
-          'url':
           'typeahead',
-          'description_text':
-          "This search types ahead. Auttosugest on steroids basically. Useful if you quickly want a user to find an address",
-      },
-      {
-          'title':
+          "This search types ahead. Auttosugest on steroids basically. Useful if you quickly want a user to find an address",),
+
+          Endpoint(
           'Multiple Address',
-          'url':
           'multiple_address',
-          'description_text':
-          "Search for not just  one address. Several. Get lots of results you can haveanice look through",
-      },
+          "Search for not just  one address. Several. Get lots of results you can haveanice look through",),
   ]
 
-  endpoints = []
-
-  for endpoint in endpoint_data:
-    endpoints.append(
-        Endpoint(
-            endpoint.get('title'),
-            endpoint.get('url'),
-            endpoint.get('description_text'),
-            endpoint.get('title_size', 3),
-            endpoint.get('name_id'),
-        ))
 
   for endpoint in endpoints:
     if endpoint.url_title == called_from:

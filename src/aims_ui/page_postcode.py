@@ -7,10 +7,11 @@ from .api_interaction import api
 from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
+from .page_error import page_error
 import json
 
+page_name = 'postcode'
 
-page_name =  'postcode'
 
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
@@ -25,8 +26,11 @@ def postcode():
     )
 
   searchable_fields = get_fields(page_name)
-  all_user_input = load_save_store_inputs(searchable_fields,request,session,)
-
+  all_user_input = load_save_store_inputs(
+      searchable_fields,
+      request,
+      session,
+  )
 
   result = api(
       '/addresses/postcode/',
@@ -35,9 +39,12 @@ def postcode():
   )
 
   if result.status_code == 200:
-    matched_addresses = get_addresses(result.json(),page_name)
-  else:
+    matched_addresses = get_addresses(result.json(), page_name)
+  elif result.status_code == 404:
+    # No results but the api compelted the call successfully
     matched_addresses = ''
+  else:
+    return page_error(result, page_name)
 
   return render_template(
       f'{page_name}.html',

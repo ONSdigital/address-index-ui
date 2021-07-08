@@ -35,7 +35,11 @@ def get_all_inputs(searchable_fields, request):
   return usr_input
 
 
-def load_save_store_inputs(searchable_fields, request, session, ):
+def load_save_store_inputs(
+    searchable_fields,
+    request,
+    session,
+):
   """Load previous inputs, save changed ones and re-submit"""
   # Dic of {'API name / HTML ID' : User Input }
   all_user_input = get_all_inputs(searchable_fields, request)

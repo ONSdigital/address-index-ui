@@ -1,5 +1,5 @@
 import os
-from . import app
+from . import app, get_db
 from flask_login import current_user, login_user
 from .models.user_model import User
 from .models.get_endpoints import get_endpoints
@@ -25,7 +25,8 @@ def login():
     password = request.form.get('password')
 
     user = User()
-    if user.is_authenticated(username, password):
+    if user.is_authenticated(username, password,get_db().cursor()):
+
       login_user(user)
 
       flash('Logged in successfully.')

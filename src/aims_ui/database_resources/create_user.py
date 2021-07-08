@@ -25,5 +25,5 @@ cur.execute('INSERT INTO USERS VALUES (?, ?)', (username, hashed_password))
 
 con.commit()
 
-print("Successfully added anew user")
+print("Successfully added a new user")
 con.close()
