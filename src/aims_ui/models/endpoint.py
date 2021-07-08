@@ -19,8 +19,4 @@ class Endpoint():
     self.nav_info = []
     self.fields = fields
     self.selected = selected
-
-    if name_id is None:
-      self.name_id = self.title
-    else:
-      self.name_id = self.title
+    self.name_id = self.title

@@ -34,7 +34,7 @@ def test_static_pages_are_200(client):
       raise Exception(
           f'Page not found error for {url}, got response: {response}')
 
-    assert response.status_code < 400
+    assert response.status_code == 200
 
 
 @pytest.fixture

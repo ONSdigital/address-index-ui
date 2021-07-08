@@ -176,3 +176,5 @@ def get_fields(endpoint_name):
 
   elif endpoint_name == 'typeahead':
     pass
+  else:
+    raise Exception(f'No valid field found - Found {endpoint_name}')

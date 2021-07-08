@@ -9,8 +9,8 @@ from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
 import json
 
+page_name = 'multiple_address'
 
-page_name =  'multiple_address'
 
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
@@ -25,8 +25,11 @@ def multiple_address():
     )
 
   searchable_fields = get_fields(page_name)
-  all_user_input = load_save_store_inputs(searchable_fields,request,session,)
-
+  all_user_input = load_save_store_inputs(
+      searchable_fields,
+      request,
+      session,
+  )
 
   result = api(
       '/addresses/uprn/',
@@ -35,7 +38,7 @@ def multiple_address():
   )
 
   if result.status_code == 200:
-    matched_addresses = get_addresses(result.json(),page_name)
+    matched_addresses = get_addresses(result.json(), page_name)
   else:
     matched_addresses = ''
 
