@@ -9,8 +9,15 @@ def get_addresses(json_response, called_from):
   if called_from == 'uprn':
     response = (json_response.get('response'))
     address = response.get('address')
-
     addresses=[Address(address)]
+  
+  elif called_from == 'postcode':
+    response = (json_response.get('response'))
+    address_json = response.get('addresses')
+
+    for address in address_json:
+      addresses.append(Address(address))
+
 
   return addresses
   
