@@ -78,7 +78,6 @@ def get_fields(endpoint_name):
             'The Unique Property Reference Number is 12 didgits, and reffers to a single property'
         ),
         common_fields['limit'],
-        common_fields['classification'],
         common_fields['epoch'],
         common_fields['historical'],
     ])
