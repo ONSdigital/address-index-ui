@@ -25,7 +25,7 @@ def login():
     password = request.form.get('password')
 
     user = User()
-    if user.is_authenticated(username, password,get_db().cursor()):
+    if user.is_authenticated(username, password, get_db().cursor()):
 
       login_user(user)
 

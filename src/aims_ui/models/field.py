@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 
+
 @dataclass
 class Field:
   database_name: str
@@ -8,19 +9,20 @@ class Field:
   description: str = ''
   display_title: str = ''
   accordion: bool = False
-  required: bool=False
-  dropdown_options:list= field(default_factory=lambda: []) 
-  search_box_visible:bool=True
-  format_as_boolean:bool=False
-  checkbox_value:bool=False
-  database_association_name: str  =''
-  classes: str =''
-  add_default_dropdown_option:bool=True
-  show_as_table_header:bool=True
+  required: bool = False
+  dropdown_options: list = field(default_factory=lambda: [])
+  search_box_visible: bool = True
+  format_as_boolean: bool = False
+  checkbox_value: bool = False
+  database_association_name: str = ''
+  classes: str = ''
+  add_default_dropdown_option: bool = True
+  show_as_table_header: bool = True
 
   def __post_init__(self):
     self.dropdown_options = self.format_dropdown_options(
-        self.dropdown_options, add_default_option=self.add_default_dropdown_option)
+        self.dropdown_options,
+        add_default_option=self.add_default_dropdown_option)
 
   def find_and_extract(self, data):
     checkbox_present = data.get(self.unique_name) == 'other'
