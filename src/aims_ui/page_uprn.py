@@ -46,8 +46,6 @@ def uprn():
   else:
     return page_error(result, page_name)
 
-
-
   return render_template(
       f'{page_name}.html',
       endpoints=get_endpoints(called_from=page_name),

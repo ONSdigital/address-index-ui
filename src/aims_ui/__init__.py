@@ -43,17 +43,21 @@ except OSError:
 
 DATABASE = '/path/to/database.db'
 
+
 def get_db():
-    db = getattr(g, '_database', None)
-    if db is None:
-        db = g._database = sqlite3.connect(os.path.join(os.path.dirname(__file__), 'database_resources/auth.db'))
-    return db
+  db = getattr(g, '_database', None)
+  if db is None:
+    db = g._database = sqlite3.connect(
+        os.path.join(os.path.dirname(__file__), 'database_resources/auth.db'))
+  return db
+
 
 @app.teardown_appcontext
 def close_connection(exception):
-    db = getattr(g, '_database', None)
-    if db is not None:
-        db.close()
+  db = getattr(g, '_database', None)
+  if db is not None:
+    db.close()
+
 
 from . import info
 from . import login

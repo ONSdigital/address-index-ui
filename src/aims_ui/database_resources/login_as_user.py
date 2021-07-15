@@ -20,11 +20,8 @@ def authenticate_user(input_username, input_password, cur):
     pwdhash = binascii.hexlify(pwdhash).decode('ascii')
     return pwdhash == stored_password
 
-
   stored_password = get_pass(input_username)
   if stored_password is None:
     return None
 
   return verify_password(stored_password, input_password)
-
-
