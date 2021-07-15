@@ -1,20 +1,18 @@
 from flask import url_for
+from dataclasses import dataclass, field
 
-
+@dataclass
 class Endpoint():
-  def __init__(self,
-               title,
-               url,
-               description_text,
-               title_size=3,
-               name_id=None,
-               selected=False,):
+    title: str
+    url_title: str
+    description_text: str
+    title_size: int = 3
+    nav_info: list = field(default_factory=lambda: [])
+    selected: bool = False
+    name_id: str = ''
 
-    self.title = title
-    self.url_title = url
-    self.url = url_for(str(url))
-    self.description_text = description_text
-    self.title_size = title_size
-    self.nav_info = []
-    self.selected = selected
-    self.name_id = self.title
+    def __post_init__(self):
+        self.url = url_for(str(self.url_title))
+        if self.name_id is None and self.title:
+            self.name_id = self.title
+
