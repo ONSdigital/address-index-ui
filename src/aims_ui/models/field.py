@@ -1,37 +1,26 @@
 from dataclasses import dataclass, field
 
+@dataclass
 class Field:
-  def __init__(self,
-               database_name,
-               search_type='input_box',
-               previous_value='',
-               description='',
-               display_title='',
-               search_options=None,
-               accordion=False,
-               required=False,
-               dropdown_options=None,
-               search_box_visible=True,
-               format_as_boolean=False,
-               checkbox_value=False,
-               database_association_name='',
-               classes=None,
-               add_default_dropdown_option=True,
-               show_as_table_header=True):
+  database_name: str
+  search_type: str = 'input_box'
+  previous_value: str = ''
+  description: str = ''
+  display_title: str = ''
+  accordion: bool = False
+  required: bool=False
+  dropdown_options:list= field(default_factory=lambda: []) 
+  search_box_visible:bool=True
+  format_as_boolean:bool=False
+  checkbox_value:bool=False
+  database_association_name: str  =''
+  classes: str =''
+  add_default_dropdown_option:bool=True
+  show_as_table_header:bool=True
 
-    self.database_name = database_name  # The name as it appears in a parameter
-    self.search_type = search_type
+  def __post_init__(self):
     self.dropdown_options = self.format_dropdown_options(
-        dropdown_options, add_default_option=add_default_dropdown_option)
-    self.accordion = accordion
-    self.previous_value = previous_value
-    self.search_box_visible = search_box_visible
-    self.format_as_boolean = format_as_boolean
-    self.checkbox_value = checkbox_value
-    self.description = description
-    self.display_title = display_title
-    self.classes = classes
-    self.required = required
+        self.dropdown_options, add_default_option=self.add_default_dropdown_option)
 
   def find_and_extract(self, data):
     checkbox_present = data.get(self.unique_name) == 'other'
@@ -42,7 +31,7 @@ class Field:
                               dropdown_options,
                               add_default_option=True,
                               selected_value='blank'):
-    if dropdown_options != None:
+    if dropdown_options != []:
       final_dropdowns = []
       if add_default_option == True:
         final_dropdowns = [{
