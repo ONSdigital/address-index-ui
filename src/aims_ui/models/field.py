@@ -1,3 +1,5 @@
+from dataclasses import dataclass, field
+
 class Field:
   def __init__(self,
                database_name,
