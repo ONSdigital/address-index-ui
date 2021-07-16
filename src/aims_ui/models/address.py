@@ -24,7 +24,7 @@ class AddressAttribute():
 
   def format_special(self, value):
     # Special formatting for some values
-    if self.name == 'confidenceScore':
+    if self.name == 'confidence_score':
       return (f'{value}% match')
     if self.name == 'geo':
       # Convert geo to strings
@@ -41,25 +41,25 @@ class Address():
   def __init__(self, address_data):
     # Essentially all atributes of an expected address from AIMS API
     self.uprn = AddressAttribute(address_data, 'uprn')
-    self.formattedAddress = AddressAttribute(address_data, 'formattedAddress')
-    self.parentUprn = AddressAttribute(address_data, 'parentUprn')
-    self.formattedAddressNag = AddressAttribute(address_data,
+    self.formatted_address = AddressAttribute(address_data, 'formattedAddress')
+    self.parent_uprn = AddressAttribute(address_data, 'parentUprn')
+    self.formatted_address_nag = AddressAttribute(address_data,
                                                 'formattedAddressNag')
-    self.formattedAddressPaf = AddressAttribute(address_data,
+    self.formatted_address_paf = AddressAttribute(address_data,
                                                 'formattedAddressPaf')
-    self.formattedAddressNisra = AddressAttribute(address_data,
+    self.formatted_address_nisra = AddressAttribute(address_data,
                                                   'formattedAddressNisra')
-    self.welshFormattedAddressNag = AddressAttribute(
+    self.welsh_formatted_address_nag = AddressAttribute(
         address_data, 'welshFormattedAddressNag')
-    self.welshFormattedAddressPaf = AddressAttribute(
+    self.welsh_formatted_address_paf = AddressAttribute(
         address_data, 'welshFormattedAddressPaf')
     self.geo = AddressAttribute(address_data, 'geo')
-    self.classificationCode = AddressAttribute(address_data,
+    self.classification_code = AddressAttribute(address_data,
                                                'classificationCode')
-    self.censusAddressType = AddressAttribute(address_data,
+    self.census_address_type = AddressAttribute(address_data,
                                               'censusAddressType')
-    self.censusEstabType = AddressAttribute(address_data, 'censusEstabType')
-    self.countryCode = AddressAttribute(address_data, 'countryCode')
-    self.lpiLogicalStatus = AddressAttribute(address_data, 'lpiLogicalStatus')
-    self.confidenceScore = AddressAttribute(address_data, 'confidenceScore')
-    self.underlyingScore = AddressAttribute(address_data, 'underlyingScore')
+    self.census_estab_type = AddressAttribute(address_data, 'censusEstabType')
+    self.country_code = AddressAttribute(address_data, 'countryCode')
+    self.lpi_logical_status = AddressAttribute(address_data, 'lpiLogicalStatus')
+    self.confidence_score = AddressAttribute(address_data, 'confidenceScore')
+    self.underlying_score = AddressAttribute(address_data, 'underlyingScore')
