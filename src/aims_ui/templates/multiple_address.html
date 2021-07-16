@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
+{% from "components/input/_macro.njk" import onsInput %}
+{% from "components/upload/_macro.njk" import onsUpload %}
+{% from "components/button/_macro.njk" import onsButton %}
+
+{% set form =  {
+	'method': 'POST',
+	'id': 'searchform',
+	'attributes': {
+	'action': form_action, 
+	}, } %}
+
+{% block main %}
+
+<br>
+
+{{ onsUpload({
+	"id": "file",
+	"accept": ".xls,.xlsx,.pdf",
+	"label": {
+	"description": "File types accepted are EXCLUSIVELY '.csv', comma separated values.",
+	"text": "Upload a file" }
+
+	})  }}
+<br>
+
+{{  onsButton({ 
+	"text": "Search", }) }}
+
+
+{% endblock %}

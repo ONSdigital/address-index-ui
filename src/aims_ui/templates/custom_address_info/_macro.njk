@@ -1,0 +1,84 @@
+{% macro customAddressInfo(params) %}
+{% from 'components/label/_macro.njk' import onsLabel %}
+
+{% for address in params.matched_addresses %}
+
+<article class="result-short-form">
+<a href="url"><h2 class="saturn"> {{ address.formatted_address.value }}</h2></a>
+<table> <tbody>
+
+{% for attribute_name, address_attribute in address.__dict__.items() %}
+{% if address_attribute.show %}
+	<tr><td class="mars">{{ address_attribute.name }}</td>
+	    <td class="venus">{{ address_attribute.value }}</td>
+	</tr>
+{% endif %}
+{% endfor %}
+<tr>
+
+    <td class="mars"><a href=" {{ 'https://www.google.com/maps/search/?api=1&query=' + address.geo.value.get('longitude') + ',' + address.geo.value.get('latitude')  }}"
+    >Location Map</a></td>
+
+</tr>
+
+</tbody> </table>
+</article>
+
+
+
+
+
+
+
+
+
+<style>
+article.result-short-form {
+    border-top: 1px solid #dfe0e2;
+    margin: 20px 0px 0px 0px;
+    padding: 20px 0;
+}
+.jupiter {
+    font-family: 'Lato Bold', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.saturn {
+    font-family: 'Lato Bold', sans-serif;
+    font-size: 1.556rem;
+    font-weight: 700;
+}
+
+.neptune {
+    font-family: 'Lato Bold', sans-serif;
+    font-size: 1.222rem;
+    font-weight: 700;
+}
+
+.venus {
+    font-family: 'Lato Bold', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.mars {
+    font-family: 'Lato Regular', sans-serif;
+    font-size: 1rem;
+}
+
+.mercury {
+    font-family: 'Lato Bold', sans-serif;
+    font-size: 0.8889rem;
+    font-weight: 700;
+}
+
+.pluto {
+    font-family: 'Lato Regular', sans-serif;
+    font-size: 0.8889rem;
+}
+
+</style>
+
+{% endfor %}
+{% endmacro %}

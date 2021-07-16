@@ -6,6 +6,13 @@ __pycache__/
 # C extensions
 *.so
 
+# Jninja Templates
+components/
+layout
+
+#Auth files
+auth.sqbpro
+
 # Distribution / packaging
 .Python
 build/
@@ -26,6 +33,9 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+# Mac Specific Cache Files
+.DS_Store
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
