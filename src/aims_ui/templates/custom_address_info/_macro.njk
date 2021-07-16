@@ -4,7 +4,7 @@
 {% for address in params.matched_addresses %}
 
 <article class="result-short-form">
-<a href="url"><h2 class="saturn"> {{ address.formattedAddress.value }}</h2></a>
+<a href="url"><h2 class="saturn"> {{ address.formatted_address.value }}</h2></a>
 <table> <tbody>
 
 {% for attribute_name, address_attribute in address.__dict__.items() %}
