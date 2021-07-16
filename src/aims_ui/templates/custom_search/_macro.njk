@@ -1,0 +1,89 @@
+{% macro customSearch(params) %}
+
+{% from 'components/input/_macro.njk' import onsInput %}
+{% from 'components/select/_macro.njk' import onsSelect %}
+{% from "components/checkboxes/_checkbox-macro.njk" import onsCheckbox %}
+{% from "components/button/_macro.njk" import onsButton %}
+
+{% set col = namespace(value=-1) %}
+{% set row = namespace(value=0) %}
+{% set max_col = 1 %}
+
+
+
+<section class = "match-form-container" >
+{% for field in params.Fields %}
+
+	<br>
+	{# Code to generate actual searchui here #}
+	{% if field.search_type == "input_box" %}
+	{{onsInput({
+		"id"   : field.database_name,
+		"name" : field.database_name,
+		"classes": field.classes,
+		"label": { "text": field.display_title,
+			   "description": field.description },
+		"value": field.previous_value,   })}}
+	{% elif field.search_type == "dropdown" %}
+	{{onsSelect({
+		"id"   : field.database_name,
+		"name" : field.database_name,
+		"classes": field.classes,
+		"label": { "text": field.display_title, 
+			   "description": field.description },
+		"options": field.dropdown_options })}}
+	{% elif field.search_type == "checkbox" %}
+	{{onsCheckbox({
+		"id": field.database_name,
+		"name": field.database_name,
+		"classes": field.classes,
+		"label": { "text": field.display_title, 
+			   "description": field.description },
+		"value": True,
+		"checked": field.checkbox_value,
+	})}}
+	<br>
+
+
+{% endif %}
+{% endfor %}
+
+<br>
+{# Add a search button on the end of the UI #}
+{{  onsButton({ 
+	"text": "Search", }) }}
+
+{# Add a clear filters button with a url to the currently selected endpoint #}
+{% for endpoint in params.endpoints %}
+  {% if endpoint.selected %}
+	{{ onsButton({
+		'text': 'Clear  filters',
+		'classes': 'btn--secondary',
+		'submitType': "loader",
+		'url': endpoint.url,
+	}) }}
+{% endif %}
+{% endfor %}
+
+
+</section>
+
+	
+
+{# If it's a results page then have the searchboxes arranged at the top #}
+{% if params.results_page %}
+<style>
+section.match-form-container {
+    background-color: #dfe0e2;
+  width: 100vw;
+  position: relative;
+  padding-left: 20vw;
+  left: -20vw;
+  padding-right: 40vw;
+  padding-bottom:5vh;
+}
+</style>
+{% endif %}
+
+
+{% endmacro %}

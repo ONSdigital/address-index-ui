@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% from 'components/panel/_macro.njk' import onsPanel %}
+{% from 'components/lists/_macro.njk' import onsList %}
+{% from 'custom_search/_macro.njk' import customSearch %}
+{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+
+
+{% set form =  {
+	'method': 'POST',
+	'id': 'searchform',
+	'attributes': {
+	'action': form_action, }} %}
+
+{% block main %}
+
+
+<br>
+
+{{ customSearch ({ "Fields": searchable_fields,
+		   "endpoints": endpoints, 
+                   "results_page": results_page, }) }}
+
+ 
+{% if matched_addresses == '' %}
+<br>
+
+{% call
+    onsPanel({
+	'title': 'No Results Found',
+	'type': 'error'
+    }) %}
+{{ onsList({
+	'id': 'no_data_found',
+	'classes': 'list--bare list--errors u-mb-s',
+	'itemsList': [{
+		'text': 'No data found for that PostCode. Please verify that the number you entered was valid.', }]
+    }) }}
+
+{% endcall %}
+{% else %}
+<br>
+{{ customAddressInfo ({
+	'matched_addresses': matched_addresses,
+	}) }}
+
+
+{% endif %}
+
+{% endblock %}
