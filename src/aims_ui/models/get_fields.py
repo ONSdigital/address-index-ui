@@ -118,7 +118,6 @@ def get_fields(endpoint_name):
             description=
             'Specifies whether a slow fallback query is used in the event of the main query returning no results.',
         ),
-        common_fields['epoch'],
         common_fields['historical'],
         common_fields['auxilary_search'],
     ])
