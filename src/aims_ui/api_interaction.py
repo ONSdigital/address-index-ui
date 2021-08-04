@@ -20,7 +20,6 @@ def get_params(all_user_input):
     quoted_value = urllib.parse.quote_plus(str(value))
     params.append(quoted_param + '=' + quoted_value)  
   
-  print('&'.join(params))
   return '&'.join(params)
 
 
