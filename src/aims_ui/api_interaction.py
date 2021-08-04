@@ -1,10 +1,13 @@
 import os
+import json
 import requests
 from . import app
+from flask import render_template
+from .models.get_endpoints import get_endpoints
 
 def get_params(all_user_input):
   """Return a list of aparameters formatted for API header, from class list of inputs"""
-  params = ''
+  params = 'verbose=True&&'
   for param in all_user_input.keys():
     # Do not add epoch for testing
     if (param != 'epoch') and (os.getenv('FLASK_ENV') == 'development'):
