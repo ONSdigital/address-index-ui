@@ -7,12 +7,12 @@ from .models.get_endpoints import get_endpoints
 
 def get_params(all_user_input):
   """Return a list of aparameters formatted for API header, from class list of inputs"""
-  params = 'verbose=True&&'
+  params = 'verbose=True&'
   for param in all_user_input.keys():
     # Do not add epoch for testing
     if (param != 'epoch') and (os.getenv('FLASK_ENV') == 'development'):
       if str(all_user_input.get(param)) != '':
-        params = params + str(param) +'='+ str(all_user_input.get(param)).replace('%','') + '&&'
+        params = params + str(param) +'='+ str(all_user_input.get(param)).replace('%','') + '&'
 
   params = params[:-2] if params != '' else ''
 
