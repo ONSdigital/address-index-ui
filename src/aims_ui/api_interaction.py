@@ -4,19 +4,25 @@ import requests
 from . import app
 from flask import render_template
 from .models.get_endpoints import get_endpoints
+import urllib
 
 def get_params(all_user_input):
   """Return a list of aparameters formatted for API header, from class list of inputs"""
-  params = 'verbose=True&'
-  for param in all_user_input.keys():
-    # Do not add epoch for testing
-    if (param != 'epoch') and (os.getenv('FLASK_ENV') == 'development'):
-      if str(all_user_input.get(param)) != '':
-        params = params + str(param) +'='+ str(all_user_input.get(param)).replace('%','') + '&'
+    
+  params = ['verbose=True']
+  for param, value in all_user_input.items():
+    if not str(value):
+      continue
+    if (os.getenv('FLASK_ENV') == 'development') and (param == 'epoch'):
+      # do not add epoch for testing
+      continue
+    quoted_param = urllib.parse.quote_plus(str(param))
+    quoted_value = urllib.parse.quote_plus(str(value))
+    params.append(quoted_param + '=' + quoted_value)  
+  
+  print('&'.join(params))
+  return '&'.join(params)
 
-  params = params[:-2] if params != '' else ''
-
-  return params
 
 def api(
     url,
