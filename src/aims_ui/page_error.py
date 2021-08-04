@@ -7,7 +7,7 @@ def page_error(
     page_name,
 ):
 
-  if api_response.json().get('errors',[''])[0].get('message',None) != None:
+  if len(api_response.json().get('errors', [])) > 0:
     error_description = api_response.json().get('errors',[''])[0].get('message',None) 
   else:
     error_description = f'Expected 200 response, got {api_response.status_code}. Response is {api_response}'
