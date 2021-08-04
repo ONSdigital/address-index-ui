@@ -37,6 +37,28 @@ def get_fields(endpoint_name):
           description=
           'Check this box to include historical address data in the search. This will allow inclusion of historical data.',
       ),
+      'england_boost_checkbox':
+      Field(
+          'eboost',
+          display_title='England Boost',
+          search_type='checkbox',
+          description='Boost the results in favour of England Addresses',
+      ),
+      'wales_boost_checkbox':
+      Field(
+          'wboost',
+          display_title='Wales Boost',
+          search_type='checkbox',
+          description='Boost the results in favour of Wales Addresses',
+      ),
+      'scotland_boost_checkbox':
+      Field(
+          'sboost',
+          display_title='Scotland Boost',
+          search_type='checkbox',
+          description='Boost the results in favour of Scotland Addresses',
+      ),
+
       'england_boost':
       Field(
           'eboost',
@@ -123,8 +145,6 @@ def get_fields(endpoint_name):
         common_fields['auxilary_search'],
     ])
 
-  elif endpoint_name == 'address':
-    pass
   elif endpoint_name == 'multiple_address':
     return ([])
   elif endpoint_name == 'postcode':
@@ -140,9 +160,9 @@ def get_fields(endpoint_name):
         common_fields['limit'],
         common_fields['classification'],
         common_fields['epoch'],
-        common_fields['england_boost'],
-        common_fields['wales_boost'],
-        common_fields['scotland_boost'],
+        common_fields['england_boost_checkbox'],
+        common_fields['wales_boost_checkbox'],
+        common_fields['scotland_boost_checkbox'],
         common_fields['auxilary_search'],
     ])
 
@@ -156,9 +176,9 @@ def get_fields(endpoint_name):
             'Specifies the address search string (e.g. "14 Acacia Avenue, Ruislip, HA4 8RG").'
         ),
         common_fields['classification'],
-        common_fields['england_boost'],
-        common_fields['wales_boost'],
-        common_fields['scotland_boost'],
+        common_fields['england_boost_checkbox'],
+        common_fields['wales_boost_checkbox'],
+        common_fields['scotland_boost_checkbox'],
         common_fields['epoch'],
         Field(
             'matchthreshold',
