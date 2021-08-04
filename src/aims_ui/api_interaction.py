@@ -29,12 +29,12 @@ def api(
   if (called_from == 'uprn') or (called_from == 'postcode'):
     url = app.config.get('API_URL') + url + all_user_input.get(called_from)
     params = get_params(all_user_input)
-    r = requests.get(url, params=params, headers=header, timeout=1000000., verify=False)
+    r = requests.get(url, params=params, headers=header, )
 
   elif called_from == 'singlesearch':
     url = app.config.get('API_URL') + url
     proposed_params = {k: v for k, v in all_user_input.items() if v}
     params = get_params(all_user_input)
-    r = requests.get(url, params=params, headers=header, timeout=1000000., verify=False)
+    r = requests.get(url, params=params, headers=header, )
 
   return r
