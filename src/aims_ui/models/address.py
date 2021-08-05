@@ -27,6 +27,7 @@ class AddressAttribute():
         'classificationCode',
         'classificationCodeList',
         'confidenceScore',
+        'nag',
     ]
      
     if name in full_values_to_show:
@@ -48,6 +49,10 @@ class AddressAttribute():
       return new_d
     if self.name == 'classificationCodeList':
       return get_classification_list(app)
+    if self.name == 'nag':
+      self.name = 'localCustodianName'
+      return self.raw_value[0].get('localCustodianName') if len(self.raw_value) > 0 else ''
+
 
     return f'{value}'
 
@@ -80,3 +85,4 @@ class Address():
     self.lpi_logical_status = AddressAttribute(address_data, 'lpiLogicalStatus', app)
     self.confidence_score = AddressAttribute(address_data, 'confidenceScore', app)
     self.underlying_score = AddressAttribute(address_data, 'underlyingScore', app)
+    self.nag = AddressAttribute(address_data, 'nag', app)
