@@ -39,7 +39,7 @@ def singlesearch():
   )
 
   if result.status_code == 200:
-    matched_addresses = get_addresses(result.json(), page_name)
+    matched_addresses = get_addresses(result.json(), page_name, app)
   elif result.status_code == 404:
     # No results but the api compelted the call successfully
     matched_addresses = ''

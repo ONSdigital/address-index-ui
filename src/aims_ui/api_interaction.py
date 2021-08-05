@@ -32,7 +32,7 @@ def api(
   header = {"Content-Type": "application/json",}
 
   if (called_from == 'uprn') or (called_from == 'postcode'):
-    url = app.config.get('API_URL') + url + all_user_input.get(called_from)
+    url = app.config.get('API_URL') + url + all_user_input.get(called_from,'')
     params = get_params(all_user_input)
     r = requests.get(url, params=params, headers=header, )
 

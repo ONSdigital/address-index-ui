@@ -97,7 +97,7 @@ def get_fields(endpoint_name):
             display_title='To get started, enter a UPRN',
             required=True,
             description=
-            'The Unique Property Reference Number is 12 didgits, and reffers to a single property'
+            'The Unique Property Reference Number consists of digits only, and refers to a single property'
         ),
         common_fields['limit'],
         common_fields['epoch'],
