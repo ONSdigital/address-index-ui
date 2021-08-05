@@ -2,8 +2,6 @@
 {% from 'components/label/_macro.njk' import onsLabel %}
 {% from "components/breadcrumb/_macro.njk" import onsBreadcrumb %}
 
-THIS IS INSIDE THE MACRO
-
 {% if params.full_info %}
 <h1 class="saturn"> {{ params.matched_addresses[0].formatted_address.value }}</h1>
 <a href=''><h5>Radius search from this location</h5></a>
@@ -20,6 +18,7 @@ THIS IS INSIDE THE MACRO
 	    <td class="venus">{{ address_attribute.value }}</td>
 	</tr>
 {% endif %}
+
 {% endfor %}
 <tr>
     <td class="mars"><a href=" {{ 'https://www.google.com/maps/search/?api=1&query=' + params.matched_addresses[0].geo.value.get('longitude') + ',' + params.matched_addresses[0].geo.value.get('latitude')  }}"
