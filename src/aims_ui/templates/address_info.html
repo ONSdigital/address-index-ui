@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
+{% from "components/input/_macro.njk" import onsInput %}
+{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+
+{% set form =  {
+	'method': 'POST',
+	'id': 'searchform',
+	'attributes': {
+	'action': form_action, }} %}
+
+{% block main %}
+
+<br>
+
+{{ customAddressInfo ({
+	'full_info': True,
+	'matched_addresses': matched_addresses,
+	}) }}
+
+
+{% endblock %}
