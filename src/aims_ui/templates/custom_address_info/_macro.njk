@@ -3,6 +3,8 @@
 {% from "components/breadcrumb/_macro.njk" import onsBreadcrumb %}
 
 {% if params.full_info %}
+
+
 <h1 class="saturn"> {{ params.matched_addresses[0].formatted_address.value }}</h1>
 <a href=''><h5>Radius search from this location</h5></a>
 
@@ -30,6 +32,9 @@
   </div></div>
 
 {% else %}
+
+
+
 {% for address in params.matched_addresses %}
 
 <article class="result-short-form">
