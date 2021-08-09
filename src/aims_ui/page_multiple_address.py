@@ -11,41 +11,48 @@ import json
 
 page_name = 'multiple_address'
 
+from werkzeug.utils import secure_filename
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+def allowed_file(filename):
+  return '.' in filename and \
+    filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def multiple_address():
 
-  if request.method == 'GET':
-    delete_input(session)
-    return render_template(
-        f'{page_name}.html',
-        searchable_fields=get_fields(page_name),
-        endpoints=get_endpoints(called_from=page_name),
-    )
+  if request.method == 'POST':
+    print('POST happening now')
+    # check if the post request has the file part
+    if 'file' not in request.files:
+      print('No file part')
+      return redirect(request.url)
+    file = request.files['file']
+    print(file)
+    # If the user does not select a file, the browser submits an
+    # empty file without a filename.
+    if file.filename == '':
+      print('No selected file')
+      return redirect(request.url)
+    if file and allowed_file(file.filename):
+      filename = secure_filename(file.filename)
+      print(file)
+      return 'Upload sucessful i think lol'
 
-  searchable_fields = get_fields(page_name)
-  all_user_input = load_save_store_inputs(
-      searchable_fields,
-      request,
-      session,
-  )
-
-  result = api(
-      '/addresses/uprn/',
-      page_name,
-      all_user_input.get(page_name),
-  )
-
-  if result.status_code == 200:
-    matched_addresses = get_addresses(result.json(), page_name)
-  else:
-    matched_addresses = ''
+  print('get happening')
+  delete_input(session)
 
   return render_template(
       f'{page_name}.html',
+      searchable_fields=get_fields(page_name),
       endpoints=get_endpoints(called_from=page_name),
-      searchable_fields=searchable_fields,
+  )
+
+
+  print("POST IS HAPPENING!")
+  print(request.files)
+  return render_template(
+      f'{page_name}.html',
+      endpoints=get_endpoints(called_from=page_name),
       results_page=True,
-      matched_addresses=matched_addresses,
   )
