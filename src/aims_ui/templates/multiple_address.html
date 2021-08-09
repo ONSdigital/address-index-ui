@@ -9,7 +9,6 @@
 
 {% block main %}
 
-
 <h1>Match Multiple Addresses</h1>
 
 <br>
@@ -18,21 +17,21 @@
 "body": '<p>To get started, upload a CSV file of addresses to be matched. The selected file must be 1MB or less (much smaller for show results option) with only two columns, id and address. <br> <br> Download a <a href=''> sample file</a> (shows all possible parameters) <br> <br> You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>'
     })}}
 
-
+<br>
 <form method=post enctype=multipart/form-data>
+<br>
 
-<div class="field">
-  <div class="field">
-    <label class="label  label--with-description " for="file">Upload a file
-    </label>
-    <span id="description-hint" class="label__description  input--with-description">
-      Please upload a CSV file. 
-    </span>
-    <input name=file type=file id="file" class="input input--text input-type__input input--upload" accept=".csv,.CSV" aria-describedby="description-hint" />
-  </div>
-</div>
+{{ onsUpload({
+	"id": "file",
+	"name":"file",
+	"type":"file",
+	"classes":"input input--text input-type__input input--upload",
+	"accept": ".csv,.CSV",
+	"label": {
+	    "description": "Please upload a CSV file",
+	    "text":  "Please upload a CSV file", } }) }}
 
-
+<br>
 {{ onsButton({
         "text": "Save and continue",
         "type": "submit",
@@ -40,10 +39,5 @@
         "classes": "btn",  })  }}
 
 </form>
-
-
-<br>
-
-
 
 {% endblock %}
