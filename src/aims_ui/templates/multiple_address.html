@@ -21,12 +21,18 @@
 <form method=post enctype=multipart/form-data>
 <br>
 
+{{ error_type }}
+
 {{ onsUpload({
 	"id": "file",
 	"name":"file",
 	"type":"file",
 	"classes":"input input--text input-type__input input--upload",
 	"accept": ".csv,.CSV",
+        "error": {
+		"id": "file-error",
+            	"text": "Select a file that is smaller than 2MB", },
+
 	"label": {
 	    "description": "Please upload a CSV file",
 	    "text":  "Please upload a CSV file", } }) }}
