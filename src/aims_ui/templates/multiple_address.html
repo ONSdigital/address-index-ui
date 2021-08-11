@@ -21,7 +21,18 @@
 <form method=post enctype=multipart/form-data>
 <br>
 
-{{ error_type }}
+{% if error_type %}
+
+<div class="panel panel--error panel--no-title u-mb-s">
+  <span class="u-vh">Error: </span>
+  <div class="panel__body">
+    <p class="panel__error">
+    <strong>{{ error_type }}</strong>
+    </p>
+    <div class="field">
+	    <label class="label  " for="number">{{ error_description }}
+      </label>
+{% endif %}
 
 {{ onsUpload({
 	"id": "file",
@@ -29,21 +40,31 @@
 	"type":"file",
 	"classes":"input input--text input-type__input input--upload",
 	"accept": ".csv,.CSV",
-        "error": {
+	"error": {
 		"id": "file-error",
-            	"text": "Select a file that is smaller than 2MB", },
-
+		"text": "Select a file that is smaller than 2MB" },
 	"label": {
-	    "description": "Please upload a CSV file",
-	    "text":  "Please upload a CSV file", } }) }}
+	    "description": "Please upload a CSV file" if not error_type else "",
+	    "text":  "Please upload a CSV file" if not error_type else "" } }) }}
+
+{% if error_type %}
+    </div>
+  </div>
+</div>
+{% endif %}
 
 <br>
 {{ onsButton({
-        "text": "Save and continue",
+        "text": "Download Results",
+        "type": "submit",
+        "value": "Download",
+        "classes": "btn--secondary",  })  }}
+
+{{ onsButton({
+        "text": "Show Results",
         "type": "submit",
         "value": "Upload",
         "classes": "btn",  })  }}
-
 </form>
 
 {% endblock %}
