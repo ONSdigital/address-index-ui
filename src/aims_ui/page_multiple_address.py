@@ -24,11 +24,11 @@ def multiple_address():
 
   def final(
       error_description='', 
-      error_type = '',):
+      error_title = '',):
     return render_template(
         f'{page_name}.html',
         error_description=error_description,
-        error_type=error_type,
+        error_type=error_title,
         endpoints=get_endpoints(called_from=page_name),
         results_page=True, ) 
 
@@ -38,17 +38,18 @@ def multiple_address():
 
     file = request.files['file']
     file_size = int(os.fstat(file.fileno()).st_size) / 1000000 # In MB
+    max_file_size = 1 # In MB
 
 
     if file.filename == '':
       return final(
           error_description='Select a file that is a CSV ', 
-          error_type='file-error')
+          error_title='File Type Error')
 
-    if file_size > 2:
+    if file_size > max_file_size:
       return final(
-          error_description='File size is too large. Please enter a file no larger than {max_file_size}', 
-          error_type='file-size')
+          error_description=f'File size is too large. Please enter a file no larger than {max_file_size} MB', 
+          error_title='File Size Error')
 
     if file and allowed_file(file.filename):
       filename = secure_filename(file.filename)
