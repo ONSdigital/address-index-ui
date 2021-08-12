@@ -50,6 +50,7 @@
 
 <br>
 {# Add a search button on the end of the UI #}
+{% if not params.remove_buttons %}
 {{  onsButton({ 
 	"text": "Search", }) }}
 
@@ -64,7 +65,7 @@
 	}) }}
 {% endif %}
 {% endfor %}
-
+{% endif %}
 
 </section>
 

@@ -1,10 +1,10 @@
 import os
-from flask import render_template, request, session
+from flask import render_template, request, session, send_file
 from flask_login import login_required
 from werkzeug.utils import secure_filename
 from . import app
 from .cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs
-from .api_interaction import api
+from .api_interaction import api, multiple_address_match
 from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
@@ -22,15 +22,31 @@ def allowed_file(filename):
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def multiple_address():
 
+  if request.method == 'GET':
+    delete_input(session)
+    return render_template(
+        f'{page_name}.html',
+        searchable_fields=get_fields(page_name),
+        endpoints=get_endpoints(called_from=page_name),)
+
+
   def final(
       error_description='', 
       error_title = '',):
-    return render_template(
-        f'{page_name}.html',
-        error_description=error_description,
-        error_type=error_title,
-        endpoints=get_endpoints(called_from=page_name),
-        results_page=True, ) 
+
+      searchable_fields = get_fields(page_name)
+      all_user_input = load_save_store_inputs(
+          searchable_fields,
+          request,
+          session, )
+
+      return render_template(
+          f'{page_name}.html',
+          error_description=error_description,
+          error_type=error_title,
+          endpoints=get_endpoints(called_from=page_name),
+          searchable_fields=searchable_fields,
+          results_page=True, ) 
 
   if request.method == 'POST':
     if 'file' not in request.files:
@@ -53,12 +69,13 @@ def multiple_address():
 
     if file and allowed_file(file.filename):
       filename = secure_filename(file.filename)
-      print(file)
-      return final()
+      # 1. Work out how to differenciate between "Downlaod results" button and "View results" BUtton
 
-  delete_input(session)
-  return render_template(
-      f'{page_name}.html',
-      searchable_fields=get_fields(page_name),
-      endpoints=get_endpoints(called_from=page_name),
-  )
+      full_results = multiple_address_match(file, {}, app)
+
+      return send_file(full_results,
+                     mimetype='text/csv',
+                     attachment_filename='YouJustUploadedMe.csv',
+                     as_attachment=True)
+
+

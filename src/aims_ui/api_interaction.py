@@ -4,10 +4,11 @@ import requests
 from . import app
 from flask import render_template
 from .models.get_endpoints import get_endpoints
+from .models.get_addresses import get_addresses
 import urllib
 
 def get_params(all_user_input):
-  """Return a list of aparameters formatted for API header, from class list of inputs"""
+  """Return a list of parameters formatted for API header, from class list of inputs"""
     
   params = ['verbose=True']
   for param, value in all_user_input.items():
@@ -43,3 +44,38 @@ def api(
     r = requests.get(url, params=params, headers=header, )
 
   return r
+
+def multiple_address_match(file, all_user_input, app):
+  contents = file.readlines()
+
+  final_csv = ''
+  for line in contents:
+    line = line.strip().decode( "utf-8" )
+    given_id = line.split(',')[0]
+    address_to_lookup = line.split(',')[1]
+    all_user_input['input'] = address_to_lookup
+    
+    result = api(
+        '/addresses',
+        'singlesearch',
+        all_user_input,)
+
+    matched_addresses = get_addresses(result.json(), 'singlesearch', app)
+    
+
+
+  return matched_addresses
+
+
+
+
+
+
+
+
+
+
+
+
+
+

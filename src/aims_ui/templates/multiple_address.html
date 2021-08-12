@@ -5,6 +5,7 @@
 {% from "components/upload/_macro.njk" import onsUpload %}
 {% from "components/button/_macro.njk" import onsButton %}
 {% from "components/panel/_macro.njk" import onsPanel %}
+{% from 'custom_search/_macro.njk' import customSearch %}
 
 
 {% block main %}
@@ -18,6 +19,14 @@
     })}}
 
 <br>
+
+{{ customSearch ({ "Fields": searchable_fields,
+		   "endpoints": endpoints, 
+		   "remove_buttons": True,
+                   "results_page": results_page, }) }}
+
+
+
 <form method=post enctype=multipart/form-data>
 <br>
 
@@ -37,17 +46,19 @@
 
 
 <br>
+
 {{ onsButton({
         "text": "Download Results",
         "type": "submit",
         "value": "Download",
-        "classes": "btn--secondary",  })  }}
+        "classes": "btn",  })  }}
 
 {{ onsButton({
         "text": "Show Results",
         "type": "submit",
         "value": "Upload",
         "classes": "btn",  })  }}
+
 </form>
 
 {% endblock %}
