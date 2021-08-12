@@ -59,7 +59,7 @@ class AddressAttribute():
 
 class Address():
   def __init__(self, address_data, app):
-    # Essentially all atributes of an expected address from AIMS API
+    # Essentially all atributes of an expected address from AIMS API (Verbose)
     self.uprn = AddressAttribute(address_data, 'uprn', app)
     self.formatted_address = AddressAttribute(address_data, 'formattedAddress', app)
     self.parent_uprn = AddressAttribute(address_data, 'parentUprn', app)
@@ -86,3 +86,17 @@ class Address():
     self.confidence_score = AddressAttribute(address_data, 'confidenceScore', app)
     self.underlying_score = AddressAttribute(address_data, 'underlyingScore', app)
     self.nag = AddressAttribute(address_data, 'nag', app)
+
+
+  
+
+
+
+
+
+
+
+
+
+
+

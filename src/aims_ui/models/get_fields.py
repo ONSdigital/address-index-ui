@@ -58,7 +58,15 @@ def get_fields(endpoint_name):
           search_type='checkbox',
           description='Boost the results in favour of Scotland Addresses',
       ),
-
+      'match_threshold':
+      Field(
+          'matchthreshold',
+          display_title='Minimum match %',
+          search_type='dropdown',
+          previous_value='5%',
+          dropdown_options=get_options('percentage_match'),
+          add_default_dropdown_option=False,
+      ),
       'england_boost':
       Field(
           'eboost',
@@ -145,7 +153,12 @@ def get_fields(endpoint_name):
     ])
 
   elif endpoint_name == 'multiple_address':
-    return ([])
+    return ([
+        common_fields['limit'],
+        common_fields['epoch'],
+        common_fields['historical'],
+        common_fields['match_threshold'],
+      ])
   elif endpoint_name == 'postcode':
     return ([
         Field(
@@ -179,14 +192,7 @@ def get_fields(endpoint_name):
         common_fields['wales_boost_checkbox'],
         common_fields['scotland_boost_checkbox'],
         common_fields['epoch'],
-        Field(
-            'matchthreshold',
-            display_title='Minimum match %',
-            search_type='dropdown',
-            previous_value='5%',
-            dropdown_options=get_options('percentage_match'),
-            add_default_dropdown_option=False,
-        ),
+        common_fields['match_threshold'],
         common_fields['limit'],
         common_fields['historical'],
         common_fields['auxilary_search'],
