@@ -4,6 +4,8 @@
 {% from 'components/select/_macro.njk' import onsSelect %}
 {% from "components/checkboxes/_checkbox-macro.njk" import onsCheckbox %}
 {% from "components/button/_macro.njk" import onsButton %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/question/_macro.njk" import onsQuestion %}
 
 {% set col = namespace(value=-1) %}
 {% set row = namespace(value=0) %}
@@ -40,8 +42,20 @@
 		"label": { "text": field.display_title, 
 			   "description": field.description },
 		"value": True,
-		"checked": field.checkbox_value,
-	})}}
+		"checked": field.checkbox_value, })}}
+	{% elif field.search_type == "radio" %}
+	{% call onsQuestion({
+	    "title": field.display_title,
+	    "classes": "u-mt-no",
+	    "legendIsQuestionTitle": true }) %}
+	{{ onsRadios({
+            "name": "property-type",
+            "dontWrap": true,
+            "radios": field.radio_options }) }}
+
+	{% endcall %}
+
+
 	<br>
 
 

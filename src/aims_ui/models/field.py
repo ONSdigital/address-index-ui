@@ -11,8 +11,10 @@ class Field:
   accordion: bool = False
   required: bool = False
   dropdown_options: list = field(default_factory=lambda: [])
+  radio_options: list = field(default_factory=lambda: [])
   search_box_visible: bool = True
   format_as_boolean: bool = False
+  flag: bool = False
   checkbox_value: bool = False
   database_association_name: str = ''
   classes: str = ''
@@ -23,6 +25,18 @@ class Field:
     self.dropdown_options = self.format_dropdown_options(
         self.dropdown_options,
         add_default_option=self.add_default_dropdown_option)
+    if self.search_type == 'radio':
+      self.radio_options = self.format_radio_options()
+  
+  def format_radio_options(self):
+    final_radios = []
+    for radio_option in self.radio_options:
+      final_radios.append(
+          { 'id':radio_option.get('id'),
+            'label': {'text':radio_option.get('text')},
+            'value':radio_option.get('id') } )
+    return final_radios
+
 
   def find_and_extract(self, data):
     checkbox_present = data.get(self.unique_name) == 'other'

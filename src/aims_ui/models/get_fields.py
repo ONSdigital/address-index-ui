@@ -158,6 +158,17 @@ def get_fields(endpoint_name):
         common_fields['epoch'],
         common_fields['historical'],
         common_fields['match_threshold'],
+        Field(
+          'display-type',
+          search_type='radio',
+          flag = False,
+          display_title='How would you like your results?',
+          previous_value='Download',
+          radio_options=[
+            {'id':'Downoad', 'text':'Download as CSV'},
+            {'id':'Display', 'text':'Display in browser'},
+          ],)
+          
       ])
   elif endpoint_name == 'postcode':
     return ([

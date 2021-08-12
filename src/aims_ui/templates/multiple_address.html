@@ -6,7 +6,14 @@
 {% from "components/button/_macro.njk" import onsButton %}
 {% from "components/panel/_macro.njk" import onsPanel %}
 {% from 'custom_search/_macro.njk' import customSearch %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/question/_macro.njk" import onsQuestion %}
 
+{% set form =  {
+	'method': 'POST',
+	'id': 'searchform',
+	'attributes': {
+	'action': form_action, }} %}
 
 {% block main %}
 
@@ -25,11 +32,8 @@
 		   "remove_buttons": True,
                    "results_page": results_page, }) }}
 
-
-
 <form method=post enctype=multipart/form-data>
 <br>
-
 
 {{ onsUpload({
 	"id": "file",
@@ -46,18 +50,8 @@
 
 
 <br>
-
-{{ onsButton({
-        "text": "Download Results",
-        "type": "submit",
-        "value": "Download",
-        "classes": "btn",  })  }}
-
-{{ onsButton({
-        "text": "Show Results",
-        "type": "submit",
-        "value": "Upload",
-        "classes": "btn",  })  }}
+{{  onsButton({ 
+	"text": "Search", }) }}
 
 </form>
 
