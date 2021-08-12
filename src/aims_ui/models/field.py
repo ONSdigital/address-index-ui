@@ -27,7 +27,13 @@ class Field:
         add_default_option=self.add_default_dropdown_option)
     if self.search_type == 'radio':
       self.radio_options = self.format_radio_options()
-  
+
+  def set_radio_status(self, value_to_select): 
+    self.previous_value = value_to_select
+    for radio in self.radio_options:
+      if radio.get('id') == self.previous_value:
+        radio['checked'] = True
+
   def format_radio_options(self):
     final_radios = []
     for radio_option in self.radio_options:
@@ -35,6 +41,11 @@ class Field:
           { 'id':radio_option.get('id'),
             'label': {'text':radio_option.get('text')},
             'value':radio_option.get('id') } )
+
+    for radio in final_radios:
+      if radio.get('id') == self.previous_value:
+        radio['checked'] = True
+
     return final_radios
 
 
