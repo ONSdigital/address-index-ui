@@ -9,11 +9,6 @@
 {% from "components/radios/_macro.njk" import onsRadios %}
 {% from "components/question/_macro.njk" import onsQuestion %}
 
-{% set form =  {
-	'method': 'POST',
-	'id': 'searchform',
-	'attributes': {
-	'action': form_action, }} %}
 
 {% block main %}
 
@@ -27,12 +22,12 @@
 
 <br>
 
+<form method=post enctype=multipart/form-data>
 {{ customSearch ({ "Fields": searchable_fields,
 		   "endpoints": endpoints, 
 		   "remove_buttons": True,
                    "results_page": results_page, }) }}
 
-<form method=post enctype=multipart/form-data>
 <br>
 
 {{ onsUpload({
@@ -50,8 +45,11 @@
 
 
 <br>
-{{  onsButton({ 
-	"text": "Search", }) }}
+{{ onsButton({
+        "text": "Download Results",
+        "type": "submit",
+        "value": "Download",
+        "classes": "btn",  })  }}
 
 </form>
 

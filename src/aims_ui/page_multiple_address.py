@@ -24,7 +24,6 @@ def multiple_address():
 
   if request.method == 'GET':
     delete_input(session)
-    
     return render_template(
         f'{page_name}.html',
         searchable_fields=get_fields(page_name),
@@ -54,13 +53,9 @@ def multiple_address():
         request,
         session, )
 
-    if 'file' not in request.files:
-      return redirect(request.url)
-
     file = request.files['file']
     file_size = int(os.fstat(file.fileno()).st_size) / 1000000 # In MB
     max_file_size = 1 # In MB
-
 
     if file.filename == '':
       return final(
