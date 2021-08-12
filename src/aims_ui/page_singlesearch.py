@@ -25,9 +25,6 @@ def singlesearch():
         endpoints=get_endpoints(called_from=page_name),
     )
 
-  print(request)
-  print(session)
-
   searchable_fields = get_fields(page_name)
   all_user_input = load_save_store_inputs(
       searchable_fields,

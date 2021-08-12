@@ -24,9 +24,15 @@ def multiple_address():
 
   if request.method == 'GET':
     delete_input(session)
+    searchable_fields=get_fields(page_name)
+    # Set default selected radio
+    for field in searchable_fields:
+      if field.database_name=='display-type':
+        field.set_radio_status('Download')
+
     return render_template(
         f'{page_name}.html',
-        searchable_fields=get_fields(page_name),
+        searchable_fields=searchable_fields,
         endpoints=get_endpoints(called_from=page_name),)
 
 
@@ -44,8 +50,6 @@ def multiple_address():
           results_page=True, ) 
 
   if request.method == 'POST':
-    print(request)
-    print(session)
 
     searchable_fields = get_fields(page_name)
     all_user_input = load_save_store_inputs(

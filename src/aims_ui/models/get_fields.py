@@ -163,9 +163,8 @@ def get_fields(endpoint_name):
           search_type='radio',
           flag = False,
           display_title='How would you like your results?',
-          previous_value='Download',
           radio_options=[
-            {'id':'Downoad', 'text':'Download as CSV'},
+            {'id':'Download', 'text':'Download as CSV'},
             {'id':'Display', 'text':'Display in browser'},
           ],)
           
