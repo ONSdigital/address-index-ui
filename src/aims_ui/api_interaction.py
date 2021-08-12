@@ -9,7 +9,6 @@ import urllib
 
 def get_params(all_user_input):
   """Return a list of parameters formatted for API header, from class list of inputs"""
-    
   params = ['verbose=True']
   for param, value in all_user_input.items():
     if not str(value):
@@ -17,6 +16,9 @@ def get_params(all_user_input):
     if (os.getenv('FLASK_ENV') == 'development') and (param == 'epoch'):
       # do not add epoch for testing
       continue
+
+    if type(value) == str:
+      value = value.replace('%','')
     quoted_param = urllib.parse.quote_plus(str(param))
     quoted_value = urllib.parse.quote_plus(str(value))
     params.append(quoted_param + '=' + quoted_value)  

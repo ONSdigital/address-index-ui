@@ -24,6 +24,7 @@ def multiple_address():
 
   if request.method == 'GET':
     delete_input(session)
+    
     return render_template(
         f'{page_name}.html',
         searchable_fields=get_fields(page_name),
@@ -31,14 +32,9 @@ def multiple_address():
 
 
   def final(
+      searchable_fields,
       error_description='', 
       error_title = '',):
-
-      searchable_fields = get_fields(page_name)
-      all_user_input = load_save_store_inputs(
-          searchable_fields,
-          request,
-          session, )
 
       return render_template(
           f'{page_name}.html',
@@ -49,6 +45,15 @@ def multiple_address():
           results_page=True, ) 
 
   if request.method == 'POST':
+    print(request)
+    print(session)
+
+    searchable_fields = get_fields(page_name)
+    all_user_input = load_save_store_inputs(
+        searchable_fields,
+        request,
+        session, )
+
     if 'file' not in request.files:
       return redirect(request.url)
 
@@ -59,11 +64,13 @@ def multiple_address():
 
     if file.filename == '':
       return final(
+          searchable_fields,
           error_description='Select a file that is a CSV ', 
           error_title='File Type Error')
 
     if file_size > max_file_size:
       return final(
+          searchable_fields,
           error_description=f'File size is too large. Please enter a file no larger than {max_file_size} MB', 
           error_title='File Size Error')
 
