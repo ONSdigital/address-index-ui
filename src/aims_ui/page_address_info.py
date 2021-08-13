@@ -16,7 +16,7 @@ def address_info(uprn):
   result = api(
       '/addresses/uprn/',
       'uprn',
-      {'uprn':uprn},
+      {'uprn': uprn},
   )
 
   if result.status_code == 200:
@@ -27,8 +27,8 @@ def address_info(uprn):
   else:
     return page_error(result, page_name)
 
-  return render_template('address_info.html', 
+  return render_template(
+      'address_info.html',
       endpoints=get_endpoints(),
       matched_addresses=matched_addresses,
-      )
-
+  )
