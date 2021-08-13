@@ -3,9 +3,11 @@ import json
 import requests
 from . import app
 from flask import render_template
+from io import StringIO, BytesIO
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
 import urllib
+import csv 
 
 def get_params(all_user_input):
   """Return a list of parameters formatted for API header, from class list of inputs"""
@@ -47,10 +49,15 @@ def api(
 
   return r
 
-def multiple_address_match(file, all_user_input, app):
-  contents = file.readlines()
+def multiple_address_match(file, all_user_input, app, download=False):
+  final_csv = 'id, inputAddress, matchedAddress, uprn, matchType, confidenceScore, documentScore, rank\n\r'
 
-  final_csv = ''
+  if download:
+    contents = file.readlines()
+    proxy = StringIO()
+    writer = csv.writer(proxy)
+    writer.writerow(final_csv.split(','))
+  
   for line in contents:
     line = line.strip().decode( "utf-8" )
     given_id = line.split(',')[0]
@@ -63,10 +70,26 @@ def multiple_address_match(file, all_user_input, app):
         all_user_input,)
 
     matched_addresses = get_addresses(result.json(), 'singlesearch', app)
-    
+    match_type = 'M' if len(matched_addresses) > 1 else 'S'
+    rank = 1
+    for adrs in matched_addresses:
+      if download:
+        writer.writerow([given_id,address_to_lookup,adrs.formatted_address_nag.value, 
+        adrs.uprn.value,match_type,adrs.confidence_score.value,'docScoreHere',rank])
+      else:
+        final_csv=final_csv+ f'{given_id},{address_to_lookup},{adrs.formatted_address_nag.value},' +\
+            f'{adrs.uprn.value},{match_type},{adrs.confidence_score.value},docScoreHere,{rank}\n\r'
+      rank = rank + 1
 
+  if download:
+    # Creating the byteIO object from the StringIO Object
+    mem = BytesIO()
+    mem.write(proxy.getvalue().encode())
+    mem.seek(0)
+    proxy.close()
+    return mem
 
-  return matched_addresses
+  return final_csv
 
 
 
