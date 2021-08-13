@@ -28,6 +28,11 @@ class Field:
     if self.search_type == 'radio':
       self.radio_options = self.format_radio_options()
 
+  def get_selected_radio(self):
+    for radio in self.radio_options:
+      if radio.get('checked'):
+        return radio.get('id')
+
   def set_radio_status(self, value_to_select): 
     self.previous_value = value_to_select
     for radio in self.radio_options:

@@ -9,7 +9,7 @@ from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
 import json
-import os 
+import csv 
 
 page_name = 'multiple_address'
 
@@ -39,7 +39,8 @@ def multiple_address():
   def final(
       searchable_fields,
       error_description='', 
-      error_title = '',):
+      error_title = '',
+      table_results= '' ):
 
       return render_template(
           f'{page_name}.html',
@@ -47,6 +48,7 @@ def multiple_address():
           error_type=error_title,
           endpoints=get_endpoints(called_from=page_name),
           searchable_fields=searchable_fields,
+          table_results=table_results,
           results_page=True, ) 
 
   if request.method == 'POST':
@@ -75,13 +77,40 @@ def multiple_address():
 
     if file and allowed_file(file.filename):
       filename = secure_filename(file.filename)
-      # 1. Work out how to differenciate between "Downlaod results" button and "View results" BUtton
 
-      full_results = multiple_address_match(file, {}, app)
 
-      return send_file(full_results,
-                     mimetype='text/csv',
-                     attachment_filename='YouJustUploadedMe.csv',
-                     as_attachment=True)
+      for field in searchable_fields:
+        if field.database_name=='display-type':
+          results_type =field.get_selected_radio()
+
+      if results_type == 'Download':
+        full_results = multiple_address_match(file, {}, app, download=True)
+
+        return send_file(full_results,
+          mimetype='text/csv',
+          attachment_filename='results.csv',
+          as_attachment=True)
+      else:
+        full_results = multiple_address_match(file, {}, app, download=False)
+        return final(
+            searchable_fields,
+            table_results=table_results(full_results))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
