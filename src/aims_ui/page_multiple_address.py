@@ -9,14 +9,17 @@ from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
 import json
-import csv 
+import csv
 
 page_name = 'multiple_address'
 
 ALLOWED_EXTENSIONS = {'csv'}
+
+
 def allowed_file(filename):
   return '.' in filename and \
     filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
@@ -24,32 +27,32 @@ def multiple_address():
 
   if request.method == 'GET':
     delete_input(session)
-    searchable_fields=get_fields(page_name)
+    searchable_fields = get_fields(page_name)
     # Set default selected radio
     for field in searchable_fields:
-      if field.database_name=='display-type':
+      if field.database_name == 'display-type':
         field.set_radio_status('Download')
 
     return render_template(
         f'{page_name}.html',
         searchable_fields=searchable_fields,
-        endpoints=get_endpoints(called_from=page_name),)
+        endpoints=get_endpoints(called_from=page_name),
+    )
 
+  def final(searchable_fields,
+            error_description='',
+            error_title='',
+            table_results=''):
 
-  def final(
-      searchable_fields,
-      error_description='', 
-      error_title = '',
-      table_results= '' ):
-
-      return render_template(
-          f'{page_name}.html',
-          error_description=error_description,
-          error_type=error_title,
-          endpoints=get_endpoints(called_from=page_name),
-          searchable_fields=searchable_fields,
-          table_results=table_results,
-          results_page=True, ) 
+    return render_template(
+        f'{page_name}.html',
+        error_description=error_description,
+        error_type=error_title,
+        endpoints=get_endpoints(called_from=page_name),
+        searchable_fields=searchable_fields,
+        table_results=table_results,
+        results_page=True,
+    )
 
   if request.method == 'POST':
 
@@ -57,59 +60,41 @@ def multiple_address():
     all_user_input = load_save_store_inputs(
         searchable_fields,
         request,
-        session, )
+        session,
+    )
 
     file = request.files['file']
-    file_size = int(os.fstat(file.fileno()).st_size) / 1000000 # In MB
-    max_file_size = 1 # In MB
+    file_size = int(os.fstat(file.fileno()).st_size) / 1000000  # In MB
+    max_file_size = 1  # In MB
 
     if file.filename == '':
-      return final(
-          searchable_fields,
-          error_description='Select a file that is a CSV ', 
-          error_title='File Type Error')
+      return final(searchable_fields,
+                   error_description='Select a file that is a CSV ',
+                   error_title='File Type Error')
 
     if file_size > max_file_size:
       return final(
           searchable_fields,
-          error_description=f'File size is too large. Please enter a file no larger than {max_file_size} MB', 
+          error_description=
+          f'File size is too large. Please enter a file no larger than {max_file_size} MB',
           error_title='File Size Error')
 
     if file and allowed_file(file.filename):
       filename = secure_filename(file.filename)
 
       for field in searchable_fields:
-        if field.database_name=='display-type':
-          results_type =field.get_selected_radio()
+        if field.database_name == 'display-type':
+          results_type = field.get_selected_radio()
 
       if results_type == 'Download':
-        full_results, line_count = multiple_address_match(file, {}, app, download=True)
+        full_results, line_count = multiple_address_match(file, {},
+                                                          app,
+                                                          download=True)
 
         return send_file(full_results,
-          mimetype='text/csv',
-          attachment_filename=f'result_size_{line_count}.csv',
-          as_attachment=True)
+                         mimetype='text/csv',
+                         attachment_filename=f'result_size_{line_count}.csv',
+                         as_attachment=True)
       elif results_type == 'Display':
-        table_results= multiple_address_match(file, {}, app, download=False)
-        return final(
-            searchable_fields,
-            table_results=table_results)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        table_results = multiple_address_match(file, {}, app, download=False)
+        return final(searchable_fields, table_results=table_results)
