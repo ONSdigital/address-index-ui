@@ -8,7 +8,7 @@
 {% from 'custom_search/_macro.njk' import customSearch %}
 {% from "components/radios/_macro.njk" import onsRadios %}
 {% from "components/question/_macro.njk" import onsQuestion %}
-
+{% from "components/table/_macro.njk" import onsTable %}
 
 {% block main %}
 
@@ -52,5 +52,11 @@
         "classes": "btn",  })  }}
 
 </form>
+
+{{ onsTable({
+	"id": "basic-table",
+        "ths":  [] if not table_results else table_results.get('ths') ,
+  	"trs": [] if not table_results else table_results.get('trs'),
+}) }}
 
 {% endblock %}

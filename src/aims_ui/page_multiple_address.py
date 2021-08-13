@@ -78,23 +78,22 @@ def multiple_address():
     if file and allowed_file(file.filename):
       filename = secure_filename(file.filename)
 
-
       for field in searchable_fields:
         if field.database_name=='display-type':
           results_type =field.get_selected_radio()
 
       if results_type == 'Download':
-        full_results = multiple_address_match(file, {}, app, download=True)
+        full_results, line_count = multiple_address_match(file, {}, app, download=True)
 
         return send_file(full_results,
           mimetype='text/csv',
-          attachment_filename='results.csv',
+          attachment_filename=f'result_size_{line_count}.csv',
           as_attachment=True)
-      else:
-        full_results = multiple_address_match(file, {}, app, download=False)
+      elif results_type == 'Display':
+        table_results= multiple_address_match(file, {}, app, download=False)
         return final(
             searchable_fields,
-            table_results=table_results(full_results))
+            table_results=table_results)
 
 
 
