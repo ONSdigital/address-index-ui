@@ -73,7 +73,7 @@ def multiple_address_match(file, all_user_input, app, download=False):
         all_user_input,)
 
     matched_addresses = get_addresses(result.json(), 'singlesearch', app)
-    match_type = 'M' if len(matched_addresses) > 1 else 'S'
+    match_type = '<p style="background-color:orange;">M</p>' if len(matched_addresses) > 1 else '<p style="background-color:Aquamarine;">S</p>'
     rank = 1
     for adrs in matched_addresses:
       if download:
