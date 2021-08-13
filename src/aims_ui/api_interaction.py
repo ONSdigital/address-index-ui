@@ -51,13 +51,16 @@ def api(
 
 def multiple_address_match(file, all_user_input, app, download=False):
   final_csv = 'id, inputAddress, matchedAddress, uprn, matchType, confidenceScore, documentScore, rank\n\r'
+  ths = [ {'value': x, 'ariaSort':None} for x in final_csv.split(',') ]
+  trs = []
 
+  contents = file.readlines()
   if download:
-    contents = file.readlines()
     proxy = StringIO()
     writer = csv.writer(proxy)
     writer.writerow(final_csv.split(','))
   
+  line_count = 0
   for line in contents:
     line = line.strip().decode( "utf-8" )
     given_id = line.split(',')[0]
@@ -75,10 +78,21 @@ def multiple_address_match(file, all_user_input, app, download=False):
     for adrs in matched_addresses:
       if download:
         writer.writerow([given_id,address_to_lookup,adrs.formatted_address_nag.value, 
-        adrs.uprn.value,match_type,adrs.confidence_score.value,'docScoreHere',rank])
+        adrs.uprn.value,match_type,adrs.confidence_score.value,adrs.underlying_score.value,rank])
+        line_count = line_count + 1
       else:
+        trs.append( {'tds':[
+          {'value':given_id},
+          {'value':address_to_lookup},
+          {'value':adrs.formatted_address_nag.value},
+          {'value':adrs.uprn.value},
+          {'value':match_type},
+          {'value':adrs.confidence_score.value},
+          {'value':adrs.underlying_score.value},
+          {'value':rank},
+          ] } )
         final_csv=final_csv+ f'{given_id},{address_to_lookup},{adrs.formatted_address_nag.value},' +\
-            f'{adrs.uprn.value},{match_type},{adrs.confidence_score.value},docScoreHere,{rank}\n\r'
+            f'{adrs.uprn.value},{match_type},{adrs.confidence_score.value},{adrs.underlying_score.value},{rank}\n\r'
       rank = rank + 1
 
   if download:
@@ -87,9 +101,9 @@ def multiple_address_match(file, all_user_input, app, download=False):
     mem.write(proxy.getvalue().encode())
     mem.seek(0)
     proxy.close()
-    return mem
+    return mem, line_count
 
-  return final_csv
+  return {'ths':ths, 'trs':trs }
 
 
 
