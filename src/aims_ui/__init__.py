@@ -68,3 +68,4 @@ from . import page_typeahead
 from . import page_multiple_address
 from . import page_singlesearch
 from . import page_address_info
+from . import download_handler
