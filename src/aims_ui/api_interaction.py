@@ -78,9 +78,15 @@ def multiple_address_match(file, all_user_input, app, download=False):
 
     matched_addresses = get_addresses(result.json(), 'singlesearch', app)
     if len(matched_addresses) > 1:
-      match_type = '<p style="background-color:orange;">M</p>'  
+      if download:
+        match_type = 'M'
+      else:
+        match_type = '<p style="background-color:orange;">M</p>'  
     else:
-      match_type = '<p style="background-color:Aquamarine;">S</p>'
+      if download:
+        match_type = 'S'
+      else:
+        match_type = '<p style="background-color:Aquamarine;">S</p>'
     rank = 1
     for adrs in matched_addresses:
       if download:
@@ -93,30 +99,14 @@ def multiple_address_match(file, all_user_input, app, download=False):
       else:
         trs.append({
             'tds': [
-                {
-                    'value': given_id
-                },
-                {
-                    'value': address_to_lookup
-                },
-                {
-                    'value': adrs.formatted_address_nag.value
-                },
-                {
-                    'value': adrs.uprn.value
-                },
-                {
-                    'value': match_type
-                },
-                {
-                    'value': adrs.confidence_score.value
-                },
-                {
-                    'value': adrs.underlying_score.value
-                },
-                {
-                    'value': rank
-                },
+                {'value': given_id},
+                {'value': address_to_lookup},
+                {'value': adrs.formatted_address_nag.value},
+                {'value': adrs.uprn.value},
+                {'value': match_type},
+                {'value': adrs.confidence_score.value},
+                {'value': adrs.underlying_score.value},
+                {'value': rank},
             ]
         })
         final_csv=final_csv+ f'{given_id},{address_to_lookup},{adrs.formatted_address_nag.value},' +\
