@@ -81,7 +81,6 @@ def multiple_address_match(file, all_user_input, app, download=False):
       match_type = '<p style="background-color:orange;">M</p>'  
     else:
       match_type = '<p style="background-color:Aquamarine;">S</p>'
-
     rank = 1
     for adrs in matched_addresses:
       if download:
