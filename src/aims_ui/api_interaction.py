@@ -36,24 +36,18 @@ def api(url, called_from, all_user_input):
       "Content-Type": "application/json",
   }
 
+  params = get_params(all_user_input)
   if (called_from == 'uprn') or (called_from == 'postcode'):
     url = app.config.get('API_URL') + url + all_user_input.get(called_from, '')
-    params = get_params(all_user_input)
-    r = requests.get(
-        url,
-        params=params,
-        headers=header,
-    )
-
   elif called_from == 'singlesearch':
     url = app.config.get('API_URL') + url
     proposed_params = {k: v for k, v in all_user_input.items() if v}
-    params = get_params(all_user_input)
-    r = requests.get(
-        url,
-        params=params,
-        headers=header,
-    )
+
+  r = requests.get(
+      url,
+      params=params,
+      headers=header,
+  )
 
   return r
 
@@ -83,9 +77,11 @@ def multiple_address_match(file, all_user_input, app, download=False):
     )
 
     matched_addresses = get_addresses(result.json(), 'singlesearch', app)
-    match_type = '<p style="background-color:orange;">M</p>' if len(
-        matched_addresses
-    ) > 1 else '<p style="background-color:Aquamarine;">S</p>'
+    if len(matched_addresses) > 1:
+      match_type = '<p style="background-color:orange;">M</p>'  
+    else:
+      match_type = '<p style="background-color:Aquamarine;">S</p>'
+
     rank = 1
     for adrs in matched_addresses:
       if download:
