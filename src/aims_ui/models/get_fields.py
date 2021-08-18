@@ -42,21 +42,18 @@ def get_fields(endpoint_name):
           'eboost',
           display_title='England Boost',
           search_type='checkbox',
-          description='Boost the results in favour of England Addresses',
       ),
       'wales_boost_checkbox':
       Field(
           'wboost',
           display_title='Wales Boost',
           search_type='checkbox',
-          description='Boost the results in favour of Wales Addresses',
       ),
       'scotland_boost_checkbox':
       Field(
           'sboost',
           display_title='Scotland Boost',
           search_type='checkbox',
-          description='Boost the results in favour of Scotland Addresses',
       ),
       'match_threshold':
       Field(
@@ -66,6 +63,11 @@ def get_fields(endpoint_name):
           previous_value='5%',
           dropdown_options=get_options('percentage_match'),
           add_default_dropdown_option=False,
+      ),
+      'boost-checkbox-description':
+       Field('None',
+         search_type='label',
+         display_title = 'Select any of the below to boost the results in favour of that region',
       ),
       'england_boost':
       Field(
@@ -182,6 +184,7 @@ def get_fields(endpoint_name):
         common_fields['limit'],
         common_fields['classification'],
         common_fields['epoch'],
+        common_fields['boost-checkbox-description'],
         common_fields['england_boost_checkbox'],
         common_fields['wales_boost_checkbox'],
         common_fields['scotland_boost_checkbox'],
@@ -198,6 +201,7 @@ def get_fields(endpoint_name):
             'Specifies the address search string (e.g. "14 Acacia Avenue, Ruislip, HA4 8RG").'
         ),
         common_fields['classification'],
+        common_fields['boost-checkbox-description'],
         common_fields['england_boost_checkbox'],
         common_fields['wales_boost_checkbox'],
         common_fields['scotland_boost_checkbox'],
