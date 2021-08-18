@@ -52,7 +52,7 @@ def api(url, called_from, all_user_input):
   return r
 
 
-def multiple_address_match(file, all_user_input, app, download=False):
+def multiple_address_match(file, all_user_input, download=False):
   final_csv = 'id, inputAddress, matchedAddress, uprn, matchType, confidenceScore, documentScore, rank\n\r'
   ths = [{'value': x, 'ariaSort': None} for x in final_csv.split(',')]
   trs = []
@@ -76,7 +76,7 @@ def multiple_address_match(file, all_user_input, app, download=False):
         all_user_input,
     )
 
-    matched_addresses = get_addresses(result.json(), 'singlesearch', app)
+    matched_addresses = get_addresses(result.json(), 'singlesearch')
     if len(matched_addresses) > 1:
       if download:
         match_type = 'M'
@@ -89,15 +89,15 @@ def multiple_address_match(file, all_user_input, app, download=False):
         match_type = '<p style="background-color:Aquamarine;">S</p>'
     rank = 1
 
-    for adrs in matched_addresses:
-      if download:
+    # Set 'write' type depending on if the results are to be downloaded or shown in browser
+    if download:
+      def write(id, addr, m_addr, uprn, m_type, confid_score, doc_score, rank):
         writer.writerow([
             given_id, address_to_lookup, adrs.formatted_address_nag.value,
             adrs.uprn.value, match_type, adrs.confidence_score.value,
-            adrs.underlying_score.value, rank
-        ])
-        line_count = line_count + 1
-      else:
+            adrs.underlying_score.value, rank ])
+    else:
+      def write(id, addr, m_addr, uprn, m_type, confid_score, doc_score, rank):
         trs.append({
             'tds': [
                 {'value': given_id},
@@ -108,10 +108,12 @@ def multiple_address_match(file, all_user_input, app, download=False):
                 {'value': adrs.confidence_score.value},
                 {'value': adrs.underlying_score.value},
                 {'value': rank},
-            ]
-        })
-        final_csv=final_csv+ f'{given_id},{address_to_lookup},{adrs.formatted_address_nag.value},' +\
-            f'{adrs.uprn.value},{match_type},{adrs.confidence_score.value},{adrs.underlying_score.value},{rank}\n\r'
+            ] })
+
+    for adrs in matched_addresses:
+      line_count = line_count + 1
+      write(given_id,address_to_lookup,adrs.formatted_address_nag.value,adrs.uprn.value,match_type, \
+        adrs.confidence_score.value,adrs.underlying_score.value,rank,)
       rank = rank + 1
 
   if download:
