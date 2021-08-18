@@ -96,6 +96,15 @@ def multiple_address_match(file, all_user_input, download=False):
             given_id, address_to_lookup, adrs.formatted_address_nag.value,
             adrs.uprn.value, match_type, adrs.confidence_score.value,
             adrs.underlying_score.value, rank ])
+
+      def finalize(line_count, ths, trs):
+        # Creating the byteIO object from the StringIO Object
+        mem = BytesIO()
+        mem.write(proxy.getvalue().encode())
+        mem.seek(0)
+        proxy.close()
+        return mem, line_count
+
     else:
       def write(id, addr, m_addr, uprn, m_type, confid_score, doc_score, rank):
         trs.append({
@@ -109,6 +118,8 @@ def multiple_address_match(file, all_user_input, download=False):
                 {'value': adrs.underlying_score.value},
                 {'value': rank},
             ] })
+      def finalize(line_count, ths, trs):
+        return {'ths': ths, 'trs': trs}
 
     for adrs in matched_addresses:
       line_count = line_count + 1
@@ -116,12 +127,5 @@ def multiple_address_match(file, all_user_input, download=False):
         adrs.confidence_score.value,adrs.underlying_score.value,rank,)
       rank = rank + 1
 
-  if download:
-    # Creating the byteIO object from the StringIO Object
-    mem = BytesIO()
-    mem.write(proxy.getvalue().encode())
-    mem.seek(0)
-    proxy.close()
-    return mem, line_count
+  return finalize(line_count, ths, trs)
 
-  return {'ths': ths, 'trs': trs}
