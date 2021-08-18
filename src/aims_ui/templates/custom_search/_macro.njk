@@ -5,6 +5,7 @@
 {% from "components/checkboxes/_checkbox-macro.njk" import onsCheckbox %}
 {% from "components/button/_macro.njk" import onsButton %}
 {% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/label/_macro.njk" import onsLabel %}
 {% from "components/question/_macro.njk" import onsQuestion %}
 
 {% set col = namespace(value=-1) %}
@@ -27,6 +28,7 @@
 			   "description": field.description },
 		"value": field.previous_value,   })}}
 	{% elif field.search_type == "dropdown" %}
+
 	{{onsSelect({
 		"id"   : field.database_name,
 		"name" : field.database_name,
@@ -35,6 +37,7 @@
 			   "description": field.description },
 		"options": field.dropdown_options })}}
 	{% elif field.search_type == "checkbox" %}
+
 	{{onsCheckbox({
 		"id": field.database_name,
 		"name": field.database_name,
@@ -43,6 +46,8 @@
 			   "description": field.description },
 		"value": True,
 		"checked": field.checkbox_value, })}}
+		<br>
+
 	{% elif field.search_type == "radio" %}
 	{% call onsQuestion({
 	    "title": field.display_title,
@@ -52,11 +57,14 @@
             "name": field.database_name,
             "dontWrap": true,
             "radios": field.radio_options }) }}
-
 	{% endcall %}
 
+	{% elif field.search_type == "label" %}
+	{{ onsLabel({
+	    "id": 'label',
+	    "for": "",
+     	    "text": field.display_title, }) }}
 
-	<br>
 
 
 {% endif %}
