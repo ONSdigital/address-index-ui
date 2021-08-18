@@ -1,9 +1,9 @@
 import requests
 import json
 import re
+from aims_ui import app
 
-def get_class_list(classifications_api_url, app):
-  print(classifications_api_url)
+def get_class_list(classifications_api_url):
   classifications = requests.get(classifications_api_url)
   return json.loads(classifications.text)
 
@@ -40,7 +40,7 @@ def get_class_subset(classifications_api_url, code=None):
   return subset_list
 
 
-def get_classification_list(app, code=None):
+def get_classification_list(code=None):
   class_list = []
   api_url = app.config.get('API_URL')
   classifications_url = f'{api_url}/classifications'

@@ -20,7 +20,7 @@ def address_info(uprn):
   )
 
   if result.status_code == 200:
-    matched_addresses = get_addresses(result.json(), 'uprn', app)
+    matched_addresses = get_addresses(result.json(), 'uprn')
   elif result.status_code == 404:
     # No results but the api compelted the call successfully
     matched_addresses = ''

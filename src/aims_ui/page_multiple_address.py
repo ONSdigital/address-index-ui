@@ -88,7 +88,6 @@ def multiple_address():
 
       if results_type == 'Download':
         full_results, line_count = multiple_address_match(file, {},
-                                                          app,
                                                           download=True)
 
         return send_file(full_results,
@@ -96,5 +95,5 @@ def multiple_address():
                          attachment_filename=f'result_size_{line_count}.csv',
                          as_attachment=True)
       elif results_type == 'Display':
-        table_results = multiple_address_match(file, {}, app, download=False)
+        table_results = multiple_address_match(file, {}, download=False)
         return final(searchable_fields, table_results=table_results)
