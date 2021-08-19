@@ -17,7 +17,7 @@ def get_fields(endpoint_name):
       ),
       'classification':
       Field(
-          'classification',
+          'classificationfilter',
           display_title='Classification (optional)',
           description='E.g. residential, commercial, RD06',
       ),
