@@ -78,15 +78,9 @@ def multiple_address_match(file, all_user_input, download=False):
 
     matched_addresses = get_addresses(result.json(), 'singlesearch')
     if len(matched_addresses) > 1:
-      if download:
-        match_type = 'M'
-      else:
-        match_type = '<p style="background-color:orange;">M</p>'  
+      match_type = 'M' if download else '<p style="background-color:orange;">M</p>' 
     else:
-      if download:
-        match_type = 'S'
-      else:
-        match_type = '<p style="background-color:Aquamarine;">S</p>'
+      match_type = 'S' if download else '<p style="background-color:orange;">S</p>' 
     rank = 1
 
     # Set 'write' type depending on if the results are to be downloaded or shown in browser
