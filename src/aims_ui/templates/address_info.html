@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
+{% from "components/input/_macro.njk" import onsInput %}
+{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+
+{# In order to specify wider than usual components, page must be in "pageContent" #}
+{% block pageContent %}
+{% block main %}
+{# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
+<div class="grid">
+<div class="grid__col col-1@m"></div>
+<div class="grid__col col-10@m">
+
+<br>
+
+{{ customAddressInfo ({
+	'full_info': True,
+	'matched_addresses': matched_addresses,
+	}) }}
+</div>
+
+{% endblock %}
+{% endblock %}

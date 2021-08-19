@@ -4,6 +4,9 @@
 {% from 'components/select/_macro.njk' import onsSelect %}
 {% from "components/checkboxes/_checkbox-macro.njk" import onsCheckbox %}
 {% from "components/button/_macro.njk" import onsButton %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/label/_macro.njk" import onsLabel %}
+{% from "components/question/_macro.njk" import onsQuestion %}
 
 {% set col = namespace(value=-1) %}
 {% set row = namespace(value=0) %}
@@ -25,6 +28,7 @@
 			   "description": field.description },
 		"value": field.previous_value,   })}}
 	{% elif field.search_type == "dropdown" %}
+
 	{{onsSelect({
 		"id"   : field.database_name,
 		"name" : field.database_name,
@@ -33,6 +37,7 @@
 			   "description": field.description },
 		"options": field.dropdown_options })}}
 	{% elif field.search_type == "checkbox" %}
+
 	{{onsCheckbox({
 		"id": field.database_name,
 		"name": field.database_name,
@@ -40,9 +45,26 @@
 		"label": { "text": field.display_title, 
 			   "description": field.description },
 		"value": True,
-		"checked": field.checkbox_value,
-	})}}
-	<br>
+		"checked": field.checkbox_value, })}}
+		<br>
+
+	{% elif field.search_type == "radio" %}
+	{% call onsQuestion({
+	    "title": field.display_title,
+	    "classes": "u-mt-no",
+	    "legendIsQuestionTitle": true }) %}
+	{{ onsRadios({
+            "name": field.database_name,
+            "dontWrap": true,
+            "radios": field.radio_options }) }}
+	{% endcall %}
+
+	{% elif field.search_type == "label" %}
+	{{ onsLabel({
+	    "id": 'label',
+	    "for": "",
+     	    "text": field.display_title, }) }}
+
 
 
 {% endif %}
@@ -50,6 +72,7 @@
 
 <br>
 {# Add a search button on the end of the UI #}
+{% if not params.remove_buttons %}
 {{  onsButton({ 
 	"text": "Search", }) }}
 
@@ -64,7 +87,7 @@
 	}) }}
 {% endif %}
 {% endfor %}
-
+{% endif %}
 
 </section>
 
@@ -72,17 +95,6 @@
 
 {# If it's a results page then have the searchboxes arranged at the top #}
 {% if params.results_page %}
-<style>
-section.match-form-container {
-    background-color: #dfe0e2;
-  width: 100vw;
-  position: relative;
-  padding-left: 20vw;
-  left: -20vw;
-  padding-right: 40vw;
-  padding-bottom:5vh;
-}
-</style>
 {% endif %}
 
 

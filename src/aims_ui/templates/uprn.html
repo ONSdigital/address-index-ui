@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-
+{% from "components/card/_macro.njk" import onsCard %}
 {% from 'components/panel/_macro.njk' import onsPanel %}
 {% from 'components/lists/_macro.njk' import onsList %}
 {% from 'custom_search/_macro.njk' import customSearch %}
@@ -13,39 +13,59 @@
 	'attributes': {
 	'action': form_action, }} %}
 
+{# In order to specify wider than usual components, page must be in "pageContent" #}
+{% block pageContent %}
 {% block main %}
+{# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
+<div class="grid">
 
+{# 1Column boarder#}
+  <div class="grid__col col-1@m "><div class="pl-grid-col"></div></div>
 
-<br>
+{# Content is the searchboxes, taing up 4 col#}
+  <div class="grid__col col-4@m ">
+    <div class="pl-grid-col">
 
 {{ customSearch ({ "Fields": searchable_fields,
 		   "endpoints": endpoints, 
                    "results_page": results_page, }) }}
-
- 
-{% if matched_addresses == '' %}
 <br>
+</div> </div>
 
-{% call
-    onsPanel({
-	'title': 'No Results Found',
-	'type': 'error'
-    }) %}
-{{ onsList({
-	'id': 'no_data_found',
-	'classes': 'list--bare list--errors u-mb-s',
-	'itemsList': [{
-		'text': 'No data found for that UPRN. Please verify that the number you entered was valid.', }]
-    }) }}
+{# 1 Col boarder between filters and results #}
+  <div class="grid__col col-1@m "><div class="pl-grid-col"></div></div>
 
-{% endcall %}
-{% else %}
+{# 5 Col results page #}
+  <div class="grid__col col-5@m ">
+    <div class="pl-grid-col">
+
+{# Title and description #}
+{% for endpoint in endpoints %}
+{% if endpoint.selected %}
 <br>
+	{{ onsCard({
+	    "id": 	endpoint.id,
+	    "textId": 	'text',
+	    "titleSize":endpoint.title_size,
+	    "titleClasses": 'header__title',
+	    "title": 	endpoint.title,
+	    "url": 	endpoint.url,
+	    "text": 	endpoint.description_text,
+	}) }}
+<br>
+<br>
+{% endif %}
+{% endfor %}
+
+
 {{ customAddressInfo ({
 	'matched_addresses': matched_addresses,
 	}) }}
 
+</div> </div>
 
-{% endif %}
-
+{# End of grid #}
+</div>
+ 
+{% endblock %}
 {% endblock %}
