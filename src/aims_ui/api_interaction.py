@@ -107,8 +107,7 @@ def multiple_address_match(file, all_user_input, download=False):
   line_count = 0
   for line in contents:
     line = line.strip().decode('utf-8')
-    given_id = line.split(',')[0]
-    address_to_lookup = line.split(',')[1]
+    given_id, address_to_lookup = line.split(',',maxsplit=1)
     all_user_input['input'] = address_to_lookup
 
     result = api(
