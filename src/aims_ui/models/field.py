@@ -33,7 +33,7 @@ class Field:
       if radio.get('checked'):
         return radio.get('id')
 
-  def set_radio_status(self, value_to_select): 
+  def set_radio_status(self, value_to_select):
     self.previous_value = value_to_select
     for radio in self.radio_options:
       if radio.get('id') == self.previous_value:
@@ -42,17 +42,19 @@ class Field:
   def format_radio_options(self):
     final_radios = []
     for radio_option in self.radio_options:
-      final_radios.append(
-          { 'id':radio_option.get('id'),
-            'label': {'text':radio_option.get('text')},
-            'value':radio_option.get('id') } )
+      final_radios.append({
+          'id': radio_option.get('id'),
+          'label': {
+              'text': radio_option.get('text')
+          },
+          'value': radio_option.get('id')
+      })
 
     for radio in final_radios:
       if radio.get('id') == self.previous_value:
         radio['checked'] = True
 
     return final_radios
-
 
   def find_and_extract(self, data):
     checkbox_present = data.get(self.unique_name) == 'other'
