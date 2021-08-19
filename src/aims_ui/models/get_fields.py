@@ -17,7 +17,7 @@ def get_fields(endpoint_name):
       ),
       'classification':
       Field(
-          'classification',
+          'classificationfilter',
           display_title='Classification (optional)',
           description='E.g. residential, commercial, RD06',
       ),
@@ -42,23 +42,35 @@ def get_fields(endpoint_name):
           'eboost',
           display_title='England Boost',
           search_type='checkbox',
-          description='Boost the results in favour of England Addresses',
       ),
       'wales_boost_checkbox':
       Field(
           'wboost',
           display_title='Wales Boost',
           search_type='checkbox',
-          description='Boost the results in favour of Wales Addresses',
       ),
       'scotland_boost_checkbox':
       Field(
           'sboost',
           display_title='Scotland Boost',
           search_type='checkbox',
-          description='Boost the results in favour of Scotland Addresses',
       ),
-
+      'match_threshold':
+      Field(
+          'matchthreshold',
+          display_title='Minimum match %',
+          search_type='dropdown',
+          previous_value='5%',
+          dropdown_options=get_options('percentage_match'),
+          add_default_dropdown_option=False,
+      ),
+      'boost-checkbox-description':
+      Field(
+          'None',
+          search_type='label',
+          display_title=
+          'Select any of the below to boost the results in favour of that region',
+      ),
       'england_boost':
       Field(
           'eboost',
@@ -97,7 +109,7 @@ def get_fields(endpoint_name):
             display_title='To get started, enter a UPRN',
             required=True,
             description=
-            'The Unique Property Reference Number is 12 didgits, and reffers to a single property'
+            'The Unique Property Reference Number consists of digits only, and refers to a single property'
         ),
         common_fields['limit'],
         common_fields['epoch'],
@@ -145,7 +157,26 @@ def get_fields(endpoint_name):
     ])
 
   elif endpoint_name == 'multiple_address':
-    return ([])
+    return ([
+        common_fields['limit'], common_fields['epoch'],
+        common_fields['historical'], common_fields['match_threshold'],
+        Field(
+            'display-type',
+            search_type='radio',
+            flag=False,
+            display_title='How would you like your results?',
+            radio_options=[
+                {
+                    'id': 'Download',
+                    'text': 'Download as CSV'
+                },
+                {
+                    'id': 'Display',
+                    'text': 'Display in browser'
+                },
+            ],
+        )
+    ])
   elif endpoint_name == 'postcode':
     return ([
         Field(
@@ -159,6 +190,7 @@ def get_fields(endpoint_name):
         common_fields['limit'],
         common_fields['classification'],
         common_fields['epoch'],
+        common_fields['boost-checkbox-description'],
         common_fields['england_boost_checkbox'],
         common_fields['wales_boost_checkbox'],
         common_fields['scotland_boost_checkbox'],
@@ -175,18 +207,12 @@ def get_fields(endpoint_name):
             'Specifies the address search string (e.g. "14 Acacia Avenue, Ruislip, HA4 8RG").'
         ),
         common_fields['classification'],
+        common_fields['boost-checkbox-description'],
         common_fields['england_boost_checkbox'],
         common_fields['wales_boost_checkbox'],
         common_fields['scotland_boost_checkbox'],
         common_fields['epoch'],
-        Field(
-            'matchthreshold',
-            display_title='Minimum match %',
-            search_type='dropdown',
-            previous_value='5%',
-            dropdown_options=get_options('percentage_match'),
-            add_default_dropdown_option=False,
-        ),
+        common_fields['match_threshold'],
         common_fields['limit'],
         common_fields['historical'],
         common_fields['auxilary_search'],

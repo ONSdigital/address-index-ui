@@ -4,30 +4,59 @@
 {% from "components/input/_macro.njk" import onsInput %}
 {% from "components/upload/_macro.njk" import onsUpload %}
 {% from "components/button/_macro.njk" import onsButton %}
-
-{% set form =  {
-	'method': 'POST',
-	'id': 'searchform',
-	'attributes': {
-	'action': form_action, 
-	}, } %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+{% from 'custom_search/_macro.njk' import customSearch %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/question/_macro.njk" import onsQuestion %}
+{% from "components/table/_macro.njk" import onsTable %}
 
 {% block main %}
+
+<h1>Match Multiple Addresses</h1>
+
+<br>
+
+{{onsPanel({
+"body": "<p>To get started, upload a CSV file of addresses to be matched. The selected file must be 1MB or less (much smaller for show results option) with only two columns, id and address. <br> <br> Download a <a href='/downloads/example_csv'> sample file</a> <br> <br> You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>"
+    })}}
+
+<br>
+
+<form method=post enctype=multipart/form-data>
+{{ customSearch ({ "Fields": searchable_fields,
+		   "endpoints": endpoints, 
+		   "remove_buttons": True,
+                   "results_page": results_page, }) }}
 
 <br>
 
 {{ onsUpload({
 	"id": "file",
-	"accept": ".xls,.xlsx,.pdf",
+	"name":"file",
+	"type":"file",
+	"classes":"input input--text input-type__input input--upload",
+	"accept": ".csv,.CSV",
+	"error": {
+		"id": error_type,
+		"text": error_description } if error_type else '',
 	"label": {
-	"description": "File types accepted are EXCLUSIVELY '.csv', comma separated values.",
-	"text": "Upload a file" }
+	    "description": "Please upload a CSV file" if not error_type else "",
+	    "text":  "Please upload a CSV file" if not error_type else "" } }) }}
 
-	})  }}
+
 <br>
+{{ onsButton({
+        "text": "Match Addresses",
+        "type": "submit",
+        "value": "Download",
+        "classes": "btn",  })  }}
 
-{{  onsButton({ 
-	"text": "Search", }) }}
+</form>
 
+{{ onsTable({
+	"id": "basic-table",
+        "ths":  [] if not table_results else table_results.get('ths') ,
+  	"trs": [] if not table_results else table_results.get('trs'),
+}) }}
 
 {% endblock %}
