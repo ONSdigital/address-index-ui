@@ -41,8 +41,6 @@ def api(url, called_from, all_user_input):
     url = app.config.get('API_URL') + url + all_user_input.get(called_from, '')
   elif called_from == 'singlesearch':
     url = app.config.get('API_URL') + url
-    # TODO not sure if this is still required, as singlesearch seems to work without it
-    proposed_params = {k: v for k, v in all_user_input.items() if v}
 
   r = requests.get(
       url,
