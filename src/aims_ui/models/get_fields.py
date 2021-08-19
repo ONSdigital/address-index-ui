@@ -65,9 +65,11 @@ def get_fields(endpoint_name):
           add_default_dropdown_option=False,
       ),
       'boost-checkbox-description':
-       Field('None',
-         search_type='label',
-         display_title = 'Select any of the below to boost the results in favour of that region',
+      Field(
+          'None',
+          search_type='label',
+          display_title=
+          'Select any of the below to boost the results in favour of that region',
       ),
       'england_boost':
       Field(
@@ -156,21 +158,25 @@ def get_fields(endpoint_name):
 
   elif endpoint_name == 'multiple_address':
     return ([
-        common_fields['limit'],
-        common_fields['epoch'],
-        common_fields['historical'],
-        common_fields['match_threshold'],
+        common_fields['limit'], common_fields['epoch'],
+        common_fields['historical'], common_fields['match_threshold'],
         Field(
-          'display-type',
-          search_type='radio',
-          flag = False,
-          display_title='How would you like your results?',
-          radio_options=[
-            {'id':'Download', 'text':'Download as CSV'},
-            {'id':'Display', 'text':'Display in browser'},
-          ],)
-          
-      ])
+            'display-type',
+            search_type='radio',
+            flag=False,
+            display_title='How would you like your results?',
+            radio_options=[
+                {
+                    'id': 'Download',
+                    'text': 'Download as CSV'
+                },
+                {
+                    'id': 'Display',
+                    'text': 'Display in browser'
+                },
+            ],
+        )
+    ])
   elif endpoint_name == 'postcode':
     return ([
         Field(
