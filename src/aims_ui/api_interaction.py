@@ -90,7 +90,7 @@ def multiple_address_match(file, all_user_input, download=False):
             adrs.uprn.value, match_type, adrs.confidence_score.value,
             adrs.underlying_score.value, rank ])
 
-      def finalize(line_count, ths, trs):
+      def finalize(line_count):
         # Creating the byteIO object from the StringIO Object
         mem = BytesIO()
         mem.write(proxy.getvalue().encode())
@@ -111,7 +111,7 @@ def multiple_address_match(file, all_user_input, download=False):
                 {'value': adrs.underlying_score.value},
                 {'value': rank},
             ] })
-      def finalize(line_count, ths, trs):
+      def finalize(line_count):
         return {'ths': ths, 'trs': trs}
 
     for adrs in matched_addresses:
@@ -120,5 +120,5 @@ def multiple_address_match(file, all_user_input, download=False):
         adrs.confidence_score.value,adrs.underlying_score.value,rank,)
       rank = rank + 1
 
-  return finalize(line_count, ths, trs)
+  return finalize(line_count)
 
