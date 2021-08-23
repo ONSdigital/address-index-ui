@@ -35,7 +35,7 @@ def check_valid_upload(file):
           f'File size is too large. Please enter a file no larger than {max_file_size} MB',
           'File Size Error')
 
-    return True,'',''
+    return True,'','', 
 
 
 
