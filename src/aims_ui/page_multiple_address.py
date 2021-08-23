@@ -59,7 +59,9 @@ def multiple_address():
 
     file = request.files['file']
 
+    print(file.readlines()) # Contents present
     file_valid, error_description, error_title = check_valid_upload(file)
+    print(file.readlines()) # Blank File
 
     if file_valid:
 
