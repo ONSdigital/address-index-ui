@@ -41,7 +41,7 @@ def multiple_address():
     return render_template(
         f'{page_name}.html',
         error_description=error_description,
-        error_type=error_title,
+        error_title=error_title,
         endpoints=get_endpoints(called_from=page_name),
         searchable_fields=searchable_fields,
         table_results=table_results,
@@ -59,12 +59,9 @@ def multiple_address():
 
     file = request.files['file']
 
-    print(file.readlines()) # Contents present
     file_valid, error_description, error_title = check_valid_upload(file)
-    print(file.readlines()) # Blank File
 
     if file_valid:
-
       for field in searchable_fields:
         if field.database_name == 'display-type':
           results_type = field.get_selected_radio()
