@@ -13,7 +13,28 @@ import json
 import csv
 
 page_name = 'multiple_address'
+ 
+def final(searchable_fields,
+          error_description='',
+          error_title='',
+          table_results=''):
 
+  return render_template(
+      f'{page_name}.html',
+      error_description=error_description,
+      error_title=error_title,
+      endpoints=get_endpoints(called_from=page_name),
+      searchable_fields=searchable_fields,
+      table_results=table_results,
+      results_page=True,
+  )
+
+# In the event of a file being too large, send this custom template
+@app.errorhandler(413)
+def request_entity_too_large(error):
+    return final(get_fields(page_name), 
+        f'File size is too large. Please enter a file no larger than 2 MB',
+        'File Size Error')
 
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
@@ -33,20 +54,6 @@ def multiple_address():
         endpoints=get_endpoints(called_from=page_name),
     )
 
-  def final(searchable_fields,
-            error_description='',
-            error_title='',
-            table_results=''):
-
-    return render_template(
-        f'{page_name}.html',
-        error_description=error_description,
-        error_title=error_title,
-        endpoints=get_endpoints(called_from=page_name),
-        searchable_fields=searchable_fields,
-        table_results=table_results,
-        results_page=True,
-    )
 
   if request.method == 'POST':
 
