@@ -99,7 +99,11 @@ def multiple_address_match(file, all_user_input, download=False):
       }) # yapf: disable
 
     def finalize(line_count):
-      return {'ths': ths, 'trs': trs}
+      headers = ['Number of addresses searched:','Single matches:','Multiple Matches','No Match:']
+      answers = ['14 Addresses Searched','5 Single Matches','18 Multiple Matches','No match found for 12 results']
+      results_summary_table_trs =  [{'tds': [{'value':headers[x]},{'value':answers[x]}]} for x in range(0,len(headers)) ] 
+        
+      return {'ths': ths, 'trs': trs}, {'ths': [], 'trs': results_summary_table_trs }, 
 
     def get_match_type(n_addr):
       return '<p style="background-color:orange;">M</p>' if n_addr > 1 else '<p style="background-color:Aquamarine;">S</p>'

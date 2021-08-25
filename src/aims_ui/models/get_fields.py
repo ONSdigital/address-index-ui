@@ -190,10 +190,6 @@ def get_fields(endpoint_name):
         common_fields['limit'],
         common_fields['classification'],
         common_fields['epoch'],
-        common_fields['boost-checkbox-description'],
-        common_fields['england_boost_checkbox'],
-        common_fields['wales_boost_checkbox'],
-        common_fields['scotland_boost_checkbox'],
         common_fields['auxilary_search'],
     ])
 

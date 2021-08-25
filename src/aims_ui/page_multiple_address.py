@@ -17,6 +17,7 @@ page_name = 'multiple_address'
 def final(searchable_fields,
           error_description='',
           error_title='',
+          results_summary_table='',
           table_results=''):
 
   return render_template(
@@ -26,6 +27,7 @@ def final(searchable_fields,
       endpoints=get_endpoints(called_from=page_name),
       searchable_fields=searchable_fields,
       table_results=table_results,
+      results_summary_table=results_summary_table,
       results_page=True,
   )
 
@@ -82,8 +84,8 @@ def multiple_address():
                          attachment_filename=f'result_size_{line_count}.csv',
                          as_attachment=True)
       elif results_type == 'Display':
-        table_results = multiple_address_match(file, {}, download=False)
-        return final(searchable_fields, table_results=table_results)
+        table_results, results_summary_table = multiple_address_match(file, {}, download=False)
+        return final(searchable_fields, table_results=table_results, results_summary_table=results_summary_table)
     else:
       return final(searchable_fields,
                    error_description=error_description,
