@@ -4,7 +4,6 @@
 
 {% if params.full_info %}
 
-
 <h1 class="saturn"> {{ params.matched_addresses[0].formatted_address.value }}</h1>
 <a href=''><h5>Radius search from this location</h5></a>
 
@@ -33,8 +32,6 @@
 
 {% else %}
 
-
-
 {% for address in params.matched_addresses %}
 
 <article class="result-short-form">
@@ -62,55 +59,5 @@
 
 
 
-
-
-
-<style>
-article.result-short-form {
-    border-top: 1px solid #dfe0e2;
-    margin: 20px 0px 0px 0px;
-    padding: 20px 0;
-}
-.jupiter {
-    font-family: 'Lato Bold', sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
-}
-
-.saturn {
-    font-family: 'Lato Bold', sans-serif;
-    font-size: 1.556rem;
-    font-weight: 700;
-}
-
-.neptune {
-    font-family: 'Lato Bold', sans-serif;
-    font-size: 1.222rem;
-    font-weight: 700;
-}
-
-.venus {
-    font-family: 'Lato Bold', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-}
-
-.mars {
-    font-family: 'Lato Regular', sans-serif;
-    font-size: 1rem;
-}
-
-.mercury {
-    font-family: 'Lato Bold', sans-serif;
-    font-size: 0.8889rem;
-    font-weight: 700;
-}
-
-.pluto {
-    font-family: 'Lato Regular', sans-serif;
-    font-size: 0.8889rem;
-}
-
-</style>
 
 {% endmacro %}
