@@ -34,9 +34,16 @@ def final(searchable_fields,
 # In the event of a file being too large, send this custom template
 @app.errorhandler(413)
 def request_entity_too_large(error):
-    return final(get_fields(page_name), 
-        f'File size is too large. Please enter a file no larger than 2 MB',
-        'File Size Error')
+  # TODO searchable fields unable to set page values to what they were before error
+  searchable_fields = get_fields(page_name)
+
+  for field in searchable_fields:
+    if field.database_name == 'display-type':
+      field.set_radio_status('Download')
+
+  return final(searchable_fields ,
+      f'File size is too large. Please enter a file no larger than 2 MB',
+      'File Size Error')
 
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
