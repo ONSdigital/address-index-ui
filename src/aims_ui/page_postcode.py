@@ -38,6 +38,9 @@ def postcode():
       all_user_input,
   )
 
+  if result == 'error connecting':
+    return page_error(None, page_name, connection_error=True)
+
   if result.status_code == 200:
     matched_addresses = get_addresses(result.json(), page_name)
   elif result.status_code == 404:
