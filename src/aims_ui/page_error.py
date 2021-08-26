@@ -5,13 +5,18 @@ from .models.get_endpoints import get_endpoints
 def page_error(
     api_response,
     page_name,
+    connection_error=False,
 ):
 
-  if len(api_response.json().get('errors', [])) > 0:
-    error_description = api_response.json().get('errors',
-                                                [''])[0].get('message')
+  if not connection_error:
+    if len(api_response.json().get('errors', [])) > 0:
+      error_description = api_response.json().get('errors',
+                                                  [''])[0].get('message')
+    else:
+      error_description = f'Expected 200 response, got {api_response.status_code}. Response is {api_response}'
   else:
-    error_description = f'Expected 200 response, got {api_response.status_code}. Response is {api_response}'
+    # Connection error - AIMS service is unavailable
+    error_description=f'Sorry, there is a problem with the service right now. <a href="mailto:ai.users@ons.gov.uk?Subject=Error%20Report&Body=Page:{page_name}%0D%0AProblem%20Details:">Contact Us </a> to report the problem and request support'
 
   return (render_template(
       'error.html',

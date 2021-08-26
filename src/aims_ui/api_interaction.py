@@ -42,11 +42,15 @@ def api(url, called_from, all_user_input):
   elif called_from == 'singlesearch':
     url = app.config.get('API_URL') + url
 
-  r = requests.get(
-      url,
-      params=params,
-      headers=header,
-  )
+  try:
+    r = requests.get(
+        url,
+        params=params,
+        headers=header,
+    )
+
+  except requests.exceptions.RequestException as e:  
+    return ('error connecting')
 
   return r
 
