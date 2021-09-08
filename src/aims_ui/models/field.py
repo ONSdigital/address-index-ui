@@ -20,6 +20,7 @@ class Field:
   classes: str = ''
   add_default_dropdown_option: bool = True
   show_as_table_header: bool = True
+  default_radio_selection: str = ''
 
   def __post_init__(self):
     self.dropdown_options = self.format_dropdown_options(
@@ -27,6 +28,7 @@ class Field:
         add_default_option=self.add_default_dropdown_option)
     if self.search_type == 'radio':
       self.radio_options = self.format_radio_options()
+      self.set_radio_status(self.default_radio_selection)
 
   def get_selected_radio(self):
     for radio in self.radio_options:

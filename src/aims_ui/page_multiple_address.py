@@ -101,7 +101,7 @@ def multiple_address():
         table_results, results_summary_table = multiple_address_match(
             file, {}, download=False)
 
-        if full_results == 'error_connecting':
+        if table_results == 'error_connecting':
           return page_error(None, page_name, connection_error=True)
 
         return final(searchable_fields,
