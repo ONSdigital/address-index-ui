@@ -9,11 +9,13 @@ from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
 from .upload_utils import check_valid_upload
+from .page_error import page_error
 import json
 import csv
 
 page_name = 'multiple_address'
- 
+
+
 def final(searchable_fields,
           error_description='',
           error_title='',
@@ -31,6 +33,7 @@ def final(searchable_fields,
       results_page=True,
   )
 
+
 # In the event of a file being too large, send this custom template
 @app.errorhandler(413)
 def request_entity_too_large(error):
@@ -41,9 +44,11 @@ def request_entity_too_large(error):
     if field.database_name == 'display-type':
       field.set_radio_status('Download')
 
-  return final(searchable_fields ,
+  return final(
+      searchable_fields,
       f'File size is too large. Please enter a file no larger than 2 MB',
       'File Size Error')
+
 
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
@@ -62,7 +67,6 @@ def multiple_address():
         searchable_fields=searchable_fields,
         endpoints=get_endpoints(called_from=page_name),
     )
-
 
   if request.method == 'POST':
 
@@ -86,9 +90,7 @@ def multiple_address():
         full_results, line_count = multiple_address_match(file, {},
                                                           download=True)
         if full_results == 'error_connecting':
-          return final(searchable_fields,
-              'Error connecting to AIMS service. Please try again later.',
-              'Connection Error')
+          return page_error(None, page_name, connection_error=True)
 
         return send_file(full_results,
                          mimetype='text/csv',
@@ -96,16 +98,16 @@ def multiple_address():
                          as_attachment=True)
 
       elif results_type == 'Display':
-        table_results, results_summary_table = multiple_address_match(file, {}, download=False)
+        table_results, results_summary_table = multiple_address_match(
+            file, {}, download=False)
 
         if full_results == 'error_connecting':
-          return final(searchable_fields,
-              'Error connecting to AIMS service. Please try again later.',
-              'Connection Error')
+          return page_error(None, page_name, connection_error=True)
 
-        return final(searchable_fields, table_results=table_results, results_summary_table=results_summary_table)
+        return final(searchable_fields,
+                     table_results=table_results,
+                     results_summary_table=results_summary_table)
     else:
       return final(searchable_fields,
                    error_description=error_description,
                    error_title=error_title)
-

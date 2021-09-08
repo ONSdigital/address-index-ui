@@ -38,7 +38,7 @@ def uprn():
       all_user_input,
   )
 
-  if result == 'error connecting':
+  if result == 'error_connecting':
     return page_error(None, page_name, connection_error=True)
 
   if result.status_code == 200:
