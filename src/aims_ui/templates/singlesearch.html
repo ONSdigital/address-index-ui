@@ -57,6 +57,9 @@
 {% endif %}
 {% endfor %}
 
+{% if results_page %}
+<h2>We matched {{matched_address_number}}  addresses:</h2>
+{% endif %}
 
 {{ customAddressInfo ({
 	'matched_addresses': matched_addresses,
