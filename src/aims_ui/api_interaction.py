@@ -49,7 +49,7 @@ def api(url, called_from, all_user_input):
         headers=header,
     )
 
-  except requests.exceptions.RequestException as e:  
+  except requests.exceptions.RequestException as e:
     return ('error_connecting')
 
   return r
@@ -73,7 +73,8 @@ def multiple_address_match(file, all_user_input, download=False):
           adrs.underlying_score.value, rank
       ])
 
-    def finalize(line_count, no_addresses_searched, single_match_total, multiple_match_total, no_match_total):
+    def finalize(line_count, no_addresses_searched, single_match_total,
+                 multiple_match_total, no_match_total):
       # Creating the byteIO object from the StringIO Object
       mem = BytesIO()
       mem.write(proxy.getvalue().encode())
@@ -102,12 +103,31 @@ def multiple_address_match(file, all_user_input, download=False):
           ]
       }) # yapf: disable
 
-    def finalize(line_count, no_addresses_searched, single_match_total, multiple_match_total, no_match_total):
-      headers = ['Number of addresses searched:','Single matches:','Multiple Matches','No Match:']
-      answers = [no_addresses_searched, single_match_total, multiple_match_total, no_match_total]
-      results_summary_table_trs =  [{'tds': [{'value':headers[x]},{'value':answers[x]}]} for x in range(0,len(headers)) ] 
-        
-      return {'ths': ths, 'trs': trs}, {'ths': [], 'trs': results_summary_table_trs }, 
+    def finalize(line_count, no_addresses_searched, single_match_total,
+                 multiple_match_total, no_match_total):
+      headers = [
+          'Number of addresses searched:', 'Single matches:',
+          'Multiple Matches', 'No Match:'
+      ]
+      answers = [
+          no_addresses_searched, single_match_total, multiple_match_total,
+          no_match_total
+      ]
+      results_summary_table_trs = [{
+          'tds': [{
+              'value': headers[x]
+          }, {
+              'value': answers[x]
+          }]
+      } for x in range(0, len(headers))]
+
+      return {
+          'ths': ths,
+          'trs': trs
+      }, {
+          'ths': [],
+          'trs': results_summary_table_trs
+      },
 
     def get_match_type(n_addr):
       return '<p style="background-color:orange;">M</p>' if n_addr > 1 else '<p style="background-color:Aquamarine;">S</p>'
@@ -120,7 +140,7 @@ def multiple_address_match(file, all_user_input, download=False):
 
   for line in contents:
     line = line.strip().decode('utf-8')
-    given_id, address_to_lookup = line.split(',',maxsplit=1)
+    given_id, address_to_lookup = line.split(',', maxsplit=1)
     all_user_input['input'] = address_to_lookup
 
     result = api(
@@ -130,15 +150,15 @@ def multiple_address_match(file, all_user_input, download=False):
     )
 
     if result != 'error_connecting':
-      matched_addresses = get_addresses(result.json() , 'singlesearch')
+      matched_addresses = get_addresses(result.json(), 'singlesearch')
     else:
-      return 'error_connecting','error_connecting' 
+      return 'error_connecting', 'error_connecting'
 
-    no_results = len(matched_addresses) 
+    no_results = len(matched_addresses)
     if no_results == 1:
-      single_match_total +=1
+      single_match_total += 1
     elif no_results > 1:
-      multiple_match_total += no_results 
+      multiple_match_total += no_results
     elif no_results == 0:
       no_match_total += 1
 
@@ -158,4 +178,5 @@ def multiple_address_match(file, all_user_input, download=False):
           rank,
       )
 
-  return finalize(line_count, no_addresses_searched, single_match_total, multiple_match_total, no_match_total)
+  return finalize(line_count, no_addresses_searched, single_match_total,
+                  multiple_match_total, no_match_total)

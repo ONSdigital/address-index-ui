@@ -37,7 +37,7 @@ def typeahead():
       all_user_input.get(page_name),
   )
 
-  if result == 'error connecting':
+  if result == 'error_connecting':
     return page_error(None, page_name, connection_error=True)
 
   if result.status_code == 200:

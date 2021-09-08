@@ -16,7 +16,7 @@ def page_error(
       error_description = f'Expected 200 response, got {api_response.status_code}. Response is {api_response}'
   else:
     # Connection error - AIMS service is unavailable
-    error_description=f'Sorry, there is a problem with the service right now. <a href="mailto:ai.users@ons.gov.uk?Subject=Error%20Report&Body=Page:{page_name}%0D%0AProblem%20Details:">Contact Us </a> to report the problem and request support'
+    error_description = f'Sorry, there is a problem with the service right now. <a href="mailto:ai.users@ons.gov.uk?Subject=Error%20Report&Body=Page:{page_name}%0D%0AProblem%20Details:">Contact Us </a> to report the problem and request support'
 
   return (render_template(
       'error.html',
