@@ -55,4 +55,5 @@ def uprn():
       searchable_fields=searchable_fields,
       results_page=True,
       matched_addresses=matched_addresses,
+      matched_address_number=len(matched_addresses),
   )
