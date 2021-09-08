@@ -85,13 +85,24 @@ def multiple_address():
       if results_type == 'Download':
         full_results, line_count = multiple_address_match(file, {},
                                                           download=True)
+        if full_results == 'error_connecting':
+          return final(searchable_fields,
+              'Error connecting to AIMS service. Please try again later.',
+              'Connection Error')
 
         return send_file(full_results,
                          mimetype='text/csv',
                          attachment_filename=f'result_size_{line_count}.csv',
                          as_attachment=True)
+
       elif results_type == 'Display':
         table_results, results_summary_table = multiple_address_match(file, {}, download=False)
+
+        if full_results == 'error_connecting':
+          return final(searchable_fields,
+              'Error connecting to AIMS service. Please try again later.',
+              'Connection Error')
+
         return final(searchable_fields, table_results=table_results, results_summary_table=results_summary_table)
     else:
       return final(searchable_fields,

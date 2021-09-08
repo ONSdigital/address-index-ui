@@ -50,7 +50,7 @@ def api(url, called_from, all_user_input):
     )
 
   except requests.exceptions.RequestException as e:  
-    return ('error connecting')
+    return ('error_connecting')
 
   return r
 
@@ -129,7 +129,11 @@ def multiple_address_match(file, all_user_input, download=False):
         all_user_input,
     )
 
-    matched_addresses = get_addresses(result.json(), 'singlesearch')
+    if result != 'error_connecting':
+      matched_addresses = get_addresses(result.json() , 'singlesearch')
+    else:
+      return 'error_connecting','error_connecting' 
+
     no_results = len(matched_addresses) 
     if no_results == 1:
       single_match_total +=1
