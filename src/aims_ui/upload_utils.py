@@ -1,8 +1,14 @@
 import os
 import csv
-from .page_error import FileUploadException
 
 ALLOWED_EXTENSIONS = {'csv'}
+
+class FileUploadException(Exception):
+  """Exception raised for errors from the API response"""
+  def __init__(self, error_title='', error_description=''):
+    self.error_title = error_title
+    self.error_description = error_description
+    super().__init__(self.error_title)
 
 
 def allowed_file(filename):
