@@ -11,7 +11,7 @@ from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
 from .upload_utils import check_valid_upload
 from .page_error import page_error
-from .page_error import FileUploadException
+from .upload_utils import FileUploadException
 import json
 import csv
 
