@@ -1,5 +1,6 @@
 import os
 import csv
+from .page_error import PageErrorException
 
 ALLOWED_EXTENSIONS = {'csv'}
 
@@ -33,6 +34,7 @@ def check_valid_upload(file):
         'Input file error')
 
   if file.filename == '':
-    return (False, 'Please select a file', 'File Type Error')
+    raise PageErrorException(error_title='File Type Error',
+                             error_description='Please select a file')
 
   return True, '', '',

@@ -22,25 +22,25 @@ def get_fields(endpoint_name):
           description='E.g. residential, commercial, RD06',
       ),
       'epoch':
-        Field(
-            'epoch',
-            search_type='radio',
-            flag=False,
-            display_title='Epoch',
-            default_radio_selection='84',
-            radio_options=[
-                {
-                    'id': '84',
-                    'text': '84',
-                    'value': '84',
-                },
-                {
-                    'id': '83',
-                    'text': '83',
-                    'value': '83',
-                }, 
-                ], ),
-            
+      Field(
+          'epoch',
+          search_type='radio',
+          flag=False,
+          display_title='Epoch',
+          default_radio_selection='84',
+          radio_options=[
+              {
+                  'id': '84',
+                  'text': '84',
+                  'value': '84',
+              },
+              {
+                  'id': '83',
+                  'text': '83',
+                  'value': '83',
+              },
+          ],
+      ),
       'historical':
       Field(
           'historical',

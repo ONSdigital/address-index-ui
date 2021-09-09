@@ -2,6 +2,14 @@ from flask import render_template
 from .models.get_endpoints import get_endpoints
 
 
+class PageErrorException(Exception):
+  """Exception raised for errors from the API response"""
+  def __init__(self, error_title='', error_description=''):
+    self.error_title = error_title
+    self.error_description = error_description
+    super().__init__(self.error_title)
+
+
 def page_error(
     api_response,
     page_name,
@@ -9,9 +17,9 @@ def page_error(
 ):
 
   if not connection_error:
-    if len(api_response.json().get('errors', [])) > 0:
-      error_description = api_response.json().get('errors',
-                                                  [''])[0].get('message')
+    api_errors = api_response.json().get('errors', [])
+    if len(api_errors) > 0:
+      error_description = api_errors[0].get('message')
     else:
       error_description = f'Expected 200 response, got {api_response.status_code}. Response is {api_response}'
   else:
