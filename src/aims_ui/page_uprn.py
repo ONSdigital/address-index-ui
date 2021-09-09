@@ -1,5 +1,6 @@
 import os
 from flask import render_template, request, session
+from requests.exceptions import ConnectionError
 from flask_login import login_required
 from . import app
 from .cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs
@@ -32,14 +33,16 @@ def uprn():
       session,
   )
 
-  result = api(
-      '/addresses/uprn/',
-      page_name,
-      all_user_input,
-  )
 
-  if result == 'error_connecting':
-    return page_error(None, page_name, connection_error=True)
+  try: 
+    result = api(
+        '/addresses/uprn/',
+        page_name,
+        all_user_input,
+    )
+
+  except ConnectionError as e:
+    return page_error(None, e, page_name)
 
   if result.status_code == 200:
     matched_addresses = get_addresses(result.json(), page_name)

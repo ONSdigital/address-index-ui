@@ -6,6 +6,7 @@ from flask import render_template
 from io import StringIO, BytesIO
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
+from .page_error import page_error
 import urllib
 import csv
 
@@ -42,15 +43,11 @@ def api(url, called_from, all_user_input):
   elif called_from == 'singlesearch':
     url = app.config.get('API_URL') + url
 
-  try:
-    r = requests.get(
-        url,
-        params=params,
-        headers=header,
-    )
-
-  except requests.exceptions.RequestException as e:
-    return ('error_connecting')
+  r = requests.get(
+      url,
+      params=params,
+      headers=header,
+  )
 
   return r
 

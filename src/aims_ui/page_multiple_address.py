@@ -1,5 +1,6 @@
 import os
 from flask import render_template, request, session, send_file
+from requests.exceptions import ConnectionError
 from flask_login import login_required
 from werkzeug.utils import secure_filename
 from . import app
@@ -87,10 +88,11 @@ def multiple_address():
           results_type = field.get_selected_radio()
 
       if results_type == 'Download':
-        full_results, line_count = multiple_address_match(file, {},
+        try: 
+          full_results, line_count = multiple_address_match(file, {},
                                                           download=True)
-        if full_results == 'error_connecting':
-          return page_error(None, page_name, connection_error=True)
+        except ConnectionError as e:
+          return page_error(None, e, page_name)
 
         return send_file(full_results,
                          mimetype='text/csv',
@@ -98,11 +100,11 @@ def multiple_address():
                          as_attachment=True)
 
       elif results_type == 'Display':
-        table_results, results_summary_table = multiple_address_match(
-            file, {}, download=False)
-
-        if table_results == 'error_connecting':
-          return page_error(None, page_name, connection_error=True)
+        try: 
+          table_results, results_summary_table = multiple_address_match(
+              file, {}, download=False)
+        except ConnectionError as e:
+          return page_error(None, e, page_name)
 
         return final(searchable_fields,
                      table_results=table_results,
