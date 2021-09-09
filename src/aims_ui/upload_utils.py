@@ -4,7 +4,7 @@ import csv
 ALLOWED_EXTENSIONS = {'csv'}
 
 class FileUploadException(Exception):
-  """Exception raised for errors from the API response"""
+  """Exception raised for errors caused by uploading a file, from size to content validation"""
   def __init__(self, error_title='', error_description=''):
     self.error_title = error_title
     self.error_description = error_description
