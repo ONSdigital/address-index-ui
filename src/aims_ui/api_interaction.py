@@ -146,10 +146,7 @@ def multiple_address_match(file, all_user_input, download=False):
         all_user_input,
     )
 
-    if result != 'error_connecting':
-      matched_addresses = get_addresses(result.json(), 'singlesearch')
-    else:
-      return 'error_connecting', 'error_connecting'
+    matched_addresses = get_addresses(result.json(), 'singlesearch')
 
     no_results = len(matched_addresses)
     if no_results == 1:

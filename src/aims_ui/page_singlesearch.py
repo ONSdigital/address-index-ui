@@ -33,7 +33,7 @@ def singlesearch():
       session,
   )
 
-  try: 
+  try:
     result = api(
         '/addresses/uprn/',
         page_name,

@@ -11,6 +11,7 @@ from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
 from .upload_utils import check_valid_upload
 from .page_error import page_error
+from .page_error import PageErrorException
 import json
 import csv
 
@@ -47,7 +48,7 @@ def request_entity_too_large(error):
 
   return final(
       searchable_fields,
-      f'File size is too large. Please enter a file no larger than 2 MB',
+      'File size is too large. Please enter a file no larger than 2 MB',
       'File Size Error')
 
 
@@ -80,7 +81,12 @@ def multiple_address():
 
     file = request.files['file']
 
-    file_valid, error_description, error_title = check_valid_upload(file)
+    try:
+      file_valid, error_description, error_title = check_valid_upload(file)
+    except PageErrorException as e:
+      return final(searchable_fields,
+                   error_description=e.error_description,
+                   error_title=e.error_title)
 
     if file_valid:
       for field in searchable_fields:
@@ -88,9 +94,9 @@ def multiple_address():
           results_type = field.get_selected_radio()
 
       if results_type == 'Download':
-        try: 
+        try:
           full_results, line_count = multiple_address_match(file, {},
-                                                          download=True)
+                                                            download=True)
         except ConnectionError as e:
           return page_error(None, e, page_name)
 
@@ -100,7 +106,7 @@ def multiple_address():
                          as_attachment=True)
 
       elif results_type == 'Display':
-        try: 
+        try:
           table_results, results_summary_table = multiple_address_match(
               file, {}, download=False)
         except ConnectionError as e:
