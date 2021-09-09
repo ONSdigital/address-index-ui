@@ -11,7 +11,7 @@ from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
 from .upload_utils import check_valid_upload
 from .page_error import page_error
-from .page_error import PageErrorException
+from .page_error import FileUploadException
 import json
 import csv
 
@@ -83,7 +83,7 @@ def multiple_address():
 
     try:
       file_valid, error_description, error_title = check_valid_upload(file)
-    except PageErrorException as e:
+    except FileUploadException as e:
       return final(searchable_fields,
                    error_description=e.error_description,
                    error_title=e.error_title)

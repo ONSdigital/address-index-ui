@@ -1,6 +1,6 @@
 import os
 import csv
-from .page_error import PageErrorException
+from .page_error import FileUploadException
 
 ALLOWED_EXTENSIONS = {'csv'}
 
@@ -28,13 +28,11 @@ def check_valid_upload(file):
   blank_fields_present = check_for_blank_fields(file)
 
   if blank_fields_present:
-    return (
-        False,
-        f'Source file contains empty fields. Please check that your file conforms to the syntax of the example file. <br> <br> The row with this issue is "{"".join(blank_fields_present)}"',
-        'Input file error')
+    raise FileUploadException(error_title='Input file error',
+                 error_description=f'Source file contains empty fields. Please check that your file conforms to the syntax of the example file. <br> <br> The row with this issue is "{"".join(blank_fields_present)}"')
 
   if file.filename == '':
-    raise PageErrorException(error_title='File Type Error',
+    raise FileUploadException(error_title='File Type Error',
                              error_description='Please select a file')
 
   return True, '', '',

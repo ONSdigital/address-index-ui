@@ -2,7 +2,7 @@ from flask import render_template
 from .models.get_endpoints import get_endpoints
 
 
-class PageErrorException(Exception):
+class FileUploadException(Exception):
   """Exception raised for errors from the API response"""
   def __init__(self, error_title='', error_description=''):
     self.error_title = error_title
