@@ -15,6 +15,13 @@
 
 <table> <tbody>
 {% for attribute_name, address_attribute in  params.matched_addresses[0].__dict__.items() %}
+{% if attribute_name == 'nag' %}
+{{attribute_name, address_attribute  }}
+
+	<tr><td class="mars">Local Authority</td>
+	    <td class="venus">{{ address_attribute }}</td>
+	</tr>
+{% endif %}
 {% if address_attribute.full_show %}
 	<tr><td class="mars">{{ address_attribute.name }}</td>
 	    <td class="venus">{{ address_attribute.value }}</td>
