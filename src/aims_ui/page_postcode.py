@@ -2,6 +2,7 @@ import os
 from flask import render_template, request, session
 from flask_login import login_required
 from . import app
+from requests.exceptions import ConnectionError
 from .cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs
 from .api_interaction import api
 from .models.get_endpoints import get_endpoints
@@ -32,11 +33,15 @@ def postcode():
       session,
   )
 
-  result = api(
-      '/addresses/postcode/',
-      page_name,
-      all_user_input,
-  )
+  try:
+    result = api(
+        '/addresses/uprn/',
+        page_name,
+        all_user_input,
+    )
+
+  except ConnectionError as e:
+    return page_error(None, e, page_name)
 
   if result.status_code == 200:
     matched_addresses = get_addresses(result.json(), page_name)
@@ -52,4 +57,5 @@ def postcode():
       searchable_fields=searchable_fields,
       results_page=True,
       matched_addresses=matched_addresses,
+      matched_address_number=len(matched_addresses),
   )

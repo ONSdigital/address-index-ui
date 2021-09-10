@@ -15,12 +15,16 @@
 <h1>Match Multiple Addresses</h1>
 
 <br>
+{% if not results_page %}
 
 {{onsPanel({
 "body": "<p>To get started, upload a CSV file of addresses to be matched. The selected file must be 1MB or less (much smaller for show results option) with only two columns, id and address. <br> <br> Download a <a href='/downloads/example_csv'> sample file</a> <br> <br> You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>"
     })}}
 
 <br>
+
+{% endif %}
+
 
 <form method=post enctype=multipart/form-data>
 {{ customSearch ({ "Fields": searchable_fields,
@@ -37,8 +41,8 @@
 	"classes":"input input--text input-type__input input--upload",
 	"accept": ".csv,.CSV",
 	"error": {
-		"id": error_type,
-		"text": error_description } if error_type else '',
+		"id": error_title,
+		"text": error_description } if error_title else '',
 	"label": {
 	    "description": "Please upload a CSV file" if not error_type else "",
 	    "text":  "Please upload a CSV file" if not error_type else "" } }) }}
@@ -52,6 +56,16 @@
         "classes": "btn",  })  }}
 
 </form>
+
+<br>
+
+{{ onsTable({
+	"id": "basic-table 2",
+        "ths":  [] if not table_results else results_summary_table.get('ths') ,
+  	"trs": [] if not table_results else results_summary_table.get('trs'),
+}) }}
+
+<br>
 
 {{ onsTable({
 	"id": "basic-table",
