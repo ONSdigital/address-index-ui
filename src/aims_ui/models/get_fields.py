@@ -22,13 +22,25 @@ def get_fields(endpoint_name):
           description='E.g. residential, commercial, RD06',
       ),
       'epoch':
-      Field('epoch',
-            display_title='Epoch',
-            search_type='dropdown',
-            classes='input--w-4',
-            dropdown_options=get_options('epoch'),
-            add_default_dropdown_option=False,
-            description='Feel freeto Choose and Epoch from the dropdown menu'),
+      Field(
+          'epoch',
+          search_type='radio',
+          flag=False,
+          display_title='Epoch',
+          default_radio_selection='84',
+          radio_options=[
+              {
+                  'id': '84',
+                  'text': '84',
+                  'value': '84',
+              },
+              {
+                  'id': '83',
+                  'text': '83',
+                  'value': '83',
+              },
+          ],
+      ),
       'historical':
       Field(
           'historical',
@@ -190,10 +202,6 @@ def get_fields(endpoint_name):
         common_fields['limit'],
         common_fields['classification'],
         common_fields['epoch'],
-        common_fields['boost-checkbox-description'],
-        common_fields['england_boost_checkbox'],
-        common_fields['wales_boost_checkbox'],
-        common_fields['scotland_boost_checkbox'],
         common_fields['auxilary_search'],
     ])
 

@@ -6,6 +6,7 @@ from flask import render_template
 from io import StringIO, BytesIO
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
+from .page_error import page_error
 import urllib
 import csv
 
@@ -69,7 +70,8 @@ def multiple_address_match(file, all_user_input, download=False):
           adrs.underlying_score.value, rank
       ])
 
-    def finalize(line_count):
+    def finalize(line_count, no_addresses_searched, single_match_total,
+                 multiple_match_total, no_match_total):
       # Creating the byteIO object from the StringIO Object
       mem = BytesIO()
       mem.write(proxy.getvalue().encode())
@@ -98,16 +100,44 @@ def multiple_address_match(file, all_user_input, download=False):
           ]
       }) # yapf: disable
 
-    def finalize(line_count):
-      return {'ths': ths, 'trs': trs}
+    def finalize(line_count, no_addresses_searched, single_match_total,
+                 multiple_match_total, no_match_total):
+      headers = [
+          'Number of addresses searched:', 'Single matches:',
+          'Multiple Matches', 'No Match:'
+      ]
+      answers = [
+          no_addresses_searched, single_match_total, multiple_match_total,
+          no_match_total
+      ]
+      results_summary_table_trs = [{
+          'tds': [{
+              'value': headers[x]
+          }, {
+              'value': answers[x]
+          }]
+      } for x in range(0, len(headers))]
+
+      return {
+          'ths': ths,
+          'trs': trs
+      }, {
+          'ths': [],
+          'trs': results_summary_table_trs
+      },
 
     def get_match_type(n_addr):
       return '<p style="background-color:orange;">M</p>' if n_addr > 1 else '<p style="background-color:Aquamarine;">S</p>'
 
   line_count = 0
+  no_addresses_searched = 0
+  single_match_total = 0
+  multiple_match_total = 0
+  no_match_total = 0
+
   for line in contents:
     line = line.strip().decode('utf-8')
-    given_id, address_to_lookup = line.split(',',maxsplit=1)
+    given_id, address_to_lookup = line.split(',', maxsplit=1)
     all_user_input['input'] = address_to_lookup
 
     result = api(
@@ -117,7 +147,17 @@ def multiple_address_match(file, all_user_input, download=False):
     )
 
     matched_addresses = get_addresses(result.json(), 'singlesearch')
+
+    no_results = len(matched_addresses)
+    if no_results == 1:
+      single_match_total += 1
+    elif no_results > 1:
+      multiple_match_total += no_results
+    elif no_results == 0:
+      no_match_total += 1
+
     match_type = get_match_type(len(matched_addresses))
+    no_addresses_searched += 1
 
     for rank, adrs in enumerate(matched_addresses, start=1):
       line_count += 1
@@ -132,4 +172,5 @@ def multiple_address_match(file, all_user_input, download=False):
           rank,
       )
 
-  return finalize(line_count)
+  return finalize(line_count, no_addresses_searched, single_match_total,
+                  multiple_match_total, no_match_total)
