@@ -24,6 +24,11 @@ class Nag():
     nag):
     nag = nag[0]
     
+    # Values to show in the 'full info' page on a particular address
+    full_values_to_show = [
+        'localCustodianName',
+        ]
+
     self.uprn = nag.get('uprn')
     self.postcodeLocator= nag.get('postcodeLocator')
     self.addressBasePostal= nag.get('addressBasePostal')
@@ -91,14 +96,17 @@ class AddressAttribute():
     if self.name == 'classificationCodeList':
       return get_classification_list()
     if self.name == 'nag':
-      self.value = Nag(self.raw_value)
+      return Nag(self.raw_value)
 
     return f'{value}'
 
 
 class Address():
   def __init__(self, address_data):
-    print(address_data)
+    full_response = address_data
+    address_data = address_data.get('address')
+
+
     # Essentially all atributes of an expected address from AIMS API (Verbose)
     self.uprn = AddressAttribute(address_data, 'uprn')
     self.formatted_address = AddressAttribute(address_data, 'formattedAddress')
@@ -126,4 +134,7 @@ class Address():
                                                'lpiLogicalStatus')
     self.confidence_score = AddressAttribute(address_data, 'confidenceScore')
     self.underlying_score = AddressAttribute(address_data, 'underlyingScore')
+
+    # Items with their own Dict object returned should be given full response
     self.nag = AddressAttribute(address_data, 'nag')
+
