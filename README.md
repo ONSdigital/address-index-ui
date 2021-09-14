@@ -21,9 +21,3 @@ Run
 
 *To run*
 python3 -m flask run
-
-
-
-
-*To Re-format (using yapf)*
-python3 -m yapf -ir -vv . --style='{based_on_style: pep8, indent_width: 2}'
