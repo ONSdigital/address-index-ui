@@ -43,6 +43,7 @@ def singlesearch():
   except ConnectionError as e:
     return page_error(None, e, page_name)
 
+
   if result.status_code == 200:
     matched_addresses = get_addresses(result.json(), page_name)
   elif result.status_code == 404:
