@@ -3,6 +3,7 @@ from . import app
 from .models.get_endpoints import get_endpoints
 from .api_interaction import api
 from .models.get_addresses import get_addresses
+from requests.exceptions import ConnectionError
 from flask import render_template
 from flask_login import login_required
 import json
@@ -13,11 +14,15 @@ import json
 def address_info(uprn):
   """Show all info about an address given the UPRN"""
 
-  result = api(
-      '/addresses/uprn/',
-      'uprn',
-      {'uprn': uprn},
-  )
+  try:
+    result = api(
+        '/addresses/uprn/',
+        'uprn',
+        {'uprn': uprn},
+    )
+
+  except ConnectionError as e:
+    return page_error(None, e, page_name)
 
   if result.status_code == 200:
     matched_addresses = get_addresses(result.json(), 'uprn')
