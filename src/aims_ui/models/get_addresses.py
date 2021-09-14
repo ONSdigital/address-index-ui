@@ -14,6 +14,6 @@ def get_addresses(json_response, called_from):
     address_json = response.get('addresses')
 
     for address in address_json:
-      addresses.append(Address(address))
+      addresses.append(Address({'address':address} ))
 
   return addresses
