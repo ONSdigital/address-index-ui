@@ -35,7 +35,7 @@ def singlesearch():
 
   try:
     result = api(
-        '/addresses/uprn/',
+        '/addresses',
         page_name,
         all_user_input,
     )
