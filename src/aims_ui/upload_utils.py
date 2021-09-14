@@ -3,6 +3,7 @@ import csv
 
 ALLOWED_EXTENSIONS = {'csv'}
 
+
 class FileUploadException(Exception):
   """Exception raised for errors caused by uploading a file, from size to content validation"""
   def __init__(self, error_title='', error_description=''):
@@ -34,11 +35,14 @@ def check_valid_upload(file):
   blank_fields_present = check_for_blank_fields(file)
 
   if blank_fields_present:
-    raise FileUploadException(error_title='Input file error',
-                 error_description=f'Source file contains empty fields. Please check that your file conforms to the syntax of the example file. <br> <br> The row with this issue is "{"".join(blank_fields_present)}"')
+    raise FileUploadException(
+        error_title='Input file error',
+        error_description=
+        f'Source file contains empty fields. Please check that your file conforms to the syntax of the example file. <br> <br> The row with this issue is "{"".join(blank_fields_present)}"'
+    )
 
   if file.filename == '':
     raise FileUploadException(error_title='File Type Error',
-                             error_description='Please select a file')
+                              error_description='Please select a file')
 
   return True, '', '',
