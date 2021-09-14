@@ -35,7 +35,7 @@ def postcode():
 
   try:
     result = api(
-        '/addresses/uprn/',
+        '/addresses/postcode/',
         page_name,
         all_user_input,
     )
