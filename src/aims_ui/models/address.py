@@ -103,9 +103,7 @@ class AddressAttribute():
 
 class Address():
   def __init__(self, address_data):
-    full_response = address_data
     address_data = address_data.get('address')
-
 
     # Essentially all atributes of an expected address from AIMS API (Verbose)
     self.uprn = AddressAttribute(address_data, 'uprn')
