@@ -20,9 +20,9 @@ class Sao():
     self.saoEndNumber = sao.get('saoEndNumber')
     self.saoEndSuffix = sao.get('saoEndSuffix')
 
-class NagValue():
-  def __init__(self, nag, name):
-    self.value = nag.get(name)
+class BasicValue():
+  def __init__(self, nag_paf, name, default_blank = ''):
+    self.value = nag_paf.get(name, default_blank )
 
 class Nag():
   def __init__(self, nag):
@@ -33,26 +33,59 @@ class Nag():
         'localCustodianName',
     ]
 
-    self.uprn = NagValue(nag, 'uprn')
-    self.postcodeLocator = NagValue(nag, 'postcodeLocator')
-    self.addressBasePostal = NagValue(nag, 'addressBasePostal')
-    self.usrn = NagValue(nag, 'usrn')
-    self.lpiKey = NagValue(nag, 'lpiKey')
+    self.uprn = BasicValue(nag, 'uprn')
+    self.postcodeLocator = BasicValue(nag, 'postcodeLocator')
+    self.addressBasePostal = BasicValue(nag, 'addressBasePostal')
+    self.usrn = BasicValue(nag, 'usrn')
+    self.lpiKey = BasicValue(nag, 'lpiKey')
     self.pao = Pao(nag.get('pao'))
     self.sao = Sao(nag.get('sao'))
-    self.level = NagValue(nag, 'level')
-    self.officialFlag = NagValue(nag, 'officialFlag')
-    self.logicalStatus = NagValue(nag, 'logicalStatus')
-    self.streetDescriptor = NagValue(nag, 'streetDescriptor')
-    self.townName = NagValue(nag, 'townName')
-    self.locality = NagValue(nag, 'locality')
-    self.organisation = NagValue(nag, 'organisation')
-    self.legalName = NagValue(nag, 'legalName')
-    self.localCustodianCode = NagValue(nag, 'localCustodianCode')
-    self.localCustodianName = NagValue(nag, 'localCustodianName')
-    self.localCustodianGeogCode = NagValue(nag, 'localCustodianGeogCode')
-    self.lpiEndDate = NagValue(nag, 'lpiEndDate')
-    self.lpiStartDate = NagValue(nag, 'lpiStartDate')
+    self.level = BasicValue(nag, 'level')
+    self.officialFlag = BasicValue(nag, 'officialFlag')
+    self.logicalStatus = BasicValue(nag, 'logicalStatus')
+    self.streetDescriptor = BasicValue(nag, 'streetDescriptor')
+    self.townName = BasicValue(nag, 'townName')
+    self.locality = BasicValue(nag, 'locality')
+    self.organisation = BasicValue(nag, 'organisation')
+    self.legalName = BasicValue(nag, 'legalName')
+    self.localCustodianCode = BasicValue(nag, 'localCustodianCode')
+    self.localCustodianName = BasicValue(nag, 'localCustodianName')
+    self.localCustodianGeogCode = BasicValue(nag, 'localCustodianGeogCode')
+    self.lpiEndDate = BasicValue(nag, 'lpiEndDate')
+    self.lpiStartDate = BasicValue(nag, 'lpiStartDate')
+
+class Paf():
+  def __init__(self, paf):
+    if not paf:
+      paf = {}
+
+    # Values to show in the 'full info' page on a particular address
+    self.full_values_to_show = [
+    ]
+
+    self.udprn = BasicValue(paf, 'udprn')
+    self.organisationName = BasicValue(paf, 'organisationName')
+    self.departmentName = BasicValue(paf, 'departmentName')
+    self.subBuildingName = BasicValue(paf, 'subBuildingName')
+    self.buildingName = BasicValue(paf, 'buildingName')
+    self.buildingNumber = BasicValue(paf, 'buildingNumber')
+    self.dependentThoroughfare = BasicValue(paf, 'dependentThoroughfare')
+    self.thoroughfare = BasicValue(paf, 'thoroughfare')
+    self.doubleDependentLocality = BasicValue(paf, 'doubleDependentLocality')
+    self.dependentLocality = BasicValue(paf, 'dependentLocality')
+    self.postTown = BasicValue(paf, 'postTown')
+    self.postcode = BasicValue(paf, 'postcode')
+    self.postcodeType = BasicValue(paf, 'postcodeType')
+    self.deliveryPointSuffix = BasicValue(paf, 'deliveryPointSuffix')
+    self.welshDependentThoroughfare = BasicValue(paf, 'welshDependentThoroughfare')
+    self.welshThoroughfare = BasicValue(paf, 'welshThoroughfare')
+    self.welshDoubleDependentLocality = BasicValue(paf, 'welshDoubleDependentLocality')
+    self.welshDependentLocality = BasicValue(paf, 'welshDependentLocality')
+    self.welshPostTown = BasicValue(paf, 'welshPostTown')
+    self.poBoxNumber = BasicValue(paf, 'poBoxNumber')
+    self.startDate = BasicValue(paf, 'startDate')
+    self.endDate = BasicValue(paf, 'endDate')
+
 
 class AddressAttribute():
   def __init__(
@@ -101,6 +134,8 @@ class AddressAttribute():
       return get_classification_list()
     if self.name == 'nag':
       return Nag(self.raw_value)
+    if self.name == 'paf':
+      return Paf(self.raw_value)
 
     return f'{value}'
 
@@ -139,3 +174,4 @@ class Address():
 
     # Items with their own Dict object returned should be given full response
     self.nag = AddressAttribute(address_data, 'nag')
+    self.paf = AddressAttribute(address_data, 'paf')

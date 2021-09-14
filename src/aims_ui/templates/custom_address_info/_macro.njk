@@ -33,6 +33,17 @@
 	{% endfor %}
 	{% endif %}
 
+	{# If the address is the "PAF" response (contains a PAF Model) #} 
+	{% if attribute_name == 'paf' %}
+		{% for paf_attribute_name, paf_attribute_value in  address_attribute.value.__dict__.items() %}
+		{% if paf_attribute_name in address_attribute.value.full_values_to_show %}
+			<tr><td class="mars">{{paf_attribute_name}}</td>
+			    <td class="venus">{{ paf_attribute_value.value }}</td>
+			</tr>
+		{% endif %}
+	{% endfor %}
+	{% endif %}
+
 {% endfor %}
 <tr>
     <td class="mars"><a href=" {{ 'https://www.google.com/maps/search/?api=1&query=' + params.matched_addresses[0].geo.value.get('longitude') + ',' + params.matched_addresses[0].geo.value.get('latitude')  }}"
@@ -43,7 +54,6 @@
     </p>
   </div></div>
 
-{# Add Clerical information as an Accordion #} 
 
 
 {% else %}
