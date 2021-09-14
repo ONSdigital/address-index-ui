@@ -20,37 +20,39 @@ class Sao():
     self.saoEndNumber = sao.get('saoEndNumber')
     self.saoEndSuffix = sao.get('saoEndSuffix')
 
+class NagValue():
+  def __init__(self, nag, name):
+    self.value = nag.get(name)
 
 class Nag():
   def __init__(self, nag):
     nag = nag[0]
 
     # Values to show in the 'full info' page on a particular address
-    full_values_to_show = [
+    self.full_values_to_show = [
         'localCustodianName',
     ]
 
-    self.uprn = nag.get('uprn')
-    self.postcodeLocator = nag.get('postcodeLocator')
-    self.addressBasePostal = nag.get('addressBasePostal')
-    self.usrn = nag.get('usrn')
-    self.lpiKey = nag.get('lpiKey')
+    self.uprn = NagValue(nag, 'uprn')
+    self.postcodeLocator = NagValue(nag, 'postcodeLocator')
+    self.addressBasePostal = NagValue(nag, 'addressBasePostal')
+    self.usrn = NagValue(nag, 'usrn')
+    self.lpiKey = NagValue(nag, 'lpiKey')
     self.pao = Pao(nag.get('pao'))
     self.sao = Sao(nag.get('sao'))
-    self.level = nag.get('level')
-    self.officialFlag = nag.get('officialFlag')
-    self.logicalStatus = nag.get('logicalStatus')
-    self.streetDescriptor = nag.get('streetDescriptor')
-    self.townName = nag.get('townName')
-    self.locality = nag.get('locality')
-    self.organisation = nag.get('organisation')
-    self.legalName = nag.get('legalName')
-    self.localCustodianCode = nag.get('localCustodianCode')
-    self.localCustodianName = nag.get('localCustodianName')
-    self.localCustodianGeogCode = nag.get('localCustodianGeogCode')
-    self.lpiEndDate = nag.get('lpiEndDate')
-    self.lpiStartDate = nag.get('lpiStartDate')
-
+    self.level = NagValue(nag, 'level')
+    self.officialFlag = NagValue(nag, 'officialFlag')
+    self.logicalStatus = NagValue(nag, 'logicalStatus')
+    self.streetDescriptor = NagValue(nag, 'streetDescriptor')
+    self.townName = NagValue(nag, 'townName')
+    self.locality = NagValue(nag, 'locality')
+    self.organisation = NagValue(nag, 'organisation')
+    self.legalName = NagValue(nag, 'legalName')
+    self.localCustodianCode = NagValue(nag, 'localCustodianCode')
+    self.localCustodianName = NagValue(nag, 'localCustodianName')
+    self.localCustodianGeogCode = NagValue(nag, 'localCustodianGeogCode')
+    self.lpiEndDate = NagValue(nag, 'lpiEndDate')
+    self.lpiStartDate = NagValue(nag, 'lpiStartDate')
 
 class AddressAttribute():
   def __init__(

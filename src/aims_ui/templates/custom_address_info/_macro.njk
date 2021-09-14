@@ -14,18 +14,24 @@
     <p>
 
 <table> <tbody>
+{# For each atribute in the Address Model #} 
 {% for attribute_name, address_attribute in  params.matched_addresses[0].__dict__.items() %}
-{% if address_attribute.full_show %}
-	<tr><td class="mars">{{ address_attribute.name }}</td>
-	    <td class="venus">{{ address_attribute.value }}</td>
-	</tr>
-{% endif %}
+	{% if address_attribute.full_show %}
+		<tr><td class="mars">{{ address_attribute.name }}</td>
+		    <td class="venus">{{ address_attribute.value }}</td>
+		</tr>
+	{% endif %}
 
-{% if attribute_name == 'nag' %}
-	<tr><td class="mars">Local Authority</td>
-	    <td class="venus">{{ address_attribute.value.localCustodianName }}</td>
-	</tr>
-{% endif %}
+	{# If the address is the "NAG" response (contains a NAG Model) #} 
+	{% if attribute_name == 'nag' %}
+		{% for nag_attribute_name, nag_attribute_value in  address_attribute.value.__dict__.items() %}
+		{% if nag_attribute_name in address_attribute.value.full_values_to_show %}
+			<tr><td class="mars">{{nag_attribute_name}}</td>
+			    <td class="venus">{{ nag_attribute_value.value }}</td>
+			</tr>
+		{% endif %}
+	{% endfor %}
+	{% endif %}
 
 {% endfor %}
 <tr>
@@ -36,6 +42,9 @@
 
     </p>
   </div></div>
+
+{# Add Clerical information as an Accordion #} 
+
 
 {% else %}
 
