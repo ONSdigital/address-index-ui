@@ -5,7 +5,6 @@
 
 {% if params.full_info %}
 
-
 <h1 class="saturn"> {{ params.matched_addresses[0].formatted_address.value }}</h1>
 <a href=''><h5>Radius search from this location</h5></a>
 
@@ -64,11 +63,10 @@
 {% else %}
 
 
-
 {% for address in params.matched_addresses %}
 
 <article class="result-short-form">
-<a href={{'/address_info/' + address.uprn.value }}><h2 class="saturn"> {{ address.formatted_address.value }}</h2></a>
+<a href={{'/address_info/' + address.uprn.value }}><h2 class="saturn"> {{ address.formattedAddress.value }}</h2></a>
 <table> <tbody>
 
 {% for attribute_name, address_attribute in address.__dict__.items() %}
