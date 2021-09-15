@@ -2,6 +2,8 @@ from .field import Field
 from .endpoint_options import get_options
 from flask import url_for
 
+# This will change when DS changes
+hidden_field_class = ' u-hidden '
 
 def get_fields(endpoint_name):
   # Deffine fields which are reused in many of the endpoints
@@ -131,11 +133,10 @@ def get_fields(endpoint_name):
   elif endpoint_name == 'typeahead':
     return ([
         Field(
-            'name',
-            display_title='Enter search string',
-            required=True,
-            description=
-            'Specifies the address search string (e.g. "14 Acacia Avenue, Ruislip, HA4 8RG").'
+           'None',
+           search_type='label',
+           display_title=
+           'Adjust the following fields to see the typeahead behaviour change',
         ),
         common_fields['limit'],
         common_fields['classification'],
@@ -160,6 +161,7 @@ def get_fields(endpoint_name):
         Field(
             'fallback',
             search_type='checkbox',
+            only_display_in_results_page=hidden_field_class,
             display_title='Fallback',
             description=
             'Specifies whether a slow fallback query is used in the event of the main query returning no results.',
@@ -225,8 +227,5 @@ def get_fields(endpoint_name):
         common_fields['historical'],
         common_fields['auxilary_search'],
     ])
-
-  elif endpoint_name == 'typeahead':
-    pass
   else:
     raise Exception(f'No valid field found - Found {endpoint_name}')

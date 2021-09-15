@@ -21,6 +21,7 @@ class Field:
   add_default_dropdown_option: bool = True
   show_as_table_header: bool = True
   default_radio_selection: str = ''
+  only_display_in_results_page: bool = False
 
   def __post_init__(self):
     self.dropdown_options = self.format_dropdown_options(
