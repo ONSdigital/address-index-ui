@@ -11,6 +11,7 @@ class Endpoint():
   nav_info: list = field(default_factory=lambda: [])
   selected: bool = False
   name_id: str = ''
+  current_selected_endpoint: str = ''
 
   def __post_init__(self):
     self.url = url_for(str(self.url_title))
