@@ -34,7 +34,7 @@ def get_endpoints(called_from=None):
 
   for endpoint in endpoints:
     if endpoint.url_title == called_from:
-      endpoint.selected = True
+      current_selected_endpoint = url_for(endpoint.url_title)
 
   nav_info = [{
       'title': endpoint.title,
@@ -44,5 +44,6 @@ def get_endpoints(called_from=None):
 
   for endpoint in endpoints:
     endpoint.nav_info = nav_info
+    endpoint.current_selected_endpoint =current_selected_endpoint  
 
   return endpoints
