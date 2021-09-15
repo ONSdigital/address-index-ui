@@ -5,6 +5,7 @@ from flask import url_for
 # This will change when DS changes
 hidden_field_class = ' u-hidden '
 
+
 def get_fields(endpoint_name):
   # Deffine fields which are reused in many of the endpoints
 
@@ -133,10 +134,10 @@ def get_fields(endpoint_name):
   elif endpoint_name == 'typeahead':
     return ([
         Field(
-           'None',
-           search_type='label',
-           display_title=
-           'Adjust the following fields to see the typeahead behaviour change',
+            'None',
+            search_type='label',
+            display_title=
+            'Adjust the following fields to see the typeahead behaviour change',
         ),
         common_fields['limit'],
         common_fields['classification'],

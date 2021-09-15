@@ -7,30 +7,17 @@
 
  {% set content %}
         {{ onsTable({
-        "caption": "A basic table with a caption",
+        "caption": "Clerical Information",
         "id": "basic-table",
-        "ths": [
-            { "value": "Column A" },
-            { "value": "Column B" },
-            { "value": "Column C" }  ],
-        "trs": [
-            { "tds": [
-                    { "value": "Cell A1",
-                      "name": "cell-name" },
-                    { "value": "Cell B1" },
-                    { "value": "Cell C1" } ]
-            },
-            { "tds": [
-                    { "value": "Cell A2" },
-                    { "value": "Cell B2" },
-                    { "value": "Cell C2" } ]
-            }
-        ] }) }}
+        "ths": params.clerical_info.get('ths'),
+        "trs": params.clerical_info.get('trs'),
+	}) }}
+
     {% endset %}
 
     {% call onsCollapsible({
             'id': "collapsible",
-            'title': "Need to answer separately from your household?",
+            'title': "Show Clerical Information",
             'titleTag': "h2",
             'button': {
                 "close": "Hide this",

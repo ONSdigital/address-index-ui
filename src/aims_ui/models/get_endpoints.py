@@ -46,6 +46,6 @@ def get_endpoints(called_from=None):
 
   for endpoint in endpoints:
     endpoint.nav_info = nav_info
-    endpoint.current_selected_endpoint =current_selected_endpoint  
+    endpoint.current_selected_endpoint = current_selected_endpoint
 
   return endpoints
