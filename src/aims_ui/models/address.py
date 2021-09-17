@@ -218,7 +218,6 @@ class Address():
 
   @classmethod
   def from_dict(cls, d):
-    d = d.get('address')
     args = [
         AddressAttribute(d, 'uprn'),
         AddressAttribute(d, 'formattedAddress'),
