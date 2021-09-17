@@ -69,10 +69,12 @@
 <a href={{'/address_info/' + address.uprn.value }}><h2 class="saturn"> {{ address.formattedAddress.value }}</h2></a>
 <table> <tbody>
 
-{% for attribute_name, address_attribute in address.__dict__.items() %}
-{% if address_attribute.show %}
-	<tr><td class="mars">{{ address_attribute.name }}</td>
-	    <td class="venus">{{ address_attribute.value }}</td>
+{% for field in address.__dataclass_fields__ %}
+{{ field }}
+{{ field.attribute.list }} 
+{% if field.show %}
+	<tr><td class="mars">{{ field.name }}</td>
+	    <td class="venus">{{ field.value }}</td>
 	</tr>
 {% endif %}
 {% endfor %}
