@@ -71,7 +71,7 @@
 
 {% for field in address.__dataclass_fields__ %}
 {{ field }}
-{{ field.attribute.list }} 
+{{ address.value }}
 {% if field.show %}
 	<tr><td class="mars">{{ field.name }}</td>
 	    <td class="venus">{{ field.value }}</td>
