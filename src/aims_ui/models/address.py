@@ -145,7 +145,7 @@ class AddressAttribute():
       name,
   ):
     self.name = name
-    self.address_data = address_data 
+    self.address_data = address_data
     self.raw_value = address_data.get(name)
     self.value = self.format_special(self.raw_value)
     self.show = False
@@ -195,30 +195,30 @@ class AddressAttribute():
 @dataclass
 class Address():
   uprn: AddressAttribute
-  formattedAddress:AddressAttribute 
-  parentUprn:AddressAttribute 
-  formattedAddressNag:AddressAttribute 
-  formattedAddressPaf:AddressAttribute
-  formattedAddressNisra:AddressAttribute 
-  welshFormattedAddressNag:AddressAttribute 
-  welshFormattedAddressPaf:AddressAttribute
+  formattedAddress: AddressAttribute
+  parentUprn: AddressAttribute
+  formattedAddressNag: AddressAttribute
+  formattedAddressPaf: AddressAttribute
+  formattedAddressNisra: AddressAttribute
+  welshFormattedAddressNag: AddressAttribute
+  welshFormattedAddressPaf: AddressAttribute
   geo: AddressAttribute
-  classificationCode:AddressAttribute 
-  classificationCodeList:AddressAttribute 
-  censusAddressType:AddressAttribute 
-  censusEstabType:AddressAttribute 
-  countryCode:AddressAttribute 
-  lpiLogicalStatus:AddressAttribute 
-  confidenceScore:AddressAttribute 
-  underlyingScore:AddressAttribute
+  classificationCode: AddressAttribute
+  classificationCodeList: AddressAttribute
+  censusAddressType: AddressAttribute
+  censusEstabType: AddressAttribute
+  countryCode: AddressAttribute
+  lpiLogicalStatus: AddressAttribute
+  confidenceScore: AddressAttribute
+  underlyingScore: AddressAttribute
 
   # Items with their own Dict object returned should be given full response
-  nag: AddressAttribute 
-  paf :AddressAttribute  
+  nag: AddressAttribute
+  paf: AddressAttribute
 
   @classmethod
   def from_dict(cls, d):
-    d  = d.get('address')
+    d = d.get('address')
     args = [
         AddressAttribute(d, 'uprn'),
         AddressAttribute(d, 'formattedAddress'),
@@ -236,9 +236,9 @@ class Address():
         AddressAttribute(d, 'countryCode'),
         AddressAttribute(d, 'lpiLogicalStatus'),
         AddressAttribute(d, 'confidenceScore'),
-        AddressAttribute(d, 'underlyingScore'), 
+        AddressAttribute(d, 'underlyingScore'),
         AddressAttribute(d, 'nag'),
         AddressAttribute(d, 'paf'),
-       ]
+    ]
 
     return Address(*args)

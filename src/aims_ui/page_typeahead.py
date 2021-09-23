@@ -23,6 +23,7 @@ def typeahead():
         f'{page_name}.html',
         searchable_fields=get_fields(page_name),
         endpoints=get_endpoints(called_from=page_name),
+        API_KEY=app.config.get('API_KEY'),
     )
 
   searchable_fields = get_fields(page_name)
@@ -54,4 +55,5 @@ def typeahead():
       results_page=True,
       matched_addresses=matched_addresses,
       matched_address_number=len(matched_addresses),
+      API_KEY=app.config.get('API_KEY'),
   )
