@@ -1,0 +1,32 @@
+{% macro customClericalData(params) %}
+
+{% from "components/collapsible/_macro.njk" import onsCollapsible %}
+{% from "components/table/_macro.njk" import onsTable %}
+
+{# By setting the content, the onsTable is contained inside onsCollapsible #}
+
+ {% set content %}
+        {{ onsTable({
+        "caption": "Clerical Information",
+        "id": "basic-table",
+        "ths": params.clerical_info.get('ths'),
+        "trs": params.clerical_info.get('trs'),
+	}) }}
+
+    {% endset %}
+
+    {% call onsCollapsible({
+            'id': "collapsible",
+            'title': "Show Clerical Information",
+            'titleTag': "h2",
+            'button': {
+                "close": "Hide this",
+                "contextSuffix": "content"
+            }
+        })
+    %}
+        {{ content | safe }}
+    {% endcall %}
+
+
+{% endmacro %}

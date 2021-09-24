@@ -1,3 +1,4 @@
+from dataclasses import dataclass, field, fields
 import json
 from .utilities.classifications import get_classification_list
 from aims_ui import app
@@ -20,9 +21,11 @@ class Sao():
     self.saoEndNumber = sao.get('saoEndNumber')
     self.saoEndSuffix = sao.get('saoEndSuffix')
 
+
 class BasicValue():
-  def __init__(self, nag_paf, name, default_blank = ''):
-    self.value = nag_paf.get(name, default_blank )
+  def __init__(self, nag_paf, name, default_blank=''):
+    self.value = nag_paf.get(name, default_blank)
+
 
 class Nag():
   def __init__(self, nag):
@@ -31,6 +34,27 @@ class Nag():
     # Values to show in the 'full info' page on a particular address
     self.full_values_to_show = [
         'localCustodianName',
+    ]
+
+    self.clerical_values = [
+        'uprn',
+        'postcodeLocator',
+        'addressBasePostal',
+        'usrn',
+        'lpiKey',
+        'level',
+        'officialFlag',
+        'logicalStatus',
+        'streetDescriptor',
+        'townName',
+        'locality',
+        'organisation',
+        'legalName',
+        'localCustodianCode',
+        'localCustodianName',
+        'localCustodianGeogCode',
+        'lpiEndDate',
+        'lpiStartDate',
     ]
 
     self.uprn = BasicValue(nag, 'uprn')
@@ -54,13 +78,38 @@ class Nag():
     self.lpiEndDate = BasicValue(nag, 'lpiEndDate')
     self.lpiStartDate = BasicValue(nag, 'lpiStartDate')
 
+
 class Paf():
   def __init__(self, paf):
     if not paf:
       paf = {}
 
     # Values to show in the 'full info' page on a particular address
-    self.full_values_to_show = [
+    self.full_values_to_show = []
+
+    self.clerical_values = [
+        'udprn',
+        'organisationName',
+        'departmentName',
+        'subBuildingName',
+        'buildingName',
+        'buildingNumber',
+        'dependentThoroughfare',
+        'thoroughfare',
+        'doubleDependentLocality',
+        'dependentLocality',
+        'postTown',
+        'postcode',
+        'postcodeType',
+        'deliveryPointSuffix',
+        'welshDependentThoroughfare',
+        'welshThoroughfare',
+        'welshDoubleDependentLocality',
+        'welshDependentLocality',
+        'welshPostTown',
+        'poBoxNumber',
+        'startDate',
+        'endDate',
     ]
 
     self.udprn = BasicValue(paf, 'udprn')
@@ -77,9 +126,11 @@ class Paf():
     self.postcode = BasicValue(paf, 'postcode')
     self.postcodeType = BasicValue(paf, 'postcodeType')
     self.deliveryPointSuffix = BasicValue(paf, 'deliveryPointSuffix')
-    self.welshDependentThoroughfare = BasicValue(paf, 'welshDependentThoroughfare')
+    self.welshDependentThoroughfare = BasicValue(paf,
+                                                 'welshDependentThoroughfare')
     self.welshThoroughfare = BasicValue(paf, 'welshThoroughfare')
-    self.welshDoubleDependentLocality = BasicValue(paf, 'welshDoubleDependentLocality')
+    self.welshDoubleDependentLocality = BasicValue(
+        paf, 'welshDoubleDependentLocality')
     self.welshDependentLocality = BasicValue(paf, 'welshDependentLocality')
     self.welshPostTown = BasicValue(paf, 'welshPostTown')
     self.poBoxNumber = BasicValue(paf, 'poBoxNumber')
@@ -94,6 +145,7 @@ class AddressAttribute():
       name,
   ):
     self.name = name
+    self.address_data = address_data
     self.raw_value = address_data.get(name)
     self.value = self.format_special(self.raw_value)
     self.show = False

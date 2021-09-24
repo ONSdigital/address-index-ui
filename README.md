@@ -11,6 +11,10 @@ Pre-requisites:
 *Setup Environment Variables*
 `export FLASK_APP="aims_ui"`
 `export FLASK_ENV="development"`	
+`export API_AUTH_TYPE="JWT"`	
+`export JWT_TOKEN=[enter_jwt_token_here]`
+`export API_BSC_AUTH_USERNAME=[enter_bsc_username]`
+`export API_BSC_AUTH_PASSWORD=[enter_bsc_password]`
 
 *Install Python Packages*
 Run
