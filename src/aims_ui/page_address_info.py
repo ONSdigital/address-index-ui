@@ -40,8 +40,8 @@ def address_info(uprn):
   trs = []
   special_responses = ['paf', 'nag']
   # Create clerical info, from endpoints
-  for address_attribute in dataclasses.fields(Address):
-    attribute_name = address_attribute.name
+  for attribute_name, address_attribute in matched_addresses[0].__dict__.items(
+  ):
     if attribute_name in special_responses:
       for nag_name, nag_attribute in address_attribute.value.__dict__.items():
         if nag_name in address_attribute.value.clerical_values:

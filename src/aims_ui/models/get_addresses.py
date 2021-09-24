@@ -7,7 +7,7 @@ def get_addresses(json_response, called_from):
 
   if called_from == 'uprn':
     response = (json_response.get('response'))
-    addresses = [Address.from_dict(response)]
+    addresses = [Address(response)]
 
   elif (called_from == 'postcode') or (called_from == 'singlesearch'):
     response = (json_response.get('response'))
