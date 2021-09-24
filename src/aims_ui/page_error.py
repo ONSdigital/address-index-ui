@@ -1,5 +1,6 @@
 from flask import render_template
 from .models.get_endpoints import get_endpoints
+import logging
 
 
 def page_error(
@@ -17,6 +18,8 @@ def page_error(
   else:
     # Connection error - AIMS service is unavailable
     error_description = f'Sorry, there is a problem with the service right now. <a href="mailto:ai.users@ons.gov.uk?Subject=Error%20Report&Body=Page:{page_name}%0D%0AProblem%20Details:">Contact Us </a> to report the problem and request support'
+
+  logging.error(error_description)
 
   return (render_template(
       'error.html',
