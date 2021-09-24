@@ -12,28 +12,38 @@
 {% set row = namespace(value=0) %}
 {% set max_col = 1 %}
 
-
-
 <section class = "match-form-container" >
 {% for field in params.Fields %}
 
+{% if params.results_page %}
+{% set show = True %}
+{% elif not params.results_page and not field.only_display_in_results_page %}
+{% set show = True %}
+{% elif not params.results_page and field.only_display_in_results_page %}
+{% set show = False %}
+{% endif %}
+
+
+{# Check to see if the parameter is only meant to be shown on a results page #}
 	<br>
 	{# Code to generate actual searchui here #}
 	{% if field.search_type == "input_box" %}
 	{{onsInput({
 		"id"   : field.database_name,
 		"name" : field.database_name,
-		"classes": field.classes,
+		"classes": field.classes if show else ' '.join([field.only_display_in_results_page,field.classes])  ,
 		"label": { "text": field.display_title,
-			   "description": field.description },
+			   "classes": '' if show else field.only_display_in_results_page,
+			   "description": '' if not show else field.description },
 		"value": field.previous_value,   })}}
 	{% elif field.search_type == "dropdown" %}
 
 	{{onsSelect({
 		"id"   : field.database_name,
 		"name" : field.database_name,
-		"classes": field.classes,
+		"classes": field.classes if show else ' '.join([field.only_display_in_results_page,field.classes])  ,
 		"label": { "text": field.display_title, 
+			   "classes": '' if show else field.only_display_in_results_page,
 			   "description": field.description },
 		"options": field.dropdown_options })}}
 	{% elif field.search_type == "checkbox" %}
@@ -41,8 +51,9 @@
 	{{onsCheckbox({
 		"id": field.database_name,
 		"name": field.database_name,
-		"classes": field.classes,
+		"classes": field.classes if show else ' '.join([field.only_display_in_results_page,field.classes])  ,
 		"label": { "text": field.display_title, 
+			   "classes": '' if show else field.only_display_in_results_page,
 			   "description": field.description },
 		"value": True,
 		"checked": field.checkbox_value, })}}
@@ -51,7 +62,7 @@
 	{% elif field.search_type == "radio" %}
 	{% call onsQuestion({
 	    "title": field.display_title,
-	    "classes": "u-mt-no",
+	    "classes": 'u-mt-no' + '' if show else ' '.join([field.only_display_in_results_page,field.classes])  ,
 	    "legendIsQuestionTitle": true }) %}
 	{{ onsRadios({
             "name": field.database_name,
@@ -63,9 +74,8 @@
 	{{ onsLabel({
 	    "id": 'label',
 	    "for": "",
+	    "classes": field.classes if show else ' '.join([field.only_display_in_results_page,field.classes])  ,
      	    "text": field.display_title, }) }}
-
-
 
 {% endif %}
 {% endfor %}
@@ -93,9 +103,6 @@
 
 	
 
-{# If it's a results page then have the searchboxes arranged at the top #}
-{% if params.results_page %}
-{% endif %}
 
 
 {% endmacro %}

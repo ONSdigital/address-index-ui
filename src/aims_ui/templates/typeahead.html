@@ -2,6 +2,8 @@
 
 {% from "components/input/_macro.njk" import onsInput %}
 {% from 'custom_search/_macro.njk' import customSearch %}
+{% from "components/address-input/_macro.njk" import onsAddressInput %}
+
 
 {% set form =  {
 	'method': 'POST',
@@ -9,13 +11,75 @@
 	'attributes': {
 	'action': form_action, }} %}
 
+{# In order to specify wider than usual components, page must be in "pageContent" #}
+{% block pageContent %}
 {% block main %}
+{# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
+<div class="grid">
 
-<br>
+{# 1Column boarder#}
+  <div class="grid__col col-1@m "><div class="pl-grid-col"></div></div>
+
+{# Show the typeahead on left side of the page as not to obscure filters #}
+  <div class="grid__col col-4@m ">
+    <div class="pl-grid-col">
+	    <br>
+
+{{ onsAddressInput({
+    "id": "address",
+    "dontWrap": true,
+    "label": {
+        "text": "Enter address or postcode and select from results",
+        "id": "address-label"
+    },
+    "isEditable": false,
+    "mandatory": true,
+    "externalInitialiser": true,
+    "autocomplete": "new-password",
+    "APIDomain": 'https://initial-test-bulk-1.aims.gcp.onsdigital.uk',
+    'APIDomainBearerToken': api_auth.get('JWT_TOKEN'),
+    "instructions": "Use up and down keys to navigate suggestions once you\'ve typed more than two characters. Use the enter key to select a suggestion. Touch device users, explore by touch or with swipe gestures.",
+    "ariaYouHaveSelected": "You have selected",
+    "ariaMinChars": "Enter 3 or more characters for suggestions.",
+    "ariaResultsLabel": "Address suggestions",
+    "ariaOneResult": "There is one suggestion available.",
+    "ariaNResults": "There are {n} suggestions available.",
+    "ariaLimitedResults": "Results have been limited to 10 suggestions. Type more characters to improve your search",
+    "ariaGroupedResults": "There are {n} for {x}",
+    "groupCount": "{n} addresses",
+    "moreResults": "Enter more of the address to improve results",
+    "resultsTitle": "Select an address",
+    "noResults": "No results found. Try entering a different part of the address",
+    "tooManyResults": "{n} results found. Enter more of the address to improve results",
+    "typeMore": "Enter more of the address to get results",
+    "errorTitle": "There is a problem with your answer",
+    "errorMessageEnter": "Enter an address",
+    "errorMessageSelect": "Select an address",
+    "errorMessageAPI": "Sorry, there is a problem. We are working to fix it. Please try again later or",
+    "errorMessageAPILinkText": "contact us for more help",
+    "errorMessageAPILink": "",
+    "options": {
+        "regionCode": "gb-eng",
+        "addressType": "residential",
+        "oneYearAgo": "True", 
+    }
+}) }}
+
+</div> </div>
+
+{# 1 Col boarder between filters and results #}
+  <div class="grid__col col-1@m "><div class="pl-grid-col"></div></div>
+
+{# 5 Col results page #}
+  <div class="grid__col col-5@m ">
+    <div class="pl-grid-col">
 
 
 {{ customSearch ({ "Fields": searchable_fields , }) }}
+</div> </div>
 
-
-
+{# End of grid #}
+</div>
+ 
+{% endblock %}
 {% endblock %}
