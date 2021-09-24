@@ -63,18 +63,17 @@
 {% else %}
 
 
+
 {% for address in params.matched_addresses %}
 
 <article class="result-short-form">
-<a href={{'/address_info/' + address.uprn.value }}><h2 class="saturn"> {{ address.formattedAddress.value }}</h2></a>
+<a href={{'/address_info/' + address.uprn.value }}><h2 class="saturn"> {{ address.formatted_address.value }}</h2></a>
 <table> <tbody>
 
-{% for field in address.__dataclass_fields__ %}
-{{ field }}
-{{ address.value }}
-{% if field.show %}
-	<tr><td class="mars">{{ field.name }}</td>
-	    <td class="venus">{{ field.value }}</td>
+{% for attribute_name, address_attribute in address.__dict__.items() %}
+{% if address_attribute.show %}
+	<tr><td class="mars">{{ address_attribute.name }}</td>
+	    <td class="venus">{{ address_attribute.value }}</td>
 	</tr>
 {% endif %}
 {% endfor %}
@@ -88,8 +87,6 @@
 {% endfor %}
 
 {% endif %}
-
-
 
 
 
