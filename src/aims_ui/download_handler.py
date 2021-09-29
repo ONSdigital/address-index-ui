@@ -2,10 +2,30 @@ import os
 from . import app
 import json
 import csv
+import requests
+from .models.utilities.classifications import get_class_list
 from io import StringIO, BytesIO
 from flask import render_template, request, session, send_file
 from flask_login import login_required
-import requests
+
+@login_required
+@app.route('/autosuggest/<autosuggest_type>', methods=['GET', 'POST'])
+def autosuggest(autosuggest_type):
+  """ Autosuggest data for various typeaheads """
+  if autosuggest_type == 'classification':
+    formatted_class_list = [] 
+    classifications_api_url= app.config.get('API_URL') + '/classifications'
+    class_call = requests.get(classifications_api_url)
+    class_list = json.loads(class_call.text).get('classifications')
+
+    for classification in class_list:
+      formatted_class_list.append({'en' : classification.get('code') })
+
+    return json.dumps(formatted_class_list)
+
+  return('Invalid autosuggest type')
+
+
 
 
 @login_required

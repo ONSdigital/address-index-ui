@@ -126,7 +126,15 @@ def get_fields(endpoint_name):
             description=
             'The Unique Property Reference Number consists of digits only, and refers to a single property'
         ),
-        common_fields['limit'],
+        Field(
+            'classification',
+            search_type = 'autosuggest',
+            display_title='Classification',
+            description=
+            'Select a classification',
+            autosuggest_url = '',
+        ),
+       common_fields['limit'],
         common_fields['epoch'],
         common_fields['historical'],
     ])
@@ -140,7 +148,6 @@ def get_fields(endpoint_name):
             'Adjust the following fields to see the typeahead behaviour change',
         ),
         common_fields['limit'],
-        common_fields['classification'],
         common_fields['epoch'],
         common_fields['england_boost'],
         common_fields['wales_boost'],
