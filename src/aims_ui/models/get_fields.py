@@ -132,7 +132,7 @@ def get_fields(endpoint_name):
             display_title='Classification',
             description=
             'Select a classification',
-            autosuggest_url = '',
+            autosuggest_url = '/autosuggest/classification.json',
         ),
        common_fields['limit'],
         common_fields['epoch'],

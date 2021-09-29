@@ -9,7 +9,7 @@ from flask import render_template, request, session, send_file
 from flask_login import login_required
 
 @login_required
-@app.route('/autosuggest/<autosuggest_type>', methods=['GET', 'POST'])
+@app.route('/autosuggest/<autosuggest_type>.json', methods=['GET', 'POST'])
 def autosuggest(autosuggest_type):
   """ Autosuggest data for various typeaheads """
   if autosuggest_type == 'classification':
