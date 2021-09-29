@@ -10,6 +10,14 @@ from .page_error import page_error
 import urllib
 import csv
 
+def get_classifications():
+  """Return classification endpoint result as json pairs"""
+
+  r = api('/classifications',
+      'singlesearch',
+      [],)
+
+  print(r)
 
 def get_api_auth():
   """Get the auth type, and subsequent required authorisation parameters"""
