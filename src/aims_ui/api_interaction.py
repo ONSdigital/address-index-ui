@@ -63,6 +63,8 @@ def api(url, called_from, all_user_input):
   elif called_from == 'singlesearch':
     url = app.config.get('API_URL') + url
 
+  #TODO remove me
+  print(params)
   r = requests.get(
       url,
       params=params,
