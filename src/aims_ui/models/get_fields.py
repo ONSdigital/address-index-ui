@@ -18,12 +18,6 @@ def get_fields(endpoint_name):
           description='Enter the number of addresses to return (0 - 5,000)',
           previous_value='10',
       ),
-      'classification':
-      Field(
-          'classificationfilter',
-          display_title='Classification (optional)',
-          description='E.g. residential, commercial, RD06',
-      ),
       'epoch':
       Field(
           'epoch',
@@ -115,6 +109,16 @@ def get_fields(endpoint_name):
           'Check this box to use auxilairy data in addition to regular standard data. This may make your search results more accurate.',
           search_type='checkbox',
       ),
+      'classification':
+      Field(
+          'classificationfilter',
+          search_type = 'autosuggest',
+          display_title='Classification',
+          description=
+          'Select a classification',
+          autosuggest_url = '/autosuggest/classification.json',
+      ),
+
   }
 
   if endpoint_name == 'uprn':
@@ -126,15 +130,8 @@ def get_fields(endpoint_name):
             description=
             'The Unique Property Reference Number consists of digits only, and refers to a single property'
         ),
-        Field(
-            'classification',
-            search_type = 'autosuggest',
-            display_title='Classification',
-            description=
-            'Select a classification',
-            autosuggest_url = '/autosuggest/classification.json',
-        ),
-       common_fields['limit'],
+        common_fields['classification'],
+        common_fields['limit'],
         common_fields['epoch'],
         common_fields['historical'],
     ])

@@ -23,7 +23,8 @@ def load_input(all_user_input, session, searchable_fields):
         field.set_dropdown_status(all_user_input.get(current_id))
       elif field.search_type == 'radio':
         field.set_radio_status(all_user_input.get(current_id))
-
+      elif field.search_type == 'autosuggest':
+        field.previous_value = all_user_input.get(current_id)
 
 def get_all_inputs(searchable_fields, request):
   """Using fields, retreive values of html objects"""

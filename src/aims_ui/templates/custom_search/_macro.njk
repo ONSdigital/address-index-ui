@@ -81,6 +81,7 @@
 	{% elif field.search_type == "autosuggest" %}
 	 {{ onsAutosuggest({
             "id": field.database_name,
+            "name": field.database_name,
 	    "label": { "text": field.display_title, 
 	 	   "classes": '' if show else field.only_display_in_results_page,
 		   "description": field.description },
@@ -98,6 +99,7 @@
             "noResults": "No suggestions found. You can enter your own answer",
             "typeMore": "Continue entering to get suggestions",
 	    "allowMultiple": "true",
+	    "value": field.previous_value,   
         }) }}
 
 {% endif %}
