@@ -118,6 +118,15 @@ def get_fields(endpoint_name):
           'Select a classification',
           autosuggest_url = '/autosuggest/classification.json',
       ),
+      'classification_help_download':
+      Field(
+          'None',
+          display_title='List of Classifications',
+          description=
+          'This file contains a list of classifications, explained in a universaly recognised "easy to read" csv format.',
+          search_type = 'download',
+          download_url='/downloads/example_multiple_address',
+      ),
 
   }
 
@@ -131,6 +140,7 @@ def get_fields(endpoint_name):
             'The Unique Property Reference Number consists of digits only, and refers to a single property'
         ),
         common_fields['classification'],
+        common_fields['classification_help_download'],
         common_fields['limit'],
         common_fields['epoch'],
         common_fields['historical'],

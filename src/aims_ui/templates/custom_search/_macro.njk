@@ -8,6 +8,7 @@
 {% from "components/label/_macro.njk" import onsLabel %}
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/autosuggest/_macro.njk" import onsAutosuggest %}
+{% from "components/downloads/_macro.njk" import onsDownloads %}
 
 {% set col = namespace(value=-1) %}
 {% set row = namespace(value=0) %}
@@ -79,7 +80,7 @@
      	    "text": field.display_title, }) }}
 
 	{% elif field.search_type == "autosuggest" %}
-	 {{ onsAutosuggest({
+	{{ onsAutosuggest({
             "id": field.database_name,
             "name": field.database_name,
 	    "label": { "text": field.display_title, 
@@ -101,6 +102,29 @@
 	    "allowMultiple": "true",
 	    "value": field.previous_value,   
         }) }}
+
+	{% elif field.search_type == "download" %}
+	<h1> There should be a download here </h1>
+
+	{{ onsDownloads({
+    "downloads": [
+        {
+            "thumbnail": {
+                "smallSrc": '/patternlib-img/download-resources/img/small/census-2021-matters-to-everyone.png',
+                "largeSrc": '/patternlib-img/download-resources/img/large/census-2021-matters-to-everyone.png'
+            },
+            "url": '/patternlib-img/download-resources/documents/Print-Ready-A4GIP1-2021-v1-0-120620.pdf',
+            "title": 'Census 2021 matters to everyone',
+            "type": 'Poster',
+            "meta": {
+                "fileType": 'PDF',
+                "fileSize": '866KB',
+                "filePages": '1 page'
+            },
+            "excerpt": 'By taking part and encouraging others to do the same, you’ll make sure your community gets the services it needs.'
+        }
+    ]
+}) }}
 
 {% endif %}
 {% endfor %}
