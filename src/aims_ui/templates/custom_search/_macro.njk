@@ -104,7 +104,8 @@
         }) }}
 
 	{% elif field.search_type == "download" %}
-	<h2>Need Help?<a href="{{field.download_url}}"> Click Here</a></h2>
+	<h4>Unsure?<a href={{field.download_url}}> Click here</a>.</h4>
+
 
 {% endif %}
 {% endfor %}
