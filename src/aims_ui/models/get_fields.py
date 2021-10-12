@@ -125,7 +125,7 @@ def get_fields(endpoint_name):
           description=
           'This file contains a list of classifications, explained in a universaly recognised "easy to read" csv format.',
           search_type = 'download',
-          download_url='/downloads/example_multiple_address',
+          download_url='/downloads/classifications_list',
       ),
 
   }
