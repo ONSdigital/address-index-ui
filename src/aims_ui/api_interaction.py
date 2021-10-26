@@ -10,14 +10,18 @@ from .page_error import page_error
 import urllib
 import csv
 
+
 def get_classifications():
   """Return classification endpoint result as json pairs"""
 
-  r = api('/classifications',
+  r = api(
+      '/classifications',
       'singlesearch',
-      [],)
+      [],
+  )
 
   print(r)
+
 
 def get_api_auth():
   """Get the auth type, and subsequent required authorisation parameters"""
@@ -30,6 +34,7 @@ def get_api_auth():
     api_auth['API_BSC_AUTH_USERNAME'] = app.config.get('API_BSC_AUTH_USERNAME')
     api_auth['API_BSC_AUTH_PASSWORD'] = app.config.get('API_BSC_AUTH_PASSWORD')
   return api_auth
+
 
 def get_params(all_user_input):
   """Return a list of parameters formatted for API header, from class list of inputs"""
