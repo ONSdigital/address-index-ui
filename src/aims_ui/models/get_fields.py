@@ -18,12 +18,6 @@ def get_fields(endpoint_name):
           description='Enter the number of addresses to return (0 - 5,000)',
           previous_value='10',
       ),
-      'classification':
-      Field(
-          'classificationfilter',
-          display_title='Classification (optional)',
-          description='E.g. residential, commercial, RD06',
-      ),
       'epoch':
       Field(
           'epoch',
@@ -115,6 +109,23 @@ def get_fields(endpoint_name):
           'Check this box to use auxilairy data in addition to regular standard data. This may make your search results more accurate.',
           search_type='checkbox',
       ),
+      'classification':
+      Field(
+          'classificationfilter',
+          search_type='autosuggest',
+          display_title='Classification',
+          description='Select a classification',
+          autosuggest_url='/autosuggest/classification.json',
+      ),
+      'classification_help_download':
+      Field(
+          'None',
+          display_title='List of Classifications',
+          description=
+          'This file contains a list of classifications, explained in a universaly recognised "easy to read" csv format.',
+          search_type='download',
+          download_url='/downloads/classifications_list',
+      ),
   }
 
   if endpoint_name == 'uprn':
@@ -126,6 +137,8 @@ def get_fields(endpoint_name):
             description=
             'The Unique Property Reference Number consists of digits only, and refers to a single property'
         ),
+        common_fields['classification'],
+        common_fields['classification_help_download'],
         common_fields['limit'],
         common_fields['epoch'],
         common_fields['historical'],
@@ -140,7 +153,6 @@ def get_fields(endpoint_name):
             'Adjust the following fields to see the typeahead behaviour change',
         ),
         common_fields['limit'],
-        common_fields['classification'],
         common_fields['epoch'],
         common_fields['england_boost'],
         common_fields['wales_boost'],
