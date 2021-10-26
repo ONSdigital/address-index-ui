@@ -11,7 +11,7 @@ from .models.get_addresses import get_addresses
 import json
 
 page_name = 'typeahead'
-  
+
 
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
@@ -24,7 +24,7 @@ def typeahead():
         f'{page_name}.html',
         searchable_fields=get_fields(page_name),
         endpoints=get_endpoints(called_from=page_name),
-        api_auth = get_api_auth(),
+        api_auth=get_api_auth(),
     )
 
   searchable_fields = get_fields(page_name)
@@ -56,5 +56,5 @@ def typeahead():
       results_page=True,
       matched_addresses=matched_addresses,
       matched_address_number=len(matched_addresses),
-      api_auth = get_api_auth(),
+      api_auth=get_api_auth(),
   )

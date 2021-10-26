@@ -26,6 +26,7 @@ def load_input(all_user_input, session, searchable_fields):
       elif field.search_type == 'autosuggest':
         field.previous_value = all_user_input.get(current_id)
 
+
 def get_all_inputs(searchable_fields, request):
   """Using fields, retreive values of html objects"""
   def get_val(value_html_id):

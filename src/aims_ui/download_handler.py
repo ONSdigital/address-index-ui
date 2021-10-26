@@ -8,22 +8,23 @@ from io import StringIO, BytesIO
 from flask import render_template, request, session, send_file
 from flask_login import login_required
 
+
 @login_required
 @app.route('/autosuggest/<autosuggest_type>.json', methods=['GET', 'POST'])
 def autosuggest(autosuggest_type):
   """ Autosuggest data for various typeaheads """
   if autosuggest_type == 'classification':
-    formatted_class_list = [] 
-    classifications_api_url= app.config.get('API_URL') + '/classifications'
+    formatted_class_list = []
+    classifications_api_url = app.config.get('API_URL') + '/classifications'
     class_call = requests.get(classifications_api_url)
     class_list = json.loads(class_call.text).get('classifications')
 
     for classification in class_list:
-      formatted_class_list.append({'en' : classification.get('code') })
+      formatted_class_list.append({'en': classification.get('code')})
 
     return json.dumps(formatted_class_list)
 
-  return('Invalid autosuggest type')
+  return ('Invalid autosuggest type')
 
 
 @login_required
@@ -38,10 +39,10 @@ def download_handler(file_name):
     f = open('src/aims_ui/static/downloads/classifications.csv', 'rb')
 
   elif file_name == 'example_multiple_address':
-    f = open('src/aims_ui/static/downloads/example_multiple_match_upload.csv', 'rb')
+    f = open('src/aims_ui/static/downloads/example_multiple_match_upload.csv',
+             'rb')
 
   return send_file(f,
-      mimetype='text/csv', 
-      attachment_filename=f'{file_name}',
-      as_attachment=True)
-
+                   mimetype='text/csv',
+                   attachment_filename=f'{file_name}',
+                   as_attachment=True)

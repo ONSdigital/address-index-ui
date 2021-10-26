@@ -112,11 +112,10 @@ def get_fields(endpoint_name):
       'classification':
       Field(
           'classificationfilter',
-          search_type = 'autosuggest',
+          search_type='autosuggest',
           display_title='Classification',
-          description=
-          'Select a classification',
-          autosuggest_url = '/autosuggest/classification.json',
+          description='Select a classification',
+          autosuggest_url='/autosuggest/classification.json',
       ),
       'classification_help_download':
       Field(
@@ -124,10 +123,9 @@ def get_fields(endpoint_name):
           display_title='List of Classifications',
           description=
           'This file contains a list of classifications, explained in a universaly recognised "easy to read" csv format.',
-          search_type = 'download',
+          search_type='download',
           download_url='/downloads/classifications_list',
       ),
-
   }
 
   if endpoint_name == 'uprn':
