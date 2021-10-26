@@ -51,7 +51,7 @@ def address_info(uprn):
 
   return render_template(
       'address_info.html',
-      endpoints=get_endpoints(),
+      endpoints=get_endpoints('address_info'),
       matched_addresses=matched_addresses,
       clerical_info=create_table(ths, trs),
   )

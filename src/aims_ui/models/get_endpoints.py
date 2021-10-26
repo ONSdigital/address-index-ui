@@ -32,7 +32,10 @@ def get_endpoints(called_from=None):
       ),
   ]
 
-  current_selected_endpoint = url_for('landing')
+  if called_from != 'address_info':
+    current_selected_endpoint = url_for('landing')
+  else:
+    current_selected_endpoint = ''
   for endpoint in endpoints:
     if endpoint.url_title == called_from:
       endpoint.selected = True
