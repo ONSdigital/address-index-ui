@@ -6,7 +6,7 @@ from .models.get_endpoints import get_endpoints
 
 
 @login_required
-@app.route('/landing')
-def landing():
+@app.route('/about')
+def about():
 
-  return render_template('landing.html', endpoints=get_endpoints())
+  return render_template('about.html', endpoints=get_endpoints())

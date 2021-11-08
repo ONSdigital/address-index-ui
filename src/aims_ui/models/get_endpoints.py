@@ -3,7 +3,7 @@ from flask import url_for
 
 
 def get_endpoints(called_from=None):
-  # Add new endpoints here for auto-creation on landing page
+  # Add new endpoints here for auto-creation on all pages
   endpoints = [
       Endpoint(
           'Unique Property Reference Number',
@@ -33,7 +33,7 @@ def get_endpoints(called_from=None):
   ]
 
   if called_from != 'address_info':
-    current_selected_endpoint = url_for('landing')
+    current_selected_endpoint = url_for('about')
   else:
     current_selected_endpoint = ''
   for endpoint in endpoints:
@@ -45,7 +45,9 @@ def get_endpoints(called_from=None):
       'title': endpoint.title,
       'url': endpoint.url
   } for endpoint in endpoints]
-  nav_info.insert(0, {'title': 'Home', 'url': url_for('landing')})
+  # Add the 'About' section at the end, insert instead of append so it's location can easily
+  # be changed later, after consulting with UX team
+  nav_info.insert(len(nav_info), {'title': 'About', 'url': url_for('about')})
 
   for endpoint in endpoints:
     endpoint.nav_info = nav_info
