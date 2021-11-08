@@ -137,8 +137,6 @@ def get_fields(endpoint_name):
             description=
             'The Unique Property Reference Number consists of digits only, and refers to a single property'
         ),
-        common_fields['classification'],
-        common_fields['classification_help_download'],
         common_fields['epoch'],
         common_fields['historical'],
     ])
@@ -215,6 +213,8 @@ def get_fields(endpoint_name):
         ),
         common_fields['limit'],
         common_fields['classification'],
+        common_fields['classification_help_download'],
+        common_fields['classification'],
         common_fields['epoch'],
         common_fields['auxilary_search'],
     ])
@@ -229,6 +229,7 @@ def get_fields(endpoint_name):
             'Specifies the address search string (e.g. "14 Acacia Avenue, Ruislip, HA4 8RG").'
         ),
         common_fields['classification'],
+        common_fields['classification_help_download'],
         common_fields['boost-checkbox-description'],
         common_fields['england_boost_checkbox'],
         common_fields['wales_boost_checkbox'],
