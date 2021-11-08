@@ -24,17 +24,27 @@ def get_fields(endpoint_name):
           search_type='radio',
           flag=False,
           display_title='Epoch',
-          default_radio_selection='85',
+          default_radio_selection='87',
           radio_options=[
+              {
+                  'id': '87',
+                  'text': '87',
+                  'value': '87',
+              },
               {
                   'id': '85',
                   'text': '85',
                   'value': '85',
               },
               {
-                  'id': '84',
-                  'text': '84',
-                  'value': '84',
+                  'id': '80',
+                  'text': '80',
+                  'value': '80',
+              },
+              {
+                  'id': '39',
+                  'text': '39',
+                  'value': '39',
               },
           ],
       ),
