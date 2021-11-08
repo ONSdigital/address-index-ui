@@ -139,7 +139,6 @@ def get_fields(endpoint_name):
         ),
         common_fields['classification'],
         common_fields['classification_help_download'],
-        common_fields['limit'],
         common_fields['epoch'],
         common_fields['historical'],
     ])
