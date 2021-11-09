@@ -61,7 +61,7 @@ def close_connection(exception):
 
 from . import info
 from . import login
-from . import landing
+from . import about
 from . import page_uprn
 from . import page_postcode
 from . import page_typeahead

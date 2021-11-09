@@ -44,5 +44,5 @@ def download_handler(file_name):
 
   return send_file(f,
                    mimetype='text/csv',
-                   attachment_filename=f'{file_name}',
+                   attachment_filename=f'{file_name}.csv',
                    as_attachment=True)
