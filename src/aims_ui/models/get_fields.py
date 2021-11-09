@@ -24,17 +24,27 @@ def get_fields(endpoint_name):
           search_type='radio',
           flag=False,
           display_title='Epoch',
-          default_radio_selection='84',
+          default_radio_selection='87',
           radio_options=[
               {
-                  'id': '84',
-                  'text': '84',
-                  'value': '84',
+                  'id': '87',
+                  'text': '87',
+                  'value': '87',
               },
               {
-                  'id': '83',
-                  'text': '83',
-                  'value': '83',
+                  'id': '85',
+                  'text': '85',
+                  'value': '85',
+              },
+              {
+                  'id': '80',
+                  'text': '80',
+                  'value': '80',
+              },
+              {
+                  'id': '39',
+                  'text': '39',
+                  'value': '39',
               },
           ],
       ),
@@ -137,9 +147,6 @@ def get_fields(endpoint_name):
             description=
             'The Unique Property Reference Number consists of digits only, and refers to a single property'
         ),
-        common_fields['classification'],
-        common_fields['classification_help_download'],
-        common_fields['limit'],
         common_fields['epoch'],
         common_fields['historical'],
     ])
@@ -216,6 +223,8 @@ def get_fields(endpoint_name):
         ),
         common_fields['limit'],
         common_fields['classification'],
+        common_fields['classification_help_download'],
+        common_fields['classification'],
         common_fields['epoch'],
         common_fields['auxilary_search'],
     ])
@@ -230,10 +239,31 @@ def get_fields(endpoint_name):
             'Specifies the address search string (e.g. "14 Acacia Avenue, Ruislip, HA4 8RG").'
         ),
         common_fields['classification'],
-        common_fields['boost-checkbox-description'],
-        common_fields['england_boost_checkbox'],
-        common_fields['wales_boost_checkbox'],
-        common_fields['scotland_boost_checkbox'],
+        common_fields['classification_help_download'],
+        Field(
+            'None',
+            search_type='label',
+            display_title=
+            'Include results from the following areas:',
+        ),
+        Field(
+            'eboost',
+            display_title='England',
+            search_type='checkbox',
+            checkbox_value=True,
+        ),
+        Field(
+            'wboost',
+            display_title='Wales',
+            search_type='checkbox',
+            checkbox_value=True,
+        ),
+        Field(
+            'sboost',
+            display_title='Scotland',
+            search_type='checkbox',
+            checkbox_value=True,
+        ),
         common_fields['epoch'],
         common_fields['match_threshold'],
         common_fields['limit'],
