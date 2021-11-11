@@ -3,7 +3,7 @@ from .endpoint_options import get_options
 from flask import url_for
 
 # This will change when DS changes
-hidden_field_class = ' u-hidden '
+hidden_field_class = ' ons-u-hidden '
 
 
 def get_fields(endpoint_name):
@@ -14,7 +14,7 @@ def get_fields(endpoint_name):
       Field(
           'limit',
           display_title="Limit",
-          classes='input--w-4',
+          classes='ons-input--w-4',
           description='Enter the number of addresses to return (0 - 5,000)',
           previous_value='10',
       ),
@@ -94,21 +94,21 @@ def get_fields(endpoint_name):
       Field(
           'eboost',
           display_title='England Boost (1-10)',
-          classes='input--w-4',
+          classes='ons-input--w-4',
           description='Boost the results in favour of England Addresses',
       ),
       'wales_boost':
       Field(
           'wboost',
           display_title='Wales Boost (1-10)',
-          classes='input--w-4',
+          classes='ons-input--w-4',
           description='Boost the results in favour of Wales Addresses',
       ),
       'scotland_boost':
       Field(
           'sboost',
           display_title='Scotland Boost (1-10)',
-          classes='input--w-4',
+          classes='ons-input--w-4',
           description='Boost the results in favour of Scotland Addresses',
       ),
       'auxilary_search':
@@ -216,7 +216,7 @@ def get_fields(endpoint_name):
         Field(
             'postcode',
             display_title='To get started, enter a PostCode',
-            classes='input--w-8',
+            classes='ons-input--w-8',
             required=True,
             description=
             'A postcode is a code for post which separates houses into groups. This is often a 7 didgit letter and number combo.'
