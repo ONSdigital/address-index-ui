@@ -165,13 +165,6 @@ def get_fields(endpoint_name):
         common_fields['wales_boost'],
         common_fields['scotland_boost'],
         Field(
-            'favourwelsh',
-            search_type='checkbox',
-            display_title='Flavour Welsh',
-            description=
-            'If you prefer the results to be flavoured Welsh tick this box',
-        ),
-        Field(
             'groupfullpostcodes',
             search_type='checkbox',
             display_title='Group full postcodes',
