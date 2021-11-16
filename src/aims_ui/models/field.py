@@ -16,6 +16,8 @@ class Field:
   format_as_boolean: bool = False
   flag: bool = False
   checkbox_value: bool = False
+  checkbox_true_value: int  = 0
+  checkbox_false_value: int = 0
   database_association_name: str = ''
   classes: str = ''
   add_default_dropdown_option: bool = True
@@ -32,6 +34,7 @@ class Field:
     if self.search_type == 'radio':
       self.radio_options = self.format_radio_options()
       self.set_radio_status(self.default_radio_selection)
+
 
   def get_selected_radio(self):
     for radio in self.radio_options:
