@@ -55,7 +55,7 @@ def get_fields(endpoint_name):
           display_title='Include historical address data',
           description=
           'Check this box to include historical address data in the search. This will allow inclusion of historical data.',
-      ),
+      ), # REMOVED from all pages for now, as all data is always included due to 'verbose' flag
       'england_boost_checkbox':
       Field(
           'eboost',
@@ -88,7 +88,7 @@ def get_fields(endpoint_name):
           'None',
           search_type='label',
           display_title=
-          'Select any of the below to boost the results in favour of that region',
+          'Boost a region. This is used as a "tie breaker" when the same address from different regions is present.',
       ),
       'england_boost':
       Field(
@@ -148,7 +148,6 @@ def get_fields(endpoint_name):
             'The Unique Property Reference Number consists of digits only, and refers to a single property'
         ),
         common_fields['epoch'],
-        common_fields['historical'],
     ])
 
   elif endpoint_name == 'typeahead':
@@ -169,7 +168,7 @@ def get_fields(endpoint_name):
             search_type='checkbox',
             display_title='Group full postcodes',
             description=
-            'If you bwould like the results to be grouped by their respective full postcodes, tick this box',
+            'If you would like the results to be grouped by their respective full postcodes, tick this box',
         ),
         Field(
             'fallback',
@@ -179,7 +178,6 @@ def get_fields(endpoint_name):
             description=
             'Specifies whether a slow fallback query is used in the event of the main query returning no results.',
         ),
-        common_fields['historical'],
         common_fields['auxilary_search'],
     ])
 
@@ -259,7 +257,6 @@ def get_fields(endpoint_name):
         common_fields['epoch'],
         common_fields['match_threshold'],
         common_fields['limit'],
-        common_fields['historical'],
         common_fields['auxilary_search'],
     ])
   else:
