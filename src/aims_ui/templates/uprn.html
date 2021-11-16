@@ -17,27 +17,24 @@
 {% block pageContent %}
 {% block main %}
 {# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
-<div class="grid">
+<div class="ons-grid">
 
 {# 1Column boarder#}
-  <div class="grid__col col-1@m "><div class="pl-grid-col"></div></div>
+<div class="ons-grid__col ons-col-1@m "></div>
 
 {# Content is the searchboxes, taing up 4 col#}
-  <div class="grid__col col-4@m ">
-    <div class="pl-grid-col">
+  <div class="ons-grid__col ons-col-4@m ">
 
 {{ customSearch ({ "Fields": searchable_fields,
 		   "endpoints": endpoints, 
                    "results_page": results_page, }) }}
 <br>
-</div> </div>
+</div> 
 
 {# 1 Col boarder between filters and results #}
-  <div class="grid__col col-1@m "><div class="pl-grid-col"></div></div>
-
+<div class="ons-grid__col ons-col-1@m "></div>
 {# 5 Col results page #}
-  <div class="grid__col col-5@m ">
-    <div class="pl-grid-col">
+  <div class="ons-grid__col ons-col-5@m ">
 
 {# Title and description #}
 {% for endpoint in endpoints %}
@@ -65,7 +62,7 @@
 	'matched_addresses': matched_addresses,
 	}) }}
 
-</div> </div>
+</div>
 
 {# End of grid #}
 </div>

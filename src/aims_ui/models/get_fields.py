@@ -3,7 +3,7 @@ from .endpoint_options import get_options
 from flask import url_for
 
 # This will change when DS changes
-hidden_field_class = ' u-hidden '
+hidden_field_class = ' ons-u-hidden '
 
 
 def get_fields(endpoint_name):
@@ -14,7 +14,7 @@ def get_fields(endpoint_name):
       Field(
           'limit',
           display_title="Limit",
-          classes='input--w-4',
+          classes='ons-input--w-4',
           description='Enter the number of addresses to return (0 - 5,000)',
           previous_value='10',
       ),
@@ -55,7 +55,7 @@ def get_fields(endpoint_name):
           display_title='Include historical address data',
           description=
           'Check this box to include historical address data in the search. This will allow inclusion of historical data.',
-      ),
+      ), # REMOVED from all pages for now, as all data is always included due to 'verbose' flag
       'england_boost_checkbox':
       Field(
           'eboost',
@@ -88,27 +88,27 @@ def get_fields(endpoint_name):
           'None',
           search_type='label',
           display_title=
-          'Select any of the below to boost the results in favour of that region',
+          'Boost a region. This is used as a "tie breaker" when the same address from different regions is present.',
       ),
       'england_boost':
       Field(
           'eboost',
           display_title='England Boost (1-10)',
-          classes='input--w-4',
+          classes='ons-input--w-4',
           description='Boost the results in favour of England Addresses',
       ),
       'wales_boost':
       Field(
           'wboost',
           display_title='Wales Boost (1-10)',
-          classes='input--w-4',
+          classes='ons-input--w-4',
           description='Boost the results in favour of Wales Addresses',
       ),
       'scotland_boost':
       Field(
           'sboost',
           display_title='Scotland Boost (1-10)',
-          classes='input--w-4',
+          classes='ons-input--w-4',
           description='Boost the results in favour of Scotland Addresses',
       ),
       'auxilary_search':
@@ -148,7 +148,6 @@ def get_fields(endpoint_name):
             'The Unique Property Reference Number consists of digits only, and refers to a single property'
         ),
         common_fields['epoch'],
-        common_fields['historical'],
     ])
 
   elif endpoint_name == 'typeahead':
@@ -165,18 +164,11 @@ def get_fields(endpoint_name):
         common_fields['wales_boost'],
         common_fields['scotland_boost'],
         Field(
-            'favourwelsh',
-            search_type='checkbox',
-            display_title='Flavour Welsh',
-            description=
-            'If you prefer the results to be flavoured Welsh tick this box',
-        ),
-        Field(
             'groupfullpostcodes',
             search_type='checkbox',
             display_title='Group full postcodes',
             description=
-            'If you bwould like the results to be grouped by their respective full postcodes, tick this box',
+            'If you would like the results to be grouped by their respective full postcodes, tick this box',
         ),
         Field(
             'fallback',
@@ -186,7 +178,6 @@ def get_fields(endpoint_name):
             description=
             'Specifies whether a slow fallback query is used in the event of the main query returning no results.',
         ),
-        common_fields['historical'],
         common_fields['auxilary_search'],
     ])
 
@@ -216,7 +207,7 @@ def get_fields(endpoint_name):
         Field(
             'postcode',
             display_title='To get started, enter a PostCode',
-            classes='input--w-8',
+            classes='ons-input--w-8',
             required=True,
             description=
             'A postcode is a code for post which separates houses into groups. This is often a 7 didgit letter and number combo.'
@@ -224,7 +215,6 @@ def get_fields(endpoint_name):
         common_fields['limit'],
         common_fields['classification'],
         common_fields['classification_help_download'],
-        common_fields['classification'],
         common_fields['epoch'],
         common_fields['auxilary_search'],
     ])
@@ -267,7 +257,6 @@ def get_fields(endpoint_name):
         common_fields['epoch'],
         common_fields['match_threshold'],
         common_fields['limit'],
-        common_fields['historical'],
         common_fields['auxilary_search'],
     ])
   else:
