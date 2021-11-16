@@ -39,7 +39,8 @@ def get_all_inputs(searchable_fields, request):
       if field.checkbox_true_value == 0:
         usr_input[field.database_name] = get_val(field.database_name)
       else:
-        usr_input[field.database_name] = field.checkbox_true_value if get_val(field.database_name) else field.checkbox_false_value
+        usr_input[field.database_name] = field.checkbox_true_value if get_val(
+            field.database_name) else field.checkbox_false_value
 
     else:
       usr_input[field.database_name] = get_val(field.database_name)
