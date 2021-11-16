@@ -55,7 +55,7 @@ def get_fields(endpoint_name):
           display_title='Include historical address data',
           description=
           'Check this box to include historical address data in the search. This will allow inclusion of historical data.',
-      ), # REMOVED from all pages for now, as all data is always included due to 'verbose' flag
+      ),  # REMOVED from all pages for now, as all data is always included due to 'verbose' flag
       'england_boost_checkbox':
       Field(
           'eboost',
@@ -233,8 +233,7 @@ def get_fields(endpoint_name):
         Field(
             'None',
             search_type='label',
-            display_title=
-            'Include results from the following areas:',
+            display_title='Include results from the following areas:',
         ),
         Field(
             'eboost',
