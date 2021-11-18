@@ -20,9 +20,10 @@ def autosuggest(autosuggest_type):
     class_list = json.loads(class_call.text).get('classifications')
 
     for classification in class_list:
-      formatted_class_list.append(
-          {'en': classification.get('code'),
-           'category': classification.get('label') })
+      formatted_class_list.append({
+          'en': classification.get('code'),
+          'category': classification.get('label')
+      })
 
     return json.dumps(formatted_class_list)
 
