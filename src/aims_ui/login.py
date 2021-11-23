@@ -30,8 +30,7 @@ def login():
 
       login_user(user)
 
-      flash('Logged in successfully.')
-      return redirect(url_for('uprn'))
+      return redirect(url_for('uprn').replace('http://', 'https://', 1))
 
   return render_template('login.html',
                          endpoints=get_endpoints(),
