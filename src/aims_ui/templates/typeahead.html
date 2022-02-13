@@ -32,6 +32,7 @@
         "id": "address-label"
     },
     "isEditable": false,
+    'APIManualQueryParams': true,
     "mandatory": true,
     "externalInitialiser": true,
     "autocomplete": "new-password",
@@ -76,6 +77,25 @@
 
 {# End of grid #}
 </div>
+
+
+<script>
+function getParamsFromPage( x ) {
+	if  (x === 'a') {
+		return '&limit=11'
+	} else if (x === 'b' ) {
+		return  '&limit=3'
+	}
+}
+typeaheadContainer = document.querySelector('#address-autosuggest-container')
+typeaheadContainer.setAttribute('data-query-params', getParamsFromPage('b') );
+
+document.addEventListener('click', (e) => {
+	console.log('event')
+	typeaheadContainer.setAttribute('data-query-params', getParamsFromPage('a') );
+});
+
+</script>
  
 {% endblock %}
 {% endblock %}
