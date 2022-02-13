@@ -8,12 +8,25 @@ from io import StringIO, BytesIO
 from flask import render_template, request, session, send_file
 from flask_login import login_required
 
+def get_autosuggest_list():
+  formatted_class_list = []
+  classifications_api_url = app.config.get('API_URL') + '/classifications'
+  class_call = requests.get(classifications_api_url)
+  class_list = json.loads(class_call.text).get('classifications')
+
+  for classification in class_list:
+    formatted_class_list.append({
+        'en': classification.get('code'),
+        'category': classification.get('label'),
+    })
+
+  return formatted_class_list
 
 @login_required
 @app.route('/autosuggest/<autosuggest_type>.json', methods=['GET', 'POST'])
 def autosuggest(autosuggest_type):
   """ Autosuggest data for various typeaheads """
-  if autosuggest_type == 'classification':
+  if 'classification' in autosuggest_type:
     formatted_class_list = []
     classifications_api_url = app.config.get('API_URL') + '/classifications'
     class_call = requests.get(classifications_api_url)
@@ -22,8 +35,15 @@ def autosuggest(autosuggest_type):
     for classification in class_list:
       formatted_class_list.append({
           'en': classification.get('code'),
-          'category': classification.get('label')
+          'category': classification.get('label'),
       })
+    if 'reverse' in autosuggest_type:
+      # Add the reverse so the endpoint can be searched in reverse
+      for classification in class_list:
+        formatted_class_list.append({
+            'en': classification.get('label'),
+            'category': classification.get('code'),
+        })
 
     return json.dumps(formatted_class_list)
 
