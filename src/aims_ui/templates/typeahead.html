@@ -21,8 +21,8 @@
 <div class="ons-grid__col ons-col-1@m "></div>
 
 {# Show the typeahead on left side of the page as not to obscure filters #}
-  <div class="ons-grid__col ons-col-4@m ">
-	  <br><br>
+<div class="ons-grid__col ons-col-4@m ">
+<br><br>
 
 {{ onsAddressInput({
     "id": "address",
@@ -80,19 +80,27 @@
 
 
 <script>
-function getParamsFromPage( x ) {
-	if  (x === 'a') {
-		return '&limit=11'
-	} else if (x === 'b' ) {
-		return  '&limit=3'
+function getParamsFromPage( ) {
+	finalParams = '&';
+	form = document.querySelector('.match-form-container');
+	inputs = form.querySelectorAll('input');
+	for (input of inputs) {
+		if ((input.value !== '') && (input.type === 'text')) {
+			finalParams = finalParams + input.getAttribute('id') + '=' + input.value;
+			finalParams = finalParams + '&';
+		}
 	}
+	finalParams = finalParams.substring(0, finalParams.length - 1);
+	console.log(finalParams);
+	return finalParams
 }
+
 typeaheadContainer = document.querySelector('#address-autosuggest-container')
-typeaheadContainer.setAttribute('data-query-params', getParamsFromPage('b') );
+typeaheadContainer.setAttribute('data-query-params', getParamsFromPage() );
 
 document.addEventListener('click', (e) => {
 	console.log('event')
-	typeaheadContainer.setAttribute('data-query-params', getParamsFromPage('a') );
+	typeaheadContainer.setAttribute('data-query-params', getParamsFromPage() );
 });
 
 </script>
