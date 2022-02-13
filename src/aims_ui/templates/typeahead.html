@@ -89,6 +89,10 @@ function getParamsFromPage( ) {
 			finalParams = finalParams + input.getAttribute('id') + '=' + input.value;
 			finalParams = finalParams + '&';
 		}
+		if ((input.type === 'radio') && (input.checked )) {
+			finalParams = finalParams + input.name + '=' + input.id;
+			finalParams = finalParams + '&';
+		}
 	}
 	finalParams = finalParams.substring(0, finalParams.length - 1);
 	console.log(finalParams);
