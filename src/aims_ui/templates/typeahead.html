@@ -85,7 +85,7 @@ function getParamsFromPage( ) {
 	form = document.querySelector('.match-form-container');
 	inputs = form.querySelectorAll('input');
 	for (input of inputs) {
-		if ((input.value !== '') && (input.type === 'text')) {
+		if ((input.type === 'text') && (input.value !== '')) {
 			finalParams = finalParams + input.getAttribute('id') + '=' + input.value;
 			finalParams = finalParams + '&';
 		}
@@ -99,15 +99,14 @@ function getParamsFromPage( ) {
 		}
 	}
 	finalParams = finalParams.substring(0, finalParams.length - 1);
-	console.log(finalParams);
 	return finalParams
 }
 
 typeaheadContainer = document.querySelector('#address-autosuggest-container')
 typeaheadContainer.setAttribute('data-query-params', getParamsFromPage() );
 
-document.addEventListener('click', (e) => {
-	console.log('event')
+// Every time the typeahead is focussed on, refresh the parameters
+typeaheadContainer.addEventListener('focusin', (e) => {
 	typeaheadContainer.setAttribute('data-query-params', getParamsFromPage() );
 });
 
