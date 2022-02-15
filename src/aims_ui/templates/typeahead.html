@@ -21,8 +21,8 @@
 <div class="ons-grid__col ons-col-1@m "></div>
 
 {# Show the typeahead on left side of the page as not to obscure filters #}
-  <div class="ons-grid__col ons-col-4@m ">
-	  <br><br>
+<div class="ons-grid__col ons-col-4@m ">
+<br><br>
 
 {{ onsAddressInput({
     "id": "address",
@@ -32,6 +32,7 @@
         "id": "address-label"
     },
     "isEditable": false,
+    'APIManualQueryParams': true,
     "mandatory": true,
     "externalInitialiser": true,
     "autocomplete": "new-password",
@@ -76,6 +77,40 @@
 
 {# End of grid #}
 </div>
+
+
+<script>
+function getParamsFromPage( ) {
+	finalParams = '&';
+	form = document.querySelector('.match-form-container');
+	inputs = form.querySelectorAll('input');
+	for (input of inputs) {
+		if ((input.type === 'text') && (input.value !== '')) {
+			finalParams = finalParams + input.getAttribute('id') + '=' + input.value;
+			finalParams = finalParams + '&';
+		}
+		if ((input.type === 'radio') && (input.checked)) {
+			finalParams = finalParams + input.name + '=' + input.id;
+			finalParams = finalParams + '&';
+		}
+		if ((input.type === 'checkbox') && (input.checked)) {
+			finalParams = finalParams + input.id + '=' + 'true';
+			finalParams = finalParams + '&';
+		}
+	}
+	finalParams = finalParams.substring(0, finalParams.length - 1);
+	return finalParams
+}
+
+typeaheadContainer = document.querySelector('#address-autosuggest-container')
+typeaheadContainer.setAttribute('data-query-params', getParamsFromPage() );
+
+// Every time the typeahead is focussed on, refresh the parameters
+typeaheadContainer.addEventListener('focusin', (e) => {
+	typeaheadContainer.setAttribute('data-query-params', getParamsFromPage() );
+});
+
+</script>
  
 {% endblock %}
 {% endblock %}
