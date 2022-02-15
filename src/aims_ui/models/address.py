@@ -143,11 +143,12 @@ class AddressAttribute():
       self,
       address_data,
       name,
+      classification_code=None,
   ):
     self.name = name
     self.address_data = address_data
     self.raw_value = address_data.get(name)
-    self.value = self.format_special(self.raw_value)
+    self.value = self.format_special(self.raw_value, classification_code)
     self.show = False
 
     # Set values to show in small overview of an address
@@ -171,7 +172,7 @@ class AddressAttribute():
     if name in values_to_show:
       self.show = True
 
-  def format_special(self, value):
+  def format_special(self, value, classification_code = None):
     # Special formatting for some values
     if self.name == 'confidence_score':
       return (f'{value}% match')
@@ -183,7 +184,7 @@ class AddressAttribute():
       }
       return new_d
     if self.name == 'classificationCodeList':
-      return get_classification_list()
+      return get_classification_list(classification_code)
     if self.name == 'nag':
       return Nag(self.raw_value)
     if self.name == 'paf':
@@ -214,7 +215,7 @@ class Address():
     self.classification_code = AddressAttribute(address_data,
                                                 'classificationCode')
     self.classification_code_list = AddressAttribute(address_data,
-                                                     'classificationCodeList')
+                                                     'classificationCodeList', classification_code = self.classification_code.value)
     self.census_address_type = AddressAttribute(address_data,
                                                 'censusAddressType')
     self.census_estab_type = AddressAttribute(address_data, 'censusEstabType')

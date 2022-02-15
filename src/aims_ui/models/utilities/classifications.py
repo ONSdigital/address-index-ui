@@ -9,45 +9,29 @@ def get_class_list(classifications_api_url):
   return json.loads(classifications.text)
 
 
-def get_class_subset(classifications_api_url, code=None):
+def get_class_subset(classifications_api_url, code):
 
   class_call = requests.get(classifications_api_url)
-  class_list = json.loads(class_call.text)
+  class_list = json.loads(class_call.text).get('classifications')
 
-  subset_list = []
+  final_list = [code]
+  for c in class_list:
+    if c.get('code') == code[0]:
+      final_list.append(c.get('label'))
 
-  if code:
+  for c in class_list:
+    if c.get('code') == code[:2]:
+      final_list.append(c.get('label'))
 
-    if len(code) == 1:
-      for classification in class_list['classifications']:
-        if re.match(r'^(%s)[A-Z]$' % code, classification['code']):
-          subset_list.append({
-              "code": classification['code'].encode("utf-8"),
-              "label": classification['label'].encode("utf-8")
-          })
-    elif len(code) == 2:
-      for classification in class_list['classifications']:
-        if re.match(r'^(%s)[0-9]{2}$' % code, classification['code']):
-          subset_list.append({
-              "code": classification['code'].encode("utf-8"),
-              "label": classification['label'].encode("utf-8")
-          })
-    elif len(code) == 4:
-      for classification in class_list['classifications']:
-        if re.match(r'^(%s)[A-Z]{2}$' % code, classification['code']):
-          subset_list.append({
-              "code": classification['code'].encode("utf-8"),
-              "label": classification['label'].encode("utf-8")
-          })
-  else:
-    for classification in class_list['classifications']:
-      if re.match(r'^[A-Z]$', classification['code']):
-        subset_list.append({
-            "code": classification['code'].encode("utf-8"),
-            "label": classification['label'].encode("utf-8")
-        })
+  for c in class_list:
+    if c.get('code') == code:
+      final_list.append(c.get('label'))
 
-  return subset_list
+  final_string = ''
+  for desc in final_list:
+    final_string = final_string + '['+desc+'] '
+
+  return final_string 
 
 
 def get_classification_list(code=None):
@@ -55,7 +39,6 @@ def get_classification_list(code=None):
   api_url = app.config.get('API_URL')
   classifications_url = f'{api_url}/classifications'
 
-  for classification in get_class_subset(classifications_url, code):
-    class_list.append(' [ ' + str(classification['label'].decode()) + ' ] ')
+  class_list = get_class_subset(classifications_url, code)
 
-  return ''.join(class_list)
+  return str(class_list)
