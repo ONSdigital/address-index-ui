@@ -7,6 +7,7 @@ from io import StringIO, BytesIO
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
 from .page_error import page_error
+from .download_handler import get_autosuggest_list
 import urllib
 import csv
 
@@ -19,7 +20,15 @@ def get_classifications():
       'singlesearch',
       [],
   )
+  return r
 
+def check_reverse_classification(value):
+  autosuggest_list = get_autosuggest_list()
+  for category in autosuggest_list:
+    if value == category.get('category'):
+      return category.get('en')
+
+  return value 
 
 def get_api_auth():
   """Get the auth type, and subsequent required authorisation parameters"""
@@ -37,6 +46,7 @@ def get_api_auth():
 def get_params(all_user_input):
   """Return a list of parameters formatted for API header, from class list of inputs"""
   params = ['verbose=True']
+  print(all_user_input)
   for param, value in all_user_input.items():
     if not str(value):
       continue
@@ -46,6 +56,11 @@ def get_params(all_user_input):
 
     if type(value) == str:
       value = value.replace('%', '')
+
+    # Check if the value is for the classifications, if so, check to see if it needs reversing 
+    if param == 'classificationfilter':
+      value = check_reverse_classification(value)
+
     quoted_param = urllib.parse.quote_plus(str(param))
     quoted_value = urllib.parse.quote_plus(str(value))
     params.append(quoted_param + '=' + quoted_value)

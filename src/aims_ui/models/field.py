@@ -18,6 +18,7 @@ class Field:
   checkbox_value: bool = False
   checkbox_true_value: int = 0
   checkbox_false_value: int = 0
+  min_chars: int = 3
   database_association_name: str = ''
   classes: str = ''
   add_default_dropdown_option: bool = True
