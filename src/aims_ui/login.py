@@ -30,7 +30,7 @@ def login():
 
       login_user(user)
 
-      return redirect(url_for('uprn').replace('http://', 'https://', 1))
+      return redirect(url_for('singlesearch').replace('http://', 'https://', 1))
 
   return render_template('login.html',
                          endpoints=get_endpoints(),
