@@ -50,8 +50,9 @@ def address_info(uprn):
           if nag_name in address_attribute.value.clerical_values:
             trs.append([f'[{attribute_name}]  ' + nag_name, nag_attribute.value])
     else:
-      # If it is 'hierarchey'
+      # If attribute name is 'hierarchey'
       print('looool', address_attribute.value )
+
 
     trs.append([attribute_name, address_attribute.value])
 

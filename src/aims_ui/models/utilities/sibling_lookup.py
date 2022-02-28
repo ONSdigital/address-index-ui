@@ -69,6 +69,10 @@ def getHierarchey(parentUPRN):
         property_uprn,
             ])
 
-  print(tables)
+  
+  test_table = [[tables[0][1], tables[0][2] ]] 
+  table1 = create_table(['Name', 'UPRN'], test_table)
+  print(table1)
+
   return tables
   
