@@ -39,15 +39,22 @@ def address_info(uprn):
   ths = ['Name', 'Value']
   trs = []
   special_responses = ['paf', 'nag']
+
   # Create clerical info, from endpoints
+  # All attributes of 'Address' are added to the table
   for attribute_name, address_attribute in matched_addresses[0].__dict__.items(
   ):
-    if attribute_name in special_responses:
-      for nag_name, nag_attribute in address_attribute.value.__dict__.items():
-        if nag_name in address_attribute.value.clerical_values:
-          trs.append([f'[{attribute_name}]  ' + nag_name, nag_attribute.value])
+    if attribute_name != 'hierarchey':
+      if attribute_name in special_responses:
+        for nag_name, nag_attribute in address_attribute.value.__dict__.items():
+          if nag_name in address_attribute.value.clerical_values:
+            trs.append([f'[{attribute_name}]  ' + nag_name, nag_attribute.value])
+    else:
+      # If it is 'hierarchey'
+      print('looool', address_attribute.value )
 
     trs.append([attribute_name, address_attribute.value])
+
 
   return render_template(
       'address_info.html',

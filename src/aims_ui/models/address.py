@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field, fields
 import json
 from .utilities.classifications import get_classification_list
+from .utilities.sibling_lookup import getHierarchey
 from aims_ui import app
 
 
@@ -189,6 +190,8 @@ class AddressAttribute():
       return Nag(self.raw_value)
     if self.name == 'paf':
       return Paf(self.raw_value)
+    if self.name == 'hierarchey':
+      return getHierarchey(self.address_data)
 
     return f'{value}'
 
@@ -201,29 +204,22 @@ class Address():
     self.uprn = AddressAttribute(address_data, 'uprn')
     self.formatted_address = AddressAttribute(address_data, 'formattedAddress')
     self.parent_uprn = AddressAttribute(address_data, 'parentUprn')
-    self.formatted_address_nag = AddressAttribute(address_data,
-                                                  'formattedAddressNag')
-    self.formatted_address_paf = AddressAttribute(address_data,
-                                                  'formattedAddressPaf')
-    self.formatted_address_nisra = AddressAttribute(address_data,
-                                                    'formattedAddressNisra')
-    self.welsh_formatted_address_nag = AddressAttribute(
-        address_data, 'welshFormattedAddressNag')
-    self.welsh_formatted_address_paf = AddressAttribute(
-        address_data, 'welshFormattedAddressPaf')
+    self.formatted_address_nag = AddressAttribute(address_data, 'formattedAddressNag')
+    self.formatted_address_paf = AddressAttribute(address_data, 'formattedAddressPaf')
+    self.formatted_address_nisra = AddressAttribute(address_data,'formattedAddressNisra')
+    self.welsh_formatted_address_nag = AddressAttribute(address_data, 'welshFormattedAddressNag')
+    self.welsh_formatted_address_paf = AddressAttribute(address_data, 'welshFormattedAddressPaf')
     self.geo = AddressAttribute(address_data, 'geo')
-    self.classification_code = AddressAttribute(address_data,
-                                                'classificationCode')
+    self.classification_code = AddressAttribute(address_data,'classificationCode')
     self.classification_code_list = AddressAttribute(address_data,
-                                                     'classificationCodeList', classification_code = self.classification_code.value)
-    self.census_address_type = AddressAttribute(address_data,
-                                                'censusAddressType')
+          'classificationCodeList', classification_code = self.classification_code.value)
+    self.census_address_type = AddressAttribute(address_data, 'censusAddressType')
     self.census_estab_type = AddressAttribute(address_data, 'censusEstabType')
     self.country_code = AddressAttribute(address_data, 'countryCode')
-    self.lpi_logical_status = AddressAttribute(address_data,
-                                               'lpiLogicalStatus')
+    self.lpi_logical_status = AddressAttribute(address_data, 'lpiLogicalStatus')
     self.confidence_score = AddressAttribute(address_data, 'confidenceScore')
     self.underlying_score = AddressAttribute(address_data, 'underlyingScore')
+    self.hierarchey = AddressAttribute(address_data, 'hierarchey')
 
     # Items with their own Dict object returned should be given full response
     self.nag = AddressAttribute(address_data, 'nag')

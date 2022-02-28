@@ -46,7 +46,6 @@ def get_api_auth():
 def get_params(all_user_input):
   """Return a list of parameters formatted for API header, from class list of inputs"""
   params = ['verbose=True']
-  print(all_user_input)
   for param, value in all_user_input.items():
     if not str(value):
       continue

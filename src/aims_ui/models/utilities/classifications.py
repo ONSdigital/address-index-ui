@@ -27,9 +27,15 @@ def get_class_subset(classifications_api_url, code):
     if c.get('code') == code:
       final_list.append(c.get('label'))
 
+  # Check to remove final string if identical to prior
+  length = len(final_list)
+  if final_list[length-1] == final_list[length-2]:
+    final_list[length-1] = ''
+
   final_string = ''
   for desc in final_list:
-    final_string = final_string + '['+desc+'] '
+    if desc != '':
+      final_string = final_string + '['+desc+'] '
 
   return final_string 
 
