@@ -18,6 +18,7 @@ import hashlib, binascii, os
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
+  return redirect(url_for('singlesearch').replace('http://', 'https://', 1))
 
   if request.method == 'POST':
 
