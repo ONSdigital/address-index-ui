@@ -11,9 +11,6 @@ def create_table(table_headers, table_rows):
 
 
 def create_hierarchey_table(table_templates):
-  print(table_templates)
-  print('')
-
   row_titles = ['UPRN', 'Name']
   dic_tables = {}
   t_title = ''
@@ -29,9 +26,7 @@ def create_hierarchey_table(table_templates):
   final_tables = {}
   for key, value in dic_tables.items():
     nunjucks_table = create_table(row_titles, value)
-    final_tables['key'] = nunjucks_table
-
-
+    final_tables[key] = nunjucks_table
 
   return final_tables 
 

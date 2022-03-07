@@ -3,6 +3,7 @@
 {% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
 {% from "components/input/_macro.njk" import onsInput %}
 {% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+{% from "components/table/_macro.njk" import onsTable %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -20,19 +21,16 @@
 	'clerical_info': clerical_info,
 	}) }}
 
+{% for t_title, t_table in hierarchey_table.items() %} 
 
-
-<h1> {{ hierarchey_table }}</h1>
-
-
-{#
 {{ onsTable({
-'caption': '',
-'ths': params.clerical_info.get('ths'),
-'trs': params.clerical_info.get('trs'),
-}) }}
-#}
+	'caption': t_title,
+	'ths': t_table.get('ths'),
+	'trs': t_table.get('trs'),
+	}) }}
 
+
+{% endfor %}
 
 </div>
 </div>
