@@ -31,6 +31,8 @@ def create_hierarchey_table(table_templates):
     nunjucks_table = create_table(row_titles, value)
     final_tables['key'] = nunjucks_table
 
+
+
   return final_tables 
 
 
