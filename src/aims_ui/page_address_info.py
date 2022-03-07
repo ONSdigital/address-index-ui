@@ -2,7 +2,7 @@ import os
 from . import app
 from .models.get_endpoints import get_endpoints
 from .api_interaction import api
-from .table_utils import create_table
+from .table_utils import create_table, create_hierarchey_table
 from .models.get_addresses import get_addresses
 from requests.exceptions import ConnectionError
 from flask import render_template
@@ -51,15 +51,17 @@ def address_info(uprn):
             trs.append([f'[{attribute_name}]  ' + nag_name, nag_attribute.value])
     else:
       # If attribute name is 'hierarchey'
-      print('looool', address_attribute.value )
-
-
+      hierarchey_table = create_hierarchey_table(address_attribute.value)
+    
     trs.append([attribute_name, address_attribute.value])
-
 
   return render_template(
       'address_info.html',
       endpoints=get_endpoints('address_info'),
       matched_addresses=matched_addresses,
       clerical_info=create_table(ths, trs),
+      hierarchey_table=hierarchey_table,
   )
+
+
+

@@ -42,7 +42,6 @@ def api(url, called_from, all_user_input):
   return r
 
 def getHierarchey(parentUPRN):
-  print('start of output-------------')
   relatives = parentUPRN.get('relatives')
 
   tables = []
@@ -69,10 +68,8 @@ def getHierarchey(parentUPRN):
         property_uprn,
             ])
 
-  
   test_table = [[tables[0][1], tables[0][2] ]] 
   table1 = create_table(['Name', 'UPRN'], test_table)
-  print(table1)
 
   return tables
   
