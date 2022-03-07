@@ -9,21 +9,12 @@ def create_table(table_headers, table_rows):
 
   return {'ths': ths, 'trs': trs}
 
-class Table():
-  def __init__(self, title):
-    self.title = title
-    self.rows = []
-    self.row_titles = ['UPRN', 'Name']
-
-  def add_row(self, row):
-    self.rows.append(row)
-
-
 
 def create_hierarchey_table(table_templates):
   print(table_templates)
   print('')
 
+  row_titles = ['UPRN', 'Name']
   dic_tables = {}
   t_title = ''
   for t in table_templates:
@@ -35,7 +26,10 @@ def create_hierarchey_table(table_templates):
 
     dic_tables[t_title] =tmp
 
-  print(dic_tables)
+  final_tables = {}
+  for key, value in dic_tables.items():
+    nunjucks_table = create_table(row_titles, value)
+    final_tables['key'] = nunjucks_table
 
   return final_tables 
 
