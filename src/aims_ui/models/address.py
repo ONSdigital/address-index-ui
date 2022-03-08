@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field, fields
 import json
 from .utilities.classifications import get_classification_list
-from .utilities.sibling_lookup import getHierarchey
+from .utilities.sibling_lookup import getHierarchy
 from aims_ui import app
 
 
@@ -190,8 +190,8 @@ class AddressAttribute():
       return Nag(self.raw_value)
     if self.name == 'paf':
       return Paf(self.raw_value)
-    if self.name == 'hierarchey':
-      return getHierarchey(self.address_data)
+    if self.name == 'hierarchy':
+      return getHierarchy(self.address_data)
 
     return f'{value}'
 
@@ -219,7 +219,7 @@ class Address():
     self.lpi_logical_status = AddressAttribute(address_data, 'lpiLogicalStatus')
     self.confidence_score = AddressAttribute(address_data, 'confidenceScore')
     self.underlying_score = AddressAttribute(address_data, 'underlyingScore')
-    self.hierarchey = AddressAttribute(address_data, 'hierarchey')
+    self.hierarchy = AddressAttribute(address_data, 'hierarchy')
 
     # Items with their own Dict object returned should be given full response
     self.nag = AddressAttribute(address_data, 'nag')
