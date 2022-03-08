@@ -20,15 +20,14 @@
 	'matched_addresses': matched_addresses,
 	'clerical_info': clerical_info,
 	}) }}
+<br>
 
 {% for t_title, t_table in hierarchey_table.items() %} 
-
-{{ onsTable({
-	'caption': t_title,
-	'ths': t_table.get('ths'),
-	'trs': t_table.get('trs'),
-	}) }}
-
+	{{ onsTable({
+		'caption': t_title,
+		'ths': t_table.get('ths'),
+		'trs': t_table.get('trs'),
+		}) }}
 
 {% endfor %}
 
