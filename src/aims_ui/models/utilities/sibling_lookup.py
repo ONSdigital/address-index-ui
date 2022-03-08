@@ -41,7 +41,7 @@ def api(url, called_from, all_user_input):
 
   return r
 
-def getHierarchey(parentUPRN):
+def getHierarchy(parentUPRN):
   relatives = parentUPRN.get('relatives')
 
   tables = []

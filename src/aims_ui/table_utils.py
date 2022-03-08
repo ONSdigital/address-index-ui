@@ -10,7 +10,7 @@ def create_table(table_headers, table_rows):
   return {'ths': ths, 'trs': trs}
 
 
-def create_hierarchey_table(table_templates):
+def create_hierarchy_table(table_templates):
   row_titles = ['UPRN', 'Name']
   dic_tables = {}
   t_title = ''
