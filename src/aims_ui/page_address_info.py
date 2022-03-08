@@ -55,11 +55,16 @@ def address_info(uprn):
     
     trs.append([attribute_name, address_attribute.value])
 
+  # Remove hierarchy info from clerical data
+  final_trs = [x if x[0]!='hierarchy' else '' for x in trs]
+  
+  clerical_info = create_table(ths, final_trs)
+
   return render_template(
       'address_info.html',
       endpoints=get_endpoints('address_info'),
       matched_addresses=matched_addresses,
-      clerical_info=create_table(ths, trs),
+      clerical_info=clerical_info,
       hierarchy_table=hierarchy_table,
   )
 
