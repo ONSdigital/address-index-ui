@@ -164,13 +164,16 @@ def get_fields(endpoint_name):
         common_fields['england_boost'],
         common_fields['wales_boost'],
         common_fields['scotland_boost'],
-        Field(
-            'groupfullpostcodes',
-            search_type='checkbox',
-            display_title='Group full postcodes',
-            description=
-            'If you would like the results to be grouped by their respective full postcodes, tick this box',
-        ),
+
+# REMOVED - left commented incase of later requirements
+#        Field(
+#            'groupfullpostcodes',
+#            search_type='checkbox',
+#            display_title='Group full postcodes',
+#            description=
+#            'If you would like the results to be grouped by their respective full postcodes, tick this box',
+#        ),
+
         Field(
             'fallback',
             search_type='checkbox',
@@ -179,7 +182,6 @@ def get_fields(endpoint_name):
             description=
             'Specifies whether a slow fallback query is used in the event of the main query returning no results.',
         ),
-        common_fields['auxilary_search'],
     ])
 
   elif endpoint_name == 'multiple_address':
@@ -217,7 +219,6 @@ def get_fields(endpoint_name):
         common_fields['classification'],
         common_fields['classification_help_download'],
         common_fields['epoch'],
-        common_fields['auxilary_search'],
     ])
 
   elif endpoint_name == 'singlesearch':
@@ -263,7 +264,6 @@ def get_fields(endpoint_name):
         common_fields['epoch'],
         common_fields['match_threshold'],
         common_fields['limit'],
-        common_fields['auxilary_search'],
     ])
   else:
     raise Exception(f'No valid field found - Found {endpoint_name}')
