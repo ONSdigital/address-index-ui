@@ -126,7 +126,7 @@ def get_fields(endpoint_name):
           display_title='Classification',
           description='Select a classification',
           autosuggest_url='/autosuggest/classification-reverse.json',
-          min_chars = 1,
+          min_chars=1,
       ),
       'classification_help_download':
       Field(
