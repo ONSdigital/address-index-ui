@@ -8,6 +8,7 @@ from io import StringIO, BytesIO
 from flask import render_template, request, session, send_file
 from flask_login import login_required
 
+
 def get_autosuggest_list():
   formatted_class_list = []
   classifications_api_url = app.config.get('API_URL') + '/classifications'
@@ -21,6 +22,7 @@ def get_autosuggest_list():
     })
 
   return formatted_class_list
+
 
 @login_required
 @app.route('/autosuggest/<autosuggest_type>.json', methods=['GET', 'POST'])
