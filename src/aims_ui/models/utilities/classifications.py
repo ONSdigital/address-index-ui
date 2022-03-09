@@ -29,15 +29,15 @@ def get_class_subset(classifications_api_url, code):
 
   # Check to remove final string if identical to prior
   length = len(final_list)
-  if final_list[length-1] == final_list[length-2]:
-    final_list[length-1] = ''
+  if final_list[length - 1] == final_list[length - 2]:
+    final_list[length - 1] = ''
 
   final_string = ''
   for desc in final_list:
     if desc != '':
-      final_string = final_string + '['+desc+'] '
+      final_string = final_string + '[' + desc + '] '
 
-  return final_string 
+  return final_string
 
 
 def get_classification_list(code=None):
