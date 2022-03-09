@@ -27,14 +27,14 @@ def get_fields(endpoint_name):
           default_radio_selection='87',
           radio_options=[
               {
+                  'id': '89',
+                  'text': '89',
+                  'value': '89',
+              },
+              {
                   'id': '87',
                   'text': '87',
                   'value': '87',
-              },
-              {
-                  'id': '85',
-                  'text': '85',
-                  'value': '85',
               },
               {
                   'id': '80',
