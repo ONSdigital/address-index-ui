@@ -46,18 +46,20 @@ def address_info(uprn):
   ):
     if attribute_name != 'hierarchy':
       if attribute_name in special_responses:
-        for nag_name, nag_attribute in address_attribute.value.__dict__.items():
+        for nag_name, nag_attribute in address_attribute.value.__dict__.items(
+        ):
           if nag_name in address_attribute.value.clerical_values:
-            trs.append([f'[{attribute_name}]  ' + nag_name, nag_attribute.value])
+            trs.append(
+                [f'[{attribute_name}]  ' + nag_name, nag_attribute.value])
     else:
       # If attribute name is 'hierarchy'
       hierarchy_table = create_hierarchy_table(address_attribute.value)
-    
+
     trs.append([attribute_name, address_attribute.value])
 
   # Remove hierarchy info from clerical data
-  final_trs = [x if x[0]!='hierarchy' else '' for x in trs]
-  
+  final_trs = [x if x[0] != 'hierarchy' else '' for x in trs]
+
   clerical_info = create_table(ths, final_trs)
 
   return render_template(
@@ -67,6 +69,3 @@ def address_info(uprn):
       clerical_info=clerical_info,
       hierarchy_table=hierarchy_table,
   )
-
-
-
