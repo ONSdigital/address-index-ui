@@ -22,13 +22,15 @@ def get_classifications():
   )
   return r
 
+
 def check_reverse_classification(value):
   autosuggest_list = get_autosuggest_list()
   for category in autosuggest_list:
     if value == category.get('category'):
       return category.get('en')
 
-  return value 
+  return value
+
 
 def get_api_auth():
   """Get the auth type, and subsequent required authorisation parameters"""
@@ -56,7 +58,7 @@ def get_params(all_user_input):
     if type(value) == str:
       value = value.replace('%', '')
 
-    # Check if the value is for the classifications, if so, check to see if it needs reversing 
+    # Check if the value is for the classifications, if so, check to see if it needs reversing
     if param == 'classificationfilter':
       value = check_reverse_classification(value)
 
