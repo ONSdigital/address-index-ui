@@ -173,7 +173,7 @@ class AddressAttribute():
     if name in values_to_show:
       self.show = True
 
-  def format_special(self, value, classification_code = None):
+  def format_special(self, value, classification_code=None):
     # Special formatting for some values
     if self.name == 'confidence_score':
       return (f'{value}% match')
@@ -204,19 +204,29 @@ class Address():
     self.uprn = AddressAttribute(address_data, 'uprn')
     self.formatted_address = AddressAttribute(address_data, 'formattedAddress')
     self.parent_uprn = AddressAttribute(address_data, 'parentUprn')
-    self.formatted_address_nag = AddressAttribute(address_data, 'formattedAddressNag')
-    self.formatted_address_paf = AddressAttribute(address_data, 'formattedAddressPaf')
-    self.formatted_address_nisra = AddressAttribute(address_data,'formattedAddressNisra')
-    self.welsh_formatted_address_nag = AddressAttribute(address_data, 'welshFormattedAddressNag')
-    self.welsh_formatted_address_paf = AddressAttribute(address_data, 'welshFormattedAddressPaf')
+    self.formatted_address_nag = AddressAttribute(address_data,
+                                                  'formattedAddressNag')
+    self.formatted_address_paf = AddressAttribute(address_data,
+                                                  'formattedAddressPaf')
+    self.formatted_address_nisra = AddressAttribute(address_data,
+                                                    'formattedAddressNisra')
+    self.welsh_formatted_address_nag = AddressAttribute(
+        address_data, 'welshFormattedAddressNag')
+    self.welsh_formatted_address_paf = AddressAttribute(
+        address_data, 'welshFormattedAddressPaf')
     self.geo = AddressAttribute(address_data, 'geo')
-    self.classification_code = AddressAttribute(address_data,'classificationCode')
-    self.classification_code_list = AddressAttribute(address_data,
-          'classificationCodeList', classification_code = self.classification_code.value)
-    self.census_address_type = AddressAttribute(address_data, 'censusAddressType')
+    self.classification_code = AddressAttribute(address_data,
+                                                'classificationCode')
+    self.classification_code_list = AddressAttribute(
+        address_data,
+        'classificationCodeList',
+        classification_code=self.classification_code.value)
+    self.census_address_type = AddressAttribute(address_data,
+                                                'censusAddressType')
     self.census_estab_type = AddressAttribute(address_data, 'censusEstabType')
     self.country_code = AddressAttribute(address_data, 'countryCode')
-    self.lpi_logical_status = AddressAttribute(address_data, 'lpiLogicalStatus')
+    self.lpi_logical_status = AddressAttribute(address_data,
+                                               'lpiLogicalStatus')
     self.confidence_score = AddressAttribute(address_data, 'confidenceScore')
     self.underlying_score = AddressAttribute(address_data, 'underlyingScore')
     self.hierarchy = AddressAttribute(address_data, 'hierarchy')

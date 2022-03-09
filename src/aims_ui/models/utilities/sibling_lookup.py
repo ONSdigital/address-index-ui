@@ -3,6 +3,7 @@ from aims_ui.table_utils import create_table
 import requests
 import urllib
 
+
 def get_params(all_user_input):
   """Return a list of parameters formatted for API header, from class list of inputs"""
   params = ['verbose=True']
@@ -13,7 +14,7 @@ def get_params(all_user_input):
     if type(value) == str:
       value = value.replace('%', '')
 
-    # Check if the value is for the classifications, if so, check to see if it needs reversing 
+    # Check if the value is for the classifications, if so, check to see if it needs reversing
     if param == 'classificationfilter':
       value = check_reverse_classification(value)
 
@@ -23,6 +24,7 @@ def get_params(all_user_input):
 
   return '&'.join(params)
 
+
 def api(url, called_from, all_user_input):
   """API helper, all pages go through here to interact with API"""
 
@@ -31,7 +33,8 @@ def api(url, called_from, all_user_input):
   }
 
   params = get_params(all_user_input)
-  url = app.config.get('API_URL') + str(url) + str(all_user_input.get(called_from, ''))
+  url = app.config.get('API_URL') + str(url) + str(
+      all_user_input.get(called_from, ''))
 
   r = requests.get(
       url,
@@ -41,12 +44,15 @@ def api(url, called_from, all_user_input):
 
   return r
 
+
 def getHierarchy(parentUPRN):
   relatives = parentUPRN.get('relatives')
 
   tables = []
 
-  table_headers = ['placeholder', 'Primary', 'Secondary', 'Teriternary', 'Quaternaty']
+  table_headers = [
+      'placeholder', 'Primary', 'Secondary', 'Teriternary', 'Quaternaty'
+  ]
   ths = ['UPRN', 'Property Name']
   trs = []
 
@@ -63,13 +69,12 @@ def getHierarchy(parentUPRN):
       property_uprn = address.get('uprn')
 
       tables.append([
-        table_headers[level.get('level')],
-        property_name,
-        property_uprn,
-            ])
+          table_headers[level.get('level')],
+          property_name,
+          property_uprn,
+      ])
 
-  test_table = [[tables[0][1], tables[0][2] ]] 
+  test_table = [[tables[0][1], tables[0][2]]]
   table1 = create_table(['Name', 'UPRN'], test_table)
 
   return tables
-  
