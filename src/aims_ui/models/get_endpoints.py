@@ -18,7 +18,7 @@ def get_endpoints(called_from=None):
       Endpoint(
           'Single Search',
           'singlesearch',
-          "Search for a single address using a single word phrase or paragraph",
+          'Provide as much of the address as possible for best results',
       ),
       Endpoint(
           'Typeahead',
