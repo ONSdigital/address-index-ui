@@ -197,7 +197,7 @@ class AddressAttribute():
 
 
 class Address():
-  def __init__(self, address_data):
+  def __init__(self, address_data, include_hierarchy=False):
     address_data = address_data.get('address')
 
     # Essentially all atributes of an expected address from AIMS API (Verbose)
@@ -219,7 +219,10 @@ class Address():
     self.lpi_logical_status = AddressAttribute(address_data, 'lpiLogicalStatus')
     self.confidence_score = AddressAttribute(address_data, 'confidenceScore')
     self.underlying_score = AddressAttribute(address_data, 'underlyingScore')
-    self.hierarchy = AddressAttribute(address_data, 'hierarchy')
+    if include_hierarchy:
+      self.hierarchy = AddressAttribute(address_data, 'hierarchy')
+    else:
+      self.hierarchy = None
 
     # Items with their own Dict object returned should be given full response
     self.nag = AddressAttribute(address_data, 'nag')
