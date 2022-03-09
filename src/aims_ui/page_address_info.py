@@ -53,7 +53,9 @@ def address_info(uprn):
                 [f'[{attribute_name}]  ' + nag_name, nag_attribute.value])
     else:
       # If attribute name is 'hierarchy'
-      hierarchy_table = create_hierarchy_table(address_attribute.value)
+      if address_attribute.value != None:
+        hierarchy_table = create_hierarchy_table(address_attribute.value)
+
 
     trs.append([attribute_name, address_attribute.value])
 
