@@ -13,7 +13,7 @@ def get_endpoints(called_from=None):
       Endpoint(
           'Unique Property Reference Number',
           'uprn',
-          "Search for a property via it's unique property refference number. This is a 12 didgit number which contains no characters",
+          "Search for a property via it's unique property reference number. This is a 12 digit number which contains no characters.",
       ),
       Endpoint(
           'Postcode',
@@ -21,14 +21,19 @@ def get_endpoints(called_from=None):
           "Search for a property using it's postcode. This is effective and a valid postcode will return a list of possible addresses.",
       ),
       Endpoint(
+          'Single Search',
+          'singlesearch',
+          'Provide as much of the address as possible for best results.',
+      ),
+      Endpoint(
           'Typeahead',
           'typeahead',
-          "This search types ahead. Auttosugest on steroids basically. Useful if you quickly want a user to find an address",
+          "This search types ahead. Autosuggest on steroids basically. Useful if you quickly want a user to find an address.",
       ),
       Endpoint(
           'Multiple Address',
           'multiple_address',
-          "Search for not just  one address. Several. Get lots of results you can haveanice look through",
+          "Search for not just  one address. Several. Get lots of results you can look through. This service completes many single searches from a file.",
       ),
   ]
 
