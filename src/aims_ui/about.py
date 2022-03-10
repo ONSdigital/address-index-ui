@@ -6,6 +6,7 @@ from .models.get_endpoints import get_endpoints
 
 
 @login_required
+@app.route('/')
 @app.route('/about')
 def about():
 
