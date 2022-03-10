@@ -6,6 +6,11 @@ def get_endpoints(called_from=None):
   # Add new endpoints here for auto-creation on all pages
   endpoints = [
       Endpoint(
+          'Single Search',
+          'singlesearch',
+          'Provide as much of the address as possible for best results',
+      ),
+      Endpoint(
           'Unique Property Reference Number',
           'uprn',
           "Search for a property via it's unique property refference number. This is a 12 didgit number which contains no characters",
@@ -14,11 +19,6 @@ def get_endpoints(called_from=None):
           'Postcode',
           'postcode',
           "Search for a property using it's postcode. This is effective and a valid postcode will return a list of possible addresses.",
-      ),
-      Endpoint(
-          'Single Search',
-          'singlesearch',
-          'Provide as much of the address as possible for best results',
       ),
       Endpoint(
           'Typeahead',
