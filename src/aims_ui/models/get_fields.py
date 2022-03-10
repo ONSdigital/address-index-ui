@@ -213,7 +213,7 @@ def get_fields(endpoint_name):
             classes='ons-input--w-8',
             required=True,
             description=
-            'A postcode is a code for post which separates houses into groups. This is often a 7 didgit letter and number combo.'
+            'A postcode is a code for post which separates houses into groups. This is often a 7 digit letter and number combo.'
         ),
         common_fields['limit'],
         common_fields['classification'],
