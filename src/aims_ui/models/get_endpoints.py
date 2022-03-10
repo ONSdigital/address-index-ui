@@ -6,6 +6,11 @@ def get_endpoints(called_from=None):
   # Add new endpoints here for auto-creation on all pages
   endpoints = [
       Endpoint(
+          'Single Search',
+          'singlesearch',
+          'Provide as much of the address as possible for best results',
+      ),
+      Endpoint(
           'Unique Property Reference Number',
           'uprn',
           "Search for a property via it's unique property reference number. This is a 12 digit number which contains no characters.",
