@@ -16,9 +16,9 @@ import sqlite3
 import hashlib, binascii, os
 
 
-@app.route('/nothinghere', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-  return redirect(url_for('singlesearch').replace('http://', 'https://', 1))
+  return redirect(url_for('singlesearch').replace('http', 'https', 1))
 
   if request.method == 'POST':
 
@@ -32,7 +32,7 @@ def login():
       login_user(user)
 
       return redirect(
-          url_for('singlesearch').replace('http://', 'https://', 1))
+          url_for('singlesearch').replace('http', 'https', 1))
 
   return render_template('login.html',
                          endpoints=get_endpoints(),
