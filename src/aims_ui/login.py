@@ -16,7 +16,7 @@ import sqlite3
 import hashlib, binascii, os
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/nothinghere', methods=['GET', 'POST'])
 def login():
   return redirect(url_for('singlesearch').replace('http://', 'https://', 1))
 
