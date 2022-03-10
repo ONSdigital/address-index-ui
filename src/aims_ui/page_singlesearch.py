@@ -15,7 +15,7 @@ page_name = 'singlesearch'
 
 
 @login_required
-@app.route(f'/{page_name}', methods=['GET', 'POST'])
+@app.route(f'/', methods=['GET', 'POST'])
 def singlesearch():
 
   if request.method == 'GET':
