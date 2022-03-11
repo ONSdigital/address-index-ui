@@ -111,11 +111,15 @@
 {% endif %}
 {% endfor %}
 
+{% if params.remove_search_button == False %}
+
 <br>
 {# Add a search button on the end of the UI #}
 {% if not params.remove_buttons %}
 {{  onsButton({ 
 	"text": "Search", }) }}
+
+{% endif %}
 
 {# Add a clear filters button with a url to the currently selected endpoint #}
 {% for endpoint in params.endpoints %}
