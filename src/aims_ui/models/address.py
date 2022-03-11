@@ -192,6 +192,8 @@ class AddressAttribute():
       return Paf(self.raw_value)
     if self.name == 'hierarchy':
       return getHierarchy(self.address_data)
+    if self.name == 'parentUprn':
+      return f'<a href="/address_info/{value}">{value}<a>' 
 
     return f'{value}'
 
