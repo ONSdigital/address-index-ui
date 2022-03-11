@@ -124,7 +124,7 @@ def get_fields(endpoint_name):
           'classificationfilter',
           search_type='autosuggest',
           display_title='Classification',
-          description='Select a classification',
+          description='Classification - To further filter your results, select a classification',
           autosuggest_url='/autosuggest/classification-reverse.json',
           min_chars=1,
       ),
