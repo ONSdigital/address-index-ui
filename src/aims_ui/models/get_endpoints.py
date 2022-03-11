@@ -21,11 +21,6 @@ def get_endpoints(called_from=None):
           "Search for a property using it's postcode. This is effective and a valid postcode will return a list of possible addresses.",
       ),
       Endpoint(
-          'Single Search',
-          'singlesearch',
-          'Provide as much of the address as possible for best results.',
-      ),
-      Endpoint(
           'Typeahead',
           'typeahead',
           "This search types ahead. Autosuggest on steroids basically. Useful if you quickly want a user to find an address.",
