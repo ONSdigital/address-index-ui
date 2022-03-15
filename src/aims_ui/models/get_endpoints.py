@@ -18,7 +18,7 @@ def get_endpoints(called_from=None):
       Endpoint(
           'Postcode',
           'postcode',
-          "Search for a property using it's postcode. This is effective and a valid postcode will return a list of possible addresses.",
+          "Search for a property using its postcode. This is effective and a valid postcode will return a list of possible addresses.",
       ),
       Endpoint(
           'Typeahead',
