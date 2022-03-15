@@ -13,12 +13,12 @@ def get_endpoints(called_from=None):
       Endpoint(
           'Unique Property Reference Number',
           'uprn',
-          "Search for a property via it's unique property reference number. This is a 12 digit number which contains no characters.",
+          "Search for a property via its unique property reference number. This is a 12 digit number which contains no characters.",
       ),
       Endpoint(
           'Postcode',
           'postcode',
-          "Search for a property using it's postcode. This is effective and a valid postcode will return a list of possible addresses.",
+          "Search for a property using its postcode. This is effective and a valid postcode will return a list of possible addresses.",
       ),
       Endpoint(
           'Typeahead',
