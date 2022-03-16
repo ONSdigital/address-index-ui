@@ -55,8 +55,9 @@ def singlesearch():
   save_confidence_score(session, matched_addresses)
 
   # Check to see if showing the comfortable redirect is appropriate
-  if all_user_input.get('input').isdigit():
-    searchable_fields = get_fields(page_name, include_UPRN_redirect=True)
+  ss_input = all_user_input.get('input') 
+  if ss_input.isdigit():
+    searchable_fields = get_fields(page_name, include_UPRN_redirect=ss_input)
     all_user_input = load_save_store_inputs(
         searchable_fields,
         request,

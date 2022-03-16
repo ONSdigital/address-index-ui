@@ -144,6 +144,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         Field(
             'uprn',
             display_title='To get started, enter a UPRN',
+            previous_value=include_UPRN_redirect,
             required=True,
             description=
             'The Unique Property Reference Number consists of digits only, and refers to a single property'
@@ -266,13 +267,13 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['limit'],
     ]
 
-    if include_UPRN_redirect:
+    if include_UPRN_redirect != False:
       uprn_search_url = url_for('uprn')
       panel_field = Field(
           'panel',
           search_type='panel',
           description=
-          f'Looking for UPRN search? <a href={uprn_search_url}>Try this service for UPRN searches</a>',
+          f'Looking for UPRN search? <a href={uprn_search_url}?search_uprn={include_UPRN_redirect}>Try this service for UPRN searches</a>',
         )
       fields.insert(0, panel_field)
 
