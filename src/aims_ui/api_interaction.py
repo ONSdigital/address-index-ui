@@ -38,6 +38,7 @@ def get_api_auth():
   if app.config.get('API_AUTH_TYPE') == 'JWT':
     api_auth['API_AUTH_TYPE'] = 'JWT'
     api_auth['JWT_TOKEN'] = app.config.get('JWT_TOKEN')
+    api_auth['PROJECT_DOMAIN'] = app.config.get('PROJECT_DOMAIN')
   elif app.config.get('API_AUTH_TYPE') == 'BASIC_AUTH':
     api_auth['API_AUTH_TYPE'] = 'BASIC_AUTH'
     api_auth['API_BSC_AUTH_USERNAME'] = app.config.get('API_BSC_AUTH_USERNAME')
