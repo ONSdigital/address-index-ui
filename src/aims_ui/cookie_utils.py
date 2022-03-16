@@ -2,7 +2,6 @@ def delete_input(session):
   """Remove search field data from the cookie"""
   session['previous_user_responses'] = {}
 
-
 def save_input(all_user_input, session):
   """Save the values of html objects into response so they can be loaded in future"""
   session['previous_user_responses'] = all_user_input
