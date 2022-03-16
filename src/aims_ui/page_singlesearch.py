@@ -54,6 +54,16 @@ def singlesearch():
   # Save a list of UPRNs and their respective confidence scores
   save_confidence_score(session, matched_addresses)
 
+  # Check to see if showing the comfortable redirect is appropriate
+  if all_user_input.get('input').isdigit():
+    searchable_fields = get_fields(page_name, include_UPRN_redirect=True)
+    all_user_input = load_save_store_inputs(
+        searchable_fields,
+        request,
+        session,
+    )
+
+
   return render_template(
       f'{page_name}.html',
       endpoints=get_endpoints(called_from=page_name),
