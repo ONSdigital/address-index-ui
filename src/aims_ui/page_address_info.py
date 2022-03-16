@@ -2,10 +2,12 @@ import os
 from . import app
 from .models.get_endpoints import get_endpoints
 from .api_interaction import api
+from .page_error import page_error
 from .table_utils import create_table, create_hierarchy_table
 from .models.get_addresses import get_addresses
+from .cookie_utils import load_confidence_score 
 from requests.exceptions import ConnectionError
-from flask import render_template
+from flask import render_template, request, session
 from flask_login import login_required
 import dataclasses
 from .models.address import Address
@@ -16,6 +18,8 @@ import json
 @app.route('/address_info/<uprn>')
 def address_info(uprn):
   """Show all info about an address given the UPRN"""
+
+  confidence_score = load_confidence_score(session, uprn)
 
   try:
     result = api(
@@ -28,12 +32,12 @@ def address_info(uprn):
     return page_error(None, e, page_name)
 
   if result.status_code == 200:
-    matched_addresses = get_addresses(result.json(), 'uprn')
+    matched_addresses = get_addresses(result.json(), 'uprn', confidence_score=confidence_score)
   elif result.status_code == 404:
     # No results but the api compelted the call successfully
-    matched_addresses = ''
+    return page_error(result, 'Detailed Information')
   else:
-    return page_error(result, page_name)
+    return page_error(result, 'Detailed Information')
 
   # Clerical headers will always be constant
   ths = ['Name', 'Value']

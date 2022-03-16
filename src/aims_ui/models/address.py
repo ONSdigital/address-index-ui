@@ -145,7 +145,7 @@ class AddressAttribute():
       address_data,
       name,
       classification_code=None,
-      confidence_score=0,
+      confidence_score=None,
   ):
     self.name = name
     self.address_data = address_data
@@ -174,11 +174,17 @@ class AddressAttribute():
     if name in values_to_show:
       self.show = True
 
-  def format_special(self, value, classification_code=None, confidence_score=0):
+  def format_special(self, value, classification_code=None, confidence_score=None):
     # Special formatting for some values
     if self.name == 'confidenceScoreFormatted':
       confidence_score_formatted  = str(round(float(confidence_score), 2)) + '% Match'
       return confidence_score_formatted
+
+    if self.name == 'confidenceScore':
+      if confidence_score != None:
+        return confidence_score
+      else:
+        return value
 
     if self.name == 'geo':
       # README swapping the long/lat values fixes things - do not change, it's not a mistake!
@@ -196,13 +202,16 @@ class AddressAttribute():
     if self.name == 'hierarchy':
       return getHierarchy(self.address_data)
     if self.name == 'parentUprn':
-      return f'<a href="/address_info/{value}">{value}<a>' 
+      if str(value) != '0':
+        return f'<a href="/address_info/{value}">{value}<a>' 
+      else: 
+        return 'NA' 
 
     return f'{value}'
 
 
 class Address():
-  def __init__(self, address_data, include_hierarchy=False):
+  def __init__(self, address_data, include_hierarchy=False, confidence_score=None):
     address_data = address_data.get('address')
 
     # Essentially all atributes of an expected address from AIMS API (Verbose)
@@ -232,7 +241,7 @@ class Address():
     self.country_code = AddressAttribute(address_data, 'countryCode')
     self.lpi_logical_status = AddressAttribute(address_data,
                                                'lpiLogicalStatus')
-    self.confidence_score = AddressAttribute(address_data, 'confidenceScore')
+    self.confidence_score = AddressAttribute(address_data, 'confidenceScore', confidence_score = confidence_score)
     self.formatted_confidence_score = AddressAttribute(address_data, 'confidenceScoreFormatted', confidence_score = self.confidence_score.value )
     self.underlying_score = AddressAttribute(address_data, 'underlyingScore')
     if include_hierarchy:

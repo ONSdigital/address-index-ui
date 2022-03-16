@@ -24,7 +24,7 @@ def get_fields(endpoint_name):
           search_type='radio',
           flag=False,
           display_title='Epoch',
-          default_radio_selection='87',
+          default_radio_selection='89',
           radio_options=[
               {
                   'id': '89',
