@@ -20,9 +20,10 @@ def uprn():
 
   if request.method == 'GET':
     delete_input(session)
+    search_uprn = request.args.get('search_uprn')
     return render_template(
         f'{page_name}.html',
-        searchable_fields=get_fields(page_name),
+        searchable_fields=get_fields(page_name, include_UPRN_redirect=search_uprn),
         endpoints=get_endpoints(called_from=page_name),
     )
 

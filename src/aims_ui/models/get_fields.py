@@ -6,7 +6,7 @@ from flask import url_for
 hidden_field_class = ' ons-u-hidden '
 
 
-def get_fields(endpoint_name):
+def get_fields(endpoint_name, include_UPRN_redirect=False):
   # Deffine fields which are reused in many of the endpoints
 
   common_fields = {
@@ -144,6 +144,7 @@ def get_fields(endpoint_name):
         Field(
             'uprn',
             display_title='To get started, enter a UPRN',
+            previous_value=include_UPRN_redirect,
             required=True,
             description=
             'The Unique Property Reference Number consists of digits only, and refers to a single property'
@@ -222,7 +223,7 @@ def get_fields(endpoint_name):
     ])
 
   elif endpoint_name == 'singlesearch':
-    return ([
+    fields = [
         Field(
             'input',
             display_title='Enter search string',
@@ -264,6 +265,19 @@ def get_fields(endpoint_name):
         common_fields['epoch'],
         common_fields['match_threshold'],
         common_fields['limit'],
-    ])
+    ]
+
+    if include_UPRN_redirect != False:
+      uprn_search_url = url_for('uprn')
+      panel_field = Field(
+          'panel',
+          search_type='panel',
+          description=
+          f'Looking for UPRN search? <a href={uprn_search_url}?search_uprn={include_UPRN_redirect}>Try this service for UPRN searches</a>',
+        )
+      fields.insert(0, panel_field)
+
+    return fields
+
   else:
     raise Exception(f'No valid field found - Found {endpoint_name}')
