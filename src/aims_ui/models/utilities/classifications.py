@@ -28,14 +28,17 @@ def get_class_subset(classifications_api_url, code):
       final_list.append(c.get('label'))
 
   # Check to remove final string if identical to prior
-  length = len(final_list)
-  if final_list[length - 1] == final_list[length - 2]:
-    final_list[length - 1] = ''
+  length = len(final_list) -1
+  final_word = final_list[length]
+  final_list = [ x if x != final_word else '' for x in final_list ]
 
   final_string = ''
   for desc in final_list:
     if desc != '':
       final_string = final_string + '[' + desc + '] '
+
+  # Add back final word as all instances have been removed
+  final_string = final_string + '[' + final_word + ']'
 
   return final_string
 
