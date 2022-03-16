@@ -9,6 +9,8 @@
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/autosuggest/_macro.njk" import onsAutosuggest %}
 {% from "components/downloads/_macro.njk" import onsDownloads %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+
 
 {% set col = namespace(value=-1) %}
 {% set row = namespace(value=0) %}
@@ -39,7 +41,6 @@
 			   "description": '' if not show else field.description },
 		"value": field.previous_value,   })}}
 	{% elif field.search_type == "dropdown" %}
-
 	{{onsSelect({
 		"id"   : field.database_name,
 		"name" : field.database_name,
@@ -49,7 +50,6 @@
 			   "description": field.description },
 		"options": field.dropdown_options })}}
 	{% elif field.search_type == "checkbox" %}
-
 	{{onsCheckbox({
 		"id": field.database_name,
 		"name": field.database_name,
@@ -106,7 +106,12 @@
 
 	{% elif field.search_type == "download" %}
 	<h4>Unsure? <a href={{field.download_url}}>Click here to download a list of classifications</a>.</h4>
-
+	{% elif field.search_type == "panel" %}
+	  {% call onsPanel({
+		"type": 'warn' })
+	  %}
+	    {{ field.description }}
+	  {% endcall %}
 
 {% endif %}
 {% endfor %}
