@@ -35,12 +35,6 @@ def address_info(uprn):
   else:
     return page_error(result, page_name)
 
-  # Values to NOT show in clerical information page
-  clerical_vals_to_hide = [
-      'confidenceScoreFormatted',
-      'hierarchy',
-  ]
-
   # Clerical headers will always be constant
   ths = ['Name', 'Value']
   trs = []
@@ -50,7 +44,7 @@ def address_info(uprn):
   # All attributes of 'Address' are added to the table
   for attribute_name, address_attribute in matched_addresses[0].__dict__.items(
   ):
-    if attribute_name not in clerical_vals_to_hide :
+    if attribute_name != 'hierarchy':
       if attribute_name in special_responses:
         for nag_name, nag_attribute in address_attribute.value.__dict__.items(
         ):
@@ -65,8 +59,15 @@ def address_info(uprn):
 
     trs.append([attribute_name, address_attribute.value])
 
+  to_hide = [
+      'hierarchy',
+      'formatted_confidence_score',
+      'paf',
+      'nag',
+  ]
+
   # Remove hierarchy info from clerical data
-  final_trs = [x if x[0] != 'hierarchy' else '' for x in trs]
+  final_trs = [x if x[0] not in to_hide else '' for x in trs]
 
   clerical_info = create_table(ths, final_trs)
 

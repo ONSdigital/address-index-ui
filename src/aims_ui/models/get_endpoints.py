@@ -8,7 +8,7 @@ def get_endpoints(called_from=None):
       Endpoint(
           'Single Search',
           'singlesearch',
-          'Provide as much of the address as possible for best results',
+          'Provide as much of the address as possible for best results.',
       ),
       Endpoint(
           'Unique Property Reference Number',
