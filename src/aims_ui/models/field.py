@@ -42,9 +42,13 @@ class Field:
         return radio.get('id')
 
   def set_radio_status(self, value_to_select):
-    self.previous_value = value_to_select
+    # Remove previous checked state
     for radio in self.radio_options:
-      if radio.get('id') == self.previous_value:
+      if radio.get('checked', '') != '':
+        radio.pop('checked')
+
+    for radio in self.radio_options:
+      if radio.get('id') == value_to_select:
         radio['checked'] = True
 
   def format_radio_options(self):
