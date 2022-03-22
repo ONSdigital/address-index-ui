@@ -7,7 +7,7 @@ from io import StringIO, BytesIO
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
 from .page_error import page_error
-from .download_handler import get_autosuggest_list
+from .classification_utilities import check_reverse_classification
 import urllib
 import csv
 
@@ -21,15 +21,6 @@ def get_classifications():
       [],
   )
   return r
-
-
-def check_reverse_classification(value):
-  autosuggest_list = get_autosuggest_list()
-  for category in autosuggest_list:
-    if value == category.get('category'):
-      return category.get('en')
-
-  return value
 
 
 def get_api_auth():
