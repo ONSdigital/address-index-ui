@@ -74,7 +74,7 @@ def address_info(uprn):
   final_trs = [x if x[0] not in to_hide else '' for x in trs]
 
   clerical_info = create_table(ths, final_trs)
-
+  
   return render_template(
       'address_info.html',
       endpoints=get_endpoints('address_info'),

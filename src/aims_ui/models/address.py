@@ -166,6 +166,7 @@ class AddressAttribute():
         'classificationCode',
         'classificationCodeList',
         'confidenceScoreFormatted',
+        'parentUprn',
     ]
 
     if name in full_values_to_show:
