@@ -51,7 +51,7 @@ def getHierarchy(parentUPRN):
   tables = []
 
   table_headers = [
-      'placeholder', 'Primary', 'Secondary', 'Teriternary', 'Quaternaty'
+      'placeholder', 'Primary', 'Secondary', 'Tertiary', 'Quaternary'
   ]
   ths = ['UPRN', 'Property Name']
   trs = []
