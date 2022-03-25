@@ -31,7 +31,25 @@ def autosuggest(autosuggest_type):
   if 'classification' in autosuggest_type:
     formatted_class_list = []
     classifications_api_url = app.config.get('API_URL') + '/classifications'
-    class_call = requests.get(classifications_api_url)
+
+    header = {
+        "Content-Type": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.dbdMlWXZbLRLevp7iR8JyG-kcLR1Br8lAa2oNMqGY1Y",
+    }
+
+
+
+    class_call = requests.get(
+        classifications_api_url)
+
+    print('')
+    print('')
+    print('')
+    print(class_call)
+    print('')
+    print('')
+
+
     class_list = json.loads(class_call.text).get('classifications')
 
     for classification in class_list:
