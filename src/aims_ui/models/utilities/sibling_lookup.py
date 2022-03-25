@@ -30,6 +30,7 @@ def api(url, called_from, all_user_input):
 
   header = {
       "Content-Type": "application/json",
+       "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.dbdMlWXZbLRLevp7iR8JyG-kcLR1Br8lAa2oNMqGY1Y",
   }
 
   params = get_params(all_user_input)
