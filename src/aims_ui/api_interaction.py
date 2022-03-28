@@ -8,6 +8,7 @@ from .classification_utilities import check_reverse_classification
 import urllib
 import csv
 
+
 def api(url, called_from, all_user_input):
   """API helper for individual API lookups"""
 
@@ -29,6 +30,7 @@ def api(url, called_from, all_user_input):
   )
 
   return r
+
 
 def get_api_auth():
   """Get the auth type for typeahead"""
@@ -66,6 +68,7 @@ def get_params(all_user_input):
     params.append(quoted_param + '=' + quoted_value)
 
   return '&'.join(params)
+
 
 def get_classifications():
   """Return classification endpoint result as json pairs"""

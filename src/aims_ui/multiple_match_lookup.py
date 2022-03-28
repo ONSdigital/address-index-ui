@@ -5,6 +5,7 @@ import csv
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
 
+
 def multiple_address_match(file, all_user_input, download=False):
   csv_headers = ['id', 'inputAddress', 'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank']  # yapf: disable
 

@@ -5,7 +5,7 @@ from flask_login import login_required
 from werkzeug.utils import secure_filename
 from . import app
 from .cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs
-from .api_interaction import api 
+from .api_interaction import api
 from .multiple_match_lookup import multiple_address_match
 from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
