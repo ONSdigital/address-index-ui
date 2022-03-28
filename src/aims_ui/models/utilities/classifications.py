@@ -44,6 +44,7 @@ def get_class_subset(classifications_api_url, code):
 
 
 def get_classification_list(code=None):
+  return 'TEST REMOVE ME TODO'
   class_list = []
   api_url = app.config.get('API_URL')
   classifications_url = f'{api_url}/classifications'
