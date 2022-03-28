@@ -3,15 +3,32 @@ import json
 import re
 from aims_ui import app
 
-
 def get_class_list(classifications_api_url):
-  classifications = requests.get(classifications_api_url)
-  return json.loads(classifications.text)
+  header = {
+      "Content-Type": "application/json",
+      "Authorization": app.config.get('JWT_TOKEN'),
+  }
 
+  class_call = requests.get(
+      classifications_api_url,
+      headers=header,
+  )
+
+  class_list = json.loads(class_call.text).get('classifications')
+  return class_list
 
 def get_class_subset(classifications_api_url, code):
 
-  class_call = requests.get(classifications_api_url)
+  header = {
+      "Content-Type": "application/json",
+      "Authorization": app.config.get('JWT_TOKEN'),
+  }
+
+  class_call = requests.get(
+      classifications_api_url,
+      headers=header,
+  )
+
   class_list = json.loads(class_call.text).get('classifications')
 
   final_list = [code]
@@ -44,7 +61,6 @@ def get_class_subset(classifications_api_url, code):
 
 
 def get_classification_list(code=None):
-  return 'TEST REMOVE ME TODO'
   class_list = []
   api_url = app.config.get('API_URL')
   classifications_url = f'{api_url}/classifications'
