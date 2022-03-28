@@ -1,55 +1,11 @@
 from aims_ui import app
-from aims_ui.table_utils import create_table
-import requests
-import urllib
 import json 
+import requests
 
-
-def get_params(all_user_input):
-  """Return a list of parameters formatted for API header, from class list of inputs"""
-  params = ['verbose=True']
-  for param, value in all_user_input.items():
-    if not str(value):
-      continue
-
-    if type(value) == str:
-      value = value.replace('%', '')
-
-    # Check if the value is for the classifications, if so, check to see if it needs reversing
-    if param == 'classificationfilter':
-      value = check_reverse_classification(value)
-
-    quoted_param = urllib.parse.quote_plus(str(param))
-    quoted_value = urllib.parse.quote_plus(str(value))
-    params.append(quoted_param + '=' + quoted_value)
-
-  return '&'.join(params)
-
-
-def api(url, called_from, all_user_input):
-  """API helper, all pages go through here to interact with API"""
-
-  header = {
-      "Content-Type": "application/json",
-       "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.dbdMlWXZbLRLevp7iR8JyG-kcLR1Br8lAa2oNMqGY1Y",
-  }
-
-  params = get_params(all_user_input)
-  url = app.config.get('API_URL') + str(url) + str(
-      all_user_input.get(called_from, ''))
-
-  r = requests.get(
-      url,
-      params=params,
-      headers=header,
-  )
-
-  return r
-
-def newLookup(siblings):
+def multiple_uprn_lookup(siblings):
   header = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.dbdMlWXZbLRLevp7iR8JyG-kcLR1Br8lAa2oNMqGY1Y",
+        "Authorization": app.config.get('JWT_TOKEN'),
     }
 
   url_endpoint = app.config.get('API_URL') + '/addresses/multiuprn'
@@ -61,7 +17,6 @@ def newLookup(siblings):
       headers=header)
 
   return class_call
- 
 
 def getHierarchy(parentUPRN):
   relatives = parentUPRN.get('relatives')
@@ -74,7 +29,7 @@ def getHierarchy(parentUPRN):
   for level in relatives:
     siblings =  level.get('siblings')
     # Get Address list of all siblings
-    siblings_info = newLookup(siblings)
+    siblings_info = multiple_uprn_lookup(siblings)
     result = siblings_info.json().get('response').get('addresses')
 
     # Add each child address to table
