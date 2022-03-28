@@ -11,6 +11,7 @@ def create_table(table_headers, table_rows):
 
 
 def create_hierarchy_table(table_templates):
+  """Create possibly several tables of an addresses hierarchey"""
   row_titles = ['Name', 'Parent UPRN', 'UPRN']
   dic_tables = {}
   t_title = ''
