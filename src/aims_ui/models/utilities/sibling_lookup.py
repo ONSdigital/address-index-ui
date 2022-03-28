@@ -30,7 +30,7 @@ def api(url, called_from, all_user_input):
 
   header = {
       "Content-Type": "application/json",
-       "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.dbdMlWXZbLRLevp7iR8JyG-kcLR1Br8lAa2oNMqGY1Y",
+       "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.dbdMlWXZbLRLevp7iR8JyG-kcLR1Br8lAa2oNMqGY1Y",
   }
 
   params = get_params(all_user_input)
@@ -60,6 +60,12 @@ def getHierarchy(parentUPRN):
   all_relatives = []
   for level in relatives:
     for sibling_uprn in level.get('siblings'):
+      header = {
+          "Content-Type": "application/json",
+           "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.dbdMlWXZbLRLevp7iR8JyG-kcLR1Br8lAa2oNMqGY1Y",
+      }
+
+
       result = api(
           '/addresses/uprn/',
           'uprn',

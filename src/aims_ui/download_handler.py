@@ -34,21 +34,12 @@ def autosuggest(autosuggest_type):
 
     header = {
         "Content-Type": "application/json",
-        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.dbdMlWXZbLRLevp7iR8JyG-kcLR1Br8lAa2oNMqGY1Y",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.dbdMlWXZbLRLevp7iR8JyG-kcLR1Br8lAa2oNMqGY1Y",
     }
 
-
-
     class_call = requests.get(
-        classifications_api_url)
-
-    print('')
-    print('')
-    print('')
-    print(class_call)
-    print('')
-    print('')
-
+        classifications_api_url,
+        headers=header)
 
     class_list = json.loads(class_call.text).get('classifications')
 
