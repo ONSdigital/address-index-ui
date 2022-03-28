@@ -34,7 +34,7 @@ def autosuggest(autosuggest_type):
 
     header = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.dbdMlWXZbLRLevp7iR8JyG-kcLR1Br8lAa2oNMqGY1Y",
+        "Authorization": app.config.get('JWT_TOKEN'),
     }
 
     class_call = requests.get(
