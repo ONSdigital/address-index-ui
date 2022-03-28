@@ -3,6 +3,7 @@ import json
 import re
 from aims_ui import app
 
+
 def get_class_list(classifications_api_url):
   header = {
       "Content-Type": "application/json",
@@ -16,6 +17,7 @@ def get_class_list(classifications_api_url):
 
   class_list = json.loads(class_call.text).get('classifications')
   return class_list
+
 
 def get_class_subset(classifications_api_url, code):
 
@@ -45,9 +47,9 @@ def get_class_subset(classifications_api_url, code):
       final_list.append(c.get('label'))
 
   # Check to remove final string if identical to prior
-  length = len(final_list) -1
+  length = len(final_list) - 1
   final_word = final_list[length]
-  final_list = [ x if x != final_word else '' for x in final_list ]
+  final_list = [x if x != final_word else '' for x in final_list]
 
   final_string = ''
   for desc in final_list:

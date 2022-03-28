@@ -124,7 +124,8 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           'classificationfilter',
           search_type='autosuggest',
           display_title='Classification',
-          description='To further filter your results, select a classification. You can start typing the Classification Code or the Description. (I.e. "R" or "Residential")',
+          description=
+          'To further filter your results, select a classification. You can start typing the Classification Code or the Description. (I.e. "R" or "Residential")',
           autosuggest_url='/autosuggest/classification-reverse.json',
           min_chars=1,
       ),
@@ -166,15 +167,14 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['wales_boost'],
         common_fields['scotland_boost'],
 
-# REMOVED - left commented incase of later requirements
-#        Field(
-#            'groupfullpostcodes',
-#            search_type='checkbox',
-#            display_title='Group full postcodes',
-#            description=
-#            'If you would like the results to be grouped by their respective full postcodes, tick this box',
-#        ),
-
+        # REMOVED - left commented incase of later requirements
+        #        Field(
+        #            'groupfullpostcodes',
+        #            search_type='checkbox',
+        #            display_title='Group full postcodes',
+        #            description=
+        #            'If you would like the results to be grouped by their respective full postcodes, tick this box',
+        #        ),
         Field(
             'fallback',
             search_type='checkbox',
@@ -274,7 +274,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           search_type='panel',
           description=
           f'Looking for UPRN search? <a href={uprn_search_url}?search_uprn={include_UPRN_redirect}>Try this service for UPRN searches</a>',
-        )
+      )
       fields.insert(0, panel_field)
 
     return fields
