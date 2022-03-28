@@ -2,6 +2,7 @@ from aims_ui import app
 from aims_ui.table_utils import create_table
 import requests
 import urllib
+import json 
 
 
 def get_params(all_user_input):
@@ -45,43 +46,49 @@ def api(url, called_from, all_user_input):
 
   return r
 
+def newLookup(siblings):
+  header = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.dbdMlWXZbLRLevp7iR8JyG-kcLR1Br8lAa2oNMqGY1Y",
+    }
+
+  url_endpoint = app.config.get('API_URL') + '/addresses/multiuprn'
+  siblings = [str(x) for x in siblings]
+  data = {'uprns': siblings}
+  class_call = requests.post(
+      url_endpoint,
+      json=data,
+      headers=header)
+
+  return class_call
+ 
 
 def getHierarchy(parentUPRN):
   relatives = parentUPRN.get('relatives')
-
   tables = []
 
   table_headers = [
       'placeholder', 'Primary', 'Secondary', 'Tertiary', 'Quaternary'
   ]
-  ths = ['UPRN', 'Property Name']
-  trs = []
 
-  all_relatives = []
   for level in relatives:
-    for sibling_uprn in level.get('siblings'):
-      header = {
-          "Content-Type": "application/json",
-           "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.dbdMlWXZbLRLevp7iR8JyG-kcLR1Br8lAa2oNMqGY1Y",
-      }
+    siblings =  level.get('siblings')
+    # Get Address list of all siblings
+    siblings_info = newLookup(siblings)
+    result = siblings_info.json().get('response').get('addresses')
 
-
-      result = api(
-          '/addresses/uprn/',
-          'uprn',
-          {'uprn': sibling_uprn},
-      )
-      address = result.json().get('response').get('address')
+    # Add each child address to table
+    for address in result:
+      #[{'uprn': '1775115412', 'parentUprn': '1775091131', 'formattedAddress'
       property_name = address.get('formattedAddress')
       property_uprn = address.get('uprn')
-
+      parent_uprn = address.get('parentUprn')
+  
       tables.append([
           table_headers[level.get('level')],
           property_name,
           property_uprn,
+          parent_uprn,
       ])
-
-  test_table = [[tables[0][1], tables[0][2]]]
-  table1 = create_table(['Name', 'UPRN'], test_table)
 
   return tables
