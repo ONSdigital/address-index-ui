@@ -28,3 +28,20 @@ python3 -m flask run
 
 *To format*
 yapf --style='{based_on_style: pep8, indent_width: 2}' -ir .
+
+FOR WINDOWS USERS ONLY:
+
+*Ensure you have python 3.9 installed*
+
+*Run a command window as an administrator and cd to the project root*
+`pip install -r requirements.txt`
+
+*Download the design system templates from https://github.com/ONSdigital/design-system/releases*
+
+*Unzip the components and layout directories into the project's templates folder*
+
+*Set environment variables and run (on localhost:5000)*
+`set FLASK_ENV=development`
+`set FLASK_APP=src/aims_ui`
+`python -m flask run`
+
