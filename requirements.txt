@@ -4,3 +4,4 @@ flask-session==0.3.2
 six
 importlib-metadata==4.5.0
 requests
+Werkzeug~=2.0.0
