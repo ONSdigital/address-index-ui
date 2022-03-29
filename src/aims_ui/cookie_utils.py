@@ -2,15 +2,18 @@ def delete_input(session):
   """Remove search field data from the cookie"""
   session['previous_user_responses'] = {}
 
+
 def save_input(all_user_input, session):
   """Save the values of html objects into response so they can be loaded in future"""
   session['previous_user_responses'] = all_user_input
 
+
 def load_confidence_score(session, uprn):
   """Load confidence scores given UPRN"""
-  cs = session.get('override_confidence_score',{})
+  cs = session.get('override_confidence_score', {})
   confidence_score = cs.get(uprn, 100)
-  return confidence_score 
+  return confidence_score
+
 
 def save_confidence_score(session, addresses):
   """Save a list of UPRNs and their confidence scores to local storage"""
@@ -19,6 +22,7 @@ def save_confidence_score(session, addresses):
     cs[address.uprn.value] = address.confidence_score.value
 
   session['override_confidence_score'] = cs
+
 
 def load_input(all_user_input, session, searchable_fields):
   """Load stored values into html attributes (by setting their Field classes 'previous value' attribute"""

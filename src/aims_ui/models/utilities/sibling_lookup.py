@@ -1,80 +1,48 @@
 from aims_ui import app
-from aims_ui.table_utils import create_table
+import json
 import requests
-import urllib
 
 
-def get_params(all_user_input):
-  """Return a list of parameters formatted for API header, from class list of inputs"""
-  params = ['verbose=True']
-  for param, value in all_user_input.items():
-    if not str(value):
-      continue
-
-    if type(value) == str:
-      value = value.replace('%', '')
-
-    # Check if the value is for the classifications, if so, check to see if it needs reversing
-    if param == 'classificationfilter':
-      value = check_reverse_classification(value)
-
-    quoted_param = urllib.parse.quote_plus(str(param))
-    quoted_value = urllib.parse.quote_plus(str(value))
-    params.append(quoted_param + '=' + quoted_value)
-
-  return '&'.join(params)
-
-
-def api(url, called_from, all_user_input):
-  """API helper, all pages go through here to interact with API"""
-
+def multiple_uprn_lookup(siblings):
   header = {
       "Content-Type": "application/json",
+      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
 
-  params = get_params(all_user_input)
-  url = app.config.get('API_URL') + str(url) + str(
-      all_user_input.get(called_from, ''))
+  url_endpoint = app.config.get('API_URL') + '/addresses/multiuprn'
+  siblings = [str(x) for x in siblings]
+  data = {'uprns': siblings}
+  class_call = requests.post(url_endpoint, json=data, headers=header)
 
-  r = requests.get(
-      url,
-      params=params,
-      headers=header,
-  )
-
-  return r
+  return class_call
 
 
 def getHierarchy(parentUPRN):
   relatives = parentUPRN.get('relatives')
-
   tables = []
 
   table_headers = [
       'placeholder', 'Primary', 'Secondary', 'Tertiary', 'Quaternary'
   ]
-  ths = ['UPRN', 'Property Name']
-  trs = []
 
-  all_relatives = []
   for level in relatives:
-    for sibling_uprn in level.get('siblings'):
-      result = api(
-          '/addresses/uprn/',
-          'uprn',
-          {'uprn': sibling_uprn},
-      )
-      address = result.json().get('response').get('address')
+    siblings = level.get('siblings')
+    # Get Address list of all siblings
+    siblings_info = multiple_uprn_lookup(siblings)
+    result = siblings_info.json().get('response').get('addresses')
+
+    # Add each child address to table
+    for address in result:
+      #[{'uprn': '1775115412', 'parentUprn': '1775091131', 'formattedAddress'
       property_name = address.get('formattedAddress')
       property_uprn = address.get('uprn')
+      parent_uprn = address.get('parentUprn')
 
       tables.append([
           table_headers[level.get('level')],
           property_name,
           property_uprn,
+          parent_uprn,
       ])
-
-  test_table = [[tables[0][1], tables[0][2]]]
-  table1 = create_table(['Name', 'UPRN'], test_table)
 
   return tables

@@ -5,7 +5,7 @@ from .api_interaction import api
 from .page_error import page_error
 from .table_utils import create_table, create_hierarchy_table
 from .models.get_addresses import get_addresses
-from .cookie_utils import load_confidence_score 
+from .cookie_utils import load_confidence_score
 from requests.exceptions import ConnectionError
 from flask import render_template, request, session
 from flask_login import login_required
@@ -32,7 +32,9 @@ def address_info(uprn):
     return page_error(None, e, page_name)
 
   if result.status_code == 200:
-    matched_addresses = get_addresses(result.json(), 'uprn', confidence_score=confidence_score)
+    matched_addresses = get_addresses(result.json(),
+                                      'uprn',
+                                      confidence_score=confidence_score)
   elif result.status_code == 404:
     # No results but the api compelted the call successfully
     return page_error(result, 'Detailed Information')
@@ -60,7 +62,6 @@ def address_info(uprn):
       if address_attribute.value != None:
         hierarchy_table = create_hierarchy_table(address_attribute.value)
 
-
     trs.append([attribute_name, address_attribute.value])
 
   to_hide = [
@@ -74,7 +75,7 @@ def address_info(uprn):
   final_trs = [x if x[0] not in to_hide else '' for x in trs]
 
   clerical_info = create_table(ths, final_trs)
-  
+
   return render_template(
       'address_info.html',
       endpoints=get_endpoints('address_info'),

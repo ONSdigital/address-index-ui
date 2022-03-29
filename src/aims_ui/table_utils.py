@@ -11,7 +11,9 @@ def create_table(table_headers, table_rows):
 
 
 def create_hierarchy_table(table_templates):
-  row_titles = ['Name', 'UPRN']
+  """Create possibly several tables of an addresses hierarchey"""
+  # Example UPRN for Quaternery 15127116
+  row_titles = ['Name', 'Parent UPRN', 'UPRN']
   dic_tables = {}
   t_title = ''
   for t in table_templates:
@@ -20,7 +22,8 @@ def create_hierarchy_table(table_templates):
 
     tmp = dic_tables.get(t_title, [])
     uprn_link = f'<a href="/address_info/{t[2]}">{t[2]}<a>'
-    tmp.append([t[1], uprn_link])
+    parent_uprn_link = f'<a href="/address_info/{t[3]}">{t[3]}<a>'
+    tmp.append([t[1], parent_uprn_link, uprn_link])
 
     dic_tables[t_title] = tmp
 
