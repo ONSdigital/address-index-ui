@@ -30,8 +30,7 @@ def test_static_pages_are_200(client):
   for url in urls:
     response = client.get('/' + url)
     if response.status_code == 404:
-      raise Exception(
-          f'Page not found error for {url}, got response: {response}')
+      raise Exception(f'Page not found error for {url}, got response: {response}')
 
     assert response.status_code == 200
 
