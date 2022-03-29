@@ -14,7 +14,7 @@ def get_autosuggest_list():
   classifications_api_url = app.config.get('API_URL') + '/classifications'
   header = {
       "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN'),
+      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
 
   class_call = requests.get(
@@ -43,7 +43,7 @@ def autosuggest(autosuggest_type):
 
     header = {
         "Content-Type": "application/json",
-        "Authorization": app.config.get('JWT_TOKEN'),
+        "Authorization": app.config.get('JWT_TOKEN_BEARER'),
     }
 
     class_call = requests.get(classifications_api_url, headers=header)

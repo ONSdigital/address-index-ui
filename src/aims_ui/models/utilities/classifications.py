@@ -7,7 +7,7 @@ from aims_ui import app
 def get_class_list(classifications_api_url):
   header = {
       "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN'),
+      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
 
   class_call = requests.get(
@@ -20,10 +20,9 @@ def get_class_list(classifications_api_url):
 
 
 def get_class_subset(classifications_api_url, code):
-
   header = {
       "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN'),
+      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
 
   class_call = requests.get(
