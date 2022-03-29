@@ -1,5 +1,6 @@
 from .download_handler import get_autosuggest_list
 
+
 def check_reverse_classification(value):
   # Check if the string value has been entered, then swap it for it's classification code
   autosuggest_list = get_autosuggest_list()
@@ -12,5 +13,3 @@ def check_reverse_classification(value):
   # i.e. 'R' becomes 'R*' meaning all 'Residential' like properties
 
   return to_return + '*'
-
-
