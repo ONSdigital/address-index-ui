@@ -16,6 +16,8 @@ Pre-requisites:
 `export API_BSC_AUTH_USERNAME=[enter_bsc_username]`
 `export API_BSC_AUTH_PASSWORD=[enter_bsc_password]`
 
+/Note: JWT token is exported WITHOUT 'Bearer ' before it/
+
 *Install Python Packages*
 Run
 `pip install -r requirements.txt`

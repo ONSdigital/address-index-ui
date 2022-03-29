@@ -6,7 +6,7 @@ import requests
 def multiple_uprn_lookup(siblings):
   header = {
       "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN'),
+      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
 
   url_endpoint = app.config.get('API_URL') + '/addresses/multiuprn'

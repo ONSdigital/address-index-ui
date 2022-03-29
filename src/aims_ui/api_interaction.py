@@ -14,7 +14,7 @@ def api(url, called_from, all_user_input):
 
   header = {
       "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN'),
+      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
 
   params = get_params(all_user_input)
