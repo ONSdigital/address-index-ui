@@ -59,7 +59,10 @@ def close_connection(exception):
   if db is not None:
     db.close()
 
+
 classifications = None
+
+
 def get_classifications_cached():
   global start_time, classifications, last_pop_time
   if classifications is None:
@@ -69,11 +72,11 @@ def get_classifications_cached():
     return classifications
   else:
     current_time = time.time()
-    time_since_last_population = current_time - last_pop_time 
+    time_since_last_population = current_time - last_pop_time
     # More than 60 seconds since last API population of classifications
     if time_since_last_population > 60:
       classifications = get_classifications()
-      last_pop_time  = time.time()
+      last_pop_time = time.time()
       return classifications
     else:
       # Use previously cached results

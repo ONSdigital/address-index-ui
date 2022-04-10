@@ -87,4 +87,4 @@ def get_classifications():
 
   class_list = json.loads(class_call.text).get('classifications')
 
-  return  class_list 
+  return class_list

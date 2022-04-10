@@ -3,6 +3,7 @@ import json
 import re
 from aims_ui import app, get_classifications_cached
 
+
 def get_class_subset(code):
   class_list = get_classifications_cached()
 
