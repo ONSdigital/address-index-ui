@@ -72,6 +72,7 @@ def get_params(all_user_input):
 
 def get_classifications():
   """Return classification endpoint result as json pairs"""
+  # All classification list aquesition should come through here
 
   classifications_api_url = app.config.get('API_URL') + '/classifications'
   header = {
