@@ -6,10 +6,10 @@ from aims_ui import get_epoch_options_cached
 # This will change when DS changes
 hidden_field_class = ' ons-u-hidden '
 
-epoch_options = get_epoch_options_cached()
-
 def get_fields(endpoint_name, include_UPRN_redirect=False):
   # Deffine fields which are reused in many of the endpoints
+
+  epoch_options, default_epoch = get_epoch_options_cached()
 
   common_fields = {
       'limit':
@@ -26,29 +26,8 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           search_type='radio',
           flag=False,
           display_title='Epoch',
-          default_radio_selection='89',
-          radio_options=[
-              {
-                  'id': '89',
-                  'text': '89',
-                  'value': '89',
-              },
-              {
-                  'id': '87',
-                  'text': '87',
-                  'value': '87',
-              },
-              {
-                  'id': '80',
-                  'text': '80',
-                  'value': '80',
-              },
-              {
-                  'id': '39',
-                  'text': '39',
-                  'value': '39',
-              },
-          ],
+          default_radio_selection=default_epoch,
+          radio_options=epoch_options,
       ),
       'historical':
       Field(
