@@ -1,36 +1,10 @@
 import requests
 import json
 import re
-from aims_ui import app
+from aims_ui import app, get_classifications_cached
 
-
-def get_class_list(classifications_api_url):
-  header = {
-      "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-  }
-
-  class_call = requests.get(
-      classifications_api_url,
-      headers=header,
-  )
-
-  class_list = json.loads(class_call.text).get('classifications')
-  return class_list
-
-
-def get_class_subset(classifications_api_url, code):
-  header = {
-      "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-  }
-
-  class_call = requests.get(
-      classifications_api_url,
-      headers=header,
-  )
-
-  class_list = json.loads(class_call.text).get('classifications')
+def get_class_subset(code):
+  class_list = get_classifications_cached()
 
   final_list = [code]
   for c in class_list:
@@ -63,9 +37,6 @@ def get_class_subset(classifications_api_url, code):
 
 def get_classification_list(code=None):
   class_list = []
-  api_url = app.config.get('API_URL')
-  classifications_url = f'{api_url}/classifications'
-
-  class_list = get_class_subset(classifications_url, code)
+  class_list = get_class_subset(code)
 
   return str(class_list)
