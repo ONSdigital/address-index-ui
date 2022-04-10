@@ -62,6 +62,7 @@ def close_connection(exception):
 
 classifications = None
 
+
 def get_classifications_cached():
   global start_time, classifications, last_pop_time
   if classifications is None:
@@ -81,10 +82,13 @@ def get_classifications_cached():
       # Use previously cached results
       return classifications
 
-# Must import here to avoid circular imports 
+
+# Must import here to avoid circular imports
 from .api_interaction import get_epoch_options
 
 epoch_options = None
+
+
 def get_epoch_options_cached():
   global epoch_start_time, epoch_options, default_epoch, epoch_last_pop_time
   if epoch_options is None:
