@@ -73,9 +73,17 @@ def get_params(all_user_input):
 def get_classifications():
   """Return classification endpoint result as json pairs"""
 
-  r = api(
-      '/classifications',
-      'singlesearch',
-      [],
+  classifications_api_url = app.config.get('API_URL') + '/classifications'
+  header = {
+      "Content-Type": "application/json",
+      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
+  }
+
+  class_call = requests.get(
+      classifications_api_url,
+      headers=header,
   )
-  return r
+
+  class_list = json.loads(class_call.text).get('classifications')
+
+  return  class_list 

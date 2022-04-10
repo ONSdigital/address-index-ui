@@ -1,5 +1,6 @@
 import os
 import sqlite3
+import time
 
 from flask import Flask, g
 from flask_login import LoginManager
@@ -58,6 +59,34 @@ def close_connection(exception):
   if db is not None:
     db.close()
 
+print('Anything')
+
+classifications = None
+def get_classifications_cached():
+  global start_time, classifications, last_pop_time
+  if classifications is None:
+    # Populate classifications list at start of program
+    print('No classifications, saving them now')
+    last_pop_time = time.time()
+    classifications = get_classifications()
+    return classifications
+  else:
+    print('Classifications already populated')
+    current_time = time.time()
+    time_since_last_population = current_time - last_pop_time 
+    # More than 60 seconds since last API population of classifications
+    print(f'Time difference is :   {time_since_last_population}')
+    if time_since_last_population > 10:
+      print('refreshing classifications')
+      classifications = get_classifications()
+      last_pop_time  = time.time()
+      return classifications
+    else:
+      # Use previously cached results
+      print('Using previously cached results as time is ')
+      print(time_since_last_population) 
+      return classifications
+
 
 from . import info
 from . import login
@@ -69,3 +98,8 @@ from . import page_multiple_address
 from . import page_singlesearch
 from . import page_address_info
 from . import download_handler
+from .api_interaction import get_classifications
+
+
+
+
