@@ -7,6 +7,7 @@ from .models.get_addresses import get_addresses
 from .classification_utilities import check_reverse_classification
 import urllib
 import csv
+import logging
 
 
 def get_epoch_options():
@@ -22,6 +23,14 @@ def get_epoch_options():
       api_url,
       headers=header,
   )
+
+  if epoch_call.status_code != 200:
+    logging.warn('No epoch endpoint found, falling back to Preset Options')
+
+    sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
+    default = app.config.get('DEFAULT_EPOCH_SELECTED')
+
+    return sorted_epochs, default
 
   epoch_options = json.loads(epoch_call.text).get('epochs')
 
@@ -121,6 +130,13 @@ def get_classifications():
       classifications_api_url,
       headers=header,
   )
+
+  if class_call.status_code != 200:
+    logging.warn(
+        'No Class Code endpoint found, falling back to Preset Options')
+    class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
+
+    return class_list
 
   class_list = json.loads(class_call.text).get('classifications')
 
