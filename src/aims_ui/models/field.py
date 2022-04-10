@@ -57,7 +57,8 @@ class Field:
       final_radios.append({
           'id': radio_option.get('id'),
           'label': {
-              'text': radio_option.get('text')
+              'text': radio_option.get('text'),
+              'description': radio_option.get('description')
           },
           'value': radio_option.get('id')
       })
