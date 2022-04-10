@@ -9,6 +9,42 @@ import urllib
 import csv
 
 
+def get_epoch_options():
+  """Get the result of the Epoch Endpoint and format for radio button use"""
+  api_url = app.config.get('API_URL') + '/epochs'
+
+  header = {
+      "Content-Type": "application/json",
+      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
+  }
+
+  epoch_call = requests.get(
+      api_url,
+      headers=header,
+  )
+
+  epoch_options = json.loads(epoch_call.text).get('epochs')
+
+  # Find default
+  # Make epoch Numbers Ints
+  default = 0
+  epoch_formatted = []
+  for epoch in epoch_options:
+    if str(epoch.get('default')) == 'true':
+      default = epoch.get('epoch')
+    # Also add each epoch to a new list in the correct format
+    epoch_num = epoch.get('epoch')
+    epoch_formatted.append(
+        { 'id': epoch_num,
+          'text': epoch_num,
+          'value':epoch_num,
+          'description': epoch.get('description') } )
+  
+  sorted_epochs = sorted(epoch_formatted, key=lambda d: d['id'])
+
+  return sorted_epochs, default
+
+
 def api(url, called_from, all_user_input):
   """API helper for individual API lookups"""
 

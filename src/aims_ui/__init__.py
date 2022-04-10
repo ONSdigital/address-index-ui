@@ -62,7 +62,6 @@ def close_connection(exception):
 
 classifications = None
 
-
 def get_classifications_cached():
   global start_time, classifications, last_pop_time
   if classifications is None:
@@ -81,6 +80,29 @@ def get_classifications_cached():
     else:
       # Use previously cached results
       return classifications
+
+# Must import here to avoid circular imports 
+from .api_interaction import get_epoch_options
+
+epoch_options = None
+def get_epoch_options_cached():
+  global epoch_start_time, epoch_options, epoch_last_pop_time
+  if epoch_options is None:
+    # Populate epoch options list at start of program
+    epoch_last_pop_time = time.time()
+    epoch_options = get_epoch_options()
+    return epoch_options 
+  else:
+    epoch_current_time = time.time()
+    epoch_time_since_last_population = epoch_current_time - epoch_last_pop_time
+    # More than 120 seconds since last epoch sync
+    if epoch_time_since_last_population > 60:
+      epoch_options = get_epoch_options()
+      epoch_last_pop_time = time.time()
+      return epoch_options 
+    else:
+      # Use previously cached results
+      return epoch_options 
 
 
 from . import info
