@@ -34,12 +34,13 @@ def get_epoch_options():
       default = epoch.get('epoch')
     # Also add each epoch to a new list in the correct format
     epoch_num = epoch.get('epoch')
-    epoch_formatted.append(
-        { 'id': epoch_num,
-          'text': epoch_num,
-          'value':epoch_num,
-          'description': epoch.get('description') } )
-  
+    epoch_formatted.append({
+        'id': epoch_num,
+        'text': epoch_num,
+        'value': epoch_num,
+        'description': epoch.get('description')
+    })
+
   sorted_epochs = sorted(epoch_formatted, key=lambda d: d['id'])
 
   return sorted_epochs, default

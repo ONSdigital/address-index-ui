@@ -6,6 +6,7 @@ from aims_ui import get_epoch_options_cached
 # This will change when DS changes
 hidden_field_class = ' ons-u-hidden '
 
+
 def get_fields(endpoint_name, include_UPRN_redirect=False):
   # Deffine fields which are reused in many of the endpoints
 
