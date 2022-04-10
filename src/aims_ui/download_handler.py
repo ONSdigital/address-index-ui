@@ -10,16 +10,9 @@ from flask_login import login_required
 
 
 def get_autosuggest_list():
+  """Return the classifications list in the format expected by the autosuggest component"""
   formatted_class_list = []
-
   class_list = get_classifications_cached()
-  print('Got classed classifications as')
-  if len(class_list) > 0 :
-    print(class_list[0])
-    print(len(class_list))
-  else:
-    print(class_list)
-  print('\n\n\n')
 
   for classification in class_list:
     formatted_class_list.append({
@@ -36,16 +29,7 @@ def autosuggest(autosuggest_type):
   """ Autosuggest data for various typeaheads """
   if 'classification' in autosuggest_type:
     formatted_class_list = []
-    classifications_api_url = app.config.get('API_URL') + '/classifications'
-
-    header = {
-        "Content-Type": "application/json",
-        "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-    }
-
-    class_call = requests.get(classifications_api_url, headers=header)
-
-    class_list = json.loads(class_call.text).get('classifications')
+    class_list = get_classifications_cached()
 
     for classification in class_list:
       formatted_class_list.append({
