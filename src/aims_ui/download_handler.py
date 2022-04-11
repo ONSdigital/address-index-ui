@@ -3,7 +3,6 @@ from . import app, get_classifications_cached
 import json
 import csv
 import requests
-from .models.utilities.classifications import get_class_list
 from io import StringIO, BytesIO
 from flask import render_template, request, session, send_file
 from flask_login import login_required
