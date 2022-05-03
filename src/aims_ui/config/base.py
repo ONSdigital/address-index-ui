@@ -13,7 +13,7 @@ API_BSC_AUTH_PASSWORD = os.getenv('API_BSC_AUTH_PASSWORD')
 
 # Default Classification and Epoch options, should the initial server response be incorrect (or the endpoint doesn't exist)
 
-DEFAULT_EPOCH_SELECTED = 89
+DEFAULT_EPOCH_SELECTED = '89'
 DEFAULT_EPOCH_OPTIONS = [{
     'id': '39',
     'text': '39',
