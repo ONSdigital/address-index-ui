@@ -96,7 +96,7 @@ def multiple_address():
 
       if results_type == 'Download':
         try:
-          full_results, line_count = multiple_address_match(file, {},
+          full_results, line_count = multiple_address_match(file, all_user_input, 
                                                             download=True)
         except ConnectionError as e:
           return page_error(None, e, page_name)
@@ -109,7 +109,7 @@ def multiple_address():
       elif results_type == 'Display':
         try:
           table_results, results_summary_table = multiple_address_match(
-              file, {}, download=False)
+              file, all_user_input,  download=False)
         except ConnectionError as e:
           return page_error(None, e, page_name)
 
