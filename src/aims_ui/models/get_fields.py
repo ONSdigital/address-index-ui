@@ -19,7 +19,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           display_title="Limit",
           classes='ons-input--w-4',
           description='Enter the number of addresses to return (0 - 5,000)',
-          previous_value='10',
+          previous_value='50',
       ),
       'epoch':
       Field(
