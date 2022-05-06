@@ -159,6 +159,7 @@ class AddressAttribute():
         'uprn',
         'classificationCode',
         'confidenceScoreFormatted',
+        'lpiLogicalStatus',
     ]
 
     # Values to show in the 'full info' page on a particular address
