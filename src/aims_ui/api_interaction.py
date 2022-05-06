@@ -19,18 +19,20 @@ def get_epoch_options():
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
 
-  epoch_call = requests.get(
-      api_url,
-      headers=header,
-  )
+  if app.config.get("ENV") != "testing":
 
-  if epoch_call.status_code != 200:
-    logging.warn('No epoch endpoint found, falling back to Preset Options')
+    epoch_call = requests.get(
+        api_url,
+        headers=header,
+    )
 
-    sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
-    default = app.config.get('DEFAULT_EPOCH_SELECTED')
+    if epoch_call.status_code != 200:
+      logging.warn('No epoch endpoint found, falling back to Preset Options')
 
-    return sorted_epochs, default
+      sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
+      default = app.config.get('DEFAULT_EPOCH_SELECTED')
+
+      return sorted_epochs, default
 
   epoch_options = json.loads(epoch_call.text).get('epochs')
 
@@ -126,17 +128,18 @@ def get_classifications():
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
 
-  class_call = requests.get(
-      classifications_api_url,
-      headers=header,
-  )
+  if app.config.get("ENV") != "testing":
+    class_call = requests.get(
+        classifications_api_url,
+        headers=header,
+    )
 
-  if class_call.status_code != 200:
-    logging.warn(
-        'No Class Code endpoint found, falling back to Preset Options')
-    class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
+    if class_call.status_code != 200:
+      logging.warn(
+          'No Class Code endpoint found, falling back to Preset Options')
+      class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
 
-    return class_list
+      return class_list
 
   class_list = json.loads(class_call.text).get('classifications')
 
