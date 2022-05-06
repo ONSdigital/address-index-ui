@@ -34,7 +34,12 @@ def get_epoch_options():
 
       return sorted_epochs, default
 
-  epoch_options = json.loads(epoch_call.text).get('epochs')
+    epoch_options = json.loads(epoch_call.text).get('epochs')
+  else:
+    sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
+    default = app.config.get('DEFAULT_EPOCH_SELECTED')
+
+    return sorted_epochs, default
 
   # Find default
   # Make epoch Numbers Ints
@@ -141,6 +146,9 @@ def get_classifications():
 
       return class_list
 
-  class_list = json.loads(class_call.text).get('classifications')
+    class_list = json.loads(class_call.text).get('classifications')
+  else:
+    class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
+
 
   return class_list
