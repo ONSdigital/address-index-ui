@@ -22,7 +22,7 @@ def getHierarchy(parentUPRN):
   tables = []
 
   table_headers = [
-      'placeholder', 'Primary', 'Secondary', 'Tertiary', 'Quaternary'
+      'placeholder', 'Primary', 'Secondary', 'Tertiary', 'Quaternary', 'Quinary', 'Senary', 'Septenary', 'Octonary',
   ]
 
   for level in relatives:
