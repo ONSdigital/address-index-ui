@@ -22,8 +22,6 @@ def multiple_address_match(file, all_user_input, download=False):
   contents = file.readlines()
   remove_header_row(contents)
 
-  print( contents )
-
   # Set 'write' type depending on if the results are to be downloaded or shown in browser
   if download:
     proxy = StringIO()
