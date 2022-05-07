@@ -19,7 +19,7 @@ def get_epoch_options():
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
 
-  if app.config.get("FLASK_ENV") != "testing":
+  if os.getenv("FLASK_ENV") != "testing":
 
     epoch_call = requests.get(
         api_url,
@@ -133,7 +133,7 @@ def get_classifications():
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
 
-  if app.config.get("FLASK_ENV") != "testing":
+  if os.getenv("FLASK_ENV") != "testing":
     class_call = requests.get(
         classifications_api_url,
         headers=header,
