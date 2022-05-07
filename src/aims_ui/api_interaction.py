@@ -18,7 +18,7 @@ def get_epoch_options():
       "Content-Type": "application/json",
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
-
+  logging.warn('flask_env = ' + os.getenv("FLASK_ENV"))
   if os.getenv("FLASK_ENV") != "testing":
 
     epoch_call = requests.get(
@@ -36,6 +36,7 @@ def get_epoch_options():
 
     epoch_options = json.loads(epoch_call.text).get('epochs')
   else:
+    logging.warn('Test mode, falling back to Preset Options')
     sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
     default = app.config.get('DEFAULT_EPOCH_SELECTED')
 
