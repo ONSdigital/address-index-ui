@@ -18,21 +18,29 @@ def get_epoch_options():
       "Content-Type": "application/json",
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
+  logging.warn('flask_env = ' + os.getenv("FLASK_ENV"))
+  if os.getenv("FLASK_ENV") != "testing":
 
-  epoch_call = requests.get(
-      api_url,
-      headers=header,
-  )
+    epoch_call = requests.get(
+        api_url,
+        headers=header,
+    )
 
-  if epoch_call.status_code != 200:
-    logging.warn('No epoch endpoint found, falling back to Preset Options')
+    if epoch_call.status_code != 200:
+      logging.warn('No epoch endpoint found, falling back to Preset Options')
 
+      sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
+      default = app.config.get('DEFAULT_EPOCH_SELECTED')
+
+      return sorted_epochs, default
+
+    epoch_options = json.loads(epoch_call.text).get('epochs')
+  else:
+    logging.warn('Test mode, falling back to Preset Options')
     sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
     default = app.config.get('DEFAULT_EPOCH_SELECTED')
 
     return sorted_epochs, default
-
-  epoch_options = json.loads(epoch_call.text).get('epochs')
 
   # Find default
   # Make epoch Numbers Ints
@@ -126,18 +134,22 @@ def get_classifications():
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
 
-  class_call = requests.get(
-      classifications_api_url,
-      headers=header,
-  )
+  if os.getenv("FLASK_ENV") != "testing":
+    class_call = requests.get(
+        classifications_api_url,
+        headers=header,
+    )
 
-  if class_call.status_code != 200:
-    logging.warn(
-        'No Class Code endpoint found, falling back to Preset Options')
+    if class_call.status_code != 200:
+      logging.warn(
+          'No Class Code endpoint found, falling back to Preset Options')
+      class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
+
+      return class_list
+
+    class_list = json.loads(class_call.text).get('classifications')
+  else:
     class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
 
-    return class_list
-
-  class_list = json.loads(class_call.text).get('classifications')
 
   return class_list
