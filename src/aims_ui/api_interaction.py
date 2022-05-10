@@ -112,6 +112,7 @@ def get_params(all_user_input):
 
     if type(value) == str:
       value = value.replace('%', '')
+      value = value.replace('"','')
 
     # Check if the value is for the classifications, if so, check to see if it needs reversing
     if param == 'classificationfilter':
@@ -119,6 +120,7 @@ def get_params(all_user_input):
 
     quoted_param = urllib.parse.quote_plus(str(param))
     quoted_value = urllib.parse.quote_plus(str(value))
+
     params.append(quoted_param + '=' + quoted_value)
 
   return '&'.join(params)
