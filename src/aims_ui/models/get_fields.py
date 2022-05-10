@@ -143,7 +143,13 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             display_title=
             'Adjust the following fields to see the typeahead behaviour change',
         ),
-        common_fields['limit'],
+        Field(
+            'limit',
+            display_title="Limit",
+            classes='ons-input--w-4',
+            description='Enter the number of addresses to return (0 - 5,000)',
+            previous_value='10',
+        ),
         common_fields['epoch'],
         common_fields['england_boost'],
         common_fields['wales_boost'],
@@ -169,7 +175,14 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
 
   elif endpoint_name == 'multiple_address':
     return ([
-        common_fields['limit'], common_fields['epoch'],
+        Field(
+            'limit',
+            display_title="Limit",
+            classes='ons-input--w-4',
+            description='Enter the number of addresses to return (0 - 5,000)',
+            previous_value='5',
+        ),
+        common_fields['epoch'],
         common_fields['historical'], common_fields['match_threshold'],
         Field(
             'display-type',
