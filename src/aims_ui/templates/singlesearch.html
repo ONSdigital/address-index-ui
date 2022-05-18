@@ -69,6 +69,13 @@
 {# End of grid #}
 </div>
 
+{# Add script to remove form resubmission message #}
+<script>
+if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
+</script>
+ 
 
 {% endblock %}
 {% endblock %}

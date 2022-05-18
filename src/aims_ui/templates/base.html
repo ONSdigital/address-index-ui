@@ -4,6 +4,7 @@
 
 {% set item_list = endpoints[0].nav_info  %}
 
+
 {% set pageConfig = {
 'title': "Address Index",
 	'header': {
@@ -42,11 +43,5 @@
 	} %}
 
 
-{# Add script to remove form resubmission message #}
-<script>
-if ( window.history.replaceState ) {
-  window.history.replaceState( null, null, window.location.href );
-}
-</script>
- 
+
 
