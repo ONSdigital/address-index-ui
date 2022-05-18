@@ -19,6 +19,7 @@ page_name = 'singlesearch'
 def singlesearch():
 
   if request.method == 'GET':
+    print(session)
     delete_input(session)
     return render_template(
         f'{page_name}.html',
