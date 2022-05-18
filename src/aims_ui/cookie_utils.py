@@ -1,7 +1,6 @@
 def delete_input(session):
   """Remove search field data from the cookie"""
   session['previous_user_responses'] = {}
-  session['override_confidence_score'] = {}
 
 
 def save_input(all_user_input, session):
