@@ -19,22 +19,32 @@ def get_epoch_options():
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
   logging.warn('flask_env = ' + os.getenv("FLASK_ENV"))
+
   if os.getenv("FLASK_ENV") != "testing":
 
-    epoch_call = requests.get(
-        api_url,
-        headers=header,
-    )
-
-    if epoch_call.status_code != 200:
+    try:
+      epoch_call = requests.get(
+          api_url,
+          headers=header,
+      )
+    except:
       logging.warn('No epoch endpoint found, falling back to Preset Options')
-
       sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
       default = app.config.get('DEFAULT_EPOCH_SELECTED')
 
       return sorted_epochs, default
 
+    if epoch_call.status_code != 200:
+      logging.warn('No epoch endpoint found, falling back to Preset Options')
+      sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
+      default = app.config.get('DEFAULT_EPOCH_SELECTED')
+
+      return sorted_epochs, default
+
+
+    # If there are no errors from the epoch call, extract the epochs
     epoch_options = json.loads(epoch_call.text).get('epochs')
+
   else:
     logging.warn('Test mode, falling back to Preset Options')
     sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
@@ -137,10 +147,18 @@ def get_classifications():
   }
 
   if os.getenv("FLASK_ENV") != "testing":
-    class_call = requests.get(
-        classifications_api_url,
-        headers=header,
-    )
+
+    try:
+      class_call = requests.get(
+          classifications_api_url,
+          headers=header,
+      )
+    except:
+      logging.warn(
+          'No Class Code endpoint found, falling back to Preset Options')
+      class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
+
+      return class_list
 
     if class_call.status_code != 200:
       logging.warn(
@@ -149,6 +167,9 @@ def get_classifications():
 
       return class_list
 
+
+
+    # If there were no errors reaching the endpoint
     class_list = json.loads(class_call.text).get('classifications')
   else:
     class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
