@@ -2,5 +2,5 @@ def get_options(option):
   """Get options for a dropdown menu"""
 
   if option == 'percentage_match':
-    percent_values = [1, 2, 3, 5, 10, 25, 50, 60, 75, 80, 95]
+    percent_values = [ x if x > 0 else 1 for x in range (0, 100, 5) ]
     return (['%' + str(x) for x in percent_values])
