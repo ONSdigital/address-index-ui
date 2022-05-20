@@ -2,8 +2,8 @@ from dataclasses import dataclass, field, fields
 import json
 from .utilities.classifications import get_classification_list
 from .utilities.sibling_lookup import getHierarchy
+from .utilities.logicalStatusUtils import getTextLogicalStatus
 from aims_ui import app
-
 
 class Pao():
   def __init__(self, pao):
@@ -206,6 +206,8 @@ class AddressAttribute():
       return Nag(self.raw_value)
     if self.name == 'paf':
       return Paf(self.raw_value)
+    if self.name == 'lpiLogicalStatus':
+      return getTextLogicalStatus(self.raw_value)
     if self.name == 'hierarchy':
       return getHierarchy(self.address_data)
     if self.name == 'parentUprn':

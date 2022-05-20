@@ -1,7 +1,7 @@
 from aims_ui import app
 import json
 import requests
-
+import logging
 
 def multiple_uprn_lookup(siblings):
   header = {
@@ -12,7 +12,16 @@ def multiple_uprn_lookup(siblings):
   url_endpoint = app.config.get('API_URL') + '/addresses/multiuprn'
   siblings = [str(x) for x in siblings]
   data = {'uprns': siblings}
-  class_call = requests.post(url_endpoint, json=data, headers=header)
+
+  try:
+    class_call = requests.post(url_endpoint, json=data, headers=header)
+  except: 
+    logging.warn('WARNING No multiple UPRN lookup endpoint found, check connection and that you are connecting to the latetst version of the API')
+    return False
+
+  if class_call.status_code != 200:
+    logging.warn('WARNING Issue on /addresses/multiuprn')
+    return False
 
   return class_call
 
@@ -29,7 +38,10 @@ def getHierarchy(parentUPRN):
     siblings = level.get('siblings')
     # Get Address list of all siblings
     siblings_info = multiple_uprn_lookup(siblings)
-    result = siblings_info.json().get('response').get('addresses')
+    if siblings_info == False:
+      result = []
+    else:
+      result = siblings_info.json().get('response').get('addresses')
 
     # Add each child address to table
     for address in result:
