@@ -113,7 +113,8 @@ form.addEventListener('submit', (e) => {
   saveToLocalStorage();
 });
 
-form.addEventListener('reset', (e) => {
+const clear_button = document.querySelector('#clear-form-data-button-id');
+clear_button.addEventListener('click', (e) => {
   wipeLocalStorage();
 });
 
@@ -129,9 +130,6 @@ if (stored_vals) {
     }
   }
 }
-
-
-console.log(localStorage.getItem(loc));
 
 </script>
  
