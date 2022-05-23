@@ -36,11 +36,11 @@ Pre-requisites:
 
 # To run Flask Project
 
-python3 -m flask run
+`python3 -m flask run`
 
 ## To reformat code
 
-yapf --style='{based_on_style: pep8, indent_width: 2}' -ir .
+`yapf --style='{based_on_style: pep8, indent_width: 2}' -ir .`
 
 FOR WINDOWS USERS ONLY:
 
