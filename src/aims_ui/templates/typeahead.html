@@ -3,6 +3,7 @@
 {% from "components/input/_macro.njk" import onsInput %}
 {% from 'custom_search/_macro.njk' import customSearch %}
 {% from "components/address-input/_macro.njk" import onsAddressInput %}
+{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
 
 
 {% set form =  {
@@ -64,16 +65,27 @@
     }
 }) }}
 
-</div> 
+
+{# Add Results under the Typeahead #}
+	{% if results_page %}
+	<h2>We matched {{matched_address_number}}  addresses:</h2>
+	{% endif %}
+
+	{{ customAddressInfo ({
+		'matched_addresses': matched_addresses,
+		}) }}
+
+
+</div>
 
 {# 1 Col boarder between filters and results #}
   <div class="ons-grid__col ons-col-1@m "></div>
 
-{# 5 Col results page #}
+{# 5 Col FLAGS page #}
   <div class="ons-grid__col ons-col-5@m ">
 
 {{ customSearch ({ "Fields": searchable_fields , "remove_search_button":True  }) }}
-</div> 
+</div>
 
 {# End of grid #}
 </div>
@@ -81,10 +93,10 @@
 
 <script>
 function getParamsFromPage( ) {
-	finalParams = '&';
-	form = document.querySelector('.match-form-container');
-	inputs = form.querySelectorAll('input');
-	for (input of inputs) {
+	let finalParams = '&';
+	const lfForm = document.querySelector('.match-form-container');
+	const inputs = lfForm.querySelectorAll('input');
+	for (const input of inputs) {
 		if ((input.type === 'text') && (input.value !== '')) {
 			finalParams = finalParams + input.getAttribute('id') + '=' + input.value;
 			finalParams = finalParams + '&';
@@ -111,6 +123,7 @@ typeaheadContainer.addEventListener('focusin', (e) => {
 });
 
 </script>
+
 
 {# Add script to remove form resubmission message #}
 <script>
@@ -151,15 +164,17 @@ function wipeLocalStorage() {
 
 
 // Add event listener to save data when the form is submitted
-const form = document.querySelector('form');
-form.addEventListener('submit', (e) => {
+const localForm= document.querySelector('form');
+localForm.addEventListener('submit', (e) => {
   saveToLocalStorage();
 });
 
 const clear_button = document.querySelector('#clear-form-data-button-id');
-clear_button.addEventListener('click', (e) => {
-  wipeLocalStorage();
-});
+if (clear_button) {
+	clear_button.addEventListener('click', (e) => {
+	  wipeLocalStorage();
+	});
+}
 
 
 // Load values on page load if they exist
@@ -176,6 +191,6 @@ if (stored_vals) {
 
 
 </script>
- 
+
 {% endblock %}
 {% endblock %}
