@@ -27,17 +27,19 @@ Pre-requisites:
 *Note: JWT token is exported WITHOUT 'Bearer ' before it*
 
 ## Install Python Packages
-Run
 
 `pip install -r requirements.txt`
 
 ## Install project as a python package*
+
 `pip install -e .`
 
 # To run Flask Project
+
 python3 -m flask run
 
 ## To reformat code
+
 yapf --style='{based_on_style: pep8, indent_width: 2}' -ir .
 
 FOR WINDOWS USERS ONLY:
