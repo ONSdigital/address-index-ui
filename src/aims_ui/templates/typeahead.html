@@ -4,6 +4,7 @@
 {% from 'custom_search/_macro.njk' import customSearch %}
 {% from "components/address-input/_macro.njk" import onsAddressInput %}
 {% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+{% from "components/button/_macro.njk" import onsButton %}
 
 
 {% set form =  {
@@ -65,6 +66,18 @@
     }
 }) }}
 
+<br>
+
+{{  onsButton({
+	"text": "Search", }) }}
+
+	{{ onsButton({
+		'text': 'Clear  filters',
+		'variants': 'secondary',
+		'submitType': "loader",
+		'url': '/typeahead',
+		'id': 'clear-form-data-button-id',
+	}) }}
 
 {# Add Results under the Typeahead #}
 	{% if results_page %}
@@ -84,7 +97,9 @@
 {# 5 Col FLAGS page #}
   <div class="ons-grid__col ons-col-5@m ">
 
-{{ customSearch ({ "Fields": searchable_fields , "remove_search_button":True  }) }}
+{{ customSearch ({ "Fields": searchable_fields ,
+ "remove_search_button":True }) }}
+
 </div>
 
 {# End of grid #}
@@ -138,7 +153,9 @@ function getInputObjects() {
   const final = [];
   for (const a of inps) {
     if ( ! a.classList.contains('ons-input--select') ) {
-      final.push(a);
+			if ( ! a.id === 'address-autosuggest' ) {
+	      final.push(a);
+		  }
     }
   }
   return final;

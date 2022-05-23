@@ -18,10 +18,10 @@ def get_epoch_options():
       "Content-Type": "application/json",
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
-  logging.warn('flask_env = ' + os.getenv("FLASK_ENV"))
 
   if os.getenv("FLASK_ENV") != "testing":
 
+    logging.warn('flask_env = ' + os.getenv("FLASK_ENV"))
     try:
       epoch_call = requests.get(
           api_url,
