@@ -33,11 +33,13 @@ def typeahead():
       request,
       session,
   )
+  all_user_input['uprn'] = request.form.get('address-uprn')
+  print(all_user_input)
 
   try:
     result = api(
         '/addresses/uprn/',
-        page_name,
+        'uprn',
         all_user_input,
     )
 
@@ -45,7 +47,7 @@ def typeahead():
     return page_error(None, e, page_name)
 
   if result.status_code == 200:
-    matched_addresses = get_addresses(result.json(), page_name)
+    matched_addresses = get_addresses(result.json(), 'uprn')
   else:
     matched_addresses = ''
 
