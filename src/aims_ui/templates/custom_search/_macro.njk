@@ -45,7 +45,7 @@
 		"id"   : field.database_name,
 		"name" : field.database_name,
 		"classes": field.classes if show else ' '.join([field.only_display_in_results_page,field.classes])  ,
-		"label": { "text": field.display_title, 
+		"label": { "text": field.display_title,
 			   "classes": '' if show else field.only_display_in_results_page,
 			   "description": field.description },
 		"options": field.dropdown_options })}}
@@ -54,7 +54,7 @@
 		"id": field.database_name,
 		"name": field.database_name,
 		"classes": field.classes if show else ' '.join([field.only_display_in_results_page,field.classes])  ,
-		"label": { "text": field.display_title, 
+		"label": { "text": field.display_title,
 			   "classes": '' if show else field.only_display_in_results_page,
 			   "description": field.description },
 		"value": True,
@@ -77,13 +77,13 @@
 	    "id": 'label',
 	    "for": "",
 	    "classes": field.classes if show else ' '.join([field.only_display_in_results_page,field.classes])  ,
-     	    "text": field.display_title, }) }}
+     	"text": field.display_title, }) }}
 
 	{% elif field.search_type == "autosuggest" %}
 	{{ onsAutosuggest({
-            "id": field.database_name,
-            "name": field.database_name,
-	    "label": { "text": field.display_title, 
+       "id": field.database_name,
+       "name": field.database_name,
+	     "label": { "text": field.display_title,
 	 	   "classes": '' if show else field.only_display_in_results_page,
 		   "description": field.description },
             "autocomplete": "off",
@@ -101,7 +101,7 @@
             "noResults": "No suggestions found. You can enter your own answer",
             "typeMore": "Continue entering to get suggestions",
 	    "allowMultiple": "true",
-	    "value": field.previous_value,   
+	    "value": field.previous_value,
         }) }}
 
 	{% elif field.search_type == "download" %}
@@ -121,7 +121,7 @@
 <br>
 {# Add a search button on the end of the UI #}
 {% if not params.remove_buttons %}
-{{  onsButton({ 
+{{  onsButton({
 	"text": "Search", }) }}
 
 {% endif %}
@@ -131,8 +131,8 @@
   {% if endpoint.selected %}
 	{{ onsButton({
 		'text': 'Clear  filters',
-		'classes': 'btn--secondary',
 		'submitType': "loader",
+		'variants': 'secondary',
 		'url': endpoint.url,
 		'id': 'clear-form-data-button-id',
 	}) }}
@@ -142,8 +142,5 @@
 
 </section>
 
-	
-
-
-
 {% endmacro %}
+
