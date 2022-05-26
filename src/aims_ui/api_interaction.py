@@ -8,6 +8,7 @@ from .classification_utilities import check_reverse_classification
 import urllib
 import csv
 import logging
+from flask import request
 
 
 def get_epoch_options():
@@ -18,10 +19,10 @@ def get_epoch_options():
       "Content-Type": "application/json",
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
-  logging.warn('flask_env = ' + os.getenv("FLASK_ENV"))
 
   if os.getenv("FLASK_ENV") != "testing":
 
+    logging.warn('flask_env = ' + os.getenv("FLASK_ENV"))
     try:
       epoch_call = requests.get(
           api_url,
@@ -76,9 +77,14 @@ def get_epoch_options():
 def api(url, called_from, all_user_input):
   """API helper for individual API lookups"""
 
+  user_email = request.headers.get('X-Goog-Authenticated-User-Email')
+  user_id = request.headers.get('X-Goog-Authenticated-User-ID')
+
   header = {
       "Content-Type": "application/json",
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
+      "user-email": user_email,
+      "user-id": user_id,
   }
 
   params = get_params(all_user_input)
@@ -176,3 +182,4 @@ def get_classifications():
 
 
   return class_list
+
