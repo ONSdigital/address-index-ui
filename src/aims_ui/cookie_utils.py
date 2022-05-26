@@ -1,3 +1,5 @@
+from aims_ui import get_epoch_options_cached
+
 def delete_input(session):
   """Remove search field data from the cookie"""
   session['previous_user_responses'] = {}
@@ -22,6 +24,20 @@ def save_confidence_score(session, addresses):
     cs[address.uprn.value] = address.confidence_score.value
 
   session['override_confidence_score'] = cs
+
+
+def load_epoch_number(session):
+  """Load the epoch number given the session, return to default if undeffined"""
+  epoch_version_number = session.get('epoch_version_number', {})
+  if epoch_version_number == {}:
+    epochs, default = (get_epoch_options_cached())
+    epoch_version_number = default 
+  return epoch_version_number
+
+def save_epoch_number(session, epoch_version_number ):
+  """Save the epoch number for a query to the session"""
+  session['epoch_version_number'] = epoch_version_number
+
 
 
 def load_input(all_user_input, session, searchable_fields):
