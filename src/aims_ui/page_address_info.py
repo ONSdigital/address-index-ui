@@ -5,7 +5,7 @@ from .api_interaction import api
 from .page_error import page_error
 from .table_utils import create_table, create_hierarchy_table
 from .models.get_addresses import get_addresses
-from .cookie_utils import load_confidence_score
+from .cookie_utils import load_confidence_score, load_epoch_number
 from requests.exceptions import ConnectionError
 from flask import render_template, request, session
 from flask_login import login_required
@@ -20,12 +20,13 @@ def address_info(uprn):
   """Show all info about an address given the UPRN"""
 
   confidence_score = load_confidence_score(session, uprn)
+  epoch_version_number = load_epoch_number(session)
 
   try:
     result = api(
         '/addresses/uprn/',
         'uprn',
-        {'uprn': uprn},
+        {'uprn': uprn, 'epoch':epoch_version_number},
     )
 
   except ConnectionError as e:
