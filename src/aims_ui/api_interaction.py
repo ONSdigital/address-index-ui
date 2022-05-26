@@ -83,8 +83,7 @@ def api(url, called_from, all_user_input):
   header = {
       "Content-Type": "application/json",
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-      "user-email": user_email,
-      "user-id": user_id,
+      "user": user_email,
   }
 
   params = get_params(all_user_input)
