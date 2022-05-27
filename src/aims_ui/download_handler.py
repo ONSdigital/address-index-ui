@@ -55,13 +55,18 @@ def download_handler(file_name):
 
   proxy = StringIO()
   writer = csv.writer(proxy)
+  dir_path = os.path.dirname(os.path.realpath(__file__))
 
   if file_name == 'classifications_list':
-    f = open('src/aims_ui/static/downloads/classifications.csv', 'rb')
+    f = open(f'{dir_path}/static/downloads/classifications.csv', 'rb')
 
   elif file_name == 'example_multiple_address':
-    f = open('src/aims_ui/static/downloads/example_multiple_match_upload.csv',
+    f = open(f'{dir_path}/static/downloads/example_multiple_match_upload.csv',
              'rb')
+  elif file_name == 'tool_tip_clerical_information':
+    f = open(f'{dir_path}/static/downloads/tool_tip_clerical_information.csv',
+             'rb')
+
 
   return send_file(f,
                    mimetype='text/csv',
