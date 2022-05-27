@@ -66,7 +66,6 @@ for (const elm of table_elms) {
   for (const toolTip of ttd) {
     const toolTipClean = cleanAndFormat(toolTip.name);
     if ( tableCellClean === toolTipClean ) {
-      console.log(tableCellClean , ' === ', toolTipClean );
       elm.title = toolTip.description;
       showToolTip(elm);
     } 
