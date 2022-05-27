@@ -42,7 +42,6 @@ def get_epoch_options():
 
       return sorted_epochs, default
 
-
     # If there are no errors from the epoch call, extract the epochs
     epoch_options = json.loads(epoch_call.text).get('epochs')
 
@@ -127,7 +126,7 @@ def get_params(all_user_input):
 
     if type(value) == str:
       value = value.replace('%', '')
-      value = value.replace('"','')
+      value = value.replace('"', '')
 
     # Check if the value is for the classifications, if so, check to see if it needs reversing
     if param == 'classificationfilter':
@@ -172,13 +171,9 @@ def get_classifications():
 
       return class_list
 
-
-
     # If there were no errors reaching the endpoint
     class_list = json.loads(class_call.text).get('classifications')
   else:
     class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
 
-
   return class_list
-
