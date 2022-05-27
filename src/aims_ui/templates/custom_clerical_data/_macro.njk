@@ -29,10 +29,41 @@
     {% endcall %}
 
 <script>
-// Add tooltips to the above table
 
-console.log({{ params }} )
-console.log(' {{ params.tool_tip_data }} ')
+function cleanAndFormat(toClean) {
+  clean = toClean.replace(/\s/g, "");
+  clean = clean.toLowerCase();
+  clean = clean.replace('[paf]','');
+  clean = clean.replace('[nag]','');
+  return clean;
+}
+
+function showToolTip(elm) {
+  elm.style = ' cursor: pointer; ';
+}
+
+// Add tooltips to the above table
+const ttd = {{params.tool_tip_data}};
+for (const x of ttd) {
+//  console.log(x);
+  let i = 9;
+}
+
+const table_elms = document.querySelectorAll('.ons-table__cell');
+
+for (const elm of table_elms) {
+  let tableCellClean = cleanAndFormat(elm.textContent);
+
+  for (const toolTip of ttd) {
+    const toolTipClean = cleanAndFormat(toolTip.name);
+    if ( tableCellClean === toolTipClean ) {
+      console.log(tableCellClean , ' === ', toolTipClean );
+      elm.title = toolTip.description;
+      showToolTip(elm);
+    } 
+  }
+}
+
 
 </script>
 

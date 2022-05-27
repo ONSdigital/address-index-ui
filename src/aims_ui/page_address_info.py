@@ -1,4 +1,3 @@
-import os
 from . import app
 from .models.get_endpoints import get_endpoints
 from .api_interaction import api
@@ -6,12 +5,14 @@ from .page_error import page_error
 from .table_utils import create_table, create_hierarchy_table
 from .models.get_addresses import get_addresses
 from .cookie_utils import load_confidence_score, load_epoch_number
+from .models.address import Address
 from requests.exceptions import ConnectionError
 from flask import render_template, request, session
 from flask_login import login_required
 import dataclasses
-from .models.address import Address
 import json
+import urllib.request, json
+import os
 
 
 @login_required
@@ -80,11 +81,26 @@ def address_info(uprn):
 
   clerical_info = create_table(ths, final_trs)
 
+  dir_path = os.path.dirname(os.path.realpath(__file__))
+  f = open(f'{dir_path}/static/downloads/tool_tip_clerical_information.csv',
+           'r')
+  tool_tip_data = []
+  for line in f.readlines():
+    temp = line.split(',')
+    temp = [ x.lstrip().rstrip() for x in temp if x.strip() ]
+    if temp != []:
+      # Convert temp into an object
+      temp = {
+          'name': temp[1],
+          'description': temp[2],
+          }
+      tool_tip_data.append(temp)
+
   return render_template(
       'address_info.html',
       endpoints=get_endpoints('address_info'),
       matched_addresses=matched_addresses,
       clerical_info=clerical_info,
       hierarchy_table=hierarchy_table,
-      tool_tip_data='THIS IS TOOL TIP DATA FROM PYTHON',
+      tool_tip_data=tool_tip_data,
   )
