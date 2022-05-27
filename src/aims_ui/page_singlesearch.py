@@ -53,7 +53,7 @@ def singlesearch():
 
   # Save a list of UPRNs and their respective confidence scores
   save_confidence_score(session, matched_addresses)
-  save_epoch_number(session, all_user_input.get('epoch',''))
+  save_epoch_number(session, all_user_input.get('epoch', ''))
 
   # Check to see if showing the comfortable redirect is appropriate
   ss_input = all_user_input.get('input')

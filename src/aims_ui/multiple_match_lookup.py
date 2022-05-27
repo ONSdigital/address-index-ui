@@ -5,16 +5,18 @@ import csv
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
 
+
 def remove_header_row(contents):
   remove_index = None
-  for i in range (0, len(contents)):
+  for i in range(0, len(contents)):
     line = contents[i]
     line = line.strip().decode('utf-8')
-    if (line == 'id,address') or (line == 'id,searchAddress') :
+    if (line == 'id,address') or (line == 'id,searchAddress'):
       remove_index = i
 
   if remove_index != None:
     contents.pop(remove_index)
+
 
 def multiple_address_match(file, all_user_input, download=False):
   csv_headers = ['id', 'inputAddress', 'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank']  # yapf: disable

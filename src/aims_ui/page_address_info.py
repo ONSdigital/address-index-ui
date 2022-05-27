@@ -26,7 +26,10 @@ def address_info(uprn):
     result = api(
         '/addresses/uprn/',
         'uprn',
-        {'uprn': uprn, 'epoch':epoch_version_number},
+        {
+            'uprn': uprn,
+            'epoch': epoch_version_number
+        },
     )
 
   except ConnectionError as e:
