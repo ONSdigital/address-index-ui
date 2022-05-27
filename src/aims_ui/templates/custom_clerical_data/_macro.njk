@@ -8,7 +8,7 @@
  {% set content %}
         {{ onsTable({
         "caption": "Clerical Information",
-        "id": "basic-table",
+        "id": "clerical-data-table",
         "ths": params.clerical_info.get('ths'),
         "trs": params.clerical_info.get('trs'),
 	}) }}
@@ -27,5 +27,13 @@
     %}
         {{ content | safe }}
     {% endcall %}
+
+<script>
+// Add tooltips to the above table
+
+console.log({{ params }} )
+console.log(' {{ params.tool_tip_data }} ')
+
+</script>
 
 {% endmacro %}
