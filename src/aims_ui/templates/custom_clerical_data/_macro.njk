@@ -2,6 +2,15 @@
 
 {% from "components/collapsible/_macro.njk" import onsCollapsible %}
 {% from "components/table/_macro.njk" import onsTable %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+
+<br>
+{% call onsPanel({
+        "type": 'warn'
+    })
+%}
+   Hover your cursor over the "Name" field to see descriptions
+{% endcall %}
 
 {# By setting the content, the onsTable is contained inside onsCollapsible #}
 
