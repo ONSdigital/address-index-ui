@@ -17,7 +17,7 @@ def get_epoch_options():
 
   header = {
       "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
+      "Authorization": app.config.get('JWT_TOKEN_BEARER').replace('accounts.google.com:',''),
   }
 
   if os.getenv("FLASK_ENV") != "testing":
