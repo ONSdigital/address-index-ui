@@ -17,7 +17,7 @@ def get_epoch_options():
 
   header = {
       "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN_BEARER').replace('accounts.google.com:',''),
+      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
   }
 
   if os.getenv("FLASK_ENV") != "testing":
@@ -76,13 +76,12 @@ def get_epoch_options():
 def api(url, called_from, all_user_input):
   """API helper for individual API lookups"""
 
-  user_email = request.headers.get('X-Goog-Authenticated-User-Email')
-  user_id = request.headers.get('X-Goog-Authenticated-User-ID')
+  user_email = request.headers.get('X-Goog-Authenticated-User-Email', '')
 
   header = {
       "Content-Type": "application/json",
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-      "user": user_email,
+      "user": user_email.replace('accounts.google.com:',''),
   }
 
   params = get_params(all_user_input)
