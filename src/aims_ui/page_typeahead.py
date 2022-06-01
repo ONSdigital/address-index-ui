@@ -34,7 +34,7 @@ def typeahead():
       session,
   )
   all_user_input['uprn'] = request.form.get('address-uprn')
-  save_epoch_number(session, all_user_input.get('epoch',''))
+  save_epoch_number(session, all_user_input.get('epoch', ''))
 
   try:
     result = api(
@@ -60,4 +60,3 @@ def typeahead():
       matched_address_number=len(matched_addresses),
       api_auth=get_api_auth(),
   )
-

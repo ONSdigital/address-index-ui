@@ -3,6 +3,7 @@ import json
 import requests
 import logging
 
+
 def multiple_uprn_lookup(siblings):
   header = {
       "Content-Type": "application/json",
@@ -15,8 +16,10 @@ def multiple_uprn_lookup(siblings):
 
   try:
     class_call = requests.post(url_endpoint, json=data, headers=header)
-  except: 
-    logging.warn('WARNING No multiple UPRN lookup endpoint found, check connection and that you are connecting to the latetst version of the API')
+  except:
+    logging.warn(
+        'WARNING No multiple UPRN lookup endpoint found, check connection and that you are connecting to the latetst version of the API'
+    )
     return False
 
   if class_call.status_code != 200:
@@ -31,7 +34,15 @@ def getHierarchy(parentUPRN):
   tables = []
 
   table_headers = [
-      'placeholder', 'Primary', 'Secondary', 'Tertiary', 'Quaternary', 'Quinary', 'Senary', 'Septenary', 'Octonary',
+      'placeholder',
+      'Primary',
+      'Secondary',
+      'Tertiary',
+      'Quaternary',
+      'Quinary',
+      'Senary',
+      'Septenary',
+      'Octonary',
   ]
 
   for level in relatives:

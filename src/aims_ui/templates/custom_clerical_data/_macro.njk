@@ -2,13 +2,23 @@
 
 {% from "components/collapsible/_macro.njk" import onsCollapsible %}
 {% from "components/table/_macro.njk" import onsTable %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+
+<br>
+{% call onsPanel({
+        "type": 'warn'
+    })
+%}
+   Hover your cursor over the "Name" field to see descriptions
+{% endcall %}
 
 {# By setting the content, the onsTable is contained inside onsCollapsible #}
 
  {% set content %}
         {{ onsTable({
         "caption": "Clerical Information",
-        "id": "basic-table",
+        "variants": ['row-hover'],
+        "id": "clerical-data-table",
         "ths": params.clerical_info.get('ths'),
         "trs": params.clerical_info.get('trs'),
 	}) }}
@@ -27,5 +37,43 @@
     %}
         {{ content | safe }}
     {% endcall %}
+
+<script>
+
+function cleanAndFormat(toClean) {
+  clean = toClean.replace(/\s/g, "");
+  clean = clean.toLowerCase();
+  clean = clean.replace('[paf]','');
+  clean = clean.replace('[nag]','');
+  return clean;
+}
+
+function showToolTip(elm) {
+  elm.style = ' cursor: pointer; ';
+}
+
+// Add tooltips to the above table
+const ttd = {{params.tool_tip_data}};
+for (const x of ttd) {
+//  console.log(x);
+  let i = 9;
+}
+
+const table_elms = document.querySelectorAll('.ons-table__cell');
+
+for (const elm of table_elms) {
+  let tableCellClean = cleanAndFormat(elm.textContent);
+
+  for (const toolTip of ttd) {
+    const toolTipClean = cleanAndFormat(toolTip.name);
+    if ( tableCellClean === toolTipClean ) {
+      elm.title = toolTip.description;
+      showToolTip(elm);
+    } 
+  }
+}
+
+
+</script>
 
 {% endmacro %}
