@@ -1,4 +1,4 @@
-,1,UPRN,Unique Property Reference Number (UPRN) assigned by the LLPG Custodian or Ordnance Survey.,
+,1,UPRN,Unique Property Reference Number (UPRN) assigned by the LLPG (Local Land and Property Gazetteer) Custodian or Ordnance Survey.,
 ,2,Address Detail Valid From Date,The date on or after which the Address Index Detail is deemed to be effective/valid.,
 ,3,Addressbase Postal,Identifies addresses which are believed to be capable of receiving mail as defined specifically for the AddressBase products  and details their relationship with other AddressBase Postal records. N.B. this field identifies some addresses which the AddressBase product believes to be capable of receiving mail which are not contained within the Royal Mail PAF database  such as flats behind a front door which has a single letter box. D = A record which is linked to PAF N = Not a postal address C = A record which is postal and has a parent record which is linked to PAF L = A record which is identified as postal based on Local Authority information,
 ,4,Adminstrative Area,Local Highway Authority name for the area this record exists within.,
