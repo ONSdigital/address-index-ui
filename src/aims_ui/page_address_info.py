@@ -12,6 +12,7 @@ from flask_login import login_required
 import dataclasses
 import json
 import urllib.request, json
+from aims_ui import get_cached_tooltip_data
 import os
 
 
@@ -81,20 +82,7 @@ def address_info(uprn):
 
   clerical_info = create_table(ths, final_trs)
 
-  dir_path = os.path.dirname(os.path.realpath(__file__))
-  f = open(f'{dir_path}/static/downloads/tool_tip_clerical_information.csv',
-           'r')
-  tool_tip_data = []
-  for line in f.readlines():
-    temp = line.split(',')
-    temp = [ x.lstrip().rstrip() for x in temp if x.strip() ]
-    if temp != []:
-      # Convert temp into an object
-      temp = {
-          'name': temp[1],
-          'description': temp[2],
-          }
-      tool_tip_data.append(temp)
+  tool_tip_data = get_cached_tooltip_data()
 
   return render_template(
       'address_info.html',
