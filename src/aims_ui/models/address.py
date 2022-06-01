@@ -5,6 +5,7 @@ from .utilities.sibling_lookup import getHierarchy
 from .utilities.logicalStatusUtils import getTextLogicalStatus
 from aims_ui import app
 
+
 class Pao():
   def __init__(self, pao):
     self.paoText = pao.get('paoText')

@@ -55,7 +55,7 @@ def uprn():
 
   # Save a list of UPRNs and their respective confidence scores
   save_confidence_score(session, matched_addresses)
-  save_epoch_number(session, all_user_input.get('epoch',''))
+  save_epoch_number(session, all_user_input.get('epoch', ''))
 
   return render_template(
       f'{page_name}.html',
