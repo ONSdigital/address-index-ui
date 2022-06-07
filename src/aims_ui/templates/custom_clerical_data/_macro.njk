@@ -14,10 +14,15 @@
 
 {# By setting the content, the onsTable is contained inside onsCollapsible #}
 
+
  {% set content %}
         {{ onsTable({
         "caption": "Clerical Information",
-        "variants": ['row-hover'],
+        "variants": ['row-hover', 'sortable'],
+	"sortBy": "Sort by",
+        "ariaAsc": "ascending",
+        "ariaDesc": "descending",
+
         "id": "clerical-data-table",
         "ths": params.clerical_info.get('ths'),
         "trs": params.clerical_info.get('trs'),
