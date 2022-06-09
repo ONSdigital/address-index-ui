@@ -71,7 +71,7 @@
 
 	<article class="result-short-form">
 	<a href={{'/address_info/' + address.uprn.value }}><h2 class="saturn"> {{ address.formatted_address.value }}</h2></a>
-	<table id='clerical-data-table' > 
+  <table class='clerical-data-table'> <tbody id='{{address.uprn.value}}'>
 
 	{% for attribute_name, address_attribute in address.__dict__.items() %}
 	{% if address_attribute.show %}
@@ -80,40 +80,55 @@
 		</tr>
 	{% endif %}
 	{% endfor %}
-	 </table>
+  <tbody> </table>
 	    <p class="mars"><a href=" {{ 'https://www.google.com/maps/search/?api=1&query=' + address.geo.value.get('longitude') + ',' + address.geo.value.get('latitude')  }}"
 	    >Location Map</a></p>
 	</article>
 
 {% endfor %}
 
-  <script>
-    const addresses = {};
-  </script>
+<script>
+  function getFavourites() {
+    const favs = localStorage.getItem('favourites');
+    if (favs) {
+      return JSON.parse(favs);
+    } else {
+      localStorage.setItem('favourites', JSON.stringify({}));
+      return {};
+    }
+  }
+
+  const localFavourites = getFavourites();
+  function getLocalFav(name) {
+    if (localFavourites[name] === true) {
+      return true
+    } else {
+      return false
+    }
+  }
+  const addresses = {};
+  const address = {};
+</script>
+
 {% for address in params.matched_addresses %}
 	{% for attribute_name, address_attribute in address.__dict__.items() %}
     <script> 
-      addresses['{{attribute_name}}'] = `{{address_attribute.value}}`;
+      address['{{attribute_name}}'] = {value:`{{address_attribute.value}}`,
+                favourite: getLocalFav('{{attribute_name}}')};
     </script>
   {% endfor %}
+  <script>
+    copyOfAddress = {...address};
+    addresses[`{{address.uprn.value}}`] = copyOfAddress;
+  </script>
+
 {% endfor %}
 
 <script>
-
 function getName(row) {
   const firstCell = row.children[0]; 
   return firstCell.textContent.replace(/\s/g,''); 
 }
-function getFavourites() {
-  const favs = localStorage.getItem('favourites');
-  if (favs) {
-    return JSON.parse(favs);
-  } else {
-    localStorage.setItem('favourites', JSON.stringify({}));
-    return {};
-  }
-}
-
 function toggleFavourite(row, cell) {
   const favouriteStatus = getFavouriteStatus(row, cell);
   const favourites = getFavourites();
@@ -148,7 +163,7 @@ function setFavouriteStar(row, cell) {
 }
 
 function addFavouritesColumn() {
-  for (const [i, row] of [...document.querySelectorAll('#clerical-data-table tr')].entries()) {
+  for (const [i, row] of [...document.querySelectorAll('.clerical-data-table tr')].entries()) {
     const cell = document.createElement(i ? "td" : "th");
 
     cursorPointer(cell);
@@ -159,14 +174,46 @@ function addFavouritesColumn() {
   };
 }
 
-addFavouritesColumn();
 
+function addAttribute(parent, attributeName, attributeValue) {
+  const tr = document.createElement('tr');
+  const attName = document.createElement('td');
+  const attValue = document.createElement('td');
+  attName.classList.add('mars');
+  attValue.classList.add('venus');
+  tr.append(attName, attValue);
+  attName.textContent = attributeName;
+  // Again, gross, but in this case we need HTML to be pasrsed!
+  attValue.innerHTML= attributeValue;
+  parent.append(tr);
+}
 
-function cursorPointer(elm) {
-  elm.style = ' cursor: pointer; ';
+function addFavouriteAttributes() {
+  const trs = document.querySelectorAll('tbody');
+  for (const tbl of trs) {
+    const uprn = tbl.id;
+    if ( addresses[uprn] ) {
+      const currentAddress = addresses[uprn];
+      // For each 'Favourated' attribute, add it!
+      for ( const attribute_name in currentAddress ) {
+      //  console.log(attribute_name, currentAddress[attribute_name]);
+        //console.val(uprn          , {value: '10023117623', favourite: true});
+        const attLocalData = currentAddress[attribute_name];
+        if (attLocalData.favourite) {
+          addAttribute(tbl, attribute_name, attLocalData.value);
+        }
+      }
+    }
+  }
 }
 
 
+addFavouriteAttributes();
+
+addFavouritesColumn();
+function cursorPointer(elm) {
+  elm.style = ' cursor: pointer; ';
+}
 
 </script>
 
