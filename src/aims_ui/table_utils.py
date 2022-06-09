@@ -7,7 +7,13 @@ def create_table(table_headers, table_rows):
       } for col_val in row]
   } for row in table_rows]
 
-  return {'ths': ths, 'trs': trs}
+  # Remove blank ({'tds': []}) rows from the table
+  tmp = []
+  for row in trs:
+    if str(row) != "{'tds': []}":
+      tmp.append(row)
+
+  return {'ths': ths, 'trs': tmp}
 
 
 def create_hierarchy_table(table_templates):
