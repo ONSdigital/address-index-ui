@@ -45,6 +45,52 @@
 
 <script>
 // ADD FAVOURITE OPTION ROW
+function getName(row) {
+  const firstCell = row.children[0]; 
+  return firstCell.textContent.replace(/\s/g,''); 
+}
+function getFavourites() {
+  const favs = localStorage.getItem('favourites');
+  if (favs) {
+    return JSON.parse(favs);
+  } else {
+    localStorage.setItem('favourites', JSON.stringify({}));
+    return {};
+  }
+}
+
+function toggleFavourite(row, cell) {
+  const favouriteStatus = getFavouriteStatus(row, cell);
+  const favourites = getFavourites();
+  const name = getName(row);
+  if (favourites[name]) {
+    favourites[name] = !favourites[name];
+  } else {
+    favourites[name] = true;
+  }
+  localStorage.setItem('favourites', JSON.stringify(favourites));
+  setFavouriteStar(row, cell);
+}
+
+function getFavouriteStatus(row, cell) {
+  const name = getName(row);
+  const favourites = getFavourites();
+  const favSetting = favourites[name];
+  if (favSetting) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function setFavouriteStar(row, cell) {
+  if (getFavouriteStatus(row, cell)) {
+      // Note innerHTML is just the worst and should be removed at some point
+    cell.innerHTML = '★';
+  } else {
+    cell.innerHTML = '☆';
+  }
+}
 
 function addFavouritesColumn() {
   let count = 0;
@@ -56,15 +102,13 @@ function addFavouritesColumn() {
       cell.textContent='Favourite';
       cell.scope = 'col';
     } else {
-      // Note innerHTML is just the worst and should be removed at some point
       cursorPointer(cell);
       cell.classList.add('ons-table__cell');
-      cell.innerHTML = '☆';
-      //cell.innerHTML = '★';
+      setFavouriteStar(row, cell);
+      cell.addEventListener('click', function(){toggleFavourite(row, cell)}, false);
     }
     
     row.appendChild(cell);
-
     count = count + 1;
   };
 }
