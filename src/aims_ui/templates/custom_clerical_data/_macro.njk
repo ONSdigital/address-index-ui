@@ -44,7 +44,34 @@
     {% endcall %}
 
 <script>
+// ADD FAVOURITE OPTION ROW
 
+function addFavouritesColumn() {
+  let count = 0;
+  for (const [i, row] of [...document.querySelectorAll('#clerical-data-table tr')].entries()) {
+    const cell = document.createElement(i ? "td" : "th");
+
+    if (count === 0) {
+      cell.classList.add('ons-table__header');
+      cell.textContent='Favourite';
+      cell.scope = 'col';
+    } else {
+      // Note innerHTML is just the worst and should be removed at some point
+      cursorPointer(cell);
+      cell.classList.add('ons-table__cell');
+      cell.innerHTML = '☆';
+      //cell.innerHTML = '★';
+    }
+    
+    row.appendChild(cell);
+
+    count = count + 1;
+  };
+}
+
+addFavouritesColumn();
+
+// ADD TOOLTIPS
 function cleanAndFormat(toClean) {
   clean = toClean.replace(/\s/g, "");
   clean = clean.toLowerCase();
@@ -53,7 +80,7 @@ function cleanAndFormat(toClean) {
   return clean;
 }
 
-function showToolTip(elm) {
+function cursorPointer(elm) {
   elm.style = ' cursor: pointer; ';
 }
 
@@ -73,7 +100,7 @@ for (const elm of table_elms) {
     const toolTipClean = cleanAndFormat(toolTip.name);
     if ( tableCellClean === toolTipClean ) {
       elm.title = toolTip.description;
-      showToolTip(elm);
+      cursorPointer(elm);
     } 
   }
 }
