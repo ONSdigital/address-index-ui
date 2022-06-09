@@ -15,7 +15,7 @@
 {# For each atribute in the Address Model #} 
 {% for attribute_name, address_attribute in  params.matched_addresses[0].__dict__.items() %}
 	{% if address_attribute.full_show %}
-		<tr><td class="mars">{{ address_attribute.name }}</td>
+		<tr><td class="mars">{{ attribute_name }}</td>
 		    <td class="venus">{{ address_attribute.value }}</td>
 		</tr>
 	{% endif %}
@@ -72,7 +72,7 @@
 
 {% for attribute_name, address_attribute in address.__dict__.items() %}
 {% if address_attribute.show %}
-	<tr><td class="mars">{{ address_attribute.name }}</td>
+	<tr><td class="mars">{{ attribute_name }}</td>
 	    <td class="venus">{{ address_attribute.value }}</td>
 	</tr>
 {% endif %}
