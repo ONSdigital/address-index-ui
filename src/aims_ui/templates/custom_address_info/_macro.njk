@@ -11,11 +11,12 @@
   <div class="panel__body">
     <p>
 
+      
 <table> <tbody>
 {# For each atribute in the Address Model #} 
 {% for attribute_name, address_attribute in  params.matched_addresses[0].__dict__.items() %}
 	{% if address_attribute.full_show %}
-		<tr><td class="mars">{{ address_attribute.name }}</td>
+		<tr><td class="mars">{{ attribute_name }}</td>
 		    <td class="venus">{{ address_attribute.value }}</td>
 		</tr>
 	{% endif %}
@@ -63,27 +64,165 @@
 
 
 
+
+
+{# Add the smaller cards, used on the overview when a search is done #}
 {% for address in params.matched_addresses %}
 
-<article class="result-short-form">
-<a href={{'/address_info/' + address.uprn.value }}><h2 class="saturn"> {{ address.formatted_address.value }}</h2></a>
-<table> <tbody>
+	<article class="result-short-form">
+	<a href={{'/address_info/' + address.uprn.value }}><h2 class="saturn"> {{ address.formatted_address.value }}</h2></a>
+  <table class='clerical-data-table'> <tbody id='{{address.uprn.value}}'>
 
-{% for attribute_name, address_attribute in address.__dict__.items() %}
-{% if address_attribute.show %}
-	<tr><td class="mars">{{ address_attribute.name }}</td>
-	    <td class="venus">{{ address_attribute.value }}</td>
-	</tr>
-{% endif %}
-{% endfor %}
-<tr>
-    <td class="mars"><a href=" {{ 'https://www.google.com/maps/search/?api=1&query=' + address.geo.value.get('longitude') + ',' + address.geo.value.get('latitude')  }}"
-    >Location Map</a></td>
-</tr>
-</tbody> </table>
-</article>
+	{% for attribute_name, address_attribute in address.__dict__.items() %}
+	{% if address_attribute.show %}
+		<tr><td class="mars">{{ attribute_name }}</td>
+		    <td class="venus">{{ address_attribute.value }}</td>
+		</tr>
+	{% endif %}
+	{% endfor %}
+  <tbody> </table>
+	    <p class="mars"><a href=" {{ 'https://www.google.com/maps/search/?api=1&query=' + address.geo.value.get('longitude') + ',' + address.geo.value.get('latitude')  }}"
+	    >Location Map</a></p>
+	</article>
 
 {% endfor %}
+
+<script>
+  function getFavourites() {
+    const defaultFavs = {"uprn":true,"classification_code":true,"classification_code_list":true,"lpi_logical_status":true};
+    const favs = localStorage.getItem('favourites');
+    if (favs) {
+      return JSON.parse(favs);
+    } else {
+      localStorage.setItem('favourites', JSON.stringify(defaultFavs));
+      return {};
+    }
+  }
+
+  const localFavourites = getFavourites();
+  function getLocalFav(name) {
+    if (localFavourites[name] === true) {
+      return true
+    } else {
+      return false
+    }
+  }
+  const addresses = {};
+  const address = {};
+</script>
+
+{% for address in params.matched_addresses %}
+	{% for attribute_name, address_attribute in address.__dict__.items() %}
+    <script> 
+      address['{{attribute_name}}'] = {value:`{{address_attribute.value}}`,
+                favourite: getLocalFav('{{attribute_name}}')};
+    </script>
+  {% endfor %}
+  <script>
+    copyOfAddress = {...address};
+    addresses[`{{address.uprn.value}}`] = copyOfAddress;
+  </script>
+
+{% endfor %}
+
+<script>
+function getName(row) {
+  const firstCell = row.children[0]; 
+  return firstCell.textContent.replace(/\s/g,''); 
+}
+function toggleFavourite(row, cell) {
+  const favouriteStatus = getFavouriteStatus(row, cell);
+  const favourites = getFavourites();
+  const name = getName(row);
+  if (favourites[name]) {
+    favourites[name] = !favourites[name];
+  } else {
+    favourites[name] = true;
+  }
+  localStorage.setItem('favourites', JSON.stringify(favourites));
+  setFavouriteStar(row, cell);
+}
+
+function getFavouriteStatus(row, cell) {
+  const name = getName(row);
+  const favourites = getFavourites();
+  const favSetting = favourites[name];
+  if (favSetting) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function setFavouriteStar(row, cell) {
+  if (getFavouriteStatus(row, cell)) {
+      // Note innerHTML is just the worst and should be removed at some point
+    cell.textContent = '★';
+  } else {
+    cell.textContent= '☆';
+  }
+}
+
+function addFavouritesColumn() {
+  for (const [i, row] of [...document.querySelectorAll('.clerical-data-table tr')].entries()) {
+    const cell = document.createElement(i ? "td" : "th");
+
+    cursorPointer(cell);
+    setFavouriteStar(row, cell);
+    cell.classList.add('ons-table__cell');
+    cell.addEventListener('click', function(){toggleFavourite(row, cell)}, false);
+
+    // Create custom event for changing other rows
+    const event = new CustomEvent('update-star', {detail: cell, bubbles:true});
+    cell.addEventListener('click', function(){ cell.dispatchEvent(event); }, false);
+    document.addEventListener('update-star', function(){ setFavouriteStar(row,cell); } );
+    
+    row.appendChild(cell);
+  };
+}
+
+
+function addAttribute(parent, attributeName, attributeValue) {
+  const tr = document.createElement('tr');
+  const attName = document.createElement('td');
+  const attValue = document.createElement('td');
+  attName.classList.add('mars', 'ons-table__cell');
+  attValue.classList.add('venus', 'ons-table__cell');
+  tr.append(attName, attValue);
+  attName.textContent = attributeName;
+  // Again, gross, but in this case we need HTML to be pasrsed!
+  attValue.innerHTML= attributeValue;
+  parent.append(tr);
+}
+
+function addFavouriteAttributes() {
+  const trs = document.querySelectorAll('tbody');
+  for (const tbl of trs) {
+    const uprn = tbl.id;
+    if ( addresses[uprn] ) {
+      const currentAddress = addresses[uprn];
+      // For each 'Favourated' attribute, add it!
+      for ( const attribute_name in currentAddress ) {
+      //  console.log(attribute_name, currentAddress[attribute_name]);
+        //console.val(uprn          , {value: '10023117623', favourite: true});
+        const attLocalData = currentAddress[attribute_name];
+        if (attLocalData.favourite) {
+          addAttribute(tbl, attribute_name, attLocalData.value);
+        }
+      }
+    }
+  }
+}
+
+
+addFavouriteAttributes();
+
+addFavouritesColumn();
+function cursorPointer(elm) {
+  elm.style = ' cursor: pointer; ';
+}
+
+</script>
 
 {% endif %}
 
