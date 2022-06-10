@@ -89,11 +89,12 @@
 
 <script>
   function getFavourites() {
+    const defaultFavs = {"uprn":true,"classification_code":true,"classification_code_list":true,"lpi_logical_status":true};
     const favs = localStorage.getItem('favourites');
     if (favs) {
       return JSON.parse(favs);
     } else {
-      localStorage.setItem('favourites', JSON.stringify({}));
+      localStorage.setItem('favourites', JSON.stringify(defaultFavs));
       return {};
     }
   }
