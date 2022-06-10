@@ -169,6 +169,7 @@ function addFavouritesColumn() {
 
     cursorPointer(cell);
     setFavouriteStar(row, cell);
+    cell.classList.add('ons-table__cell');
     cell.addEventListener('click', function(){toggleFavourite(row, cell)}, false);
     
     row.appendChild(cell);
@@ -180,8 +181,8 @@ function addAttribute(parent, attributeName, attributeValue) {
   const tr = document.createElement('tr');
   const attName = document.createElement('td');
   const attValue = document.createElement('td');
-  attName.classList.add('mars');
-  attValue.classList.add('venus');
+  attName.classList.add('mars', 'ons-table__cell');
+  attValue.classList.add('venus', 'ons-table__cell');
   tr.append(attName, attValue);
   attName.textContent = attributeName;
   // Again, gross, but in this case we need HTML to be pasrsed!
