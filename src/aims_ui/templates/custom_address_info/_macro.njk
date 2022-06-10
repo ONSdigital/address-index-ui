@@ -109,6 +109,9 @@
   }
   const addresses = {};
   const address = {};
+  const paf = {};
+  const nag = {};
+  let x = {};
 </script>
 
 {% for address in params.matched_addresses %}
@@ -117,10 +120,27 @@
       address['{{attribute_name}}'] = {value:`{{address_attribute.value}}`,
                 favourite: getLocalFav('{{attribute_name}}')};
     </script>
+
+    {% if attribute_name == 'paf'  %}
+      {% for paf_attribute_name, paf_attribute_value in address_attribute.value.__dict__.items() %}
+        <script>
+          address['[paf]{{paf_attribute_name}}'] = {value:`{{paf_attribute_value.value}}`,
+               favourite: getLocalFav('[paf]{{paf_attribute_name}}')}; 
+        </script>
+            {% endfor %}
+    {% endif %}
+    <script>
+      if ('{{attribute_name}}' === 'paf') {
+        address['[paf]{{attribute_name}}'] = {...paf};
+      }
+    </script>
+
+
   {% endfor %}
   <script>
     copyOfAddress = {...address};
     addresses[`{{address.uprn.value}}`] = copyOfAddress;
+    console.log(copyOfAddress);
   </script>
 
 {% endfor %}
@@ -181,7 +201,6 @@ function addFavouritesColumn() {
   };
 }
 
-
 function addAttribute(parent, attributeName, attributeValue) {
   const tr = document.createElement('tr');
   const attName = document.createElement('td');
@@ -203,7 +222,7 @@ function addFavouriteAttributes() {
       const currentAddress = addresses[uprn];
       // For each 'Favourated' attribute, add it!
       for ( const attribute_name in currentAddress ) {
-      //  console.log(attribute_name, currentAddress[attribute_name]);
+        //console.log(attribute_name, currentAddress[attribute_name]);
         //console.val(uprn          , {value: '10023117623', favourite: true});
         const attLocalData = currentAddress[attribute_name];
         if (attLocalData.favourite) {
