@@ -157,9 +157,9 @@ function getFavouriteStatus(row, cell) {
 function setFavouriteStar(row, cell) {
   if (getFavouriteStatus(row, cell)) {
       // Note innerHTML is just the worst and should be removed at some point
-    cell.innerHTML = '★';
+    cell.textContent = '★';
   } else {
-    cell.innerHTML = '☆';
+    cell.textContent= '☆';
   }
 }
 
@@ -171,6 +171,11 @@ function addFavouritesColumn() {
     setFavouriteStar(row, cell);
     cell.classList.add('ons-table__cell');
     cell.addEventListener('click', function(){toggleFavourite(row, cell)}, false);
+
+    // Create custom event for changing other rows
+    const event = new CustomEvent('update-star', {detail: cell, bubbles:true});
+    cell.addEventListener('click', function(){ cell.dispatchEvent(event); }, false);
+    document.addEventListener('update-star', function(){ setFavouriteStar(row,cell); } );
     
     row.appendChild(cell);
   };
