@@ -121,20 +121,34 @@
                 favourite: getLocalFav('{{attribute_name}}')};
     </script>
 
-    {% if attribute_name == 'paf'  %}
-      {% for paf_attribute_name, paf_attribute_value in address_attribute.value.__dict__.items() %}
-        <script>
-          address['[paf]{{paf_attribute_name}}'] = {value:`{{paf_attribute_value.value}}`,
-               favourite: getLocalFav('[paf]{{paf_attribute_name}}')}; 
-        </script>
-            {% endfor %}
-    {% endif %}
-    <script>
-      if ('{{attribute_name}}' === 'paf') {
-        address['[paf]{{attribute_name}}'] = {...paf};
-      }
-    </script>
+    {# PAF AND NAG EXCEPTIONS #}
+      {% if attribute_name == 'paf'  %}
+        {% for paf_attribute_name, paf_attribute_value in address_attribute.value.__dict__.items() %}
+          <script>
+            address['[paf]{{paf_attribute_name}}'] = {value:`{{paf_attribute_value.value}}`,
+                 favourite: getLocalFav('[paf]{{paf_attribute_name}}')}; 
+          </script>
+         {% endfor %}
+      {% endif %}
 
+      {% if attribute_name == 'nag'  %}
+        {% for nag_attribute_name, nag_attribute_value in address_attribute.value.__dict__.items() %}
+          <script>
+            address['[nag]{{nag_attribute_name}}'] = {value:`{{nag_attribute_value.value}}`,
+                 favourite: getLocalFav('[nag]{{nag_attribute_name}}')}; 
+          </script>
+         {% endfor %}
+      {% endif %}
+
+      <script>
+        if ('{{attribute_name}}' === 'paf') {
+          address['[paf]{{attribute_name}}'] = {...paf};
+        }
+        if ('{{attribute_name}}' === 'nag') {
+          address['[nag]{{attribute_name}}'] = {...nag};
+        }
+      </script>
+    {# END PAF AND NAG EXCEPTIONS #}
 
   {% endfor %}
   <script>
