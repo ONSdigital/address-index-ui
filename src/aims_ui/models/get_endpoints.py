@@ -30,6 +30,11 @@ def get_endpoints(called_from=None):
           'multiple_address',
           "Search for not just  one address. Several. Get lots of results you can look through. This service completes many single searches from a file.",
       ),
+      Endpoint(
+        'Help',
+        'help',
+        'Here you will find lightweight and in-depth deffinitions and descriptions of address attributes.',
+      ),
   ]
 
   if called_from != 'address_info':
