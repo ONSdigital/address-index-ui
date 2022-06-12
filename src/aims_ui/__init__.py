@@ -143,5 +143,6 @@ from . import page_typeahead
 from . import page_multiple_address
 from . import page_singlesearch
 from . import page_address_info
+from . import page_help
 from . import download_handler
 from .api_interaction import get_classifications
