@@ -6,8 +6,8 @@ from .models.get_endpoints import get_endpoints
 
 page_name = 'help'
 
-@app.route('/help/<subject>')
-def help(subject, methods=['GET', 'POST']):
+@app.route('/help/<subject>', defaults={'subject': None})
+def help(subject):
   print(subject)
 
   # Get brief descriptions from the tooltips file, but any deffinitions
