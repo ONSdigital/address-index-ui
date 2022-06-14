@@ -17,6 +17,7 @@ import os
 
 page_name = 'address_info'
 
+
 @login_required
 @app.route('/address_info/<uprn>')
 def address_info(uprn):
