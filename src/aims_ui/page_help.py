@@ -7,21 +7,24 @@ from aims_ui import get_cached_tooltip_data
 
 page_name = 'help'
 
-@app.route('/help/<subject>', defaults={'subject': None})
-def help(subject):
+@login_required
+@app.route('/help/<subject>')
+def help(subject='None'):
+  print(subject)
   # Get brief descriptions from the tooltips file, but any deffinitions
   # here will get a more lengthly explanation
 
+  url = '/help/'
   deffinitions = [
     {'title': 'UPRN',
-      'url': url_for('uprn'),
+      'url': url + 'uprn',
       'long_description': 'This is the Unique Property refference number'},
 
     {'title': 'Other', 'description': 'A nother thing '},
     ]
 
   breadcrumbs = [
-      { "url": url_for('help'), "text": 'Help' },
+      { "url": url, "text": 'Help' },
   ]
 
   def get_matching_tooltip(name):
