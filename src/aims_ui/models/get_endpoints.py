@@ -32,7 +32,9 @@ def get_endpoints(called_from=None):
       ),
   ]
 
-  if called_from != 'address_info':
+  if called_from == 'help':
+    current_selected_endpoint = '/help/home'
+  elif called_from != 'address_info':
     current_selected_endpoint = url_for('about')
   else:
     current_selected_endpoint = ''
@@ -47,6 +49,7 @@ def get_endpoints(called_from=None):
   } for endpoint in endpoints]
   # Add the 'About' section at the end, insert instead of append so it's location can easily
   # be changed later, after consulting with UX team
+  nav_info.insert(len(nav_info), {'title': 'Help', 'url': '/help/home'})
   nav_info.insert(len(nav_info), {'title': 'About', 'url': url_for('about')})
 
   for endpoint in endpoints:

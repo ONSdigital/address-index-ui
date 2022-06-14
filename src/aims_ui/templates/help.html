@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% from "components/card/_macro.njk" import onsCard %}
+{% from "components/breadcrumbs/_macro.njk" import onsBreadcrumbs %}
+
+{% block main %}
+
+{{ onsBreadcrumbs({
+  "ariaLabel": 'Breadcrumbs',
+  "itemsList":  breadcrumbs,
+}) }}
+
+
+{% for deffinition in deffinitions %}
+	<br>
+	{{ onsCard({
+	    "id": 	deffinition.title,
+	    "textId": 	'text',
+	    "titleSize":1,
+	    "title": 	deffinition.title,
+	    "url": 	  deffinition.url,
+	    "text": 	deffinition.description,
+	}) }}
+	<br>
+{% endfor %}
+
+
+
+{% endblock %}
+

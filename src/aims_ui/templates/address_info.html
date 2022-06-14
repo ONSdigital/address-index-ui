@@ -21,12 +21,14 @@
 	'matched_addresses': matched_addresses,
 	'clerical_info': clerical_info,
 	'tool_tip_data': tool_tip_data,
+	'link_data': link_data,
 	}) }}
 <br>
 
 {% for t_title, t_table in hierarchy_table.items() %} 
 	{{ onsTable({
 		'caption': t_title,
+		'variants': 'sortable',
 		'ths': t_table.get('ths'),
 		'trs': t_table.get('trs'),
 		}) }}

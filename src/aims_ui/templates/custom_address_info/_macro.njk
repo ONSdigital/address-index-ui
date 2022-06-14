@@ -57,6 +57,7 @@
 {{ customClericalData({
 	'clerical_info': params.clerical_info,
 	'tool_tip_data': params.tool_tip_data,
+	'link_data': params.link_data,
 	} ) }} 
 
 
@@ -109,6 +110,9 @@
   }
   const addresses = {};
   const address = {};
+  const paf = {};
+  const nag = {};
+  let x = {};
 </script>
 
 {% for address in params.matched_addresses %}
@@ -117,6 +121,36 @@
       address['{{attribute_name}}'] = {value:`{{address_attribute.value}}`,
                 favourite: getLocalFav('{{attribute_name}}')};
     </script>
+
+    {# PAF AND NAG EXCEPTIONS #}
+      {% if attribute_name == 'paf'  %}
+        {% for paf_attribute_name, paf_attribute_value in address_attribute.value.__dict__.items() %}
+          <script>
+            address['[paf]{{paf_attribute_name}}'] = {value:`{{paf_attribute_value.value}}`,
+                 favourite: getLocalFav('[paf]{{paf_attribute_name}}')}; 
+          </script>
+         {% endfor %}
+      {% endif %}
+
+      {% if attribute_name == 'nag'  %}
+        {% for nag_attribute_name, nag_attribute_value in address_attribute.value.__dict__.items() %}
+          <script>
+            address['[nag]{{nag_attribute_name}}'] = {value:`{{nag_attribute_value.value}}`,
+                 favourite: getLocalFav('[nag]{{nag_attribute_name}}')}; 
+          </script>
+         {% endfor %}
+      {% endif %}
+
+      <script>
+        if ('{{attribute_name}}' === 'paf') {
+          address['[paf]{{attribute_name}}'] = {...paf};
+        }
+        if ('{{attribute_name}}' === 'nag') {
+          address['[nag]{{attribute_name}}'] = {...nag};
+        }
+      </script>
+    {# END PAF AND NAG EXCEPTIONS #}
+
   {% endfor %}
   <script>
     copyOfAddress = {...address};
@@ -128,8 +162,11 @@
 <script>
 function getName(row) {
   const firstCell = row.children[0]; 
-  return firstCell.textContent.replace(/\s/g,''); 
+  let text = firstCell.textContent.replace(/\s/g,'');
+  text = text.replace('Explainme','');
+  return text; 
 }
+
 function toggleFavourite(row, cell) {
   const favouriteStatus = getFavouriteStatus(row, cell);
   const favourites = getFavourites();
@@ -181,7 +218,6 @@ function addFavouritesColumn() {
   };
 }
 
-
 function addAttribute(parent, attributeName, attributeValue) {
   const tr = document.createElement('tr');
   const attName = document.createElement('td');
@@ -203,7 +239,7 @@ function addFavouriteAttributes() {
       const currentAddress = addresses[uprn];
       // For each 'Favourated' attribute, add it!
       for ( const attribute_name in currentAddress ) {
-      //  console.log(attribute_name, currentAddress[attribute_name]);
+        //console.log(attribute_name, currentAddress[attribute_name]);
         //console.val(uprn          , {value: '10023117623', favourite: true});
         const attLocalData = currentAddress[attribute_name];
         if (attLocalData.favourite) {
