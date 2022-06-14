@@ -85,11 +85,12 @@ def address_info(uprn):
   clerical_info = create_table(ths, final_trs)
 
   tool_tip_data = get_cached_tooltip_data()
-  link_data = [{
-      'attribute_name': 'confidence_score',
-      'url': '/help/confidence_score',
+  link_data = [
+      {
+          'attribute_name': 'confidence_score',
+          'url': '/help/confidence_score',
       },
-    ]
+  ]
 
   return render_template(
       'address_info.html',
