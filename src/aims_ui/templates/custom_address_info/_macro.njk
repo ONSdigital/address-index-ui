@@ -57,6 +57,7 @@
 {{ customClericalData({
 	'clerical_info': params.clerical_info,
 	'tool_tip_data': params.tool_tip_data,
+	'link_data': params.link_data,
 	} ) }} 
 
 
@@ -161,8 +162,11 @@
 <script>
 function getName(row) {
   const firstCell = row.children[0]; 
-  return firstCell.textContent.replace(/\s/g,''); 
+  let text = firstCell.textContent.replace(/\s/g,'');
+  text = text.replace('Explainme','');
+  return text; 
 }
+
 function toggleFavourite(row, cell) {
   const favouriteStatus = getFavouriteStatus(row, cell);
   const favourites = getFavourites();
