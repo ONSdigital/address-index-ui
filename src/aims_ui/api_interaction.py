@@ -81,7 +81,7 @@ def api(url, called_from, all_user_input):
   header = {
       "Content-Type": "application/json",
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-      "user": user_email.replace('accounts.google.com:',''),
+      "user": user_email.replace('accounts.google.com:', ''),
   }
 
   params = get_params(all_user_input)

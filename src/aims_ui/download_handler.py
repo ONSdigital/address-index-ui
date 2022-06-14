@@ -67,7 +67,6 @@ def download_handler(file_name):
     f = open(f'{dir_path}/static/downloads/tool_tip_clerical_information.csv',
              'rb')
 
-
   return send_file(f,
                    mimetype='text/csv',
                    attachment_filename=f'{file_name}.csv',
