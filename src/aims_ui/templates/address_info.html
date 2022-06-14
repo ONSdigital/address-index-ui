@@ -28,6 +28,7 @@
 {% for t_title, t_table in hierarchy_table.items() %} 
 	{{ onsTable({
 		'caption': t_title,
+		'variants': 'sortable',
 		'ths': t_table.get('ths'),
 		'trs': t_table.get('trs'),
 		}) }}
