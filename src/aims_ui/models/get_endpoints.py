@@ -30,11 +30,6 @@ def get_endpoints(called_from=None):
           'multiple_address',
           "Search for not just  one address. Several. Get lots of results you can look through. This service completes many single searches from a file.",
       ),
-      Endpoint(
-        'Help',
-        'help',
-        'Here you will find lightweight and in-depth deffinitions and descriptions of address attributes.',
-      ),
   ]
 
   if called_from != 'address_info':
@@ -52,6 +47,7 @@ def get_endpoints(called_from=None):
   } for endpoint in endpoints]
   # Add the 'About' section at the end, insert instead of append so it's location can easily
   # be changed later, after consulting with UX team
+  nav_info.insert(len(nav_info), {'title': 'Help', 'url': '/help/home'})
   nav_info.insert(len(nav_info), {'title': 'About', 'url': url_for('about')})
 
   for endpoint in endpoints:

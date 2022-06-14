@@ -15,6 +15,7 @@ import urllib.request, json
 from aims_ui import get_cached_tooltip_data
 import os
 
+page_name = 'address_info'
 
 @login_required
 @app.route('/address_info/<uprn>')
