@@ -18,7 +18,7 @@ def help(subject='None'):
   deffinitions = [
       {
           'title': 'Confidence Score',
-          'name':  'confidence_score',
+          'name': 'confidence_score',
           'url': url + 'confidence_score',
       },
   ]
@@ -53,11 +53,3 @@ def help(subject='None'):
         endpoints=get_endpoints(called_from=page_name),
         deffinitions=deffinitions,
     ))
-
-
-
-
-
-
-
-
