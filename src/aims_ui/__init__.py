@@ -108,7 +108,10 @@ def get_epoch_options_cached():
       # Use previously cached results
       return epoch_options, default_epoch
 
+
 cached_tooltip_data = None
+
+
 # Cache the contents of the tooltip file to prevent excessive reading from disk
 def get_cached_tooltip_data():
   global cached_tooltip_data
@@ -120,18 +123,17 @@ def get_cached_tooltip_data():
   tool_tip_data = []
   for line in f.readlines():
     temp = line.split(',')
-    temp = [ x.lstrip().rstrip() for x in temp if x.strip() ]
+    temp = [x.lstrip().rstrip() for x in temp if x.strip()]
     if temp != []:
       # Convert temp into an object
       temp = {
           'name': temp[1],
           'description': temp[2],
-          }
+      }
       tool_tip_data.append(temp)
   cached_tooltip_data = tool_tip_data
 
   return tool_tip_data
-
 
 
 from . import info

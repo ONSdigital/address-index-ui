@@ -172,8 +172,8 @@ class AddressAttribute():
         'parentUprn',
     ]
 
-    # CHANGE HERE TODO above for hybrid 
-    # Decide on behaviour between normal or hybrid approach to 
+    # CHANGE HERE TODO above for hybrid
+    # Decide on behaviour between normal or hybrid approach to
     # attribute selection (Leave blank for complete control)
     values_to_show = []
 

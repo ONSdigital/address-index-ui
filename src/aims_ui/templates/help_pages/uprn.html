@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% from "components/breadcrumbs/_macro.njk" import onsBreadcrumbs %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+
+{% block main %}
+
+{{ onsBreadcrumbs({
+  "ariaLabel": 'Breadcrumbs',
+  "itemsList":  breadcrumbs,
+}) }}
+
+
+<h1>Confidence Score</h1>
+
+{{   onsPanel({
+    "body": '<p>The Confidence Score returned by this service is explained in depth through the links below. <br><br> <a href="https://analysis-prod-aims-developers-ui.gcp.onsdigital.uk/methodology">https://analysis-prod-aims-developers-ui.gcp.onsdigital.uk/methodology</a> <br><br> <a href="https://www.ons.gov.uk/methodology/methodologicalpublications/generalmethodology/onsworkingpaperseries/onsworkingpaperseriesno17usingdatasciencefortheaddressmatchingservice">https://www.ons.gov.uk/methodology/methodologicalpublications/generalmethodology/onsworkingpaperseries/onsworkingpaperseriesno17usingdatasciencefortheaddressmatchingservice</a><br>',
+}) }}
+
+
+{% endblock %}
+

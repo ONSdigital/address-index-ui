@@ -7,38 +7,57 @@ from aims_ui import get_cached_tooltip_data
 
 page_name = 'help'
 
+
 @login_required
 @app.route('/help/<subject>')
 def help(subject='None'):
-  print(subject)
   # Get brief descriptions from the tooltips file, but any deffinitions
   # here will get a more lengthly explanation
 
   url = '/help/'
   deffinitions = [
-    {'title': 'UPRN',
-      'url': url + 'uprn',
-      'long_description': 'This is the Unique Property refference number'},
-
-    {'title': 'Other', 'description': 'A nother thing '},
-    ]
+      {
+          'title': 'Confidence Score',
+          'name':  'confidence_score',
+          'url': url + 'confidence_score',
+      },
+  ]
 
   breadcrumbs = [
-      { "url": url, "text": 'Help' },
+      {
+          "url": url + '/bacon',
+          "text": 'Help'
+      },
   ]
 
   def get_matching_tooltip(name):
-      for tool_tip in get_cached_tooltip_data():
-          if tool_tip.get('name').lower() ==  name.lower():
-              return tool_tip.get('description', 'No description available as a tooltip')
+    for tool_tip in get_cached_tooltip_data():
+      if tool_tip.get('name').lower() == name.lower():
+        return tool_tip.get('description',
+                            'No description available as a tooltip')
 
   for deffinition in deffinitions:
-      deffinition['description'] = get_matching_tooltip(deffinition.get('title'))
+    deffinition['description'] = get_matching_tooltip(deffinition.get('name'))
+
+  # Hard code here to avoid security flaws where users could potentially inject unwanted urls
+  if subject == 'confidence_score':
+    return render_template(
+        './help_pages/uprn.html',
+        endpoints=get_endpoints(called_from=page_name),
+        deffinitions=deffinitions,
+        breadcrumbs=breadcrumbs,
+    )
+  else:
+    return (render_template(
+        'help.html',
+        endpoints=get_endpoints(called_from=page_name),
+        deffinitions=deffinitions,
+    ))
 
 
-  return (render_template(
-      'help.html',
-      endpoints=get_endpoints(called_from=page_name),
-      deffinitions=deffinitions,
-      breadcrumbs=breadcrumbs,
-  ))
+
+
+
+
+
+
