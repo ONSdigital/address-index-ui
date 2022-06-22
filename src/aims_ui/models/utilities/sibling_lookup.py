@@ -2,12 +2,17 @@ from aims_ui import app
 import json
 import requests
 import logging
+from flask import request
 
 
 def multiple_uprn_lookup(siblings):
+
+  user_email = request.headers.get('X-Goog-Authenticated-User-Email', '')
+
   header = {
       "Content-Type": "application/json",
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
+      "user": user_email.replace('accounts.google.com:', ''),
   }
 
   url_endpoint = app.config.get('API_URL') + '/addresses/multiuprn'
