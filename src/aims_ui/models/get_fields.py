@@ -221,7 +221,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         Field(
             'input',
             display_title='Enter search string',
-            classes='ons-input--w-40',
+            classes='ons-input--w-40 nocache',
             required=True,
             description=
             'Specifies the address search string (e.g. "14 Acacia Avenue, Ruislip, HA4 8RG").'
