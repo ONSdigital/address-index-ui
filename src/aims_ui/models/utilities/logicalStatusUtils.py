@@ -1,11 +1,18 @@
 codes = {
-    '1': 'Approved',
-    '3': 'Alternative',
-    '6': 'Provisional',
-    '8': 'Historical',
+    '1': {'status': 'Approved',
+      'colour':'#90EE90'},
+    '3':  {'status': 'Alternative',
+      'colour':'#FFA500'},
+    '6':  {'status': 'Provisional',
+      'colour':'#FFFF00'},
+    '8':  {'status': 'Historical',
+      'colour':'#ff0000'},
 }
 
 
 def getTextLogicalStatus(value):
-  final = codes.get(str(value)) + ' (' + str(value) + ') '
-  return final
+  code_vals = codes.get(str(value))
+  code_colour = code_vals.get('colour')
+  final_string = code_vals.get('status') + ' (' + str(value) + ') '
+  final_html = f'<div style="background-color:{code_colour};">{final_string}</div>'
+  return final_html
