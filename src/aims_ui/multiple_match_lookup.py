@@ -109,14 +109,15 @@ def multiple_address_match(file, all_user_input, download=False):
     given_id, address_to_lookup = line.split(',', maxsplit=1)
     all_user_input['input'] = address_to_lookup
 
-    try: 
+    try:
       result = api(
           '/addresses',
           'singlesearch',
           all_user_input,
       )
     except:
-      logging.error('Error on a singlesearch API call for:\n "{all_user_input}"')
+      logging.error(
+          'Error on a singlesearch API call for:\n "{all_user_input}"')
       return page_error(None, e, page_name)
 
     # For testing the API <Response [429]> too many requests issue

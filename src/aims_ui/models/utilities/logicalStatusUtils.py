@@ -1,12 +1,20 @@
 codes = {
-    '1': {'status': 'Approved',
-      'colour':'#90EE90'},
-    '3':  {'status': 'Alternative',
-      'colour':'#FFA500'},
-    '6':  {'status': 'Provisional',
-      'colour':'#FFFF00'},
-    '8':  {'status': 'Historical',
-      'colour':'#ff0000'},
+    '1': {
+        'status': 'Approved',
+        'colour': '#90EE90'
+    },
+    '3': {
+        'status': 'Alternative',
+        'colour': '#FFA500'
+    },
+    '6': {
+        'status': 'Provisional',
+        'colour': '#FFFF00'
+    },
+    '8': {
+        'status': 'Historical',
+        'colour': '#ff0000'
+    },
 }
 
 
