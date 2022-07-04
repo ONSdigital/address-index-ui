@@ -81,7 +81,9 @@ function getInputObjects() {
   const final = [];
   for (const a of inps) {
     if ( ! a.classList.contains('ons-input--select') ) {
-      final.push(a);
+      if (! a.classList.contains('nocache') ) {
+        final.push(a);
+      }
     }
   }
   return final;
