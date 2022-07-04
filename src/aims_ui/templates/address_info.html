@@ -26,11 +26,13 @@
 <br>
 
 {% for t_title, t_table in hierarchy_table.items() %} 
+{# ISSUE: TODO: When the table below has "'variants': 'searchable'" added, 
+ then the table breaks, as the title becomes a mess - duplicated header row on the first table #}
 	{{ onsTable({
 		'caption': t_title,
-		'variants': 'sortable',
 		'ths': t_table.get('ths'),
 		'trs': t_table.get('trs'),
+		'variants': 'responsive',
 		}) }}
 
 {% endfor %}
