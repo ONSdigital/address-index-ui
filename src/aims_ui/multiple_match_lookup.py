@@ -4,6 +4,8 @@ from aims_ui.api_interaction import api
 import csv
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
+from .page_error import page_error
+import logging
 
 
 def remove_header_row(contents):
@@ -107,11 +109,20 @@ def multiple_address_match(file, all_user_input, download=False):
     given_id, address_to_lookup = line.split(',', maxsplit=1)
     all_user_input['input'] = address_to_lookup
 
-    result = api(
-        '/addresses',
-        'singlesearch',
-        all_user_input,
-    )
+    try:
+      result = api(
+          '/addresses',
+          'singlesearch',
+          all_user_input,
+      )
+    except:
+      logging.error(
+          'Error on a singlesearch API call for:\n "{all_user_input}"')
+      return page_error(None, e, page_name)
+
+    # For testing the API <Response [429]> too many requests issue
+    #print(result)
+    #print(result.json())
 
     matched_addresses = get_addresses(result.json(), 'singlesearch')
 

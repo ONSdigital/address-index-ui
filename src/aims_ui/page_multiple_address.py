@@ -15,6 +15,7 @@ from .page_error import page_error
 from .upload_utils import FileUploadException
 import json
 import csv
+from time import sleep
 
 page_name = 'multiple_address'
 
