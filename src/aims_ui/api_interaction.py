@@ -44,7 +44,6 @@ def get_epoch_options():
 
     # If there are no errors from the epoch call, extract the epochs
     epoch_options = json.loads(epoch_call.text).get('epochs')
-
   else:
     logging.warn('Test mode, falling back to Preset Options')
     sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
