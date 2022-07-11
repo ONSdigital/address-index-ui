@@ -25,7 +25,7 @@ def help(subject='None'):
 
   breadcrumbs = [
       {
-          "url": url + '/bacon',
+          "url": url + '/home',
           "text": 'Help'
       },
   ]
