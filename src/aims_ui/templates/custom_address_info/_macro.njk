@@ -45,7 +45,7 @@
 
 {% endfor %}
 <tr>
-    <td class="mars"><a href=" {{ 'https://www.google.com/maps/search/?api=1&query=' + params.matched_addresses[0].geo.value.get('longitude') + ',' + params.matched_addresses[0].geo.value.get('latitude')  }}"
+    <td class="mars"><a href=" {{ 'https://maps.google.com/?q=' + params.matched_addresses[0].geo.value.get('longitude') + ',' + params.matched_addresses[0].geo.value.get('latitude') + '&ll=' + params.matched_addresses[0].geo.value.get('longitude') + ',' + params.matched_addresses[0].geo.value.get('latitude') + '&z=18'  }}"
     >Location Map</a></td>
 </tr>
 </tbody> </table>
@@ -82,7 +82,8 @@
 	{% endif %}
 	{% endfor %}
   <tbody> </table>
-	    <p class="mars"><a href=" {{ 'https://www.google.com/maps/search/?api=1&query=' + address.geo.value.get('longitude') + ',' + address.geo.value.get('latitude')  }}"
+  {#https://stackoverflow.com/questions/32806084/google-map-zoom-parameter-in-url-not-working#}
+	    <p class="mars"><a href=" {{ 'https://maps.google.com/?q=' + address.geo.value.get('longitude') + ',' + address.geo.value.get('latitude') + '&ll=' +  address.geo.value.get('longitude') + ',' + address.geo.value.get('latitude') + '&z=18' +'&basemap=satellite' }}"
 	    >Location Map</a></p>
 	</article>
 
