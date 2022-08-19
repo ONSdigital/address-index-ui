@@ -20,10 +20,12 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+
 @login_manager.user_loader
 def load_user(user_id):
   maybe_user = next((user for user in users if user.id == user_id), None)
   return maybe_user
+
 
 
 if ENV == 'development':
@@ -148,3 +150,6 @@ from . import page_address_info
 from . import page_help
 from . import download_handler
 from .api_interaction import get_classifications
+
+if __name__ == "aims_ui":
+  app.run(host="0.0.0.0", port=5000, debug=0)
