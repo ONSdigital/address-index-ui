@@ -10,5 +10,6 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 COPY . .
 RUN pip install -e .
-CMD ["flask","run"]
-
+#CMD ["flask","run"]
+#CMD ["gunicorn", "app:aims_ui", "--config=src/aims_ui/__init__.py"]
+CMD ["gunicorn", "aims_ui:app", "--preload", "--config=gconf.py"]
