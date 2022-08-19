@@ -12,4 +12,4 @@ COPY . .
 RUN pip install -e .
 #CMD ["flask","run"]
 #CMD ["gunicorn", "app:aims_ui", "--config=src/aims_ui/__init__.py"]
-CMD ["gunicorn", "aims_ui:app", "--preload", "--config=gconf.py"]
+CMD ["gunicorn", "aims_ui:app", "--preload", "--timeout=600", "--config=gconf.py"]

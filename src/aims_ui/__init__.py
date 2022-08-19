@@ -12,7 +12,7 @@ setup_logging(os.getenv('PLATFORM'))
 
 app = Flask(__name__, instance_relative_config=False)
 
-ENV = os.getenv('FLASK_ENV')
+ENV = os.getenv('FLASK_ENV','testing')
 
 app.config.from_object(config_base)
 
