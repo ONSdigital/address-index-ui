@@ -13,7 +13,7 @@ def remove_header_row(contents):
   for i in range(0, len(contents)):
     line = contents[i]
     line = line.strip().decode('utf-8')
-    if (line == 'id,address') or (line == 'id,searchAddress'):
+    if (line.casefold() == 'id,address'.casefold()) or (line.casefold() == 'id,searchAddress'.casefold()):
       remove_index = i
 
   if remove_index != None:
