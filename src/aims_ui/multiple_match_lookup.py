@@ -112,7 +112,7 @@ def multiple_address_match(file, all_user_input, download=False):
     try:
       result = api(
           '/addresses',
-          'singlesearch',
+          'multiple',
           all_user_input,
       )
     except:
