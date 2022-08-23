@@ -151,5 +151,5 @@ from . import page_help
 from . import download_handler
 from .api_interaction import get_classifications
 
-if __name__ == "aims_ui":
+if ENV != 'testing':
   app.run(host="0.0.0.0", port=5000, debug=0)
