@@ -13,7 +13,7 @@ def get_addresses(json_response, called_from, confidence_score=None):
                 confidence_score=confidence_score)
     ]
 
-  elif (called_from == 'postcode') or (called_from == 'singlesearch'):
+  elif (called_from == 'postcode') or (called_from == 'singlesearch') or (called_from == 'multiple'):
     response = (json_response.get('response'))
     address_json = response.get('addresses')
 

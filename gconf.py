@@ -8,4 +8,4 @@ PORT = int(os.getenv("PORT", 5000))
 bind = ":" + str(PORT)
 workers = multiprocessing.cpu_count() * 2 + 1
 threads = 2 * multiprocessing.cpu_count()
-timeout = 400
+timeout = 420
