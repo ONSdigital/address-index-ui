@@ -124,7 +124,7 @@ def multiple_address_match(file, all_user_input, download=False):
     #print(result)
     #print(result.json())
 
-    matched_addresses = get_addresses(result.json(), 'singlesearch')
+    matched_addresses = get_addresses(result.json(), 'multiple')
 
     no_results = len(matched_addresses)
     if no_results == 1:
