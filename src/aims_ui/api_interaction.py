@@ -91,7 +91,7 @@ def api(url, called_from, all_user_input):
 
   # bulks run without verbose for speed
   if (called_from == 'multiple'):
-    params.replace('verbose=True','verbose=False')
+    params = params.replace('verbose=True','verbose=False')
 
   r = requests.get(
       url,
