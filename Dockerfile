@@ -10,4 +10,4 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 COPY . .
 RUN pip install -e .
-CMD ["gunicorn", "aims_ui:app", "--preload", "--timeout=420", "--config=gconf.py"]
+CMD ["gunicorn", "wsgi:app", "--preload", "--timeout=420", "--config=gconf.py"]

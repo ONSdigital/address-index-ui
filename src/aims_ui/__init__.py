@@ -150,6 +150,3 @@ from . import page_address_info
 from . import page_help
 from . import download_handler
 from .api_interaction import get_classifications
-
-if ENV != 'testing':
-  app.run(host="0.0.0.0", port=5000, debug=0)
