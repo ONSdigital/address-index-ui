@@ -13,7 +13,7 @@ def remove_header_row(contents):
   for i in range(0, len(contents)):
     line = contents[i]
     line = line.strip().decode('utf-8')
-    if (line == 'id,address') or (line == 'id,searchAddress'):
+    if (line.casefold() == 'id,address'.casefold()) or (line.casefold() == 'id,searchAddress'.casefold()):
       remove_index = i
 
   if remove_index != None:
@@ -112,7 +112,7 @@ def multiple_address_match(file, all_user_input, download=False):
     try:
       result = api(
           '/addresses',
-          'singlesearch',
+          'multiple',
           all_user_input,
       )
     except:
@@ -124,7 +124,7 @@ def multiple_address_match(file, all_user_input, download=False):
     #print(result)
     #print(result.json())
 
-    matched_addresses = get_addresses(result.json(), 'singlesearch')
+    matched_addresses = get_addresses(result.json(), 'multiple')
 
     no_results = len(matched_addresses)
     if no_results == 1:

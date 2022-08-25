@@ -28,10 +28,30 @@ def check_for_blank_fields(file):
       return row
   return False
 
+def check_for_record_limit(file, maxlines):
+  contents = file.readlines()
+  file.seek(0)
+  rows = 0
+
+  for row in contents:
+    rows = rows + 1
+  if (rows > maxlines):
+    return True
+  else:
+    return False
+
 
 def check_valid_upload(file):
-  file_size = int(os.fstat(file.fileno()).st_size) / 1000000  # In MB
-  max_file_size = 1  # In MB
+
+  record_limit_exceeded = check_for_record_limit(file, 5001)
+
+  if record_limit_exceeded:
+    raise FileUploadException(
+      error_title='Input file error',
+      error_description=
+      f'Source file contains more than 5000 addresses'
+    )
+
   blank_fields_present = check_for_blank_fields(file)
 
   if blank_fields_present:

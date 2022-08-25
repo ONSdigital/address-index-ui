@@ -1,4 +1,5 @@
 from .address import Address
+from .short_address import ShortAddress
 
 
 def get_addresses(json_response, called_from, confidence_score=None):
@@ -19,5 +20,12 @@ def get_addresses(json_response, called_from, confidence_score=None):
 
     for address in address_json:
       addresses.append(Address({'address': address}))
+
+  elif (called_from == 'multiple'):
+      response = (json_response.get('response'))
+      address_json = response.get('addresses')
+
+      for address in address_json:
+          addresses.append(ShortAddress({'address': address}))
 
   return addresses

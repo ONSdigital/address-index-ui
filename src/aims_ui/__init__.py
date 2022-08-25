@@ -12,7 +12,7 @@ setup_logging(os.getenv('PLATFORM'))
 
 app = Flask(__name__, instance_relative_config=False)
 
-ENV = os.getenv('FLASK_ENV')
+ENV = os.getenv('FLASK_ENV','testing')
 
 app.config.from_object(config_base)
 
@@ -20,10 +20,12 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+
 @login_manager.user_loader
 def load_user(user_id):
   maybe_user = next((user for user in users if user.id == user_id), None)
   return maybe_user
+
 
 
 if ENV == 'development':
