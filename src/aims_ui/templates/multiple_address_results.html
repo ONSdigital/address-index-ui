@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
+{% from "components/input/_macro.njk" import onsInput %}
+{% from "components/upload/_macro.njk" import onsUpload %}
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+{% from 'custom_search/_macro.njk' import customSearch %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/question/_macro.njk" import onsQuestion %}
+{% from "components/table/_macro.njk" import onsTable %}
+{% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
+
+{% block main %}
+
+<h1>Match Multiple Addresses</h1>
+
+<br>
+
+{{ onsSectionNavigation({
+        "id": "section-menu",
+        "currentPath": 'multiple_address_results',
+        "itemsList": [
+            {
+                "title": "Subit Addresses",
+                "url": url_for('multiple_address'),
+            },
+            {
+                "title": "Results",
+                "url":'multiple_address_results',
+            },
+        ]
+}) }}
+
+<br>
+
+{{onsPanel({
+"body": "<p>You can find previously submitted jobs, and their statusses here. Optionally you can also toggle the ability to see 'All jobs', which shows jobs submitted by other users</p>"
+    })}}
+
+
+{% endblock %}

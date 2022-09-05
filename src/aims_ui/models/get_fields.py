@@ -175,30 +175,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
 
   elif endpoint_name == 'multiple_address':
     return ([
-        Field(
-            'limit',
-            display_title="Limit",
-            classes='ons-input--w-4',
-            description='Enter the number of addresses to return (0 - 5,000)',
-            previous_value='5',
-        ), common_fields['epoch'], common_fields['historical'],
-        common_fields['match_threshold'],
-        Field(
-            'display-type',
-            search_type='radio',
-            flag=False,
-            display_title='How would you like your results?',
-            radio_options=[
-                {
-                    'id': 'Download',
-                    'text': 'Download as CSV'
-                },
-                {
-                    'id': 'Display',
-                    'text': 'Display in browser'
-                },
-            ],
-        )
+        common_fields['limit'],
     ])
   elif endpoint_name == 'postcode':
     return ([
