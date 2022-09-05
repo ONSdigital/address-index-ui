@@ -145,6 +145,7 @@ from . import page_uprn
 from . import page_postcode
 from . import page_typeahead
 from . import page_multiple_address
+from . import page_multiple_address_results
 from . import page_singlesearch
 from . import page_address_info
 from . import page_help
