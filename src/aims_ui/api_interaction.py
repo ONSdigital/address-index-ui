@@ -71,6 +71,43 @@ def get_epoch_options():
 
   return sorted_epochs, default
 
+def job_data_by_job_id(job_id):
+ url = f'https://analysis-prod-aims-bulk-service.gcp.onsdigital.uk/bulk-progress/{job_id}'
+ r = job_api(url)
+ return r
+
+def all_jobs():
+ url = f'https://analysis-prod-aims-bulk-service.gcp.onsdigital.uk/jobs'
+ r = job_api(url)
+ return r
+
+def job_data_by_user_id(user_id):
+ url = f'https://analysis-prod-aims-bulk-service.gcp.onsdigital.uk/jobs?userid={user_id}'
+ r = job_api(url)
+ return r
+
+def job_data_by_job_status(job_status):
+ url = f'https://analysis-prod-aims-bulk-service.gcp.onsdigital.uk/jobs?status={job_status}'
+ r = job_api(url)
+ return r
+
+def job_api(url):
+  """API helper for job endpoints """
+
+  user_email = request.headers.get('X-Goog-Authenticated-User-Email', '')
+
+  header = {
+      "Content-Type": "application/json",
+      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
+      "user": user_email.replace('accounts.google.com:', ''),
+  }
+
+  r = requests.get(
+      url,
+  )
+
+  return r
+
 
 def api(url, called_from, all_user_input):
   """API helper for individual API lookups"""
