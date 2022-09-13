@@ -33,10 +33,19 @@
 }) }}
 
 <br>
-
 {{onsPanel({
 "body": "<p>You can find previously submitted jobs, and their statusses here. Optionally you can also toggle the ability to see 'All jobs', which shows jobs submitted by other users</p>"
     })}}
+<br>
+
+{{ onsTable({
+	'caption': 'Jobs',
+	'ths': jobs.get('ths'),
+	'trs': jobs.get('trs'),
+	'variants': 'responsive',
+	}) }}
+
+
 
 
 {% endblock %}
