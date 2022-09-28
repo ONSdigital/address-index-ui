@@ -21,7 +21,7 @@ def multiple_address_results():
 
   headers = ['JOBID','STATUS', 'RECS PROCESSED','DOWNLOAD LINK']
   results = all_jobs()
-  print(results)
+  print(results.json())
   #TODO remove testing only
   results = [
       ['34', '10,000 of 67,924', 'in-progress', '-'],

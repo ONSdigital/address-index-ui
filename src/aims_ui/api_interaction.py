@@ -77,7 +77,7 @@ def job_data_by_job_id(job_id):
  return r
 
 def all_jobs():
- url = f'https://analysis-prod-aims-bulk-service.gcp.onsdigital.uk/jobs'
+ url = f'/jobs'
  r = job_api(url)
  return r
 
@@ -93,17 +93,18 @@ def job_data_by_job_status(job_status):
 
 def job_api(url):
   """API helper for job endpoints """
-
   user_email = request.headers.get('X-Goog-Authenticated-User-Email', '')
+  url = app.config.get('API_URL') + url
 
   header = {
       "Content-Type": "application/json",
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-      "user": user_email.replace('accounts.google.com:', ''),
+      "user": 'UUItesst',
   }
 
   r = requests.get(
       url,
+      headers=header,
   )
 
   return r
