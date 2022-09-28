@@ -3,7 +3,7 @@ from flask_login import login_required
 from flask import render_template, request, session, send_file, url_for
 from . import app
 from .models.get_endpoints import get_endpoints
-from .api_interaction import api, all_jobs
+from .api_interaction import api, all_jobs, job_result_formatter
 from .table_utils import create_table
 import json
 import csv
@@ -22,15 +22,13 @@ def multiple_address_results():
   headers = ['JOBID','STATUS', 'USER ID', 'RECS PROCESSED','DOWNLOAD LINK']
   results = all_jobs().json().get('jobs',[])
   formatted_results = [
-      [x.get('jobid'),
-       x.get('status'),
-       x.get('userid'),
-       f"{x.get('recssofar')}  of  {x.get('totalrecs')}",
-       x.get('a', '-')
+      [job.get('jobid'),
+       job.get('status'),
+       job.get('userid'),
+       f"{job.get('recssofar')}  of  {job.get('totalrecs')}",
+       job_result_formatter(job.get('jobid'))
         ] 
-      for x in results]
-
-  print(formatted_results )
+      for job in results]
 
   # EXAMPLE results format
   # results = [
