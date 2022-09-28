@@ -23,7 +23,12 @@ def multiple_address_results():
   results = all_jobs()
   print(results)
   #TODO remove testing only
-  results = [{'-', '10,000 of 67,924', 'in-progress', '42'}]
+  results = [
+      ['34', '10,000 of 67,924', 'in-progress', '-'],
+      ['80', '30,501 of 80,924', 'in-progress', '-'],
+      ['212', '23 of 924', 'in-progress', '-'],
+      ['4', '40,000 of 40,000', 'complete', 'http://www.example.com'],
+      ]
   jobs = []
   jobs = create_table(headers, results)
 
