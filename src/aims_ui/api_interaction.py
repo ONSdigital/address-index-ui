@@ -72,9 +72,23 @@ def get_epoch_options():
   return sorted_epochs, default
 
 def job_data_by_job_id(job_id):
- url = f'https://analysis-prod-aims-bulk-service.gcp.onsdigital.uk/bulk-progress/{job_id}'
+ url = f'/bulk-progress/{job_id}'
  r = job_api(url)
  return r
+
+def job_result_formatter(job_id):
+  r = job_result_by_job_id(job_id)
+  if r == False:
+    return 'URL not yet available'
+  return f'<a href="{r}">Download Job {job_id} Here</a>'
+
+def job_result_by_job_id(job_id):
+ url = f'/bulk-result/{job_id}'
+ r = job_api(url)
+ r = r.json()
+ if not r.get('error'):
+   return r.get('signedUrl')
+ return False
 
 def all_jobs():
  url = f'/jobs'
