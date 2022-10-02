@@ -96,12 +96,12 @@ def all_jobs():
  return r
 
 def job_data_by_user_id(user_id):
- url = f'https://analysis-prod-aims-bulk-service.gcp.onsdigital.uk/jobs?userid={user_id}'
+ url = f'/'
  r = job_api(url)
  return r
 
 def job_data_by_job_status(job_status):
- url = f'https://analysis-prod-aims-bulk-service.gcp.onsdigital.uk/jobs?status={job_status}'
+ url = f'/'
  r = job_api(url)
  return r
 
