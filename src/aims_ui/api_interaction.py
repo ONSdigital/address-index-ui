@@ -113,28 +113,19 @@ def submit_mm_job(user, addresses):
   header = {
       "Content-Type": "application/json",
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-      "user": 'x',
+      "user": user_email,
   }
-  bod = """
-  {
-    "addresses":[{
-        "id" : "1",
-        "address": "45 Wheatlands Stevenage SG2 0JT"
-    },{
-        "id" : "2",
-        "address": "86 Truro Drive Kidderminster DY11 6DL"
-    },{
-        "id" : "3",
-        "address": "61 Elmhurst Mansions Edgeley Road London SW4 6EU"
-    }]
-  }
-  """
+
+  addresses = str(addresses).replace('"', '') # Remove Quotes from address
+  addresses = str(addresses).replace("'",'"') # Replace quotes for correct JSON formatting
 
   r = requests.post(
       url,
       headers=header,
-      data = bod,
+      data = addresses,
   )
+
+  return r
 
 def job_api(url):
   """API helper for job endpoints """
