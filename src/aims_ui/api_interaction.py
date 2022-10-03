@@ -96,7 +96,7 @@ def all_jobs():
  return r
 
 def job_data_by_user_id(user_id):
- url = f'/'
+ url = f'/jobs?userid={user_id}'
  r = job_api(url)
  return r
 
