@@ -105,6 +105,37 @@ def job_data_by_job_status(job_status):
  r = job_api(url)
  return r
 
+def submit_mm_job(user, addresses):
+  """API helper for job endpoints """
+  user_email = request.headers.get('X-Goog-Authenticated-User-Email', 'UserNotLoggedIn')
+  url = app.config.get('API_URL') + '/bulk'
+
+  header = {
+      "Content-Type": "application/json",
+      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
+      "user": 'x',
+  }
+  bod = """
+  {
+    "addresses":[{
+        "id" : "1",
+        "address": "45 Wheatlands Stevenage SG2 0JT"
+    },{
+        "id" : "2",
+        "address": "86 Truro Drive Kidderminster DY11 6DL"
+    },{
+        "id" : "3",
+        "address": "61 Elmhurst Mansions Edgeley Road London SW4 6EU"
+    }]
+  }
+  """
+
+  r = requests.post(
+      url,
+      headers=header,
+      data = bod,
+  )
+
 def job_api(url):
   """API helper for job endpoints """
   user_email = request.headers.get('X-Goog-Authenticated-User-Email', '')

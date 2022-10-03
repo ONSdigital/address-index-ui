@@ -91,34 +91,8 @@ def multiple_address():
                    error_title=e.error_title)
 
     if file_valid:
-      for field in searchable_fields:
-        if field.database_name == 'display-type':
-          results_type = field.get_selected_radio()
-
-      if results_type == 'Download':
-        try:
-          full_results, line_count = multiple_address_match(file,
-                                                            all_user_input,
-                                                            download=True)
-        except ConnectionError as e:
-          return page_error(None, e, page_name)
-
-        return send_file(full_results,
-                         mimetype='text/csv',
-                         attachment_filename=f'result_size_{line_count}.csv',
-                         as_attachment=True)
-
-      elif results_type == 'Display':
-        try:
-          table_results, results_summary_table = multiple_address_match(
-              file, all_user_input, download=False)
-        except ConnectionError as e:
-          return page_error(None, e, page_name)
-
-        return final(searchable_fields,
-                     table_results=table_results,
-                     results_summary_table=results_summary_table)
-    else:
-      return final(searchable_fields,
-                   error_description=error_description,
-                   error_title=error_title)
+      multiple_address_match( file,
+                              all_user_input,
+                              download=True)
+      return 'Sucessful'
+        
