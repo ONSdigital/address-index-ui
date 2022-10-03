@@ -56,6 +56,12 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           display_title='Scotland Boost',
           search_type='checkbox',
       ),
+      'northern_ireland_boost_checkbox':
+      Field(
+         'nboost',
+         display_title='Northern Ireland Boost',
+         search_type='checkbox',
+      ),
       'match_threshold':
       Field(
           'matchthreshold',
@@ -93,6 +99,13 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           classes='ons-input--w-4',
           description='Boost the results in favour of Scotland Addresses',
       ),
+      'northern_ireland_boost':
+          Field(
+              'sboost',
+              display_title='Northern Ireland Boost (1-10)',
+              classes='ons-input--w-4',
+              description='Boost the results in favour of Northern Ireland Addresses',
+          ),
       'auxilary_search':
       Field(
           'includeauxiliarysearch',
@@ -154,7 +167,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['england_boost'],
         common_fields['wales_boost'],
         common_fields['scotland_boost'],
-
+        common_fields['northern_ireland_boost'],
         # REMOVED - left commented incase of later requirements
         #        Field(
         #            'groupfullpostcodes',
@@ -252,6 +265,14 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         Field(
             'sboost',
             display_title='Scotland',
+            search_type='checkbox',
+            checkbox_value=True,
+            checkbox_true_value=10,
+            checkbox_false_value=0,
+        ),
+        Field(
+            'nboost',
+            display_title='Northern Ireland',
             search_type='checkbox',
             checkbox_value=True,
             checkbox_true_value=10,
