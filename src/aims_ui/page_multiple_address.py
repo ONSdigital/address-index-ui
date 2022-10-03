@@ -94,5 +94,5 @@ def multiple_address():
       multiple_address_match( file,
                               all_user_input,
                               download=True)
-      return 'Sucessful'
+      return final(all_user_input)
         
