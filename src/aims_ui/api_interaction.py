@@ -100,11 +100,6 @@ def job_data_by_user_id(user_id):
  r = job_api(url)
  return r
 
-def job_data_by_job_status(job_status):
- url = f'/'
- r = job_api(url)
- return r
-
 def submit_mm_job(user, addresses):
   """API helper for job endpoints """
   user_email = request.headers.get('X-Goog-Authenticated-User-Email', 'UserNotLoggedIn')

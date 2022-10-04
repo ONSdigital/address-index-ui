@@ -35,7 +35,6 @@ def multiple_address_match(file, all_user_input, download=False):
     addresses.append(current_address)
   mm_dict['addresses'] = addresses[:]
   
-  submit_mm_job('a',mm_dict)
   try:
     # Submit Multiple Match to API
     submit_mm_job('a',mm_dict)
