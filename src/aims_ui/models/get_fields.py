@@ -101,7 +101,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
       ),
       'northern_ireland_boost':
           Field(
-              'sboost',
+              'nboost',
               display_title='Northern Ireland Boost (1-10)',
               classes='ons-input--w-4',
               description='Boost the results in favour of Northern Ireland Addresses',
