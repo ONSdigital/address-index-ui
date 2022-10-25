@@ -91,8 +91,5 @@ def multiple_address():
                    error_title=e.error_title)
 
     if file_valid:
-      multiple_address_match( file,
-                              all_user_input,
-                              download=True)
+      multiple_address_match(file, all_user_input, download=True)
       return final(all_user_input)
-        
