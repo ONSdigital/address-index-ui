@@ -9,16 +9,20 @@ import logging
 
 page_name = 'multiple_match_submit'
 
+
 def remove_header_row(contents):
   remove_index = None
   for i in range(0, len(contents)):
     line = contents[i]
     line = line.strip().decode('utf-8')
-    if (line.casefold() == 'id,address'.casefold()) or (line.casefold() == 'id,searchAddress'.casefold()):
+    if (line.casefold()
+        == 'id,address'.casefold()) or (line.casefold()
+                                        == 'id,searchAddress'.casefold()):
       remove_index = i
 
   if remove_index != None:
     contents.pop(remove_index)
+
 
 def multiple_address_match(file, all_user_input, download=False):
   csv_headers = ['id', 'inputAddress', 'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank']  # yapf: disable
@@ -26,7 +30,7 @@ def multiple_address_match(file, all_user_input, download=False):
   contents = file.readlines()
   remove_header_row(contents)
 
-  mm_dict = {} # mm = multiple match
+  mm_dict = {}  # mm = multiple match
   addresses = []
   for line in contents:
     line = line.strip().decode('utf-8')
@@ -34,10 +38,10 @@ def multiple_address_match(file, all_user_input, download=False):
     current_address = {'id': given_id, 'address': address_to_lookup}
     addresses.append(current_address)
   mm_dict['addresses'] = addresses[:]
-  
+
   try:
     # Submit Multiple Match to API
-    submit_mm_job('a',mm_dict)
+    submit_mm_job('a', mm_dict)
   except Exception as e:
     logging.error('Error on a multiple match API call')
     return page_error(None, e, page_name)
@@ -175,23 +179,3 @@ def multiple_address_match_original(file, all_user_input, download=False):
 
   return finalize(line_count, no_addresses_searched, single_match_total,
                   multiple_match_total, no_match_total)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

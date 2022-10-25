@@ -97,9 +97,8 @@ def multiple_address_original():
 
       if results_type == 'Download':
         try:
-          full_results, line_count = multiple_address_match_original(file,
-                                                            all_user_input,
-                                                            download=True)
+          full_results, line_count = multiple_address_match_original(
+              file, all_user_input, download=True)
         except ConnectionError as e:
           return page_error(None, e, page_name)
 

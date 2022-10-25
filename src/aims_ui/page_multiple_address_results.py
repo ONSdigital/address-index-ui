@@ -19,17 +19,16 @@ def multiple_address_results():
   for endpoint in endpoints:
     endpoint.current_selected_endpoint = url_for(page_name)
 
-  user_email = request.headers.get('X-Goog-Authenticated-User-Email', 'UserNotLoggedIn')
-  headers = ['JOBID','STATUS', 'USER ID', 'RECS PROCESSED','DOWNLOAD LINK']
-  results = job_data_by_user_id(user_email).json().get('jobs',[])
-  formatted_results = [
-      [job.get('jobid'),
-       job.get('status'),
-       job.get('userid'),
-       f"{job.get('recssofar')}  of  {job.get('totalrecs')}",
-       job_result_formatter(job.get('jobid'))
-        ] 
-      for job in results]
+  user_email = request.headers.get('X-Goog-Authenticated-User-Email',
+                                   'UserNotLoggedIn')
+  headers = ['JOBID', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK']
+  results = job_data_by_user_id(user_email).json().get('jobs', [])
+  formatted_results = [[
+      job.get('jobid'),
+      job.get('status'),
+      job.get('userid'), f"{job.get('recssofar')}  of  {job.get('totalrecs')}",
+      job_result_formatter(job.get('jobid'))
+  ] for job in results]
 
   # EXAMPLE results format
   # results = [
@@ -47,4 +46,3 @@ def multiple_address_results():
       endpoints=endpoints,
       jobs=jobs,
   )
-
