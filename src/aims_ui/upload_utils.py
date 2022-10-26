@@ -28,6 +28,7 @@ def check_for_blank_fields(file):
       return row
   return False
 
+
 def check_for_record_limit(file, maxlines):
   contents = file.readlines()
   file.seek(0)
@@ -47,10 +48,8 @@ def check_valid_upload(file):
 
   if record_limit_exceeded:
     raise FileUploadException(
-      error_title='Input file error',
-      error_description=
-      f'Source file contains more than 5000 addresses'
-    )
+        error_title='Input file error',
+        error_description=f'Source file contains more than 5000 addresses')
 
   blank_fields_present = check_for_blank_fields(file)
 

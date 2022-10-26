@@ -12,7 +12,7 @@ setup_logging(os.getenv('PLATFORM'))
 
 app = Flask(__name__, instance_relative_config=False)
 
-ENV = os.getenv('FLASK_ENV','testing')
+ENV = os.getenv('FLASK_ENV', 'testing')
 
 app.config.from_object(config_base)
 
@@ -20,12 +20,10 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-
 @login_manager.user_loader
 def load_user(user_id):
   maybe_user = next((user for user in users if user.id == user_id), None)
   return maybe_user
-
 
 
 if ENV == 'development':
@@ -145,6 +143,8 @@ from . import page_uprn
 from . import page_postcode
 from . import page_typeahead
 from . import page_multiple_address
+from . import page_multiple_address_results
+from . import page_multiple_address_original
 from . import page_singlesearch
 from . import page_address_info
 from . import page_help

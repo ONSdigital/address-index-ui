@@ -1,5 +1,4 @@
 {% extends 'layout/_template.njk' %}
-{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
 {% from "components/header/_macro.njk" import onsHeader %}
 
 {% set item_list = endpoints[0].nav_info  %}
@@ -12,24 +11,22 @@
 		"logoHref": '#0',
 		"mobileLogo": 'ons-logo-stacked-en',
 		"titleLogoHref": '#0'  },
-
-	'phase': {
-		"badge": "BETA",
-		"html": 'This release is still in development. Your <a class="mailto" href="mailto:ai.users@ons.gov.uk?subject=Feedback%20on%20Address%20Index">Feedback</a> will help us improve it.'
-		},
 	"footer": {
 		"OGLLink": {
 		    "pre": 'All content is available under the',
 		    "link": 'Open Government Licence v3.0',
 		    "url": 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/',
 		    "post": ', except where otherwise stated'} ,
-
         "rows": [
             {	"title": 'Service Help',
                 "itemsList": [
                     {   "text": 'Found an issue with matched address(es)?',
 			"url": "mailto:ai.users@ons.gov.uk?subject=Issues%20with%20service", 
-		    }] ,
+		    },
+                    {   "text": 'Have feedback?',
+			"url":"ai.users@ons.gov.uk?subject=Feedback%20on%20Address%20Index", 
+		    }
+		    ] ,
             }, ], } ,
 
      	"navigation": {
