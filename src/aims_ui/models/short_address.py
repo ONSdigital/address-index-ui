@@ -5,6 +5,7 @@ from .utilities.sibling_lookup import getHierarchy
 from .utilities.logicalStatusUtils import getTextLogicalStatus
 from aims_ui import app
 
+
 class AddressAttribute():
   def __init__(
       self,
@@ -132,5 +133,3 @@ class ShortAddress():
       self.hierarchy = AddressAttribute(address_data, 'hierarchy')
     else:
       self.hierarchy = None
-
-

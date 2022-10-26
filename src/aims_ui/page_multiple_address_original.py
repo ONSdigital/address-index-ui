@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 from . import app
 from .cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs
 from .api_interaction import api
-from .multiple_match_lookup import multiple_address_match
+from .multiple_match_lookup import multiple_address_match_original
 from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
@@ -17,7 +17,7 @@ import json
 import csv
 from time import sleep
 
-page_name = 'multiple_address'
+page_name = 'multiple_address_original'
 
 
 def final(searchable_fields,
@@ -56,7 +56,7 @@ def request_entity_too_large(error):
 
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
-def multiple_address():
+def multiple_address_original():
 
   if request.method == 'GET':
     delete_input(session)
@@ -91,5 +91,33 @@ def multiple_address():
                    error_title=e.error_title)
 
     if file_valid:
-      multiple_address_match(file, all_user_input, download=True)
-      return final(all_user_input)
+      for field in searchable_fields:
+        if field.database_name == 'display-type':
+          results_type = field.get_selected_radio()
+
+      if results_type == 'Download':
+        try:
+          full_results, line_count = multiple_address_match_original(
+              file, all_user_input, download=True)
+        except ConnectionError as e:
+          return page_error(None, e, page_name)
+
+        return send_file(full_results,
+                         mimetype='text/csv',
+                         attachment_filename=f'result_size_{line_count}.csv',
+                         as_attachment=True)
+
+      elif results_type == 'Display':
+        try:
+          table_results, results_summary_table = multiple_address_match_original(
+              file, all_user_input, download=False)
+        except ConnectionError as e:
+          return page_error(None, e, page_name)
+
+        return final(searchable_fields,
+                     table_results=table_results,
+                     results_summary_table=results_summary_table)
+    else:
+      return final(searchable_fields,
+                   error_description=error_description,
+                   error_title=error_title)

@@ -186,7 +186,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         ),
     ])
 
-  elif endpoint_name == 'multiple_address':
+  elif endpoint_name == 'multiple_address_original':
     return ([
         Field(
             'limit',
@@ -212,6 +212,17 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
                 },
             ],
         )
+    ])
+
+  elif endpoint_name == 'multiple_address':
+    return ([
+        Field(
+            'limitperaddress',
+            display_title="Limit Per Address",
+            classes='ons-input--w-4',
+            description='Enter the number of addresses to return (0 - 5,000)',
+            previous_value='50',
+        ),
     ])
   elif endpoint_name == 'postcode':
     return ([

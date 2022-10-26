@@ -72,6 +72,84 @@ def get_epoch_options():
   return sorted_epochs, default
 
 
+def job_data_by_job_id(job_id):
+  url = f'/bulk-progress/{job_id}'
+  r = job_api(url)
+  return r
+
+
+def job_result_formatter(job_id):
+  r = job_result_by_job_id(job_id)
+  if r == False:
+    return 'URL not yet available'
+  return f'<a href="{r}">Download Job {job_id} Here</a>'
+
+
+def job_result_by_job_id(job_id):
+  url = f'/bulk-result/{job_id}'
+  r = job_api(url)
+  r = r.json()
+  if not r.get('error'):
+    return r.get('signedUrl')
+  return False
+
+
+def all_jobs():
+  url = f'/jobs'
+  r = job_api(url)
+  return r
+
+
+def job_data_by_user_id(user_id):
+  url = f'/jobs?userid={user_id}'
+  r = job_api(url)
+  return r
+
+
+def submit_mm_job(user, addresses):
+  """API helper for job endpoints """
+  user_email = request.headers.get('X-Goog-Authenticated-User-Email',
+                                   'UserNotLoggedIn')
+  url = app.config.get('API_URL') + '/bulk'
+
+  header = {
+      "Content-Type": "application/json",
+      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
+      "user": user_email,
+  }
+
+  addresses = str(addresses).replace('"', '')  # Remove Quotes from address
+  addresses = str(addresses).replace(
+      "'", '"')  # Replace quotes for correct JSON formatting
+
+  r = requests.post(
+      url,
+      headers=header,
+      data=addresses,
+  )
+
+  return r
+
+
+def job_api(url):
+  """API helper for job endpoints """
+  user_email = request.headers.get('X-Goog-Authenticated-User-Email', '')
+  url = app.config.get('API_URL') + url
+
+  header = {
+      "Content-Type": "application/json",
+      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
+      "user": 'UUItesst',
+  }
+
+  r = requests.get(
+      url,
+      headers=header,
+  )
+
+  return r
+
+
 def api(url, called_from, all_user_input):
   """API helper for individual API lookups"""
 
@@ -91,7 +169,7 @@ def api(url, called_from, all_user_input):
 
   # bulks run without verbose for speed
   if (called_from == 'multiple'):
-    params = params.replace('verbose=True','verbose=False')
+    params = params.replace('verbose=True', 'verbose=False')
 
   r = requests.get(
       url,

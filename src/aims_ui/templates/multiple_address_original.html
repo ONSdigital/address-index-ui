@@ -5,7 +5,7 @@
 {% from "components/upload/_macro.njk" import onsUpload %}
 {% from "components/button/_macro.njk" import onsButton %}
 {% from "components/panel/_macro.njk" import onsPanel %}
-{% from "custom_search/_macro.njk" import customSearch %}
+{% from 'custom_search/_macro.njk' import customSearch %}
 {% from "components/radios/_macro.njk" import onsRadios %}
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/table/_macro.njk" import onsTable %}
@@ -16,14 +16,15 @@
 <h1>Match Multiple Addresses</h1>
 
 <br>
+{% if not results_page %}
 
 {{ onsSectionNavigation({
         "id": "section-menu",
-        "currentPath": endpoints[0].current_selected_endpoint,
+        "currentPath": 'multiple_address_original',
         "itemsList": [
             {
                 "title": "Original Matching Service",
-                "url": url_for('multiple_address_original'),
+                "url": 'multiple_address_original',
             },
             {
                 "title": "Subit Addresses",
@@ -36,11 +37,16 @@
         ]
 }) }}
 
+
+<br>
+{{onsPanel({
+"body": "<p>To get started, upload a CSV file of up to 5000 addresses to be matched. The file must have only two columns, id and address. <br> <br> Download a <a href='/downloads/example_multiple_address'> sample file</a> <br> <br> You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>"
+    })}}
+
 <br>
 
-{{onsPanel({
-"body": "<p>To get started, upload a CSV file of up to 500,000 addresses to be matched. The file must have only two columns, id and address. <br> <br> Download a <a href='/downloads/example_multiple_address'> sample file</a> <br> <br> You can download your results as a CSV file. Your results will include a match accuracy score.</p>"
-    })}}
+{% endif %}
+
 
 <form method=post enctype=multipart/form-data>
 {{ customSearch ({ "Fields": searchable_fields,
@@ -75,5 +81,19 @@
 </form>
 
 <br>
+
+{{ onsTable({
+	"id": "basic-table 2",
+        "ths":  [] if not table_results else results_summary_table.get('ths') ,
+  	"trs": [] if not table_results else results_summary_table.get('trs'),
+}) }}
+
+<br>
+
+{{ onsTable({
+	"id": "basic-table",
+        "ths":  [] if not table_results else table_results.get('ths') ,
+  	"trs": [] if not table_results else table_results.get('trs'),
+}) }}
 
 {% endblock %}
