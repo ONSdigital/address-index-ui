@@ -135,7 +135,7 @@ def submit_mm_job(user, addresses):
 def job_api(url):
   """API helper for job endpoints """
   user_email = request.headers.get('X-Goog-Authenticated-User-Email', '')
-  url = app.config.get('API_URL') + url
+  url = app.config.get('BM_API_URL') + url
 
   header = {
       "Content-Type": "application/json",
