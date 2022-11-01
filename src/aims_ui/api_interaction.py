@@ -79,6 +79,7 @@ def job_data_by_job_id(job_id):
 
 
 def job_result_formatter(job_id):
+  # TODO Might switch to the new results endpoint
   r = job_result_by_job_id(job_id)
   if r == False:
     return 'URL not yet available'
