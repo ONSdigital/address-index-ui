@@ -21,8 +21,6 @@ def get_epoch_options():
   }
 
   if os.getenv("FLASK_ENV") != "testing":
-
-    logging.warn('flask_env = ' + os.getenv("FLASK_ENV"))
     try:
       epoch_call = requests.get(
           api_url,
