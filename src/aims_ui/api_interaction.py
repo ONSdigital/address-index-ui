@@ -109,7 +109,7 @@ def submit_mm_job(user, addresses):
   """API helper for job endpoints """
   user_email = request.headers.get('X-Goog-Authenticated-User-Email',
                                    'UserNotLoggedIn')
-  url = app.config.get('API_URL') + '/bulk'
+  url = app.config.get('BM_API_URL') + '/bulk'
 
   header = {
       "Content-Type": "application/json",
@@ -127,7 +127,7 @@ def submit_mm_job(user, addresses):
       data=addresses,
   )
 
-  logging.warn('Submmitted MMJob on endpoint"' + str(url) +'"  with UserId as "' + str(user_email) + '"')
+  logging.info('Submmitted MMJob on endpoint"' + str(url) +'"  with UserId as "' + str(user_email) + '"')
 
   return r
 
@@ -135,7 +135,7 @@ def submit_mm_job(user, addresses):
 def job_api(url):
   """API helper for job endpoints """
   user_email = request.headers.get('X-Goog-Authenticated-User-Email', '')
-  url = app.config.get('API_URL') + url
+  url = app.config.get('BM_API_URL') + url
 
   header = {
       "Content-Type": "application/json",
