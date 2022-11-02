@@ -34,6 +34,8 @@ def get_endpoints(called_from=None):
 
   if called_from == 'help':
     current_selected_endpoint = '/help/home'
+  elif 'multiple_address' in called_from:
+    current_selected_endpoint = url_for('multiple_address')
   elif called_from != 'address_info':
     current_selected_endpoint = url_for('about')
   else:
