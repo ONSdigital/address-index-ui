@@ -44,6 +44,9 @@ Pre-requisites:
 
 `yapf --style='{based_on_style: pep8, indent_width: 2}' -ir .`
 
+### To Test
+`python3 -m pytest`
+
 FOR WINDOWS USERS ONLY:
 
 *Ensure you have python 3.9 installed*
