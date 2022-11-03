@@ -42,9 +42,9 @@ def check_for_record_limit(file, maxlines):
     return False
 
 
-def check_valid_upload(file):
+def check_valid_upload(file, limit=5001):
 
-  record_limit_exceeded = check_for_record_limit(file, 5001)
+  record_limit_exceeded = check_for_record_limit(file, limit)
 
   if record_limit_exceeded:
     raise FileUploadException(
