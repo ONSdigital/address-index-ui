@@ -23,6 +23,7 @@ def test_static_pages_are_200(client):
       'uprn',
       'about',
       'postcode',
+      'typeahead',
   ]
 
   for url in urls:
