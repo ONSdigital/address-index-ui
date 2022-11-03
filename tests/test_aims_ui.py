@@ -24,6 +24,9 @@ def test_static_pages_are_200(client):
       'about',
       'postcode',
       'typeahead',
+      'multiple_address_original',
+      'multiple_address',
+      'multiple_address_results',
   ]
 
   for url in urls:
