@@ -22,7 +22,7 @@
         "currentPath": endpoints[0].current_selected_endpoint,
         "itemsList": [
             {
-                "title": "Original Matching Service",
+                "title": "Quick Run",
                 "url": url_for('multiple_address_original'),
             },
             {
@@ -39,7 +39,7 @@
 <br>
 
 {{onsPanel({
-"body": "<p>To get started, upload a CSV file of up to 500,000 addresses to be matched. The file must have only two columns, id and address. <br> <br> Download a <a href='/downloads/example_multiple_address'> sample file</a> <br> <br> You can download your results as a CSV file. Your results will include a match accuracy score.</p>"
+"body": "<p>To get started, upload a CSV file of up to 100,000 addresses to be matched. The file must have only two columns, id and address. <br> <br> Download a <a href='/downloads/example_multiple_address'> sample file</a> <br> <br> You can download your results as a CSV file. Your results will include a match accuracy score.</p>"
     })}}
 
 <form method=post enctype=multipart/form-data>
