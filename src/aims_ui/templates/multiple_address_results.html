@@ -22,15 +22,15 @@
         "currentPath": 'multiple_address_results',
         "itemsList": [
             {
-                "title": "Original Matching Service",
+                "title": "Quick Run",
                 "url": url_for('multiple_address_original'),
             },
             {
-                "title": "Submit Addresses",
+                "title": "Submit Job",
                 "url": url_for('multiple_address'),
             },
             {
-                "title": "Results",
+                "title": "Monitor Jobs",
                 "url":'multiple_address_results',
             },
         ]
@@ -38,7 +38,9 @@
 
 <br>
 {{onsPanel({
-"body": "<p>You can find previously submitted jobs, and their statusses here. If a job is in the status 'results-ready' it can be downloaded. There can be quite a delay between 'finished' and 'results-ready'.</p>"
+"body": "<p>You can find previously submitted jobs, and their statuses here.</p>
+<p>If a job is in the status 'results-exported' it can be downloaded.</p>
+<p>There can be 1-hour delay between 'processing-finished' and 'results-exported'.</p>"
     })}}
 <br>
 
