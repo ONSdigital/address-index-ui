@@ -24,6 +24,13 @@ def remove_header_row(contents):
     contents.pop(remove_index)
 
 
+def jsonify_address(address_to_lookup):
+  # If the address contains a "'" character then contain the address
+  if "'" in address_to_lookup:
+    return '"' + address_to_lookup + '"'
+  return address_to_lookup
+
+
 def multiple_address_match(file, all_user_input, download=False):
   csv_headers = ['id', 'inputAddress', 'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank']  # yapf: disable
 
@@ -35,6 +42,7 @@ def multiple_address_match(file, all_user_input, download=False):
   for line in contents:
     line = line.strip().decode('utf-8')
     given_id, address_to_lookup = line.split(',', maxsplit=1)
+    address_to_lookup = jsonify_address(address_to_lookup)
     current_address = {'id': given_id, 'address': address_to_lookup}
     addresses.append(current_address)
   mm_dict['addresses'] = addresses[:]
