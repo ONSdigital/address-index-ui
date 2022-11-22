@@ -110,7 +110,7 @@ def submit_mm_job(user, addresses):
   user_email = request.headers.get('X-Goog-Authenticated-User-Email',
                                    'UserNotLoggedIn')
   user_email = user_email.replace('accounts.google.com:', '')
-  user_email = user_email.replace('@ons.gov.uk','')
+  user_email = user_email.replace('@ons.gov.uk', '')
   url = app.config.get('BM_API_URL') + '/bulk'
 
   header = {
@@ -131,6 +131,8 @@ def submit_mm_job(user, addresses):
 
   logging.info('Submmitted MMJob on endpoint"' + str(url) +
                '"  with UserId as "' + str(user_email) + '"')
+
+  print(r)
 
   return r
 

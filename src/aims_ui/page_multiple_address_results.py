@@ -23,7 +23,7 @@ def multiple_address_results():
                                    'UserNotLoggedIn')
 
   user_email = user_email.replace('accounts.google.com:', '')
-  user_email = user_email.replace('@ons.gov.uk','')
+  user_email = user_email.replace('@ons.gov.uk', '')
 
   headers = ['JOBID', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK']
   results = job_data_by_user_id(user_email).json().get('jobs', [])
