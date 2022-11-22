@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% from "components/breadcrumbs/_macro.njk" import onsBreadcrumbs %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+
+{% block main %}
+
+{{ onsBreadcrumbs({
+  "ariaLabel": 'Breadcrumbs',
+  "itemsList":  breadcrumbs,
+}) }}
+
+
+<h1>Confidence Score</h1>
+
+{{   onsPanel({
+"body": "Please provide feedback via servicenow.<br> <br> You can do this by searching for 'AIMS', selecting 'REQUEST' then select Option 'Provide Feedback'. <br><br> Then type your feedback in the blank box and click the send button."
+}) }}
+
+
+{% endblock %}
+
