@@ -132,8 +132,6 @@ def submit_mm_job(user, addresses):
   logging.info('Submmitted MMJob on endpoint"' + str(url) +
                '"  with UserId as "' + str(user_email) + '"')
 
-  print(r)
-
   return r
 
 
