@@ -58,9 +58,9 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
       ),
       'northern_ireland_boost_checkbox':
       Field(
-         'nboost',
-         display_title='Northern Ireland Boost',
-         search_type='checkbox',
+          'nboost',
+          display_title='Northern Ireland Boost',
+          search_type='checkbox',
       ),
       'match_threshold':
       Field(
@@ -100,12 +100,13 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           description='Boost the results in favour of Scotland Addresses',
       ),
       'northern_ireland_boost':
-          Field(
-              'nboost',
-              display_title='Northern Ireland Boost (1-10)',
-              classes='ons-input--w-4',
-              description='Boost the results in favour of Northern Ireland Addresses',
-          ),
+      Field(
+          'nboost',
+          display_title='Northern Ireland Boost (1-10)',
+          classes='ons-input--w-4',
+          description=
+          'Boost the results in favour of Northern Ireland Addresses',
+      ),
       'auxilary_search':
       Field(
           'includeauxiliarysearch',
