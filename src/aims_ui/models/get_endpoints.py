@@ -27,25 +27,31 @@ def get_endpoints(called_from=None):
       ),
       Endpoint(
           'Multiple Address',
-          'multiple_address',
+          'multiple_address_original',
           "Search for not just  one address. Several. Get lots of results you can look through. This service completes many single searches from a file.",
       ),
   ]
 
+  print('called_from:  ',called_from)
   if called_from == None:
     called_from = ''
   if called_from == 'help':
     current_selected_endpoint = '/help/home'
   elif 'multiple_address' in called_from:
-    current_selected_endpoint = url_for('multiple_address')
+    called_from = 'multiple_address_original'
   elif called_from != 'address_info':
     current_selected_endpoint = url_for('about')
   else:
     current_selected_endpoint = ''
+
   for endpoint in endpoints:
     if endpoint.url_title == called_from:
+      print(endpoint.url_title , called_from)
       endpoint.selected = True
       current_selected_endpoint = url_for(endpoint.url_title)
+
+  print(current_selected_endpoint)
+  print('')
 
   nav_info = [{
       'title': endpoint.title,
