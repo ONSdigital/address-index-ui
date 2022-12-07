@@ -32,7 +32,6 @@ def get_endpoints(called_from=None):
       ),
   ]
 
-  print('called_from:  ',called_from)
   if called_from == None:
     called_from = ''
   if called_from == 'help':
@@ -62,7 +61,4 @@ def get_endpoints(called_from=None):
     endpoint.nav_info = nav_info
     endpoint.current_selected_endpoint = current_selected_endpoint
 
-  for endpoint in endpoints:
-    print(endpoint.title, endpoint.current_selected_endpoint)
-  print('')
   return endpoints
