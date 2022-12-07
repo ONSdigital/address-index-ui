@@ -16,9 +16,6 @@ page_name = 'multiple_address_results'
 def multiple_address_results():
   endpoints = get_endpoints(called_from=page_name)
 
-  for endpoint in endpoints:
-    endpoint.current_selected_endpoint = url_for(page_name)
-
   user_email = request.headers.get('X-Goog-Authenticated-User-Email',
                                    'UserNotLoggedIn')
 
