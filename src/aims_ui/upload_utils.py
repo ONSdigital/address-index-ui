@@ -1,5 +1,7 @@
 import os
 import csv
+import ast
+
 
 ALLOWED_EXTENSIONS = {'csv'}
 
@@ -11,6 +13,14 @@ class FileUploadException(Exception):
     self.error_description = error_description
     super().__init__(self.error_title)
 
+def remove_script_and_html_from_input(inp_file):
+  """Remove script tags for input sanitisation"""
+  # Remove key phrases that allow script injection
+  no_allowed = [ '<scrpit>','</script>', '[]' ]
+  for phrase in no_allowed:
+    inp_file = inp_file.replace(phrase, '')
+  inp_file = ast.literal_eval(inp_file)
+  return inp_file
 
 def allowed_file(filename):
   return '.' in filename and \

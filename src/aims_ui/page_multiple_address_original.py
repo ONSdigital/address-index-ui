@@ -10,7 +10,7 @@ from .multiple_match_lookup import multiple_address_match_original
 from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
-from .upload_utils import check_valid_upload
+from .upload_utils import check_valid_upload, remove_script_and_html_from_input
 from .page_error import page_error
 from .upload_utils import FileUploadException
 import json
@@ -114,6 +114,8 @@ def multiple_address_original():
         except ConnectionError as e:
           return page_error(None, e, page_name)
 
+        table_results = remove_script_and_html_from_input(str(table_results))
+        
         return final(searchable_fields,
                      table_results=table_results,
                      results_summary_table=results_summary_table)
