@@ -1,14 +1,38 @@
 {% extends 'base.html' %}
 
 {% from "components/card/_macro.njk" import onsCard %}
-
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/question/_macro.njk" import onsQuestion %}
 
 
 {% block main %}
 
+{% call onsQuestion({
+    "title": 'How would you like PAF or NAG titles prioritised?',
+    "description":'When viewing an address you can specify if the PAF or NAG version of the address is prioritised below.',
+    "legendIsQuestionTitle": true }) %}
+{{ onsRadios({
+    "name": 'paf-nag-address-prefference',
+    "dontWrap": true,
+    "radios": [
+     {
+	"id": 'paf-radio',
+	"label": {
+	"text": 'Prioritise PAF address format'
+	},
+	"value": 'paf'
+     },
+     {
+	"id": 'nag-radio',
+	"label": {
+	"text": 'Prioritise NAG address format'
+	},
+	"value": 'nag'
+     }]
+    }) }}
+{% endcall %}
 
-<h1>SOMETHING</h1>
 
-<script src="static/custom_js/page_settings.js"></script>
+<script type=module src="static/src/page_settings.mjs"></script>
 
 {% endblock %}
