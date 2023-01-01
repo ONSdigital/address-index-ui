@@ -71,8 +71,18 @@
 {% for address in params.matched_addresses %}
 
 	<article class="result-short-form">
-	<a href={{'/address_info/' + address.uprn.value }}><h2 class="saturn"> {{ address.formatted_address.value }}</h2></a>
-  <table class='clerical-data-table'> <tbody id='{{address.uprn.value}}'>
+	  <a href={{'/address_info/' + address.uprn.value }}>
+
+	  <h2 hidden id="formattedAddress" class="saturn address-titles"> 
+	  	{{ address.formatted_address.value }} </h2>
+
+	  <h2 hidden id="formattedAddressNag" class="saturn address-titles"> 
+	  	{{ address.formatted_address_nag.value }} </h2>
+
+	  <h2 hidden id="formattedAddressPaf" class="saturn address-titles"> 
+	  	{{ address.formatted_address_paf.value }} </h2>
+	  </a>
+        <table class='clerical-data-table'> <tbody id='{{address.uprn.value}}'>
 
 	{% for attribute_name, address_attribute in address.__dict__.items() %}
 	{% if address_attribute.show %}
