@@ -13,6 +13,16 @@ function getChosenTitleId(prefference) {
   return 'formattedAddress'
 }
 
+function getUserFriendlyPrefference(prefference) {
+  if (prefference === 'def') {
+    return 'Default Formatting'
+  } else if (prefference === 'paf') {
+    return 'PAF Formatting'
+  } else if (prefference === 'nag') {
+    return 'NAG Formatting'
+  }
+}
+
 function hideUnselectedTitles(prefference) {
   const addressTitles = document.querySelectorAll('.address-titles');
   // Remove all titles if they're not the chosen one
@@ -22,7 +32,8 @@ function hideUnselectedTitles(prefference) {
       if (title.textContent !== '') {
         title.hidden = false;
         title.textContent = 
-          title.textContent + ' (' + prefference + ')';
+          title.textContent 
+          + ' (' + getUserFriendlyPrefference(prefference) + ')';
       } 
     }
   }
