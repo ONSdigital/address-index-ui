@@ -63,7 +63,7 @@
 	{% elif field.search_type == "radio" %}
 	{% call onsQuestion({
 	    "title": field.display_title,
-	    "classes": 'ons-input--w-50',
+	    "classes": field.classes if show else ' '.join([field.only_display_in_results_page,field.classes])  ,
 	    "legendIsQuestionTitle": true }) %}
 	{{ onsRadios({
             "name": field.database_name,
