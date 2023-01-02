@@ -1,7 +1,6 @@
 import { 
   getAddressTitlePrefference, 
   updateAddressFormatPrefference,
-  setDefaultTitleChoice,
 } from './local_storage_helpers.mjs';
 
 function updateAddressTitlePrefference(e) {
@@ -41,16 +40,34 @@ function setupNagAndPafListeners() {
 }
 
 
-function setupDefaultLocalStorageValues() {
- setDefaultTitleChoice();
-}
-
-
 function init() {
-  setupDefaultLocalStorageValues();
   setupNagAndPafListeners();
   setupNagAndPafStatus();
 }
 
 window.addEventListener('load', init);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
