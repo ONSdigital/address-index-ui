@@ -1,6 +1,5 @@
 import { 
   getAddressTitlePrefference,
-  setDefaultTitleChoice
 } from './local_storage_helpers.mjs';
 
 function getChosenTitleId(prefference) {
@@ -43,7 +42,6 @@ function hideUnselectedTitles(prefference) {
 function init() {
   const prefference = getAddressTitlePrefference();
   hideUnselectedTitles(prefference);
-  setDefaultTitleChoice();
 }
 
 window.addEventListener('load', init);
