@@ -20,10 +20,10 @@
 <div class="ons-grid">
 
 {# 1Column boarder#}
-  <div class="ons-grid__col ons-col-1@m "></div>
+  <div id="space_col_1" class="ons-grid__col ons-col-1@m "></div>
 
 {# Content is the searchboxes, taing up 4 col#}
-  <div class="ons-grid__col ons-col-4@m ">
+  <div id="content_col_2" class="ons-grid__col ons-col-4@m ">
 
 {{ customSearch ({ "Fields": searchable_fields,
 		   "endpoints": endpoints,
@@ -33,10 +33,10 @@
 </div>
 
 {# 1 Col boarder between filters and results #}
-<div class="ons-grid__col ons-col-1@m "></div>
+<div id="space_col_3" class="ons-grid__col ons-col-1@m "></div>
 
 {# 5 Col results page #}
-  <div class="ons-grid__col ons-col-5@m ">
+  <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
 
 	{# Title and description #}
 	{% for endpoint in endpoints %}
@@ -81,6 +81,7 @@ if ( window.history.replaceState ) {
 <script type=module src="static/src/all_pages_js.mjs"></script>
 <script type=module src="static/src/save_inputs.mjs"></script>
 <script type=module src="static/src/apply_custom_settings.mjs"></script>
+<script type=module src="static/src/custom_column_widths.mjs"></script>
 
 {% endblock %}
 {% endblock %}
