@@ -4,8 +4,17 @@
 {% from "components/radios/_macro.njk" import onsRadios %}
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/select/_macro.njk" import onsSelect %}
+{% from "components/panel/_macro.njk" import onsPanel %}
 
 {% block main %}
+
+{% call onsPanel({
+        "type": 'warn'
+    })
+%}
+Only adjust settings on this page if you're sure you need to adjust them.
+{% endcall %}
+<br>
 
 {# SET PAF OR NAG TITLE PREFERENCE #}
 {% call onsQuestion({
@@ -48,6 +57,7 @@
     "title": 'Customise Input and Output Widths',
     "description":'You can customise the width of input and output fields below.<br> This is particularly useful for use with a widescreen or large display. Once changed this affects all other results pages. You can reset the changes back to default at any time using the reset button below',
     "legendIsQuestionTitle": true }) %}
+
 
 {{ onsSelect({
         "id":      "selector_space_col_1", "name": "selector_space_col_1",
