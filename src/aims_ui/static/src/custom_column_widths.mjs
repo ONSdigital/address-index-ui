@@ -22,12 +22,21 @@ function applyColumnWidths(columnWidths) {
     stripObjOfColClass(columnObj);
     addColClassToObj(columnObj, width);
   }
+}
 
+function removeRadioWidths() {
+  const radioObjs = document.querySelectorAll('.ons-radios__item');
+  for (const radio of radioObjs) {
+    radio.classList = '';
+    radio.style = 'width: auto; display: inline-block; margin: 0 0 0.5rem;';
+  }
 }
 
 function init() {
   const customColumnWidths = (getCustomColumnWidths());
   applyColumnWidths(customColumnWidths);
+  // Remove formatting for radios that would otherwise force them to be too wide
+  removeRadioWidths();
 }
 
 window.addEventListener('load', init);
