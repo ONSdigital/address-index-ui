@@ -68,6 +68,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           display_title='Minimum match %',
           search_type='dropdown',
           previous_value='5%',
+          classes='ons-input--w-50',
           dropdown_options=get_options('percentage_match'),
           add_default_dropdown_option=False,
       ),
