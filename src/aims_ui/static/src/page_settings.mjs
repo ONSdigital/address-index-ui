@@ -1,6 +1,8 @@
 import { 
   getAddressTitlePrefference, 
   updateAddressFormatPrefference,
+  getCustomColumnWidths,
+  setNewColumnWidths,
 } from './local_storage_helpers.mjs';
 
 function updateAddressTitlePrefference(e) {
@@ -39,32 +41,39 @@ function setupNagAndPafListeners() {
   });
 }
 
+function setValuesOfColumnWidthPrefferences() {
+  const colWidths = getCustomColumnWidths();
+    for (const [key, width] of Object.entries(colWidths)) {
+      const colInput = document.querySelector('#selector_'+key);
+      colInput.value = width;
+  }
+}
+
+function saveWidthValues(widthSelectors) {
+  const newWidthValues = {};
+  for (const selector of widthSelectors) {
+    const selectorName = selector.id.replace('selector_','');
+    newWidthValues[selectorName] = selector.value;
+  }
+  setNewColumnWidths(newWidthValues);
+}
+
+function setupColumnWidthCustomiserListeners() {
+  const widthSelectors = document.querySelectorAll('.columnWidthCustomiser');
+  for (const selector of widthSelectors) {
+    selector.addEventListener('change', (e) => 
+      { saveWidthValues(widthSelectors) });
+  }
+}
 
 function init() {
   setupNagAndPafListeners();
   setupNagAndPafStatus();
+  setValuesOfColumnWidthPrefferences();
+  setupColumnWidthCustomiserListeners();
 }
 
 window.addEventListener('load', init);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
