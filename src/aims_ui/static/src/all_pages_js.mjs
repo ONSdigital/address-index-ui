@@ -10,7 +10,6 @@ function setDefaultValuesIfUnset() {
 
 function init() {
   setDefaultValuesIfUnset();
-  console.log(localStorage);
 }
 
 window.addEventListener('load', init);
