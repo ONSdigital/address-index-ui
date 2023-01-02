@@ -14,11 +14,11 @@ function getChosenTitleId(prefference) {
 
 function getUserFriendlyPrefference(prefference) {
   if (prefference === 'def') {
-    return 'Default Formatting'
+    return ''
   } else if (prefference === 'paf') {
-    return 'PAF Formatting'
+    return ' (PAF Formatting)'
   } else if (prefference === 'nag') {
-    return 'NAG Formatting'
+    return ' (NAG Formatting)'
   }
 }
 
@@ -32,7 +32,7 @@ function hideUnselectedTitles(prefference) {
         title.hidden = false;
         title.textContent = 
           title.textContent 
-          + ' (' + getUserFriendlyPrefference(prefference) + ')';
+          + getUserFriendlyPrefference(prefference);
       } 
     }
   }

@@ -145,6 +145,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             'uprn',
             display_title='To get started, enter a UPRN',
             previous_value=include_UPRN_redirect,
+            classes='ons-input--w-50 ',
             required=True,
             description=
             'The Unique Property Reference Number consists of digits only, and refers to a single property'
