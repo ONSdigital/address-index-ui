@@ -165,6 +165,12 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             previous_value='10',
         ),
         common_fields['epoch'],
+        Field(
+            'None',
+            search_type='panel-info',
+            description=
+            'Unlike other matches, Typeahead has variable boosts. <br><br>You can increase the value for a particular country or countries. <br><br>If for example you set Scotland Boost to 10 and type in 53 Port you get all Scottish results on screen, if you then add a c the results are all from England as there are no Scottish matches for that input.',
+        ),
         common_fields['england_boost'],
         common_fields['wales_boost'],
         common_fields['scotland_boost'],
