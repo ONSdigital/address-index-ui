@@ -5,7 +5,7 @@
 {% from "components/address-input/_macro.njk" import onsAddressInput %}
 {% from 'custom_address_info/_macro.njk' import customAddressInfo %}
 {% from "components/button/_macro.njk" import onsButton %}
-
+{% from "components/panel/_macro.njk" import onsPanel %}
 
 {% set form =  {
 	'method': 'POST',
@@ -96,6 +96,7 @@
 
 {# 5 Col FLAGS page #}
   <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
+
 
 {{ customSearch ({ "Fields": searchable_fields ,
  "remove_search_button":True }) }}
