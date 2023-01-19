@@ -18,7 +18,8 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           'limit',
           display_title="Limit",
           classes='ons-input--w-4',
-          description='Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
+          description=
+          'Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
           previous_value='50',
       ),
       'epoch':
@@ -197,7 +198,8 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             'limit',
             display_title="Limit",
             classes='ons-input--w-4',
-            description='Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
+            description=
+            'Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
             previous_value='5',
         ), common_fields['epoch'], common_fields['historical'],
         common_fields['match_threshold'],
@@ -209,12 +211,16 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             default_radio_selection='PAF',
             radio_options=[
                 {
-                    'id': 'PAF',
-                    'text': 'PAF - Addresses have PAF match first, if none found default formatting will be used'
+                    'id':
+                    'PAF',
+                    'text':
+                    'PAF - Addresses have PAF match first, if none found default formatting will be used'
                 },
                 {
-                    'id': 'NAG',
-                    'text': 'NAG - Addresses have PAF match first, if none found default formatting will be used'
+                    'id':
+                    'NAG',
+                    'text':
+                    'NAG - Addresses have PAF match first, if none found default formatting will be used'
                 },
             ],
         ),
@@ -233,7 +239,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
                     'text': 'Display in browser'
                 },
             ],
-)
+        )
     ])
 
   elif endpoint_name == 'multiple_address':
@@ -242,7 +248,8 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             'limitperaddress',
             display_title="Limit Per Address",
             classes='ons-input--w-4',
-            description='Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
+            description=
+            'Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
             previous_value='50',
         ),
     ])

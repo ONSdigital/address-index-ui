@@ -55,7 +55,10 @@ def get_endpoints(called_from=None):
   # Add the 'About' section at the end, insert instead of append so it's location can easily
   # be changed later, after consulting with UX team
   nav_info.insert(len(nav_info), {'title': 'Help', 'url': '/help/home'})
-  nav_info.insert(len(nav_info), {'title': 'Settings', 'url': url_for('settings')})
+  nav_info.insert(len(nav_info), {
+      'title': 'Settings',
+      'url': url_for('settings')
+  })
 
   for endpoint in endpoints:
     endpoint.nav_info = nav_info
