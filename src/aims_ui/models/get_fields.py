@@ -202,6 +202,23 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         ), common_fields['epoch'], common_fields['historical'],
         common_fields['match_threshold'],
         Field(
+            'paf-nag-prefference',
+            search_type='radio',
+            flag=False,
+            display_title='Prioritise PAF or NAG addresses?',
+            default_radio_selection='PAF',
+            radio_options=[
+                {
+                    'id': 'PAF',
+                    'text': 'PAF - Addresses have PAF match first, if none found default formatting will be used'
+                },
+                {
+                    'id': 'NAG',
+                    'text': 'NAG - Addresses have PAF match first, if none found default formatting will be used'
+                },
+            ],
+        ),
+        Field(
             'display-type',
             search_type='radio',
             flag=False,
@@ -216,7 +233,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
                     'text': 'Display in browser'
                 },
             ],
-        )
+)
     ])
 
   elif endpoint_name == 'multiple_address':
