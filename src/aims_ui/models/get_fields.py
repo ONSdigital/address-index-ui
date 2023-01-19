@@ -220,7 +220,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
                     'id':
                     'NAG',
                     'text':
-                    'NAG - Addresses have PAF match first, if none found default formatting will be used'
+                    'NAG - Addresses have NAG match first, if none found default formatting will be used'
                 },
             ],
         ),
