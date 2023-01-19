@@ -10,6 +10,21 @@ import logging
 page_name = 'multiple_match_submit'
 
 
+def get_preffered_format_of_address(adrs ,all_user_input):
+  address_prefference = all_user_input.get('paf-nag-prefference', 'default')
+  default_address = adrs.formatted_address.value
+  paf_address = adrs.formatted_address_paf.value
+  nag_address = adrs.formatted_address_nag.value
+
+  if address_prefference == 'PAF':
+    if paf_address != '':
+      return 'PAF', paf_address
+  elif address_prefference == 'NAG':
+    if nag_address != '':
+      return 'NAG', nag_address
+  return 'DEF', default_address
+
+
 def remove_header_row(contents):
   remove_index = None
   for i in range(0, len(contents)):
@@ -56,7 +71,7 @@ def multiple_address_match(file, all_user_input, download=False):
 
 
 def multiple_address_match_original(file, all_user_input, download=False):
-  csv_headers = ['id', 'inputAddress', 'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank']  # yapf: disable
+  csv_headers = ['id', 'inputAddress',  'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag/Default)']  # yapf: disable
 
   contents = file.readlines()
   remove_header_row(contents)
@@ -67,11 +82,11 @@ def multiple_address_match_original(file, all_user_input, download=False):
     writer = csv.writer(proxy)
     writer.writerow(csv_headers)
 
-    def write(id, addr, m_addr, uprn, m_type, confid_score, doc_score, rank):
+    def write(id, addr, m_addr, address_type, uprn, m_type, confid_score, doc_score, rank):
       writer.writerow([
-          given_id, address_to_lookup, adrs.formatted_address_nag.value,
+          given_id, address_to_lookup, m_addr, 
           adrs.uprn.value, match_type, adrs.confidence_score.value,
-          adrs.underlying_score.value, rank
+          adrs.underlying_score.value, rank, address_type
       ])
 
     def finalize(line_count, no_addresses_searched, single_match_total,
@@ -90,17 +105,18 @@ def multiple_address_match_original(file, all_user_input, download=False):
     ths = [{'value': x, 'ariaSort': None} for x in csv_headers]
     trs = []
 
-    def write(id, addr, m_addr, uprn, m_type, confid_score, doc_score, rank):
+    def write(id, addr, m_addr, address_type, uprn, m_type, confid_score, doc_score, rank):
       trs.append({
           'tds': [
               {'value': given_id},
               {'value': address_to_lookup},
-              {'value': adrs.formatted_address_nag.value},
+              {'value': m_addr},
               {'value': adrs.uprn.value},
               {'value': match_type},
               {'value': adrs.confidence_score.value},
               {'value': adrs.underlying_score.value},
               {'value': rank},
+              {'value': address_type},
           ]
       }) # yapf: disable
 
@@ -174,10 +190,13 @@ def multiple_address_match_original(file, all_user_input, download=False):
 
     for rank, adrs in enumerate(matched_addresses, start=1):
       line_count += 1
+      actual_address_type, preffered_address_format = \
+          get_preffered_format_of_address(adrs,all_user_input)
       write(
           given_id,
           address_to_lookup,
-          adrs.formatted_address_nag.value,
+          preffered_address_format,
+          actual_address_type,
           adrs.uprn.value,
           match_type,
           adrs.confidence_score.value,
