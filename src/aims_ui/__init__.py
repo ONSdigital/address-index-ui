@@ -138,7 +138,7 @@ def get_cached_tooltip_data():
 
 from . import info
 from . import login
-from . import page_settings 
+from . import page_settings
 from . import page_uprn
 from . import page_postcode
 from . import page_typeahead
