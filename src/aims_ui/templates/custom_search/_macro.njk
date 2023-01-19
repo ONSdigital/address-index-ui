@@ -112,6 +112,13 @@
 	  %}
 	    {{ field.description }}
 	  {% endcall %}
+	{% elif field.search_type == "panel-info" %}
+	  {% call onsPanel({
+		"type": 'info' })
+	  %}
+	    {{ field.description }}
+	  {% endcall %}
+
 
 {% endif %}
 {% endfor %}
