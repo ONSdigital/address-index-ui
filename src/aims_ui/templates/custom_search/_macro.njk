@@ -8,7 +8,6 @@
 {% from "components/label/_macro.njk" import onsLabel %}
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/autosuggest/_macro.njk" import onsAutosuggest %}
-{% from "components/downloads/_macro.njk" import onsDownloads %}
 {% from "components/panel/_macro.njk" import onsPanel %}
 
 
@@ -64,7 +63,7 @@
 	{% elif field.search_type == "radio" %}
 	{% call onsQuestion({
 	    "title": field.display_title,
-	    "classes": 'u-mt-no' + '' if show else ' '.join([field.only_display_in_results_page,field.classes])  ,
+	    "classes": field.classes if show else ' '.join([field.only_display_in_results_page,field.classes])  ,
 	    "legendIsQuestionTitle": true }) %}
 	{{ onsRadios({
             "name": field.database_name,
@@ -91,6 +90,7 @@
             "ariaYouHaveSelected": "You have selected",
             "ariaMinChars": "Enter 3 or more characters for suggestions.",
             "minChars": field.min_chars,
+	    "classes": 'ons-input--w-50',
             "ariaResultsLabel": "Country suggestions",
             "ariaOneResult": "There is one suggestion available.",
             "ariaNResults": "There are {n} suggestions available.",

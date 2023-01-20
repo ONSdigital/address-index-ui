@@ -21,7 +21,7 @@ def test_static_pages_are_200(client):
   """Basic Check to see if pages are present, returning a 200, and also contain some form of content"""
   urls = [
       'uprn',
-      'about',
+      'settings',
       'postcode',
       'typeahead',
   ]
