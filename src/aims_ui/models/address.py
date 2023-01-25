@@ -146,12 +146,14 @@ class AddressAttribute():
       address_data,
       name,
       classification_code=None,
+      underlying_score=None,
       confidence_score=None,
   ):
     self.name = name
     self.address_data = address_data
     self.raw_value = address_data.get(name)
-    self.value = self.format_special(self.raw_value, classification_code,
+    self.value = self.format_special(self.raw_value, classification_code, 
+                                     underlying_score,
                                      confidence_score)
     self.show = False
 
@@ -186,6 +188,7 @@ class AddressAttribute():
   def format_special(self,
                      value,
                      classification_code=None,
+                     underlying_score=None,
                      confidence_score=None):
     # Special formatting for some values
     if self.name == 'confidenceScoreFormatted':
@@ -198,6 +201,13 @@ class AddressAttribute():
         return confidence_score
       else:
         return value
+
+    if self.name == 'underlyingScore':
+      if underlying_score != None:
+        return underlying_score 
+      else:
+        return value
+
 
     if self.name == 'geo':
       # README swapping the long/lat values fixes things - do not change, it's not a mistake!
@@ -229,6 +239,7 @@ class Address():
   def __init__(self,
                address_data,
                include_hierarchy=False,
+               underlying_score=None,
                confidence_score=None):
     address_data = address_data.get('address')
 
@@ -266,7 +277,8 @@ class Address():
         address_data,
         'confidenceScoreFormatted',
         confidence_score=self.confidence_score.value)
-    self.underlying_score = AddressAttribute(address_data, 'underlyingScore')
+    self.underlying_score = AddressAttribute(address_data, 'underlyingScore',
+                                             underlying_score=underlying_score)
     if include_hierarchy:
       self.hierarchy = AddressAttribute(address_data, 'hierarchy')
     else:
