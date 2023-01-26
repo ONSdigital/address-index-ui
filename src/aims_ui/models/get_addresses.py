@@ -2,7 +2,10 @@ from .address import Address
 from .short_address import ShortAddress
 
 
-def get_addresses(json_response, called_from, confidence_score=None):
+def get_addresses(json_response,
+                  called_from,
+                  confidence_score=None,
+                  underlying_score=None):
   """Create Address classes for each address, might need to be different for each endpoint"""
   addresses = []
 
@@ -11,6 +14,7 @@ def get_addresses(json_response, called_from, confidence_score=None):
     addresses = [
         Address(response,
                 include_hierarchy=True,
+                underlying_score=underlying_score,
                 confidence_score=confidence_score)
     ]
 
