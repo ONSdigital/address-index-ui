@@ -1,6 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM python:3.9-alpine
 WORKDIR /code
+ENV API_URL=http://host.docker.internal:9001
 ENV FLASK_APP=aims_ui
 ENV FLASK_ENV=development
 ENV FLASK_RUN_HOST=0.0.0.0
