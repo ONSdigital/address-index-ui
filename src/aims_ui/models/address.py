@@ -152,9 +152,8 @@ class AddressAttribute():
     self.name = name
     self.address_data = address_data
     self.raw_value = address_data.get(name)
-    self.value = self.format_special(self.raw_value, classification_code, 
-                                     underlying_score,
-                                     confidence_score)
+    self.value = self.format_special(self.raw_value, classification_code,
+                                     underlying_score, confidence_score)
     self.show = False
 
     # Set values to show in small overview of an address
@@ -204,10 +203,9 @@ class AddressAttribute():
 
     if self.name == 'underlyingScore':
       if underlying_score != None:
-        return underlying_score 
+        return underlying_score
       else:
         return value
-
 
     if self.name == 'geo':
       # README swapping the long/lat values fixes things - do not change, it's not a mistake!
@@ -277,7 +275,8 @@ class Address():
         address_data,
         'confidenceScoreFormatted',
         confidence_score=self.confidence_score.value)
-    self.underlying_score = AddressAttribute(address_data, 'underlyingScore',
+    self.underlying_score = AddressAttribute(address_data,
+                                             'underlyingScore',
                                              underlying_score=underlying_score)
     if include_hierarchy:
       self.hierarchy = AddressAttribute(address_data, 'hierarchy')
