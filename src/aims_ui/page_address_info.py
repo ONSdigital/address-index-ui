@@ -4,7 +4,7 @@ from .api_interaction import api
 from .page_error import page_error
 from .table_utils import create_table, create_hierarchy_table
 from .models.get_addresses import get_addresses
-from .cookie_utils import load_confidence_score, load_epoch_number, load_underlying_score 
+from .cookie_utils import load_confidence_score, load_epoch_number, load_underlying_score
 from .models.address import Address
 from requests.exceptions import ConnectionError
 from flask import render_template, request, session
