@@ -36,6 +36,7 @@ def typeahead():
   all_user_input['uprn'] = request.form.get('address-uprn')
   save_epoch_number(session, all_user_input.get('epoch', ''))
   save_logical_status(session, matched_addresses)
+  save_underlying_score(session, matched_addresses)
 
   try:
     result = api(
