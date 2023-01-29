@@ -18,13 +18,15 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           'limit',
           display_title="Limit",
           classes='ons-input--w-4',
-          description='Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
+          description=
+          'Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
           previous_value='50',
       ),
       'epoch':
       Field(
           'epoch',
           search_type='radio',
+          classes='ons-input--w-50',
           flag=False,
           display_title='Epoch',
           default_radio_selection=default_epoch,
@@ -68,6 +70,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           display_title='Minimum match %',
           search_type='dropdown',
           previous_value='5%',
+          classes='ons-input--w-50',
           dropdown_options=get_options('percentage_match'),
           add_default_dropdown_option=False,
       ),
@@ -120,6 +123,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           'classificationfilter',
           search_type='autosuggest',
           display_title='Classification',
+          classes='ons-input--w-50 ',
           description=
           'To further filter your results, select a classification. You can start typing the Classification Code or the Description. (I.e. "R" or "Residential")',
           autosuggest_url='/autosuggest/classification-reverse.json',
@@ -142,6 +146,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             'uprn',
             display_title='To get started, enter a UPRN',
             previous_value=include_UPRN_redirect,
+            classes='ons-input--w-50 ',
             required=True,
             description=
             'The Unique Property Reference Number consists of digits only, and refers to a single property'
@@ -165,6 +170,12 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             previous_value='10',
         ),
         common_fields['epoch'],
+        Field(
+            'None',
+            search_type='panel-info',
+            description=
+            'Unlike other matches, Typeahead has variable boosts. <br><br>You can increase the value for a particular country or countries. <br><br>If for example you set Scotland Boost to 10 and type in 53 Port you get all Scottish results on screen, if you then add a c the results are all from England as there are no Scottish matches for that input.',
+        ),
         common_fields['england_boost'],
         common_fields['wales_boost'],
         common_fields['scotland_boost'],
@@ -193,10 +204,32 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             'limit',
             display_title="Limit",
             classes='ons-input--w-4',
-            description='Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
+            description=
+            'Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
             previous_value='5',
         ), common_fields['epoch'], common_fields['historical'],
         common_fields['match_threshold'],
+        Field(
+            'paf-nag-prefference',
+            search_type='radio',
+            flag=False,
+            display_title='Prioritise PAF or NAG addresses?',
+            default_radio_selection='PAF',
+            radio_options=[
+                {
+                    'id':
+                    'PAF',
+                    'text':
+                    'PAF - Addresses have PAF match first, if none found default formatting will be used'
+                },
+                {
+                    'id':
+                    'NAG',
+                    'text':
+                    'NAG - Addresses have NAG match first, if none found default formatting will be used'
+                },
+            ],
+        ),
         Field(
             'display-type',
             search_type='radio',
@@ -221,7 +254,8 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             'limitperaddress',
             display_title="Limit Per Address",
             classes='ons-input--w-4',
-            description='Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
+            description=
+            'Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
             previous_value='50',
         ),
     ])

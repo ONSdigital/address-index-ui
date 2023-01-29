@@ -26,7 +26,6 @@ def help(subject='None'):
           'name': 'submit_feedback',
           'url': url + 'submit_feedback',
       },
-
   ]
 
   breadcrumbs = [
