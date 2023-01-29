@@ -4,7 +4,7 @@ from .api_interaction import api
 from .page_error import page_error
 from .table_utils import create_table, create_hierarchy_table
 from .models.get_addresses import get_addresses
-from .cookie_utils import load_confidence_score, load_epoch_number
+from .cookie_utils import load_confidence_score, load_epoch_number, load_underlying_score
 from .models.address import Address
 from requests.exceptions import ConnectionError
 from flask import render_template, request, session
@@ -24,6 +24,7 @@ def address_info(uprn):
   """Show all info about an address given the UPRN"""
 
   confidence_score = load_confidence_score(session, uprn)
+  underlying_score = load_underlying_score(session, uprn)
   epoch_version_number = load_epoch_number(session)
 
   try:
@@ -42,6 +43,7 @@ def address_info(uprn):
   if result.status_code == 200:
     matched_addresses = get_addresses(result.json(),
                                       'uprn',
+                                      underlying_score=underlying_score,
                                       confidence_score=confidence_score)
   elif result.status_code == 404:
     # No results but the api compelted the call successfully

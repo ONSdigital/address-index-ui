@@ -3,7 +3,7 @@ from flask import render_template, request, session
 from flask_login import login_required
 from . import app
 from requests.exceptions import ConnectionError
-from .cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs, save_confidence_score, save_confidence_score, save_epoch_number
+from .cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs, save_confidence_score, save_confidence_score, save_epoch_number, save_underlying_score
 from .api_interaction import api
 from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
@@ -53,6 +53,7 @@ def postcode():
 
   # Save a list of UPRNs and their respective confidence scores
   save_confidence_score(session, matched_addresses)
+  save_underlying_score(session, matched_addresses)
   save_epoch_number(session, all_user_input.get('epoch', ''))
 
   return render_template(
