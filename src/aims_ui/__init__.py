@@ -4,6 +4,7 @@ import time
 
 from flask import Flask, g
 from flask_login import LoginManager
+from werkzeug.middleware.profiler import ProfilerMiddleware
 from .config import base as config_base
 from .logging import setup_logging
 from .models.user_model import User, users
@@ -11,7 +12,7 @@ from .models.user_model import User, users
 setup_logging(os.getenv('PLATFORM'))
 
 app = Flask(__name__, instance_relative_config=False)
-
+app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions = [30])
 ENV = os.getenv('FLASK_ENV', 'testing')
 
 app.config.from_object(config_base)
