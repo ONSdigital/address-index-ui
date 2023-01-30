@@ -7,6 +7,7 @@ def page_error(
     api_response,
     page_name,
     connection_error=False,
+    override_error_description='',
 ):
 
   if not connection_error:
@@ -18,6 +19,9 @@ def page_error(
   else:
     # Connection error - AIMS service is unavailable
     error_description = f'Sorry, there is a problem with the service right now. <a href="mailto:ai.users@ons.gov.uk?Subject=Error%20Report&Body=Page:{page_name}%0D%0AProblem%20Details:">Contact Us </a> to report the problem and request support'
+
+  if override_error_description != '':
+    error_description = override_error_description
 
   logging.error(error_description)
 
