@@ -10,7 +10,7 @@ from .multiple_match_lookup import multiple_address_match_original
 from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
-from .upload_utils import check_valid_upload, remove_script_and_html_from_input
+from .upload_utils import check_valid_upload
 from .page_error import page_error
 from .upload_utils import FileUploadException
 import json
@@ -83,6 +83,7 @@ def multiple_address_original():
 
     file = request.files['file']
 
+
     try:
       file_valid, error_description, error_title = check_valid_upload(file)
     except FileUploadException as e:
@@ -90,7 +91,12 @@ def multiple_address_original():
                    error_description=e.error_description,
                    error_title=e.error_title)
 
-    if file_valid:
+    if not file_valid:
+      # File invalid? Return error
+      return final(searchable_fields,
+                   error_description=error_description,
+                   error_title=error_title)
+    else:
       for field in searchable_fields:
         if field.database_name == 'display-type':
           results_type = field.get_selected_radio()
@@ -114,12 +120,8 @@ def multiple_address_original():
         except ConnectionError as e:
           return page_error(None, e, page_name)
 
-        table_results = remove_script_and_html_from_input(str(table_results))
         
         return final(searchable_fields,
                      table_results=table_results,
                      results_summary_table=results_summary_table)
-    else:
-      return final(searchable_fields,
-                   error_description=error_description,
-                   error_title=error_title)
+

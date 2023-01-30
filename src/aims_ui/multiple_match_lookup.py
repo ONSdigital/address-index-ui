@@ -4,6 +4,7 @@ from aims_ui.api_interaction import api, submit_mm_job
 import csv
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
+from .upload_utils import remove_script_and_html_from_input
 from .page_error import page_error
 import logging
 
@@ -160,6 +161,11 @@ def multiple_address_match_original(file, all_user_input, download=False):
   for line in contents:
     line = line.strip().decode('utf-8')
     given_id, address_to_lookup = line.split(',', maxsplit=1)
+
+    # Remove HTML from address_to_lookup and given_id
+    given_id = remove_script_and_html_from_input(given_id)
+    address_to_lookup = remove_script_and_html_from_input(address_to_lookup)
+
     all_user_input['input'] = address_to_lookup
 
     try:
