@@ -13,14 +13,26 @@ class FileUploadException(Exception):
     self.error_description = error_description
     super().__init__(self.error_title)
 
-def remove_script_and_html_from_input(inp_file):
+def escape_html_string(htmlstring):
+  escapes = {'\"': '&quot;',
+             '\'': '&#39;',
+             '<': '&lt;',
+             '>': '&gt;'}
+  # This is done first to prevent escaping other escapes.
+  htmlstring = htmlstring.replace('&', '&amp;')
+  for seq, esc in escapes.items():
+    htmlstring = htmlstring.replace(seq, esc)
+  return htmlstring
+
+def remove_script_and_html_from_input(inp):
   """Remove script tags for input sanitisation"""
   # Remove key phrases that allow script injection
   no_allowed = [ '<scrpit>','</script>', '[]' ]
   for phrase in no_allowed:
-    inp_file = inp_file.replace(phrase, '')
-  inp_file = ast.literal_eval(inp_file)
-  return inp_file
+    inp = inp.replace(phrase, '')
+  # Replace all html characters with their HTML escape codes
+  inp = escape_html_string(inp)
+  return inp
 
 def allowed_file(filename):
   return '.' in filename and \
