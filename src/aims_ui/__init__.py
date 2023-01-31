@@ -62,6 +62,10 @@ def close_connection(exception):
 
 classifications = None
 
+@app.after_request
+def add_header(r):
+  r.headers["Cache-Control"]  = "no-store max-age=0"
+  return r
 
 def get_classifications_cached():
   global start_time, classifications, last_pop_time
