@@ -64,7 +64,7 @@ classifications = None
 
 @app.after_request
 def add_header(r):
-  r.headers["Cache-Control"]  = "no-store max-age=0"
+  r.headers["Cache-Control"] = "no-store, max-age=0"
   return r
 
 def get_classifications_cached():
