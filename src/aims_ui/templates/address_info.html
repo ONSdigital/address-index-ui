@@ -25,6 +25,11 @@
 	}) }}
 <br>
 
+
+<script>
+	console.log(localStorage.getItem('test'));
+</script>
+
 {% for t_title, t_table in hierarchy_table.items() %} 
 {# ISSUE: TODO: When the table below has "'variants': 'searchable'" added, 
  then the table breaks, as the title becomes a mess - duplicated header row on the first table #}
