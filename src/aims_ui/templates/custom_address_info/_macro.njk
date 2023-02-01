@@ -171,19 +171,19 @@ let confidenceScoreList = {};
       address['{{attribute_name}}'] = {value:`{{address_attribute.value}}`,
                 favourite: getLocalFav('{{attribute_name}}')};
 
+
+      // Add the UPRN and Confidence Score and underlying score to Local Storage
       if (`{{attribute_name}}` === 'uprn') {
 	confidenceScoreList = {};
       	confidenceScoreList['uprn'] = `{{address_attribute.value}}` ;
       }
       if (`{{attribute_name}}` === 'confidence_score') {
       	confidenceScoreList['confidenceScore'] = `{{address_attribute.value}}` ;
+      }
+      if (`{{attribute_name}}` === 'underlying_score') {
+      	confidenceScoreList['underlyingScore'] = `{{address_attribute.value}}` ;
 	addToConfidenceScore(confidenceScoreList);
       }
-
-
-
-
-
 
 
     </script>
