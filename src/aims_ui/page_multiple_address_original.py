@@ -83,7 +83,6 @@ def multiple_address_original():
 
     file = request.files['file']
 
-
     try:
       file_valid, error_description, error_title = check_valid_upload(file)
     except FileUploadException as e:
@@ -120,8 +119,6 @@ def multiple_address_original():
         except ConnectionError as e:
           return page_error(None, e, page_name)
 
-        
         return final(searchable_fields,
                      table_results=table_results,
                      results_summary_table=results_summary_table)
-

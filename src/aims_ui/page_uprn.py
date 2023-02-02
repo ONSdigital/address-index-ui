@@ -3,7 +3,7 @@ from flask import render_template, request, session
 from requests.exceptions import ConnectionError
 from flask_login import login_required
 from . import app
-from .cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs, save_confidence_score, save_confidence_score, save_epoch_number, save_underlying_score
+from .cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs, save_epoch_number
 from .api_interaction import api
 from .security_utils import detect_xml_injection
 from .models.get_endpoints import get_endpoints
@@ -39,8 +39,11 @@ def uprn():
   user_input = all_user_input.get('uprn', '')
   xml_injection = detect_xml_injection(user_input)
   if xml_injection:
-    return page_error(None, page_name, all_user_input, 
-                      override_error_description = 'XML Attack Detected. This incident will be reported.')
+    return page_error(None,
+                      page_name,
+                      all_user_input,
+                      override_error_description=
+                      'XML Attack Detected. This incident will be reported.')
 
   try:
     result = api(
@@ -60,9 +63,7 @@ def uprn():
   else:
     return page_error(result, page_name)
 
-  # Save a list of UPRNs and their respective confidence scores and logical statuses
-  save_confidence_score(session, matched_addresses)
-  save_underlying_score(session, matched_addresses)
+  # Save epoch number
   save_epoch_number(session, all_user_input.get('epoch', ''))
 
   return render_template(
