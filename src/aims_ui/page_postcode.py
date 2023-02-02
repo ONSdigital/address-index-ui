@@ -60,9 +60,7 @@ def postcode():
   else:
     return page_error(result, page_name)
 
-  # Save a list of UPRNs and their respective confidence scores
-  save_confidence_score(session, matched_addresses)
-  save_underlying_score(session, matched_addresses)
+  # Save epoch
   save_epoch_number(session, all_user_input.get('epoch', ''))
 
   return render_template(
