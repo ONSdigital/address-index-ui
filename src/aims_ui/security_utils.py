@@ -1,5 +1,6 @@
 import re
 
+
 def detect_xml_injection(input_string):
   # Regular expression pattern for detecting XML injection
   pattern = r'<[^>]*(?<!\/)>|&[a-z]+;|\'|\"'
