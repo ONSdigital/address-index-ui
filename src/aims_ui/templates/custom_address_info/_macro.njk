@@ -133,6 +133,7 @@ window.onload = function() {
       underlyingScoreClericalDataCell.textContent = score.underlyingScore;
     }
   }
+
 };
 
 </script>
@@ -201,7 +202,6 @@ window.onload = function() {
 
   function confidenceScoreAlreadyAdded(objectToAdd, confidenceScores) {
     for (const conScore of confidenceScores) {
-      console.log('Checking: ', conScore);
       if (conScore.uprn === objectToAdd.uprn) {
         return true;
       } 
@@ -213,9 +213,8 @@ window.onload = function() {
     const confidenceScores = getConfidenceList();
     // Check that it's not already added
     if (confidenceScoreAlreadyAdded(objectToAdd, confidenceScores)) {
-      console.log('ALAS no, we will not add or change anything');
+      const x = 'var';
     } else {
-      console.log('Adding ', objectToAdd);
       confidenceScores.push(objectToAdd);
       localStorage.setItem('confidenceScores', JSON.stringify(confidenceScores));
     }
@@ -240,6 +239,7 @@ window.onload = function() {
 
 <script>
 let confidenceScoreList = {};
+localStorage.setItem('confidenceScores', []);
 </script>
 
 {% for address in params.matched_addresses %}
