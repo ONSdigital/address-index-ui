@@ -3,7 +3,7 @@ from flask import render_template, request, session
 from flask_login import login_required
 from . import app
 from requests.exceptions import ConnectionError
-from .cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs, save_epoch_number 
+from .cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs, save_epoch_number
 from .api_interaction import api
 from .security_utils import detect_xml_injection
 from .models.get_endpoints import get_endpoints
@@ -34,12 +34,14 @@ def postcode():
       session,
   )
 
-
-  user_input = all_user_input.get('postcode','')
+  user_input = all_user_input.get('postcode', '')
   xml_injection = detect_xml_injection(user_input)
   if xml_injection:
-    return page_error(None, page_name, all_user_input, 
-                      override_error_description = 'XML Attack Detected. This incident will be reported.')
+    return page_error(None,
+                      page_name,
+                      all_user_input,
+                      override_error_description=
+                      'XML Attack Detected. This incident will be reported.')
   try:
     result = api(
         '/addresses/postcode/',

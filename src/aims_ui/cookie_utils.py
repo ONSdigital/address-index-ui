@@ -10,6 +10,7 @@ def save_input(all_user_input, session):
   """Save the values of html objects into response so they can be loaded in future"""
   session['previous_user_responses'] = all_user_input
 
+
 #
 #def save_confidence_score(session, addresses):
 #  """Save a list of UPRNs and their confidence scores to local storage"""
@@ -42,6 +43,7 @@ def save_input(all_user_input, session):
 #  underlying_score = cs.get(uprn, 100)
 #  return underlying_score
 #
+
 
 def save_epoch_number(session, epoch_version_number):
   """Save the epoch number for a query to the session"""

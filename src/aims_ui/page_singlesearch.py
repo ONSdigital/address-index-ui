@@ -37,8 +37,11 @@ def singlesearch():
   user_input = all_user_input.get('input', '')
   xml_injection = detect_xml_injection(user_input)
   if xml_injection:
-    return page_error(None, page_name, all_user_input, 
-                      override_error_description = 'XML Attack Detected. This incident will be reported.')
+    return page_error(None,
+                      page_name,
+                      all_user_input,
+                      override_error_description=
+                      'XML Attack Detected. This incident will be reported.')
 
   try:
     result = api(
