@@ -12,9 +12,10 @@
     <p>
 
       
-<table> <tbody>
+<table id="overviewTable"> <tbody>
 {# For each atribute in the Address Model #} 
 {% for attribute_name, address_attribute in  params.matched_addresses[0].__dict__.items() %}
+
 	{% if address_attribute.full_show %}
 		<tr><td class="mars">{{ attribute_name }}</td>
 		    <td class="venus">{{ address_attribute.value }}</td>
@@ -59,6 +60,83 @@
 	'tool_tip_data': params.tool_tip_data,
 	'link_data': params.link_data,
 	} ) }} 
+
+{# Add back the Confidence Score and the Underlying Score #} 
+<script>
+
+function getCellFromTable(table, rowText) {
+  const rows = table.getElementsByTagName('tr');
+  for (let i = 0; i < rows.length; i++) {
+    const cells = rows[i].getElementsByTagName('td');
+    for (let j = 0; j < cells.length; j++) {
+      if ( String(cells[j].textContent).includes(rowText) ) {
+        return cells[j];
+      }
+    }
+  }
+  return null;
+}
+
+function getSecondCell(row) {
+  const cells = row.querySelectorAll('td');
+  if (cells.length >= 2) {
+    return cells[1];
+  } else {
+    return null;
+  }
+}
+
+function getConfidenceList() {
+  const defaultConfidence = [];
+  const confidenceScores = localStorage.getItem('confidenceScores');
+  if (confidenceScores) {
+    return JSON.parse(confidenceScores);
+  } else {
+    localStorage.setItem('confidenceScores', JSON.stringify(defaultConfidence));
+  return [];
+  }
+}
+
+window.onload = function() {
+  const overviewTable = document.querySelector('#overviewTable');
+  const confidenceScoreValueCell = getCellFromTable(overviewTable, '0.0% Match');
+  const uprnCellLabel = getCellFromTable(overviewTable, 'uprn');
+  const uprnRow = uprnCellLabel.parentNode;
+  const uprnCell = getSecondCell(uprnRow);
+  const uprn = uprnCell.textContent;
+
+  // Populate the "Important information" overview table 
+  const confidenceList = getConfidenceList();
+  for (const score of confidenceList) {
+    if (String(score.uprn) === String(uprn)) {
+      const newConScoreValue = Math.round(score.confidenceScore * 100) / 100
+      confidenceScoreValueCell.textContent = String(newConScoreValue) + '% Match';
+    }
+  }
+
+  // Populate the "Clerical Data" table for confidence and underlying score
+  const clericalDataTable = document.querySelector('#clerical-data-table');
+
+  const confidenceScoreValueCellClericalData = getCellFromTable(clericalDataTable, 'confidence_score');
+  const underlyingScoreValueCellClericalData = getCellFromTable(clericalDataTable, 'underlying_score');
+
+  // Get parent Rows
+  const conScoreClericalData          = confidenceScoreValueCellClericalData.parentNode; 
+  const underlyingScoreClericalData   = underlyingScoreValueCellClericalData.parentNode; 
+
+  const conScoreClericalDataCell        = getSecondCell(conScoreClericalData);
+  const underlyingScoreClericalDataCell = getSecondCell(underlyingScoreClericalData);
+
+  for (const score of confidenceList) {
+    if (String(score.uprn) === String(uprn)) {
+      conScoreClericalDataCell.textContent = score.confidenceScore;
+      underlyingScoreClericalDataCell.textContent = score.underlyingScore;
+    }
+  }
+
+};
+
+</script>
 
 
 {% else %}
@@ -111,6 +189,39 @@
     }
   }
 
+  function getConfidenceList() {
+    const defaultConfidence = [];
+    const confidenceScores = localStorage.getItem('confidenceScores');
+    if (confidenceScores) {
+      return JSON.parse(confidenceScores);
+    } else {
+      localStorage.setItem('confidenceScores', JSON.stringify(defaultConfidence));
+      return [];
+    }
+  }
+
+  function confidenceScoreAlreadyAdded(objectToAdd, confidenceScores) {
+    for (const conScore of confidenceScores) {
+      if (conScore.uprn === objectToAdd.uprn) {
+        return true;
+      } 
+    }
+    return false;
+  }
+
+  function addToConfidenceScore(objectToAdd) {
+    const confidenceScores = getConfidenceList();
+    // Check that it's not already added
+    if (confidenceScoreAlreadyAdded(objectToAdd, confidenceScores)) {
+      const x = 'var';
+    } else {
+      confidenceScores.push(objectToAdd);
+      localStorage.setItem('confidenceScores', JSON.stringify(confidenceScores));
+    }
+  }
+
+
+
   const localFavourites = getFavourites();
   function getLocalFav(name) {
     if (localFavourites[name] === true) {
@@ -126,11 +237,32 @@
   let x = {};
 </script>
 
+<script>
+let confidenceScoreList = {};
+localStorage.setItem('confidenceScores', []);
+</script>
+
 {% for address in params.matched_addresses %}
 	{% for attribute_name, address_attribute in address.__dict__.items() %}
     <script> 
       address['{{attribute_name}}'] = {value:`{{address_attribute.value}}`,
                 favourite: getLocalFav('{{attribute_name}}')};
+
+
+      // Add the UPRN and Confidence Score and underlying score to Local Storage
+      if (`{{attribute_name}}` === 'uprn') {
+	confidenceScoreList = {};
+      	confidenceScoreList['uprn'] = `{{address_attribute.value}}` ;
+      }
+      if (`{{attribute_name}}` === 'confidence_score') {
+      	confidenceScoreList['confidenceScore'] = `{{address_attribute.value}}` ;
+      }
+      if (`{{attribute_name}}` === 'underlying_score') {
+      	confidenceScoreList['underlyingScore'] = `{{address_attribute.value}}` ;
+	addToConfidenceScore(confidenceScoreList);
+      }
+
+
     </script>
 
     {# PAF AND NAG EXCEPTIONS #}

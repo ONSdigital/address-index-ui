@@ -2,7 +2,6 @@ import os
 import csv
 import ast
 
-
 ALLOWED_EXTENSIONS = {'csv'}
 
 
@@ -13,26 +12,26 @@ class FileUploadException(Exception):
     self.error_description = error_description
     super().__init__(self.error_title)
 
+
 def escape_html_string(htmlstring):
-  escapes = {'\"': '&quot;',
-             '\'': '&#39;',
-             '<': '&lt;',
-             '>': '&gt;'}
+  escapes = {'\"': '&quot;', '\'': '&#39;', '<': '&lt;', '>': '&gt;'}
   # This is done first to prevent escaping other escapes.
   htmlstring = htmlstring.replace('&', '&amp;')
   for seq, esc in escapes.items():
     htmlstring = htmlstring.replace(seq, esc)
   return htmlstring
 
+
 def remove_script_and_html_from_input(inp):
   """Remove script tags for input sanitisation"""
   # Remove key phrases that allow script injection
-  no_allowed = [ '<scrpit>','</script>', '[]' ]
+  no_allowed = ['<scrpit>', '</script>', '[]']
   for phrase in no_allowed:
     inp = inp.replace(phrase, '')
   # Replace all html characters with their HTML escape codes
   inp = escape_html_string(inp)
   return inp
+
 
 def allowed_file(filename):
   return '.' in filename and \
