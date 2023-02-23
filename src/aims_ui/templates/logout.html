@@ -4,6 +4,7 @@
 {% from 'components/lists/_macro.njk' import onsList %}
 {% from 'components/panel/_macro.njk' import onsPanel %}
 {% from 'components/password/_macro.njk' import onsPassword %}
+{% from 'components/button/_macro.njk' import onsButton %}
 
 {% set page_title_value = page_title %}
 
@@ -23,6 +24,6 @@
     {{ onsButton({
         'text': 'Sign In',
         'classes': 'u-mb-xl',
-        'url': '/signin'
+        'url': '/'
     }) }}
 {% endblock %}
