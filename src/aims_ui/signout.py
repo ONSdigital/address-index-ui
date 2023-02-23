@@ -16,10 +16,4 @@ page_name = 'logout'
 def logout():
   session.clear()  # invalidate the user's session (logging them out)
 
-  # Redirect user to the homepage
-  return render_template(
-      'logout.html',
-      endpoints=get_endpoints(called_from=page_name),
-  )
-  # Optional return to homepage for testing
-  return redirect(url_for('singlesearch').replace('http', 'https', 1))
+  return redirect('https://accounts.google.com/logout')
