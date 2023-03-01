@@ -6,6 +6,7 @@ import requests
 from io import StringIO, BytesIO
 from flask import render_template, request, session, send_file
 from flask_login import login_required
+from .multiple_address_utils import downloadZipToMemory
 
 
 def get_autosuggest_list():
@@ -66,6 +67,11 @@ def download_handler(file_name):
   elif file_name == 'tool_tip_clerical_information':
     f = open(f'{dir_path}/static/downloads/tool_tip_clerical_information.csv',
              'rb')
+  elif 'googlefiledownload' in file_name:
+    file_name = file_name.replace('googlefiledownload', '')
+    # Now download that gzip location, extract and send as a download
+    # The file name is now the JOBID (do a server lookup, find the download link to avoid injection
+    print('hashdh')
 
   return send_file(f,
                    mimetype='text/csv',
