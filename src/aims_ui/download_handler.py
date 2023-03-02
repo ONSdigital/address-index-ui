@@ -76,7 +76,6 @@ def download_handler(file_name):
     file_name = file_name.replace('googlefiledownload', '')
     # Now download that gzip location, extract and send as a download
     # The file name is now the JOBID (do a server lookup, find the download link to avoid injection
-    print('hashdh')
 
     url = 'https://drive.google.com/u/0/uc?id=1KYT-DDeY_EKMfjeycCleibmOBVK1AeGf&export=download'
     # create an SSL context without certificate verification
@@ -99,8 +98,8 @@ def download_handler(file_name):
       with gzip.GzipFile(mode="rb", fileobj=bio) as decompressed_file:
         csv_content = decompressed_file.read().decode('utf-8')
 
-    print(csv_content )
-
+    # create an in-memory file-like object
+    f = BytesIO(csv_content.encode('utf-8'))
 
   return send_file(f,
                    mimetype='text/csv',
