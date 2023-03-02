@@ -15,27 +15,27 @@ page_name = 'multiple_address_results'
 @app.route(f'/multiple_address_results', methods=['GET', 'POST'])
 def multiple_address_results():
 
-  #TODO REMOVE
+  #TODO REMOVE ----------------------------------------------
+  if True:
+    headers = ['JOBID', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK']
 
-  headers = ['JOBID', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK']
+    endpoints = get_endpoints(called_from=page_name)
+    formatted_results =[['22', '10,000 of A Jillion','bob' 
+                         , 'complete' , 
+                          '<a href="/downloads/googlefiledownload32">Download Job {job_id} Here</a>'
+                         ]]
 
-  endpoints = get_endpoints(called_from=page_name)
-  formatted_results =[['22', '10,000 of A Jillion','bob' 
-                       , 'complete' , 
-                        '<a href="/downloads/googlefiledownload32">Download Job {job_id} Here</a>'
-                       ]]
+    jobs = create_table(headers, formatted_results)
 
-  jobs = create_table(headers, formatted_results)
+    # Download the zip
 
-  # Download the zip
+    return render_template(
+        f'{page_name}.html',
+        endpoints=endpoints,
+        jobs=jobs,
+    )
 
-  return render_template(
-      f'{page_name}.html',
-      endpoints=endpoints,
-      jobs=jobs,
-  )
-
-  #TODO REMOVE
+  #TODO REMOVE --------------------------------------------------
 
   endpoints = get_endpoints(called_from=page_name)
 
