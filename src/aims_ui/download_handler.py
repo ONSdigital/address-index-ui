@@ -8,6 +8,11 @@ from flask import render_template, request, session, send_file
 from flask_login import login_required
 from .multiple_address_utils import downloadZipToMemory
 
+# For the gz download
+import urllib.request
+import ssl
+import gzip
+
 
 def get_autosuggest_list():
   """Return the classifications list in the format expected by the autosuggest component"""
@@ -72,6 +77,30 @@ def download_handler(file_name):
     # Now download that gzip location, extract and send as a download
     # The file name is now the JOBID (do a server lookup, find the download link to avoid injection
     print('hashdh')
+
+    url = 'https://drive.google.com/u/0/uc?id=1KYT-DDeY_EKMfjeycCleibmOBVK1AeGf&export=download'
+    # create an SSL context without certificate verification
+
+    context = ssl.create_default_context()
+    context.check_hostname = False
+    context.verify_mode = ssl.CERT_NONE
+
+    # download the file using urllib.request.urlopen() with the SSL context
+    with urllib.request.urlopen(url, context=context) as u:
+      file_content = u.read()
+
+
+    # download the gzipped file using urllib.request.urlopen() with the SSL context
+    with urllib.request.urlopen(url, context=context) as u:
+      compressed_data = u.read()
+
+    # unzip the contents of the gzipped file in memory
+    with BytesIO(compressed_data) as bio:
+      with gzip.GzipFile(mode="rb", fileobj=bio) as decompressed_file:
+        csv_content = decompressed_file.read().decode('utf-8')
+
+    print(csv_content )
+
 
   return send_file(f,
                    mimetype='text/csv',
