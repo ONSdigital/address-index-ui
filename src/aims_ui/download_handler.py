@@ -6,7 +6,7 @@ import requests
 from io import StringIO, BytesIO
 from flask import render_template, request, session, send_file
 from flask_login import login_required
-from .multiple_address_utils import downloadZipToMemory
+from .multiple_address_utils import job_url_if_authorised
 
 # For the gz download
 import urllib.request
@@ -76,7 +76,8 @@ def download_handler(file_name):
     # Now download that gzip location, extract and send as a download
     # The file name is now the JOBID (do a server lookup, find the download link to avoid injection
 
-    url = 'https://drive.google.com/u/0/uc?id=1KYT-DDeY_EKMfjeycCleibmOBVK1AeGf&export=download'
+    url = job_url_if_authorised(file_name)
+
     # create an SSL context without certificate verification
 
     context = ssl.create_default_context()
@@ -86,7 +87,6 @@ def download_handler(file_name):
     # download the file using urllib.request.urlopen() with the SSL context
     with urllib.request.urlopen(url, context=context) as u:
       file_content = u.read()
-
 
     # download the gzipped file using urllib.request.urlopen() with the SSL context
     with urllib.request.urlopen(url, context=context) as u:
@@ -119,7 +119,6 @@ def download_handler(file_name):
           matched_underlying_score = address.get('underlyingScore','NA')
           result_string = f'"{str(searched_address)}","{str(matched_add)}",{str(matched_uprn)},{many_or_single},{str(matched_confidence_score)},{str(matched_underlying_score)}'
           final_csv = final_csv + result_string + '\n'
-
 
     # create an in-memory file-like object
     f = BytesIO(final_csv.encode('utf-8'))
