@@ -81,7 +81,7 @@ def job_result_formatter(job_id):
   r = job_result_by_job_id(job_id)
   if r == False:
     return 'URL not yet available'
-  return f'<a href="{r}">Download Job {job_id} Here</a>'
+  return f'<a href="/downloads/googlefiledownload{job_id}">Download Job {job_id} Here</a>'
 
 
 def job_result_by_job_id(job_id):

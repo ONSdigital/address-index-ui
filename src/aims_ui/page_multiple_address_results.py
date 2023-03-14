@@ -15,8 +15,8 @@ page_name = 'multiple_address_results'
 @app.route(f'/multiple_address_results', methods=['GET', 'POST'])
 def multiple_address_results():
 
-  #TODO REMOVE ----------------------------------------------
-  if True:
+  #TODO Set To FALSE (debug only)----------------------------------------------
+  if False:
     headers = ['JOBID', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK']
 
     endpoints = get_endpoints(called_from=page_name)
@@ -35,7 +35,7 @@ def multiple_address_results():
         jobs=jobs,
     )
 
-  #TODO REMOVE --------------------------------------------------
+  #TODO SET TO FALSE --------------------------------------------------
 
   endpoints = get_endpoints(called_from=page_name)
 
