@@ -53,7 +53,6 @@ def autosuggest(autosuggest_type):
 
   return ('Invalid autosuggest type')
 
-
 @login_required
 @app.route(f'/downloads/<file_name>', methods=['GET', 'POST'])
 def download_handler(file_name):
@@ -98,8 +97,32 @@ def download_handler(file_name):
       with gzip.GzipFile(mode="rb", fileobj=bio) as decompressed_file:
         csv_content = decompressed_file.read().decode('utf-8')
 
+    final_csv = 'inputAddress, matchedAdress, uprn, matchType, confidenceScore, documentScore \n'
+    # Now we can adjust csv content
+    csv_rows = list(csv.reader(csv_content.splitlines()))
+    for row in csv_rows:
+      if (str(row) != "['id', 'inputaddress', 'response']") and (len(row) > 2):
+        # extract the API response string from the third column of the row
+        api_response = row[2]
+        searched_address = str(row[1])
+
+        # parse the API response string as JSON
+        api_data = json.loads(api_response)
+        r = api_data.get('response', {})
+
+        addresses = r.get('addresses', [{}])
+        for address in addresses:
+          matched_add = address.get('formattedAddress','NA')
+          matched_uprn = address.get('uprn','NA')
+          many_or_single = 'M' if len(addresses) > 1 else 'S' 
+          matched_confidence_score = address.get('confidenceScore','NA')
+          matched_underlying_score = address.get('underlyingScore','NA')
+          result_string = f'"{str(searched_address)}","{str(matched_add)}",{str(matched_uprn)},{many_or_single},{str(matched_confidence_score)},{str(matched_underlying_score)}'
+          final_csv = final_csv + result_string + '\n'
+
+
     # create an in-memory file-like object
-    f = BytesIO(csv_content.encode('utf-8'))
+    f = BytesIO(final_csv.encode('utf-8'))
 
   return send_file(f,
                    mimetype='text/csv',
