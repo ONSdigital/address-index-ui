@@ -16,6 +16,7 @@
 <h1>Match Multiple Addresses</h1>
 
 <br>
+<h1 id="tempid"></h1>
 
 {{ onsSectionNavigation({
         "id": "section-menu",
@@ -46,13 +47,81 @@
 
 {{ onsTable({
 	'caption': 'Jobs',
+	'id': 'adjustLinksTable',
 	'ths': jobs.get('ths'),
 	'trs': jobs.get('trs'),
 	'variants': 'responsive',
-	}) }}
-
-
+	})}}
 
 <script type=module src="static/src/all_pages_js.mjs"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.3/pako.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+ 
+<script>
+
+function getAllLinks() {
+  const tableLinks = [];
+  const table = document.querySelector('#adjustLinksTable');
+  const links = table.querySelectorAll('a');
+  for (const link of links) {
+    tableLinks.push({'link': link, 'parent': link.parentNode });
+  }
+  return tableLinks;
+}
+
+function downloadAndProcess(url) {
+  console.log(url);
+  fetch(url)
+    .then(response => response.arrayBuffer())
+    .then(arrayBuffer => pako.inflate(arrayBuffer))
+    .then(inflated => new TextDecoder().decode(inflated))
+    .then(csvString => Papa.parse(csvString).data)
+    .then(rows => {
+      rows.forEach(row => {
+        row.forEach(element => {
+          console.log(element);
+        });
+      });
+    });
+  return 'NA';
+}
+
+
+function changeLinkToButton(linkParent) {
+  const newButton = document.createElement('button');
+  newButton.textContent = 'Download Results';
+  linkParent.parent.append(newButton);
+  newButton.addEventListener('click', function() {
+    // Get CSV content
+    const csv = downloadAndProcess(linkParent.link.href);
+
+    // Make a new blob
+    const blob = new Blob([csv], { type: 'text/csv' });
+
+    // Make 'a' with link to finalised csv content, then download
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = linkParent.link.textContent + '.csv';
+    a.click();
+  });
+}
+
+window.addEventListener('load', function() {
+  const linksAndParents = getAllLinks();
+  for (const l of linksAndParents) {
+    changeLinkToButton(l);
+  }
+});
+
+
+</script>
+
+
+
+
+
+
 
 {% endblock %}
