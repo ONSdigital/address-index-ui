@@ -70,8 +70,48 @@ function getAllLinks() {
   return tableLinks;
 }
 
+function getAddressesFromResponse(apiResponse) {
+  // Given an API response (string), extract a list of all matched addresses, confidence score, document score
+  // Extract the list of matched addresses
+  const matchedAddresses = [];
+  const jsonResponse = JSON.parse(apiResponse);
+  const response = jsonResponse['response'];
+  const addresses = response['addresses'];
+  // Get the values needed for each address
+  let i = 0;
+  for (const address of addresses) {
+    i = i + 1;
+    const formattedAddress = address['formattedAddress'];
+    const uprn = address['uprn'];
+    const matchType = addresses.length > 1 ? 'M' : 'S'; 
+    const confidenceScore = address['confidenceScore'];
+    const documentScore = address['underlyingScore'];
+    const rank = i;
+    const addressToAdd = [formattedAddress, uprn, matchType, confidenceScore, documentScore, rank];
+    matchedAddresses.push(addressToAdd);
+  }
+  console.log(matchedAddresses);
+}
+
+function processRow(row) {
+  // Process [id, inputAddress, APIresponse]
+  // to be in same format as <5k match
+  // console.log(row);  ['119113', '5 SOWTON EX8 9DD', '{"apiVersion":"1.0.1
+
+  // Check not blank or header row
+  if (row.length !== 3) { return '' }
+  if (row[2].toString() === 'response') { return '' }
+
+  const id = row[0];
+  const inputAddress = row[1];
+  const matchedAddresses = getAddressesFromResponse(row[2]);
+
+  return ',nothing'
+}
+
 function downloadAndProcess(url) {
   console.log(url);
+  let final_csv = '';
   fetch(url)
     .then(response => response.arrayBuffer())
     .then(arrayBuffer => pako.inflate(arrayBuffer))
@@ -79,9 +119,8 @@ function downloadAndProcess(url) {
     .then(csvString => Papa.parse(csvString).data)
     .then(rows => {
       rows.forEach(row => {
-        row.forEach(element => {
-          console.log(element);
-        });
+	// Row = [id, inputAddress, APIresponse]
+	final_csv = final_csv + processRow(row);
       });
     });
   return 'NA';
