@@ -101,7 +101,7 @@ function arrayToCSV(data) {
     return /,|"/.test(cellString) ? `"${cellString}"` : cellString;
   }).join(','));
 
-  return csvRows.join('\r\n');
+  return csvRows.join('\r\n') + '\n';
 }
 
 function processRow(row) {
