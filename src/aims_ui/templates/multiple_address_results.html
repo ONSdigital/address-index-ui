@@ -18,6 +18,14 @@
 <br>
 <h1 id="tempid"></h1>
 
+{{ onsButton({
+	    "id": 'downloadButtonTemplate',
+            "text": 'Download',
+            "variants": 'loader'
+        })
+    }}
+
+
 {{ onsSectionNavigation({
         "id": "section-menu",
         "currentPath": 'multiple_address_results',
@@ -149,10 +157,18 @@ async function downloadAndProcess(url) {
 
 
 async function changeLinkToButton(linkParent) {
-  const newButton = document.createElement('button');
-  newButton.textContent = 'Download Results';
-  linkParent.parent.append(newButton);
-  newButton.addEventListener('click', async function() {
+  // Make the Download Button 
+  const originalButton = document.querySelector('#downloadButtonTemplate');
+  const clonedButton = originalButton.cloneNode(true);
+
+  const cell = linkParent.parent;
+  console.log(cell);
+
+  linkParent.parent.append(clonedButton);
+
+  clonedButton.addEventListener('click', async function() {
+    // Make Spin Load
+    clonedButton.classList.add('ons-is-loading');
     // Get CSV content
     const csv = await downloadAndProcess(linkParent.link.href);
 
@@ -165,6 +181,7 @@ async function changeLinkToButton(linkParent) {
     a.href = url;
     a.download = linkParent.link.textContent + '.csv';
     a.click();
+    clonedButton.classList.remove('ons-is-loading');
   });
 }
 
