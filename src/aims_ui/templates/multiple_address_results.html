@@ -82,6 +82,9 @@ function getAddressesFromResponse(apiResponse) {
   // Given an API response (string), extract a list of all matched addresses, confidence score, document score
   // Extract the list of matched addresses
   const matchedAddresses = [];
+  if (apiResponse.toString() === '') {
+    return []
+  }
   const jsonResponse = JSON.parse(apiResponse);
   const response = jsonResponse['response'];
   const addresses = response['addresses'];
@@ -162,7 +165,6 @@ async function changeLinkToButton(linkParent) {
   const clonedButton = originalButton.cloneNode(true);
 
   const cell = linkParent.parent;
-  console.log(cell);
 
   linkParent.parent.append(clonedButton);
 
