@@ -11,40 +11,6 @@ def save_input(all_user_input, session):
   session['previous_user_responses'] = all_user_input
 
 
-#
-#def save_confidence_score(session, addresses):
-#  """Save a list of UPRNs and their confidence scores to local storage"""
-#  cs = {}
-#  for address in addresses:
-#    cs[address.uprn.value] = address.confidence_score.value
-#
-#  session['override_confidence_score'] = cs
-#
-#
-#def load_confidence_score(session, uprn):
-#  """Load confidence scores given UPRN"""
-#  cs = session.get('override_confidence_score', {})
-#  confidence_score = cs.get(uprn, 100)
-#  return confidence_score
-#
-#
-#def save_underlying_score(session, addresses):
-#  """Save a list of UPRNs and their underlying scores"""
-#  cs = {}
-#  for address in addresses:
-#    cs[address.uprn.value] = address.underlying_score.value
-#
-#  session['override_underlying_score'] = cs
-#
-#
-#def load_underlying_score(session, uprn):
-#  """Load underlying score's given UPRN"""
-#  cs = session.get('override_underlying_score', {})
-#  underlying_score = cs.get(uprn, 100)
-#  return underlying_score
-#
-
-
 def save_epoch_number(session, epoch_version_number):
   """Save the epoch number for a query to the session"""
   session['epoch_version_number'] = epoch_version_number
