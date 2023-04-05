@@ -18,12 +18,14 @@
 <br>
 <h1 id="tempid"></h1>
 
+<div hidden=true>
 {{ onsButton({
 	    "id": 'downloadButtonTemplate',
             "text": 'Download',
-            "variants": 'loader'
-        })
-    }}
+	    "iconType": "download",
+	    "iconPosition": "before",
+            "variants": 'loader' }) }}
+</div>
 
 
 {{ onsSectionNavigation({
@@ -193,6 +195,7 @@ async function changeLinkToButton(linkParent) {
     a.click();
     clonedButton.classList.remove('ons-is-loading');
   });
+  linkParent.link.remove();
 }
 
 window.addEventListener('load', async function() {
