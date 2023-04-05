@@ -104,6 +104,14 @@ function getAddressesFromResponse(apiResponse) {
   return matchedAddresses 
 }
 
+function returnNewlineIfNotBlank(testString) {
+  if (/^[\s\n]*$/.test(testString)) {
+    return '';
+  } else {
+    return '\n';
+  }
+}
+
 function arrayToCSV(data) {
   const csvRows = data.map(row => row.map(cell => {
     // Escape double quotes in CSV data
@@ -112,7 +120,7 @@ function arrayToCSV(data) {
     return /,|"/.test(cellString) ? `"${cellString}"` : cellString;
   }).join(','));
 
-  return csvRows.join('\r\n') + '\n';
+  return csvRows.join('\r\n') + returnNewlineIfNotBlank(csvRows);
 }
 
 function processRow(row) {
