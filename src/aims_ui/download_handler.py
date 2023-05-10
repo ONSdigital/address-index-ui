@@ -77,7 +77,6 @@ def download_handler(file_name):
     # Now download that gzip location, extract and send as a download
     # The file name is now the JOBID (do a server lookup, find the download link to avoid injection
     url = job_url_if_authorised(file_name)
-    print(url)
 
     # Download the csv.gz
     response = requests.get(url)
