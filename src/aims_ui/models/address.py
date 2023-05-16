@@ -249,8 +249,6 @@ class Address():
                                                   'formattedAddressNag')
     self.formatted_address_paf = AddressAttribute(address_data,
                                                   'formattedAddressPaf')
-    self.formatted_address_nisra = AddressAttribute(address_data,
-                                                    'formattedAddressNisra')
     self.welsh_formatted_address_nag = AddressAttribute(
         address_data, 'welshFormattedAddressNag')
     self.welsh_formatted_address_paf = AddressAttribute(
