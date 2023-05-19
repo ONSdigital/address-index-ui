@@ -44,6 +44,10 @@
 	<p>Download a <a href='/downloads/example_multiple_address'> sample file</a>"
     })}}
 
+{% call onsPanel({ "type": 'warn' }) %}
+  If multiple addresses tie in confidence score, largest UPRNs are returned first.
+{% endcall %}
+
 <form method=post enctype=multipart/form-data>
 {{ customSearch ({ "Fields": searchable_fields,
 		   "endpoints": endpoints, 
