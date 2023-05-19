@@ -19,8 +19,8 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           display_title="Limit",
           classes='ons-input--w-4',
           description=
-          'Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
-          previous_value='50',
+          'Enter the number of matched addresses to return if multiple matches are available (1 - 50)',
+          previous_value='1',
       ),
       'epoch':
       Field(
@@ -205,8 +205,8 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             display_title="Limit",
             classes='ons-input--w-4',
             description=
-            'Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
-            previous_value='5',
+            'Enter the number of matched addresses to return if multiple matches are available (1 - 50)',
+            previous_value='1',
         ), common_fields['epoch'], common_fields['historical'],
         common_fields['match_threshold'],
         Field(
@@ -255,8 +255,8 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             display_title="Limit Per Address",
             classes='ons-input--w-4',
             description=
-            'Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
-            previous_value='50',
+            'Enter the number of matched addresses to return if multiple matches are available (1 - 50)',
+            previous_value='1',
         ),
     ])
   elif endpoint_name == 'postcode':
