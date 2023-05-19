@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% from "components/breadcrumbs/_macro.njk" import onsBreadcrumbs %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+
+{% block main %}
+
+{{ onsBreadcrumbs({
+  "ariaLabel": 'Breadcrumbs',
+  "itemsList":  breadcrumbs,
+}) }}
+
+
+<h1>Help and Documentation</h1>
+
+{{   onsPanel({
+"body": "For further help and documentation please visit: <br> <br> <a href='https://intranet.ons.statistics.gov.uk/news/improving-data-quality-through-the-address-index-matching-service/'>https://intranet.ons.statistics.gov.uk/news/improving-data-quality-through-the-address-index-matching-service</a> <br> <br><br>Which contains the latest updates, information and a video tutorial. <br><br>Please note that you will only be able to access the link if you're on ONS network."
+}) }}
+
+
+<script type=module src="/static/src/all_pages_js.mjs"></script>
+
+{% endblock %}
+
