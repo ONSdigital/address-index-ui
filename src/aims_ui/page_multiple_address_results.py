@@ -21,9 +21,12 @@ def multiple_address_results():
     job_id = 6
 
     endpoints = get_endpoints(called_from=page_name)
-    formatted_results =[
-        ['22', '10,000 of A Jillion','bob' , 'complete' ,  f'<a href="/downloads/googlefiledownload{job_id}">job_id {job_id}</a>'], 
-                        ]
+    formatted_results = [
+        [
+            '22', '10,000 of A Jillion', 'bob', 'complete',
+            f'<a href="/downloads/googlefiledownload{job_id}">job_id {job_id}</a>'
+        ],
+    ]
 
     jobs = create_table(headers, formatted_results)
 

@@ -11,6 +11,7 @@ def job_data_by_job_id(job_id):
   r = job_api(url)
   return r
 
+
 def job_api(url):
   """API helper for job endpoints """
   user_email = request.headers.get('X-Goog-Authenticated-User-Email', '')
@@ -32,6 +33,7 @@ def job_api(url):
 
   return r
 
+
 def job_result_by_job_id(job_id):
   url = f'/bulk-result/{job_id}'
   r = job_api(url)
@@ -39,6 +41,7 @@ def job_result_by_job_id(job_id):
   if not r.get('error'):
     return r.get('signedUrl')
   return False
+
 
 def job_url_if_authorised(job_id):
   user_email = request.headers.get('X-Goog-Authenticated-User-Email',
@@ -48,7 +51,7 @@ def job_url_if_authorised(job_id):
   job_data = job_data_by_job_id(job_id)
   job_data = job_data.json()
   # {'jobid': 11, 'userid': 'UserNotLoggedIn', 'status': 'results-exported', 'totalrecs': 28, 'recssofar': 28, 'startdate': '2023-03-14T14:55:30', 'enddate': '2023-03-14T16:01:34'}
-  if job_data.get('userid','') == user_email:
+  if job_data.get('userid', '') == user_email:
     # The user did submit this job
     return job_result_by_job_id(job_id)
   else:

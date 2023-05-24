@@ -72,7 +72,6 @@ def help(subject='None'):
         breadcrumbs=breadcrumbs,
     )
 
-
   else:
     return (render_template(
         'help.html',
