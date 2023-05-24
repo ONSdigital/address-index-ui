@@ -82,28 +82,31 @@ def job_result_formatter(job_id):
   # TODO Might switch to the new results endpoint
   buttonContent = job_result_by_job_id(job_id)
 
-  return buttonContent 
+  return buttonContent
+
 
 def check_url(url, job_id):
-    try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            buttonUrl = f'<a href="/downloads/googlefiledownload{job_id}">Download Job {job_id} Here</a>'
-            return buttonUrl
+  try:
+    response = requests.get(url)
+    if response.status_code == 200:
+      buttonUrl = f'<a href="/downloads/googlefiledownload{job_id}">Download Job {job_id} Here</a>'
+      return buttonUrl
+    else:
+      # Check if the error message is in XML format
+      try:
+        root = ET.fromstring(response.text)
+        error_code = root.find('Code').text
+        if error_code == 'NoSuchBucket':
+          return "Unavailable"
         else:
-            # Check if the error message is in XML format
-            try:
-                root = ET.fromstring(response.text)
-                error_code = root.find('Code').text
-                if error_code == 'NoSuchBucket':
-                    return "Unavailable"
-                else:
-                    logging.info(f"Error, HTTP Status Code: {response.status_code}, Error: {error_code}")
-            except ET.ParseError:
-                logging.info("Error, the url is no longer available")
-    except requests.exceptions.RequestException as err:
-      if url == None:
-        return "Not Yet Available"
+          logging.info(
+              f"Error, HTTP Status Code: {response.status_code}, Error: {error_code}"
+          )
+      except ET.ParseError:
+        logging.info("Error, the url is no longer available")
+  except requests.exceptions.RequestException as err:
+    if url == None:
+      return "Not Yet Available"
 
 
 def job_result_by_job_id(job_id):

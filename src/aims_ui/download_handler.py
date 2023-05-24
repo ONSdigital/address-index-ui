@@ -53,6 +53,7 @@ def autosuggest(autosuggest_type):
 
   return ('Invalid autosuggest type')
 
+
 @login_required
 @app.route(f'/downloads/<file_name>', methods=['GET', 'POST'])
 def download_handler(file_name):
@@ -81,15 +82,14 @@ def download_handler(file_name):
     # Download the csv.gz
     response = requests.get(url)
     file_name = 'results'
-    
+
     # Download to memory
     f = BytesIO(response.content)
 
     return send_file(f,
-          mimetype='application/gzip',
-          attachment_filename=f'{file_name}.csv.gz',
-          as_attachment=True)
-      
+                     mimetype='application/gzip',
+                     attachment_filename=f'{file_name}.csv.gz',
+                     as_attachment=True)
 
   return send_file(f,
                    mimetype='text/csv',
