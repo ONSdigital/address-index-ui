@@ -26,7 +26,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
       Field(
           'epoch',
           search_type='radio',
-          classes='ons-input--w-50',
+          classes=' ons-input--w-50 ',
           flag=False,
           display_title='Epoch',
           default_radio_selection=default_epoch,
