@@ -151,7 +151,7 @@ def submit_mm_job(user, addresses):
   r = requests.post(
       url,
       headers=header,
-      data=addresses,
+      data=addresses.encode('utf-8'),
   )
 
   logging.info('Submmitted MMJob on endpoint"' + str(url) +
