@@ -1,4 +1,5 @@
 import os
+import logging
 import json
 import requests
 from . import app
@@ -9,6 +10,7 @@ import urllib
 import csv
 import logging
 from flask import request
+import xml.etree.ElementTree as ET
 
 
 def get_epoch_options():
@@ -78,19 +80,42 @@ def job_data_by_job_id(job_id):
 
 def job_result_formatter(job_id):
   # TODO Might switch to the new results endpoint
-  r = job_result_by_job_id(job_id)
-  if r == False:
-    return 'URL not yet available'
-  return f'<a href="/downloads/googlefiledownload{job_id}">Download Job {job_id} Here</a>'
+  buttonContent = job_result_by_job_id(job_id)
+
+  return buttonContent
+
+
+def check_url(url, job_id):
+  try:
+    response = requests.get(url)
+    if response.status_code == 200:
+      buttonUrl = f'<a href="/downloads/googlefiledownload{job_id}">Download Job {job_id} Here</a>'
+      return buttonUrl
+    else:
+      # Check if the error message is in XML format
+      try:
+        root = ET.fromstring(response.text)
+        error_code = root.find('Code').text
+        if error_code == 'NoSuchBucket':
+          return "Unavailable"
+        else:
+          logging.info(
+              f"Error, HTTP Status Code: {response.status_code}, Error: {error_code}"
+          )
+      except ET.ParseError:
+        logging.info("Error, the url is no longer available")
+  except requests.exceptions.RequestException as err:
+    if url == None:
+      return "Not Yet Available"
 
 
 def job_result_by_job_id(job_id):
   url = f'/bulk-result/{job_id}'
   r = job_api(url)
   r = r.json()
-  if not r.get('error'):
-    return r.get('signedUrl')
-  return False
+  # We must check if the output still exists (it may have been cleaned up)
+  downloadableResult = check_url(r.get('signedUrl'), job_id)
+  return downloadableResult
 
 
 def all_jobs():
@@ -126,7 +151,7 @@ def submit_mm_job(user, addresses):
   r = requests.post(
       url,
       headers=header,
-      data=addresses,
+      data=addresses.encode('utf-8'),
   )
 
   logging.info('Submmitted MMJob on endpoint"' + str(url) +

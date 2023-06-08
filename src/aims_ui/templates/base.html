@@ -5,42 +5,67 @@
 
 
 {% set pageConfig = {
-'title': "Address Index",
+	'title': "Address Index",
 	'header': {
 		"title": 'AIMS',
-		"logoHref": '#0',
+		"logoHref": '/',
+		"mastheadLogo": '/',
 		"mobileLogo": 'ons-logo-stacked-en',
-		"titleLogoHref": '#0',
+		"titleLogo": 'ons-logo-stacked-en',
+		"titleLogoHref": '/',
+		"navigation": {
+			"id": 'main-nav',
+			"ariaLabel": 'Main menu',
+			"ariaListLabel": 'Navigation menu',
+			"currentPath": endpoints[0].current_selected_endpoint,
+			"itemsList": item_list,
 		},
-	"signoutButton": {
-            "text": "Sign Out",
-            "url": "/logout",
+		"serviceLinks": {
+		    "id": "service-links",
+		    "ariaLabel": 'Services menu',
+		    "ariaListLabel": 'Menu',
+		    "toggleServicesButton": {
+			"text": 'Account',
+			"ariaLabel": 'Toggle services menu'
+		    },
+		    "itemsList": [
+			{
+			    "title": endpoints[0].user_email,
+			    "iconType": 'person'
+			},
+			{
+			    "title": "Sign out",
+			    "url": "/logout"
+			}
+		    ]
+		}
         },
+
+
 	"footer": {
+
 		"OGLLink": {
 		    "pre": 'All content is available under the',
 		    "link": 'Open Government Licence v3.0',
 		    "url": 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/',
-		    "post": ', except where otherwise stated'} ,
-        "rows": [
-            {	"title": 'Service Help',
-                "itemsList": [
-                    {   "text": 'Have feedback or found an issue with matched address(es)?',
-			"url":"/help/submit_feedback",
-		    }
-		    ] ,
-            }, ], } ,
+		    "post": ', except where otherwise stated'
+		},
 
-     	"navigation": {
-		"id": 'main-nav',
-		"ariaLabel": 'Main menu',
-		"ariaListLabel": 'Navigation menu',
-		"currentPath": endpoints[0].current_selected_endpoint,
-		"itemsList": item_list,
-		}
-	
+		"rows": [
+		    {	"title": 'Service Help',
+			"itemsList": [
+			    {   "text": 'Have feedback or found an issue with matched address(es)?',
+				"url":"/help/submit_feedback",
+			    }
+			],
+		    }, 
+		],
+	},
 
-	} %}
+	"meta": {
+	    "canonicalUrl": "/",
+	},
+} %}
 
 
 

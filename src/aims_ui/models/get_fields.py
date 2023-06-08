@@ -19,14 +19,14 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           display_title="Limit",
           classes='ons-input--w-4',
           description=
-          'Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
-          previous_value='50',
+          'Enter the number of matched addresses to return if multiple matches are available (1 - 50)',
+          previous_value='1',
       ),
       'epoch':
       Field(
           'epoch',
           search_type='radio',
-          classes='ons-input--w-50',
+          classes=' ons-input--w-50 ',
           flag=False,
           display_title='Epoch',
           default_radio_selection=default_epoch,
@@ -166,7 +166,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             'limit',
             display_title="Limit",
             classes='ons-input--w-4',
-            description='Enter the number of addresses to return (0 - 5,000)',
+            description='Enter the number of addresses to return (1 - 100)',
             previous_value='10',
         ),
         common_fields['epoch'],
@@ -180,14 +180,6 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['wales_boost'],
         common_fields['scotland_boost'],
         common_fields['northern_ireland_boost'],
-        # REMOVED - left commented incase of later requirements
-        #        Field(
-        #            'groupfullpostcodes',
-        #            search_type='checkbox',
-        #            display_title='Group full postcodes',
-        #            description=
-        #            'If you would like the results to be grouped by their respective full postcodes, tick this box',
-        #        ),
         Field(
             'fallback',
             search_type='checkbox',
@@ -205,7 +197,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             display_title="Limit",
             classes='ons-input--w-4',
             description=
-            'Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
+            'Enter the number of matched addresses to return if multiple matches are available (1 - 10)',
             previous_value='5',
         ), common_fields['epoch'], common_fields['historical'],
         common_fields['match_threshold'],
@@ -255,8 +247,8 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             display_title="Limit Per Address",
             classes='ons-input--w-4',
             description=
-            'Enter the number of matched addresses to return if multiple matches are available (0 - 5,000)',
-            previous_value='50',
+            'Enter the number of matched addresses to return if multiple matches are available (1 - 10)',
+            previous_value='1',
         ),
     ])
   elif endpoint_name == 'postcode':
@@ -269,7 +261,14 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             description=
             'A postcode is a code for post which separates houses into groups. This is often a 7 digit letter and number combo.'
         ),
-        common_fields['limit'],
+        Field(
+            'limit',
+            display_title="Limit",
+            classes='ons-input--w-4',
+            description=
+            'Enter the number of matched addresses to return if multiple matches are available (1 - 200)',
+            previous_value='5',
+        ),
         common_fields['classification'],
         common_fields['classification_help_download'],
         common_fields['epoch'],

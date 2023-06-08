@@ -53,6 +53,7 @@ def autosuggest(autosuggest_type):
 
   return ('Invalid autosuggest type')
 
+
 @login_required
 @app.route(f'/downloads/<file_name>', methods=['GET', 'POST'])
 def download_handler(file_name):
@@ -71,57 +72,24 @@ def download_handler(file_name):
   elif file_name == 'tool_tip_clerical_information':
     f = open(f'{dir_path}/static/downloads/tool_tip_clerical_information.csv',
              'rb')
+
   elif 'googlefiledownload' in file_name:
     file_name = file_name.replace('googlefiledownload', '')
     # Now download that gzip location, extract and send as a download
     # The file name is now the JOBID (do a server lookup, find the download link to avoid injection
-
     url = job_url_if_authorised(file_name)
 
-    # create an SSL context without certificate verification
+    # Download the csv.gz
+    response = requests.get(url)
+    file_name = 'results'
 
-    context = ssl.create_default_context()
-    context.check_hostname = False
-    context.verify_mode = ssl.CERT_NONE
+    # Download to memory
+    f = BytesIO(response.content)
 
-    # download the file using urllib.request.urlopen() with the SSL context
-    with urllib.request.urlopen(url, context=context) as u:
-      file_content = u.read()
-
-    # download the gzipped file using urllib.request.urlopen() with the SSL context
-    with urllib.request.urlopen(url, context=context) as u:
-      compressed_data = u.read()
-
-    # unzip the contents of the gzipped file in memory
-    with BytesIO(compressed_data) as bio:
-      with gzip.GzipFile(mode="rb", fileobj=bio) as decompressed_file:
-        csv_content = decompressed_file.read().decode('utf-8')
-
-    final_csv = 'inputAddress, matchedAdress, uprn, matchType, confidenceScore, documentScore \n'
-    # Now we can adjust csv content
-    csv_rows = list(csv.reader(csv_content.splitlines()))
-    for row in csv_rows:
-      if (str(row) != "['id', 'inputaddress', 'response']") and (len(row) > 2):
-        # extract the API response string from the third column of the row
-        api_response = row[2]
-        searched_address = str(row[1])
-
-        # parse the API response string as JSON
-        api_data = json.loads(api_response)
-        r = api_data.get('response', {})
-
-        addresses = r.get('addresses', [{}])
-        for address in addresses:
-          matched_add = address.get('formattedAddress','NA')
-          matched_uprn = address.get('uprn','NA')
-          many_or_single = 'M' if len(addresses) > 1 else 'S' 
-          matched_confidence_score = address.get('confidenceScore','NA')
-          matched_underlying_score = address.get('underlyingScore','NA')
-          result_string = f'"{str(searched_address)}","{str(matched_add)}",{str(matched_uprn)},{many_or_single},{str(matched_confidence_score)},{str(matched_underlying_score)}'
-          final_csv = final_csv + result_string + '\n'
-
-    # create an in-memory file-like object
-    f = BytesIO(final_csv.encode('utf-8'))
+    return send_file(f,
+                     mimetype='application/gzip',
+                     attachment_filename=f'{file_name}.csv.gz',
+                     as_attachment=True)
 
   return send_file(f,
                    mimetype='text/csv',
