@@ -26,6 +26,11 @@ def help(subject='None'):
           'name': 'submit_feedback',
           'url': url + 'submit_feedback',
       },
+      {
+          'title': 'Help and Documentation',
+          'name': 'help_and_documentation',
+          'url': url + 'help_and_documentation',
+      },
   ]
 
   breadcrumbs = [
@@ -55,6 +60,13 @@ def help(subject='None'):
   elif subject == 'submit_feedback':
     return render_template(
         './help_pages/submit_feedback.html',
+        endpoints=get_endpoints(called_from=page_name),
+        deffinitions=deffinitions,
+        breadcrumbs=breadcrumbs,
+    )
+  elif subject == 'help_and_documentation':
+    return render_template(
+        './help_pages/help_and_documentation.html',
         endpoints=get_endpoints(called_from=page_name),
         deffinitions=deffinitions,
         breadcrumbs=breadcrumbs,

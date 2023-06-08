@@ -85,7 +85,7 @@ def multiple_address():
 
     try:
       file_valid, error_description, error_title = check_valid_upload(
-          file, limit=100000)
+          file, limit=1000000)
     except FileUploadException as e:
       return final(searchable_fields,
                    error_description=e.error_description,

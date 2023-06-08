@@ -1,5 +1,5 @@
 from .endpoint import Endpoint
-from flask import url_for
+from flask import url_for, request
 
 
 def get_endpoints(called_from=None):
@@ -32,6 +32,12 @@ def get_endpoints(called_from=None):
       ),
   ]
 
+  # Set the username on all endpoints
+  user_email = request.headers.get('X-Goog-Authenticated-User-Email',
+                                   'UserNotLoggedIn')
+  user_email = user_email.replace('accounts.google.com:', '')
+  user_email = user_email.replace('@ons.gov.uk', '')
+
   if called_from == None:
     called_from = ''
   if called_from == 'help':
@@ -44,6 +50,7 @@ def get_endpoints(called_from=None):
     current_selected_endpoint = ''
 
   for endpoint in endpoints:
+    endpoint.user_email = user_email
     if endpoint.url_title == called_from:
       endpoint.selected = True
       current_selected_endpoint = url_for(endpoint.url_title)
