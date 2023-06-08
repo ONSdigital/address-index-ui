@@ -37,7 +37,7 @@ def get_endpoints(called_from=None):
                                    'UserNotLoggedIn')
   user_email = user_email.replace('accounts.google.com:', '')
   user_email = user_email.replace('@ons.gov.uk', '')
- 
+
   if called_from == None:
     called_from = ''
   if called_from == 'help':
