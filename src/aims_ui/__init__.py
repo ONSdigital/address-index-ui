@@ -135,6 +135,11 @@ def get_cached_tooltip_data():
 
   return tool_tip_data
 
+@app.after_request
+def add_header(response):
+    response.headers["Cache-Control"] = "no-store"
+    response.headers["Pragma"] = "no-cache"
+    return response
 
 from . import info
 from . import login
