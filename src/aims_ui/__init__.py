@@ -136,6 +136,17 @@ def get_cached_tooltip_data():
   return tool_tip_data
 
 
+# Setup headers for all requests to Flaskapp
+@app.after_request
+def add_header(response):
+  # Cache Security Headers
+  response.headers['Cache-Control'] = 'no-store'
+  response.headers['Pragma'] = 'no-cache'
+  response.headers['X-Frame-Options'] = 'DENY'
+
+  return response
+
+
 from . import info
 from . import login
 from . import signout
