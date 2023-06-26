@@ -4,7 +4,7 @@ from aims_ui.api_interaction import api, submit_mm_job
 import csv
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
-from .upload_utils import remove_script_and_html_from_input
+from .upload_utils import remove_script_and_html_from_str
 from .page_error import page_error
 import logging
 
@@ -104,6 +104,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
       return 'M' if n_addr > 1 else 'S'
 
   else:
+    # Showing the results in HTML means we need to escape any html injection
     ths = [{'value': x, 'ariaSort': None} for x in csv_headers]
     trs = []
 
@@ -111,8 +112,8 @@ def multiple_address_match_original(file, all_user_input, download=False):
               doc_score, rank):
       trs.append({
           'tds': [
-              {'value': given_id},
-              {'value': address_to_lookup},
+              {'value': remove_script_and_html_from_str(given_id) },
+              {'value': remove_script_and_html_from_str(address_to_lookup) },
               {'value': m_addr},
               {'value': adrs.uprn.value},
               {'value': match_type},
@@ -161,10 +162,6 @@ def multiple_address_match_original(file, all_user_input, download=False):
   for line in contents:
     line = line.strip().decode('utf-8')
     given_id, address_to_lookup = line.split(',', maxsplit=1)
-
-    # Remove HTML from address_to_lookup and given_id
-    given_id = remove_script_and_html_from_input(given_id)
-    address_to_lookup = remove_script_and_html_from_input(address_to_lookup)
 
     all_user_input['input'] = address_to_lookup
 
