@@ -23,7 +23,8 @@ def get_preffered_format_of_address(adrs, all_user_input):
   elif address_prefference == 'NAG':
     if nag_address != '':
       return 'NAG', nag_address
-  return 'DEF', default_address
+  # Default Addresses are all NAG
+  return 'NAG', default_address
 
 
 def remove_header_row(contents):
@@ -72,7 +73,7 @@ def multiple_address_match(file, all_user_input, download=False):
 
 
 def multiple_address_match_original(file, all_user_input, download=False):
-  csv_headers = ['id', 'inputAddress',  'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag/Default)']  # yapf: disable
+  csv_headers = ['id', 'inputAddress',  'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag)']  # yapf: disable
 
   contents = file.readlines()
   remove_header_row(contents)
