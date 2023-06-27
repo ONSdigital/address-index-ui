@@ -4,7 +4,7 @@ from aims_ui.api_interaction import api, submit_mm_job
 import csv
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
-from .upload_utils import remove_script_and_html_from_input
+from .upload_utils import remove_script_and_html_from_str
 from .page_error import page_error
 import logging
 
@@ -23,7 +23,8 @@ def get_preffered_format_of_address(adrs, all_user_input):
   elif address_prefference == 'NAG':
     if nag_address != '':
       return 'NAG', nag_address
-  return 'DEF', default_address
+  # Default Addresses are all NAG
+  return 'NAG', default_address
 
 
 def remove_header_row(contents):
@@ -72,7 +73,7 @@ def multiple_address_match(file, all_user_input, download=False):
 
 
 def multiple_address_match_original(file, all_user_input, download=False):
-  csv_headers = ['id', 'inputAddress',  'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag/Default)']  # yapf: disable
+  csv_headers = ['id', 'inputAddress',  'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag)']  # yapf: disable
 
   contents = file.readlines()
   remove_header_row(contents)
@@ -86,7 +87,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
     def write(id, addr, m_addr, address_type, uprn, m_type, confid_score,
               doc_score, rank):
       writer.writerow([
-          given_id, address_to_lookup, m_addr, adrs.uprn.value, match_type,
+          given_id, address_to_lookup.replace('"""', '"') , m_addr, adrs.uprn.value, match_type,
           adrs.confidence_score.value, adrs.underlying_score.value, rank,
           address_type
       ])
@@ -104,6 +105,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
       return 'M' if n_addr > 1 else 'S'
 
   else:
+    # Showing the results in HTML means we need to escape any html injection
     ths = [{'value': x, 'ariaSort': None} for x in csv_headers]
     trs = []
 
@@ -111,8 +113,8 @@ def multiple_address_match_original(file, all_user_input, download=False):
               doc_score, rank):
       trs.append({
           'tds': [
-              {'value': given_id},
-              {'value': address_to_lookup},
+              {'value': remove_script_and_html_from_str(given_id) },
+              {'value': remove_script_and_html_from_str(address_to_lookup) },
               {'value': m_addr},
               {'value': adrs.uprn.value},
               {'value': match_type},
@@ -161,10 +163,6 @@ def multiple_address_match_original(file, all_user_input, download=False):
   for line in contents:
     line = line.strip().decode('utf-8')
     given_id, address_to_lookup = line.split(',', maxsplit=1)
-
-    # Remove HTML from address_to_lookup and given_id
-    given_id = remove_script_and_html_from_input(given_id)
-    address_to_lookup = remove_script_and_html_from_input(address_to_lookup)
 
     all_user_input['input'] = address_to_lookup
 
