@@ -87,7 +87,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
     def write(id, addr, m_addr, address_type, uprn, m_type, confid_score,
               doc_score, rank):
       writer.writerow([
-          given_id, address_to_lookup.replace('"""', '"') , m_addr, adrs.uprn.value, match_type,
+          given_id, address_to_lookup.replace('"','') , m_addr, adrs.uprn.value, match_type,
           adrs.confidence_score.value, adrs.underlying_score.value, rank,
           address_type
       ])
