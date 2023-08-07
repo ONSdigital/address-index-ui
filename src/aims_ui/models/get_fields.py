@@ -64,6 +64,24 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           display_title='Northern Ireland Boost',
           search_type='checkbox',
       ),
+      'channel_islands_boost_checkbox':
+      Field(
+          'lboost',
+          display_title='Isle of Man Boost',
+          search_type='checkbox',
+      ),
+      'isle_of_man_boost_checkbox':
+      Field(
+          'mboost',
+          display_title='Isle of Man Boost',
+          search_type='checkbox',
+      ),
+      'offshore_boost_checkbox':
+      Field(
+          'jboost',
+          display_title='Offshore etc. Boost',
+          search_type='checkbox',
+      ),
       'match_threshold':
       Field(
           'matchthreshold',
@@ -109,6 +127,30 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           classes='ons-input--w-4',
           description=
           'Boost the results in favour of Northern Ireland Addresses',
+      ),
+      'channel_islands_boost':
+      Field(
+          'lboost',
+          display_title='Northern Ireland Boost (1-10)',
+          classes='ons-input--w-4',
+          description=
+          'Boost the results in favour of Channel Islands Addresses',
+      ),
+      'isle_of_man_boost':
+      Field(
+          'nboost',
+          display_title='Northern Ireland Boost (1-10)',
+          classes='ons-input--w-4',
+          description=
+          'Boost the results in favour of Isle of Man Addresses',
+      ),
+      'offshore_boost':
+      Field(
+          'jboost',
+          display_title='Offshore etc. Boost (1-10)',
+          classes='ons-input--w-4',
+          description=
+          'Boost the results in favour of Offshore etc. Addresses',
       ),
       'auxilary_search':
       Field(
@@ -318,6 +360,30 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         Field(
             'nboost',
             display_title='Northern Ireland',
+            search_type='checkbox',
+            checkbox_value=True,
+            checkbox_true_value=10,
+            checkbox_false_value=0,
+        ),
+        Field(
+            'lboost',
+            display_title='Channel Islands',
+            search_type='checkbox',
+            checkbox_value=True,
+            checkbox_true_value=10,
+            checkbox_false_value=0,
+        ),
+        Field(
+            'mboost',
+            display_title='Isle of Man',
+            search_type='checkbox',
+            checkbox_value=True,
+            checkbox_true_value=10,
+            checkbox_false_value=0,
+        ),
+        Field(
+            'jboost',
+            display_title='Offshore etc.',
             search_type='checkbox',
             checkbox_value=True,
             checkbox_true_value=10,
