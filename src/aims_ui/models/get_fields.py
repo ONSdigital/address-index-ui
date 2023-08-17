@@ -131,7 +131,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
       'channel_islands_boost':
       Field(
           'lboost',
-          display_title='Northern Ireland Boost (1-10)',
+          display_title='Channel Islands Boost (1-10)',
           classes='ons-input--w-4',
           description=
           'Boost the results in favour of Channel Islands Addresses',
@@ -139,7 +139,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
       'isle_of_man_boost':
       Field(
           'nboost',
-          display_title='Northern Ireland Boost (1-10)',
+          display_title='Isle of Man Boost (1-10)',
           classes='ons-input--w-4',
           description=
           'Boost the results in favour of Isle of Man Addresses',
