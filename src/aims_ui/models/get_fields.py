@@ -222,6 +222,9 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['wales_boost'],
         common_fields['scotland_boost'],
         common_fields['northern_ireland_boost'],
+        common_fields['channel_islands_boost'],
+        common_fields['isle_of_man_boost'],
+        common_fields['offshore_boost'],
         Field(
             'fallback',
             search_type='checkbox',
