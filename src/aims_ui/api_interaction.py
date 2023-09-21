@@ -67,7 +67,9 @@ def get_epoch_options():
         'description': epoch.get('description')
     })
 
-  sorted_epochs = sorted(epoch_formatted, key=lambda d: d['id'])
+
+  # Sort the epochs from high to low (by 'id', epoch number)
+  sorted_epochs = sorted(epoch_formatted, key=lambda d: int(d['id']), reverse=True)
 
   return sorted_epochs, default
 
@@ -83,6 +85,14 @@ def job_result_formatter(job_id):
   buttonContent = job_result_by_job_id(job_id)
 
   return buttonContent
+
+def job_result_by_job_id(job_id):
+  url = f'/bulk-result/{job_id}'
+  r = job_api(url)
+  r = r.json()
+  # We must check if the output still exists (it may have been cleaned up)
+  downloadableResult = check_url(r.get('signedUrl'), job_id)
+  return downloadableResult
 
 
 def check_url(url, job_id):
@@ -108,14 +118,6 @@ def check_url(url, job_id):
     if url == None:
       return "Not Yet Available"
 
-
-def job_result_by_job_id(job_id):
-  url = f'/bulk-result/{job_id}'
-  r = job_api(url)
-  r = r.json()
-  # We must check if the output still exists (it may have been cleaned up)
-  downloadableResult = check_url(r.get('signedUrl'), job_id)
-  return downloadableResult
 
 
 def all_jobs():
