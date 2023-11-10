@@ -67,8 +67,6 @@ def get_epoch_options():
         'description': epoch.get('description')
     })
 
-
-  # Sort the epochs from high to low (by 'id', epoch number)
   sorted_epochs = sorted(epoch_formatted, key=lambda d: int(d['id']), reverse=True)
 
   return sorted_epochs, default
@@ -237,6 +235,9 @@ def get_params(all_user_input):
     if (os.getenv('FLASK_ENV') == 'development') and (param == 'epoch'):
       # do not add epoch for testing
       continue
+    if param == 'historical':
+      if str(value) == 'None':
+        value = 'False'
 
     if type(value) == str:
       value = value.replace('%', '')
