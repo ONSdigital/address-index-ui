@@ -67,7 +67,9 @@ def get_epoch_options():
         'description': epoch.get('description')
     })
 
-  sorted_epochs = sorted(epoch_formatted, key=lambda d: int(d['id']), reverse=True)
+  sorted_epochs = sorted(epoch_formatted,
+                         key=lambda d: int(d['id']),
+                         reverse=True)
 
   return sorted_epochs, default
 
@@ -83,6 +85,7 @@ def job_result_formatter(job_id):
   buttonContent = job_result_by_job_id(job_id)
 
   return buttonContent
+
 
 def job_result_by_job_id(job_id):
   url = f'/bulk-result/{job_id}'
@@ -115,7 +118,6 @@ def check_url(url, job_id):
   except requests.exceptions.RequestException as err:
     if url == None:
       return "Not Yet Available"
-
 
 
 def all_jobs():

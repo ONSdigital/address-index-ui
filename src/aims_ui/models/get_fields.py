@@ -39,7 +39,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           display_title='Include historical address data',
           description=
           'Check this box to include historical address data in the search. This will allow inclusion of historical data.',
-      ),  
+      ),
       'england_boost_checkbox':
       Field(
           'eboost',
@@ -141,16 +141,14 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           'nboost',
           display_title='Isle of Man Boost (1-10)',
           classes='ons-input--w-4',
-          description=
-          'Boost the results in favour of Isle of Man Addresses',
+          description='Boost the results in favour of Isle of Man Addresses',
       ),
       'offshore_boost':
       Field(
           'jboost',
           display_title='Offshore etc. Boost (1-10)',
           classes='ons-input--w-4',
-          description=
-          'Boost the results in favour of Offshore etc. Addresses',
+          description='Boost the results in favour of Offshore etc. Addresses',
       ),
       'auxilary_search':
       Field(
@@ -245,8 +243,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             description=
             'Enter the number of matched addresses to return if multiple matches are available (1 - 10)',
             previous_value='5',
-        ), common_fields['epoch'], 
-        common_fields['historical'],
+        ), common_fields['epoch'], common_fields['historical'],
         common_fields['match_threshold'],
         Field(
             'paf-nag-prefference',
