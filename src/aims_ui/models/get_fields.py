@@ -39,7 +39,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           display_title='Include historical address data',
           description=
           'Check this box to include historical address data in the search. This will allow inclusion of historical data.',
-      ),  # REMOVED from all pages for now, as all data is always included due to 'verbose' flag
+      ),
       'england_boost_checkbox':
       Field(
           'eboost',
@@ -141,16 +141,14 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           'nboost',
           display_title='Isle of Man Boost (1-10)',
           classes='ons-input--w-4',
-          description=
-          'Boost the results in favour of Isle of Man Addresses',
+          description='Boost the results in favour of Isle of Man Addresses',
       ),
       'offshore_boost':
       Field(
           'jboost',
           display_title='Offshore etc. Boost (1-10)',
           classes='ons-input--w-4',
-          description=
-          'Boost the results in favour of Offshore etc. Addresses',
+          description='Boost the results in favour of Offshore etc. Addresses',
       ),
       'auxilary_search':
       Field(
@@ -194,6 +192,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             'The Unique Property Reference Number consists of digits only, and refers to a single property'
         ),
         common_fields['epoch'],
+        common_fields['historical'],
     ])
 
   elif endpoint_name == 'typeahead':
@@ -317,6 +316,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['classification'],
         common_fields['classification_help_download'],
         common_fields['epoch'],
+        common_fields['historical'],
     ])
 
   elif endpoint_name == 'singlesearch':
@@ -395,6 +395,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['epoch'],
         common_fields['match_threshold'],
         common_fields['limit'],
+        common_fields['historical'],
     ]
 
     if include_UPRN_redirect != False:

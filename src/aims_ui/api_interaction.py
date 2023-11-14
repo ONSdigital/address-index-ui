@@ -67,9 +67,9 @@ def get_epoch_options():
         'description': epoch.get('description')
     })
 
-
-  # Sort the epochs from high to low (by 'id', epoch number)
-  sorted_epochs = sorted(epoch_formatted, key=lambda d: int(d['id']), reverse=True)
+  sorted_epochs = sorted(epoch_formatted,
+                         key=lambda d: int(d['id']),
+                         reverse=True)
 
   return sorted_epochs, default
 
@@ -85,6 +85,7 @@ def job_result_formatter(job_id):
   buttonContent = job_result_by_job_id(job_id)
 
   return buttonContent
+
 
 def job_result_by_job_id(job_id):
   url = f'/bulk-result/{job_id}'
@@ -117,7 +118,6 @@ def check_url(url, job_id):
   except requests.exceptions.RequestException as err:
     if url == None:
       return "Not Yet Available"
-
 
 
 def all_jobs():
@@ -237,6 +237,9 @@ def get_params(all_user_input):
     if (os.getenv('FLASK_ENV') == 'development') and (param == 'epoch'):
       # do not add epoch for testing
       continue
+    if param == 'historical':
+      if str(value) == 'None':
+        value = 'False'
 
     if type(value) == str:
       value = value.replace('%', '')

@@ -17,7 +17,7 @@ def escape_html_string(htmlstring):
   escapes = {'\"': '&quot;', '\'': '&#39;', '<': '&lt;', '>': '&gt;'}
   # This is done first to prevent escaping other escapes.
   htmlstring = htmlstring.replace('&', '&amp;')
-  # Replace characters that would escape 
+  # Replace characters that would escape
   for seq, esc in escapes.items():
     htmlstring = htmlstring.replace(seq, esc)
 
