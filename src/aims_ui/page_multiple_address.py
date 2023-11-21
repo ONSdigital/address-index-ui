@@ -20,23 +20,6 @@ from time import sleep
 page_name = 'multiple_address'
 
 
-def final(searchable_fields,
-          error_description='',
-          error_title='',
-          results_summary_table='',
-          table_results=''):
-
-  return render_template(
-      f'{page_name}.html',
-      error_description=error_description,
-      error_title=error_title,
-      endpoints=get_endpoints(called_from=page_name),
-      searchable_fields=searchable_fields,
-      table_results=table_results,
-      results_summary_table=results_summary_table,
-      results_page=True,
-  )
-
 
 # In the event of a file being too large, send this custom template
 @app.errorhandler(413)
@@ -95,3 +78,23 @@ def multiple_address():
     if file_valid:
       multiple_address_match(file, all_user_input, download=True)
       return final(all_user_input)
+
+def final(all_user_input,
+          error_description='',
+          error_title='',
+          results_summary_table='',
+          table_results=''):
+  searchable_fields = get_fields(page_name)
+
+  return render_template(
+      f'{page_name}.html',
+      error_description=error_description,
+      error_title=error_title,
+      endpoints=get_endpoints(called_from=page_name),
+      searchable_fields=searchable_fields,
+      table_results=table_results,
+      results_summary_table=results_summary_table,
+      results_page=True,
+  )
+
+
