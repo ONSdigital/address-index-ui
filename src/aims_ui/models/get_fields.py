@@ -294,6 +294,13 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             'Enter the number of matched addresses to return if multiple matches are available (1 - 10)',
             previous_value='1',
         ),
+        Field(
+            'name',
+            display_title="Name (Optinal)",
+            description='Optional tag to organise matches',
+            previous_value='',
+        ),
+ 
     ])
   elif endpoint_name == 'postcode':
     return ([

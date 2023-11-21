@@ -132,12 +132,14 @@ def job_data_by_user_id(user_id):
   return r
 
 
-def submit_mm_job(user, addresses):
+def submit_mm_job(user, addresses, all_user_input):
   """API helper for job endpoints """
   user_email = request.headers.get('X-Goog-Authenticated-User-Email',
                                    'UserNotLoggedIn')
   user_email = user_email.replace('accounts.google.com:', '')
   user_email = user_email.replace('@ons.gov.uk', '')
+  tag_name = '::' + str(all_user_input.get('name','') + '::')
+  user_email = user_email + tag_name
   url = app.config.get('BM_API_URL') + '/bulk'
 
   header = {
