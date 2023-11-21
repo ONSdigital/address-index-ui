@@ -138,7 +138,7 @@ def submit_mm_job(user, addresses, all_user_input):
                                    'UserNotLoggedIn')
   user_email = user_email.replace('accounts.google.com:', '')
   user_email = user_email.replace('@ons.gov.uk', '')
-  tag_name = '::' + str(all_user_input.get('name','') + '::')
+  tag_name = '::' + str(all_user_input.get('name','')[:25] + '::')
   user_email = user_email + tag_name
   url = app.config.get('BM_API_URL') + '/bulk'
 
