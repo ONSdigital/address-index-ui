@@ -28,14 +28,18 @@ def get_preffered_format_of_address(adrs, all_user_input):
 
 
 def remove_header_row(contents):
+  # Remove these header rows (if they exist, there may be no header row)
+  header_rows = ['id,address', 'id,searchAddress', '<feff>id,address']
   remove_index = None
   for i in range(0, len(contents)):
     line = contents[i]
     line = line.strip().decode('utf-8')
-    if (line.casefold()
-        == 'id,address'.casefold()) or (line.casefold()
-                                        == 'id,searchAddress'.casefold()):
-      remove_index = i
+    line = line.casefold()
+    # Remove utf8-sig Byte Object Mark
+    line = line.replace('\ufeff', '')
+    for header_row in header_rows:
+      if line == header_row.casefold():
+        remove_index = i
 
   if remove_index != None:
     contents.pop(remove_index)
