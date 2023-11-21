@@ -84,6 +84,7 @@ def multiple_address():
     file = request.files['file']
 
     try:
+      # Validate file
       file_valid, error_description, error_title = check_valid_upload(
           file, limit=1000000)
     except FileUploadException as e:

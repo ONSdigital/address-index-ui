@@ -70,7 +70,7 @@ def multiple_address_match(file, all_user_input, download=False):
 
   try:
     # Submit Multiple Match to API
-    submit_mm_job('a', mm_dict)
+    submit_mm_job('a', mm_dict, all_user_input)
   except Exception as e:
     logging.error('Error on a multiple match API call')
     return page_error(None, e, page_name)
