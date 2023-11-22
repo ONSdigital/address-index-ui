@@ -39,6 +39,7 @@
 			   "classes": '' if show else field.only_display_in_results_page,
 			   "description": '' if not show else field.description },
 		"value": field.previous_value,   })}}
+
 	{% elif field.search_type == "dropdown" %}
 	{{onsSelect({
 		"id"   : field.database_name,
@@ -49,6 +50,7 @@
 			   "description": field.description },
 		"options": field.dropdown_options })}}
 	{% elif field.search_type == "checkbox" %}
+
 	{{onsCheckbox({
 		"id": field.database_name,
 		"name": field.database_name,

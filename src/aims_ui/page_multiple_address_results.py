@@ -17,13 +17,13 @@ def multiple_address_results():
 
   #TODO Set To FALSE (debug only)----------------------------------------------
   if False:
-    headers = ['JOBID', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK']
+    headers = ['JOBID', 'NAME', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK']
     job_id = 6
 
     endpoints = get_endpoints(called_from=page_name)
     formatted_results = [
         [
-            '22', '10,000 of A Jillion', 'bob', 'complete',
+            '22','Example', '10,000 of A Jillion', 'bob', 'complete',
             f'<a href="/downloads/googlefiledownload{job_id}">job_id {job_id}</a>'
         ],
     ]
@@ -41,19 +41,20 @@ def multiple_address_results():
   #TODO SET TO FALSE --------------------------------------------------
 
   endpoints = get_endpoints(called_from=page_name)
-
   user_email = request.headers.get('X-Goog-Authenticated-User-Email',
                                    'UserNotLoggedIn')
-
   user_email = user_email.replace('accounts.google.com:', '')
   user_email = user_email.replace('@ons.gov.uk', '')
 
-  headers = ['JOBID', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK']
+  headers = ['JOBID', 'NAME', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK']
   results = job_data_by_user_id(user_email).json().get('jobs', [])
+
   formatted_results = [[
       job.get('jobid'),
+      extract_username_and_tag(job, 'tag'),
       job.get('status'),
-      job.get('userid'), f"{job.get('recssofar')}  of  {job.get('totalrecs')}",
+      extract_username_and_tag(job, 'username'),
+      f"{job.get('recssofar')}  of  {job.get('totalrecs')}",
       job_result_formatter(job.get('jobid'))
   ] for job in results]
 
@@ -73,3 +74,21 @@ def multiple_address_results():
       endpoints=endpoints,
       jobs=jobs,
   )
+
+def extract_username_and_tag(job, returnType):
+  full_user_id = job.get('userid')
+  parts = full_user_id.split("::")
+  # Check if the string contains the "::" separator
+  if len(parts) > 1:
+    username = parts[0]
+    tag = parts[1]
+  else:
+    # If the separator is not present, treat the whole string as the username
+    username = full_user_id
+    tag = ""
+  if returnType == 'username':
+    return username
+  return tag
+
+
+# Felix
