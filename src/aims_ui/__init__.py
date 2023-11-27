@@ -160,5 +160,6 @@ from . import page_multiple_address_original
 from . import page_singlesearch
 from . import page_address_info
 from . import page_help
+from . import page_uprn_multiple_match
 from . import download_handler
 from .api_interaction import get_classifications
