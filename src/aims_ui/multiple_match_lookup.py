@@ -1,6 +1,6 @@
 import json
 from io import StringIO, BytesIO
-from aims_ui.api_interaction import api, submit_mm_job
+from aims_ui.api_interaction import api, submit_mm_job, submit_uprn_mm_job
 import csv
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
@@ -262,51 +262,53 @@ def uprn_multiple_address_match_original(file, all_user_input):
     given_id, uprn = line.split(',', maxsplit=1)
     file_content_formatted.append({'id':given_id, 'uprn':uprn})
 
-  print(file_content_formatted)
+  try:
+    result = submit_uprn_mm_job(
+        file_content_formatted,
+        all_user_input,
+    )
+    print()
+    print()
+    print('Result from Multi-UPRN')
+    print(result)
+    print(result.json())
+    print('Result from Multi-UPRN')
+    print()
+    print()
+  except:
+    logging.error(
+        f'Error on a UPRN Multiple API call for:\n "{all_user_input}"')
+    return page_error(None, e, page_name)
 
-  """
-    try:
-      result = submitt_uprn_mm_job(
-          '/addresses/mutltiuprn/',
-          'uprn_multiple',
-          all_user_input,
-      )
-      print(result)
-      print(result.json())
-    except:
-      logging.error(
-          f'Error on a UPRN Multiple API call for:\n "{all_user_input}"')
-      return page_error(None, e, page_name)
+  matched_addresses = get_addresses(result.json(), 'multiple')
 
-    matched_addresses = get_addresses(result.json(), 'multiple')
+  no_results = len(matched_addresses)
+  if no_results == 1:
+    single_match_total += 1
+  elif no_results > 1:
+    multiple_match_total += no_results
+  elif no_results == 0:
+    no_match_total += 1
 
-    no_results = len(matched_addresses)
-    if no_results == 1:
-      single_match_total += 1
-    elif no_results > 1:
-      multiple_match_total += no_results
-    elif no_results == 0:
-      no_match_total += 1
+  match_type = get_match_type(len(matched_addresses))
+  no_addresses_searched += 1
 
-    match_type = get_match_type(len(matched_addresses))
-    no_addresses_searched += 1
+  for rank, adrs in enumerate(matched_addresses, start=1):
+    line_count += 1
+    actual_address_type, preffered_address_format = \
+        get_preffered_format_of_address(adrs,all_user_input)
+    write(
+        given_id,
+        address_to_lookup,
+        preffered_address_format,
+        actual_address_type,
+        adrs.uprn.value,
+        match_type,
+        adrs.confidence_score.value,
+        adrs.underlying_score.value,
+        rank,
+    )
 
-    for rank, adrs in enumerate(matched_addresses, start=1):
-      line_count += 1
-      actual_address_type, preffered_address_format = \
-          get_preffered_format_of_address(adrs,all_user_input)
-      write(
-          given_id,
-          address_to_lookup,
-          preffered_address_format,
-          actual_address_type,
-          adrs.uprn.value,
-          match_type,
-          adrs.confidence_score.value,
-          adrs.underlying_score.value,
-          rank,
-      )
-  """
   return finalize(line_count, no_addresses_searched, single_match_total,
-                  multiple_match_total, no_match_total)
+                multiple_match_total, no_match_total)
 

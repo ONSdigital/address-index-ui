@@ -1,5 +1,5 @@
 import os
-from flask import render_template, request, session
+from flask import render_template, request, session, send_file
 from requests.exceptions import ConnectionError
 from flask_login import login_required
 from . import app
@@ -57,12 +57,6 @@ def uprn_multiple_match():
     try:
       full_results, line_count = uprn_multiple_address_match_original(
           file, all_user_input)
-      print()
-      print('FULL RESULTS:\n\n')
-      print(full_results)
-      print(line_count)
-      print()
-      print()
     except ConnectionError as e:
       return page_error(None, e, page_name)
 
