@@ -132,7 +132,39 @@ def job_data_by_user_id(user_id):
   return r
 
 
-def submit_mm_job(user, addresses, all_user_input):
+def submit_uprn_mm_job(uprns_and_ids, all_user_input):
+  """API helper for job endpoints """
+  url = app.config.get('API_URL') + '/addresses/multiuprn'
+
+  user_email = request.headers.get('X-Goog-Authenticated-User-Email',
+                                   'UserNotLoggedIn')
+  user_email = user_email.replace('accounts.google.com:', '')
+  user_email = user_email.replace('@ons.gov.uk', '')
+ 
+  header = {
+      "Content-Type": "application/json",
+      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
+      "user": user_email,
+  }
+
+  just_uprns = { "uprns": [item["uprn"] for item in uprns_and_ids] }
+  just_uprns_stringified = json.dumps(just_uprns)
+
+  r = requests.post(
+      url,
+      headers=header,
+      data=just_uprns_stringified,
+  )
+
+  logging.info('Submmitted Multi-UPRN match on endpoint"' + str(url) +
+               '"  with UserId as "' + str(user_email) + '"')
+
+  return r
+
+
+
+
+def submit_mm_job(user, addresses, all_user_input, uprn=False):
   """API helper for job endpoints """
   user_email = request.headers.get('X-Goog-Authenticated-User-Email',
                                    'UserNotLoggedIn')
@@ -200,7 +232,7 @@ def api(url, called_from, all_user_input):
   params = get_params(all_user_input)
   if (called_from == 'uprn') or (called_from == 'postcode'):
     url = app.config.get('API_URL') + url + all_user_input.get(called_from, '')
-  elif (called_from == 'singlesearch') or (called_from == 'multiple'):
+  elif (called_from == 'singlesearch'):
     url = app.config.get('API_URL') + url
 
   # bulks run without verbose for speed
