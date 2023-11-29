@@ -19,7 +19,6 @@ def get_api_auth():
   api_auth = {}
   if app.config.get('API_AUTH_TYPE') == 'JWT':
     api_auth['API_AUTH_TYPE'] = 'JWT'
-    api_auth['JWT_TOKEN'] = app.config.get('JWT_TOKEN')
     api_auth['PROJECT_DOMAIN'] = app.config.get('PROJECT_DOMAIN')
 
     current_time = datetime.datetime.utcnow()
@@ -27,6 +26,7 @@ def get_api_auth():
       "exp": current_time + datetime.timedelta(minutes=10)
     }
     token = jwt.encode(payload, app.config.get('SECRET_KEY'), algorithm="HS256")
+    api_auth['JWT_TOKEN'] = token
 
   elif app.config.get('API_AUTH_TYPE') == 'BASIC_AUTH':
     api_auth['API_AUTH_TYPE'] = 'BASIC_AUTH'
