@@ -223,7 +223,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
 
 def uprn_multiple_address_match_original(file, all_user_input):
   # Only provide downloadable output
-  csv_headers = ['id', 'inputAddress',  'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag)']  # yapf: disable
+  csv_headers = ['uprn', 'matchedAddress', 'confidenceScore']
 
   contents = file.readlines()
   remove_header_row(contents)
@@ -232,29 +232,7 @@ def uprn_multiple_address_match_original(file, all_user_input):
   writer = csv.writer(proxy)
   writer.writerow(csv_headers)
 
-  def write(id, addr, m_addr, address_type, uprn, m_type, confid_score,
-            doc_score, rank):
-    writer.writerow([
-        given_id,
-        address_to_lookup.replace('"', ''), m_addr, adrs.uprn.value,
-        match_type, adrs.confidence_score.value, adrs.underlying_score.value,
-        rank, address_type
-    ])
-
-  def finalize(line_count, no_addresses_searched, single_match_total,
-               multiple_match_total, no_match_total):
-    # Creating the byteIO object from the StringIO Object
-    mem = BytesIO()
-    mem.write(proxy.getvalue().encode())
-    mem.seek(0)
-    proxy.close()
-    return mem, line_count
-
   line_count = 0
-  no_addresses_searched = 0
-  single_match_total = 0
-  multiple_match_total = 0
-  no_match_total = 0
 
   file_content_formatted = []
   for line in contents:
@@ -265,50 +243,31 @@ def uprn_multiple_address_match_original(file, all_user_input):
   try:
     result = submit_uprn_mm_job(
         file_content_formatted,
-        all_user_input,
-    )
-    print()
-    print()
-    print('Result from Multi-UPRN')
-    print(result)
-    print(result.json())
-    print('Result from Multi-UPRN')
-    print()
-    print()
+        all_user_input)
   except:
     logging.error(
         f'Error on a UPRN Multiple API call for:\n "{all_user_input}"')
     return page_error(None, e, page_name)
 
-  matched_addresses = get_addresses(result.json(), 'multiple')
+  matched_addresses = get_addresses(result.json(), 'multiple_uprn')
 
-  no_results = len(matched_addresses)
-  if no_results == 1:
-    single_match_total += 1
-  elif no_results > 1:
-    multiple_match_total += no_results
-  elif no_results == 0:
-    no_match_total += 1
+  def finalize(line_count):
+    # Creating the byteIO object from the StringIO Object
+    mem = BytesIO()
+    mem.write(proxy.getvalue().encode())
+    mem.seek(0)
+    proxy.close()
+    return mem, line_count
 
-  match_type = get_match_type(len(matched_addresses))
-  no_addresses_searched += 1
-
-  for rank, adrs in enumerate(matched_addresses, start=1):
+  for adrs in matched_addresses:
     line_count += 1
     actual_address_type, preffered_address_format = \
         get_preffered_format_of_address(adrs,all_user_input)
-    write(
-        given_id,
-        address_to_lookup,
-        preffered_address_format,
-        actual_address_type,
+    writer.writerow([
         adrs.uprn.value,
-        match_type,
+        adrs.formatted_address.value,
         adrs.confidence_score.value,
-        adrs.underlying_score.value,
-        rank,
-    )
+        ])
 
-  return finalize(line_count, no_addresses_searched, single_match_total,
-                multiple_match_total, no_match_total)
+  return finalize(line_count)
 

@@ -162,8 +162,6 @@ def submit_uprn_mm_job(uprns_and_ids, all_user_input):
   return r
 
 
-
-
 def submit_mm_job(user, addresses, all_user_input, uprn=False):
   """API helper for job endpoints """
   user_email = request.headers.get('X-Goog-Authenticated-User-Email',

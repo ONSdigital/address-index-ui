@@ -65,7 +65,30 @@ def check_for_record_limit(file, maxlines):
     return False
 
 
-def check_valid_upload(file, limit=5001):
+def check_for_duplicate_id(file):
+  contents = file.readlines()
+  file.seek(0)
+
+  ids = set()
+  uprns = set()
+
+  for row in contents:
+    row = row.strip().decode('utf-8').split(',', maxsplit=1)
+    id, uprn = row
+
+    # Check if the id or uprn already exists in their respective sets
+    if id in ids or uprn in uprns:
+      return True
+
+    # Add the id and uprn to their respective sets
+    ids.add(id)
+    uprns.add(uprn)
+
+  # If no duplicates were found
+  return False
+
+
+def check_valid_upload(file, called_from='address', limit=5001):
 
   record_limit_exceeded = check_for_record_limit(file, limit)
 
@@ -87,4 +110,13 @@ def check_valid_upload(file, limit=5001):
     raise FileUploadException(error_title='File Type Error',
                               error_description='Please select a file')
 
+  if called_from == 'uprn':
+    # Check that there aren't any duplicate ID fields
+    duplicate_id_detected = check_for_duplicate_id(file)
+    if duplicate_id_detected: 
+      raise FileUploadException(
+          error_title='Duplicate ID or UPRNs Detected',
+          error_description=f'One or more duplicate IDs have been detected. Check that all ID fields are unique.')
+
   return True, '', '',
+
