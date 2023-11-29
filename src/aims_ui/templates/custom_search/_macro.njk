@@ -135,18 +135,21 @@
 
 {% endif %}
 
-{# Add a clear filters button with a url to the currently selected endpoint #}
-{% for endpoint in params.endpoints %}
-  {% if endpoint.selected %}
-	{{ onsButton({
-		'text': 'Clear  filters',
+{% if params.remove_clear_button != True %}
+  {# Add a clear filters button with a url to the currently selected endpoint #}
+  {% for endpoint in params.endpoints %}
+    {% if endpoint.selected %}
+  	{{ onsButton({
+  		'text': 'Clear  filters',
 		'submitType': "loader",
 		'variants': 'secondary',
 		'url': endpoint.url,
 		'id': 'clear-form-data-button-id',
 	}) }}
+    {% endif %}
+  {% endfor %}
 {% endif %}
-{% endfor %}
+
 {% endif %}
 
 </section>

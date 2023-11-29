@@ -32,4 +32,11 @@ def get_addresses(json_response,
     for address in address_json:
       addresses.append(ShortAddress({'address': address}))
 
+  elif called_from == 'multiple_uprn':
+    response = json_response.get('response')
+    address_json = response.get('addresses')
+
+    for address in address_json:
+      addresses.append(ShortAddress({'address': address}))
+
   return addresses
