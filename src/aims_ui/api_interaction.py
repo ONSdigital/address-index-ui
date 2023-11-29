@@ -11,7 +11,28 @@ import csv
 import logging
 from flask import request
 import xml.etree.ElementTree as ET
+import jwt
+import datetime
 
+def get_api_auth():
+  """Get the auth type for typeahead"""
+  api_auth = {}
+  if app.config.get('API_AUTH_TYPE') == 'JWT':
+    api_auth['API_AUTH_TYPE'] = 'JWT'
+    api_auth['JWT_TOKEN'] = app.config.get('JWT_TOKEN')
+    api_auth['PROJECT_DOMAIN'] = app.config.get('PROJECT_DOMAIN')
+
+    current_time = datetime.datetime.utcnow()
+    payload = {
+      "exp": current_time + datetime.timedelta(minutes=10)
+    }
+    token = jwt.encode(payload, app.config.get('SECRET_KEY'), algorithm="HS256")
+
+  elif app.config.get('API_AUTH_TYPE') == 'BASIC_AUTH':
+    api_auth['API_AUTH_TYPE'] = 'BASIC_AUTH'
+    api_auth['API_BSC_AUTH_USERNAME'] = app.config.get('API_BSC_AUTH_USERNAME')
+    api_auth['API_BSC_AUTH_PASSWORD'] = app.config.get('API_BSC_AUTH_PASSWORD')
+  return api_auth
 
 def get_epoch_options():
   """Get the result of the Epoch Endpoint and format for radio button use"""
@@ -244,20 +265,6 @@ def api(url, called_from, all_user_input):
   )
 
   return r
-
-
-def get_api_auth():
-  """Get the auth type for typeahead"""
-  api_auth = {}
-  if app.config.get('API_AUTH_TYPE') == 'JWT':
-    api_auth['API_AUTH_TYPE'] = 'JWT'
-    api_auth['JWT_TOKEN'] = app.config.get('JWT_TOKEN')
-    api_auth['PROJECT_DOMAIN'] = app.config.get('PROJECT_DOMAIN')
-  elif app.config.get('API_AUTH_TYPE') == 'BASIC_AUTH':
-    api_auth['API_AUTH_TYPE'] = 'BASIC_AUTH'
-    api_auth['API_BSC_AUTH_USERNAME'] = app.config.get('API_BSC_AUTH_USERNAME')
-    api_auth['API_BSC_AUTH_PASSWORD'] = app.config.get('API_BSC_AUTH_PASSWORD')
-  return api_auth
 
 
 def get_params(all_user_input):
