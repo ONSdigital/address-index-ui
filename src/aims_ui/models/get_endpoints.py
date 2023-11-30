@@ -11,7 +11,7 @@ def get_endpoints(called_from=None):
           'Provide as much of the address as possible for best results.',
       ),
       Endpoint(
-          'Unique Property Reference Number',
+          'UPRN Single Search',
           'uprn',
           "Search for a property via its unique property reference number. This is a 12 digit number which contains no characters.",
       ),
@@ -29,6 +29,11 @@ def get_endpoints(called_from=None):
           'Multiple Address',
           'multiple_address_original',
           "Search for not just  one address. Several. Get lots of results you can look through. This service completes many single searches from a file.",
+      ),
+      Endpoint(
+          'Multiple UPRN',
+          'uprn_multiple_match',
+          "Search for multiple addresses providing mulitple UPRNs (Unique Property Refference Numbers)",
       ),
   ]
 

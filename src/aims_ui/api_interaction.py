@@ -11,7 +11,28 @@ import csv
 import logging
 from flask import request
 import xml.etree.ElementTree as ET
+import jwt
+import datetime
 
+def get_api_auth():
+  """Get the auth type for typeahead"""
+  api_auth = {}
+  if app.config.get('API_AUTH_TYPE') == 'JWT':
+    api_auth['API_AUTH_TYPE'] = 'JWT'
+    api_auth['PROJECT_DOMAIN'] = app.config.get('PROJECT_DOMAIN')
+
+    current_time = datetime.datetime.utcnow()
+    payload = {
+      "exp": current_time + datetime.timedelta(minutes=10)
+    }
+    token = jwt.encode(payload, app.config.get('SECRET_KEY'), algorithm="HS256")
+    api_auth['JWT_TOKEN'] = token
+
+  elif app.config.get('API_AUTH_TYPE') == 'BASIC_AUTH':
+    api_auth['API_AUTH_TYPE'] = 'BASIC_AUTH'
+    api_auth['API_BSC_AUTH_USERNAME'] = app.config.get('API_BSC_AUTH_USERNAME')
+    api_auth['API_BSC_AUTH_PASSWORD'] = app.config.get('API_BSC_AUTH_PASSWORD')
+  return api_auth
 
 def get_epoch_options():
   """Get the result of the Epoch Endpoint and format for radio button use"""
@@ -132,7 +153,37 @@ def job_data_by_user_id(user_id):
   return r
 
 
-def submit_mm_job(user, addresses, all_user_input):
+def submit_uprn_mm_job(uprns_and_ids, all_user_input):
+  """API helper for job endpoints """
+  url = app.config.get('API_URL') + '/addresses/multiuprn'
+
+  user_email = request.headers.get('X-Goog-Authenticated-User-Email',
+                                   'UserNotLoggedIn')
+  user_email = user_email.replace('accounts.google.com:', '')
+  user_email = user_email.replace('@ons.gov.uk', '')
+ 
+  header = {
+      "Content-Type": "application/json",
+      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
+      "user": user_email,
+  }
+
+  just_uprns = { "uprns": [item["uprn"] for item in uprns_and_ids] }
+  just_uprns_stringified = json.dumps(just_uprns)
+
+  r = requests.post(
+      url,
+      headers=header,
+      data=just_uprns_stringified,
+  )
+
+  logging.info('Submmitted Multi-UPRN match on endpoint"' + str(url) +
+               '"  with UserId as "' + str(user_email) + '"')
+
+  return r
+
+
+def submit_mm_job(user, addresses, all_user_input, uprn=False):
   """API helper for job endpoints """
   user_email = request.headers.get('X-Goog-Authenticated-User-Email',
                                    'UserNotLoggedIn')
@@ -200,7 +251,7 @@ def api(url, called_from, all_user_input):
   params = get_params(all_user_input)
   if (called_from == 'uprn') or (called_from == 'postcode'):
     url = app.config.get('API_URL') + url + all_user_input.get(called_from, '')
-  elif (called_from == 'singlesearch') or (called_from == 'multiple'):
+  elif (called_from == 'singlesearch'):
     url = app.config.get('API_URL') + url
 
   # bulks run without verbose for speed
@@ -214,20 +265,6 @@ def api(url, called_from, all_user_input):
   )
 
   return r
-
-
-def get_api_auth():
-  """Get the auth type for typeahead"""
-  api_auth = {}
-  if app.config.get('API_AUTH_TYPE') == 'JWT':
-    api_auth['API_AUTH_TYPE'] = 'JWT'
-    api_auth['JWT_TOKEN'] = app.config.get('JWT_TOKEN')
-    api_auth['PROJECT_DOMAIN'] = app.config.get('PROJECT_DOMAIN')
-  elif app.config.get('API_AUTH_TYPE') == 'BASIC_AUTH':
-    api_auth['API_AUTH_TYPE'] = 'BASIC_AUTH'
-    api_auth['API_BSC_AUTH_USERNAME'] = app.config.get('API_BSC_AUTH_USERNAME')
-    api_auth['API_BSC_AUTH_PASSWORD'] = app.config.get('API_BSC_AUTH_PASSWORD')
-  return api_auth
 
 
 def get_params(all_user_input):

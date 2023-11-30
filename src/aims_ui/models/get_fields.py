@@ -284,6 +284,9 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         )
     ])
 
+  elif endpoint_name == 'uprn_multiple_match':
+    return ([])
+
   elif endpoint_name == 'multiple_address':
     return ([
         Field(
