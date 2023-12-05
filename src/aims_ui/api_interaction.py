@@ -26,6 +26,8 @@ def get_api_auth():
       "exp": current_time + datetime.timedelta(minutes=10)
     }
     token = jwt.encode(payload, app.config.get('JWT_K_VALUE'), algorithm="HS256")
+    print('\nTOKEN IS \n' + str(token) + '\n\n' \
+        + ' \n\n KVALUE is: ' + str(app.config.get('JWT_K_VALUE')) )
     api_auth['JWT_TOKEN'] = token
 
   elif app.config.get('API_AUTH_TYPE') == 'BASIC_AUTH':
