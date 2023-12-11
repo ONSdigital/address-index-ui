@@ -3,6 +3,7 @@ import tarfile
 import io
 import json
 from flask import request
+import logging
 from . import app
 
 
@@ -48,11 +49,21 @@ def job_url_if_authorised(job_id):
                                    'UserNotLoggedIn')
   user_email = user_email.replace('accounts.google.com:', '')
   user_email = user_email.replace('@ons.gov.uk', '')
+
   job_data = job_data_by_job_id(job_id)
   job_data = job_data.json()
   # {'jobid': 11, 'userid': 'UserNotLoggedIn', 'status': 'results-exported', 'totalrecs': 28, 'recssofar': 28, 'startdate': '2023-03-14T14:55:30', 'enddate': '2023-03-14T16:01:34'}
-  if job_data.get('userid', '') == user_email:
+
+  submittedJobUserId = job_data.get('userid', '')
+
+  # Remove label
+  if "::" in submittedJobUserId:
+    parts = submittedJobUserId.split("::")
+    submittedJobUserId = parts[0]
+
+  if submittedJobUserId == user_email:
     # The user did submit this job
     return job_result_by_job_id(job_id)
   else:
+    logging.error('Job download attempted on an unauthorised job')
     return False
