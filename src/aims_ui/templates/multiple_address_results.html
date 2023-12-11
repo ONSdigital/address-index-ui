@@ -103,8 +103,6 @@ function getAddressesFromResponse(apiResponse) {
     const addressToAdd = [formattedAddress, uprn, matchType, confidenceScore, documentScore, rank];
     matchedAddresses.push(addressToAdd);
   }
-  // TODO removeme
-  console.log(matchedAddresses);
   return matchedAddresses 
 }
 
