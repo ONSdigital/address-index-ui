@@ -7,7 +7,6 @@ from io import StringIO, BytesIO
 from flask import render_template, request, session, send_file
 from flask_login import login_required
 from .multiple_address_utils import job_url_if_authorised
-import logging
 
 # For the gz download
 import urllib.request
