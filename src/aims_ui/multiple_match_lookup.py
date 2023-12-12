@@ -219,8 +219,6 @@ def multiple_address_match_original(file, all_user_input, download=False):
                   multiple_match_total, no_match_total)
 
 
-
-
 def uprn_multiple_address_match_original(file, all_user_input):
   # Only provide downloadable output
   csv_headers = ['uprn', 'matchedAddress', 'confidenceScore']
@@ -238,12 +236,10 @@ def uprn_multiple_address_match_original(file, all_user_input):
   for line in contents:
     line = line.strip().decode('utf-8')
     given_id, uprn = line.split(',', maxsplit=1)
-    file_content_formatted.append({'id':given_id, 'uprn':uprn})
+    file_content_formatted.append({'id': given_id, 'uprn': uprn})
 
   try:
-    result = submit_uprn_mm_job(
-        file_content_formatted,
-        all_user_input)
+    result = submit_uprn_mm_job(file_content_formatted, all_user_input)
   except:
     logging.error(
         f'Error on a UPRN Multiple API call for:\n "{all_user_input}"')
@@ -267,7 +263,6 @@ def uprn_multiple_address_match_original(file, all_user_input):
         adrs.uprn.value,
         adrs.formatted_address.value,
         adrs.confidence_score.value,
-        ])
+    ])
 
   return finalize(line_count)
-

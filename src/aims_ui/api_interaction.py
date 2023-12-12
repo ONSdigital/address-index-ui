@@ -193,6 +193,14 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
   user_email = user_email + tag_name
   url = app.config.get('BM_API_URL') + '/bulk'
 
+  # Change the paf-nag default selection
+  if all_user_input.get('paf-nag-prefference') == 'PAF':
+    all_user_input['pafdefault'] = 'true'
+  del all_user_input['paf-nag-prefference']
+  
+  params = get_params(all_user_input, removeVerbose=True)
+
+
   header = {
       "Content-Type": "application/json",
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
@@ -206,8 +214,13 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
   r = requests.post(
       url,
       headers=header,
+      params=params,
       data=addresses.encode('utf-8'),
   )
+
+  #TODO remove
+  logging.info(r)
+  logging.info(params)
 
   logging.info('Submmitted MMJob on endpoint"' + str(url) +
                '"  with UserId as "' + str(user_email) + '"')
@@ -267,9 +280,12 @@ def api(url, called_from, all_user_input):
   return r
 
 
-def get_params(all_user_input):
+def get_params(all_user_input, removeVerbose=False):
   """Return a list of parameters formatted for API header, from class list of inputs"""
   params = ['verbose=True']
+  if removeVerbose:
+    params = []
+
   for param, value in all_user_input.items():
     if not str(value):
       continue
