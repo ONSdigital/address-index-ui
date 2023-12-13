@@ -178,6 +178,28 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           search_type='download',
           download_url='/downloads/classifications_list',
       ),
+      'multiple_match_paf_nag_prefference':
+      Field(
+          'paf-nag-prefference',
+          search_type='radio',
+          flag=False,
+          display_title='Prioritise PAF or NAG addresses?',
+          default_radio_selection='PAF',
+          radio_options=[
+              {
+                  'id':
+                  'PAF',
+                  'text':
+                  'PAF - Addresses have PAF match first, if none found default formatting will be used'
+              },
+              {
+                  'id':
+                  'NAG',
+                  'text':
+                  'NAG - Addresses have NAG match first, if none found default formatting will be used'
+              },
+          ],
+      ),
   }
 
   if endpoint_name == 'uprn':
@@ -245,27 +267,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             previous_value='5',
         ), common_fields['epoch'], common_fields['historical'],
         common_fields['match_threshold'],
-        Field(
-            'paf-nag-prefference',
-            search_type='radio',
-            flag=False,
-            display_title='Prioritise PAF or NAG addresses?',
-            default_radio_selection='PAF',
-            radio_options=[
-                {
-                    'id':
-                    'PAF',
-                    'text':
-                    'PAF - Addresses have PAF match first, if none found default formatting will be used'
-                },
-                {
-                    'id':
-                    'NAG',
-                    'text':
-                    'NAG - Addresses have NAG match first, if none found default formatting will be used'
-                },
-            ],
-        ),
+        common_fields['multiple_match_paf_nag_prefference'],
         Field(
             'display-type',
             search_type='radio',
@@ -303,7 +305,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             description='Optional tag to organise matches',
             previous_value='',
         ),
- 
+        common_fields['multiple_match_paf_nag_prefference'],
     ])
   elif endpoint_name == 'postcode':
     return ([

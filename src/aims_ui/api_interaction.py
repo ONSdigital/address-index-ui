@@ -193,6 +193,14 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
   user_email = user_email + tag_name
   url = app.config.get('BM_API_URL') + '/bulk'
 
+  # Change the paf-nag default selection
+  if all_user_input.get('paf-nag-prefference') == 'PAF':
+    all_user_input['pafdefault'] = 'true'
+  del all_user_input['paf-nag-prefference']
+  
+  params = get_params(all_user_input, removeVerbose=True)
+
+
   header = {
       "Content-Type": "application/json",
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
@@ -206,6 +214,7 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
   r = requests.post(
       url,
       headers=header,
+      params=params,
       data=addresses.encode('utf-8'),
   )
 
@@ -257,6 +266,7 @@ def api(url, called_from, all_user_input):
   # bulks run without verbose for speed
   if (called_from == 'multiple'):
     params = params.replace('verbose=True', 'verbose=False')
+    url = app.config.get('API_URL') + url
 
   r = requests.get(
       url,
@@ -267,9 +277,12 @@ def api(url, called_from, all_user_input):
   return r
 
 
-def get_params(all_user_input):
+def get_params(all_user_input, removeVerbose=False):
   """Return a list of parameters formatted for API header, from class list of inputs"""
   params = ['verbose=True']
+  if removeVerbose:
+    params = []
+
   for param, value in all_user_input.items():
     if not str(value):
       continue
@@ -287,6 +300,11 @@ def get_params(all_user_input):
     # Check if the value is for the classifications, if so, check to see if it needs reversing
     if param == 'classificationfilter':
       value = check_reverse_classification(value)
+
+    # Replace paf-nag-prefference
+    if str(param) == 'paf-nag-prefference':
+      param='pafdefault'
+      value = 'true' if value == 'PAF' else 'false'
 
     quoted_param = urllib.parse.quote_plus(str(param))
     quoted_value = urllib.parse.quote_plus(str(value))
