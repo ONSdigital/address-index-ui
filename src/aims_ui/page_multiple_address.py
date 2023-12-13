@@ -14,6 +14,7 @@ from .upload_utils import check_valid_upload
 from .page_error import page_error
 from .upload_utils import FileUploadException
 import json
+import logging
 import csv
 from time import sleep
 
