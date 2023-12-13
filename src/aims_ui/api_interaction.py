@@ -266,6 +266,7 @@ def api(url, called_from, all_user_input):
   # bulks run without verbose for speed
   if (called_from == 'multiple'):
     params = params.replace('verbose=True', 'verbose=False')
+    url = app.config.get('API_URL') + url
 
   r = requests.get(
       url,
@@ -299,6 +300,11 @@ def get_params(all_user_input, removeVerbose=False):
     # Check if the value is for the classifications, if so, check to see if it needs reversing
     if param == 'classificationfilter':
       value = check_reverse_classification(value)
+
+    # Replace paf-nag-prefference
+    if str(param) == 'paf-nag-prefference':
+      param='pafdefault'
+      value = 'true' if value == 'PAF' else 'false'
 
     quoted_param = urllib.parse.quote_plus(str(param))
     quoted_value = urllib.parse.quote_plus(str(value))
