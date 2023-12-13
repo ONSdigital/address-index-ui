@@ -218,10 +218,6 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
       data=addresses.encode('utf-8'),
   )
 
-  #TODO remove
-  logging.info(r)
-  logging.info(params)
-
   logging.info('Submmitted MMJob on endpoint"' + str(url) +
                '"  with UserId as "' + str(user_email) + '"')
 
