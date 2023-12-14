@@ -33,7 +33,7 @@ def get_endpoints(called_from=None):
       Endpoint(
           'Multiple UPRN',
           'uprn_multiple_match',
-          "Search for multiple addresses providing mulitple UPRNs (Unique Property Refference Numbers)",
+          "Search for multiple addresses providing mulitple UPRNs (Unique Property Reference Numbers)",
       ),
   ]
 
