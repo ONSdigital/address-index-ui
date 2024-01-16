@@ -1,8 +1,8 @@
 {% extends 'layout/_template.njk' %}
+
 {% from "components/header/_macro.njk" import onsHeader %}
 
 {% set item_list = endpoints[0].nav_info  %}
-
 
 {% set pageConfig = {
 	'title': "Address Index",
@@ -41,9 +41,7 @@
 		}
         },
 
-
 	"footer": {
-
 		"OGLLink": {
 		    "pre": 'All content is available under the',
 		    "link": 'Open Government Licence v3.0',
@@ -56,15 +54,10 @@
 			"itemsList": [
 			    {   "text": 'Have feedback or found an issue with matched address(es)?',
 				"url":"/help/submit_feedback",
-			    }
-			],
-		    }, 
-		],
-	},
-
-	"meta": {
-	    "canonicalUrl": "/",
-	},
+			    } ],
+		    }, ],
+		},
+	"meta": { "canonicalUrl": "/", },
 } %}
 
 
