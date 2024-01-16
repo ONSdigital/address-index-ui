@@ -5,7 +5,7 @@
 {% from 'components/lists/_macro.njk' import onsList %}
 {% from 'custom_search/_macro.njk' import customSearch %}
 {% from 'custom_address_info/_macro.njk' import customAddressInfo %}
-
+{% from "components/panel/_macro.njk" import onsPanel %}
 
 {% set form =  {
 	'method': 'POST',
@@ -52,12 +52,19 @@
 		    "text": 	endpoint.description_text,
 		}) }}
 	<br>
-	<br>
 	{% endif %}
 	{% endfor %}
 
+
 	{% if results_page %}
-	<h2>We matched {{matched_address_number}}  addresses:</h2>
+	  {{ onsPanel({
+	  "body": '<p> Search Match Type (M):    Multiple Addresses Above Match Threshold
+	  		Reccommendation Code (I):  Accept top result</p>',
+	  "classes": "hidden",
+	   }) }}
+	  <br>
+	  <br>
+	  <h2>We matched {{matched_address_number}}  addresses:</h2>
 	{% endif %}
 
 	{{ customAddressInfo ({
