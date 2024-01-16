@@ -5,6 +5,7 @@
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/select/_macro.njk" import onsSelect %}
 {% from "components/panel/_macro.njk" import onsPanel %}
+{% from "components/checkboxes/_macro.njk" import onsCheckboxes %}
 
 {% block main %}
 
@@ -15,6 +16,38 @@
 Only adjust settings on this page if you're sure you need to adjust them.
 {% endcall %}
 <br>
+
+{# SET VISIBILITY OF REQUEST SPECIFIC RESULTS #}
+{% call onsQuestion({
+    "title": 'Show Additional Request Details',
+    "description": 'When a request data is returned, there are additional attributes that may be useful. Here you can select which ones you would like to see (they will be shown above the normal "results" section in an information panel',
+    "legendIsQuestionTitle": true }) %}
+    {{
+        onsCheckboxes({
+            "checkboxesLabel": "Select all you want visible",
+            "dontWrap": true,
+            "name": "Request Details",
+            "checkboxes": [
+                {
+                    "id": "match_type",
+                    "label": {
+                        "text": "Match Type",
+			"description": "S - Single Match <br> M - Multiple Matches <br> N - No Matches",
+                    },
+                    "value": "true"
+                },
+                {
+                    "id": "recommendation_code",
+                    "label": {
+                        "text": "Recommendation Code",
+			"description": "A - Recommend that the top result is accepted (97.5% of the time this is correct) <br> I - Investigate, as tests suggest that about 4% of matches meet this category)",
+                    },
+                    "value": "true"
+                },
+            ]
+        })
+    }}
+{% endcall %}
 
 {# SET PAF OR NAG TITLE PREFERENCE #}
 {% call onsQuestion({

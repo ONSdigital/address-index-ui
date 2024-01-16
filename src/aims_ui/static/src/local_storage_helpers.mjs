@@ -36,3 +36,22 @@ export function setNewColumnWidths(values) {
   const newValues = JSON.stringify(values);
   localStorage.setItem('custom_column_width', newValues);
 }
+
+// AdditionalRequests status
+export function setDefaultAdditionalRequestStatus() {
+  if (! localStorage.getItem('custom_settings_additional_request_info')) {
+    const defaultOptions = {match_type: 'true', recommendation_code: 'true'};
+    setAdditionalRequestStatus(defaultOptions);
+  }
+}
+
+export function getAdditionalRequestStatus(){
+  const obj = localStorage.getItem('custom_settings_additional_request_info');
+  return JSON.parse(obj);
+}
+
+export function setAdditionalRequestStatus(settings){
+  const stringifiedSettings = JSON.stringify(settings);
+  localStorage.setItem('custom_settings_additional_request_info', stringifiedSettings);
+}
+

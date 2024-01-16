@@ -1,11 +1,13 @@
 import { 
   setDefaultTitleChoice,
-  setDefaultColumnWidths
+  setDefaultColumnWidths,
+  setDefaultAdditionalRequestStatus,
 } from './local_storage_helpers.mjs';
 
 function setDefaultValuesIfUnset() {
   setDefaultTitleChoice();
   setDefaultColumnWidths();
+  setDefaultAdditionalRequestStatus();
 }
 
 function init() {

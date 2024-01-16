@@ -3,12 +3,15 @@ import {
   updateAddressFormatPrefference,
   getCustomColumnWidths,
   setNewColumnWidths,
+  getAdditionalRequestStatus,
+  setAdditionalRequestStatus,
 } from './local_storage_helpers.mjs';
 
 function updateAddressTitlePrefference(e) {
   updateAddressFormatPrefference(e);
 }
 
+// Paf and Nag Prefferences
 function setupNagAndPafStatus() {
   const current_status = getAddressTitlePrefference();
   if (current_status === 'paf') {
@@ -41,6 +44,7 @@ function setupNagAndPafListeners() {
   });
 }
 
+// Column Width Prefferences
 function setValuesOfColumnWidthPrefferences() {
   const colWidths = getCustomColumnWidths();
     for (const [key, width] of Object.entries(colWidths)) {
@@ -66,11 +70,48 @@ function setupColumnWidthCustomiserListeners() {
   }
 }
 
+// Additional Request Details
+function setupAdditionalRequestStatus() {
+  const current_status = getAdditionalRequestStatus();
+
+  const matchTypeCheckbox = document.querySelector('#match_type');
+  const recomCodeCheckbox = document.querySelector('#recommendation_code');
+
+  if (current_status.match_type === 'true') {
+    matchTypeCheckbox.checked = true;
+  } 
+  if (current_status.recommendation_code === 'true') {
+    recomCodeCheckbox.checked = true;
+  } 
+}
+
+function setupAdditionalRequestListeners() {
+  const matchTypeCheckbox = document.querySelector('#match_type');
+  const recomCodeCheckbox = document.querySelector('#recommendation_code');
+
+  matchTypeCheckbox.addEventListener('change', (e) => {
+    const currentSettings = getAdditionalRequestStatus();
+    const mtStatus = matchTypeCheckbox.checked;
+    currentSettings.match_type = mtStatus.toString();
+    setAdditionalRequestStatus(currentSettings);
+  });
+
+  recomCodeCheckbox.addEventListener('change', (e) => {
+    const currentSettings = getAdditionalRequestStatus();
+    const recomCodeStatus = recomCodeCheckbox.checked;
+    currentSettings.recommendation_code = recomCodeStatus.toString();
+    setAdditionalRequestStatus(currentSettings);
+  });
+}
+
+
 function init() {
   setupNagAndPafListeners();
   setupNagAndPafStatus();
   setValuesOfColumnWidthPrefferences();
   setupColumnWidthCustomiserListeners();
+  setupAdditionalRequestStatus();
+  setupAdditionalRequestListeners();
 }
 
 window.addEventListener('load', init);
