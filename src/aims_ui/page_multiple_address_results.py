@@ -17,13 +17,15 @@ def multiple_address_results():
 
   #TODO Set To FALSE (debug only)----------------------------------------------
   if False:
-    headers = ['JOBID', 'NAME', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK']
+    headers = [
+        'JOBID', 'NAME', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK'
+    ]
     job_id = 6
 
     endpoints = get_endpoints(called_from=page_name)
     formatted_results = [
         [
-            '22','Example', '10,000 of A Jillion', 'bob', 'complete',
+            '22', 'Example', '10,000 of A Jillion', 'bob', 'complete',
             f'<a href="/downloads/googlefiledownload{job_id}">job_id {job_id}</a>'
         ],
     ]
@@ -46,7 +48,9 @@ def multiple_address_results():
   user_email = user_email.replace('accounts.google.com:', '')
   user_email = user_email.replace('@ons.gov.uk', '')
 
-  headers = ['JOBID', 'NAME', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK']
+  headers = [
+      'JOBID', 'NAME', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK'
+  ]
   results = job_data_by_user_id(user_email).json().get('jobs', [])
 
   formatted_results = [[
@@ -74,6 +78,7 @@ def multiple_address_results():
       endpoints=endpoints,
       jobs=jobs,
   )
+
 
 def extract_username_and_tag(job, returnType):
   full_user_id = job.get('userid')

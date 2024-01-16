@@ -113,10 +113,11 @@ def check_valid_upload(file, called_from='address', limit=5001):
   if called_from == 'uprn':
     # Check that there aren't any duplicate ID fields
     duplicate_id_detected = check_for_duplicate_id(file)
-    if duplicate_id_detected: 
+    if duplicate_id_detected:
       raise FileUploadException(
           error_title='Duplicate ID or UPRNs Detected',
-          error_description=f'One or more duplicate IDs have been detected. Check that all ID fields are unique.')
+          error_description=
+          f'One or more duplicate IDs have been detected. Check that all ID fields are unique.'
+      )
 
   return True, '', '',
-

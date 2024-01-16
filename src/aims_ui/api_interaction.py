@@ -14,6 +14,7 @@ import xml.etree.ElementTree as ET
 import jwt
 import datetime
 
+
 def get_api_auth():
   """Get the auth type for typeahead"""
   api_auth = {}
@@ -22,10 +23,10 @@ def get_api_auth():
     api_auth['PROJECT_DOMAIN'] = app.config.get('PROJECT_DOMAIN')
 
     current_time = datetime.datetime.utcnow()
-    payload = {
-      "exp": current_time + datetime.timedelta(minutes=10)
-    }
-    token = jwt.encode(payload, app.config.get('JWT_K_VALUE'), algorithm="HS256")
+    payload = {"exp": current_time + datetime.timedelta(minutes=10)}
+    token = jwt.encode(payload,
+                       app.config.get('JWT_K_VALUE'),
+                       algorithm="HS256")
     api_auth['JWT_TOKEN'] = token
 
   elif app.config.get('API_AUTH_TYPE') == 'BASIC_AUTH':
@@ -33,6 +34,7 @@ def get_api_auth():
     api_auth['API_BSC_AUTH_USERNAME'] = app.config.get('API_BSC_AUTH_USERNAME')
     api_auth['API_BSC_AUTH_PASSWORD'] = app.config.get('API_BSC_AUTH_PASSWORD')
   return api_auth
+
 
 def get_epoch_options():
   """Get the result of the Epoch Endpoint and format for radio button use"""
@@ -161,14 +163,14 @@ def submit_uprn_mm_job(uprns_and_ids, all_user_input):
                                    'UserNotLoggedIn')
   user_email = user_email.replace('accounts.google.com:', '')
   user_email = user_email.replace('@ons.gov.uk', '')
- 
+
   header = {
       "Content-Type": "application/json",
       "Authorization": app.config.get('JWT_TOKEN_BEARER'),
       "user": user_email,
   }
 
-  just_uprns = { "uprns": [item["uprn"] for item in uprns_and_ids] }
+  just_uprns = {"uprns": [item["uprn"] for item in uprns_and_ids]}
   just_uprns_stringified = json.dumps(just_uprns)
 
   r = requests.post(
@@ -189,7 +191,7 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
                                    'UserNotLoggedIn')
   user_email = user_email.replace('accounts.google.com:', '')
   user_email = user_email.replace('@ons.gov.uk', '')
-  tag_name = '::' + str(all_user_input.get('name','')[:25] + '::')
+  tag_name = '::' + str(all_user_input.get('name', '')[:25] + '::')
   user_email = user_email + tag_name
   url = app.config.get('BM_API_URL') + '/bulk'
 
@@ -197,9 +199,8 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
   if all_user_input.get('paf-nag-prefference') == 'PAF':
     all_user_input['pafdefault'] = 'true'
   del all_user_input['paf-nag-prefference']
-  
-  params = get_params(all_user_input, removeVerbose=True)
 
+  params = get_params(all_user_input, removeVerbose=True)
 
   header = {
       "Content-Type": "application/json",
@@ -303,7 +304,7 @@ def get_params(all_user_input, removeVerbose=False):
 
     # Replace paf-nag-prefference
     if str(param) == 'paf-nag-prefference':
-      param='pafdefault'
+      param = 'pafdefault'
       value = 'true' if value == 'PAF' else 'false'
 
     quoted_param = urllib.parse.quote_plus(str(param))

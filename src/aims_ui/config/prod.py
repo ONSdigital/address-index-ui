@@ -11,4 +11,3 @@ if not (SECRET_KEY := os.getenv('SECRET_KEY')):
 
 JWT_K_VALUE = str(os.getenv('JWT_K_VALUE'))
 JWT_K_VALUE = base64.b64decode(JWT_K_VALUE)
-
