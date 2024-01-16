@@ -1,6 +1,11 @@
 import { 
   getAddressTitlePrefference,
+  getAdditionalRequestStatus,
 } from './local_storage_helpers.mjs';
+
+function applyVisibilityOfRequestStatus() {
+  const settings = getAdditionalRequestStatus();
+}
 
 function getChosenTitleId(prefference) {
   // Convert the prefference into HTML Ids
@@ -59,6 +64,7 @@ function applyTitlePrefference(prefference) {
 function init() {
   const prefference = getAddressTitlePrefference();
   applyTitlePrefference(prefference);
+  applyVisibilityOfRequestStatus();
 }
 
 window.addEventListener('load', init);
