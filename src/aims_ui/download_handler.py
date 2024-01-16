@@ -73,8 +73,9 @@ def download_handler(file_name):
     f = open(f'{dir_path}/static/downloads/tool_tip_clerical_information.csv',
              'rb')
   elif file_name == 'uprn_example_multiple_address':
-    f = open(f'{dir_path}/static/downloads/uprn_example_multiple_match_upload.csv',
-             'rb')
+    f = open(
+        f'{dir_path}/static/downloads/uprn_example_multiple_match_upload.csv',
+        'rb')
 
   elif 'googlefiledownload' in file_name:
     file_name = file_name.replace('googlefiledownload', '')
