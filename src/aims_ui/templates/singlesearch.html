@@ -11,11 +11,13 @@
 	'method': 'POST',
 	'id': 'searchform',
 	'attributes': {
-	'action': form_action, }} %}
+	'action': form_action,} } %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
 {% block main %}
+
+
 {# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
 <div class="ons-grid">
 
@@ -60,7 +62,7 @@
 	  {{ onsPanel({
 	  "body": '<p> Search Match Type (M):    Multiple Addresses Above Match Threshold
 	  		Reccommendation Code (I):  Accept top result</p>',
-	  "classes": "hidden",
+	  "classes": "ons-u-hidden",
 	   }) }}
 	  <br>
 	  <br>
