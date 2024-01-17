@@ -26,6 +26,8 @@ Pre-requisites:
 
 `export BM_API_URL=[enter_bulk_match_url]`
 
+`export API_URL=[enter_api_url]`
+
 *Note: JWT token is exported WITHOUT 'Bearer ' before it*
 
 ## Install Python Packages
