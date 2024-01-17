@@ -90,13 +90,13 @@ function getAddressesFromResponse(apiResponse) {
   const jsonResponse = JSON.parse(apiResponse);
   const response = jsonResponse['response'];
   const addresses = response['addresses'];
-  // Get the values needed for each address
+  // Get the values needed for each address (each address comes from one submitted address)
   let i = 0;
   for (const address of addresses) {
     i = i + 1;
     const formattedAddress = address['formattedAddress'];
     const uprn = address['uprn'];
-    const matchType = addresses.length > 1 ? 'M' : 'S'; 
+    const matchType = response.matchtype;
     const confidenceScore = address['confidenceScore'];
     const documentScore = address['underlyingScore'];
     const rank = i;

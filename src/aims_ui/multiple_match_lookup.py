@@ -177,7 +177,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
           'multiple',
           all_user_input,
       )
-    except:
+    except Exception as e:
       logging.error(
           'Error on a singlesearch API call for:\n "{all_user_input}"')
       return page_error(None, e, page_name)
