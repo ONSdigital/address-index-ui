@@ -14,6 +14,16 @@ import xml.etree.ElementTree as ET
 import jwt
 import datetime
 
+def get_response_attributes(r):
+  """ Return high level response attributes """
+  # "r" should be result.json() from an API call
+  res = r.get('response')
+
+  matchType = res.get('matchtype')
+  recommendationCode = res.get('recommendationCode')
+
+  return {'matchType': matchType, 'recommendationCode': recommendationCode }
+ 
 
 def get_api_auth():
   """Get the auth type for typeahead"""
@@ -274,9 +284,6 @@ def api(url, called_from, all_user_input):
       params=params,
       headers=header,
   )
-
-  #TODO removeme
-  print(r.content)
 
   return r
 
