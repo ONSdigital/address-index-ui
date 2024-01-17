@@ -100,7 +100,8 @@ function getAddressesFromResponse(apiResponse) {
     const confidenceScore = address['confidenceScore'];
     const documentScore = address['underlyingScore'];
     const rank = i;
-    const addressToAdd = [formattedAddress, uprn, matchType, confidenceScore, documentScore, rank];
+    const recommendationCode = response.recommendationCode;
+    const addressToAdd = [formattedAddress, uprn, matchType, confidenceScore, documentScore, rank, recommendationCode];
     matchedAddresses.push(addressToAdd);
   }
   return matchedAddresses 
@@ -143,7 +144,7 @@ function processRow(row) {
   finalMatches = [];
   for (const matchedAddress of matchedAddresses) {
     // Add each address with quotes for csv parsing
-    const final_row = [id, inputAddress, matchedAddress[0], matchedAddress[1] , matchedAddress[2] , matchedAddress[3] , matchedAddress[4] , matchedAddress[5] ];
+    const final_row = [id, inputAddress, matchedAddress[0], matchedAddress[1] , matchedAddress[2] , matchedAddress[3] , matchedAddress[4] , matchedAddress[5] , matchedAddress[6]];
     finalMatches.push(final_row);
   }
 
@@ -153,7 +154,7 @@ function processRow(row) {
 }
 
 async function downloadAndProcess(url) {
-  let final_csv = '';
+  let final_csv = 'id,inputAddress,matchedAddress,uprn,matchType,confidenceScore,documentScore,rank,recommendationCode\n';
   const response = await fetch(url);
   const arrayBuffer = await response.arrayBuffer();
   const inflated = await pako.inflate(arrayBuffer);
@@ -219,7 +220,6 @@ window.addEventListener('load', async function() {
 
 
 </script>
-
 
 
 
