@@ -19,8 +19,8 @@ def get_response_attributes(r):
   # "r" should be result.json() from an API call
   res = r.get('response')
 
-  matchType = res.get('matchtype')
-  recommendationCode = res.get('recommendationCode')
+  matchType = res.get('matchtype', 'N/A')
+  recommendationCode = res.get('recommendationCode', 'N/A')
 
   return {'matchType': matchType, 'recommendationCode': recommendationCode }
  
