@@ -5,17 +5,19 @@
 {% from 'components/lists/_macro.njk' import onsList %}
 {% from 'custom_search/_macro.njk' import customSearch %}
 {% from 'custom_address_info/_macro.njk' import customAddressInfo %}
-
+{% from "components/panel/_macro.njk" import onsPanel %}
 
 {% set form =  {
 	'method': 'POST',
 	'id': 'searchform',
 	'attributes': {
-	'action': form_action, }} %}
+	'action': form_action,} } %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
 {% block main %}
+
+
 {# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
 <div class="ons-grid">
 
@@ -52,12 +54,20 @@
 		    "text": 	endpoint.description_text,
 		}) }}
 	<br>
-	<br>
 	{% endif %}
 	{% endfor %}
 
+
 	{% if results_page %}
-	<h2>We matched {{matched_address_number}}  addresses:</h2>
+	  {{ onsPanel({
+	  "body": "",
+	  "classes": "ons-u-hidden",
+	  "id": "requestOverviewStatsPanel",
+	  "attributes": {'valuesOfrequestAttributes': responseAttributes },
+	   }) }}
+	  <br>
+	  <br>
+	  <h2>We matched {{matched_address_number}}  addresses:</h2>
 	{% endif %}
 
 	{{ customAddressInfo ({

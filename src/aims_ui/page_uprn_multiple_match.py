@@ -42,7 +42,8 @@ def uprn_multiple_match():
     file = request.files['file']
 
     try:
-      file_valid, error_description, error_title = check_valid_upload(file, called_from='uprn')
+      file_valid, error_description, error_title = check_valid_upload(
+          file, called_from='uprn')
     except FileUploadException as e:
       return final(searchable_fields,
                    error_description=e.error_description,
@@ -64,7 +65,6 @@ def uprn_multiple_match():
                      mimetype='text/csv',
                      attachment_filename=f'result_size_{line_count}.csv',
                      as_attachment=True)
-
 
 
 def final(searchable_fields,
@@ -99,5 +99,3 @@ def request_entity_too_large(error):
       searchable_fields,
       'File size is too large. Please enter a file no larger than 2 MB',
       'File Size Error')
-
-

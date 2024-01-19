@@ -1,6 +1,58 @@
 import { 
   getAddressTitlePrefference,
+  getAdditionalRequestStatus,
 } from './local_storage_helpers.mjs';
+
+function getMatchTypeDescription(matchType) {
+  // Expect 'S' 'M' 'N' for single multiple none
+  if (matchType === 'S') {
+    return 'S - Single match with Confidence Score above threshold';
+  } else if (matchType === 'M') {
+    return 'M - Multiple Matches with Confidence Score above threshold';
+  } else if (matchType === 'N') {
+    return 'N - No matches with Confidence Score above threshold';
+  }
+}
+
+function getRecommendationCodeDescription(code) {
+  if (code === 'A') {
+    return 'A - Accept the top result';
+  } else if (code === 'I') {
+    return 'I - Investigate results';
+  }
+}
+
+function applyVisibilityOfRequestStatus() {
+  const settings = getAdditionalRequestStatus();
+  const settingsPanel = document.querySelector('#requestOverviewStatsPanel');
+  if (!settingsPanel) {return};
+  const values = settingsPanel.getAttribute('valuesofrequestattributes');
+  const validJsonString = values.replace(/'/g, '"');
+  const jsonObj = JSON.parse(validJsonString);
+
+  let showPanel = false;
+  let panelContents = ''; 
+  if (settings.match_type === 'true') {
+    showPanel = true;
+    const pg = document.createElement('p');
+    pg.textContent = getMatchTypeDescription(jsonObj.matchType);
+    settingsPanel.append(pg);
+  }
+  if (settings.recommendation_code === 'true') {
+    showPanel = true;
+    const pg = document.createElement('p');
+    pg.textContent = getRecommendationCodeDescription(jsonObj.recommendationCode);
+    settingsPanel.append(pg);
+  }
+
+  if (showPanel) {
+    const pg = document.createElement('p');
+    pg.innerHTML = '<em>Request Details</em>';
+    settingsPanel.prepend(pg);
+    settingsPanel.classList.remove('ons-u-hidden');
+  }
+
+}
 
 function getChosenTitleId(prefference) {
   // Convert the prefference into HTML Ids
@@ -59,6 +111,7 @@ function applyTitlePrefference(prefference) {
 function init() {
   const prefference = getAddressTitlePrefference();
   applyTitlePrefference(prefference);
+  applyVisibilityOfRequestStatus();
 }
 
 window.addEventListener('load', init);
