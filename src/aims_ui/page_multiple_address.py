@@ -21,7 +21,6 @@ from time import sleep
 page_name = 'multiple_address'
 
 
-
 # In the event of a file being too large, send this custom template
 @app.errorhandler(413)
 def request_entity_too_large(error):
@@ -80,6 +79,7 @@ def multiple_address():
       multiple_address_match(file, all_user_input, download=True)
       return final(all_user_input)
 
+
 def final(all_user_input,
           error_description='',
           error_title='',
@@ -97,5 +97,3 @@ def final(all_user_input,
       results_summary_table=results_summary_table,
       results_page=True,
   )
-
-

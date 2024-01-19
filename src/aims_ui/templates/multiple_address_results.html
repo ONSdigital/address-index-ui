@@ -80,6 +80,20 @@ function getAllLinks() {
   return tableLinks;
 }
 
+function findIfPafOrNagWasUsed(address) {
+  // Receiving a single "address" from a response, return PAF or NAG
+  const formattedAddress = address['formattedAddress'];
+  const pafAddress = address['formattedAddressPaf'];
+  const nagAddress = address['formattedAddressNag'];
+  if (formattedAddress === pafAddress) {
+    return 'PAF';
+  } else if (formattedAddress === nagAddress) {
+    return 'NAG';
+  } else {
+    return 'N/A';
+  }
+}
+
 function getAddressesFromResponse(apiResponse) {
   // Given an API response (string), extract a list of all matched addresses, confidence score, document score
   // Extract the list of matched addresses
@@ -90,17 +104,19 @@ function getAddressesFromResponse(apiResponse) {
   const jsonResponse = JSON.parse(apiResponse);
   const response = jsonResponse['response'];
   const addresses = response['addresses'];
-  // Get the values needed for each address
+  // Get the values needed for each address (each address comes from one submitted address)
   let i = 0;
   for (const address of addresses) {
     i = i + 1;
     const formattedAddress = address['formattedAddress'];
     const uprn = address['uprn'];
-    const matchType = addresses.length > 1 ? 'M' : 'S'; 
+    const matchType = response.matchtype;
     const confidenceScore = address['confidenceScore'];
     const documentScore = address['underlyingScore'];
     const rank = i;
-    const addressToAdd = [formattedAddress, uprn, matchType, confidenceScore, documentScore, rank];
+    const addressTypePafNag = findIfPafOrNagWasUsed(address);
+    const recommendationCode = response.recommendationCode;
+    const addressToAdd = [formattedAddress, uprn, matchType, confidenceScore, documentScore, rank, addressTypePafNag, recommendationCode];
     matchedAddresses.push(addressToAdd);
   }
   return matchedAddresses 
@@ -143,7 +159,7 @@ function processRow(row) {
   finalMatches = [];
   for (const matchedAddress of matchedAddresses) {
     // Add each address with quotes for csv parsing
-    const final_row = [id, inputAddress, matchedAddress[0], matchedAddress[1] , matchedAddress[2] , matchedAddress[3] , matchedAddress[4] , matchedAddress[5] ];
+    const final_row = [id, inputAddress, matchedAddress[0], matchedAddress[1] , matchedAddress[2] , matchedAddress[3] , matchedAddress[4] , matchedAddress[5] , matchedAddress[6], matchedAddress[7]];
     finalMatches.push(final_row);
   }
 
@@ -153,7 +169,7 @@ function processRow(row) {
 }
 
 async function downloadAndProcess(url) {
-  let final_csv = '';
+  let final_csv = 'id,inputAddress,matchedAddress,uprn,matchType,confidenceScore,documentScore,rank,addressType(Paf/Nag),recommendationCode\n';
   const response = await fetch(url);
   const arrayBuffer = await response.arrayBuffer();
   const inflated = await pako.inflate(arrayBuffer);
@@ -219,7 +235,6 @@ window.addEventListener('load', async function() {
 
 
 </script>
-
 
 
 

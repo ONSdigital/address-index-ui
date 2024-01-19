@@ -4,7 +4,7 @@ from flask_login import login_required
 from . import app
 from requests.exceptions import ConnectionError
 from .cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs, save_epoch_number
-from .api_interaction import api
+from .api_interaction import api, get_response_attributes
 from .security_utils import detect_xml_injection
 from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
@@ -74,6 +74,9 @@ def singlesearch():
         session,
     )
 
+  # Get the attributes of the Response a user might want
+  responseAttributes = get_response_attributes(result.json());
+
   return render_template(
       f'{page_name}.html',
       endpoints=get_endpoints(called_from=page_name),
@@ -81,4 +84,5 @@ def singlesearch():
       results_page=True,
       matched_addresses=matched_addresses,
       matched_address_number=len(matched_addresses),
+      responseAttributes=responseAttributes,
   )

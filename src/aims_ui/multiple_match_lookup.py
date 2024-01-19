@@ -1,6 +1,6 @@
 import json
 from io import StringIO, BytesIO
-from aims_ui.api_interaction import api, submit_mm_job, submit_uprn_mm_job
+from aims_ui.api_interaction import api, submit_mm_job, submit_uprn_mm_job, get_response_attributes
 import csv
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
@@ -77,7 +77,7 @@ def multiple_address_match(file, all_user_input, download=False):
 
 
 def multiple_address_match_original(file, all_user_input, download=False):
-  csv_headers = ['id', 'inputAddress',  'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag)']  # yapf: disable
+  csv_headers = ['id', 'inputAddress',  'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag)', 'recommendationCode']  # yapf: disable
 
   contents = file.readlines()
   remove_header_row(contents)
@@ -89,12 +89,12 @@ def multiple_address_match_original(file, all_user_input, download=False):
     writer.writerow(csv_headers)
 
     def write(id, addr, m_addr, address_type, uprn, m_type, confid_score,
-              doc_score, rank):
+              doc_score, rank, recommendationCode):
       writer.writerow([
           given_id,
           address_to_lookup.replace('"', ''), m_addr, adrs.uprn.value,
           match_type, adrs.confidence_score.value, adrs.underlying_score.value,
-          rank, address_type
+          rank, address_type, recommendationCode,
       ])
 
     def finalize(line_count, no_addresses_searched, single_match_total,
@@ -115,7 +115,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
     trs = []
 
     def write(id, addr, m_addr, address_type, uprn, m_type, confid_score,
-              doc_score, rank):
+              doc_score, rank, recommendationCode):
       trs.append({
           'tds': [
               {'value': remove_script_and_html_from_str(given_id) },
@@ -127,6 +127,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
               {'value': adrs.underlying_score.value},
               {'value': rank},
               {'value': address_type},
+              {'value': recommendationCode},
           ]
       }) # yapf: disable
 
@@ -177,7 +178,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
           'multiple',
           all_user_input,
       )
-    except:
+    except Exception as e:
       logging.error(
           'Error on a singlesearch API call for:\n "{all_user_input}"')
       return page_error(None, e, page_name)
@@ -187,6 +188,9 @@ def multiple_address_match_original(file, all_user_input, download=False):
     #print(result.json())
 
     matched_addresses = get_addresses(result.json(), 'multiple')
+
+    # Get the attributes of the Response a user might want
+    responseAttributes = get_response_attributes(result.json());
 
     no_results = len(matched_addresses)
     if no_results == 1:
@@ -213,6 +217,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
           adrs.confidence_score.value,
           adrs.underlying_score.value,
           rank,
+          responseAttributes.get('recommendationCode'),
       )
 
   return finalize(line_count, no_addresses_searched, single_match_total,
