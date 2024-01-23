@@ -10,7 +10,6 @@
 {% from "components/autosuggest/_macro.njk" import onsAutosuggest %}
 {% from "components/panel/_macro.njk" import onsPanel %}
 
-
 {% set col = namespace(value=-1) %}
 {% set row = namespace(value=0) %}
 {% set max_col = 1 %}
@@ -19,13 +18,12 @@
 {% for field in params.Fields %}
 
 {% if params.results_page %}
-{% set show = True %}
+  {% set show = True %}
 {% elif not params.results_page and not field.only_display_in_results_page %}
-{% set show = True %}
+  {% set show = True %}
 {% elif not params.results_page and field.only_display_in_results_page %}
-{% set show = False %}
+  {% set show = False %}
 {% endif %}
-
 
 {# Check to see if the parameter is only meant to be shown on a results page #}
 	<br>
@@ -82,28 +80,32 @@
 
 	{% elif field.search_type == "autosuggest" %}
 	{{ onsAutosuggest({
-       "id": field.database_name,
-       "name": field.database_name,
-	     "label": { "text": field.display_title,
-	 	   "classes": '' if show else field.only_display_in_results_page,
-		   "description": field.description },
-            "autocomplete": "off",
-            "instructions": "Use up and down keys to navigate suggestions once you\'ve typed more than two characters. Use the enter key to select a suggestion. Touch device users, explore by touch or with swipe gestures.",
-            "ariaYouHaveSelected": "You have selected",
-            "ariaMinChars": "Enter 3 or more characters for suggestions.",
-            "minChars": field.min_chars,
-	    "classes": 'ons-input--w-50',
-            "ariaResultsLabel": "Country suggestions",
-            "ariaOneResult": "There is one suggestion available.",
-            "ariaNResults": "There are {n} suggestions available.",
-            "ariaLimitedResults": "Results have been limited to 10 suggestions. Type more characters to improve your search",
-            "moreResults": "Continue entering to improve suggestions",
-            "resultsTitle": "Suggestions",
-            "autosuggestData": field.autosuggest_url,
-            "noResults": "No suggestions found. You can enter your own answer",
-            "typeMore": "Continue entering to get suggestions",
-	    "allowMultiple": "true",
-	    "value": field.previous_value,
+             "id": field.database_name,
+	     "input": {
+  	       "label": { 
+	               "text": field.display_title,
+	   	       "classes": '' if show else field.only_display_in_results_page,
+	  	       "description": field.description,
+                       "autocomplete": "off"
+		     },
+                "name": field.database_name,
+  	        "classes": 'ons-input--w-50'
+		},
+             "instructions": "Use up and down keys to navigate suggestions once you\'ve typed more than two characters. Use the enter key to select a suggestion. Touch device users, explore by touch or with swipe gestures.",
+             "ariaYouHaveSelected": "You have selected",
+             "ariaMinChars": "Enter 3 or more characters for suggestions.",
+             "minChars": field.min_chars,
+             "ariaResultsLabel": "Country suggestions",
+             "ariaOneResult": "There is one suggestion available.",
+             "ariaNResults": "There are {n} suggestions available.",
+             "ariaLimitedResults": "Results have been limited to 10 suggestions. Type more characters to improve your search",
+             "moreResults": "Continue entering to improve suggestions",
+             "resultsTitle": "Suggestions",
+             "autosuggestData": field.autosuggest_url,
+             "noResults": "No suggestions found. You can enter your own answer",
+             "typeMore": "Continue entering to get suggestions",
+  	     "allowMultiple": "true",
+	     "value": field.previous_value,
         }) }}
 
 	{% elif field.search_type == "download" %}
