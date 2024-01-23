@@ -11,7 +11,13 @@
 {% from "components/table/_macro.njk" import onsTable %}
 {% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
 
+{# In order to specify wider than usual components, page must be in "pageContent" (in this case the table might need to be wider)#}
+{% block pageContent %}
 {% block main %}
+{# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
+<div class="ons-grid">
+  <div class="ons-grid__col ons-col-1@m"></div>
+  <div class="ons-grid__col ons-col-10@m">
 
 <h1>Match Multiple Addresses</h1>
 
@@ -36,23 +42,19 @@
         ]
 }) }}
 
-
-
 <br>
+
 {% if not results_page %}
+	<br>
+	{{onsPanel({
+	"body": "
+	<p>'Under 5K Addresses' will execute the matches while you wait, and is only suitable for small jobs. For larger ones go to 'Over 5K Addresses'.</p>
+	<p>To get started, upload a CSV file of up to 5000 addresses to be matched. The file must have only two columns, id and address.</p>
+		<p>Download a <a href='/downloads/example_multiple_address'> sample file</a> <br> <br> 
+		You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>"
+	    })}}
 
-
-<br>
-{{onsPanel({
-"body": "
-<p>'Under 5K Addresses' will execute the matches while you wait, and is only suitable for small jobs. For larger ones go to 'Over 5K Addresses'.</p>
-<p>To get started, upload a CSV file of up to 5000 addresses to be matched. The file must have only two columns, id and address.</p>
-	<p>Download a <a href='/downloads/example_multiple_address'> sample file</a> <br> <br> 
-	You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>"
-    })}}
-
-<br>
-
+	<br>
 {% endif %}
 
 
@@ -62,9 +64,7 @@
 		   "remove_buttons": True,
 		   "remove_search_button":False,
                    "results_page": results_page, }) }}
-
 <br>
-
 {{ onsUpload({
 	"id": "file",
 	"name":"file",
@@ -77,7 +77,6 @@
 	"label": {
 	    "description": "Please upload a CSV file" if not error_type else "",
 	    "text":  "Please upload a CSV file" if not error_type else "" } }) }}
-
 
 <br>
 {{ onsButton({
@@ -104,6 +103,9 @@
   	"trs": [] if not table_results else table_results.get('trs'),
 }) }}
 
+</div> {# Close the 10Col Div#}
+
 <script type=module src="static/src/all_pages_js.mjs"></script>
 
+{% endblock %}
 {% endblock %}
