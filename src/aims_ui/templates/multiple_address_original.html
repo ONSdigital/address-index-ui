@@ -14,7 +14,6 @@
 {% block main %}
 
 <h1>Match Multiple Addresses</h1>
-
 <br>
 
 {{ onsSectionNavigation({
@@ -36,25 +35,18 @@
         ]
 }) }}
 
-
-
 <br>
 {% if not results_page %}
-
-
-<br>
-{{onsPanel({
-"body": "
-<p>'Under 5K Addresses' will execute the matches while you wait, and is only suitable for small jobs. For larger ones go to 'Over 5K Addresses'.</p>
-<p>To get started, upload a CSV file of up to 5000 addresses to be matched. The file must have only two columns, id and address.</p>
-	<p>Download a <a href='/downloads/example_multiple_address'> sample file</a> <br> <br> 
-	You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>"
-    })}}
-
-<br>
-
+	<br>
+	{{onsPanel({
+	"body": "
+	<p>'Under 5K Addresses' will execute the matches while you wait, and is only suitable for small jobs. For larger ones go to 'Over 5K Addresses'.</p>
+	<p>To get started, upload a CSV file of up to 5000 addresses to be matched. The file must have only two columns, id and address.</p>
+		<p>Download a <a href='/downloads/example_multiple_address'> sample file</a> <br> <br> 
+		You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>"
+	    }) }}
+	<br>
 {% endif %}
-
 
 <form method=post enctype=multipart/form-data>
 {{ customSearch ({ "Fields": searchable_fields,
@@ -62,9 +54,7 @@
 		   "remove_buttons": True,
 		   "remove_search_button":False,
                    "results_page": results_page, }) }}
-
 <br>
-
 {{ onsUpload({
 	"id": "file",
 	"name":"file",
@@ -78,7 +68,6 @@
 	    "description": "Please upload a CSV file" if not error_type else "",
 	    "text":  "Please upload a CSV file" if not error_type else "" } }) }}
 
-
 <br>
 {{ onsButton({
         "text": "Match Addresses",
@@ -88,8 +77,12 @@
 
 </form>
 
-<br>
 
+{# Escape the main page contents, create wider grid so that the table can have max width #}
+</div></div></div>
+<div class="ons-grid__col ons-col-1@m"></div>
+<div class="ons-grid__col ons-col-10@m">
+<br>
 {{ onsTable({
 	"id": "basic-table 2",
         "ths":  [] if not table_results else results_summary_table.get('ths') ,
@@ -97,12 +90,12 @@
 }) }}
 
 <br>
-
 {{ onsTable({
 	"id": "basic-table",
         "ths":  [] if not table_results else table_results.get('ths') ,
   	"trs": [] if not table_results else table_results.get('trs'),
 }) }}
+</div>
 
 <script type=module src="static/src/all_pages_js.mjs"></script>
 
