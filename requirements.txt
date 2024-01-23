@@ -4,7 +4,7 @@ flask-session==0.3.2
 six
 importlib-metadata==4.5.0
 requests
-Werkzeug~=2.3.8
+Werkzeug~=3.0.1
 gunicorn==20.1.0
 itsdangerous==2.0.1
 pyjwt==2.4.0
