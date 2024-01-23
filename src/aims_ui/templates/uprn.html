@@ -6,16 +6,12 @@
 {% from 'custom_search/_macro.njk' import customSearch %}
 {% from 'custom_address_info/_macro.njk' import customAddressInfo %}
 
-
-{% set form =  {
-	'method': 'POST',
-	'id': 'searchform',
-	'attributes': {
-	'action': form_action, }} %}
-
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
 {% block main %}
+
+<form method="POST" id="searchform">
+
 {# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
 <div class="ons-grid">
 
@@ -29,6 +25,7 @@
 		   "endpoints": endpoints, 
 		   "remove_search_button":False,
                    "results_page": results_page, }) }}
+</form>
 <br>
 </div> 
 
