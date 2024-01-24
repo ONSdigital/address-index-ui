@@ -92,10 +92,10 @@ def download_handler(file_name):
 
     return send_file(f,
                      mimetype='application/gzip',
-                     attachment_filename=f'{file_name}.csv.gz',
+                     download_name=f'{file_name}.csv.gz',
                      as_attachment=True)
 
   return send_file(f,
                    mimetype='text/csv',
-                   attachment_filename=f'{file_name}.csv',
+                   download_name=f'{file_name}.csv',
                    as_attachment=True)
