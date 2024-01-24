@@ -7,15 +7,12 @@
 {% from "components/button/_macro.njk" import onsButton %}
 {% from "components/panel/_macro.njk" import onsPanel %}
 
-{% set form =  {
-	'method': 'POST',
-	'id': 'searchform',
-	'attributes': {
-	'action': form_action, }} %}
-
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
 {% block main %}
+
+<form method="POST" id="searchform">
+
 {# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
 <div class="ons-grid">
 
@@ -68,6 +65,8 @@
 
 <br>
 
+</form>
+
 {{  onsButton({
 	"text": "Search", }) }}
 
@@ -97,16 +96,12 @@
 {# 5 Col FLAGS page #}
   <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
 
-
 {{ customSearch ({ "Fields": searchable_fields ,
  "remove_search_button":True }) }}
 
 </div>
-
 {# End of grid #}
 </div>
-
-
 
 <script>
 // Script to adjust the parameters for typeahead whenever they're updated
@@ -141,7 +136,6 @@ typeaheadContainer.addEventListener('focusin', (e) => {
 });
 
 </script>
-
 
 {# Add script to remove form resubmission message #}
 <script>

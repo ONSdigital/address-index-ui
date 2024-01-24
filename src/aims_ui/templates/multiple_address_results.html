@@ -27,24 +27,27 @@
             "variants": 'loader' }) }}
 </div>
 
-
 {{ onsSectionNavigation({
         "id": "section-menu",
-        "currentPath": 'multiple_address_results',
-        "itemsList": [
-            {
-                "title": "Under 5K Addresses",
-                "url": url_for('multiple_address_original'),
-            },
-            {
-                "title": "Over 5K Addresses",
-                "url": url_for('multiple_address'),
-            },
-            {
-                "title": "Monitor Jobs",
-                "url":'multiple_address_results',
-            },
-        ]
+        "currentPath": url_for('multiple_address_results'),
+	"headingLevel": 2,
+	"sections":[ {
+		 "title": "",
+		 "itemsList": [ 
+ 				{
+					"title": "Under 5K Addresses",
+					"url": 'multiple_address_original',
+				},
+				{
+					"title": "Over 5K Addresses",
+					"url": url_for('multiple_address'),
+				},
+				{
+					"title": "Monitor Jobs",
+					"url": url_for('multiple_address_results'),
+				},
+		 	     ]
+		} ],
 }) }}
 
 <br>

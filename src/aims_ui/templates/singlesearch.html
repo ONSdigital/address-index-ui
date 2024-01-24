@@ -2,21 +2,17 @@
 
 {% from "components/card/_macro.njk" import onsCard %}
 {% from 'components/panel/_macro.njk' import onsPanel %}
-{% from 'components/lists/_macro.njk' import onsList %}
+{% from 'components/list/_macro.njk' import onsList %}
 {% from 'custom_search/_macro.njk' import customSearch %}
 {% from 'custom_address_info/_macro.njk' import customAddressInfo %}
 {% from "components/panel/_macro.njk" import onsPanel %}
 
-{% set form =  {
-	'method': 'POST',
-	'id': 'searchform',
-	'attributes': {
-	'action': form_action,} } %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
 {% block main %}
 
+<form method="POST" id="searchform">
 
 {# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
 <div class="ons-grid">
@@ -33,6 +29,8 @@
                    "results_page": results_page, }) }}
 <br>
 </div>
+
+</form>
 
 {# 1 Col boarder between filters and results #}
 <div id="space_col_3" class="ons-grid__col ons-col-1@m "></div>
@@ -93,6 +91,7 @@ if ( window.history.replaceState ) {
 <script type=module src="static/src/apply_custom_settings.mjs"></script>
 <script type=module src="static/src/custom_column_widths.mjs"></script>
 <script type=module src="/static/src/all_pages_last.mjs"></script>
+
 
 {% endblock %}
 {% endblock %}
