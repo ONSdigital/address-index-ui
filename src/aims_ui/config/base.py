@@ -14,8 +14,6 @@ API_BSC_AUTH_USERNAME = os.getenv('API_BSC_AUTH_USERNAME')
 API_BSC_AUTH_PASSWORD = os.getenv('API_BSC_AUTH_PASSWORD')
 
 # Deffine Paywall Limitations
-ALL = []
-
 # Remove pages for users
 REMOVE_SINGLESEARCH = {
     'name': 'singlesearch', 
