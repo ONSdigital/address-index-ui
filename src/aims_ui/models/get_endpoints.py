@@ -62,7 +62,7 @@ def get_endpoints(called_from=None):
       current_selected_endpoint = url_for(endpoint.url_title)
 
   # Paywall check
-  
+
   # Remove users from everything but help and settings
   paywall_checked_endpoints = []
   conf = app.config
@@ -71,10 +71,11 @@ def get_endpoints(called_from=None):
   for endpoint in endpoints:
     for remove in remove_conf:
       for key, remove_values in remove.items():
-        to_remove_name = remove_values.get('name') # e.g. typeahead, multiple_address_match
+        to_remove_name = remove_values.get(
+            'name')  # e.g. typeahead, multiple_address_match
         if to_remove_name == endpoint.url_title:
           users_to_remove = remove_values.get('users_to_remove')
-          if user_email in users_to_remove: 
+          if user_email in users_to_remove:
             print('removing', user_email, 'from', endpoint.title, '\n')
           else:
             print('adding', endpoint, '\n')
@@ -86,12 +87,12 @@ def get_endpoints(called_from=None):
   } for endpoint in paywall_checked_endpoints]
 
   if user_email not in app.config.get('REMOVE_HELP').get('users_to_remove'):
-    nav_info.insert(len(nav_info), {'title': 'Help', 'url': '/help/home'}) # YAPF disable
-  if user_email not in app.config.get('REMOVE_SETTINGS').get('users_to_remove'):
-    nav_info.insert(len(nav_info), {'title': 'Settings', 'url': url_for('settings') }) # YAPF disable
+    nav_info.insert(len(nav_info), {'title': 'Help', 'url': '/help/home' })  # yapf: disable
+  if user_email not in app.config.get('REMOVE_SETTINGS').get('users_to_remove'): # yapf: disable
+    nav_info.insert(len(nav_info), { 'title': 'Settings', 'url': url_for('settings') })  # yapf: disable
 
   for endpoint in paywall_checked_endpoints:
     endpoint.nav_info = nav_info
     endpoint.current_selected_endpoint = current_selected_endpoint
 
-  return paywall_checked_endpoints 
+  return paywall_checked_endpoints
