@@ -50,7 +50,6 @@ REMOVE_SETTINGS = {
 
 # Reduce 5,000 to 200 max
 REDUCED_MULTIPLE_ADDRESS = [
-    'UserNotLoggedIn'
 ]
 
 # Default Classification and Epoch options, should the initial server response be incorrect (or the endpoint doesn't exist)
