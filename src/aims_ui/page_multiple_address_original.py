@@ -24,7 +24,10 @@ def final(searchable_fields,
           error_description='',
           error_title='',
           results_summary_table='',
-          table_results=''):
+          table_results='',
+          reduced=False,
+          limit=5000,
+          ):
 
   return render_template(
       f'{page_name}.html',
@@ -35,6 +38,8 @@ def final(searchable_fields,
       table_results=table_results,
       results_summary_table=results_summary_table,
       results_page=True,
+      reduced=reduced,
+      limit=limit,
   )
 
 
@@ -57,6 +62,17 @@ def request_entity_too_large(error):
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def multiple_address_original():
+  user_email = request.headers.get('X-Goog-Authenticated-User-Email',
+                                   'UserNotLoggedIn')
+  user_email = user_email.replace('accounts.google.com:', '')
+  user_email = user_email.replace('@ons.gov.uk', '')
+
+  if user_email in app.config.get('REDUCED_MULTIPLE_ADDRESS'):
+    reduced = True
+    limit = 300
+  else:
+    reduced = False
+    limit = 5000
 
   if request.method == 'GET':
     delete_input(session)
@@ -70,6 +86,8 @@ def multiple_address_original():
         f'{page_name}.html',
         searchable_fields=searchable_fields,
         endpoints=get_endpoints(called_from=page_name),
+        reduced=reduced,
+        limit=limit,
     )
 
   if request.method == 'POST':
@@ -83,20 +101,12 @@ def multiple_address_original():
 
     file = request.files['file']
 
-    user_email = request.headers.get('X-Goog-Authenticated-User-Email',
-                                     'UserNotLoggedIn')
-    user_email = user_email.replace('accounts.google.com:', '')
-    user_email = user_email.replace('@ons.gov.uk', '')
-
-    if user_email in app.config.get('REDUCED_MULTIPLE_ADDRESS'):
-      limit = 300
-    else:
-      limit = 5000
-
     try:
       file_valid, error_description, error_title = check_valid_upload(file, limit=limit)
     except FileUploadException as e:
       return final(searchable_fields,
+                   limit=limit,
+                   reduced=reduced,
                    error_description=e.error_description,
                    error_title=e.error_title)
 
@@ -104,6 +114,8 @@ def multiple_address_original():
       # File invalid? Return error
       return final(searchable_fields,
                    error_description=error_description,
+                   limit=limit,
+                   reduced=reduced,
                    error_title=error_title)
     else:
       for field in searchable_fields:
@@ -131,4 +143,6 @@ def multiple_address_original():
 
         return final(searchable_fields,
                      table_results=table_results,
+                     limit=limit,
+                     reduced=reduced,
                      results_summary_table=results_summary_table)
