@@ -75,10 +75,7 @@ def get_endpoints(called_from=None):
             'name')  # e.g. typeahead, multiple_address_match
         if to_remove_name == endpoint.url_title:
           users_to_remove = remove_values.get('users_to_remove')
-          if user_email in users_to_remove:
-            print('removing', user_email, 'from', endpoint.title, '\n')
-          else:
-            print('adding', endpoint, '\n')
+          if user_email not in users_to_remove:
             paywall_checked_endpoints.append(endpoint)
 
   nav_info = [{
