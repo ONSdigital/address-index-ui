@@ -124,7 +124,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
               {'value': adrs.uprn.value},
               {'value': match_type},
               {'value': adrs.confidence_score.value},
-              {'value': adrs.underlying_score.value},
+              {'value': round(float(adrs.underlying_score.value), 2)},
               {'value': rank},
               {'value': address_type},
               {'value': recommendationCode},
