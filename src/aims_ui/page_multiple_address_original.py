@@ -83,8 +83,18 @@ def multiple_address_original():
 
     file = request.files['file']
 
+    user_email = request.headers.get('X-Goog-Authenticated-User-Email',
+                                     'UserNotLoggedIn')
+    user_email = user_email.replace('accounts.google.com:', '')
+    user_email = user_email.replace('@ons.gov.uk', '')
+
+    if user_email in app.config.get('REDUCED_MULTIPLE_ADDRESS'):
+      limit = 300
+    else:
+      limit = 5000
+
     try:
-      file_valid, error_description, error_title = check_valid_upload(file)
+      file_valid, error_description, error_title = check_valid_upload(file, limit=limit)
     except FileUploadException as e:
       return final(searchable_fields,
                    error_description=e.error_description,
