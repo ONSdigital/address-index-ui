@@ -1,5 +1,6 @@
 from .endpoint import Endpoint
 from flask import url_for, request
+from aims_ui import app
 
 
 def get_endpoints(called_from=None):
@@ -60,20 +61,37 @@ def get_endpoints(called_from=None):
       endpoint.selected = True
       current_selected_endpoint = url_for(endpoint.url_title)
 
+  # Paywall check
+  
+  # Remove users from everything but help and settings
+  paywall_checked_endpoints = []
+  conf = app.config
+  remove_conf = [{key: conf[key]} for key in conf if key.startswith("REMOVE_")]
+
+  for endpoint in endpoints:
+    for remove in remove_conf:
+      for key, remove_values in remove.items():
+        to_remove_name = remove_values.get('name') # e.g. typeahead, multiple_address_match
+        if to_remove_name == endpoint.url_title:
+          users_to_remove = remove_values.get('users_to_remove')
+          if user_email in users_to_remove: 
+            print('removing', user_email, 'from', endpoint.title, '\n')
+          else:
+            print('adding', endpoint, '\n')
+            paywall_checked_endpoints.append(endpoint)
+
   nav_info = [{
       'title': endpoint.title,
       'url': endpoint.url
-  } for endpoint in endpoints]
-  # Add the 'About' section at the end, insert instead of append so it's location can easily
-  # be changed later, after consulting with UX team
-  nav_info.insert(len(nav_info), {'title': 'Help', 'url': '/help/home'})
-  nav_info.insert(len(nav_info), {
-      'title': 'Settings',
-      'url': url_for('settings')
-  })
+  } for endpoint in paywall_checked_endpoints]
 
-  for endpoint in endpoints:
+  if user_email not in app.config.get('REMOVE_HELP').get('users_to_remove'):
+    nav_info.insert(len(nav_info), {'title': 'Help', 'url': '/help/home'}) # YAPF disable
+  if user_email not in app.config.get('REMOVE_SETTINGS').get('users_to_remove'):
+    nav_info.insert(len(nav_info), {'title': 'Settings', 'url': url_for('settings') }) # YAPF disable
+
+  for endpoint in paywall_checked_endpoints:
     endpoint.nav_info = nav_info
     endpoint.current_selected_endpoint = current_selected_endpoint
 
-  return endpoints
+  return paywall_checked_endpoints 
