@@ -109,7 +109,7 @@ def multiple_address_original():
 
         return send_file(full_results,
                          mimetype='text/csv',
-                         attachment_filename=f'result_size_{line_count}.csv',
+                         download_name=f'result_size_{line_count}.csv',
                          as_attachment=True)
 
       elif results_type == 'Display':
