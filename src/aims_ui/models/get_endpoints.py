@@ -11,7 +11,7 @@ def get_endpoints(called_from=None):
           'Provide as much of the address as possible for best results.',
       ),
       Endpoint(
-          'UPRN Single Search',
+          'Single UPRN',
           'uprn',
           "Search for a property via its unique property reference number. This is a 12 digit number which contains no characters.",
       ),
@@ -71,6 +71,7 @@ def get_endpoints(called_from=None):
       'title': 'Settings',
       'url': url_for('settings')
   })
+  nav_info.insert(len(nav_info), {'title': 'HTTP', 'url': '/custom_response'})
 
   for endpoint in endpoints:
     endpoint.nav_info = nav_info
