@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% from "components/select/_macro.njk" import onsSelect %}
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/label/_macro.njk" import onsLabel %}
+{% from "components/input/_macro.njk" import onsInput %}
+
+{% block main %}
+
+{# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
+<div class="ons-grid">
+
+{# 1 Column Spacing #}
+<div id="space_col_1" class="ons-grid__col ons-col-1@m "></div>
+
+{# Left Side of Page (4 cols) #}
+<div id="content_col_2" class="ons-grid__col ons-col-7@m ">
+
+{{ onsSelect({
+        "id": "request-type",
+        "name": "request-type",
+        "label": {
+            "text": "Request Type"
+        },
+        "options": [
+            {
+                "value": "GET",
+                "text": "GET",
+                "selected": true
+            } ]
+    	})
+}}
+
+{{ onsInput({
+        "id": "url-input",
+        "label": {
+            "text": "URL"
+        }
+    })
+}}
+
+{{ onsLabel({
+        "id": 'request-body-label',
+        "for": "request-body-text-area",
+        "text": 'Request Body'
+    })
+}}
+
+<textarea id="request-body-text-area" 
+	  class="ons-input ons-input--text ons-input-type__input" 
+	  rows="12" 
+	  cols="50">
+</textarea>
+
+<br>
+{{ onsButton({
+        "text": "Submit"
+    }) 
+}}
+</div>
+{# Right side of page #}
+
+
+
+{% endblock %}
