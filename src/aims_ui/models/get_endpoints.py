@@ -71,7 +71,7 @@ def get_endpoints(called_from=None):
       'title': 'Settings',
       'url': url_for('settings')
   })
-  nav_info.insert(len(nav_info), {'title': 'HTTP', 'url': '/custom_response'})
+  nav_info.insert(len(nav_info), {'title': 'API', 'url': '/custom_response'})
 
   for endpoint in endpoints:
     endpoint.nav_info = nav_info
