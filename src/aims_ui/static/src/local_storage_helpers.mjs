@@ -1,3 +1,18 @@
+// custom response helpers START
+export function getFormatPrefferenceCustomResponse(){
+  return localStorage.getItem('custom_response_return_format');
+}
+
+export function updateCustomResponseFormat(prefferenceRadioId){
+  localStorage.setItem('custom_response_return_format', prefferenceRadioId);
+}
+
+export function setDefaultResponseFormatCustomResponse() {
+  if (! localStorage.getItem('custom_response_return_format')) {
+    localStorage.setItem('custom_response_return_format', 'response-type-object');
+  }
+}
+// custom response helpers END
 
 export function updateAddressFormatPrefference(pafOrNag){
   localStorage.setItem('custom_settings_address_prefference', pafOrNag);
