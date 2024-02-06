@@ -31,7 +31,7 @@ class BasicValue():
 
 class Nag():
   def __init__(self, nag):
-    nag = nag[0]
+    nag = nag[0] if nag else {}
 
     # Values to show in the 'full info' page on a particular address
     self.full_values_to_show = [
@@ -64,8 +64,8 @@ class Nag():
     self.addressBasePostal = BasicValue(nag, 'addressBasePostal')
     self.usrn = BasicValue(nag, 'usrn')
     self.lpiKey = BasicValue(nag, 'lpiKey')
-    self.pao = Pao(nag.get('pao'))
-    self.sao = Sao(nag.get('sao'))
+    self.pao = Pao(nag.get('pao', {}))
+    self.sao = Sao(nag.get('sao', {}))
     self.level = BasicValue(nag, 'level')
     self.officialFlag = BasicValue(nag, 'officialFlag')
     self.logicalStatus = BasicValue(nag, 'logicalStatus')
