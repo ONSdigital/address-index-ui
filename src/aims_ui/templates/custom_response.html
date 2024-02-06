@@ -8,6 +8,8 @@
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/autosuggest/_macro.njk" import onsAutosuggest %}
 {% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+{% from 'components/panel/_macro.njk' import onsPanel %}
+{% from 'components/list/_macro.njk' import onsList %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -137,6 +139,20 @@
 	}
 	</style>
 </div>
+
+{% if show_error %}
+	{% call
+	    onsPanel({
+		'title': error_title,
+		'type': 'error'
+	    }) %}
+	{{ onsList({
+		'id': 'no_data_found',
+		'classes': 'list--bare list--errors u-mb-s',
+		'itemsList': errors_formatted,
+	    }) }}
+	{% endcall %}
+{% endif %}
 
 
 </div>

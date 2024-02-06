@@ -28,11 +28,41 @@ def custom_response():
 
   header = get_header(request)
 
-  if request_type == 'GET':
-    r = requests.get(
-        api_url,
-        headers=header,
-    )
+  try:
+    if request_type == 'GET':
+      r = requests.get(api_url, headers=header)
+    elif request_type == 'POST':
+      r = requests.post(api_url, headers=header, body=request_body)
+
+    # If sucessful request (but maybe a bad request) check response code
+    if r.status_code != 200:
+      # Get details about the failed response
+      json_response = r.json()
+      status = json_response.get('status')
+      errors = json_response.get('errors')
+      errors_formatted = [
+        {'text': f"Error {error['code']}. {error['message']}"} for error in errors ]
+      return render_template(
+        f'{page_name}.html',
+        endpoints=get_endpoints(called_from=page_name),
+        error_title=f"Status Code: {status.get('code')} - {status.get('message')}",
+        errors_formatted=errors_formatted,
+        show_error=True,
+      )     
+
+  except requests.exceptions.HTTPError as http_err:
+    # Specific errors related to HTTP responses
+    print(f"HTTP error occurred: {http_err}")
+  except requests.exceptions.ConnectionError as conn_err:
+    # Errors related to connecting to the server
+    print(f"Connection error occurred: {conn_err}")
+  except requests.exceptions.Timeout as timeout_err:
+    # Timeout errors
+    print(f"Timeout error occurred: {timeout_err}")
+  except requests.exceptions.RequestException as req_err:
+    # Catch-all for any request-related error
+    print(f"An error occurred: {req_err}")
+
 
   plaintext_response = r.json()
   formatted_text_response = json.dumps(plaintext_response, indent=2)
@@ -46,4 +76,5 @@ def custom_response():
       formatted_text_response=formatted_text_response,
       matched_addresses=matched_addresses,
       matched_address_number=len(matched_addresses),
+      results_page=True,
   )
