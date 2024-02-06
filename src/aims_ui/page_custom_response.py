@@ -10,6 +10,14 @@ import json, requests
 
 page_name = 'custom_response'
 
+def return_error_to_custom_response(error_title, errors_formatted):
+  return render_template(
+    f'{page_name}.html',
+    endpoints=get_endpoints(called_from=page_name),
+    error_title=error_title,
+    errors_formatted=errors_formatted,
+  )     
+
 
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
@@ -38,31 +46,28 @@ def custom_response():
     if r.status_code != 200:
       # Get details about the failed response
       json_response = r.json()
+
       status = json_response.get('status')
+      error_title=f"Status Code: {status.get('code')} - {status.get('message')}"
+
       errors = json_response.get('errors')
       errors_formatted = [
         {'text': f"Error {error['code']}. {error['message']}"} for error in errors ]
-      return render_template(
-        f'{page_name}.html',
-        endpoints=get_endpoints(called_from=page_name),
-        error_title=f"Status Code: {status.get('code')} - {status.get('message')}",
-        errors_formatted=errors_formatted,
-        show_error=True,
-      )     
+
+      return return_error_to_custom_response(error_title, errors_formatted)
 
   except requests.exceptions.HTTPError as http_err:
-    # Specific errors related to HTTP responses
-    print(f"HTTP error occurred: {http_err}")
+    errors_formatted = [{'text': 'Error in HTTP response'}]
+    return return_error_to_custom_response('HTTP error occured', errors_formatted)
   except requests.exceptions.ConnectionError as conn_err:
-    # Errors related to connecting to the server
-    print(f"Connection error occurred: {conn_err}")
+    errors_formatted = [{'text': 'Error Connecting to Server'}]
+    return return_error_to_custom_response('Connection Error', errors_formatted)
   except requests.exceptions.Timeout as timeout_err:
-    # Timeout errors
-    print(f"Timeout error occurred: {timeout_err}")
+    errors_formatted = [{'text': 'A timeout has occured. Retrying might fix this'}]
+    return return_error_to_custom_response('Timeout Error', errors_formatted)
   except requests.exceptions.RequestException as req_err:
-    # Catch-all for any request-related error
-    print(f"An error occurred: {req_err}")
-
+    errors_formatted = [{'text': str(req_err) }]
+    return return_error_to_custom_response('Unknown Error', errors_formatted)
 
   plaintext_response = r.json()
   formatted_text_response = json.dumps(plaintext_response, indent=2)
