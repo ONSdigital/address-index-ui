@@ -127,7 +127,7 @@
 </div>
 
 <div id='formatted-text-container' class="ons-u-hidden">
-	<pre><code id='code-response-element'>{{ formatted_text_response|safe }}</code></pre>
+	<pre><code id='code-response-element'>{{ r_json_readable|safe }}</code></pre>
 	<style>
 	pre {
 	    white-space: pre; /* Use 'pre' instead of 'pre-wrap' to avoid wrapping */
@@ -153,7 +153,6 @@
 	    }) }}
 	{% endcall %}
 {% endif %}
-
 
 </div>
 
