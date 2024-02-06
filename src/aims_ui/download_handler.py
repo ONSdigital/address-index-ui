@@ -62,7 +62,9 @@ def autosuggest(autosuggest_type):
 
     # Convert options ['x', 'y'... to classification format
     for option in list_from_file:
-      formatted_autosuggest_list.append({'en': option,})
+      formatted_autosuggest_list.append({
+          'en': option,
+      })
     return json.dumps(formatted_autosuggest_list)
 
   return ('Invalid autosuggest type')
