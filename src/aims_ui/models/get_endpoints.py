@@ -47,6 +47,8 @@ def get_endpoints(called_from=None):
     called_from = ''
   if called_from == 'help':
     current_selected_endpoint = '/help/home'
+  elif called_from == 'custom_response':
+    current_selected_endpoint = '/custom_response'
   elif 'multiple_address' in called_from:
     called_from = 'multiple_address_original'
   elif called_from != 'address_info':
