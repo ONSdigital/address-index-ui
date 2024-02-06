@@ -81,14 +81,15 @@
         "for": "response-type",
 	"text": 'How would you like your Response?'
     }) }} {{ onsRadios({
+    "id": "response-type-radio",
     "name": "response-type",
     "dontWrap": true,
     "radios": [ {
-	    "id": "text",
+	    "id": "response-type-text",
 	    "label": { "text": "Plaintext" },
 	    "value": "plaintext" },
 	{
-	    "id": "address-object",
+	    "id": "response-type-object",
 	    "label": { "text": "Address Objects" },
 	    "value": "address-object" }
     ] }) }}
