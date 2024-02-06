@@ -49,7 +49,8 @@ def getHierarchy(parentUPRN):
       'Septenary',
       'Octonary',
   ]
-
+  if not relatives:
+    return []
   for level in relatives:
     siblings = level.get('siblings')
     # Get Address list of all siblings

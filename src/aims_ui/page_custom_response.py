@@ -79,8 +79,11 @@ def custom_response():
   # Check to see if response actually contains addresses:
   matched_addresses = []
   if 'response' in r_json:
-    if 'addresses' in r_json.get('response'):
+    r_resp = r_json.get('response')
+    if ('addresses' in r_resp):
       matched_addresses = get_addresses(r_json, page_name)
+    elif ('address' in r_resp):
+      matched_addresses = get_addresses(r_json, 'uprn')
 
   return render_template(
       f'{page_name}.html',
