@@ -20,7 +20,10 @@ codes = {
 
 def getTextLogicalStatus(value):
   code_vals = codes.get(str(value))
-  code_colour = code_vals.get('colour')
-  final_string = code_vals.get('status') + ' (' + str(value) + ') '
-  final_html = f'<div style="background-color:{code_colour};">{final_string}</div>'
-  return final_html
+  if code_vals:
+    code_colour = code_vals.get('colour')
+    final_string = code_vals.get('status') + ' (' + str(value) + ') '
+    final_html = f'<div style="background-color:{code_colour};">{final_string}</div>'
+    return final_html
+  else:
+    return '<div style="background-color:#ff0000;">None</div>'

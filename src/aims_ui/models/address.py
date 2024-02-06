@@ -191,9 +191,11 @@ class AddressAttribute():
                      confidence_score=None):
     # Special formatting for some values
     if self.name == 'confidenceScoreFormatted':
-      confidence_score_formatted = str(round(float(confidence_score),
-                                             2)) + '% Match'
-      return confidence_score_formatted
+      if confidence_score:
+        confidence_score_formatted = str(round(float(confidence_score),
+                                               2)) + '% Match'
+        return confidence_score_formatted
+      return ''
 
     if self.name == 'confidenceScore':
       if confidence_score != None:
@@ -209,11 +211,12 @@ class AddressAttribute():
 
     if self.name == 'geo':
       # README swapping the long/lat values fixes things - do not change, it's not a mistake!
-      new_d = {
+      if value:
+        return {
           'longitude': str(value.get('latitude')),
           'latitude': str(value.get('longitude')),
-      }
-      return new_d
+        }
+      return {'longitude':'na', 'latitude':'na'}
     if self.name == 'classificationCodeList':
       return get_classification_list(classification_code)
     if self.name == 'nag':
