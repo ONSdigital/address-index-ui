@@ -29,8 +29,6 @@ def custom_response():
         endpoints=get_endpoints(called_from=page_name),
     )
 
-  print(request.form)
-  print(request.form.get('uprn'))
 
   return render_template(
       f'{page_name}.html',
