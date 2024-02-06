@@ -69,16 +69,19 @@ def custom_response():
     errors_formatted = [{'text': str(req_err) }]
     return return_error_to_custom_response('Unknown Error', errors_formatted)
 
-  plaintext_response = r.json()
-  formatted_text_response = json.dumps(plaintext_response, indent=2)
-  if r.status_code != 200:
-    return page_error(r, page_name)
-  matched_addresses = get_addresses(r.json(), page_name)
+  r_json = r.json()
+  r_json_readable = json.dumps(r_json, indent=2)
+
+  # Check to see if response actually contains addresses:
+  matched_addresses = []
+  if 'response' in r_json:
+    if 'addresses' in r_json.get('response'):
+      matched_addresses = get_addresses(r_json, page_name)
 
   return render_template(
       f'{page_name}.html',
       endpoints=get_endpoints(called_from=page_name),
-      formatted_text_response=formatted_text_response,
+      r_json_readable=r_json_readable,
       matched_addresses=matched_addresses,
       matched_address_number=len(matched_addresses),
       results_page=True,
