@@ -12,7 +12,7 @@
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
 {% block main %}
-
+<br>
 <form method="POST" id="searchform">
 
 {# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
@@ -96,6 +96,13 @@
 
 {{  onsButton({
 	"text": "Search", }) }}
+{{ onsButton({
+	'text': 'Clear  filters',
+	'submitType': "loader",
+	'variants': 'secondary',
+	'url': '/custom_response',
+	'id': 'clear-form-data-button-id',
+}) }}
 
 </form>
 <br>
@@ -128,7 +135,9 @@ if ( window.history.replaceState ) {
 
 <script type=module src="static/src/all_pages_js.mjs"></script>
 <script type=module src="static/src/apply_custom_settings.mjs"></script>
+<script type=module src="static/src/save_inputs.mjs"></script>
 <script type=module src="static/src/custom_column_widths.mjs"></script>
+<script type=module src="static/src/individual_pages/page_custom_response.mjs"></script>
 <script type=module src="/static/src/all_pages_last.mjs"></script>
 
 {% endblock %}
