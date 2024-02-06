@@ -124,6 +124,21 @@
 {{ customAddressInfo ({
 	'matched_addresses': matched_addresses,
 	}) }}
+
+{# If there's an error, formatt it nicely here #}
+{% if error_title %}
+	{% call
+	    onsPanel({
+		'title': error_title,
+		'type': 'error'
+	    }) %}
+	{{ onsList({
+		'id': 'no_data_found',
+		'classes': 'list--bare list--errors u-mb-s',
+		'itemsList': errors_formatted,
+	    }) }}
+	{% endcall %}
+{% endif %}
 </div>
 
 <div id='formatted-text-container' class="ons-u-hidden">
@@ -139,20 +154,6 @@
 	}
 	</style>
 </div>
-
-{% if error_title %}
-	{% call
-	    onsPanel({
-		'title': error_title,
-		'type': 'error'
-	    }) %}
-	{{ onsList({
-		'id': 'no_data_found',
-		'classes': 'list--bare list--errors u-mb-s',
-		'itemsList': errors_formatted,
-	    }) }}
-	{% endcall %}
-{% endif %}
 
 </div>
 
