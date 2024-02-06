@@ -35,6 +35,7 @@ def custom_response():
     )
 
   plaintext_response = r.json()
+  formatted_text_response = json.dumps(plaintext_response, indent=4)
   if r.status_code != 200:
     return page_error(r, page_name)
   matched_addresses = get_addresses(r.json(), page_name)
@@ -42,7 +43,7 @@ def custom_response():
   return render_template(
       f'{page_name}.html',
       endpoints=get_endpoints(called_from=page_name),
-      plaintext_response=plaintext_response,
+      formatted_text_response=formatted_text_response,
       matched_addresses=matched_addresses,
       matched_address_number=len(matched_addresses),
   )

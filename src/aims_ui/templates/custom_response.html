@@ -118,9 +118,26 @@
 <h2>We matched {{matched_address_number}}  addresses:</h2>
 {% endif %}
 
+<div id='address-object-container' class="ons-u-hidden">
 {{ customAddressInfo ({
 	'matched_addresses': matched_addresses,
 	}) }}
+</div>
+
+<div id='formatted-text-container' class="ons-u-hidden">
+	<pre><code id='code-response-element'>{{ formatted_text_response|safe }}</code></pre>
+	<style>
+	pre {
+	    white-space: pre; /* Use 'pre' instead of 'pre-wrap' to avoid wrapping */
+	    overflow-x: auto; /* Enable horizontal scrolling */
+	    background-color: #f4f4f4; /* Example background color */
+	    padding: 0.625em; /* Adjusted from 10px, assuming base font size is 16px */
+	    border-radius: 0.3125em; /* Adjusted from 5px, assuming base font size is 16px */
+	    border: 0.0625em solid #ccc; /* Adjusted from 1px, assuming base font size is 16px */
+	}
+	</style>
+</div>
+
 
 </div>
 
