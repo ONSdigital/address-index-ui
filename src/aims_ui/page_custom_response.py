@@ -50,11 +50,13 @@ def custom_response():
       status = json_response.get('status')
       error_title=f"Status Code: {status.get('code')} - {status.get('message')}"
 
-      errors = json_response.get('errors')
-      errors_formatted = [
-        {'text': f"Error {error['code']}. {error['message']}"} for error in errors ]
-
-      return return_error_to_custom_response(error_title, errors_formatted)
+      errors = json_response.get('errors', 'NA')
+      if errors != 'NA':
+        errors_formatted = [
+          {'text': f"Error {error['code']}. {error['message']}"} for error in errors ]
+        return return_error_to_custom_response(error_title, errors_formatted)
+      else:
+        return return_error_to_custom_response(error_title, [{'text': 'Error in request'}])
 
   except requests.exceptions.HTTPError as http_err:
     errors_formatted = [{'text': 'Error in HTTP response'}]
