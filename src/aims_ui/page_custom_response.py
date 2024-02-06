@@ -1,16 +1,12 @@
-import os
-from flask import render_template, request, session
-from requests.exceptions import ConnectionError
+from flask import render_template, request
 from flask_login import login_required
 from . import app
-from .cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs, save_epoch_number
-from .api_interaction import api
 from .security_utils import detect_xml_injection
 from .models.get_endpoints import get_endpoints
-from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
 from .page_error import page_error
-import json
+from .api_interaction import get_header
+import json, requests
 
 page_name = 'custom_response'
 
@@ -20,20 +16,33 @@ page_name = 'custom_response'
 def custom_response():
 
   if request.method == 'GET':
-    delete_input(session)
-    search_uprn = request.args.get('search_uprn')
     return render_template(
         f'{page_name}.html',
-        searchable_fields=get_fields('uprn',
-                                     include_UPRN_redirect=search_uprn),
         endpoints=get_endpoints(called_from=page_name),
     )
 
+  base_url = app.config.get('API_URL') 
+  api_url = base_url + request.form.get('url-input-autosuggest') # End of url, e.g. /addresses
+  request_body = request.form.get('request-body-text-area') # Body of request
+  request_type = request.form.get('request-type') # GET or POST
+
+  header = get_header(request)
+
+  if request_type == 'GET':
+    r = requests.get(
+        api_url,
+        headers=header,
+    )
+
+  plaintext_response = r.json()
+  if r.status_code != 200:
+    return page_error(r, page_name)
+  matched_addresses = get_addresses(r.json(), page_name)
 
   return render_template(
       f'{page_name}.html',
-      endpoints=get_endpoints(called_from='uprn'),
-      searchable_fields=get_fields('uprn'),
+      endpoints=get_endpoints(called_from=page_name),
+      plaintext_response=plaintext_response,
+      matched_addresses=matched_addresses,
+      matched_address_number=len(matched_addresses),
   )
-
-

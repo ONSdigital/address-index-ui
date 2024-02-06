@@ -75,7 +75,7 @@ def singlesearch():
     )
 
   # Get the attributes of the Response a user might want
-  responseAttributes = get_response_attributes(result.json());
+  responseAttributes = get_response_attributes(result.json())
 
   return render_template(
       f'{page_name}.html',
