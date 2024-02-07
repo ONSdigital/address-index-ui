@@ -41,7 +41,7 @@ def custom_response():
     if request_type == 'GET':
       r = requests.get(api_url, headers=header)
     elif request_type == 'POST':
-      r = requests.post(api_url, headers=header, body=request_body)
+      r = requests.post(api_url, headers=header, data=request_body.encode('utf-8'))
     
     # Get the json response and formatted version for user output
     r_json = r.json()

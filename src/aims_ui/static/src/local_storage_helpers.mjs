@@ -3,13 +3,24 @@ export function getFormatPrefferenceCustomResponse(){
   return localStorage.getItem('custom_response_return_format');
 }
 
+export function getRequestTypeCustomResponse(){
+  return localStorage.getItem('custom_response_request_type');
+}
+
+export function updateCusomtResponseRequestType(requestType){
+  localStorage.setItem('custom_response_request_type', requestType);
+}
+
 export function updateCustomResponseFormat(prefferenceRadioId){
   localStorage.setItem('custom_response_return_format', prefferenceRadioId);
 }
 
 export function setDefaultResponseFormatCustomResponse() {
   if (! localStorage.getItem('custom_response_return_format')) {
-    localStorage.setItem('custom_response_return_format', 'response-type-object');
+     updateCustomResponseFormat('response-type-object');
+  }
+  if (! localStorage.getItem('custom_response_request_type')) {
+    updateCusomtResponseRequestType('GET');
   }
 }
 // custom response helpers END
