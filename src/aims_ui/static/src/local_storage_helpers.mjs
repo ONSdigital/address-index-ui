@@ -7,7 +7,15 @@ export function getRequestTypeCustomResponse(){
   return localStorage.getItem('custom_response_request_type');
 }
 
-export function updateCusomtResponseRequestType(requestType){
+export function getReqBodyStyle(){
+  return localStorage.getItem('custom_response_req_body_style');
+}
+
+export function updateReqBodyStyle(newStyle){
+  localStorage.setItem('custom_response_req_body_style', newStyle);
+}
+
+export function updateCustomResponseRequestType(requestType){
   localStorage.setItem('custom_response_request_type', requestType);
 }
 
@@ -20,7 +28,10 @@ export function setDefaultResponseFormatCustomResponse() {
      updateCustomResponseFormat('response-type-object');
   }
   if (! localStorage.getItem('custom_response_request_type')) {
-    updateCusomtResponseRequestType('GET');
+    updateCustomResponseRequestType('GET');
+  }
+  if (! localStorage.getItem('custom_response_req_body_style')) {
+    updateReqBodyStyle('');
   }
 }
 // custom response helpers END
