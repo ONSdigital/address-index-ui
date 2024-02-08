@@ -120,11 +120,15 @@
 {# 5 Col results page #}
   <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
 
+<div id='address-object-container' class="ons-u-hidden">
+
 {% if results_page %}
 <h2>We matched {{matched_address_number}}  addresses:</h2>
+	{% if matched_address_number==0 %}
+		<h5>You may want to try the "plaintext" repsonse</h5>
+	{% endif %}
 {% endif %}
 
-<div id='address-object-container' class="ons-u-hidden">
 {{ customAddressInfo ({
 	'matched_addresses': matched_addresses,
 	}) }}
@@ -146,6 +150,7 @@
 </div>
 
 <div id='formatted-text-container' class="ons-u-hidden">
+	<h2>Plaintext Response:</h2>
 	<pre><code id='code-response-element'>{{ r_json_readable|safe }}</code></pre>
 	<style>
 	pre {
