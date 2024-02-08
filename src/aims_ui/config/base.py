@@ -13,6 +13,50 @@ SESSION_COOKIE_SECURE = True
 API_BSC_AUTH_USERNAME = os.getenv('API_BSC_AUTH_USERNAME')
 API_BSC_AUTH_PASSWORD = os.getenv('API_BSC_AUTH_PASSWORD')
 
+# Deffine Paywall Limitations
+# Remove pages for users
+REMOVE_SINGLESEARCH = {
+    'name': 'singlesearch', 
+    'users_to_remove': []
+}
+REMOVE_UPRN_SINGLESEARCH = {
+    'name': 'uprn',
+    'users_to_remove': ['UserNotLoggedIn']
+}
+REMOVE_POSTCODE = {
+    'name': 'postcode',
+    'users_to_remove': ['UserNotLoggedIn']
+}
+REMOVE_TYPEAHEAD = {
+    'name': 'typeahead',
+    'users_to_remove': []
+}
+REMOVE_MULTIPLE_ADDRESS = {
+    'name': 'multiple_address_original',
+    'users_to_remove': []
+}
+REMOVE_MUTIPLE_UPRN = {
+    'name': 'uprn_multiple_match',
+    'users_to_remove': []
+}
+REMOVE_HELP = {
+    'name': 'help', 
+    'users_to_remove': []
+}
+REMOVE_SETTINGS = {
+    'name': 'settings', 
+    'users_to_remove': ['UserNotLoggedIn']
+}
+REMOVE_API= {
+    'name': 'api', 
+    'users_to_remove': []
+}
+
+
+# Reduce 5,000 to 200 max
+REDUCED_MULTIPLE_ADDRESS = [
+]
+
 # Default Classification and Epoch options, should the initial server response be incorrect (or the endpoint doesn't exist)
 
 DEFAULT_EPOCH_SELECTED = '89'
