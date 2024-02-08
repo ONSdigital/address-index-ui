@@ -213,10 +213,10 @@ class AddressAttribute():
       # README swapping the long/lat values fixes things - do not change, it's not a mistake!
       if value:
         return {
-          'longitude': str(value.get('latitude')),
-          'latitude': str(value.get('longitude')),
+            'longitude': str(value.get('latitude')),
+            'latitude': str(value.get('longitude')),
         }
-      return {'longitude':'na', 'latitude':'na'}
+      return {'longitude': 'na', 'latitude': 'na'}
     if self.name == 'classificationCodeList':
       return get_classification_list(classification_code)
     if self.name == 'nag':
