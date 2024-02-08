@@ -8,7 +8,7 @@ import {
 } from '../local_storage_helpers.mjs';
 
 
-function addChangeEventListeners(radioText, radioAddObj, reqType, reqBody) {
+function addChangeEventListeners(radioText, radioAddObj, reqType, reqBody, reqBodyContainer) {
   // Radio Listeners
   radioText.addEventListener('change', (e) => {
     updateCustomResponseFormat('response-type-text');
@@ -21,8 +21,15 @@ function addChangeEventListeners(radioText, radioAddObj, reqType, reqBody) {
 
   // Dropdown (POST/GET) listeners
  reqType.addEventListener('change', (e) => {
+    // Save the state to local storage
     const requestType = e.target.value;
     updateCustomResponseRequestType(requestType);
+    // Also show/hide the body input (only required for POSTing)
+    if (e.target.value === 'POST') {
+      reqBodyContainer.classList.remove('ons-u-hidden');
+    } else if (e.target.value === 'GET') {
+      reqBodyContainer.classList.add('ons-u-hidden');
+    }
   });
 
   // Save the size of the body element
@@ -40,7 +47,7 @@ function addChangeEventListeners(radioText, radioAddObj, reqType, reqBody) {
   observer.observe(reqBody, config);
 }
 
-function setupStatuses(radioText, radioAddObj, reqType, reqBody) {
+function setupStatuses(radioText, radioAddObj, reqType, reqBody, reqBodyConatiner) {
   // Set status of radio option
   const savedTextStatus = getFormatPrefferenceCustomResponse();
   const radioToSelect = document.querySelector('#' + savedTextStatus);
@@ -52,6 +59,12 @@ function setupStatuses(radioText, radioAddObj, reqType, reqBody) {
   // Set style of reqBody
   const bodStyle = getReqBodyStyle();
   reqBody.setAttribute('style', bodStyle);
+  // Set visibility of ReqBodyConatiner (hide if GET)
+  if (reqType.value === 'GET') {
+    reqBodyConatiner.classList.add('ons-u-hidden');
+  } else if (reqType.value === 'POST') {
+    reqBodyConatiner.classList.remove('ons-u-hidden');
+  }
 }
 
 function makeAppropriateResponseFormatVisible(responseFormatPrefference) {
@@ -76,12 +89,13 @@ function init() {
   const radioAddObj = document.querySelector('#response-type-object');
   const reqType = document.querySelector('#request-type');
   const reqBody = document.querySelector('#request-body-text-area');
+  const reqBodyContainer = document.querySelector('#text-area-label-and-input-container');
   
   // Save status to local storage
-  addChangeEventListeners(radioText, radioAddObj, reqType, reqBody);
+  addChangeEventListeners(radioText, radioAddObj, reqType, reqBody, reqBodyContainer);
 
   // Load from local storage
-  setupStatuses(radioText, radioAddObj, reqType, reqBody);
+  setupStatuses(radioText, radioAddObj, reqType, reqBody, reqBodyContainer);
 
   const savedTextStatus = getFormatPrefferenceCustomResponse();
   // Make Appropriate Option Visible
