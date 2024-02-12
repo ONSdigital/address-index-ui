@@ -20,7 +20,8 @@ page_name = 'postcode'
 def postcode():
   # For GET and POST check page is accessible for this user
   endpoints = get_endpoints(called_from=page_name)
-  checkUserHasAccessToPage(page_name, endpoints)
+  if not checkUserHasAccessToPage(page_name, endpoints):
+    return page_error(None, page_name, override_error_description='You do not have access to this page')
 
   if request.method == 'GET':
     delete_input(session)

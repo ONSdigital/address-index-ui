@@ -2,8 +2,10 @@ import re
 
 
 def checkUserHasAccessToPage(page_name, endpoints):
-  accessible_pages = [endpoint.title for endpoint in endpoints]
-  print(page_name, accessible_pages)
+  accessible_pages = [endpoint.url_title for endpoint in endpoints]
+  if page_name in accessible_pages:
+    return True
+  return False
 
 def detect_xml_injection(input_string):
   # Regular expression pattern for detecting XML injection
