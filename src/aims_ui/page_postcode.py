@@ -5,7 +5,7 @@ from . import app
 from requests.exceptions import ConnectionError
 from .cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs, save_epoch_number
 from .api_interaction import api
-from .security_utils import detect_xml_injection
+from .security_utils import detect_xml_injection, checkUserHasAccessToPage
 from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
@@ -18,6 +18,9 @@ page_name = 'postcode'
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def postcode():
+  # For GET and POST check page is accessible for this user
+  endpoints = get_endpoints(called_from=page_name)
+  checkUserHasAccessToPage(page_name, endpoints)
 
   if request.method == 'GET':
     delete_input(session)
