@@ -2,6 +2,7 @@ from . import app
 import logging
 from flask import render_template, request, session, url_for
 from flask_login import login_required
+from .security_utils import check_user_has_access_to_page
 from .models.get_endpoints import get_endpoints
 from aims_ui import get_cached_tooltip_data
 
@@ -11,6 +12,11 @@ page_name = 'help'
 @login_required
 @app.route('/help/<subject>')
 def help(subject='None'):
+  endpoints = get_endpoints(called_from=page_name)
+  access = check_user_has_access_to_page(page_name, endpoints)
+  if access != True:
+    return access
+
   # Get brief descriptions from the tooltips file, but any deffinitions
   # here will get a more lengthly explanation
 

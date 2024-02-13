@@ -5,6 +5,7 @@ from . import app
 from .models.get_endpoints import get_endpoints
 from .api_interaction import api, job_data_by_user_id, job_result_formatter
 from .table_utils import create_table
+from .security_utils import check_user_has_access_to_page
 import json
 import csv
 
@@ -14,6 +15,10 @@ page_name = 'multiple_address_results'
 @login_required
 @app.route(f'/multiple_address_results', methods=['GET', 'POST'])
 def multiple_address_results():
+  endpoints = get_endpoints(called_from=page_name)
+  access = check_user_has_access_to_page(page_name, endpoints)
+  if access != True:
+    return access
 
   #TODO Set To FALSE (debug only)----------------------------------------------
   if False:

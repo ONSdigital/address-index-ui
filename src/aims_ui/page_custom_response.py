@@ -1,7 +1,7 @@
 from flask import render_template, request
 from flask_login import login_required
 from . import app
-from .security_utils import detect_xml_injection
+from .security_utils import detect_xml_injection, check_user_has_access_to_page
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
 from .page_error import page_error
@@ -25,6 +25,10 @@ def return_error_to_custom_response(error_title, errors_formatted,
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def custom_response():
+  endpoints = get_endpoints(called_from=page_name)
+  access = check_user_has_access_to_page(page_name, endpoints)
+  if access != True:
+    return access
 
   if request.method == 'GET':
     return render_template(
