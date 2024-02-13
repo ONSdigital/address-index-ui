@@ -11,7 +11,7 @@ def deny_access_error_page(page_name):
 
 
 def check_user_has_access_to_page(page_name, endpoints):
-  accessible_pages = [endpoint.url_title for endpoint in endpoints]
+  accessible_pages = [endpoint.page_name for endpoint in endpoints]
   #print(page_name, accessible_pages)
   if page_name in accessible_pages:
     return True

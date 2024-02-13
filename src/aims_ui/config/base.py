@@ -14,13 +14,14 @@ API_BSC_AUTH_USERNAME = os.getenv('API_BSC_AUTH_USERNAME')
 API_BSC_AUTH_PASSWORD = os.getenv('API_BSC_AUTH_PASSWORD')
 
 # Deffine Paywall Limitations
+
 # Remove pages for users
 REMOVE_SINGLESEARCH = {'name': 'singlesearch', 'users_to_remove': []}
 REMOVE_UPRN_SINGLESEARCH = {
     'name': 'uprn',
-    'users_to_remove': ['UserNotLoggedIn']
+    'users_to_remove': []
 }
-REMOVE_POSTCODE = {'name': 'postcode', 'users_to_remove': ['UserNotLoggedIn']}
+REMOVE_POSTCODE = {'name': 'postcode', 'users_to_remove': []}
 REMOVE_TYPEAHEAD = {'name': 'typeahead', 'users_to_remove': []}
 REMOVE_MULTIPLE_ADDRESS = {
     'name': 'multiple_address_original',
