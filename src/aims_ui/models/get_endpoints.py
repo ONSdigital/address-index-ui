@@ -1,5 +1,6 @@
 from .endpoint import Endpoint
 from flask import url_for, request
+from ..google_utils import get_username
 from aims_ui import app
 
 
@@ -38,11 +39,7 @@ def get_endpoints(called_from=None):
       ),
   ]
 
-  # Set the username on all endpoints
-  user_email = request.headers.get('X-Goog-Authenticated-User-Email',
-                                   'UserNotLoggedIn')
-  user_email = user_email.replace('accounts.google.com:', '')
-  user_email = user_email.replace('@ons.gov.uk', '')
+  username = get_username(request)
 
   if called_from == None:
     called_from = ''
@@ -58,7 +55,7 @@ def get_endpoints(called_from=None):
     current_selected_endpoint = ''
 
   for endpoint in endpoints:
-    endpoint.user_email = user_email
+    endpoint.username = username 
     if endpoint.url_title == called_from:
       endpoint.selected = True
       current_selected_endpoint = url_for(endpoint.url_title)
@@ -77,7 +74,7 @@ def get_endpoints(called_from=None):
             'name')  # e.g. typeahead, multiple_address_match
         if to_remove_name == endpoint.url_title:
           users_to_remove = remove_values.get('users_to_remove')
-          if user_email not in users_to_remove:
+          if username not in users_to_remove:
             paywall_checked_endpoints.append(endpoint)
 
   nav_info = [{
@@ -85,11 +82,11 @@ def get_endpoints(called_from=None):
       'url': endpoint.url
   } for endpoint in paywall_checked_endpoints]
 
-  if user_email not in app.config.get('REMOVE_HELP').get('users_to_remove'):
+  if username not in app.config.get('REMOVE_HELP').get('users_to_remove'):
     nav_info.insert(len(nav_info), {'title': 'Help', 'url': '/help/home' })  # yapf: disable
-  if user_email not in app.config.get('REMOVE_SETTINGS').get('users_to_remove'): # yapf: disable
+  if username not in app.config.get('REMOVE_SETTINGS').get('users_to_remove'): # yapf: disable
     nav_info.insert(len(nav_info), { 'title': 'Settings', 'url_title': url_for('settings'), 'url': url_for('settings') })  # yapf: disable
-  if user_email not in app.config.get('REMOVE_API').get('users_to_remove'): # yapf: disable
+  if username not in app.config.get('REMOVE_API').get('users_to_remove'): # yapf: disable
     nav_info.insert(len(nav_info), {'title': 'API', 'url': '/custom_response'})
 
   for endpoint in paywall_checked_endpoints:
