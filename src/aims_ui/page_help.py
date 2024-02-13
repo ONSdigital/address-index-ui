@@ -1,10 +1,10 @@
-from . import app
 import logging
 from flask import render_template, request, session, url_for
 from flask_login import login_required
+from aims_ui import get_cached_tooltip_data
+from . import app
 from .security_utils import check_user_has_access_to_page
 from .models.get_endpoints import get_endpoints
-from aims_ui import get_cached_tooltip_data
 
 page_name = 'help'
 

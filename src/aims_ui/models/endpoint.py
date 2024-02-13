@@ -12,7 +12,7 @@ class Endpoint():
   selected: bool = False
   name_id: str = ''
   current_selected_endpoint: str = ''
-  user_email: str = ''
+  username: str = ''
 
   def __post_init__(self):
     self.url = url_for(str(self.url_title))

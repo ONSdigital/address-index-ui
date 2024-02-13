@@ -1,4 +1,5 @@
 import os
+import json
 from flask import render_template, request, session, send_file
 from requests.exceptions import ConnectionError
 from flask_login import login_required
@@ -10,7 +11,6 @@ from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
 from .page_error import page_error
 from .security_utils import check_user_has_access_to_page
-import json
 from .upload_utils import check_valid_upload, FileUploadException
 from .multiple_match_lookup import uprn_multiple_address_match_original
 

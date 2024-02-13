@@ -1,6 +1,6 @@
 from .endpoint import Endpoint
 from flask import url_for, request
-from ..google_utils import get_username
+from aims_ui.google_utils import get_username
 from aims_ui import app
 
 
@@ -39,7 +39,7 @@ def get_endpoints(called_from=None):
       ),
   ]
 
-  username = get_username(request)
+  username = get_username()
 
   if called_from == None:
     called_from = ''
@@ -55,7 +55,7 @@ def get_endpoints(called_from=None):
     current_selected_endpoint = ''
 
   for endpoint in endpoints:
-    endpoint.username = username 
+    endpoint.username = username
     if endpoint.url_title == called_from:
       endpoint.selected = True
       current_selected_endpoint = url_for(endpoint.url_title)

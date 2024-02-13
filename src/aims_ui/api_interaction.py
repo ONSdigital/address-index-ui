@@ -6,26 +6,15 @@ from . import app
 from io import StringIO, BytesIO
 from .models.get_addresses import get_addresses
 from .classification_utilities import check_reverse_classification
+from .api_helpers import get_header
+from .google_utils import get_username
+from flask import request
 import urllib
 import csv
 import logging
-from flask import request
 import xml.etree.ElementTree as ET
 import jwt
 import datetime
-
-
-def get_header(request):
-  """ Get defaut header for API requests """
-  user_email = request.headers.get('X-Goog-Authenticated-User-Email', '')
-  user_email = user_email.replace('accounts.google.com:', '')
-  user_email = user_email.replace('@ons.gov.uk', '')
-
-  return {
-      "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-      "user": user_email.replace('accounts.google.com:', ''),
-  }
 
 
 def get_response_attributes(r):
@@ -64,10 +53,7 @@ def get_epoch_options():
   """Get the result of the Epoch Endpoint and format for radio button use"""
   api_url = app.config.get('API_URL') + '/epochs'
 
-  header = {
-      "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-  }
+  header = get_header(username=False)
 
   if os.getenv("FLASK_ENV") != "testing":
     try:
@@ -183,16 +169,8 @@ def submit_uprn_mm_job(uprns_and_ids, all_user_input):
   """API helper for job endpoints """
   url = app.config.get('API_URL') + '/addresses/multiuprn'
 
-  user_email = request.headers.get('X-Goog-Authenticated-User-Email',
-                                   'UserNotLoggedIn')
-  user_email = user_email.replace('accounts.google.com:', '')
-  user_email = user_email.replace('@ons.gov.uk', '')
-
-  header = {
-      "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-      "user": user_email,
-  }
+  username = get_username()
+  header = get_header(username=True)
 
   just_uprns = {"uprns": [item["uprn"] for item in uprns_and_ids]}
   just_uprns_stringified = json.dumps(just_uprns)
@@ -204,19 +182,13 @@ def submit_uprn_mm_job(uprns_and_ids, all_user_input):
   )
 
   logging.info('Submmitted Multi-UPRN match on endpoint"' + str(url) +
-               '"  with UserId as "' + str(user_email) + '"')
+               '"  with UserId as "' + str(username) + '"')
 
   return r
 
 
 def submit_mm_job(user, addresses, all_user_input, uprn=False):
   """API helper for job endpoints """
-  user_email = request.headers.get('X-Goog-Authenticated-User-Email',
-                                   'UserNotLoggedIn')
-  user_email = user_email.replace('accounts.google.com:', '')
-  user_email = user_email.replace('@ons.gov.uk', '')
-  tag_name = '::' + str(all_user_input.get('name', '')[:25] + '::')
-  user_email = user_email + tag_name
   url = app.config.get('BM_API_URL') + '/bulk'
 
   # Change the paf-nag default selection
@@ -226,11 +198,12 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
 
   params = get_params(all_user_input, removeVerbose=True)
 
-  header = {
-      "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-      "user": user_email,
-  }
+  username = get_username()
+  tag_name = '::' + str(all_user_input.get('name', '')[:25] + '::')
+  note_data = username + tag_name
+
+  header = get_header()
+  header.user = note_data
 
   addresses = str(addresses).replace('"', '')  # Remove Quotes from address
   addresses = str(addresses).replace(
@@ -244,24 +217,16 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
   )
 
   logging.info('Submmitted MMJob on endpoint"' + str(url) +
-               '"  with UserId as "' + str(user_email) + '"')
+               '"  with UserId as "' + str(username) + '"')
 
   return r
 
 
 def job_api(url):
   """API helper for job endpoints """
-  user_email = request.headers.get('X-Goog-Authenticated-User-Email', '')
-  user_email = user_email.replace('accounts.google.com:', '')
-  user_email = user_email.replace('@ons.gov.uk', '')
-
   url = app.config.get('BM_API_URL') + url
 
-  header = {
-      "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-      "user": 'UUItesst',
-  }
+  header = get_header()
 
   r = requests.get(
       url,
@@ -273,14 +238,7 @@ def job_api(url):
 
 def api(url, called_from, all_user_input):
   """API helper for individual API lookups"""
-
-  user_email = request.headers.get('X-Goog-Authenticated-User-Email', '')
-
-  header = {
-      "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-      "user": user_email.replace('accounts.google.com:', ''),
-  }
+  header = get_header()
 
   params = get_params(all_user_input)
   if (called_from == 'uprn') or (called_from == 'postcode'):
@@ -344,13 +302,9 @@ def get_classifications():
   # All classification list aquesition should come through here
 
   classifications_api_url = app.config.get('API_URL') + '/classifications'
-  header = {
-      "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-  }
+  header = get_header(username=False)
 
   if os.getenv("FLASK_ENV") != "testing":
-
     try:
       class_call = requests.get(
           classifications_api_url,
