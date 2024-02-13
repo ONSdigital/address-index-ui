@@ -13,6 +13,7 @@ from .models.get_addresses import get_addresses
 from .upload_utils import check_valid_upload
 from .page_error import page_error
 from .upload_utils import FileUploadException
+from .security_utils import check_user_has_access_to_page
 import json
 import csv
 from time import sleep
@@ -20,14 +21,15 @@ from time import sleep
 page_name = 'multiple_address_original'
 
 
-def final(searchable_fields,
-          error_description='',
-          error_title='',
-          results_summary_table='',
-          table_results='',
-          reduced=False,
-          limit=5000,
-          ):
+def final(
+    searchable_fields,
+    error_description='',
+    error_title='',
+    results_summary_table='',
+    table_results='',
+    reduced=False,
+    limit=5000,
+):
 
   return render_template(
       f'{page_name}.html',
@@ -62,6 +64,11 @@ def request_entity_too_large(error):
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def multiple_address_original():
+  endpoints = get_endpoints(called_from=page_name)
+  access = check_user_has_access_to_page(page_name, endpoints)
+  if access != True:
+    return access
+
   user_email = request.headers.get('X-Goog-Authenticated-User-Email',
                                    'UserNotLoggedIn')
   user_email = user_email.replace('accounts.google.com:', '')
@@ -102,7 +109,8 @@ def multiple_address_original():
     file = request.files['file']
 
     try:
-      file_valid, error_description, error_title = check_valid_upload(file, limit=limit)
+      file_valid, error_description, error_title = check_valid_upload(
+          file, limit=limit)
     except FileUploadException as e:
       return final(searchable_fields,
                    limit=limit,

@@ -13,6 +13,7 @@ from .models.get_addresses import get_addresses
 from .upload_utils import check_valid_upload
 from .page_error import page_error
 from .upload_utils import FileUploadException
+from .security_utils import check_user_has_access_to_page
 import json
 import logging
 import csv
@@ -40,6 +41,10 @@ def request_entity_too_large(error):
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def multiple_address():
+  endpoints = get_endpoints(called_from=page_name)
+  access = check_user_has_access_to_page(page_name, endpoints)
+  if access != True:
+    return access
 
   if request.method == 'GET':
     delete_input(session)

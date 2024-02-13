@@ -88,7 +88,7 @@ def get_endpoints(called_from=None):
   if user_email not in app.config.get('REMOVE_HELP').get('users_to_remove'):
     nav_info.insert(len(nav_info), {'title': 'Help', 'url': '/help/home' })  # yapf: disable
   if user_email not in app.config.get('REMOVE_SETTINGS').get('users_to_remove'): # yapf: disable
-    nav_info.insert(len(nav_info), { 'title': 'Settings', 'url': url_for('settings') })  # yapf: disable
+    nav_info.insert(len(nav_info), { 'title': 'Settings', 'url_title': url_for('settings'), 'url': url_for('settings') })  # yapf: disable
   if user_email not in app.config.get('REMOVE_API').get('users_to_remove'): # yapf: disable
     nav_info.insert(len(nav_info), {'title': 'API', 'url': '/custom_response'})
 
