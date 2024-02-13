@@ -1,3 +1,4 @@
+import json, requests
 from flask import render_template, request
 from flask_login import login_required
 from . import app
@@ -5,8 +6,7 @@ from .security_utils import detect_xml_injection, check_user_has_access_to_page
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
 from .page_error import page_error
-from .api_interaction import get_header
-import json, requests
+from .api_helpers import get_header
 
 page_name = 'custom_response'
 
@@ -42,7 +42,7 @@ def custom_response():
   request_body = request.form.get('request-body-text-area')  # Body of request
   request_type = request.form.get('request-type')  # GET or POST
 
-  header = get_header(request)
+  header = get_header()
 
   try:
     if request_type == 'GET':

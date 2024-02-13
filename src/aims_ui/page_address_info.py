@@ -1,3 +1,7 @@
+import dataclasses
+import json
+import os
+import urllib.request
 from . import app
 from .models.get_endpoints import get_endpoints
 from .api_interaction import api
@@ -9,11 +13,7 @@ from .models.address import Address
 from requests.exceptions import ConnectionError
 from flask import render_template, request, session
 from flask_login import login_required
-import dataclasses
-import json
-import urllib.request, json
 from aims_ui import get_cached_tooltip_data
-import os
 
 page_name = 'address_info'
 

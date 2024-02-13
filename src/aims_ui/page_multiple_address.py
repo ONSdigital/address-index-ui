@@ -1,3 +1,7 @@
+import json
+import logging
+import csv
+from time import sleep
 import os
 from flask import render_template, request, session, send_file
 from requests.exceptions import ConnectionError
@@ -14,10 +18,6 @@ from .upload_utils import check_valid_upload
 from .page_error import page_error
 from .upload_utils import FileUploadException
 from .security_utils import check_user_has_access_to_page
-import json
-import logging
-import csv
-from time import sleep
 
 page_name = 'multiple_address'
 

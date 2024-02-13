@@ -6,6 +6,7 @@ from .models.get_endpoints import get_endpoints
 from .api_interaction import api, job_data_by_user_id, job_result_formatter
 from .table_utils import create_table
 from .security_utils import check_user_has_access_to_page
+from .google_utils import get_username
 import json
 import csv
 
@@ -48,15 +49,12 @@ def multiple_address_results():
   #TODO SET TO FALSE --------------------------------------------------
 
   endpoints = get_endpoints(called_from=page_name)
-  user_email = request.headers.get('X-Goog-Authenticated-User-Email',
-                                   'UserNotLoggedIn')
-  user_email = user_email.replace('accounts.google.com:', '')
-  user_email = user_email.replace('@ons.gov.uk', '')
+  username = get_username()
 
   headers = [
       'JOBID', 'NAME', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK'
   ]
-  results = job_data_by_user_id(user_email).json().get('jobs', [])
+  results = job_data_by_user_id(username).json().get('jobs', [])
 
   formatted_results = [[
       job.get('jobid'),

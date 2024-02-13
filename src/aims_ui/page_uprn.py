@@ -1,4 +1,5 @@
 import os
+import json
 from flask import render_template, request, session
 from requests.exceptions import ConnectionError
 from flask_login import login_required
@@ -10,7 +11,6 @@ from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
 from .page_error import page_error
-import json
 
 page_name = 'uprn'
 
