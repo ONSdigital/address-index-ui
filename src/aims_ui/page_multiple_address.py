@@ -57,7 +57,7 @@ def multiple_address():
     return render_template(
         f'{page_name}.html',
         searchable_fields=searchable_fields,
-        endpoints=get_endpoints(called_from=page_name),
+        endpoints=endpoints,
     )
 
   if request.method == 'POST':
@@ -96,7 +96,7 @@ def final(all_user_input,
       f'{page_name}.html',
       error_description=error_description,
       error_title=error_title,
-      endpoints=get_endpoints(called_from=page_name),
+      endpoints=endpoints,
       searchable_fields=searchable_fields,
       table_results=table_results,
       results_summary_table=results_summary_table,

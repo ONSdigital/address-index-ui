@@ -4,10 +4,14 @@ from aims_ui.google_utils import get_username
 from aims_ui import app
 
 def get_current_selected_endpoint(endpoints, called_from):
+  # Adjust multiple_address / multiple_address_results pages to 
+  # multiple_address_original so that Header Highlights Work
+  if 'multiple_address' in called_from:
+    called_from = 'multiple_address_original'
+
   for endpoint in endpoints:
     if endpoint.page_name == called_from:
       return endpoint.url
-  print('ERROR getting endpoint')
 
 
 def get_endpoints(called_from=None):
