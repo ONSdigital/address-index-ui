@@ -10,6 +10,6 @@ def get_header(username=True):
   }
 
   if username:
-    header.user = get_username()
+    header['user'] = get_username()
 
   return header
