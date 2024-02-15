@@ -61,7 +61,6 @@ def multiple_address():
     )
 
   if request.method == 'POST':
-
     searchable_fields = get_fields(page_name)
     all_user_input = load_save_store_inputs(
         searchable_fields,

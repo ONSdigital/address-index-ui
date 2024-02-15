@@ -3,8 +3,9 @@ from flask import url_for, request
 from aims_ui.google_utils import get_username
 from aims_ui import app
 
+
 def get_current_selected_endpoint(endpoints, called_from):
-  # Adjust multiple_address / multiple_address_results pages to 
+  # Adjust multiple_address / multiple_address_results pages to
   # multiple_address_original so that Header Highlights Work
   if 'multiple_address' in called_from:
     called_from = 'multiple_address_original'
@@ -47,18 +48,18 @@ def get_endpoints(called_from=None):
           'uprn_multiple_match',
           "Search for multiple addresses providing mulitple UPRNs (Unique Property Reference Numbers)",
       ),
-     Endpoint(
+      Endpoint(
           'API',
           'custom_response',
           'Submit requests directly to the API and receive JSON style fromatting in return. Use this if you want to test out API features that the UI currently does not support',
       ),
-     Endpoint(
+      Endpoint(
           'Help',
           'help',
           'See information about the other pages and how to contact support.',
-          url = url_for('help', subject='home'),
+          url=url_for('help', subject='home'),
       ),
-     Endpoint(
+      Endpoint(
           'Settings',
           'settings',
           'User prefferences are stored locally on their web-browser. Adjust or reset those settings here.',
@@ -68,7 +69,8 @@ def get_endpoints(called_from=None):
   username = get_username()
 
   called_from = '' if called_from == None else called_from
-  current_selected_endpoint = get_current_selected_endpoint(endpoints, called_from)
+  current_selected_endpoint = get_current_selected_endpoint(
+      endpoints, called_from)
 
   # Create dict for ons-navigation component
   nav_info = [{
