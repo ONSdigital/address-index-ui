@@ -13,7 +13,7 @@ from .models.get_addresses import get_addresses
 from .upload_utils import check_valid_upload
 from .page_error import page_error
 from .upload_utils import FileUploadException
-from .security_utils import check_user_has_access_to_page
+from .security_utils import check_user_has_access_to_page, get_current_group
 from .google_utils import get_username
 import json
 import csv
@@ -72,9 +72,10 @@ def multiple_address_original():
 
   username = get_username()
 
-  if username in app.config.get('REDUCED_MULTIPLE_ADDRESS'):
+  current_group = get_current_group()
+  if username in current_group.get('usernames'):
     reduced = True
-    limit = 300
+    limit = current_group.get('limit_mini_bulk')
   else:
     reduced = False
     limit = 5000

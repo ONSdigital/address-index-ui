@@ -13,24 +13,48 @@ SESSION_COOKIE_SECURE = True
 API_BSC_AUTH_USERNAME = os.getenv('API_BSC_AUTH_USERNAME')
 API_BSC_AUTH_PASSWORD = os.getenv('API_BSC_AUTH_PASSWORD')
 
-# Deffine Paywall Limitations
+# Define order of pages on header and Paywall Limitations
+ALL_PAGE_NAMES = [
+    'singlesearch', 'uprn', 'postcode', 'typeahead',
+    'multiple_address_original', 'uprn_multiple_match', 'custom_response', 'help',
+    'settings'
+]
 
-# Remove pages for users
-REMOVE_SINGLESEARCH = {'name': 'singlesearch', 'users_to_remove': []}
-REMOVE_UPRN_SINGLESEARCH = {'name': 'uprn', 'users_to_remove': []}
-REMOVE_POSTCODE = {'name': 'postcode', 'users_to_remove': []}
-REMOVE_TYPEAHEAD = {'name': 'typeahead', 'users_to_remove': []}
-REMOVE_MULTIPLE_ADDRESS = {
-    'name': 'multiple_address_original',
-    'users_to_remove': []
-}
-REMOVE_MUTIPLE_UPRN = {'name': 'uprn_multiple_match', 'users_to_remove': []}
-REMOVE_HELP = {'name': 'help', 'users_to_remove': ['']}
-REMOVE_SETTINGS = {'name': 'settings', 'users_to_remove': ['UserNotLoggedIn']}
-REMOVE_API = {'name': 'api', 'users_to_remove': []}
+USER_GROUPS = [
+    {
+        'name': 'regular',
+        'usernames': [],
+        'pages_to_remove': ['api'],
+        'limit_mini_bulk': 5000,
+    },
+    {
+        'name': 'developers',
+        'usernames': [],
+        'pages_to_remove': [],
+        'limit_mini_bulk': 5000,
+    },
+    {
+        'name': 'no_bulk',
+        'usernames': [],
+        'pages_to_remove':
+        ['multiple_address_original', 'uprn_multiple_match'],
+        'limit_mini_bulk': 0,
+    },
+    {
+        'name': 'limited_bulk',
+        'usernames': ['UserNotLoggedIn'],
+        'pages_to_remove': [],
+        'limit_mini_bulk': 200,
+    },
+]
 
-# Reduce 5,000 to 200 max
-REDUCED_MULTIPLE_ADDRESS = []
+# For each group, create a list of "allowed pages"
+for group in USER_GROUPS:
+  allowed_pages = []
+  for page_name in ALL_PAGE_NAMES:
+    if page_name not in group.get('pages_to_remove'):
+      allowed_pages.append(page_name)
+  group['allowed_pages'] = allowed_pages
 
 # Default Classification and Epoch options, should the initial server response be incorrect (or the endpoint doesn't exist)
 
