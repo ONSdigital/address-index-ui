@@ -16,15 +16,15 @@ API_BSC_AUTH_PASSWORD = os.getenv('API_BSC_AUTH_PASSWORD')
 # Define order of pages on header and Paywall Limitations
 ALL_PAGE_NAMES = [
     'singlesearch', 'uprn', 'postcode', 'typeahead',
-    'multiple_address_original', 'uprn_multiple_match', 'custom_response', 'help',
-    'settings'
+    'multiple_address_original', 'uprn_multiple_match', 'custom_response',
+    'help', 'settings'
 ]
 
 USER_GROUPS = [
     {
-        'name': 'regular',
+        'name': 'default',  # UNSPECIFIED USERS WILL BE IN THIS GROUP
         'usernames': [],
-        'pages_to_remove': ['api'],
+        'pages_to_remove': ['custom_response'],
         'limit_mini_bulk': 5000,
     },
     {
@@ -42,7 +42,7 @@ USER_GROUPS = [
     },
     {
         'name': 'limited_bulk',
-        'usernames': ['UserNotLoggedIn'],
+        'usernames': [],
         'pages_to_remove': [],
         'limit_mini_bulk': 200,
     },

@@ -1,5 +1,18 @@
 from flask import request
+from . import app
 
+def get_current_group():
+  access_groups = app.config.get('USER_GROUPS')
+  username = get_username()
+
+  for group in access_groups:
+    if username in group.get('usernames', []):
+      return group
+
+  # User not in a group, return default group
+  for group in access_groups:
+    if group.get('name') == 'default':
+      return group
 
 def get_user_email():
   user_email = request.headers.get('X-Goog-Authenticated-User-Email',
