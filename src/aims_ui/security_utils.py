@@ -12,7 +12,7 @@ def deny_access_error_page(page_name):
 
 def check_user_has_access_to_page(page_name, endpoints):
   accessible_pages = [endpoint.page_name for endpoint in endpoints]
-  #print(page_name, accessible_pages)
+  print(page_name, accessible_pages)
   if page_name in accessible_pages:
     return True
   return deny_access_error_page(page_name)
@@ -25,9 +25,6 @@ def detect_xml_injection(input_string):
   # Search for the pattern in the input string
   match = re.search(pattern, input_string)
 
-  # If a match is found, return True
   if match:
     return True
-
-  # If no match is found, return False
   return False

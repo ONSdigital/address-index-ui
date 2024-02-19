@@ -25,8 +25,8 @@ REMOVE_MULTIPLE_ADDRESS = {
     'users_to_remove': []
 }
 REMOVE_MUTIPLE_UPRN = {'name': 'uprn_multiple_match', 'users_to_remove': []}
-REMOVE_HELP = {'name': 'help', 'users_to_remove': []}
-REMOVE_SETTINGS = {'name': 'settings', 'users_to_remove': []}
+REMOVE_HELP = {'name': 'help', 'users_to_remove': ['']}
+REMOVE_SETTINGS = {'name': 'settings', 'users_to_remove': ['UserNotLoggedIn']}
 REMOVE_API = {'name': 'api', 'users_to_remove': []}
 
 # Reduce 5,000 to 200 max

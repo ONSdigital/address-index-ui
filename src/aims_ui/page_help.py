@@ -17,6 +17,11 @@ def help(subject='None'):
   if access != True:
     return access
 
+  print(access)
+  print(access)
+  print(access)
+  print(access)
+
   # Get brief descriptions from the tooltips file, but any deffinitions
   # here will get a more lengthly explanation
 
@@ -63,12 +68,12 @@ def help(subject='None'):
     return return_specific_help_page('submit_feedback', common)
   elif subject == 'help_and_documentation':
     return return_specific_help_page('help_and_documentation', common)
-  else:
-    return render_template(
-        'help.html',
-        endpoints=endpoints,
-        deffinitions=deffinitions,
-    )
+
+  return render_template(
+      'help.html',
+      endpoints=endpoints,
+      deffinitions=deffinitions,
+  )
 
 
 def return_specific_help_page(page_html_name, common):
