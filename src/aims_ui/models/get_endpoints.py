@@ -1,6 +1,6 @@
 from .endpoint import Endpoint
 from flask import url_for, request
-from aims_ui.google_utils import get_username
+from aims_ui.google_utils import get_username, get_current_group
 from aims_ui import app
 
 
@@ -72,15 +72,25 @@ def get_endpoints(called_from=None):
   current_selected_endpoint = get_current_selected_endpoint(
       endpoints, called_from)
 
+  # Before the nav component is made from Endpoints, remove unallowed pages
+
+  current_group = get_current_group()
+  allowed_pages = current_group.get('allowed_pages', [])
+
+  secure_endpoints = []
+  for endpoint in endpoints:
+    if endpoint.page_name in allowed_pages:
+      secure_endpoints.append(endpoint)
+
   # Create dict for ons-navigation component
   nav_info = [{
       'title': endpoint.title,
       'url': endpoint.url
-  } for endpoint in endpoints]
+  } for endpoint in secure_endpoints]
 
   # Add a copy of the navigation info to each Endpoint
-  for endpoint in endpoints:
+  for endpoint in secure_endpoints:
     endpoint.nav_info = nav_info
     endpoint.current_selected_endpoint = current_selected_endpoint
 
-  return endpoints
+  return secure_endpoints
