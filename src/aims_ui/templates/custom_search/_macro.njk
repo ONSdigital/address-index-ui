@@ -140,6 +140,7 @@
 {% if params.remove_clear_button != True %}
   {# Add a clear filters button with a url to the currently selected endpoint #}
   {% for endpoint in params.endpoints %}
+  <br>
     {% if endpoint.selected %}
   	{{ onsButton({
   		'text': 'Clear  filters',
