@@ -17,11 +17,6 @@ def help(subject='None'):
   if access != True:
     return access
 
-  print(access)
-  print(access)
-  print(access)
-  print(access)
-
   # Get brief descriptions from the tooltips file, but any deffinitions
   # here will get a more lengthly explanation
 
