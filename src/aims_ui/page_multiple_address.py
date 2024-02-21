@@ -18,6 +18,7 @@ from .upload_utils import check_valid_upload
 from .page_error import page_error
 from .upload_utils import FileUploadException
 from .security_utils import check_user_has_access_to_page
+from .google_utils import get_username, get_current_group
 
 page_name = 'multiple_address'
 
@@ -46,6 +47,7 @@ def multiple_address():
   if access != True:
     return access
 
+  username = get_username()
   current_group = get_current_group()
   if username in current_group.get('usernames'):
     reduced = True

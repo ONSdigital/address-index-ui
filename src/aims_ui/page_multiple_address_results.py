@@ -6,7 +6,7 @@ from .models.get_endpoints import get_endpoints
 from .api_interaction import api, job_data_by_user_id, job_result_formatter
 from .table_utils import create_table
 from .security_utils import check_user_has_access_to_page
-from .google_utils import get_username
+from .google_utils import get_username, get_current_group
 import json
 import csv
 
@@ -21,6 +21,7 @@ def multiple_address_results():
   if access != True:
     return access
 
+  username = get_username()
   current_group = get_current_group()
   if username in current_group.get('usernames'):
     reduced = True
@@ -54,6 +55,8 @@ def multiple_address_results():
         f'{page_name}.html',
         endpoints=endpoints,
         jobs=jobs,
+        reduced=reduced,
+        limit=limit,
     )
 
   #TODO SET TO FALSE --------------------------------------------------
@@ -89,8 +92,9 @@ def multiple_address_results():
   return render_template(
       f'{page_name}.html',
       endpoints=endpoints,
-      limit=limit,
       jobs=jobs,
+      reduced=reduced,
+      limit=limit,
   )
 
 
