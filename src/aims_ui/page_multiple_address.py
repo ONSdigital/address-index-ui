@@ -46,6 +46,16 @@ def multiple_address():
   if access != True:
     return access
 
+  current_group = get_current_group()
+  if username in current_group.get('usernames'):
+    reduced = True
+    limit = current_group.get('limit_mini_bulk')
+  else:
+    reduced = False
+    limit = 5000
+
+
+
   if request.method == 'GET':
     delete_input(session)
     searchable_fields = get_fields(page_name)
@@ -58,6 +68,7 @@ def multiple_address():
         f'{page_name}.html',
         searchable_fields=searchable_fields,
         endpoints=endpoints,
+        limit=limit,
     )
 
   if request.method == 'POST':
@@ -100,4 +111,5 @@ def final(all_user_input,
       table_results=table_results,
       results_summary_table=results_summary_table,
       results_page=True,
+      limit=limit,
   )

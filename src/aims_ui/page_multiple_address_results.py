@@ -21,6 +21,16 @@ def multiple_address_results():
   if access != True:
     return access
 
+  current_group = get_current_group()
+  if username in current_group.get('usernames'):
+    reduced = True
+    limit = current_group.get('limit_mini_bulk')
+  else:
+    reduced = False
+    limit = 5000
+
+
+
   #TODO Set To FALSE (debug only)----------------------------------------------
   if False:
     headers = [
@@ -79,6 +89,7 @@ def multiple_address_results():
   return render_template(
       f'{page_name}.html',
       endpoints=endpoints,
+      limit=limit,
       jobs=jobs,
   )
 
