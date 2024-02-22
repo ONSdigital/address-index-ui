@@ -14,6 +14,7 @@ def get_current_selected_endpoint(endpoints, called_from):
     if endpoint.page_name == called_from:
       endpoint.selected = True
       return endpoint.url
+  return ''
 
 
 def get_endpoints(called_from=None):
@@ -95,4 +96,3 @@ def get_endpoints(called_from=None):
     endpoint.current_selected_endpoint = current_selected_endpoint
 
   return secure_endpoints
-
