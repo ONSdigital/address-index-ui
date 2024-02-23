@@ -56,8 +56,6 @@ def multiple_address():
     reduced = False
     limit = 5000
 
-
-
   if request.method == 'GET':
     delete_input(session)
     searchable_fields = get_fields(page_name)
