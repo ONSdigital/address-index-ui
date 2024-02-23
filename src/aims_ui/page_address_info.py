@@ -22,7 +22,7 @@ page_name = 'address_info'
 @app.route('/address_info/<uprn>')
 def address_info(uprn):
   """Show all info about an address given the UPRN"""
-
+  endpoints = get_endpoints(called_from=page_name)
   epoch_version_number = load_epoch_number(session)
 
   try:
@@ -93,8 +93,8 @@ def address_info(uprn):
   ]
 
   return render_template(
-      'address_info.html',
-      endpoints=get_endpoints('address_info'),
+      f'{page_name}.html',
+      endpoints=endpoints,
       matched_addresses=matched_addresses,
       clerical_info=clerical_info,
       hierarchy_table=hierarchy_table,
