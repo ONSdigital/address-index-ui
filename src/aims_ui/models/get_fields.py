@@ -200,6 +200,15 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
               },
           ],
       ),
+      'header_row_export':
+      Field(
+          'header_row_export',
+          display_title='Export Header Row',
+          search_type='checkbox',
+          description=
+          'Add a header row to the exported file.',
+      ),
+ 
   }
 
   if endpoint_name == 'uprn':
@@ -268,6 +277,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         ), common_fields['epoch'], common_fields['historical'],
         common_fields['match_threshold'],
         common_fields['multiple_match_paf_nag_prefference'],
+        common_fields['header_row_export'],
         Field(
             'display-type',
             search_type='radio',
@@ -287,7 +297,9 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
     ])
 
   elif endpoint_name == 'uprn_multiple_match':
-    return ([])
+    return ([
+        common_fields['header_row_export'],
+      ])
 
   elif endpoint_name == 'multiple_address':
     return ([
@@ -306,6 +318,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             previous_value='',
         ),
         common_fields['multiple_match_paf_nag_prefference'],
+        common_fields['header_row_export'],
     ])
   elif endpoint_name == 'postcode':
     return ([
