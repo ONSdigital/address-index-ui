@@ -203,6 +203,7 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
   note_data = username + tag_name
 
   header = get_header()
+
   header['user'] = note_data
 
   addresses = str(addresses).replace('"', '')  # Remove Quotes from address
