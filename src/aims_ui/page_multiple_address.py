@@ -100,6 +100,7 @@ def final(all_user_input,
           error_title='',
           results_summary_table='',
           table_results=''):
+  endpoints = get_endpoints(called_from=page_name)
   searchable_fields = get_fields(page_name)
 
   return render_template(
