@@ -84,18 +84,20 @@ def multiple_address():
     try:
       # Validate file
       file_valid, error_description, error_title = check_valid_upload(
-          file, limit=1000000)
+          file, limit=limit)
     except FileUploadException as e:
       return final(searchable_fields,
+                   limit,
                    error_description=e.error_description,
                    error_title=e.error_title)
 
     if file_valid:
       multiple_address_match(file, all_user_input, download=True)
-      return final(all_user_input)
+      return final(all_user_input, limit)
 
 
 def final(all_user_input,
+          limit,
           error_description='',
           error_title='',
           results_summary_table='',
