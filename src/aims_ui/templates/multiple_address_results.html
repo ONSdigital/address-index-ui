@@ -28,26 +28,27 @@
 </div>
 
 {{ onsSectionNavigation({
-        "id": "section-menu",
-        "currentPath": url_for('multiple_address_results'),
-	"headingLevel": 2,
-	"sections":[ {
-		 "title": "",
-		 "itemsList": [ 
- 				{
-					"title": "Under 5K Addresses",
-					"url": 'multiple_address_original',
-				},
-				{
-					"title": "Over 5K Addresses",
-					"url": url_for('multiple_address'),
-				},
-				{
-					"title": "Monitor Jobs",
-					"url": url_for('multiple_address_results'),
-				},
-		 	     ]
-		} ],
+  "id": "section-menu",
+  "currentPath":  url_for('multiple_address_results'),
+  "headingLevel": 2,
+  "sections": [{
+    "title": "",
+    "itemsList": [
+      {
+        "title": "Under " + (limit|string) + " Addresses",
+        "url": 'multiple_address_original',
+      }
+    ] + ([] if reduced else [
+      {
+        "title": "Over " + (limit|string) + " Addresses",
+        "url": url_for('multiple_address'),
+      },
+      {
+        "title": "Monitor Over " + (limit|string) + " Jobs",
+        "url": url_for('multiple_address_results'),
+      }
+    ])
+  }]
 }) }}
 
 <br>

@@ -1,12 +1,12 @@
 import json
-from io import StringIO, BytesIO
-from aims_ui.api_interaction import api, submit_mm_job, submit_uprn_mm_job, get_response_attributes
 import csv
+import logging
 from .models.get_endpoints import get_endpoints
 from .models.get_addresses import get_addresses
 from .upload_utils import remove_script_and_html_from_str
 from .page_error import page_error
-import logging
+from io import StringIO, BytesIO
+from aims_ui.api_interaction import api, submit_mm_job, submit_uprn_mm_job, get_response_attributes
 
 page_name = 'multiple_match_submit'
 
@@ -92,9 +92,15 @@ def multiple_address_match_original(file, all_user_input, download=False):
               doc_score, rank, recommendationCode):
       writer.writerow([
           given_id,
-          address_to_lookup.replace('"', ''), m_addr, adrs.uprn.value,
-          match_type, adrs.confidence_score.value, adrs.underlying_score.value,
-          rank, address_type, recommendationCode,
+          address_to_lookup.replace('"', ''),
+          m_addr,
+          adrs.uprn.value,
+          match_type,
+          adrs.confidence_score.value,
+          adrs.underlying_score.value,
+          rank,
+          address_type,
+          recommendationCode,
       ])
 
     def finalize(line_count, no_addresses_searched, single_match_total,
@@ -190,7 +196,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
     matched_addresses = get_addresses(result.json(), 'multiple')
 
     # Get the attributes of the Response a user might want
-    responseAttributes = get_response_attributes(result.json());
+    responseAttributes = get_response_attributes(result.json())
 
     no_results = len(matched_addresses)
     if no_results == 1:

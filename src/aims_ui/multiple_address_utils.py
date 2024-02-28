@@ -5,6 +5,8 @@ import json
 from flask import request
 import logging
 from . import app
+from .api_helpers import get_header
+from .google_utils import get_username
 
 
 def job_data_by_job_id(job_id):
@@ -15,17 +17,9 @@ def job_data_by_job_id(job_id):
 
 def job_api(url):
   """API helper for job endpoints """
-  user_email = request.headers.get('X-Goog-Authenticated-User-Email', '')
-  user_email = user_email.replace('accounts.google.com:', '')
-  user_email = user_email.replace('@ons.gov.uk', '')
+  header = get_header()
 
   url = app.config.get('BM_API_URL') + url
-
-  header = {
-      "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-      "user": 'UUItesst',
-  }
 
   r = requests.get(
       url,
@@ -45,10 +39,7 @@ def job_result_by_job_id(job_id):
 
 
 def job_url_if_authorised(job_id):
-  user_email = request.headers.get('X-Goog-Authenticated-User-Email',
-                                   'UserNotLoggedIn')
-  user_email = user_email.replace('accounts.google.com:', '')
-  user_email = user_email.replace('@ons.gov.uk', '')
+  username = get_username()
 
   job_data = job_data_by_job_id(job_id)
   job_data = job_data.json()
@@ -61,7 +52,7 @@ def job_url_if_authorised(job_id):
     parts = submittedJobUserId.split("::")
     submittedJobUserId = parts[0]
 
-  if submittedJobUserId == user_email:
+  if submittedJobUserId == username:
     # The user did submit this job
     return job_result_by_job_id(job_id)
   else:

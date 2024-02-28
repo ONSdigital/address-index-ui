@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% from "components/select/_macro.njk" import onsSelect %}
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/label/_macro.njk" import onsLabel %}
+{% from "components/input/_macro.njk" import onsInput %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/question/_macro.njk" import onsQuestion %}
+{% from "components/autosuggest/_macro.njk" import onsAutosuggest %}
+{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+{% from 'components/panel/_macro.njk' import onsPanel %}
+{% from 'components/list/_macro.njk' import onsList %}
+
+{# In order to specify wider than usual components, page must be in "pageContent" #}
+{% block pageContent %}
+{% block main %}
+<br>
+<form method="POST" id="searchform">
+
+{# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
+<div class="ons-grid">
+
+{# 1Column boarder#}
+<div id="space_col_1" class="ons-grid__col ons-col-1@m "></div>
+
+{# Content is the searchboxes, taing up 4 col#}
+<div id="content_col_2" class="ons-grid__col ons-col-4@m ">
+
+{{ onsSelect({
+        "id": "request-type",
+        "name": "request-type",
+        "label": {
+            "text": "Request Type"
+        },
+        "options": [ 
+	        { "value": "GET",
+                  "text": "GET",
+                  "selected": true },
+		{ "value": "POST",
+                  "text": "POST" } 
+		]
+    	})
+}}
+
+<br>
+{{ onsAutosuggest({
+    "id": "url-input",
+    "input": {
+    	"id": "url-input-autosuggest",
+	"name": "url-input-autosuggest",
+	"label": {
+	    "text": "URL",
+	    "description": 'See <a href="https://github.com/ONSdigital/address-index-api/tree/develop/api-definitions/explore-the-api" target="_blank" >Explore the API </a>',
+	    "id": "url-input-label"
+	},
+	"autocomplete": "off"
+    },
+    "autosuggestData": "/autosuggest/api-urls.json",
+    "instructions": "Use up and down keys to navigate suggestions once you\'ve typed more than two characters. Use the enter key to select a suggestion. Touch device users, explore by touch or with swipe gestures.",
+    "ariaYouHaveSelected": "You have selected",
+    "ariaOneResult": "There is one suggestion available.",
+    "ariaNResults": "There are {n} suggestions available.",
+    "moreResults": "Continue entering to improve suggestions",
+    "resultsTitle": "Suggestions",
+    "resultsTitleId": "url-suggesgions",
+    "noResults": "No suggestions found. You can enter your own answer",
+    "minChars": 1,
+    "typeMore": "Continue entering to get suggestions"
+}) }}
+<br>
+
+<div id="text-area-label-and-input-container" class="ons-u-hidden">
+{{ onsLabel({
+        "id": 'request-body-label',
+        "for": "request-body-text-area",
+        "text": 'Request Body' })
+}}
+<textarea id="request-body-text-area"
+	  class="ons-input ons-input--text ons-input-type__input"
+	  name="request-body-text-area"
+	  rows="12" cols="50">{} </textarea>
+<br>
+</div>
+
+{{ onsLabel({
+        "id": 'response-type-label',
+        "for": "response-type",
+	"text": 'How would you like your Response?'
+    }) }} {{ onsRadios({
+    "id": "response-type-radio",
+    "name": "response-type",
+    "dontWrap": true,
+    "radios": [ {
+	    "id": "response-type-text",
+	    "label": { "text": "Plaintext", "description":"Response will be indented JSON adjustments to any attributes. Use this to see an exact API response" },
+	    "value": "plaintext" },
+	{
+	    "id": "response-type-object",
+	    "label": { "text": "Address Objects", "description": "Response will be parsed into address cards (similar to results on other pages). Errors will be formatted nicely. Use this if you're not expecting large quantities of text to sift through" },
+	    "value": "address-object" }
+    ] }) }}
+<br>
+
+{{  onsButton({
+	"text": "Search", }) }}
+{{ onsButton({
+	'text': 'Clear  filters',
+	'submitType': "loader",
+	'variants': 'secondary',
+	'url': '/custom_response',
+	'id': 'clear-form-data-button-id',
+}) }}
+
+</form>
+<br>
+</div> 
+
+{# 1 Col boarder between filters and results #}
+<div id="space_col_3" class="ons-grid__col ons-col-1@m "></div>
+{# 5 Col results page #}
+  <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
+
+<div id='address-object-container' class="ons-u-hidden">
+
+{% if results_page %}
+<h2>We matched {{matched_address_number}}  addresses:</h2>
+	{% if matched_address_number==0 %}
+		<h5>You may want to try the "plaintext" repsonse</h5>
+	{% endif %}
+{% endif %}
+
+{{ customAddressInfo ({
+	'matched_addresses': matched_addresses,
+	}) }}
+
+{# If there's an error, formatt it nicely here #}
+{% if error_title %}
+	{% call
+	    onsPanel({
+		'title': error_title,
+		'type': 'error'
+	    }) %}
+	{{ onsList({
+		'id': 'no_data_found',
+		'classes': 'list--bare list--errors u-mb-s',
+		'itemsList': errors_formatted,
+	    }) }}
+	{% endcall %}
+{% endif %}
+</div>
+
+<div id='formatted-text-container' class="ons-u-hidden">
+	<h2>Plaintext Response:</h2>
+	<pre><code id='code-response-element'>{{ r_json_readable|safe }}</code></pre>
+	<style>
+	pre {
+	    white-space: pre; /* Use 'pre' instead of 'pre-wrap' to avoid wrapping */
+	    overflow-x: auto; /* Enable horizontal scrolling */
+	    background-color: #f4f4f4; /* Example background color */
+	    padding: 0.625em; /* Adjusted from 10px, assuming base font size is 16px */
+	    border-radius: 0.3125em; /* Adjusted from 5px, assuming base font size is 16px */
+	    border: 0.0625em solid #ccc; /* Adjusted from 1px, assuming base font size is 16px */
+	}
+	</style>
+</div>
+
+</div>
+
+{# End of grid #}
+</div>
+
+{# Add script to remove form resubmission message #}
+<script>
+if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
+</script>
+
+<script type=module src="static/src/all_pages_js.mjs"></script>
+<script type=module src="static/src/apply_custom_settings.mjs"></script>
+<script type=module src="static/src/save_inputs.mjs"></script>
+<script type=module src="static/src/custom_column_widths.mjs"></script>
+<script type=module src="static/src/individual_pages/page_custom_response.mjs"></script>
+<script type=module src="/static/src/all_pages_last.mjs"></script>
+
+{% endblock %}
+{% endblock %}
+

@@ -13,6 +13,54 @@ SESSION_COOKIE_SECURE = True
 API_BSC_AUTH_USERNAME = os.getenv('API_BSC_AUTH_USERNAME')
 API_BSC_AUTH_PASSWORD = os.getenv('API_BSC_AUTH_PASSWORD')
 
+# Define order of pages on header and Paywall Limitations
+ALL_PAGE_NAMES = [
+    'singlesearch', 'uprn', 'postcode', 'typeahead',
+    'multiple_address_original', 'multiple_address_results',
+    'multiple_address', 'uprn_multiple_match', 'custom_response', 'help',
+    'settings'
+]
+
+USER_GROUPS = [
+    {
+        'name': 'default',  # UNSPECIFIED USERS WILL BE IN THIS GROUP
+        'usernames': [],
+        'pages_to_remove': ['custom_response'],
+        'limit_mini_bulk': 5000,
+    },
+    {
+        'name': 'developers',
+        'usernames': [],
+        'pages_to_remove': [],
+        'limit_mini_bulk': 5000,
+    },
+    {
+        'name':
+        'no_bulk',
+        'usernames': [],
+        'pages_to_remove': [
+            'multiple_address_original', 'uprn_multiple_match',
+            'multiple_address', 'multiple_address_results'
+        ],
+        'limit_mini_bulk':
+        0,
+    },
+    {
+        'name': 'limited_bulk',
+        'usernames': [],
+        'pages_to_remove': [],
+        'limit_mini_bulk': 200,
+    },
+]
+
+# For each group, create a list of "allowed pages"
+for group in USER_GROUPS:
+  allowed_pages = []
+  for page_name in ALL_PAGE_NAMES:
+    if page_name not in group.get('pages_to_remove'):
+      allowed_pages.append(page_name)
+  group['allowed_pages'] = allowed_pages
+
 # Default Classification and Epoch options, should the initial server response be incorrect (or the endpoint doesn't exist)
 
 DEFAULT_EPOCH_SELECTED = '89'

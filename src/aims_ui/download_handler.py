@@ -32,6 +32,8 @@ def get_autosuggest_list():
 @app.route('/autosuggest/<autosuggest_type>.json', methods=['GET', 'POST'])
 def autosuggest(autosuggest_type):
   """ Autosuggest data for various typeaheads """
+  dir_path = os.path.dirname(os.path.realpath(__file__))
+
   if 'classification' in autosuggest_type:
     formatted_class_list = []
     class_list = get_classifications_cached()
@@ -50,6 +52,20 @@ def autosuggest(autosuggest_type):
         })
 
     return json.dumps(formatted_class_list)
+
+  elif 'api-urls' in autosuggest_type:
+    formatted_autosuggest_list = []
+
+    file_path = f'{dir_path}/static/downloads/api-url-options.csv'
+    with open(file_path, 'r', encoding='utf-8') as f:
+      list_from_file = [line.strip() for line in f]
+
+    # Convert options ['x', 'y'... to classification format
+    for option in list_from_file:
+      formatted_autosuggest_list.append({
+          'en': option,
+      })
+    return json.dumps(formatted_autosuggest_list)
 
   return ('Invalid autosuggest type')
 

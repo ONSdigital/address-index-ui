@@ -95,7 +95,7 @@ def check_valid_upload(file, called_from='address', limit=5001):
   if record_limit_exceeded:
     raise FileUploadException(
         error_title='Input file error',
-        error_description=f'Source file contains more than 5000 addresses')
+        error_description=f'Source file contains more than {limit} addresses')
 
   blank_fields_present = check_for_blank_fields(file)
 

@@ -31,7 +31,7 @@ class BasicValue():
 
 class Nag():
   def __init__(self, nag):
-    nag = nag[0]
+    nag = nag[0] if nag else {}
 
     # Values to show in the 'full info' page on a particular address
     self.full_values_to_show = [
@@ -64,8 +64,8 @@ class Nag():
     self.addressBasePostal = BasicValue(nag, 'addressBasePostal')
     self.usrn = BasicValue(nag, 'usrn')
     self.lpiKey = BasicValue(nag, 'lpiKey')
-    self.pao = Pao(nag.get('pao'))
-    self.sao = Sao(nag.get('sao'))
+    self.pao = Pao(nag.get('pao', {}))
+    self.sao = Sao(nag.get('sao', {}))
     self.level = BasicValue(nag, 'level')
     self.officialFlag = BasicValue(nag, 'officialFlag')
     self.logicalStatus = BasicValue(nag, 'logicalStatus')
@@ -191,9 +191,11 @@ class AddressAttribute():
                      confidence_score=None):
     # Special formatting for some values
     if self.name == 'confidenceScoreFormatted':
-      confidence_score_formatted = str(round(float(confidence_score),
-                                             2)) + '% Match'
-      return confidence_score_formatted
+      if confidence_score:
+        confidence_score_formatted = str(round(float(confidence_score),
+                                               2)) + '% Match'
+        return confidence_score_formatted
+      return ''
 
     if self.name == 'confidenceScore':
       if confidence_score != None:
@@ -209,11 +211,12 @@ class AddressAttribute():
 
     if self.name == 'geo':
       # README swapping the long/lat values fixes things - do not change, it's not a mistake!
-      new_d = {
-          'longitude': str(value.get('latitude')),
-          'latitude': str(value.get('longitude')),
-      }
-      return new_d
+      if value:
+        return {
+            'longitude': str(value.get('latitude')),
+            'latitude': str(value.get('longitude')),
+        }
+      return {'longitude': 'na', 'latitude': 'na'}
     if self.name == 'classificationCodeList':
       return get_classification_list(classification_code)
     if self.name == 'nag':

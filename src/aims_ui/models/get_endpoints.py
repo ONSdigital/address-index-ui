@@ -1,5 +1,20 @@
 from .endpoint import Endpoint
 from flask import url_for, request
+from aims_ui.google_utils import get_username, get_current_group
+from aims_ui import app
+
+
+def get_current_selected_endpoint(endpoints, called_from):
+  # Adjust multiple_address / multiple_address_results pages to
+  # multiple_address_original so that Header Highlights Work
+  if 'multiple_address' in called_from:
+    called_from = 'multiple_address_original'
+
+  for endpoint in endpoints:
+    if endpoint.page_name == called_from:
+      endpoint.selected = True
+      return endpoint.url
+  return ''
 
 
 def get_endpoints(called_from=None):
@@ -11,7 +26,7 @@ def get_endpoints(called_from=None):
           'Provide as much of the address as possible for best results.',
       ),
       Endpoint(
-          'UPRN Single Search',
+          'Single UPRN',
           'uprn',
           "Search for a property via its unique property reference number. This is a 12 digit number which contains no characters.",
       ),
@@ -35,45 +50,49 @@ def get_endpoints(called_from=None):
           'uprn_multiple_match',
           "Search for multiple addresses providing mulitple UPRNs (Unique Property Reference Numbers)",
       ),
+      Endpoint(
+          'API',
+          'custom_response',
+          'Submit requests directly to the API and receive JSON style fromatting in return. Use this if you want to test out API features that the UI currently does not support',
+      ),
+      Endpoint(
+          'Help',
+          'help',
+          'See information about the other pages and how to contact support.',
+          url=url_for('help', subject='home'),
+      ),
+      Endpoint(
+          'Settings',
+          'settings',
+          'User prefferences are stored locally on their web-browser. Adjust or reset those settings here.',
+      ),
   ]
 
-  # Set the username on all endpoints
-  user_email = request.headers.get('X-Goog-Authenticated-User-Email',
-                                   'UserNotLoggedIn')
-  user_email = user_email.replace('accounts.google.com:', '')
-  user_email = user_email.replace('@ons.gov.uk', '')
+  username = get_username()
 
-  if called_from == None:
-    called_from = ''
-  if called_from == 'help':
-    current_selected_endpoint = '/help/home'
-  elif 'multiple_address' in called_from:
-    called_from = 'multiple_address_original'
-  elif called_from != 'address_info':
-    current_selected_endpoint = url_for('settings')
-  else:
-    current_selected_endpoint = ''
+  called_from = '' if called_from == None else called_from
+  current_selected_endpoint = get_current_selected_endpoint(
+      endpoints, called_from)
 
+  # Before the nav component is made from Endpoints, remove unallowed pages
+
+  current_group = get_current_group()
+  allowed_pages = current_group.get('allowed_pages', [])
+
+  secure_endpoints = []
   for endpoint in endpoints:
-    endpoint.user_email = user_email
-    if endpoint.url_title == called_from:
-      endpoint.selected = True
-      current_selected_endpoint = url_for(endpoint.url_title)
+    if endpoint.page_name in allowed_pages:
+      secure_endpoints.append(endpoint)
 
+  # Create dict for ons-navigation component
   nav_info = [{
       'title': endpoint.title,
       'url': endpoint.url
-  } for endpoint in endpoints]
-  # Add the 'About' section at the end, insert instead of append so it's location can easily
-  # be changed later, after consulting with UX team
-  nav_info.insert(len(nav_info), {'title': 'Help', 'url': '/help/home'})
-  nav_info.insert(len(nav_info), {
-      'title': 'Settings',
-      'url': url_for('settings')
-  })
+  } for endpoint in secure_endpoints]
 
-  for endpoint in endpoints:
+  # Add a copy of the navigation info to each Endpoint
+  for endpoint in secure_endpoints:
     endpoint.nav_info = nav_info
     endpoint.current_selected_endpoint = current_selected_endpoint
 
-  return endpoints
+  return secure_endpoints

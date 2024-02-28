@@ -13,6 +13,8 @@ from .models.get_addresses import get_addresses
 from .upload_utils import check_valid_upload
 from .page_error import page_error
 from .upload_utils import FileUploadException
+from .security_utils import check_user_has_access_to_page
+from .google_utils import get_username, get_current_group
 import json
 import csv
 from time import sleep
@@ -20,11 +22,15 @@ from time import sleep
 page_name = 'multiple_address_original'
 
 
-def final(searchable_fields,
-          error_description='',
-          error_title='',
-          results_summary_table='',
-          table_results=''):
+def final(
+    searchable_fields,
+    error_description='',
+    error_title='',
+    results_summary_table='',
+    table_results='',
+    reduced=False,
+    limit=5000,
+):
 
   return render_template(
       f'{page_name}.html',
@@ -35,6 +41,8 @@ def final(searchable_fields,
       table_results=table_results,
       results_summary_table=results_summary_table,
       results_page=True,
+      reduced=reduced,
+      limit=limit,
   )
 
 
@@ -57,6 +65,20 @@ def request_entity_too_large(error):
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def multiple_address_original():
+  endpoints = get_endpoints(called_from=page_name)
+  access = check_user_has_access_to_page(page_name, endpoints)
+  if access != True:
+    return access
+
+  username = get_username()
+
+  current_group = get_current_group()
+  if username in current_group.get('usernames'):
+    reduced = True
+    limit = current_group.get('limit_mini_bulk')
+  else:
+    reduced = False
+    limit = 5000
 
   if request.method == 'GET':
     delete_input(session)
@@ -70,6 +92,8 @@ def multiple_address_original():
         f'{page_name}.html',
         searchable_fields=searchable_fields,
         endpoints=get_endpoints(called_from=page_name),
+        reduced=reduced,
+        limit=limit,
     )
 
   if request.method == 'POST':
@@ -84,9 +108,12 @@ def multiple_address_original():
     file = request.files['file']
 
     try:
-      file_valid, error_description, error_title = check_valid_upload(file)
+      file_valid, error_description, error_title = check_valid_upload(
+          file, limit=limit)
     except FileUploadException as e:
       return final(searchable_fields,
+                   limit=limit,
+                   reduced=reduced,
                    error_description=e.error_description,
                    error_title=e.error_title)
 
@@ -94,6 +121,8 @@ def multiple_address_original():
       # File invalid? Return error
       return final(searchable_fields,
                    error_description=error_description,
+                   limit=limit,
+                   reduced=reduced,
                    error_title=error_title)
     else:
       for field in searchable_fields:
@@ -121,4 +150,6 @@ def multiple_address_original():
 
         return final(searchable_fields,
                      table_results=table_results,
+                     limit=limit,
+                     reduced=reduced,
                      results_summary_table=results_summary_table)
