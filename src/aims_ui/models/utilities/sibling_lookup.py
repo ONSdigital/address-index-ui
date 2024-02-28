@@ -1,19 +1,13 @@
-from aims_ui import app
 import json
 import requests
 import logging
+from aims_ui import app
 from flask import request
+from aims_ui.api_helpers import get_header
 
 
 def multiple_uprn_lookup(siblings):
-
-  user_email = request.headers.get('X-Goog-Authenticated-User-Email', '')
-
-  header = {
-      "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
-      "user": user_email.replace('accounts.google.com:', ''),
-  }
+  header = get_header()
 
   url_endpoint = app.config.get('API_URL') + '/addresses/multiuprn'
   siblings = [str(x) for x in siblings]
@@ -49,7 +43,8 @@ def getHierarchy(parentUPRN):
       'Septenary',
       'Octonary',
   ]
-
+  if not relatives:
+    return []
   for level in relatives:
     siblings = level.get('siblings')
     # Get Address list of all siblings

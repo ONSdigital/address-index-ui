@@ -1,3 +1,7 @@
+import dataclasses
+import json
+import os
+import urllib.request
 from . import app
 from .models.get_endpoints import get_endpoints
 from .api_interaction import api
@@ -9,11 +13,7 @@ from .models.address import Address
 from requests.exceptions import ConnectionError
 from flask import render_template, request, session
 from flask_login import login_required
-import dataclasses
-import json
-import urllib.request, json
 from aims_ui import get_cached_tooltip_data
-import os
 
 page_name = 'address_info'
 
@@ -22,7 +22,7 @@ page_name = 'address_info'
 @app.route('/address_info/<uprn>')
 def address_info(uprn):
   """Show all info about an address given the UPRN"""
-
+  endpoints = get_endpoints(called_from=page_name)
   epoch_version_number = load_epoch_number(session)
 
   try:
@@ -93,8 +93,8 @@ def address_info(uprn):
   ]
 
   return render_template(
-      'address_info.html',
-      endpoints=get_endpoints('address_info'),
+      f'{page_name}.html',
+      endpoints=endpoints,
       matched_addresses=matched_addresses,
       clerical_info=clerical_info,
       hierarchy_table=hierarchy_table,

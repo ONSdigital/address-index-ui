@@ -1,9 +1,10 @@
-from . import app
 import logging
 from flask import render_template, request, session, url_for
 from flask_login import login_required
-from .models.get_endpoints import get_endpoints
 from aims_ui import get_cached_tooltip_data
+from . import app
+from .security_utils import check_user_has_access_to_page
+from .models.get_endpoints import get_endpoints
 
 page_name = 'help'
 
@@ -11,6 +12,11 @@ page_name = 'help'
 @login_required
 @app.route('/help/<subject>')
 def help(subject='None'):
+  endpoints = get_endpoints(called_from=page_name)
+  access = check_user_has_access_to_page(page_name, endpoints)
+  if access != True:
+    return access
+
   # Get brief descriptions from the tooltips file, but any deffinitions
   # here will get a more lengthly explanation
 
@@ -49,32 +55,26 @@ def help(subject='None'):
   for deffinition in deffinitions:
     deffinition['description'] = get_matching_tooltip(deffinition.get('name'))
 
+  common = [endpoints, deffinitions, breadcrumbs]
   # Hard code here to avoid security flaws where users could potentially inject unwanted urls
   if subject == 'confidence_score':
-    return render_template(
-        './help_pages/uprn.html',
-        endpoints=get_endpoints(called_from=page_name),
-        deffinitions=deffinitions,
-        breadcrumbs=breadcrumbs,
-    )
+    return return_specific_help_page('uprn', common)
   elif subject == 'submit_feedback':
-    return render_template(
-        './help_pages/submit_feedback.html',
-        endpoints=get_endpoints(called_from=page_name),
-        deffinitions=deffinitions,
-        breadcrumbs=breadcrumbs,
-    )
+    return return_specific_help_page('submit_feedback', common)
   elif subject == 'help_and_documentation':
-    return render_template(
-        './help_pages/help_and_documentation.html',
-        endpoints=get_endpoints(called_from=page_name),
-        deffinitions=deffinitions,
-        breadcrumbs=breadcrumbs,
-    )
+    return return_specific_help_page('help_and_documentation', common)
 
-  else:
-    return (render_template(
-        'help.html',
-        endpoints=get_endpoints(called_from=page_name),
-        deffinitions=deffinitions,
-    ))
+  return render_template(
+      'help.html',
+      endpoints=endpoints,
+      deffinitions=deffinitions,
+  )
+
+
+def return_specific_help_page(page_html_name, common):
+  return render_template(
+      f'./help_pages/{page_html_name}.html',
+      endpoints=common[0],
+      deffinitions=common[1],
+      breadcrumbs=common[2],
+  )

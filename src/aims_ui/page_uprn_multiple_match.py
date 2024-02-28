@@ -1,4 +1,5 @@
 import os
+import json
 from flask import render_template, request, session, send_file
 from requests.exceptions import ConnectionError
 from flask_login import login_required
@@ -9,7 +10,7 @@ from .models.get_endpoints import get_endpoints
 from .models.get_fields import get_fields
 from .models.get_addresses import get_addresses
 from .page_error import page_error
-import json
+from .security_utils import check_user_has_access_to_page
 from .upload_utils import check_valid_upload, FileUploadException
 from .multiple_match_lookup import uprn_multiple_address_match_original
 
@@ -19,6 +20,10 @@ page_name = 'uprn_multiple_match'
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def uprn_multiple_match():
+  endpoints = get_endpoints(called_from=page_name)
+  access = check_user_has_access_to_page(page_name, endpoints)
+  if access != True:
+    return access
 
   if request.method == 'GET':
     delete_input(session)

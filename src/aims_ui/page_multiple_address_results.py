@@ -5,6 +5,8 @@ from . import app
 from .models.get_endpoints import get_endpoints
 from .api_interaction import api, job_data_by_user_id, job_result_formatter
 from .table_utils import create_table
+from .security_utils import check_user_has_access_to_page
+from .google_utils import get_username, get_current_group
 import json
 import csv
 
@@ -14,6 +16,19 @@ page_name = 'multiple_address_results'
 @login_required
 @app.route(f'/multiple_address_results', methods=['GET', 'POST'])
 def multiple_address_results():
+  endpoints = get_endpoints(called_from=page_name)
+  access = check_user_has_access_to_page(page_name, endpoints)
+  if access != True:
+    return access
+
+  username = get_username()
+  current_group = get_current_group()
+  if username in current_group.get('usernames'):
+    reduced = True
+    limit = current_group.get('limit_mini_bulk')
+  else:
+    reduced = False
+    limit = 5000
 
   #TODO Set To FALSE (debug only)----------------------------------------------
   if False:
@@ -38,20 +53,19 @@ def multiple_address_results():
         f'{page_name}.html',
         endpoints=endpoints,
         jobs=jobs,
+        reduced=reduced,
+        limit=limit,
     )
 
   #TODO SET TO FALSE --------------------------------------------------
 
   endpoints = get_endpoints(called_from=page_name)
-  user_email = request.headers.get('X-Goog-Authenticated-User-Email',
-                                   'UserNotLoggedIn')
-  user_email = user_email.replace('accounts.google.com:', '')
-  user_email = user_email.replace('@ons.gov.uk', '')
+  username = get_username()
 
   headers = [
       'JOBID', 'NAME', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK'
   ]
-  results = job_data_by_user_id(user_email).json().get('jobs', [])
+  results = job_data_by_user_id(username).json().get('jobs', [])
 
   formatted_results = [[
       job.get('jobid'),
@@ -77,6 +91,8 @@ def multiple_address_results():
       f'{page_name}.html',
       endpoints=endpoints,
       jobs=jobs,
+      reduced=reduced,
+      limit=limit,
   )
 
 
