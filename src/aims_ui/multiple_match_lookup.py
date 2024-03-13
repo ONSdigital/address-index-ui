@@ -86,7 +86,9 @@ def multiple_address_match_original(file, all_user_input, download=False):
   if download:
     proxy = StringIO()
     writer = csv.writer(proxy)
-    writer.writerow(csv_headers)
+
+    if all_user_input.get('header_row_export') == 'True':
+      writer.writerow(csv_headers)
 
     def write(id, addr, m_addr, address_type, uprn, m_type, confid_score,
               doc_score, rank, recommendationCode):
