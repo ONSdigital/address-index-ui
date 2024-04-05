@@ -11,22 +11,19 @@ Pre-requisites:
 ## Setup Environment Variables
 
 `export FLASK_APP="aims_ui"`
-
 `export FLASK_ENV="development"`
-
 `export API_AUTH_TYPE="JWT"`
 
-`export JWT_TOKEN=[enter_jwt_token_here]`
+`export API_URL=[enter_api_url]`
+`export API_JWT_TOKEN=[enter_jwt_token_here]`
+
+`export BM_API_URL=[enter_bulk_match_url]`
+`export BM_JWT_TOKEN=[enter_jwt_token_here]`
 
 `export API_BSC_AUTH_USERNAME=[enter_bsc_username]`
-
 `export API_BSC_AUTH_PASSWORD=[enter_bsc_password]`
 
 `export PROJECT_DOMAIN=[enter_project_domain]`
-
-`export BM_API_URL=[enter_bulk_match_url]`
-
-`export API_URL=[enter_api_url]`
 
 *Note: JWT token is exported WITHOUT 'Bearer ' before it*
 

@@ -40,7 +40,7 @@ def get_api_auth():
     token = jwt.encode(payload,
                        app.config.get('JWT_K_VALUE'),
                        algorithm="HS256")
-    api_auth['JWT_TOKEN'] = token
+    api_auth['API_JWT_TOKEN'] = token
 
   elif app.config.get('API_AUTH_TYPE') == 'BASIC_AUTH':
     api_auth['API_AUTH_TYPE'] = 'BASIC_AUTH'
