@@ -6,7 +6,7 @@ def get_header(username=True):
   """ Get defaut header for API requests """
   header = {
       "Content-Type": "application/json",
-      "Authorization": app.config.get('JWT_TOKEN_BEARER'),
+      "Authorization": app.config.get('API_JWT_TOKEN_BEARER'),
   }
 
   if username:
