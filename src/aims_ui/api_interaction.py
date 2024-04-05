@@ -6,7 +6,7 @@ from . import app
 from io import StringIO, BytesIO
 from .models.get_addresses import get_addresses
 from .classification_utilities import check_reverse_classification
-from .api_helpers import get_header
+from .api_helpers import get_header, job_api
 from .google_utils import get_username
 from flask import request
 import urllib
@@ -15,6 +15,30 @@ import logging
 import xml.etree.ElementTree as ET
 import jwt
 import datetime
+
+
+def api(url, called_from, all_user_input):
+  """API helper for individual API lookups"""
+  header = get_header()
+
+  params = get_params(all_user_input)
+  if (called_from == 'uprn') or (called_from == 'postcode'):
+    url = app.config.get('API_URL') + url + all_user_input.get(called_from, '')
+  elif (called_from == 'singlesearch'):
+    url = app.config.get('API_URL') + url
+
+  # bulks run without verbose for speed
+  if (called_from == 'multiple'):
+    params = params.replace('verbose=True', 'verbose=False')
+    url = app.config.get('API_URL') + url
+
+  r = requests.get(
+      url,
+      params=params,
+      headers=header,
+  )
+
+  return r
 
 
 def get_response_attributes(r):
@@ -204,7 +228,7 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
 
   header = get_header()
 
-  header['user'] = note_data 
+  header['user'] = note_data
 
   addresses = str(addresses).replace('"', '')  # Remove Quotes from address
   addresses = str(addresses).replace(
@@ -219,44 +243,6 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
 
   logging.info('Submmitted MMJob on endpoint"' + str(url) +
                '"  with UserId as "' + str(username) + '"')
-
-  return r
-
-
-def job_api(url):
-  """API helper for job endpoints """
-  url = app.config.get('BM_API_URL') + url
-
-  header = get_header()
-
-  r = requests.get(
-      url,
-      headers=header,
-  )
-
-  return r
-
-
-def api(url, called_from, all_user_input):
-  """API helper for individual API lookups"""
-  header = get_header()
-
-  params = get_params(all_user_input)
-  if (called_from == 'uprn') or (called_from == 'postcode'):
-    url = app.config.get('API_URL') + url + all_user_input.get(called_from, '')
-  elif (called_from == 'singlesearch'):
-    url = app.config.get('API_URL') + url
-
-  # bulks run without verbose for speed
-  if (called_from == 'multiple'):
-    params = params.replace('verbose=True', 'verbose=False')
-    url = app.config.get('API_URL') + url
-
-  r = requests.get(
-      url,
-      params=params,
-      headers=header,
-  )
 
   return r
 

@@ -5,27 +5,13 @@ import json
 from flask import request
 import logging
 from . import app
-from .api_helpers import get_header
+from .api_helpers import get_header, job_api
 from .google_utils import get_username
 
 
 def job_data_by_job_id(job_id):
   url = f'/bulk-progress/{job_id}'
   r = job_api(url)
-  return r
-
-
-def job_api(url):
-  """API helper for job endpoints """
-  header = get_header()
-
-  url = app.config.get('BM_API_URL') + url
-
-  r = requests.get(
-      url,
-      headers=header,
-  )
-
   return r
 
 
