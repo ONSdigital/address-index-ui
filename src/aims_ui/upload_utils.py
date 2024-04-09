@@ -1,6 +1,7 @@
 import os
 import csv
 import ast
+import logging
 
 ALLOWED_EXTENSIONS = {'csv'}
 
@@ -93,6 +94,8 @@ def check_valid_upload(file, called_from='address', limit=5001):
   record_limit_exceeded = check_for_record_limit(file, limit)
 
   if record_limit_exceeded:
+    logging.info(
+        'Record Limit Exceeded (if unexpected, check user groups and limits)')
     raise FileUploadException(
         error_title='Input file error',
         error_description=f'Source file contains more than {limit} addresses')
@@ -100,6 +103,7 @@ def check_valid_upload(file, called_from='address', limit=5001):
   blank_fields_present = check_for_blank_fields(file)
 
   if blank_fields_present:
+    logging.info('Input file contains blank fields')
     raise FileUploadException(
         error_title='Input file error',
         error_description=

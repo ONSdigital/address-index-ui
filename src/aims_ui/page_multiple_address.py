@@ -47,14 +47,8 @@ def multiple_address():
   if access != True:
     return access
 
-  username = get_username()
   current_group = get_current_group()
-  if username in current_group.get('usernames'):
-    reduced = True
-    limit = current_group.get('limit_mini_bulk')
-  else:
-    reduced = False
-    limit = 5000
+  limit = current_group.get('limit_vast_bulk', 100000)
 
   if request.method == 'GET':
     delete_input(session)
@@ -71,29 +65,28 @@ def multiple_address():
         limit=limit,
     )
 
-  if request.method == 'POST':
-    searchable_fields = get_fields(page_name)
-    all_user_input = load_save_store_inputs(
-        searchable_fields,
-        request,
-        session,
-    )
+  searchable_fields = get_fields(page_name)
+  all_user_input = load_save_store_inputs(
+      searchable_fields,
+      request,
+      session,
+  )
 
-    file = request.files['file']
+  file = request.files['file']
 
-    try:
-      # Validate file
-      file_valid, error_description, error_title = check_valid_upload(
-          file, limit=limit)
-    except FileUploadException as e:
-      return final(searchable_fields,
-                   limit,
-                   error_description=e.error_description,
-                   error_title=e.error_title)
+  try:
+    # Validate file
+    file_valid, error_description, error_title = check_valid_upload(
+        file, limit=limit)
+  except FileUploadException as e:
+    return final(searchable_fields,
+                 limit,
+                 error_description=e.error_description,
+                 error_title=e.error_title)
 
-    if file_valid:
-      multiple_address_match(file, all_user_input, download=True)
-      return final(all_user_input, limit)
+  if file_valid:
+    multiple_address_match(file, all_user_input, download=True)
+    return final(all_user_input, limit)
 
 
 def final(all_user_input,
