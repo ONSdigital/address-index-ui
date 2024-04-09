@@ -3,10 +3,11 @@ from flask_login import login_required
 from flask import render_template, request, session, send_file, url_for
 from . import app
 from .models.get_endpoints import get_endpoints
-from .api_interaction import api, job_data_by_user_id, job_result_formatter
+from .api_interaction import api, job_result_formatter
 from .table_utils import create_table
 from .security_utils import check_user_has_access_to_page
 from .google_utils import get_username, get_current_group
+from .multiple_address_utils import get_tag_data, job_data_by_current_user
 import json
 import csv
 
@@ -65,16 +66,18 @@ def multiple_address_results():
   headers = [
       'JOBID', 'NAME', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK'
   ]
-  results = job_data_by_user_id(username).json().get('jobs', [])
+  results = job_data_by_current_user()
 
   formatted_results = [[
       job.get('jobid'),
-      extract_username_and_tag(job, 'tag'),
+      get_tag_data(job.get('userid')).get('user_tag'),
       job.get('status'),
-      extract_username_and_tag(job, 'username'),
+      get_tag_data(job.get('userid')).get('username'),
       f"{job.get('recssofar')}  of  {job.get('totalrecs')}",
       job_result_formatter(job.get('jobid'))
   ] for job in results]
+
+  print('\n', results)
 
   # EXAMPLE results format
   # results = [
@@ -94,22 +97,3 @@ def multiple_address_results():
       reduced=reduced,
       limit=limit,
   )
-
-
-def extract_username_and_tag(job, returnType):
-  full_user_id = job.get('userid')
-  parts = full_user_id.split("::")
-  # Check if the string contains the "::" separator
-  if len(parts) > 1:
-    username = parts[0]
-    tag = parts[1]
-  else:
-    # If the separator is not present, treat the whole string as the username
-    username = full_user_id
-    tag = ""
-  if returnType == 'username':
-    return username
-  return tag
-
-
-# Felix

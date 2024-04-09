@@ -8,6 +8,7 @@ from .models.get_addresses import get_addresses
 from .classification_utilities import check_reverse_classification
 from .api_helpers import get_header, job_api
 from .google_utils import get_username
+from .multiple_address_utils import generate_tag_name
 from flask import request
 import urllib
 import csv
@@ -131,12 +132,6 @@ def get_epoch_options():
   return sorted_epochs, default
 
 
-def job_data_by_job_id(job_id):
-  url = f'/bulk-progress/{job_id}'
-  r = job_api(url)
-  return r
-
-
 def job_result_formatter(job_id):
   # TODO Might switch to the new results endpoint
   buttonContent = job_result_by_job_id(job_id)
@@ -183,8 +178,8 @@ def all_jobs():
   return r
 
 
-def job_data_by_user_id(user_id):
-  url = f'/jobs?userid={user_id}'
+def job_data_by_job_id(job_id):
+  url = f'/bulk-progress/{job_id}'
   r = job_api(url)
   return r
 
@@ -223,12 +218,11 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
   params = get_params(all_user_input, removeVerbose=True)
 
   username = get_username()
-  tag_name = '::' + str(all_user_input.get('name', '')[:25] + '::')
-  note_data = username + tag_name
+  full_tag = generate_tag_name(username,
+                               str(all_user_input.get('name', '')[:25]))
 
   header = get_header(bulk=True)
-
-  header['user'] = note_data
+  header['user'] = full_tag
 
   addresses = str(addresses).replace('"', '')  # Remove Quotes from address
   addresses = str(addresses).replace(
