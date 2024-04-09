@@ -226,7 +226,7 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
   tag_name = '::' + str(all_user_input.get('name', '')[:25] + '::')
   note_data = username + tag_name
 
-  header = get_header()
+  header = get_header(bulk=True)
 
   header['user'] = note_data
 
@@ -241,8 +241,19 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
       data=addresses.encode('utf-8'),
   )
 
+  log_message = ("POST Request to " + r.url + "\n\n | Status Code: " +
+                 str(r.status_code) + " - " + r.reason +
+                 "\n\n | Request Headers: " + str(r.request.headers) +
+                 "\n\n | Response Headers: " + str(r.headers) +
+                 "\n\n | Response Body: " + r.text)
+
   logging.info('Submmitted MMJob on endpoint"' + str(url) +
-               '"  with UserId as "' + str(username) + '"')
+               '"  with UserId as "' + str(username) + '"' +
+               'Request details: ' + str(log_message))
+
+  if r.status_code != 200:
+    logging.error(log_message)
+    raise Exception(f"Request failed with status code {r.status_code}")
 
   return r
 

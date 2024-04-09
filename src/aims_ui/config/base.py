@@ -33,6 +33,7 @@ USER_GROUPS = [
         'usernames': [],
         'pages_to_remove': ['custom_response'],
         'limit_mini_bulk': 5000,
+        'limit_vast_bulk': 100000,
     },
     {
         'name': 'developers',
