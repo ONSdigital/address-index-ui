@@ -53,8 +53,6 @@ def jsonify_address(address_to_lookup):
 
 
 def multiple_address_match(file, all_user_input, download=False):
-  csv_headers = ['id', 'inputAddress', 'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank']  # yapf: disable
-
   # Process the uploaded file from th euser
   contents = file.readlines()
   remove_header_row(contents)
@@ -242,7 +240,9 @@ def uprn_multiple_address_match_original(file, all_user_input):
 
   proxy = StringIO()
   writer = csv.writer(proxy)
-  writer.writerow(csv_headers)
+
+  if all_user_input.get('header_row_export') == 'True':
+    writer.writerow(csv_headers)
 
   line_count = 0
 
