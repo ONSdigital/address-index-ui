@@ -34,14 +34,14 @@ def multiple_address_results():
   #TODO Set To FALSE (debug only)----------------------------------------------
   if False:
     headers = [
-        'JOBID', 'NAME', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK'
+        'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'RECS PROCESSED', 'DOWNLOAD LINK'
     ]
     job_id = 6
 
     endpoints = get_endpoints(called_from=page_name)
     formatted_results = [
         [
-            '22', 'Example', '10,000 of A Jillion', 'bob', 'complete',
+            '22', 'Example', '10,000 of A Jillion', 'bob', 'True', 'complete',
             f'<a href="/downloads/googlefiledownload{job_id}">job_id {job_id}</a>'
         ],
     ]
@@ -64,7 +64,7 @@ def multiple_address_results():
   username = get_username()
 
   headers = [
-      'JOBID', 'NAME', 'STATUS', 'USER ID', 'RECS PROCESSED', 'DOWNLOAD LINK'
+     'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'RECS PROCESSED', 'DOWNLOAD LINK'
   ]
   results = job_data_by_current_user()
 
@@ -73,6 +73,7 @@ def multiple_address_results():
       get_tag_data(job.get('userid')).get('user_tag'),
       job.get('status'),
       get_tag_data(job.get('userid')).get('username'),
+      get_tag_data(job.get('userid')).get('header_row_export', 'NA'),
       f"{job.get('recssofar')}  of  {job.get('totalrecs')}",
       job_result_formatter(job.get('jobid'))
   ] for job in results]

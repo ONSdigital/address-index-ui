@@ -205,6 +205,10 @@ def submit_uprn_mm_job(uprns_and_ids, all_user_input):
 
   return r
 
+def null_or_undefined_to_False(var):
+  if var is None or str(var).strip().lower() in ['null', 'undefined']:
+    return 'False' 
+  return var
 
 def submit_mm_job(user, addresses, all_user_input, uprn=False):
   """API helper for job endpoints """
@@ -215,7 +219,8 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
     all_user_input['pafdefault'] = 'true'
   del all_user_input['paf-nag-prefference']
 
-  header_row_export = all_user_input.get('header_row_export', False)
+  header_row_export = all_user_input.get('header_row_export', 'False')
+  header_row_export = null_or_undefined_to_False(header_row_export)
 
   params = get_params(all_user_input, removeVerbose=True)
 
