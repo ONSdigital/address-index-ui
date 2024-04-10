@@ -68,7 +68,7 @@ def uprn_multiple_match():
 
     return send_file(full_results,
                      mimetype='text/csv',
-                     attachment_filename=f'result_size_{line_count}.csv',
+                     download_name=f'result_size_{line_count}.csv',
                      as_attachment=True)
 
 
