@@ -9,7 +9,7 @@ from .api_helpers import get_header, job_api
 from .google_utils import get_username
 
 
-def generate_tag_name(username, user_tag, optional_metadata = {}):
+def generate_tag_name(username, user_tag, optional_metadata={}):
   """ Generate tag (username and tag in JSON format) """
   data = {'username': username, 'user_tag': user_tag}
   merged_data = data | optional_metadata
