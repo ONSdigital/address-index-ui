@@ -77,8 +77,6 @@ def multiple_address_results():
       job_result_formatter(job.get('jobid'))
   ] for job in results]
 
-  print('\n', results)
-
   # EXAMPLE results format
   # results = [
   #   ['34', '10,000 of 67,924', 'in-progress', '-'],
