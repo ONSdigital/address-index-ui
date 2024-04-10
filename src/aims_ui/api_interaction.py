@@ -215,11 +215,15 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
     all_user_input['pafdefault'] = 'true'
   del all_user_input['paf-nag-prefference']
 
+  header_row_export = all_user_input.get('header_row_export', False)
+
   params = get_params(all_user_input, removeVerbose=True)
 
+  optional_metadata = {'header_row_export': header_row_export}
   username = get_username()
   full_tag = generate_tag_name(username,
-                               str(all_user_input.get('name', '')[:25]))
+                               str(all_user_input.get('name', '')[:25]),
+                               optional_metadata=optional_metadata)
 
   header = get_header(bulk=True)
   header['user'] = full_tag

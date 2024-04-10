@@ -205,6 +205,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           'header_row_export',
           display_title='Export Header Row',
           search_type='checkbox',
+          checkbox_value=True,
           description='Add a header row to the exported file.',
       ),
   }

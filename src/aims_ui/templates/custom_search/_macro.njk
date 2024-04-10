@@ -48,7 +48,6 @@
 			   "description": field.description },
 		"options": field.dropdown_options })}}
 	{% elif field.search_type == "checkbox" %}
-
 	{{onsCheckbox({
 		"id": field.database_name,
 		"name": field.database_name,
@@ -128,20 +127,19 @@
 {% endfor %}
 
 {% if params.remove_search_button == False %}
-
-<br>
-{# Add a search button on the end of the UI #}
-{% if not params.remove_buttons %}
-{{  onsButton({
+  {# Add a search button on the end of the UI #}
+  <br>
+  {% if not params.remove_buttons %}
+    {{  onsButton({
 	"text": "Search", }) }}
-
+  	<br>
 {% endif %}
 
 {% if params.remove_clear_button != True %}
   {# Add a clear filters button with a url to the currently selected endpoint #}
   {% for endpoint in params.endpoints %}
-  <br>
     {% if endpoint.selected %}
+  	<br>
   	{{ onsButton({
   		'text': 'Clear  filters',
 		'submitType': "loader",

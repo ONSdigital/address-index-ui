@@ -55,6 +55,7 @@ def jsonify_address(address_to_lookup):
 def multiple_address_match(file, all_user_input, download=False):
   csv_headers = ['id', 'inputAddress', 'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank']  # yapf: disable
 
+  # Process the uploaded file from th euser
   contents = file.readlines()
   remove_header_row(contents)
 
