@@ -3,7 +3,14 @@ function getAllLinks() {
   const table = document.querySelector('#adjustLinksTable');
   const links = table.querySelectorAll('a');
   for (const link of links) {
-    tableLinks.push({'link': link, 'parent': link.parentNode });
+    const linkElement = link;
+    const linkParent = link.parentNode;
+
+    const headerCellIndex = linkParent.cellIndex-2;
+    const row = linkParent.parentNode;
+    const headerRowCell = row.cells[headerCellIndex];
+
+    tableLinks.push({'link': linkElement, 'parent': linkParent, 'headerRowCell': headerRowCell});
   }
   return tableLinks;
 }
@@ -96,8 +103,11 @@ function processRow(row) {
   return csvFormat;
 }
 
-async function downloadAndProcess(url) {
-  let final_csv = 'id,inputAddress,matchedAddress,uprn,matchType,confidenceScore,documentScore,rank,addressType(Paf/Nag),recommendationCode\n';
+async function downloadAndProcess(url, headerStatus) {
+  let final_csv = '';
+  if (headerStatus.toString() !== 'False') {
+    final_csv = 'id,inputAddress,matchedAddress,uprn,matchType,confidenceScore,documentScore,rank,addressType(Paf/Nag),recommendationCode\n';
+  } 
   const response = await fetch(url);
   const arrayBuffer = await response.arrayBuffer();
   const inflated = await pako.inflate(arrayBuffer);
@@ -113,21 +123,24 @@ async function downloadAndProcess(url) {
 }
 
 
-async function changeLinkToButton(linkParent) {
+async function changeLinkToButton(linkParentMetadata) {
   // Make the Download Button 
   const originalButton = document.querySelector('#downloadButtonTemplate');
   const clonedButton = originalButton.cloneNode(true);
 
-  const cell = linkParent.parent;
+  const cell = linkParentMetadata.parent;
 
-  linkParent.parent.append(clonedButton);
+  linkParentMetadata.parent.append(clonedButton);
 
   clonedButton.addEventListener('click', async function() {
     // Make Spin Load
     clonedButton.classList.add('ons-is-loading');
 
+    // Get header option status
+    const headerStatus = linkParentMetadata.headerRowCell.textContent.trim().replace(/\s+/g, ' ');
+
     // Get CSV content
-    const csv = await downloadAndProcess(linkParent.link.href);
+    const csv = await downloadAndProcess(linkParentMetadata.link.href, headerStatus);
 
     // Make a new blob
     const blob = new Blob([csv], { type: 'text/csv' });
@@ -136,12 +149,12 @@ async function changeLinkToButton(linkParent) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    const fileName = getNameOfJobFromCell(cell, linkParent.link.textContent);
+    const fileName = getNameOfJobFromCell(cell, linkParentMetadata.link.textContent);
     a.download = fileName + '.csv';
     a.click();
     clonedButton.classList.remove('ons-is-loading');
   });
-  linkParent.link.remove();
+  linkParentMetadata.link.remove();
 }
 
 function getNameOfJobFromCell(cell, backupName) {
