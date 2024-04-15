@@ -6,8 +6,9 @@ from . import app
 from io import StringIO, BytesIO
 from .models.get_addresses import get_addresses
 from .classification_utilities import check_reverse_classification
-from .api_helpers import get_header
+from .api_helpers import get_header, job_api
 from .google_utils import get_username
+from .multiple_address_utils import generate_tag_name
 from flask import request
 import urllib
 import csv
@@ -15,6 +16,30 @@ import logging
 import xml.etree.ElementTree as ET
 import jwt
 import datetime
+
+
+def api(url, called_from, all_user_input):
+  """API helper for individual API lookups"""
+  header = get_header()
+
+  params = get_params(all_user_input)
+  if (called_from == 'uprn') or (called_from == 'postcode'):
+    url = app.config.get('API_URL') + url + all_user_input.get(called_from, '')
+  elif (called_from == 'singlesearch'):
+    url = app.config.get('API_URL') + url
+
+  # bulks run without verbose for speed
+  if (called_from == 'multiple'):
+    params = params.replace('verbose=True', 'verbose=False')
+    url = app.config.get('API_URL') + url
+
+  r = requests.get(
+      url,
+      params=params,
+      headers=header,
+  )
+
+  return r
 
 
 def get_response_attributes(r):
@@ -40,7 +65,7 @@ def get_api_auth():
     token = jwt.encode(payload,
                        app.config.get('JWT_K_VALUE'),
                        algorithm="HS256")
-    api_auth['JWT_TOKEN'] = token
+    api_auth['API_JWT_TOKEN'] = token
 
   elif app.config.get('API_AUTH_TYPE') == 'BASIC_AUTH':
     api_auth['API_AUTH_TYPE'] = 'BASIC_AUTH'
@@ -107,12 +132,6 @@ def get_epoch_options():
   return sorted_epochs, default
 
 
-def job_data_by_job_id(job_id):
-  url = f'/bulk-progress/{job_id}'
-  r = job_api(url)
-  return r
-
-
 def job_result_formatter(job_id):
   # TODO Might switch to the new results endpoint
   buttonContent = job_result_by_job_id(job_id)
@@ -159,8 +178,8 @@ def all_jobs():
   return r
 
 
-def job_data_by_user_id(user_id):
-  url = f'/jobs?userid={user_id}'
+def job_data_by_job_id(job_id):
+  url = f'/bulk-progress/{job_id}'
   r = job_api(url)
   return r
 
@@ -186,6 +205,10 @@ def submit_uprn_mm_job(uprns_and_ids, all_user_input):
 
   return r
 
+def null_or_undefined_to_False(var):
+  if var is None or str(var).strip().lower() in ['null', 'undefined']:
+    return 'False' 
+  return var
 
 def submit_mm_job(user, addresses, all_user_input, uprn=False):
   """API helper for job endpoints """
@@ -196,15 +219,19 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
     all_user_input['pafdefault'] = 'true'
   del all_user_input['paf-nag-prefference']
 
+  header_row_export = all_user_input.get('header_row_export', 'False')
+  header_row_export = null_or_undefined_to_False(header_row_export)
+
   params = get_params(all_user_input, removeVerbose=True)
 
+  optional_metadata = {'header_row_export': header_row_export}
   username = get_username()
-  tag_name = '::' + str(all_user_input.get('name', '')[:25] + '::')
-  note_data = username + tag_name
+  full_tag = generate_tag_name(username,
+                               str(all_user_input.get('name', '')[:25]),
+                               optional_metadata=optional_metadata)
 
-  header = get_header()
-
-  header['user'] = note_data 
+  header = get_header(bulk=True)
+  header['user'] = full_tag
 
   addresses = str(addresses).replace('"', '')  # Remove Quotes from address
   addresses = str(addresses).replace(
@@ -217,46 +244,19 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
       data=addresses.encode('utf-8'),
   )
 
+  log_message = ("POST Request to " + r.url + "\n\n | Status Code: " +
+                 str(r.status_code) + " - " + r.reason +
+                 "\n\n | Request Headers: " + str(r.request.headers) +
+                 "\n\n | Response Headers: " + str(r.headers) +
+                 "\n\n | Response Body: " + r.text)
+
   logging.info('Submmitted MMJob on endpoint"' + str(url) +
-               '"  with UserId as "' + str(username) + '"')
+               '"  with UserId as "' + str(username) + '"' +
+               'Request details: ' + str(log_message))
 
-  return r
-
-
-def job_api(url):
-  """API helper for job endpoints """
-  url = app.config.get('BM_API_URL') + url
-
-  header = get_header()
-
-  r = requests.get(
-      url,
-      headers=header,
-  )
-
-  return r
-
-
-def api(url, called_from, all_user_input):
-  """API helper for individual API lookups"""
-  header = get_header()
-
-  params = get_params(all_user_input)
-  if (called_from == 'uprn') or (called_from == 'postcode'):
-    url = app.config.get('API_URL') + url + all_user_input.get(called_from, '')
-  elif (called_from == 'singlesearch'):
-    url = app.config.get('API_URL') + url
-
-  # bulks run without verbose for speed
-  if (called_from == 'multiple'):
-    params = params.replace('verbose=True', 'verbose=False')
-    url = app.config.get('API_URL') + url
-
-  r = requests.get(
-      url,
-      params=params,
-      headers=header,
-  )
+  if r.status_code != 200:
+    logging.error(log_message)
+    raise Exception(f"Request failed with status code {r.status_code}")
 
   return r
 

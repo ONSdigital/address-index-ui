@@ -4,10 +4,16 @@ import os
 JSONIFY_PRETTYPRINT_REGULAR = True
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024
 API_AUTH_TYPE = os.getenv('API_AUTH_TYPE')
-JWT_TOKEN = os.getenv('JWT_TOKEN')
-JWT_TOKEN_BEARER = 'Bearer ' + str(JWT_TOKEN if JWT_TOKEN else '')
+
+API_JWT_TOKEN = os.getenv('API_JWT_TOKEN')
+API_JWT_TOKEN_BEARER = 'Bearer ' + str(API_JWT_TOKEN if API_JWT_TOKEN else '')
+
+BM_JWT_TOKEN = os.getenv('BM_JWT_TOKEN')
+BM_JWT_TOKEN_BEARER = 'Bearer ' + str(BM_JWT_TOKEN if BM_JWT_TOKEN else '')
+
 PROJECT_DOMAIN = os.getenv('PROJECT_DOMAIN')
 BM_API_URL = os.getenv('BM_API_URL')
+
 SESSION_COOKIE_SECURE = True
 
 API_BSC_AUTH_USERNAME = os.getenv('API_BSC_AUTH_USERNAME')
@@ -27,6 +33,7 @@ USER_GROUPS = [
         'usernames': [],
         'pages_to_remove': ['custom_response'],
         'limit_mini_bulk': 5000,
+        'limit_vast_bulk': 100000,
     },
     {
         'name': 'developers',

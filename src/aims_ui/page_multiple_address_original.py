@@ -70,15 +70,9 @@ def multiple_address_original():
   if access != True:
     return access
 
-  username = get_username()
-
   current_group = get_current_group()
-  if username in current_group.get('usernames'):
-    reduced = True
-    limit = current_group.get('limit_mini_bulk')
-  else:
-    reduced = False
-    limit = 5000
+  limit = current_group.get('limit_mini_bulk', '5000')
+  reduced = True if limit != 5000 else False
 
   if request.method == 'GET':
     delete_input(session)
@@ -96,60 +90,58 @@ def multiple_address_original():
         limit=limit,
     )
 
-  if request.method == 'POST':
+  searchable_fields = get_fields(page_name)
+  all_user_input = load_save_store_inputs(
+      searchable_fields,
+      request,
+      session,
+  )
 
-    searchable_fields = get_fields(page_name)
-    all_user_input = load_save_store_inputs(
-        searchable_fields,
-        request,
-        session,
-    )
+  file = request.files['file']
 
-    file = request.files['file']
+  try:
+    file_valid, error_description, error_title = check_valid_upload(
+        file, limit=limit)
+  except FileUploadException as e:
+    return final(searchable_fields,
+                 limit=limit,
+                 reduced=reduced,
+                 error_description=e.error_description,
+                 error_title=e.error_title)
 
-    try:
-      file_valid, error_description, error_title = check_valid_upload(
-          file, limit=limit)
-    except FileUploadException as e:
+  if not file_valid:
+    # File invalid? Return error
+    return final(searchable_fields,
+                 error_description=error_description,
+                 limit=limit,
+                 reduced=reduced,
+                 error_title=error_title)
+  else:
+    for field in searchable_fields:
+      if field.database_name == 'display-type':
+        results_type = field.get_selected_radio()
+
+    if results_type == 'Download':
+      try:
+        full_results, line_count = multiple_address_match_original(
+            file, all_user_input, download=True)
+      except ConnectionError as e:
+        return page_error(None, e, page_name)
+
+      return send_file(full_results,
+                       mimetype='text/csv',
+                       download_name=f'result_size_{line_count}.csv',
+                       as_attachment=True)
+
+    elif results_type == 'Display':
+      try:
+        table_results, results_summary_table = multiple_address_match_original(
+            file, all_user_input, download=False)
+      except ConnectionError as e:
+        return page_error(None, e, page_name)
+
       return final(searchable_fields,
+                   table_results=table_results,
                    limit=limit,
                    reduced=reduced,
-                   error_description=e.error_description,
-                   error_title=e.error_title)
-
-    if not file_valid:
-      # File invalid? Return error
-      return final(searchable_fields,
-                   error_description=error_description,
-                   limit=limit,
-                   reduced=reduced,
-                   error_title=error_title)
-    else:
-      for field in searchable_fields:
-        if field.database_name == 'display-type':
-          results_type = field.get_selected_radio()
-
-      if results_type == 'Download':
-        try:
-          full_results, line_count = multiple_address_match_original(
-              file, all_user_input, download=True)
-        except ConnectionError as e:
-          return page_error(None, e, page_name)
-
-        return send_file(full_results,
-                         mimetype='text/csv',
-                         download_name=f'result_size_{line_count}.csv',
-                         as_attachment=True)
-
-      elif results_type == 'Display':
-        try:
-          table_results, results_summary_table = multiple_address_match_original(
-              file, all_user_input, download=False)
-        except ConnectionError as e:
-          return page_error(None, e, page_name)
-
-        return final(searchable_fields,
-                     table_results=table_results,
-                     limit=limit,
-                     reduced=reduced,
-                     results_summary_table=results_summary_table)
+                   results_summary_table=results_summary_table)

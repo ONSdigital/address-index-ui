@@ -1,11 +1,11 @@
 import os
-from . import app, get_classifications_cached
 import json
 import csv
 import requests
 from io import StringIO, BytesIO
 from flask import render_template, request, session, send_file
 from flask_login import login_required
+from . import app, get_classifications_cached
 from .multiple_address_utils import job_url_if_authorised
 
 # For the gz download
@@ -85,6 +85,10 @@ def download_handler(file_name):
   elif file_name == 'example_multiple_address':
     f = open(f'{dir_path}/static/downloads/example_multiple_match_upload.csv',
              'rb')
+  elif file_name == 'example_multiple_address_big':
+    f = open(
+        f'{dir_path}/static/downloads/example_multiple_match_5k_upload.csv',
+        'rb')
   elif file_name == 'tool_tip_clerical_information':
     f = open(f'{dir_path}/static/downloads/tool_tip_clerical_information.csv',
              'rb')
@@ -97,6 +101,7 @@ def download_handler(file_name):
     file_name = file_name.replace('googlefiledownload', '')
     # Now download that gzip location, extract and send as a download
     # The file name is now the JOBID (do a server lookup, find the download link to avoid injection
+
     url = job_url_if_authorised(file_name)
 
     # Download the csv.gz
