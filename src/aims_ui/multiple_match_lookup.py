@@ -53,8 +53,7 @@ def jsonify_address(address_to_lookup):
 
 
 def multiple_address_match(file, all_user_input, download=False):
-  csv_headers = ['id', 'inputAddress', 'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank']  # yapf: disable
-
+  # Process the uploaded file from th euser
   contents = file.readlines()
   remove_header_row(contents)
 
@@ -73,7 +72,7 @@ def multiple_address_match(file, all_user_input, download=False):
     submit_mm_job('a', mm_dict, all_user_input)
   except Exception as e:
     logging.error('Error on a multiple match API call')
-    return page_error(None, e, page_name)
+    return page_error(None, e, 'multiple_address')
 
 
 def multiple_address_match_original(file, all_user_input, download=False):
@@ -86,7 +85,9 @@ def multiple_address_match_original(file, all_user_input, download=False):
   if download:
     proxy = StringIO()
     writer = csv.writer(proxy)
-    writer.writerow(csv_headers)
+
+    if all_user_input.get('header_row_export') == 'True':
+      writer.writerow(csv_headers)
 
     def write(id, addr, m_addr, address_type, uprn, m_type, confid_score,
               doc_score, rank, recommendationCode):
@@ -239,7 +240,9 @@ def uprn_multiple_address_match_original(file, all_user_input):
 
   proxy = StringIO()
   writer = csv.writer(proxy)
-  writer.writerow(csv_headers)
+
+  if all_user_input.get('header_row_export') == 'True':
+    writer.writerow(csv_headers)
 
   line_count = 0
 
