@@ -63,7 +63,7 @@ def get_api_auth():
     current_time = datetime.datetime.utcnow()
     payload = {"exp": current_time + datetime.timedelta(minutes=10)}
     token = jwt.encode(payload,
-                       app.config.get('JWT_K_VALUE'),
+                       app.config.get('API_JWT_K_VALUE'),
                        algorithm="HS256")
     api_auth['API_JWT_TOKEN'] = token
 
