@@ -99,7 +99,10 @@ function getConfidenceList() {
 
 window.onload = function() {
   const overviewTable = document.querySelector('#overviewTable');
-  const confidenceScoreValueCell = getCellFromTable(overviewTable, '0.0% Match');
+
+  const confidenceScoreLabelCell = getCellFromTable(overviewTable, 'formatted_confidence_score');
+  const confidenceScoreValueCell = confidenceScoreLabelCell.nextElementSibling;
+
   const uprnCellLabel = getCellFromTable(overviewTable, 'uprn');
   const uprnRow = uprnCellLabel.parentNode;
   const uprnCell = getSecondCell(uprnRow);
