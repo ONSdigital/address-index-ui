@@ -54,7 +54,7 @@ USER_GROUPS = [
     },
     {
         'name': 'limited_bulk',
-        'usernames': ['NotLoggedinUser'],
+        'usernames': [],
         'pages_to_remove': [],
         'bulk_limits': {
             'limit_mini_bulk': 10,
