@@ -34,7 +34,8 @@ def multiple_address_results():
   #TODO Set To FALSE (debug only)----------------------------------------------
   if False:
     headers = [
-        'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'RECS PROCESSED', 'DOWNLOAD LINK'
+        'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'RECS PROCESSED',
+        'DOWNLOAD LINK'
     ]
     job_id = 6
 
@@ -64,7 +65,8 @@ def multiple_address_results():
   username = get_username()
 
   headers = [
-     'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'RECS PROCESSED', 'DOWNLOAD LINK'
+      'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'RECS PROCESSED',
+      'DOWNLOAD LINK'
   ]
   results = job_data_by_current_user()
 

@@ -48,7 +48,7 @@ def multiple_address():
     return access
 
   current_group = get_current_group()
-  limit = current_group.get('limit_vast_bulk', 100000)
+  bulk_limits = current_group.get('bulk_limits')
 
   if request.method == 'GET':
     delete_input(session)
