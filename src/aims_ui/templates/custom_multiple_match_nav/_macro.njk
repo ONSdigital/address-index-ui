@@ -1,0 +1,32 @@
+{% macro customMultipleMatchNav(params) %}
+
+{% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
+<br>
+
+{{ onsSectionNavigation({
+  "id": "section-menu",
+  "currentPath": params.current_path, 
+  "headingLevel": 2,
+  "sections": [{
+    "title": "",
+    "itemsList": [
+      {
+        "title": "Under " + (params.bulk_limits.limit_mini_bulk|string) + " Addresses",
+        "url": 'multiple_address_original',
+      }
+    ] + ([] if reduced else [
+      {
+        "title": "Over " + (params.bulk_limits.limit_vast_bulk|string) + " Addresses",
+        "url": url_for('multiple_address'),
+      },
+      {
+        "title": "Monitor Over " + (params.bulk_limits.limit_vast_bulk|string) + " Jobs",
+        "url": url_for('multiple_address_results'),
+      }
+    ])
+  }]
+}) }}
+
+<br>
+
+{% endmacro %}
