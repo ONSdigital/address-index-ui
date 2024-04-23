@@ -71,8 +71,7 @@ def multiple_address_original():
     return access
 
   current_group = get_current_group()
-  limit = current_group.get('limit_mini_bulk', '5000')
-  reduced = True if limit != 5000 else False
+  bulk_limits = current_group.get('bulk_limits')
 
   if request.method == 'GET':
     delete_input(session)
@@ -86,8 +85,7 @@ def multiple_address_original():
         f'{page_name}.html',
         searchable_fields=searchable_fields,
         endpoints=get_endpoints(called_from=page_name),
-        reduced=reduced,
-        limit=limit,
+        bulk_limits=bulk_limits,
     )
 
   searchable_fields = get_fields(page_name)
@@ -101,11 +99,10 @@ def multiple_address_original():
 
   try:
     file_valid, error_description, error_title = check_valid_upload(
-        file, limit=limit)
+        file, bulk_limits=bulk_limits)
   except FileUploadException as e:
     return final(searchable_fields,
-                 limit=limit,
-                 reduced=reduced,
+                 bulk_limits=bulk_limits,
                  error_description=e.error_description,
                  error_title=e.error_title)
 
@@ -113,8 +110,7 @@ def multiple_address_original():
     # File invalid? Return error
     return final(searchable_fields,
                  error_description=error_description,
-                 limit=limit,
-                 reduced=reduced,
+                 bulk_limits=bulk_limits,
                  error_title=error_title)
   else:
     for field in searchable_fields:
@@ -142,6 +138,5 @@ def multiple_address_original():
 
       return final(searchable_fields,
                    table_results=table_results,
-                   limit=limit,
-                   reduced=reduced,
+                   bulk_limits=bulk_limits,
                    results_summary_table=results_summary_table)

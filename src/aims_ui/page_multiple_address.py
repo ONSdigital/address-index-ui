@@ -62,7 +62,7 @@ def multiple_address():
         f'{page_name}.html',
         searchable_fields=searchable_fields,
         endpoints=endpoints,
-        limit=limit,
+        bulk_limits=bulk_limits,
     )
 
   searchable_fields = get_fields(page_name)
@@ -77,20 +77,20 @@ def multiple_address():
   try:
     # Validate file
     file_valid, error_description, error_title = check_valid_upload(
-        file, limit=limit)
+        file, bulk_limits=bulk_limits)
   except FileUploadException as e:
     return final(searchable_fields,
-                 limit,
+                 bulk_limits,
                  error_description=e.error_description,
                  error_title=e.error_title)
 
   if file_valid:
     multiple_address_match(file, all_user_input, download=True)
-    return final(all_user_input, limit)
+    return final(all_user_input, bulk_limits)
 
 
 def final(all_user_input,
-          limit,
+          bulk_limits,
           error_description='',
           error_title='',
           results_summary_table='',
@@ -107,5 +107,5 @@ def final(all_user_input,
       table_results=table_results,
       results_summary_table=results_summary_table,
       results_page=True,
-      limit=limit,
+      bulk_limits=bulk_limits,
   )
