@@ -5,42 +5,21 @@
 {% from "components/upload/_macro.njk" import onsUpload %}
 {% from "components/button/_macro.njk" import onsButton %}
 {% from "components/panel/_macro.njk" import onsPanel %}
-{% from 'custom_search/_macro.njk' import customSearch %}
+{% from "custom_search/_macro.njk" import customSearch %}
 {% from "components/radios/_macro.njk" import onsRadios %}
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/table/_macro.njk" import onsTable %}
-{% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
+{% from "custom_multiple_match_nav/_macro.njk" import customMultipleMatchNav %}
 
 {% block main %}
 
 <h1>Match Multiple Addresses</h1>
-<br>
 
-{{ onsSectionNavigation({
-  "id": "section-menu",
-  "currentPath": 'multiple_address_original',
-  "headingLevel": 2,
-  "sections": [{
-    "title": "",
-    "itemsList": [
-      {
-        "title": "Under " + (limit|string) + " Addresses",
-        "url": 'multiple_address_original',
-      }
-    ] + ([] if reduced else [
-      {
-        "title": "Over " + (limit|string) + " Addresses",
-        "url": url_for('multiple_address'),
-      },
-      {
-        "title": "Monitor Over " + (limit|string) + " Jobs",
-        "url": url_for('multiple_address_results'),
-      }
-    ])
-  }]
-}) }}
+{{ customMultipleMatchNav ({
+	'current_path': 'multiple_address_original',
+	'bulk_limits': bulk_limits,
+	}) }}
 
-<br>
 {% if not results_page %}
 	<br>
 	{{ onsPanel({

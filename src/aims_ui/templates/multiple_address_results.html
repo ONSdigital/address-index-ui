@@ -10,12 +10,12 @@
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/table/_macro.njk" import onsTable %}
 {% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
+{% from "custom_multiple_match_nav/_macro.njk" import customMultipleMatchNav %}
 
 {% block main %}
 
 <h1>Match Multiple Addresses</h1>
 
-<br>
 <h1 id="tempid"></h1>
 
 <div hidden=true>
@@ -27,31 +27,11 @@
             "variants": 'loader' }) }}
 </div>
 
-{{ onsSectionNavigation({
-  "id": "section-menu",
-  "currentPath":  url_for('multiple_address_results'),
-  "headingLevel": 2,
-  "sections": [{
-    "title": "",
-    "itemsList": [
-      {
-        "title": "Under " + (limit|string) + " Addresses",
-        "url": 'multiple_address_original',
-      }
-    ] + ([] if reduced else [
-      {
-        "title": "Over " + (limit|string) + " Addresses",
-        "url": url_for('multiple_address'),
-      },
-      {
-        "title": "Monitor Over " + (limit|string) + " Jobs",
-        "url": url_for('multiple_address_results'),
-      }
-    ])
-  }]
-}) }}
+{{ customMultipleMatchNav ({
+	'current_path': url_for('multiple_address_results'),
+	'bulk_limits': bulk_limits,
+	}) }}
 
-<br>
 {{onsPanel({
 "body": "<p>You can find previously submitted jobs, and their statuses here.</p>
 <p>If a job is in the status 'results-exported' it can be downloaded.</p>

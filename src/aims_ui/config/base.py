@@ -50,13 +50,15 @@ USER_GROUPS = [
             'multiple_address_original', 'uprn_multiple_match',
             'multiple_address', 'multiple_address_results'
         ],
+        'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'limited_bulk',
-        'usernames': [],
+        'usernames': ['NotLoggedinUser'],
         'pages_to_remove': [],
         'bulk_limits': {
-            'limit_mini_bulk': 100
+            'limit_mini_bulk': 10,
+            'limit_vast_bulk': 550,
         }
     },
 ]

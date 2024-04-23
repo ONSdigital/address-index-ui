@@ -24,15 +24,10 @@ def multiple_address_results():
 
   username = get_username()
   current_group = get_current_group()
-  if username in current_group.get('usernames'):
-    reduced = True
-    limit = current_group.get('limit_mini_bulk')
-  else:
-    reduced = False
-    limit = 5000
+  bulk_limits = current_group.get('bulk_limits')
 
   #TODO Set To FALSE (debug only)----------------------------------------------
-  if False:
+  if True:
     headers = [
         'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'RECS PROCESSED',
         'DOWNLOAD LINK'
@@ -55,8 +50,7 @@ def multiple_address_results():
         f'{page_name}.html',
         endpoints=endpoints,
         jobs=jobs,
-        reduced=reduced,
-        limit=limit,
+        bulk_limits=bulk_limits,
     )
 
   #TODO SET TO FALSE --------------------------------------------------
@@ -95,6 +89,5 @@ def multiple_address_results():
       f'{page_name}.html',
       endpoints=endpoints,
       jobs=jobs,
-      reduced=reduced,
-      limit=limit,
+      bulk_limits=bulk_limits,
   )
