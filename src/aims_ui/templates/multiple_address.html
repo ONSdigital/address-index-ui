@@ -10,42 +10,20 @@
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/table/_macro.njk" import onsTable %}
 {% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
+{% from "custom_multiple_match_nav/_macro.njk" import customMultipleMatchNav %}
 
 {% block main %}
 
 <h1>Match Multiple Addresses</h1>
 
-<br>
-{{ onsSectionNavigation({
-  "id": "section-menu",
-  "currentPath":  url_for('multiple_address'),
-  "headingLevel": 2,
-  "sections": [{
-    "title": "",
-    "itemsList": [
-      {
-        "title": "Under " + (limit|string) + " Addresses",
-        "url": 'multiple_address_original',
-      }
-    ] + ([] if reduced else [
-      {
-        "title": "Over " + (limit|string) + " Addresses",
-        "url": url_for('multiple_address'),
-      },
-      {
-        "title": "Monitor Over " + (limit|string) + " Jobs",
-        "url": url_for('multiple_address_results'),
-      }
-    ])
-  }]
-}) }}
-
-
-<br>
+{{ customMultipleMatchNav ({
+	'current_path': url_for('multiple_address'),
+	'bulk_limits': bulk_limits,
+	}) }}
 
 {{onsPanel({
 "body": "<p>This will schedule an asynchronous managed job. You can monitor progress and download results from Monitor Jobs.</p>
-<p>To get started, upload a CSV file of up to 100,000 addresses to be matched. The file must have only two columns, id and address.</p>
+<p>To get started, upload a CSV file of up to " + (bulk_limits.limit_vast_bulk|string) + " addresses to be matched. The file must have only two columns, id and address.</p>
 	<p>Download a <a href='/downloads/example_multiple_address_big'> sample file</a>"
     })}}
 
