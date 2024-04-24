@@ -23,8 +23,8 @@
 {% if not results_page %}
 	<br>
 	{{ onsPanel({
-	    "body": "<p>'Under " + (limit|string) + " Addresses' will execute the matches while you wait, and is only suitable for small jobs. For larger ones go to 'Over 5K Addresses'.</p>"
-	    + "<p>To get started, upload a CSV file of up to " + (limit|string) + " addresses to be matched. The file must have only two columns, id and address.</p>"
+	    "body": "<p>'Under " + (bulk_limits.limit_mini_bulk|string) + " Addresses' will execute the matches while you wait, and is only suitable for small jobs. For larger ones go to 'Over " + (bulk_limits.limit_mini_bulk|string) + " Addresses'.</p>"
+	    + "<p>To get started, upload a CSV file of up to " + (bulk_limits.limit_mini_bulk|string) + " addresses to be matched. The file must have only two columns, id and address.</p>"
 	    + "<p>Download a <a href='/downloads/example_multiple_address'>sample file</a><br><br>"
 	    + "You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>"
 	}) }}
