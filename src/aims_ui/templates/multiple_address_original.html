@@ -5,47 +5,26 @@
 {% from "components/upload/_macro.njk" import onsUpload %}
 {% from "components/button/_macro.njk" import onsButton %}
 {% from "components/panel/_macro.njk" import onsPanel %}
-{% from 'custom_search/_macro.njk' import customSearch %}
+{% from "custom_search/_macro.njk" import customSearch %}
 {% from "components/radios/_macro.njk" import onsRadios %}
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/table/_macro.njk" import onsTable %}
-{% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
+{% from "custom_multiple_match_nav/_macro.njk" import customMultipleMatchNav %}
 
 {% block main %}
 
 <h1>Match Multiple Addresses</h1>
-<br>
 
-{{ onsSectionNavigation({
-  "id": "section-menu",
-  "currentPath": 'multiple_address_original',
-  "headingLevel": 2,
-  "sections": [{
-    "title": "",
-    "itemsList": [
-      {
-        "title": "Under " + (limit|string) + " Addresses",
-        "url": 'multiple_address_original',
-      }
-    ] + ([] if reduced else [
-      {
-        "title": "Over " + (limit|string) + " Addresses",
-        "url": url_for('multiple_address'),
-      },
-      {
-        "title": "Monitor Over " + (limit|string) + " Jobs",
-        "url": url_for('multiple_address_results'),
-      }
-    ])
-  }]
-}) }}
+{{ customMultipleMatchNav ({
+	'current_path': 'multiple_address_original',
+	'bulk_limits': bulk_limits,
+	}) }}
 
-<br>
 {% if not results_page %}
 	<br>
 	{{ onsPanel({
-	    "body": "<p>'Under " + (limit|string) + " Addresses' will execute the matches while you wait, and is only suitable for small jobs. For larger ones go to 'Over 5K Addresses'.</p>"
-	    + "<p>To get started, upload a CSV file of up to " + (limit|string) + " addresses to be matched. The file must have only two columns, id and address.</p>"
+	    "body": "<p>'Under " + (bulk_limits.limit_mini_bulk|string) + " Addresses' will execute the matches while you wait, and is only suitable for small jobs. For larger ones go to 'Over " + (bulk_limits.limit_mini_bulk|string) + " Addresses'.</p>"
+	    + "<p>To get started, upload a CSV file of up to " + (bulk_limits.limit_mini_bulk|string) + " addresses to be matched. The file must have only two columns, id and address.</p>"
 	    + "<p>Download a <a href='/downloads/example_multiple_address'>sample file</a><br><br>"
 	    + "You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>"
 	}) }}
