@@ -38,7 +38,7 @@ USER_GROUPS = [
     },
     {
         'name': 'developers',
-        'usernames': [],
+        'usernames': ['richard.m.smith', 'steven.thorne', 'felix.aldam-gates'],
         'pages_to_remove': [],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
@@ -54,7 +54,7 @@ USER_GROUPS = [
     },
     {
         'name': 'limited_bulk',
-        'usernames': [],
+        'usernames': ['NotLoggedinUser'],
         'pages_to_remove': [],
         'bulk_limits': {
             'limit_mini_bulk': 10,
