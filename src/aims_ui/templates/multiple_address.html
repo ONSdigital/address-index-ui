@@ -23,7 +23,7 @@
 
 {{onsPanel({
 "body": "<p>This will schedule an asynchronous managed job. You can monitor progress and download results from Monitor Jobs.</p>
-<p>To get started, upload a CSV file of up to 100,000 addresses to be matched. The file must have only two columns, id and address.</p>
+<p>To get started, upload a CSV file of up to " + (bulk_limits.limit_vast_bulk|string) + " addresses to be matched. The file must have only two columns, id and address.</p>
 	<p>Download a <a href='/downloads/example_multiple_address_big'> sample file</a>"
     })}}
 
