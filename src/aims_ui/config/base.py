@@ -27,7 +27,7 @@ ALL_PAGE_NAMES = [
     'settings'
 ]
 
-DEFAULT_BULK_LIMITS = {'limit_mini_bulk': 5000, 'limit_vast_bulk': 10000}
+DEFAULT_BULK_LIMITS = {'limit_mini_bulk': 5000, 'limit_vast_bulk': 100000}
 
 USER_GROUPS = [
     {
