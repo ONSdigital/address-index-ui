@@ -56,14 +56,14 @@ def uprn_multiple_match():
       file_valid, error_description, error_title = check_valid_upload(
           file, uprn_bulk_limit, called_from='uprn')
     except FileUploadException as e:
-      return final(searchable_fields,
+      return error_response(searchable_fields,
                    uprn_bulk_limit,
                    error_description=e.error_description,
                    error_title=e.error_title)
 
     if not file_valid:
       # File invalid? Return error
-      return final(searchable_fields,
+      return error_response(searchable_fields,
                    uprn_bulk_limit,
                    error_description=error_description,
                    error_title=error_title)
@@ -80,7 +80,7 @@ def uprn_multiple_match():
                      as_attachment=True)
 
 
-def final(searchable_fields,
+def error_response(searchable_fields,
           uprn_bulk_limit,
           error_description='',
           error_title='',
@@ -96,7 +96,6 @@ def final(searchable_fields,
       searchable_fields=searchable_fields,
       table_results=table_results,
       results_summary_table=results_summary_table,
-      results_page=True,
   )
 
 
