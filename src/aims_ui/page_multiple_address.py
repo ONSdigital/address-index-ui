@@ -77,7 +77,7 @@ def multiple_address():
   try:
     # Validate file
     file_valid, error_description, error_title = check_valid_upload(
-        file, bulk_limits=bulk_limits)
+        file, bulk_limits.get('limit_vast_bulk'))
   except FileUploadException as e:
     return final(searchable_fields,
                  bulk_limits,

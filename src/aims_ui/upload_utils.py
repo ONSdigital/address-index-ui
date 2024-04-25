@@ -89,7 +89,7 @@ def check_for_duplicate_id(file):
   return False
 
 
-def check_valid_upload(file, called_from='address', limit=5001):
+def check_valid_upload(file, limit, called_from='address'):
 
   record_limit_exceeded = check_for_record_limit(file, limit)
 
