@@ -100,16 +100,16 @@ def multiple_address_original():
         file, bulk_limits.get('limit_mini_bulk'))
   except FileUploadException as e:
     return error_response(searchable_fields,
-                 bulk_limits,
-                 error_description=e.error_description,
-                 error_title=e.error_title)
+                          bulk_limits,
+                          error_description=e.error_description,
+                          error_title=e.error_title)
 
   if not file_valid:
     # File invalid? Return error
     return error_response(searchable_fields,
-                 bulk_limits,
-                 error_description=error_description,
-                 error_title=error_title)
+                          bulk_limits,
+                          error_description=error_description,
+                          error_title=error_title)
   else:
     for field in searchable_fields:
       if field.database_name == 'display-type':
@@ -135,6 +135,6 @@ def multiple_address_original():
         return page_error(None, e, page_name)
 
       return error_response(searchable_fields,
-                   bulk_limits,
-                   table_results=table_results,
-                   results_summary_table=results_summary_table)
+                            bulk_limits,
+                            table_results=table_results,
+                            results_summary_table=results_summary_table)

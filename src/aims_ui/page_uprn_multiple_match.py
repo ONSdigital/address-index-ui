@@ -13,6 +13,7 @@ from .page_error import page_error
 from .security_utils import check_user_has_access_to_page
 from .upload_utils import check_valid_upload, FileUploadException
 from .multiple_match_lookup import uprn_multiple_address_match_original
+from .google_utils import get_current_group
 
 page_name = 'uprn_multiple_match'
 
@@ -25,12 +26,17 @@ def uprn_multiple_match():
   if access != True:
     return access
 
+  current_group = get_current_group()
+  bulk_limits = current_group.get('bulk_limits')
+  uprn_bulk_limit = bulk_limits.get('limit_uprn_match')
+
   if request.method == 'GET':
     delete_input(session)
     searchable_fields = get_fields(page_name)
 
     return render_template(
         f'{page_name}.html',
+        uprn_bulk_limit=uprn_bulk_limit,
         searchable_fields=searchable_fields,
         endpoints=get_endpoints(called_from=page_name),
     )
@@ -48,15 +54,17 @@ def uprn_multiple_match():
 
     try:
       file_valid, error_description, error_title = check_valid_upload(
-          file, called_from='uprn')
+          file, uprn_bulk_limit, called_from='uprn')
     except FileUploadException as e:
       return final(searchable_fields,
+                   uprn_bulk_limit,
                    error_description=e.error_description,
                    error_title=e.error_title)
 
     if not file_valid:
       # File invalid? Return error
       return final(searchable_fields,
+                   uprn_bulk_limit,
                    error_description=error_description,
                    error_title=error_title)
 
@@ -73,6 +81,7 @@ def uprn_multiple_match():
 
 
 def final(searchable_fields,
+          uprn_bulk_limit,
           error_description='',
           error_title='',
           results_summary_table='',
@@ -80,6 +89,7 @@ def final(searchable_fields,
 
   return render_template(
       f'{page_name}.html',
+      uprn_bulk_limit=uprn_bulk_limit,
       error_description=error_description,
       error_title=error_title,
       endpoints=get_endpoints(called_from=page_name),
