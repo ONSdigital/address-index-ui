@@ -22,7 +22,7 @@ from time import sleep
 page_name = 'multiple_address_original'
 
 
-def final(
+def error_response(
     bulk_limits,
     searchable_fields,
     error_description='',
@@ -54,7 +54,7 @@ def request_entity_too_large(error):
     if field.database_name == 'display-type':
       field.set_radio_status('Download')
 
-  return final(
+  return error_response(
       searchable_fields,
       'File size is too large. Please enter a file no larger than 2 MB',
       'File Size Error')
