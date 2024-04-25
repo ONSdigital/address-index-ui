@@ -16,11 +16,11 @@
       }
     ] + ([] if reduced else [
       {
-        "title": "Over " + (params.bulk_limits.limit_vast_bulk|string) + " Addresses",
+        "title": "Up To " + (params.bulk_limits.limit_vast_bulk|string) + " Addresses",
         "url": url_for('multiple_address'),
       },
       {
-        "title": "Monitor Over " + (params.bulk_limits.limit_vast_bulk|string) + " Jobs",
+        "title": "Monitor Up To " + (params.bulk_limits.limit_vast_bulk|string) + " Jobs",
         "url": url_for('multiple_address_results'),
       }
     ])
