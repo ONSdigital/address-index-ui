@@ -27,7 +27,11 @@ ALL_PAGE_NAMES = [
     'settings'
 ]
 
-DEFAULT_BULK_LIMITS = {'limit_mini_bulk': 5000, 'limit_vast_bulk': 100000}
+DEFAULT_BULK_LIMITS = {
+    'limit_mini_bulk': 5000,
+    'limit_vast_bulk': 100000,
+    'limit_uprn_match': 5000,
+}
 
 USER_GROUPS = [
     {
@@ -50,7 +54,8 @@ USER_GROUPS = [
             'multiple_address_original', 'uprn_multiple_match',
             'multiple_address', 'multiple_address_results'
         ],
-        'bulk_limits': DEFAULT_BULK_LIMITS,
+        'bulk_limits':
+        DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'limited_bulk',
@@ -59,6 +64,7 @@ USER_GROUPS = [
         'bulk_limits': {
             'limit_mini_bulk': 10,
             'limit_vast_bulk': 550,
+            'limit_uprn_match': 50,
         }
     },
 ]
