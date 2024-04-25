@@ -23,13 +23,12 @@ page_name = 'multiple_address_original'
 
 
 def final(
+    bulk_limits,
     searchable_fields,
     error_description='',
     error_title='',
     results_summary_table='',
     table_results='',
-    reduced=False,
-    limit=5000,
 ):
 
   return render_template(
@@ -41,8 +40,7 @@ def final(
       table_results=table_results,
       results_summary_table=results_summary_table,
       results_page=True,
-      reduced=reduced,
-      limit=limit,
+      bulk_limits=bulk_limits,
   )
 
 
@@ -99,18 +97,18 @@ def multiple_address_original():
 
   try:
     file_valid, error_description, error_title = check_valid_upload(
-        file, bulk_limits=bulk_limits)
+        file, bulk_limits.get('limit_mini_bulk'))
   except FileUploadException as e:
-    return final(searchable_fields,
-                 bulk_limits=bulk_limits,
+    return error_response(searchable_fields,
+                 bulk_limits,
                  error_description=e.error_description,
                  error_title=e.error_title)
 
   if not file_valid:
     # File invalid? Return error
-    return final(searchable_fields,
+    return error_response(searchable_fields,
+                 bulk_limits,
                  error_description=error_description,
-                 bulk_limits=bulk_limits,
                  error_title=error_title)
   else:
     for field in searchable_fields:
@@ -136,7 +134,7 @@ def multiple_address_original():
       except ConnectionError as e:
         return page_error(None, e, page_name)
 
-      return final(searchable_fields,
+      return error_response(searchable_fields,
+                   bulk_limits,
                    table_results=table_results,
-                   bulk_limits=bulk_limits,
                    results_summary_table=results_summary_table)
