@@ -21,7 +21,7 @@
 <br>
 {{onsPanel({
 "body": "
-<p>To get started, upload a CSV file of up to 5000 UPRNs to be matched. The file must have only two columns, id and UPRN.</p>
+<p>To get started, upload a CSV file of up to " + (uprn_bulk_limit|string) + " UPRNs to be matched. The file must have only two columns, id and UPRN.</p>
 	<p>Download a <a href='/downloads/uprn_example_multiple_address'> sample file</a> <br> <br> 
 	Once submitted your file will automatically download.</p>"
     })}}
