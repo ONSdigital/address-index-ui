@@ -1,5 +1,6 @@
 """FLASK BASE CONFIG"""
 import os
+import json
 
 JSONIFY_PRETTYPRINT_REGULAR = True
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024
@@ -19,6 +20,9 @@ SESSION_COOKIE_SECURE = True
 API_BSC_AUTH_USERNAME = os.getenv('API_BSC_AUTH_USERNAME')
 API_BSC_AUTH_PASSWORD = os.getenv('API_BSC_AUTH_PASSWORD')
 
+# Default usernames for paywall
+USER_AUTHS = json.loads(os.getenv('USER_AUTHS', '{}'))
+
 # Define order of pages on header and Paywall Limitations
 ALL_PAGE_NAMES = [
     'singlesearch', 'uprn', 'postcode', 'typeahead',
@@ -33,33 +37,32 @@ DEFAULT_BULK_LIMITS = {
     'limit_uprn_match': 5000,
 }
 
+# yapf: disable
 USER_GROUPS = [
     {
         'name': 'default',  # UNSPECIFIED USERS WILL BE IN THIS GROUP
-        'usernames': [],
+        'usernames': USER_AUTHS.get('default', []),
         'pages_to_remove': ['custom_response'],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'developers',
-        'usernames': ['richard.m.smith', 'steven.thorne', 'felix.aldam-gates'],
+        'usernames': USER_AUTHS.get('developers', []),
         'pages_to_remove': [],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
-        'name':
-        'no_bulk',
-        'usernames': [],
+        'name': 'bulk_removed',
+        'usernames': USER_AUTHS.get('bulk_removed', []),
         'pages_to_remove': [
             'multiple_address_original', 'uprn_multiple_match',
             'multiple_address', 'multiple_address_results'
         ],
-        'bulk_limits':
-        DEFAULT_BULK_LIMITS,
+        'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'limited_bulk',
-        'usernames': ['NotLoggedinUser'],
+        'usernames': USER_AUTHS.get('limited_bulk', []),
         'pages_to_remove': [],
         'bulk_limits': {
             'limit_mini_bulk': 10,
@@ -68,6 +71,7 @@ USER_GROUPS = [
         }
     },
 ]
+# yapf: enable
 
 # For each group, create a list of "allowed pages"
 for group in USER_GROUPS:

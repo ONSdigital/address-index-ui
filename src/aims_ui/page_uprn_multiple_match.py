@@ -57,16 +57,16 @@ def uprn_multiple_match():
           file, uprn_bulk_limit, called_from='uprn')
     except FileUploadException as e:
       return error_response(searchable_fields,
-                   uprn_bulk_limit,
-                   error_description=e.error_description,
-                   error_title=e.error_title)
+                            uprn_bulk_limit,
+                            error_description=e.error_description,
+                            error_title=e.error_title)
 
     if not file_valid:
       # File invalid? Return error
       return error_response(searchable_fields,
-                   uprn_bulk_limit,
-                   error_description=error_description,
-                   error_title=error_title)
+                            uprn_bulk_limit,
+                            error_description=error_description,
+                            error_title=error_title)
 
     try:
       full_results, line_count = uprn_multiple_address_match_original(
@@ -81,11 +81,11 @@ def uprn_multiple_match():
 
 
 def error_response(searchable_fields,
-          uprn_bulk_limit,
-          error_description='',
-          error_title='',
-          results_summary_table='',
-          table_results=''):
+                   uprn_bulk_limit,
+                   error_description='',
+                   error_title='',
+                   results_summary_table='',
+                   table_results=''):
 
   return render_template(
       f'{page_name}.html',

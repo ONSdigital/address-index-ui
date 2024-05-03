@@ -25,6 +25,12 @@ Pre-requisites:
 
 `export PROJECT_DOMAIN=[enter_project_domain]`
 
+Optional:
+
+Set the "groups" of users (by default all users including the "NotLoggedInUser" are in the "default" group
+
+`export USER_AUTHS='{"developers":["NotLoggedinUer"]}'`
+
 *Note: JWT token is exported WITHOUT 'Bearer ' before it*
 
 ## Install Python Packages
