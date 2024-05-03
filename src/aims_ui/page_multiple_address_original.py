@@ -34,7 +34,8 @@ def final(
   current_group = get_current_group()
   bulk_limits = current_group.get('bulk_limits')
 
-  searchable_fields = get_fields(page_name) # This should be handled with error checking in future
+  searchable_fields = get_fields(
+      page_name)  # This should be handled with error checking in future
   return render_template(
       f'{page_name}.html',
       error_description=error_description,
@@ -104,16 +105,16 @@ def multiple_address_original():
         file, bulk_limits.get('limit_mini_bulk'))
   except FileUploadException as e:
     return final(searchable_fields,
-                          bulk_limits,
-                          error_description=e.error_description,
-                          error_title=e.error_title)
+                 bulk_limits,
+                 error_description=e.error_description,
+                 error_title=e.error_title)
 
   if not file_valid:
     # File invalid? Return error
     return final(searchable_fields,
-                          bulk_limits,
-                          error_description=error_description,
-                          error_title=error_title)
+                 bulk_limits,
+                 error_description=error_description,
+                 error_title=error_title)
   else:
     for field in searchable_fields:
       if field.database_name == 'display-type':
@@ -139,6 +140,6 @@ def multiple_address_original():
         return page_error(None, e, page_name)
 
       return final(searchable_fields,
-                            bulk_limits,
-                            table_results=table_results,
-                            results_summary_table=results_summary_table)
+                   bulk_limits,
+                   table_results=table_results,
+                   results_summary_table=results_summary_table)
