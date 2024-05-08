@@ -33,6 +33,7 @@ def final(
 
   current_group = get_current_group()
   bulk_limits = current_group.get('bulk_limits')
+  removed_pages = current_group.get('pages_to_remove', [])
 
   searchable_fields = get_fields(
       page_name)  # This should be handled with error checking in future
@@ -46,6 +47,7 @@ def final(
       results_summary_table=results_summary_table,
       results_page=True,
       bulk_limits=bulk_limits,
+      removed_pages=removed_pages,
   )
 
 
@@ -75,6 +77,7 @@ def multiple_address_original():
 
   current_group = get_current_group()
   bulk_limits = current_group.get('bulk_limits')
+  removed_pages = current_group.get('pages_to_remove', [])
 
   if request.method == 'GET':
     delete_input(session)
@@ -89,6 +92,7 @@ def multiple_address_original():
         searchable_fields=searchable_fields,
         endpoints=get_endpoints(called_from=page_name),
         bulk_limits=bulk_limits,
+        removed_pages=removed_pages,
     )
 
   searchable_fields = get_fields(page_name)
