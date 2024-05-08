@@ -75,8 +75,10 @@ def multiple_address_match(file, all_user_input, download=False):
     return page_error(None, e, 'multiple_address')
 
 
-def multiple_address_match_original(file, all_user_input, download=False):
+def multiple_address_match_original(file, all_user_input, group_name='', download=False):
   csv_headers = ['id', 'inputAddress',  'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag)', 'recommendationCode']  # yapf: disable
+  if group_name == 'bulk_external':
+    csv_headers = ['id', 'uprn', 'confidenceScore', 'documentScore', 'rank', 'recommendationCode']  # yapf: disable
 
   contents = file.readlines()
   remove_header_row(contents)
@@ -91,7 +93,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
 
     def write(id, addr, m_addr, address_type, uprn, m_type, confid_score,
               doc_score, rank, recommendationCode):
-      writer.writerow([
+      row = [
           given_id,
           address_to_lookup.replace('"', ''),
           m_addr,
@@ -102,7 +104,10 @@ def multiple_address_match_original(file, all_user_input, download=False):
           rank,
           address_type,
           recommendationCode,
-      ])
+      ]
+      if group_name == 'bulk_external':
+         row = [row[0], row[3], row[5], row[6], row[7], row[9]]
+      writer.writerow(row)
 
     def finalize(line_count, no_addresses_searched, single_match_total,
                  multiple_match_total, no_match_total):
@@ -123,8 +128,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
 
     def write(id, addr, m_addr, address_type, uprn, m_type, confid_score,
               doc_score, rank, recommendationCode):
-      trs.append({
-          'tds': [
+      row = { 'tds': [
               {'value': remove_script_and_html_from_str(given_id) },
               {'value': remove_script_and_html_from_str(address_to_lookup) },
               {'value': m_addr},
@@ -134,9 +138,21 @@ def multiple_address_match_original(file, all_user_input, download=False):
               {'value': adrs.underlying_score.value},
               {'value': rank},
               {'value': address_type},
-              {'value': recommendationCode},
+              {'value': recommendationCode}, ] } # yapf: disable
+
+      if group_name == 'bulk_external':
+        row = {
+          'tds': [
+              {'value': row['tds'][0]['value']},  
+              {'value': row['tds'][3]['value']}, 
+              {'value': row['tds'][5]['value']},
+              {'value': row['tds'][6]['value']},
+              {'value': row['tds'][7]['value']},
+              {'value': row['tds'][9]['value']},
           ]
-      }) # yapf: disable
+      }
+
+      trs.append(row) 
 
     def finalize(line_count, no_addresses_searched, single_match_total,
                  multiple_match_total, no_match_total):

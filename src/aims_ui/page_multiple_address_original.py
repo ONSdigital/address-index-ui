@@ -76,6 +76,7 @@ def multiple_address_original():
     return access
 
   current_group = get_current_group()
+  group_name = current_group.get('name')
   bulk_limits = current_group.get('bulk_limits')
   removed_pages = current_group.get('pages_to_remove', [])
 
@@ -127,7 +128,7 @@ def multiple_address_original():
     if results_type == 'Download':
       try:
         full_results, line_count = multiple_address_match_original(
-            file, all_user_input, download=True)
+            file, all_user_input, group_name=group_name, download=True)
       except ConnectionError as e:
         return page_error(None, e, page_name)
 
@@ -139,7 +140,7 @@ def multiple_address_original():
     elif results_type == 'Display':
       try:
         table_results, results_summary_table = multiple_address_match_original(
-            file, all_user_input, download=False)
+            file, all_user_input, group_name=group_name, download=False)
       except ConnectionError as e:
         return page_error(None, e, page_name)
 
