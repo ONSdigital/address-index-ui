@@ -46,6 +46,7 @@ USER_GROUPS = [
         'pages_to_remove': ['custom_response'],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
+
     {
         'name': 'developers',
         'description': 'Developer users who might need more granular access to the API and are comfortable dealing with errors and less guard rails',
@@ -54,6 +55,7 @@ USER_GROUPS = [
         'pages_to_remove': [],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
+
     {
         'name': 'bulk_removed',
         'description': 'Completely remove access to the bulk match pages',
@@ -64,6 +66,7 @@ USER_GROUPS = [
         ],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
+
     {
         'name': 'limited_bulk',
         'description': 'Limit the matching capacity but leave access to the pages',
@@ -75,15 +78,18 @@ USER_GROUPS = [
             'limit_uprn_match': 50,
         }
     },
+
     {
         'name': 'bulk_external',  
         'description': 'Changes the way the bulk works, only returning UPRNS instead of other values for licensing compliance',
         'usernames': USER_AUTHS.get('bulk_external', []),
         'pages_to_remove': ['custom_response', 'multiple_address_results', 
-                            'multiple_address'],
+                            'multiple_address',
+                            'singlesearch', 'uprn', 'postcode', 'typeahead',
+                            'multiple_address', 'custom_response', 
+                            ],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
- 
 ]
 # yapf: enable
 
