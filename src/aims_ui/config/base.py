@@ -41,18 +41,22 @@ DEFAULT_BULK_LIMITS = {
 USER_GROUPS = [
     {
         'name': 'default',  # UNSPECIFIED USERS WILL BE IN THIS GROUP
+        'description': 'Users that do not fall into another group will be part of this group',  
         'usernames': USER_AUTHS.get('default', []),
         'pages_to_remove': ['custom_response'],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'developers',
+        'description': 'Developer users who might need more granular access to the API and are comfortable dealing with errors and less guard rails',
+        'usernames': USER_AUTHS.get('default', []),
         'usernames': USER_AUTHS.get('developers', []),
         'pages_to_remove': [],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'bulk_removed',
+        'description': 'Completely remove access to the bulk match pages',
         'usernames': USER_AUTHS.get('bulk_removed', []),
         'pages_to_remove': [
             'multiple_address_original', 'uprn_multiple_match',
@@ -62,6 +66,7 @@ USER_GROUPS = [
     },
     {
         'name': 'limited_bulk',
+        'description': 'Limit the matching capacity but leave access to the pages',
         'usernames': USER_AUTHS.get('limited_bulk', []),
         'pages_to_remove': [],
         'bulk_limits': {
@@ -70,6 +75,15 @@ USER_GROUPS = [
             'limit_uprn_match': 50,
         }
     },
+    {
+        'name': 'bulk_external',  
+        'description': 'Changes the way the bulk works, only returning UPRNS instead of other values for licensing compliance',
+        'usernames': USER_AUTHS.get('bulk_external', []),
+        'pages_to_remove': ['custom_response', 'multiple_address_results', 
+                            'multiple_address'],
+        'bulk_limits': DEFAULT_BULK_LIMITS,
+    },
+ 
 ]
 # yapf: enable
 
