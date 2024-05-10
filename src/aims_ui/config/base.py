@@ -91,6 +91,11 @@ USER_GROUPS = [
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
 ]
+print(USER_GROUPS)
+print(USER_GROUPS)
+print(USER_GROUPS)
+print(USER_GROUPS)
+print(USER_GROUPS)
 # yapf: enable
 
 # For each group, create a list of "allowed pages"
