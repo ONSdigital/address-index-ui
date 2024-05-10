@@ -1,6 +1,7 @@
 """FLASK BASE CONFIG"""
 import os
 import json
+import logging
 
 JSONIFY_PRETTYPRINT_REGULAR = True
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024
@@ -91,6 +92,11 @@ USER_GROUPS = [
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
 ]
+
+logging.error('Current gorup: ' + str(current_group))
+logging.error('Current groupname: ' + str(group_name))
+logging.error('Current remvoed pages: ' + str(removed_pages))
+
 # yapf: enable
 
 # For each group, create a list of "allowed pages"

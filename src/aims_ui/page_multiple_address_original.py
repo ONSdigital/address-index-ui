@@ -80,9 +80,6 @@ def multiple_address_original():
   group_name = current_group.get('name')
   bulk_limits = current_group.get('bulk_limits')
   removed_pages = current_group.get('pages_to_remove', [])
-  logging.error('Current gorup: ' + str(current_group))
-  logging.error('Current groupname: ' + str(group_name))
-  logging.error('Current remvoed pages: ' + str(removed_pages))
 
   if request.method == 'GET':
     delete_input(session)
