@@ -93,9 +93,9 @@ USER_GROUPS = [
     },
 ]
 
-logging.error('Current gorup: ' + str(current_group))
-logging.error('Current groupname: ' + str(group_name))
-logging.error('Current remvoed pages: ' + str(removed_pages))
+logging.error('Groups Info: ' + str(USER_GROUPS))
+logging.error('Groups Info: ' + str(USER_GROUPS))
+logging.error('Groups Info: ' + str(USER_GROUPS))
 
 # yapf: enable
 
