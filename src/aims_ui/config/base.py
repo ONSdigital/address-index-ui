@@ -3,6 +3,18 @@ import os
 import json
 import logging
 
+
+# Temporary: refactor these from google_utils
+def get_username(user_email):
+  username = user_email.replace('accounts.google.com:', '')
+  username = username.replace('@ons.gov.uk', '')
+
+  return username
+
+def get_usernames(usernames):
+  """ Run the 'get_username' function on a list of usernames """
+  return [ get_username(x) for x in usernames ] 
+
 JSONIFY_PRETTYPRINT_REGULAR = True
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024
 API_AUTH_TYPE = os.getenv('API_AUTH_TYPE')
@@ -43,7 +55,7 @@ USER_GROUPS = [
     {
         'name': 'default',  # UNSPECIFIED USERS WILL BE IN THIS GROUP
         'description': 'Users that do not fall into another group will be part of this group',  
-        'usernames': USER_AUTHS.get('default', []),
+        'usernames': get_usernames(USER_AUTHS.get('default', [])),
         'pages_to_remove': ['custom_response'],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
@@ -51,8 +63,7 @@ USER_GROUPS = [
     {
         'name': 'developers',
         'description': 'Developer users who might need more granular access to the API and are comfortable dealing with errors and less guard rails',
-        'usernames': USER_AUTHS.get('default', []),
-        'usernames': USER_AUTHS.get('developers', []),
+        'usernames': get_usernames(USER_AUTHS.get('developers', [])),
         'pages_to_remove': [],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
@@ -60,7 +71,7 @@ USER_GROUPS = [
     {
         'name': 'bulk_removed',
         'description': 'Completely remove access to the bulk match pages',
-        'usernames': USER_AUTHS.get('bulk_removed', []),
+        'usernames': get_usernames(USER_AUTHS.get('bulk_removed', [])),
         'pages_to_remove': [
             'multiple_address_original', 'uprn_multiple_match',
             'multiple_address', 'multiple_address_results'
@@ -71,7 +82,7 @@ USER_GROUPS = [
     {
         'name': 'limited_bulk',
         'description': 'Limit the matching capacity but leave access to the pages',
-        'usernames': USER_AUTHS.get('limited_bulk', []),
+        'usernames': get_usernames(USER_AUTHS.get('limited_bulk', [])),
         'pages_to_remove': [],
         'bulk_limits': {
             'limit_mini_bulk': 10,
@@ -83,7 +94,7 @@ USER_GROUPS = [
     {
         'name': 'bulk_external',  
         'description': 'Changes the way the bulk works, only returning UPRNS instead of other values for licensing compliance',
-        'usernames': USER_AUTHS.get('bulk_external', []),
+        'usernames': get_usernames(USER_AUTHS.get('bulk_external', [])),
         'pages_to_remove': ['custom_response', 'multiple_address_results', 
                             'multiple_address',
                             'singlesearch', 'uprn', 'postcode', 'typeahead',
