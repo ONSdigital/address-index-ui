@@ -12,6 +12,7 @@ import json
 import csv
 
 page_name = 'multiple_address_results'
+pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
 @login_required
@@ -47,7 +48,7 @@ def multiple_address_results():
     # Download the zip
 
     return render_template(
-        f'{page_name}.html',
+        f'{pages_location}{page_name}.html',
         endpoints=endpoints,
         jobs=jobs,
         bulk_limits=bulk_limits,
@@ -86,7 +87,7 @@ def multiple_address_results():
   jobs = create_table(headers, formatted_results)
 
   return render_template(
-      f'{page_name}.html',
+      f'{pages_location}{page_name}.html',
       endpoints=endpoints,
       jobs=jobs,
       bulk_limits=bulk_limits,

@@ -9,6 +9,7 @@ from .page_error import page_error
 from .api_helpers import get_header
 
 page_name = 'custom_response'
+pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
 def return_error_to_custom_response(error_title, errors_formatted,
@@ -109,7 +110,7 @@ def custom_response():
       matched_addresses = get_addresses(r_json, 'uprn')
 
   return render_template(
-      f'{page_name}.html',
+      f'{pages_location}{page_name}.html',
       endpoints=get_endpoints(called_from=page_name),
       r_json_readable=r_json_readable,
       matched_addresses=matched_addresses,

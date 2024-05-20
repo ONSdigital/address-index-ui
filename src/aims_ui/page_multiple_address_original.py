@@ -20,6 +20,7 @@ import csv
 from time import sleep
 
 page_name = 'multiple_address_original'
+pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
 def final(
@@ -37,7 +38,7 @@ def final(
   searchable_fields = get_fields(
       page_name)  # This should be handled with error checking in future
   return render_template(
-      f'{page_name}.html',
+      f'{pages_location}{page_name}.html',
       error_description=error_description,
       error_title=error_title,
       endpoints=get_endpoints(called_from=page_name),

@@ -13,6 +13,7 @@ from .page_error import page_error
 import json
 
 page_name = 'postcode'
+pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
 @login_required
@@ -26,7 +27,7 @@ def postcode():
   if request.method == 'GET':
     delete_input(session)
     return render_template(
-        f'{page_name}.html',
+        f'{pages_location}{page_name}.html',
         searchable_fields=get_fields(page_name),
         endpoints=endpoints,
     )
@@ -68,7 +69,7 @@ def postcode():
   save_epoch_number(session, all_user_input.get('epoch', ''))
 
   return render_template(
-      f'{page_name}.html',
+      f'{pages_location}{page_name}.html',
       endpoints=endpoints,
       searchable_fields=searchable_fields,
       results_page=True,

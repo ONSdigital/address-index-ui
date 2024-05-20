@@ -21,6 +21,7 @@ from .security_utils import check_user_has_access_to_page
 from .google_utils import get_username, get_current_group
 
 page_name = 'multiple_address'
+pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
 # In the event of a file being too large, send this custom template
@@ -59,7 +60,7 @@ def multiple_address():
         field.set_radio_status('Download')
 
     return render_template(
-        f'{page_name}.html',
+        f'{pages_location}{page_name}.html',
         searchable_fields=searchable_fields,
         endpoints=endpoints,
         bulk_limits=bulk_limits,
@@ -99,7 +100,7 @@ def final(all_user_input,
   searchable_fields = get_fields(page_name)
 
   return render_template(
-      f'{page_name}.html',
+      f'{pages_location}{page_name}.html',
       error_description=error_description,
       error_title=error_title,
       endpoints=endpoints,
