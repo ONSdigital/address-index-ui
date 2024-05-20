@@ -7,6 +7,7 @@ from .security_utils import check_user_has_access_to_page
 from .models.get_endpoints import get_endpoints
 
 page_name = 'help'
+pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
 @login_required
@@ -65,7 +66,7 @@ def help(subject='None'):
     return return_specific_help_page('help_and_documentation', common)
 
   return render_template(
-      'help.html',
+      f'{pages_location}{page_name}.html',
       endpoints=endpoints,
       deffinitions=deffinitions,
   )
@@ -73,7 +74,7 @@ def help(subject='None'):
 
 def return_specific_help_page(page_html_name, common):
   return render_template(
-      f'./help_pages/{page_html_name}.html',
+      f'{pages_location}/help_pages/{page_html_name}.html',
       endpoints=common[0],
       deffinitions=common[1],
       breadcrumbs=common[2],

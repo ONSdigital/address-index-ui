@@ -16,6 +16,7 @@ from flask_login import login_required
 from aims_ui import get_cached_tooltip_data
 
 page_name = 'address_info'
+pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
 @login_required
@@ -93,7 +94,7 @@ def address_info(uprn):
   ]
 
   return render_template(
-      f'{page_name}.html',
+      f'{pages_location}{page_name}.html',
       endpoints=endpoints,
       matched_addresses=matched_addresses,
       clerical_info=clerical_info,

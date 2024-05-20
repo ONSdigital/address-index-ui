@@ -1,12 +1,7 @@
-import os
 from . import app
-from .models.get_endpoints import get_endpoints
 from flask import (
-    render_template,
-    request,
     redirect,
     session,
-    url_for,
 )
 
 page_name = 'logout'

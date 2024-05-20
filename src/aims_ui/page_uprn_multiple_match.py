@@ -16,6 +16,7 @@ from .multiple_match_lookup import uprn_multiple_address_match_original
 from .google_utils import get_current_group
 
 page_name = 'uprn_multiple_match'
+pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
 @login_required
@@ -35,7 +36,7 @@ def uprn_multiple_match():
     searchable_fields = get_fields(page_name)
 
     return render_template(
-        f'{page_name}.html',
+        f'{pages_location}{page_name}.html',
         uprn_bulk_limit=uprn_bulk_limit,
         searchable_fields=searchable_fields,
         endpoints=get_endpoints(called_from=page_name),
@@ -88,7 +89,7 @@ def error_response(searchable_fields,
                    table_results=''):
 
   return render_template(
-      f'{page_name}.html',
+      f'{pages_location}{page_name}.html',
       uprn_bulk_limit=uprn_bulk_limit,
       error_description=error_description,
       error_title=error_title,

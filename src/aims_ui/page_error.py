@@ -1,7 +1,10 @@
 from flask import render_template
 from .models.get_endpoints import get_endpoints
 import logging
+from . import app
 
+
+pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 def page_error(
     api_response,
@@ -31,7 +34,7 @@ def page_error(
   logging.error(error_description)
 
   return (render_template(
-      'error.html',
+      f'{pages_location}{page_name}.html',
       endpoints=get_endpoints(called_from=page_name),
       error_name=error_name,
       error_description=error_description,

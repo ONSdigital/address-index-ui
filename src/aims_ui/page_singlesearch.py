@@ -13,7 +13,7 @@ from .models.get_addresses import get_addresses
 from .page_error import page_error
 
 page_name = 'singlesearch'
-
+pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 @login_required
 @app.route(f'/', methods=['GET', 'POST'])
@@ -26,7 +26,7 @@ def singlesearch():
   if request.method == 'GET':
     delete_input(session)
     return render_template(
-        f'{page_name}.html',
+        f'{pages_location}{page_name}.html',
         searchable_fields=get_fields(page_name),
         endpoints=endpoints,
     )
@@ -82,7 +82,7 @@ def singlesearch():
   responseAttributes = get_response_attributes(result.json())
 
   return render_template(
-      f'{page_name}.html',
+      f'{pages_location}{page_name}.html',
       endpoints=endpoints,
       searchable_fields=searchable_fields,
       results_page=True,
