@@ -6,7 +6,7 @@ from . import app
 from .security_utils import check_user_has_access_to_page
 from .models.get_endpoints import get_endpoints
 
-page_name = 'help'
+page_name = 'help_home'
 pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
