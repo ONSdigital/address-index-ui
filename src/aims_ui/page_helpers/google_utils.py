@@ -1,5 +1,5 @@
 from flask import request
-from . import app
+from aims_ui import app
 
 
 def get_current_group():

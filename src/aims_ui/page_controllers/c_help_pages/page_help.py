@@ -2,7 +2,7 @@ import logging
 from flask import render_template, request, session, url_for
 from flask_login import login_required
 from aims_ui import get_cached_tooltip_data
-from . import app
+from aims_ui import app
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from aims_ui.models.get_endpoints import get_endpoints
 

@@ -3,7 +3,7 @@ import json
 from flask import render_template, request, session, send_file
 from requests.exceptions import ConnectionError
 from flask_login import login_required
-from . import app
+from aims_ui import app
 from .utils.upload_utils import check_valid_upload, FileUploadException
 from .utils.multiple_match_lookup import uprn_multiple_address_match_original
 from aims_ui.page_helpers.cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs, save_epoch_number

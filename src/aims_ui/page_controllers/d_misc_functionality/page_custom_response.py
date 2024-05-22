@@ -1,7 +1,7 @@
 import json, requests
 from flask import render_template, request
 from flask_login import login_required
-from . import app
+from aims_ui import app
 from aims_ui.page_helpers.api.api_helpers import get_header
 from aims_ui.page_helpers.security_utils import detect_xml_injection, check_user_has_access_to_page
 from aims_ui.models.get_endpoints import get_endpoints

@@ -2,7 +2,7 @@ import dataclasses
 import json
 import os
 import urllib.request
-from . import app
+from aims_ui import app
 from .models.get_endpoints import get_endpoints
 from .models.address import Address
 from .models.get_addresses import get_addresses

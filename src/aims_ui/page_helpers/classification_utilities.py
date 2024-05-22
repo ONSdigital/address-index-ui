@@ -1,5 +1,4 @@
-from .download_handler import get_autosuggest_list
-
+from aims_ui.page_controllers.d_misc_functionality.download_utils.autosuggest import get_autosuggest_list
 
 def check_reverse_classification(value):
   # Check if the string value has been entered, then swap it for it's classification code

@@ -3,7 +3,7 @@ import requests
 import logging
 from aims_ui import app
 from flask import request
-from aims_ui.api_helpers import get_header
+from aims_ui.page_helpers.api.api_helpers import get_header
 
 
 def multiple_uprn_lookup(siblings):
