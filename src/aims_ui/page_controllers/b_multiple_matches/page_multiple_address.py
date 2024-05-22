@@ -12,6 +12,7 @@ from aims_ui.page_helpers.cookie_utils import save_input, load_input, get_all_in
 from aims_ui.page_helpers.api.api_interaction import api
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from aims_ui.page_helpers.google_utils import get_username, get_current_group
+from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.models.get_addresses import get_addresses
@@ -21,7 +22,6 @@ from .utils.upload_utils import check_valid_upload
 from .utils.upload_utils import FileUploadException
 
 page_name = 'multiple_address'
-pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
 # In the event of a file being too large, send this custom template
@@ -45,6 +45,7 @@ def request_entity_too_large(error):
 def multiple_address():
   endpoints = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name, endpoints)
+  page_location = get_page_location(endpoints, page_name)
   if access != True:
     return access
 
@@ -60,7 +61,7 @@ def multiple_address():
         field.set_radio_status('Download')
 
     return render_template(
-        f'{pages_location}{page_name}.html',
+        page_location,
         searchable_fields=searchable_fields,
         endpoints=endpoints,
         bulk_limits=bulk_limits,
@@ -82,16 +83,18 @@ def multiple_address():
   except FileUploadException as e:
     return final(searchable_fields,
                  bulk_limits,
+                 page_location,
                  error_description=e.error_description,
                  error_title=e.error_title)
 
   if file_valid:
     multiple_address_match(file, all_user_input, download=True)
-    return final(all_user_input, bulk_limits)
+    return final(all_user_input, bulk_limits, page_location)
 
 
 def final(all_user_input,
           bulk_limits,
+          page_location,
           error_description='',
           error_title='',
           results_summary_table='',
@@ -100,7 +103,7 @@ def final(all_user_input,
   searchable_fields = get_fields(page_name)
 
   return render_template(
-      f'{pages_location}{page_name}.html',
+      page_location,
       error_description=error_description,
       error_title=error_title,
       endpoints=endpoints,

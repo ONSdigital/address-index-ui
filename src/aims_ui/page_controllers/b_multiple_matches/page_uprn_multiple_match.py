@@ -10,13 +10,13 @@ from aims_ui.page_helpers.cookie_utils import save_input, load_input, get_all_in
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from aims_ui.page_helpers.api.api_interaction import api
 from aims_ui.page_helpers.google_utils import get_current_group
+from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.models.get_addresses import get_addresses
 from aims_ui.page_error import page_error
 
 page_name = 'uprn_multiple_match'
-pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
 @login_required
@@ -24,6 +24,7 @@ pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 def uprn_multiple_match():
   endpoints = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name, endpoints)
+  page_location = get_page_location(endpoints, page_name)
   if access != True:
     return access
 
@@ -36,7 +37,7 @@ def uprn_multiple_match():
     searchable_fields = get_fields(page_name)
 
     return render_template(
-        f'{pages_location}{page_name}.html',
+        page_location,
         uprn_bulk_limit=uprn_bulk_limit,
         searchable_fields=searchable_fields,
         endpoints=get_endpoints(called_from=page_name),
@@ -66,6 +67,7 @@ def uprn_multiple_match():
       # File invalid? Return error
       return error_response(searchable_fields,
                             uprn_bulk_limit,
+                            page_location,
                             error_description=error_description,
                             error_title=error_title)
 
@@ -83,13 +85,14 @@ def uprn_multiple_match():
 
 def error_response(searchable_fields,
                    uprn_bulk_limit,
+                   page_location,
                    error_description='',
                    error_title='',
                    results_summary_table='',
                    table_results=''):
 
   return render_template(
-      f'{pages_location}{page_name}.html',
+      page_location,
       uprn_bulk_limit=uprn_bulk_limit,
       error_description=error_description,
       error_title=error_title,

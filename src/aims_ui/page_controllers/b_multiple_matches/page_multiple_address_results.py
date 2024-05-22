@@ -1,18 +1,15 @@
-import os
 from flask_login import login_required
-from flask import render_template, request, session, send_file, url_for
+from flask import render_template
 from aims_ui import app
 from .utils.multiple_address_utils import get_tag_data, job_data_by_current_user
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from aims_ui.page_helpers.table_utils import create_table
 from aims_ui.models.get_endpoints import get_endpoints
-from aims_ui.page_helpers.api.api_interaction import api, job_result_formatter
+from aims_ui.page_helpers.pages_location_utils import get_page_location
+from aims_ui.page_helpers.api.api_interaction import job_result_formatter
 from aims_ui.page_helpers.google_utils import get_username, get_current_group
-import json
-import csv
 
 page_name = 'multiple_address_results'
-pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
 @login_required
@@ -20,6 +17,7 @@ pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 def multiple_address_results():
   endpoints = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name, endpoints)
+  page_location = get_page_location(endpoints, page_name)
   if access != True:
     return access
 
@@ -57,7 +55,6 @@ def multiple_address_results():
   #TODO SET TO FALSE --------------------------------------------------
 
   endpoints = get_endpoints(called_from=page_name)
-  username = get_username()
 
   headers = [
       'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'RECS PROCESSED',
@@ -87,7 +84,7 @@ def multiple_address_results():
   jobs = create_table(headers, formatted_results)
 
   return render_template(
-      f'{pages_location}{page_name}.html',
+      page_location,
       endpoints=endpoints,
       jobs=jobs,
       bulk_limits=bulk_limits,
