@@ -11,6 +11,7 @@ from aims_ui.models.get_fields import get_fields
 from aims_ui.models.get_addresses import get_addresses
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from aims_ui.page_helpers.google_utils import get_username, get_current_group
+from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_error import page_error
 from .utils.multiple_match_lookup import multiple_address_match_original
 from .utils.upload_utils import check_valid_upload, FileUploadException
@@ -19,7 +20,6 @@ import csv
 from time import sleep
 
 page_name = 'multiple_address_original'
-pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
 def final(
@@ -34,13 +34,16 @@ def final(
   current_group = get_current_group()
   bulk_limits = current_group.get('bulk_limits')
 
+  endpoints = get_endpoints(called_from=page_name)
+  page_location = get_page_location(endpoints, page_name)
+
   searchable_fields = get_fields(
       page_name)  # This should be handled with error checking in future
   return render_template(
-      f'{pages_location}{page_name}.html',
+      page_location,
+      endpoints=endpoints,
       error_description=error_description,
       error_title=error_title,
-      endpoints=get_endpoints(called_from=page_name),
       searchable_fields=searchable_fields,
       table_results=table_results,
       results_summary_table=results_summary_table,
@@ -70,6 +73,7 @@ def request_entity_too_large(error):
 def multiple_address_original():
   endpoints = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name, endpoints)
+  page_location = get_page_location(endpoints, page_name)
   if access != True:
     return access
 
@@ -85,7 +89,7 @@ def multiple_address_original():
         field.set_radio_status('Download')
 
     return render_template(
-        f'{page_name}.html',
+        page_location,
         searchable_fields=searchable_fields,
         endpoints=get_endpoints(called_from=page_name),
         bulk_limits=bulk_limits,
