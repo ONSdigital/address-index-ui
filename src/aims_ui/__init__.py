@@ -133,4 +133,4 @@ from . import page_help
 from . import page_uprn_multiple_match
 from . import download_handler
 from . import page_custom_response
-from .api_interaction import get_classifications
+from aims_ui.page_helpers.api.api_interaction import get_classifications
