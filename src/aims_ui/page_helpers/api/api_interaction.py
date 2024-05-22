@@ -4,10 +4,10 @@ import json
 import requests
 from . import app
 from io import StringIO, BytesIO
-from .models.get_addresses import get_addresses
-from .classification_utilities import check_reverse_classification
+from aims_ui.models.get_addresses import get_addresses
+from aims_ui.page_helpers.classification_utilities import check_reverse_classification
 from .api_helpers import get_header, job_api
-from .google_utils import get_username
+from aims_ui.page_helpers.google_utils import get_username
 from .multiple_address_utils import generate_tag_name
 from flask import request
 import urllib

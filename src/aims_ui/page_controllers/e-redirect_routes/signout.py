@@ -1,8 +1,5 @@
 from . import app
-from flask import (
-    redirect,
-    session,
-)
+from flask import redirect, session
 
 page_name = 'logout'
 

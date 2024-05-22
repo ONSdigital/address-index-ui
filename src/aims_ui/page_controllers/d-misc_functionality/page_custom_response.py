@@ -2,11 +2,11 @@ import json, requests
 from flask import render_template, request
 from flask_login import login_required
 from . import app
-from .security_utils import detect_xml_injection, check_user_has_access_to_page
-from .models.get_endpoints import get_endpoints
-from .models.get_addresses import get_addresses
-from .page_error import page_error
-from .api_helpers import get_header
+from aims_ui.page_helpers.api.api_helpers import get_header
+from aims_ui.page_helpers.security_utils import detect_xml_injection, check_user_has_access_to_page
+from aims_ui.models.get_endpoints import get_endpoints
+from aims_ui.models.get_addresses import get_addresses
+from aims_ui.page_error import page_error
 
 page_name = 'custom_response'
 pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')

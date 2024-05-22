@@ -1,8 +1,8 @@
 from . import app
 from flask import render_template
 from flask_login import login_required
-from .models.get_endpoints import get_endpoints
-from .security_utils import check_user_has_access_to_page
+from aims_ui.models.get_endpoints import get_endpoints
+from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 
 page_name = 'settings'
 pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')

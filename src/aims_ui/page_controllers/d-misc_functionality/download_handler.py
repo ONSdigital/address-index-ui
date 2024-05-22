@@ -6,7 +6,7 @@ from io import StringIO, BytesIO
 from flask import render_template, request, session, send_file
 from flask_login import login_required
 from . import app, get_classifications_cached
-from .multiple_address_utils import job_url_if_authorised
+from aims_ui.page_controllers.b_multiple_matches.utils.multiple_address_utils import job_url_if_authorised
 
 # For the gz download
 import urllib.request
