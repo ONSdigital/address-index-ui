@@ -6,6 +6,7 @@ from requests.exceptions import ConnectionError
 from aims_ui.page_helpers.cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs, save_epoch_number
 from aims_ui.page_helpers.api.api_interaction import api
 from aims_ui.page_helpers.security_utils import detect_xml_injection, check_user_has_access_to_page
+from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.models.get_addresses import get_addresses
@@ -13,7 +14,6 @@ from aims_ui.page_error import page_error
 import json
 
 page_name = 'postcode'
-pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
 @login_required
@@ -21,13 +21,14 @@ pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 def postcode():
   endpoints = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name, endpoints)
+  page_locatinon = get_page_location(endpoints, page_name)
   if access != True:
     return access
 
   if request.method == 'GET':
     delete_input(session)
     return render_template(
-        f'{pages_location}{page_name}.html',
+        page_locatinon,
         searchable_fields=get_fields(page_name),
         endpoints=endpoints,
     )
@@ -69,7 +70,7 @@ def postcode():
   save_epoch_number(session, all_user_input.get('epoch', ''))
 
   return render_template(
-      f'{pages_location}{page_name}.html',
+      page_locatinon,
       endpoints=endpoints,
       searchable_fields=searchable_fields,
       results_page=True,

@@ -1,5 +1,6 @@
 from aims_ui import get_classifications_cached
 
+
 def get_autosuggest_list():
   """Return the classifications list in the format expected by the autosuggest component"""
   formatted_class_list = []
@@ -12,4 +13,3 @@ def get_autosuggest_list():
     })
 
   return formatted_class_list
-

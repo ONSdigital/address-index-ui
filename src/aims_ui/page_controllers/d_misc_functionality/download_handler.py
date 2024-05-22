@@ -15,7 +15,6 @@ import ssl
 import gzip
 
 
-
 @login_required
 @app.route('/autosuggest/<autosuggest_type>.json', methods=['GET', 'POST'])
 def autosuggest(autosuggest_type):

@@ -6,6 +6,7 @@ from flask import (
     url_for,
 )
 
+
 # Keep this for backwards compatibility!
 # Users who've bookmarked "/login" need to be redirected
 @app.route('/login', methods=['GET', 'POST'])

@@ -3,8 +3,8 @@ import logging
 from aims_ui import app
 from aims_ui.models.get_endpoints import get_endpoints
 
-
 pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
+
 
 def page_error(
     api_response,

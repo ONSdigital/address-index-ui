@@ -19,8 +19,7 @@ def settings():
   col_options = [{'value': x, 'text': x} for x in range(1, 8)]
   col_options_inc0 = [{'value': x, 'text': x} for x in range(0, 6)]
 
-  return render_template(
-    f'{pages_location}{page_name}.html',
-    endpoints=endpoints,
-    col_options=col_options,
-    col_options_inc0=col_options_inc0)
+  return render_template(f'{pages_location}{page_name}.html',
+                         endpoints=endpoints,
+                         col_options=col_options,
+                         col_options_inc0=col_options_inc0)
