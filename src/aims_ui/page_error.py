@@ -1,6 +1,6 @@
 from flask import render_template
 import logging
-from . import app
+from aims_ui import app
 from aims_ui.models.get_endpoints import get_endpoints
 
 

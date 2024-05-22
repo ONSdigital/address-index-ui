@@ -1,5 +1,5 @@
 import os
-from . import app
+from aims_ui import app
 from aims_ui.models.get_endpoints import get_endpoints
 from flask import (
     redirect,

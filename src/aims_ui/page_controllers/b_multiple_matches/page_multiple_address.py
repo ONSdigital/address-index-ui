@@ -7,7 +7,7 @@ from flask import render_template, request, session, send_file
 from requests.exceptions import ConnectionError
 from flask_login import login_required
 from werkzeug.utils import secure_filename
-from . import app
+from aims_ui import app
 from aims_ui.page_helpers.cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs
 from aims_ui.page_helpers.api.api_interaction import api
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page

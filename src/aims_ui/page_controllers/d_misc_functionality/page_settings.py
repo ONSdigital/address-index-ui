@@ -1,4 +1,4 @@
-from . import app
+from aims_ui import app
 from flask import render_template
 from flask_login import login_required
 from aims_ui.models.get_endpoints import get_endpoints

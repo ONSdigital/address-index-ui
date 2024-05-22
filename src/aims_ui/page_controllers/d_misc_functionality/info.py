@@ -1,5 +1,5 @@
 import os
-from . import app
+from aims_ui import app
 from flask import jsonify
 from importlib_metadata import version, PackageNotFoundError
 

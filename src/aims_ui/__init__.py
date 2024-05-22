@@ -3,7 +3,7 @@ import time
 
 from flask import Flask
 from .config import base as config_base
-from .logging import setup_logging
+from aims_ui.app_helpers.logging import setup_logging
 
 setup_logging(os.getenv('PLATFORM'))
 
@@ -54,7 +54,7 @@ def get_classifications_cached():
 
 
 # Must import here to avoid circular imports
-from .api_interaction import get_epoch_options
+from aims_ui.page_helpers.api.api_interaction import get_epoch_options
 
 epoch_options = None
 

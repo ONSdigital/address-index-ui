@@ -1,7 +1,7 @@
 import re
 from aims_ui.page_error import page_error
 from .google_utils import get_username, get_current_group
-from . import app
+from aims_ui import app
 
 
 def deny_access_error_page(page_name):

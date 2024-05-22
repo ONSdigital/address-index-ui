@@ -1,7 +1,7 @@
 import os
 from flask import render_template, request, session
 from flask_login import login_required
-from . import app
+from aims_ui import app
 from requests.exceptions import ConnectionError
 from aims_ui.page_helpers.cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs, save_epoch_number
 from aims_ui.page_helpers.api.api_interaction import api

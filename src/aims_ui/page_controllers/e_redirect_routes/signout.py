@@ -1,4 +1,4 @@
-from . import app
+from aims_ui import app
 from flask import redirect, session
 
 page_name = 'logout'
