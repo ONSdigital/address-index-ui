@@ -3,16 +3,12 @@ import json
 import csv
 import requests
 from io import StringIO, BytesIO
-from flask import render_template, request, session, send_file
+from flask import send_file
 from flask_login import login_required
 from aims_ui import app, get_classifications_cached
 from aims_ui.page_controllers.b_multiple_matches.utils.multiple_address_utils import job_url_if_authorised
-from .download_utils.autosuggest import get_autosuggest_list
 
 # For the gz download
-import urllib.request
-import ssl
-import gzip
 
 
 @login_required

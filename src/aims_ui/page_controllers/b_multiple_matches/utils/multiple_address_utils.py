@@ -1,11 +1,6 @@
-import requests
-import tarfile
-import io
 import json
-from flask import request
 import logging
-from aims_ui import app
-from aims_ui.page_helpers.api.api_helpers import get_header, job_api
+from aims_ui.page_helpers.api.api_helpers import job_api
 from aims_ui.page_helpers.google_utils import get_username
 
 
