@@ -1,7 +1,6 @@
 from .endpoint import Endpoint
-from flask import url_for, request
+from flask import url_for
 from aims_ui.page_helpers.google_utils import get_username, get_current_group
-from aims_ui import app
 
 
 def get_current_selected_endpoint(endpoints, called_from):

@@ -3,20 +3,21 @@ from flask import render_template, request
 from flask_login import login_required
 from aims_ui import app
 from aims_ui.page_helpers.api.api_helpers import get_header
-from aims_ui.page_helpers.security_utils import detect_xml_injection, check_user_has_access_to_page
+from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_addresses import get_addresses
-from aims_ui.page_error import page_error
+from aims_ui.page_helpers.pages_location_utils import get_page_location
 
 page_name = 'custom_response'
-pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
 def return_error_to_custom_response(error_title, errors_formatted,
                                     r_json_readable):
+  endpoints = get_endpoints(called_from=page_name)
+  page_location = get_page_location(endpoints, page_name)
   return render_template(
-      f'{page_name}.html',
-      endpoints=get_endpoints(called_from=page_name),
+      page_location,
+      endpoints=endpoints,
       error_title=error_title,
       errors_formatted=errors_formatted,
       r_json_readable=r_json_readable,
@@ -28,13 +29,14 @@ def return_error_to_custom_response(error_title, errors_formatted,
 def custom_response():
   endpoints = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name, endpoints)
+  page_location = get_page_location(endpoints, page_name)
   if access != True:
     return access
 
   if request.method == 'GET':
     return render_template(
-        f'{page_name}.html',
-        endpoints=get_endpoints(called_from=page_name),
+        page_location,
+        endpoints=endpoints,
     )
 
   base_url = app.config.get('API_URL')
@@ -110,7 +112,7 @@ def custom_response():
       matched_addresses = get_addresses(r_json, 'uprn')
 
   return render_template(
-      f'{pages_location}{page_name}.html',
+      page_location,
       endpoints=get_endpoints(called_from=page_name),
       r_json_readable=r_json_readable,
       matched_addresses=matched_addresses,

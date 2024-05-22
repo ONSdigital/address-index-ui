@@ -1,5 +1,4 @@
-import logging
-from flask import render_template, request, session, url_for
+from flask import render_template
 from flask_login import login_required
 from aims_ui import get_cached_tooltip_data
 from aims_ui import app
