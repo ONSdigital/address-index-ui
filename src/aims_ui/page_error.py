@@ -1,7 +1,7 @@
 from flask import render_template
-from .models.get_endpoints import get_endpoints
 import logging
 from . import app
+from aims_ui.models.get_endpoints import get_endpoints
 
 
 pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')

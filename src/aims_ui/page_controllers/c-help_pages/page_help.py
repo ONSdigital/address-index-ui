@@ -3,8 +3,8 @@ from flask import render_template, request, session, url_for
 from flask_login import login_required
 from aims_ui import get_cached_tooltip_data
 from . import app
-from .security_utils import check_user_has_access_to_page
-from .models.get_endpoints import get_endpoints
+from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
+from aims_ui.models.get_endpoints import get_endpoints
 
 page_name = 'help_home'
 pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')

@@ -1,12 +1,12 @@
 import json
 import csv
 import logging
-from .models.get_endpoints import get_endpoints
-from .models.get_addresses import get_addresses
-from .upload_utils import remove_script_and_html_from_str
-from .page_error import page_error
 from io import StringIO, BytesIO
-from aims_ui.api_interaction import api, submit_mm_job, submit_uprn_mm_job, get_response_attributes
+from aims_ui.models.get_endpoints import get_endpoints
+from aims_ui.models.get_addresses import get_addresses
+from .upload_utils import remove_script_and_html_from_str
+from aims_ui.page_error import page_error
+from aims_ui.page_helpers.api.api_interaction import api, submit_mm_job, submit_uprn_mm_job, get_response_attributes
 
 page_name = 'multiple_match_submit'
 
@@ -257,7 +257,7 @@ def uprn_multiple_address_match_original(file, all_user_input):
   except:
     logging.error(
         f'Error on a UPRN Multiple API call for:\n "{all_user_input}"')
-    return page_error(None, e, page_name)
+    return page_error(None, None, page_name)
 
   matched_addresses = get_addresses(result.json(), 'multiple_uprn')
 

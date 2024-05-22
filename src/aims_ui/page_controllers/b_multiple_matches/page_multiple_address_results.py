@@ -2,12 +2,12 @@ import os
 from flask_login import login_required
 from flask import render_template, request, session, send_file, url_for
 from . import app
-from .models.get_endpoints import get_endpoints
-from .api_interaction import api, job_result_formatter
-from .table_utils import create_table
-from .security_utils import check_user_has_access_to_page
-from .google_utils import get_username, get_current_group
-from .multiple_address_utils import get_tag_data, job_data_by_current_user
+from .utils.multiple_address_utils import get_tag_data, job_data_by_current_user
+from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
+from aims_ui.page_helpers.table_utils import create_table
+from aims_ui.models.get_endpoints import get_endpoints
+from aims_ui.page_helpers.api.api_interaction import api, job_result_formatter
+from aims_ui.page_helpers.google_utils import get_username, get_current_group
 import json
 import csv
 

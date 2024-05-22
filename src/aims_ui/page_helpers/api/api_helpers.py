@@ -1,6 +1,6 @@
 import requests
 from . import app
-from .google_utils import get_username, get_user_email
+from aims_ui.page_helpers.google_utils import get_username
 
 
 def get_header(username=True, bulk=False):
