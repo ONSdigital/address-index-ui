@@ -56,7 +56,11 @@ def help(subject='None'):
   for deffinition in deffinitions:
     deffinition['description'] = get_matching_tooltip(deffinition.get('name'))
 
-  common = {'endpoints': endpoints, 'deffinitions': deffinitions, 'breadcrumbs': breadcrumbs}
+  common = {
+      'endpoints': endpoints,
+      'deffinitions': deffinitions,
+      'breadcrumbs': breadcrumbs
+  }
 
   # Hard code here to avoid security flaws where users could potentially inject unwanted urls
   if subject == 'confidence_score':
@@ -76,7 +80,10 @@ def help(subject='None'):
 def return_specific_help_page(page_html_name, common):
   endpoints = common.get('endpoints')
 
-  nested_page_location = get_nested_page_location(endpoints, page_name, page_html_name, subfolder='sub_help_pages') 
+  nested_page_location = get_nested_page_location(endpoints,
+                                                  page_name,
+                                                  page_html_name,
+                                                  subfolder='sub_help_pages')
   print(nested_page_location)
 
   return render_template(
