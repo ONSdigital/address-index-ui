@@ -117,7 +117,7 @@ def add_header(response):
 
 
 # Setup 'misc_functionality' page controllers
-from aims_ui.page_controllers.d_misc_functionality.info import info
+from aims_ui.page_controllers.d_misc_functionality.page_info import info
 from aims_ui.page_controllers.d_misc_functionality.page_settings import settings
 from aims_ui.page_controllers.d_misc_functionality.download_handler import download_handler
 from aims_ui.page_controllers.d_misc_functionality.page_custom_response import custom_response

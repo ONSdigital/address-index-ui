@@ -73,6 +73,7 @@ def get_endpoints(called_from=None):
           'settings',
           'User prefferences are stored locally on their web-browser. Adjust or reset those settings here.',
           'd_misc_functionality',
+          url=url_for('settings')
       ),
   ]
 
