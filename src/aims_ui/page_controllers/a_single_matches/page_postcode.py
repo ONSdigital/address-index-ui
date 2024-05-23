@@ -1,9 +1,8 @@
-import os
 from flask import render_template, request, session
 from flask_login import login_required
 from aims_ui import app
 from requests.exceptions import ConnectionError
-from aims_ui.page_helpers.cookie_utils import save_input, load_input, get_all_inputs, delete_input, load_save_store_inputs, save_epoch_number
+from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs, save_epoch_number
 from aims_ui.page_helpers.api.api_interaction import api
 from aims_ui.page_helpers.security_utils import detect_xml_injection, check_user_has_access_to_page
 from aims_ui.page_helpers.pages_location_utils import get_page_location
@@ -11,7 +10,6 @@ from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.models.get_addresses import get_addresses
 from aims_ui.page_error import page_error
-import json
 
 page_name = 'postcode'
 

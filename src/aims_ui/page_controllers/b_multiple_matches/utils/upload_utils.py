@@ -1,6 +1,3 @@
-import os
-import csv
-import ast
 import logging
 
 ALLOWED_EXTENSIONS = {'csv'}
