@@ -1,8 +1,6 @@
-import json
 import csv
 import logging
 from io import StringIO, BytesIO
-from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_addresses import get_addresses
 from .upload_utils import remove_script_and_html_from_str
 from aims_ui.page_error import page_error
