@@ -13,6 +13,7 @@ from aims_ui.page_error import page_error
 
 page_name = 'typeahead'
 
+
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def typeahead():

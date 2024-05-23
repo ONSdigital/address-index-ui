@@ -4,6 +4,7 @@ from aims_ui import app
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.page_helpers.pages_location_utils import get_page_location_non_endpoint
 
+
 def page_error(
     api_response,
     page_name,
