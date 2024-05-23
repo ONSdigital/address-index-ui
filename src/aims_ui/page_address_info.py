@@ -5,13 +5,13 @@ from aims_ui.page_error import page_error
 from aims_ui.page_helpers.api.api_interaction import api
 from aims_ui.page_helpers.cookie_utils import load_epoch_number
 from aims_ui.page_helpers.table_utils import create_table, create_hierarchy_table
+from aims_ui.page_helpers.pages_location_utils import get_page_location_non_endpoint
 from aims_ui import get_cached_tooltip_data
 from flask import render_template, session
 from flask_login import login_required
 from requests.exceptions import ConnectionError
 
 page_name = 'address_info'
-pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
 @login_required
@@ -20,6 +20,7 @@ def address_info(uprn):
   """Show all info about an address given the UPRN"""
   endpoints = get_endpoints(called_from=page_name)
   epoch_version_number = load_epoch_number(session)
+  page_location = get_page_location_non_endpoint(page_name)
 
   try:
     result = api(
@@ -89,7 +90,7 @@ def address_info(uprn):
   ]
 
   return render_template(
-      f'{pages_location}{page_name}.html',
+      page_location,
       endpoints=endpoints,
       matched_addresses=matched_addresses,
       clerical_info=clerical_info,
