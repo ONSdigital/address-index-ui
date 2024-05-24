@@ -1,0 +1,86 @@
+{% extends './aims_ui_pages/0-base_page_settings.html' %}
+
+{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
+{% from "components/input/_macro.njk" import onsInput %}
+{% from "components/upload/_macro.njk" import onsUpload %}
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+{% from "custom_search/_macro.njk" import customSearch %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/question/_macro.njk" import onsQuestion %}
+{% from "components/table/_macro.njk" import onsTable %}
+{% from "custom_multiple_match_nav/_macro.njk" import customMultipleMatchNav %}
+
+{% block main %}
+
+<h1>Match Multiple Addresses</h1>
+
+{{ customMultipleMatchNav ({
+	'current_path': 'multiple_address_original',
+	'bulk_limits': bulk_limits,
+	}) }}
+
+{% if not results_page %}
+	<br>
+	{{ onsPanel({
+	    "body": "<p>'Under " + (bulk_limits.limit_mini_bulk|string) + " Addresses' will execute the matches while you wait, and is only suitable for small jobs. For larger ones go to 'Up To " + (bulk_limits.limit_vast_bulk|string) + " Addresses'.</p>"
+	    + "<p>To get started, upload a CSV file of up to " + (bulk_limits.limit_mini_bulk|string) + " addresses to be matched. The file must have only two columns, id and address.</p>"
+	    + "<p>Download a <a href='/downloads/example_multiple_address'>sample file</a><br><br>"
+	    + "You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>"
+	}) }} <br>
+{% endif %}
+
+<form method=post enctype=multipart/form-data>
+{{ customSearch ({ "Fields": searchable_fields,
+		   "endpoints": endpoints, 
+		   "remove_buttons": True,
+		   "remove_search_button":False,
+                   "results_page": results_page, }) }}
+<br>
+{{ onsUpload({
+	"id": "file",
+	"name":"file",
+	"type":"file",
+	"classes":"input input--text input-type__input input--upload",
+	"accept": ".csv,.CSV",
+	"error": {
+		"id": error_title,
+		"text": error_description } if error_title else '',
+	"label": {
+	    "description": "Please upload a CSV file" if not error_type else "",
+	    "text":  "Please upload a CSV file" if not error_type else "" } }) }}
+
+<br>
+{{ onsButton({
+        "id": "downloadButtonMultipleMatch",
+        "text": "Match Addresses",
+        "type": "submit",
+        "value": "Download",
+	"variants": "loader",
+        "classes": "btn",  })  }}
+
+</form>
+
+
+{# Escape the main page contents, create wider grid so that the table can have max width #}
+</div></div></div>
+<div class="ons-grid__col ons-col-1@m"></div>
+<div class="ons-grid__col ons-col-10@m">
+<br>
+{{ onsTable({
+	"id": "basic-table 2",
+        "ths":  [] if not table_results else results_summary_table.get('ths') ,
+  	"trs": [] if not table_results else results_summary_table.get('trs'),
+}) }}
+
+<br>
+{{ onsTable({
+	"id": "basic-table",
+        "ths":  [] if not table_results else table_results.get('ths') ,
+  	"trs": [] if not table_results else table_results.get('trs'),
+}) }}
+</div>
+
+<script type=module src="static/src/all_pages_js.mjs"></script>
+
+{% endblock %}

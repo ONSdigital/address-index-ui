@@ -1,6 +1,8 @@
 from flask import render_template
-from .models.get_endpoints import get_endpoints
 import logging
+from aims_ui import app
+from aims_ui.models.get_endpoints import get_endpoints
+from aims_ui.page_helpers.pages_location_utils import get_page_location_non_endpoint
 
 
 def page_error(
@@ -10,6 +12,8 @@ def page_error(
     override_error_description='',
     override_error_name='',
 ):
+
+  page_location = get_page_location_non_endpoint('error')
 
   if override_error_name != '':
     error_name = override_error_name
@@ -31,7 +35,7 @@ def page_error(
   logging.error(error_description)
 
   return (render_template(
-      'error.html',
+      page_location,
       endpoints=get_endpoints(called_from=page_name),
       error_name=error_name,
       error_description=error_description,

@@ -7,6 +7,9 @@ class Endpoint():
   title: str
   page_name: str
   description_text: str
+  file_location: str
+
+  # Optional fields
   title_size: int = 3
   nav_info: list = field(default_factory=lambda: [])
   selected: bool = False

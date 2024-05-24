@@ -1,9 +1,6 @@
-from dataclasses import dataclass, field, fields
-import json
 from .utilities.classifications import get_classification_list
 from .utilities.sibling_lookup import getHierarchy
 from .utilities.logicalStatusUtils import getTextLogicalStatus
-from aims_ui import app
 
 
 class AddressAttribute():

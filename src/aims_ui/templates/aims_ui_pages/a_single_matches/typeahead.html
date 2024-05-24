@@ -1,0 +1,155 @@
+{% extends './aims_ui_pages/0-base_page_settings.html' %}
+
+{% from "components/input/_macro.njk" import onsInput %}
+{% from 'custom_search/_macro.njk' import customSearch %}
+{% from "components/address-input/_macro.njk" import onsAddressInput %}
+{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+
+{# In order to specify wider than usual components, page must be in "pageContent" #}
+{% block pageContent %}
+{% block main %}
+
+<form method="POST" id="searchform">
+
+{# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
+<div class="ons-grid">
+
+{# 1Column boarder#}
+  <div id="space_col_1" class="ons-grid__col ons-col-1@m "></div>
+
+{# Show the typeahead on left side of the page as not to obscure filters #}
+  <div id="content_col_2" class="ons-grid__col ons-col-4@m ">
+<br><br>
+
+{{ onsAddressInput({
+    "id": "address",
+    "dontWrap": true,
+    "label": {
+        "text": "Enter address or postcode and select from results",
+        "id": "address-label"
+    },
+    "isEditable": false,
+    'APIManualQueryParams': true,
+    "mandatory": true,
+    "externalInitialiser": true,
+    "autocomplete": "new-password",
+    "APIDomain": api_auth.get('PROJECT_DOMAIN'),
+    'APIDomainBearerToken': api_auth.get('API_JWT_TOKEN'),
+    "instructions": "Use up and down keys to navigate suggestions once you\'ve typed more than two characters. Use the enter key to select a suggestion. Touch device users, explore by touch or with swipe gestures.",
+    "ariaYouHaveSelected": "You have selected",
+    "ariaMinChars": "Enter 3 or more characters for suggestions.",
+    "ariaResultsLabel": "Address suggestions",
+    "ariaOneResult": "There is one suggestion available.",
+    "ariaNResults": "There are {n} suggestions available.",
+    "ariaLimitedResults": "Results have been limited to 10 suggestions. Type more characters to improve your search",
+    "ariaGroupedResults": "There are {n} for {x}",
+    "groupCount": "{n} addresses",
+    "moreResults": "Enter more of the address to improve results",
+    "resultsTitle": "Select an address",
+    "noResults": "No results found. Try entering a different part of the address",
+    "tooManyResults": "{n} results found. Enter more of the address to improve results",
+    "typeMore": "Enter more of the address to get results",
+    "errorTitle": "There is a problem with your answer",
+    "errorMessageEnter": "Enter an address",
+    "errorMessageSelect": "Select an address",
+    "errorMessageAPI": "Sorry, there is a problem. We are working to fix it. Please try again later or",
+    "errorMessageAPILinkText": "contact us for more help",
+    "errorMessageAPILink": "",
+    "options": {
+        "regionCode": "gb-eng",
+        "addressType": "residential",
+    }
+}) }}
+
+<br>
+
+</form>
+
+{{  onsButton({
+	"text": "Search", }) }}
+
+	{{ onsButton({
+		'text': 'Clear  filters',
+		'variants': 'secondary',
+		'submitType': "loader",
+		'url': '/typeahead',
+		'id': 'clear-form-data-button-id',
+	}) }}
+
+{# Add Results under the Typeahead #}
+	{% if results_page %}
+	<h2>We matched {{matched_address_number}}  addresses:</h2>
+	{% endif %}
+
+	{{ customAddressInfo ({
+		'matched_addresses': matched_addresses,
+		}) }}
+
+
+</div>
+
+{# 1 Col boarder between filters and results #}
+<div id="space_col_3" class="ons-grid__col ons-col-1@m "></div>
+
+{# 5 Col FLAGS page #}
+  <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
+
+{{ customSearch ({ "Fields": searchable_fields ,
+ "remove_search_button":True }) }}
+
+</div>
+{# End of grid #}
+</div>
+
+<script>
+// Script to adjust the parameters for typeahead whenever they're updated
+function getParamsFromPage( ) {
+	let finalParams = '&';
+	const lfForm = document.querySelector('.match-form-container');
+	const inputs = lfForm.querySelectorAll('input');
+	for (const input of inputs) {
+		if ((input.type === 'text') && (input.value !== '')) {
+			finalParams = finalParams + input.getAttribute('id') + '=' + input.value;
+			finalParams = finalParams + '&';
+		}
+		if ((input.type === 'radio') && (input.checked)) {
+			finalParams = finalParams + input.name + '=' + input.id;
+			finalParams = finalParams + '&';
+		}
+		if ((input.type === 'checkbox') && (input.checked)) {
+			finalParams = finalParams + input.id + '=' + 'true';
+			finalParams = finalParams + '&';
+		}
+	}
+	finalParams = finalParams.substring(0, finalParams.length - 1);
+	return finalParams
+}
+
+typeaheadContainer = document.querySelector('#address-autosuggest-container')
+typeaheadContainer.setAttribute('data-query-params', getParamsFromPage() );
+
+// Every time the typeahead is focussed on, refresh the parameters
+typeaheadContainer.addEventListener('focusin', (e) => {
+	typeaheadContainer.setAttribute('data-query-params', getParamsFromPage() );
+});
+
+</script>
+
+{# Add script to remove form resubmission message #}
+<script>
+if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
+</script>
+
+<script type=module src="static/src/all_pages_js.mjs"></script>
+<script type=module src="static/src/save_inputs.mjs"></script>
+<script type=module src="static/src/apply_custom_settings.mjs"></script>
+<script type=module src="static/src/custom_column_widths.mjs"></script>
+<script type=module src="/static/src/all_pages_last.mjs"></script>
+
+{% endblock %}
+{% endblock %}
+

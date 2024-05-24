@@ -1,0 +1,40 @@
+{% extends './aims_ui_pages/0-base_page_settings.html' %}
+
+{% from "components/breadcrumbs/_macro.njk" import onsBreadcrumbs %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+
+{% block main %}
+
+{{ onsBreadcrumbs({
+  "ariaLabel": 'Breadcrumbs',
+  "itemsList":  breadcrumbs,
+}) }}
+
+
+<h1>Confidence Score</h1>
+
+{{   onsPanel({
+    "body": " The Confidence Score is a number from 0-100 which approximately represents a percentage chance of the address being correct.
+It is calculated using input from two sources:
+<br>
+<br>
+1) The search engine underlying score. This is a number from 0 to about 50 which Elasticsearch outputs for each result. It doesn't mean much other than the higher the number then better the 'hit'
+<br>
+<br>
+2) A bespoke score calculation. A complex deterministic analysis is performed on each matching address awarding points for different parts of the address that match.
+<br>
+<br>
+The two scores go into a Sigmoid function which takes into account all the returned scores to give an easy to understand pseudo-percentage for each result.
+The API can be told (e.g. via the UI) to apply a minimum value of the confidence score, e.g. reject all values under 10. An address with a confidence score of 70 or more can safely be assumed to be the clear winner. An ambiguous address such as 12 Station Road London will return two or more results with a score of around 55.
+<br>
+<br>
+For a full explanation see section 5 of this paper: <a href='https://www.ons.gov.uk/methodology/methodologicalpublications/generalmethodology/onsworkingpaperseries/onsworkingpaperseriesno17usingdatasciencefortheaddressmatchingservice'>onsworkingpaperseriesno17usingdatasciencefortheaddressmatchingservice<a>
+"
+
+}) }}
+
+
+<script type=module src="/static/src/all_pages_js.mjs"></script>
+
+{% endblock %}
+

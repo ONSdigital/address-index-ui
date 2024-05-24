@@ -1,0 +1,83 @@
+{% extends './aims_ui_pages/0-base_page_settings.html' %}
+
+{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
+{% from "components/input/_macro.njk" import onsInput %}
+{% from "components/upload/_macro.njk" import onsUpload %}
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+{% from 'custom_search/_macro.njk' import customSearch %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/question/_macro.njk" import onsQuestion %}
+{% from "components/table/_macro.njk" import onsTable %}
+{% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
+
+{% block main %}
+
+<h1>Unique Property Reference Number Multiple Match</h1>
+
+<br>
+{% if not results_page %}
+
+<br>
+{{onsPanel({
+"body": "
+<p>To get started, upload a CSV file of up to " + (uprn_bulk_limit|string) + " UPRNs to be matched. The file must have only two columns, id and UPRN.</p>
+	<p>Download a <a href='/downloads/uprn_example_multiple_address'> sample file</a> <br> <br> 
+	Once submitted your file will automatically download.</p>"
+    })}}
+
+<br>
+
+{% endif %}
+
+<form method=post enctype=multipart/form-data>
+{{ customSearch ({ "Fields": searchable_fields,
+		   "endpoints": endpoints, 
+		   "remove_buttons": True,
+		   "remove_search_button": False,
+		   "remove_clear_button": True,
+                   "results_page": results_page, }) }}
+
+<br>
+
+{{ onsUpload({
+	"id": "file",
+	"name":"file",
+	"type":"file",
+	"classes":"input input--text input-type__input input--upload",
+	"accept": ".csv,.CSV",
+	"error": {
+		"id": error_title,
+		"text": error_description } if error_title else '',
+	"label": {
+	    "description": "Please upload a CSV file" if not error_type else "",
+	    "text":  "Please upload a CSV file" if not error_type else "" } }) }}
+
+<br>
+{{ onsButton({
+        "text": "Match Addresses",
+        "type": "submit",
+        "value": "Download",
+        "classes": "btn",  })  }}
+
+</form>
+
+<br>
+
+{{ onsTable({
+	"id": "basic-table 2",
+        "ths":  [] if not table_results else results_summary_table.get('ths') ,
+  	"trs": [] if not table_results else results_summary_table.get('trs'),
+}) }}
+
+<br>
+
+{{ onsTable({
+	"id": "basic-table",
+        "ths":  [] if not table_results else table_results.get('ths') ,
+  	"trs": [] if not table_results else table_results.get('trs'),
+}) }}
+
+<script type=module src="static/src/all_pages_js.mjs"></script>
+
+{% endblock %}

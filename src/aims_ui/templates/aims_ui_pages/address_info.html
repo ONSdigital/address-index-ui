@@ -1,0 +1,53 @@
+{% extends './aims_ui_pages/0-base_page_settings.html' %}
+
+{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
+{% from "components/input/_macro.njk" import onsInput %}
+{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+{% from "components/table/_macro.njk" import onsTable %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+
+{# In order to specify wider than usual components, page must be in "pageContent" #}
+{% block pageContent %}
+{% block main %}
+{# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
+<div class="ons-grid">
+<div class="ons-grid__col ons-col-1@m"></div>
+<div class="ons-grid__col ons-col-10@m">
+
+<br>
+{{ customAddressInfo ({
+	'full_info': True,
+	'matched_addresses': matched_addresses,
+	'clerical_info': clerical_info,
+	'tool_tip_data': tool_tip_data,
+	'link_data': link_data,
+	}) }}
+<br>
+
+{% for t_title, t_table in hierarchy_table.items() %} 
+{# ISSUE: TODO: When the table below has "'variants': 'searchable'" added, 
+ then the table breaks, as the title becomes a mess - duplicated header row on the first table #}
+	{{ onsTable({
+		'caption': t_title,
+		'ths': t_table.get('ths'),
+		'trs': t_table.get('trs'),
+		'variants': 'responsive',
+		}) }}
+
+{% endfor %}
+
+{% call onsPanel({
+        "type": 'branded',
+    })
+%}
+<h3>PAF and NAG explained:</h3>
+<p>The addresses in AIMS come from a product called AddressBase Premium (ABP) and this includes data from the Postcode Address File (PAF) and the National Address Gazetteer (NAG).<br><br> The PAF data comes from Royal Mail and covers about 90% of UK addresses, whilst the NAG comes from local authorities and 100% of entries in ABP have at least one NAG record (there can be approved, historical and provisional records).</p>
+{% endcall %}
+
+</div>
+</div>
+<h1 style="visibility: hidden;">More Info</h1>
+<h1 style="visibility: hidden;">More Info</h1>
+
+{% endblock %}
+{% endblock %}
