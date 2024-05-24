@@ -1,19 +1,15 @@
-import dataclasses
-import json
-import os
-import urllib.request
-from . import app
-from .models.get_endpoints import get_endpoints
-from .api_interaction import api
-from .page_error import page_error
-from .table_utils import create_table, create_hierarchy_table
-from .models.get_addresses import get_addresses
-from .cookie_utils import load_epoch_number
-from .models.address import Address
-from requests.exceptions import ConnectionError
-from flask import render_template, request, session
-from flask_login import login_required
+from aims_ui import app
+from aims_ui.models.get_endpoints import get_endpoints
+from aims_ui.models.get_addresses import get_addresses
+from aims_ui.page_error import page_error
+from aims_ui.page_helpers.api.api_interaction import api
+from aims_ui.page_helpers.cookie_utils import load_epoch_number
+from aims_ui.page_helpers.table_utils import create_table, create_hierarchy_table
+from aims_ui.page_helpers.pages_location_utils import get_page_location_non_endpoint
 from aims_ui import get_cached_tooltip_data
+from flask import render_template, session
+from flask_login import login_required
+from requests.exceptions import ConnectionError
 
 page_name = 'address_info'
 
@@ -24,6 +20,7 @@ def address_info(uprn):
   """Show all info about an address given the UPRN"""
   endpoints = get_endpoints(called_from=page_name)
   epoch_version_number = load_epoch_number(session)
+  page_location = get_page_location_non_endpoint(page_name)
 
   try:
     result = api(
@@ -93,7 +90,7 @@ def address_info(uprn):
   ]
 
   return render_template(
-      f'{page_name}.html',
+      page_location,
       endpoints=endpoints,
       matched_addresses=matched_addresses,
       clerical_info=clerical_info,

@@ -1,0 +1,131 @@
+{% extends './aims_ui_pages/0-base_page_settings.html' %}
+
+{% from "components/card/_macro.njk" import onsCard %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/question/_macro.njk" import onsQuestion %}
+{% from "components/select/_macro.njk" import onsSelect %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+{% from "components/checkboxes/_macro.njk" import onsCheckboxes %}
+
+{% block main %}
+
+{% call onsPanel({
+        "type": 'warn'
+    })
+%}
+Only adjust settings on this page if you're sure you need to adjust them.
+{% endcall %}
+<br>
+
+{# SET VISIBILITY OF REQUEST SPECIFIC RESULTS #}
+{% call onsQuestion({
+    "title": 'Show Additional Request Details',
+    "description": 'When a request data is returned, there are additional attributes that may be useful. Here you can select which ones you would like to see (they will be shown above the normal "results" section in an information panel',
+    "legendIsQuestionTitle": true }) %}
+    {{
+        onsCheckboxes({
+            "checkboxesLabel": "Select all you want visible",
+            "dontWrap": true,
+            "name": "Request Details",
+            "checkboxes": [
+                {
+                    "id": "match_type",
+                    "label": {
+                        "text": "Match Type",
+			"description": "S - Single Match <br> M - Multiple Matches <br> N - No Matches",
+                    },
+                    "value": "true"
+                },
+                {
+                    "id": "recommendation_code",
+                    "label": {
+                        "text": "Recommendation Code",
+			"description": "A - Recommend that the top result is accepted (97.5% of the time this was correct during testing but may be different for your dataset) <br> I - Investigate, we recommend investigating further as there's a significant chance the top match might be wrong",
+                    },
+                    "value": "true"
+                },
+            ]
+        })
+    }}
+{% endcall %}
+
+{# SET PAF OR NAG TITLE PREFERENCE #}
+{% call onsQuestion({
+    "title": 'How would you like PAF or NAG titles prioritised on result cards? (not on multiple match)',
+    "description": 'When examining an address, you can specify whether to prioritize the PAF or NAG version of the address below. If PAF or NAG is chosen, addresses will be labeled as (PAF Formatting) or (NAG Formatting) respectively. However, note that each address always has at least one NAG version, which serves as the default format. Therefore, if PAF is not available, the address will automatically default to (NAG Formatting).',
+    "legendIsQuestionTitle": true }) %}
+{{ onsRadios({
+    "name": 'paf-nag-address-prefference',
+    "dontWrap": true,
+    "radios": [
+     {
+	"id": 'paf-radio',
+	"label": {
+	"text": 'Prioritise PAF address format'
+	},
+	"value": 'paf'
+     },
+     {
+	"id": 'nag-radio',
+	"label": {
+	"text": 'Prioritise NAG address format'
+	},
+	"value": 'nag'
+     },
+     {
+	"id": 'default-radio',
+	"label": {
+	"text": 'Default Address Format'
+	},
+	"value": 'default'
+     }
+     ]
+    }) }}
+{% endcall %}
+
+
+
+{# SET COLUMN WIDTH PREFERENCE#}
+{% call onsQuestion({
+    "title": 'Customise Input and Output Widths',
+    "description":'You can customise the width of input and output fields below.<br> This is particularly useful for use with a widescreen or large display. Once changed this affects all other results pages. You can reset the changes back to default at any time using the reset button below',
+    "legendIsQuestionTitle": true }) %}
+
+
+{{ onsSelect({
+        "id":      "selector_space_col_1", "name": "selector_space_col_1",
+        "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "label"  : {
+            "text": "Width of Leftside Padding", "inline": true
+        },  "options": col_options_inc0 }) }}
+
+{{ onsSelect({
+        "id":      "selector_content_col_2", "name": "selector_content_col_2",
+        "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "label"  : {
+            "text": "Width of Leftside Content (inputs)", "inline": true
+        },  "options": col_options }) }}
+
+{{ onsSelect({
+        "id":      "selector_space_col_3", "name": "selector_space_col_3",
+        "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "label"  : {
+            "text": "Width of Gap in middle", "inline": true
+        },  "options": col_options }) }}
+
+{{ onsSelect({
+        "id":      "selector_content_col_4", "name": "selector_content_col_4",
+        "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "label"  : {
+            "text": "Width of Right Side Content ", "inline": true
+        },  "options": col_options }) }}
+
+{% endcall %}
+
+
+<script type=module src="static/src/all_pages_js.mjs"></script>
+<script type=module src="static/src/page_settings.mjs"></script>
+<script type=module src="/static/src/all_pages_last.mjs"></script>
+
+{% endblock %}
+

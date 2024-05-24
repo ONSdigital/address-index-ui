@@ -1,0 +1,22 @@
+{% extends './aims_ui_pages/0-base_page_settings.html' %}
+
+{% from 'components/panel/_macro.njk' import onsPanel %}
+{% from 'components/list/_macro.njk' import onsList %}
+
+{% block main %}
+
+{% call
+    onsPanel({
+	'title': error_title,
+	'type': 'error'
+    }) %}
+{{ onsList({
+	'id': 'no_data_found',
+	'classes': 'list--bare list--errors u-mb-s',
+	'itemsList': [{
+		'text': error_description, }]
+    }) }}
+
+{% endcall %}
+{% endblock %}
+

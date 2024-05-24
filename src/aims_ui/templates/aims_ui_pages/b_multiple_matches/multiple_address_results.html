@@ -1,0 +1,56 @@
+{% extends './aims_ui_pages/0-base_page_settings.html' %}
+
+{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
+{% from "components/input/_macro.njk" import onsInput %}
+{% from "components/upload/_macro.njk" import onsUpload %}
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+{% from 'custom_search/_macro.njk' import customSearch %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/question/_macro.njk" import onsQuestion %}
+{% from "components/table/_macro.njk" import onsTable %}
+{% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
+{% from "custom_multiple_match_nav/_macro.njk" import customMultipleMatchNav %}
+
+{% block main %}
+
+<h1>Match Multiple Addresses</h1>
+
+<h1 id="tempid"></h1>
+
+<div hidden=true>
+{{ onsButton({
+	    "id": 'downloadButtonTemplate',
+            "text": 'Download',
+	    "iconType": "download",
+	    "iconPosition": "before",
+            "variants": 'loader' }) }}
+</div>
+
+{{ customMultipleMatchNav ({
+	'current_path': url_for('multiple_address_results'),
+	'bulk_limits': bulk_limits,
+	}) }}
+
+{{onsPanel({
+"body": "<p>You can find previously submitted jobs, and their statuses here.</p>
+<p>If a job is in the status 'results-exported' it can be downloaded.</p>
+<p>There can be 1-hour delay between 'processing-finished' and 'results-exported'.</p>"
+    })}}
+<br>
+
+{{ onsTable({
+	'caption': 'Jobs',
+	'id': 'adjustLinksTable',
+	'ths': jobs.get('ths'),
+	'trs': jobs.get('trs'),
+	'variants': 'responsive',
+	})}}
+
+<script type=module src="static/src/all_pages_js.mjs"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.3/pako.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<script type=module src="static/src/individual_pages/multiple_address_results.mjs"></script>
+<script type=module src="/static/src/all_pages_last.mjs"></script>
+
+{% endblock %}

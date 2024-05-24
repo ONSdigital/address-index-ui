@@ -1,12 +1,9 @@
 import os
-import sqlite3
 import time
 
-from flask import Flask, g
-from flask_login import LoginManager
+from flask import Flask
 from .config import base as config_base
-from .logging import setup_logging
-from .models.user_model import User, users
+from aims_ui.app_helpers.logging import setup_logging
 
 setup_logging(os.getenv('PLATFORM'))
 
@@ -15,16 +12,6 @@ app = Flask(__name__, instance_relative_config=False)
 ENV = os.getenv('FLASK_ENV', 'testing')
 
 app.config.from_object(config_base)
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-
-@login_manager.user_loader
-def load_user(user_id):
-  maybe_user = next((user for user in users if user.id == user_id), None)
-  return maybe_user
-
 
 if ENV == 'development':
   from .config import dev as config_env
@@ -41,24 +28,6 @@ try:
   os.makedirs(app.instance_path)
 except OSError:
   pass
-
-DATABASE = '/path/to/database.db'
-
-
-def get_db():
-  db = getattr(g, '_database', None)
-  if db is None:
-    db = g._database = sqlite3.connect(
-        os.path.join(os.path.dirname(__file__), 'database_resources/auth.db'))
-  return db
-
-
-@app.teardown_appcontext
-def close_connection(exception):
-  db = getattr(g, '_database', None)
-  if db is not None:
-    db.close()
-
 
 classifications = None
 
@@ -84,7 +53,7 @@ def get_classifications_cached():
 
 
 # Must import here to avoid circular imports
-from .api_interaction import get_epoch_options
+from aims_ui.page_helpers.api.api_interaction import get_epoch_options
 
 epoch_options = None
 
@@ -147,20 +116,33 @@ def add_header(response):
   return response
 
 
-from . import info
-from . import login
-from . import signout
-from . import page_settings
-from . import page_uprn
-from . import page_postcode
-from . import page_typeahead
-from . import page_multiple_address
-from . import page_multiple_address_results
-from . import page_multiple_address_original
-from . import page_singlesearch
-from . import page_address_info
-from . import page_help
-from . import page_uprn_multiple_match
-from . import download_handler
-from . import page_custom_response
-from .api_interaction import get_classifications
+# Setup 'misc_functionality' page controllers
+from aims_ui.page_controllers.d_misc_functionality.page_info import info
+from aims_ui.page_controllers.d_misc_functionality.page_settings import settings
+from aims_ui.page_controllers.d_misc_functionality.download_handler import download_handler
+from aims_ui.page_controllers.d_misc_functionality.page_custom_response import custom_response
+
+# Setup routes that immedaitely redirect elsewhere
+from aims_ui.page_controllers.e_redirect_routes.login import login
+from aims_ui.page_controllers.e_redirect_routes.signout import logout
+
+# Setup 'single_mathes' page controllers
+from aims_ui.page_controllers.a_single_matches.page_uprn import uprn
+from aims_ui.page_controllers.a_single_matches.page_postcode import postcode
+from aims_ui.page_controllers.a_single_matches.page_typeahead import typeahead
+from aims_ui.page_controllers.a_single_matches.page_singlesearch import singlesearch
+
+# Setup 'multiple_matches' page controllers
+from aims_ui.page_controllers.b_multiple_matches.page_multiple_address import multiple_address
+from aims_ui.page_controllers.b_multiple_matches.page_multiple_address_results import multiple_address_results
+from aims_ui.page_controllers.b_multiple_matches.page_multiple_address_original import multiple_address_original
+from aims_ui.page_controllers.b_multiple_matches.page_uprn_multiple_match import uprn_multiple_match
+
+# Setup 'help' page controller
+from aims_ui.page_controllers.c_help_pages.page_help import help
+
+# Setup standalone pages (in root directory)
+from aims_ui.page_address_info import address_info
+
+# Import classifications here to avoid circular import
+from aims_ui.page_helpers.api.api_interaction import get_classifications

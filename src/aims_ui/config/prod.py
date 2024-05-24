@@ -1,6 +1,5 @@
 """FLASK PROD CONFIG"""
 import os
-import logging
 import base64
 
 if not (API_URL := os.getenv('API_URL')):

@@ -1,0 +1,31 @@
+{% extends './aims_ui_pages/0-base_page_settings.html' %}
+
+{% from "components/card/_macro.njk" import onsCard %}
+{% from "components/breadcrumbs/_macro.njk" import onsBreadcrumbs %}
+
+{% block main %}
+
+{{ onsBreadcrumbs({
+  "ariaLabel": 'Breadcrumbs',
+  "itemsList":  breadcrumbs,
+}) }}
+
+
+{% for deffinition in deffinitions %}
+	<br>
+	{{ onsCard({
+	    "id": 	deffinition.title,
+	    "textId": 	'text',
+	    "titleSize":1,
+	    "title": 	deffinition.title,
+	    "url": 	deffinition.url.replace('http','https'),
+	    "text": 	'Select above link for details',
+	}) }}
+	<br>
+{% endfor %}
+
+<script type=module src="/static/src/all_pages_js.mjs"></script>
+<script type=module src="/static/src/all_pages_last.mjs"></script>
+
+{% endblock %}
+
