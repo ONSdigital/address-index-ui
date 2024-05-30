@@ -1,9 +1,8 @@
-function forceCapsInput(){
+function forceCapsInput() {
   const postcodeInput = document.querySelector('#postcode');
   postcodeInput.addEventListener('input', (e) => {
-      e.target.value = e.target.value.toUpperCase();
-    }
-  );
+    e.target.value = e.target.value.toUpperCase();
+  });
 }
 
 function init() {
@@ -12,7 +11,3 @@ function init() {
 }
 
 window.addEventListener('load', init);
-
-
-
-
