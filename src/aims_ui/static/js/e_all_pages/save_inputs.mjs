@@ -32,7 +32,7 @@ function setupEventListeners(loc) {
   const form = document.querySelector('form');
   form.addEventListener('submit', (e) => {
     const inputObjectValues = getInputObjectValues();
-    saveToLocalStorage(inputObjectValues);
+    saveToLocalStorage(inputObjectValues, loc);
   });
 
   const clear_button = document.querySelector('#clear-form-data-button-id');

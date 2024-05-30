@@ -10,11 +10,11 @@ import {
 
 function addChangeEventListeners(radioText, radioAddObj, reqType, reqBody, reqBodyContainer) {
   // Radio Listeners
-  radioText.addEventListener('change', (e) => {
+  radioText.addEventListener('change', () => {
     updateCustomResponseFormat('response-type-text');
     makeAppropriateResponseFormatVisible('response-type-text');
   });
-  radioAddObj.addEventListener('change', (e) => {
+  radioAddObj.addEventListener('change', () => {
     updateCustomResponseFormat('response-type-object');
     makeAppropriateResponseFormatVisible('response-type-object');
   });
