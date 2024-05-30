@@ -79,7 +79,7 @@ function arrayToCSV(data) {
 function processRow(row) {
   // Process [id, inputAddress, APIresponse]
   // to be in same format as <5k match
-  // console.log(row);  ['119113', '5 SOWTON EX8 9DD', '{"apiVersion":"1.0.1
+  // console.log(row);['119113', '5 SOWTON EX8 9DD', '{"apiVersion":"1.0.1
 
   // Check not blank or header row
   if (row.length !== 3) { return '' }
