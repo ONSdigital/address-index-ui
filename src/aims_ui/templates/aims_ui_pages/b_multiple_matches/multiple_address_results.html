@@ -47,10 +47,14 @@
 	'variants': 'responsive',
 	})}}
 
-<script type=module src="static/src/all_pages_js.mjs"></script>
+<script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
+
+{# Required for unzipping the bulk results on clientside #}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.3/pako.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-<script type=module src="static/src/individual_pages/multiple_address_results.mjs"></script>
-<script type=module src="/static/src/all_pages_last.mjs"></script>
+
+<script type=module src="static/js/b_multiple_matches/multiple_address_results.mjs"></script>
+
+<script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
 
 {% endblock %}
