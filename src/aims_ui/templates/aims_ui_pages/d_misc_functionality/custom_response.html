@@ -176,12 +176,15 @@ if ( window.history.replaceState ) {
 }
 </script>
 
-<script type=module src="static/src/all_pages_js.mjs"></script>
-<script type=module src="static/src/apply_custom_settings.mjs"></script>
-<script type=module src="static/src/save_inputs.mjs"></script>
-<script type=module src="static/src/custom_column_widths.mjs"></script>
-<script type=module src="static/src/individual_pages/page_custom_response.mjs"></script>
-<script type=module src="/static/src/all_pages_last.mjs"></script>
+<script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
+
+<script type=module src="static/js/d_misc_functionality/page_custom_response.mjs"></script>
+
+<script type=module src="static/js/e_all_pages/save_inputs.mjs"></script>
+<script type=module src="static/js/e_all_pages/apply_custom_settings.mjs"></script>
+<script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
+
+<script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
 
 {% endblock %}
 {% endblock %}
