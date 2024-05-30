@@ -1,4 +1,4 @@
-import { 
+import {
   setDefaultTitleChoice,
   setDefaultColumnWidths,
   setDefaultAdditionalRequestStatus,
@@ -13,8 +13,8 @@ function setDefaultValuesIfUnset() {
 }
 
 function removeResubmissionMessage() {
-  if ( window.history.replaceState ) {
-    window.history.replaceState( null, null, window.location.href );
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
   }
 }
 
@@ -25,7 +25,3 @@ function init() {
 }
 
 window.addEventListener('load', init);
-
-
-
-

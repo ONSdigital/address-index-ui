@@ -45,9 +45,13 @@ Set the "groups" of users (by default all users including the "NotLoggedInUser" 
 
 `python3 -m flask run`
 
-## To reformat code
+## To lint code
 
+### For python:
 `yapf --style='{based_on_style: pep8, indent_width: 2}' -ir .`
+
+### For js/mjs:
+`npx prettier --write "**/*.mjs"`
 
 ### To Test
 `python3 -m pytest`

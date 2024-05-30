@@ -6,11 +6,15 @@ function getAllLinks() {
     const linkElement = link;
     const linkParent = link.parentNode;
 
-    const headerCellIndex = linkParent.cellIndex-2;
+    const headerCellIndex = linkParent.cellIndex - 2;
     const row = linkParent.parentNode;
     const headerRowCell = row.cells[headerCellIndex];
 
-    tableLinks.push({'link': linkElement, 'parent': linkParent, 'headerRowCell': headerRowCell});
+    tableLinks.push({
+      link: linkElement,
+      parent: linkParent,
+      headerRowCell: headerRowCell,
+    });
   }
   return tableLinks;
 }
@@ -34,7 +38,7 @@ function getAddressesFromResponse(apiResponse) {
   // Extract the list of matched addresses
   const matchedAddresses = [];
   if (apiResponse.toString() === '') {
-    return []
+    return [];
   }
   const jsonResponse = JSON.parse(apiResponse);
   const response = jsonResponse['response'];
@@ -51,10 +55,19 @@ function getAddressesFromResponse(apiResponse) {
     const rank = i;
     const addressTypePafNag = findIfPafOrNagWasUsed(address);
     const recommendationCode = response.recommendationCode;
-    const addressToAdd = [formattedAddress, uprn, matchType, confidenceScore, documentScore, rank, addressTypePafNag, recommendationCode];
+    const addressToAdd = [
+      formattedAddress,
+      uprn,
+      matchType,
+      confidenceScore,
+      documentScore,
+      rank,
+      addressTypePafNag,
+      recommendationCode,
+    ];
     matchedAddresses.push(addressToAdd);
   }
-  return matchedAddresses 
+  return matchedAddresses;
 }
 
 function returnNewlineIfNotBlank(testString) {
@@ -66,12 +79,16 @@ function returnNewlineIfNotBlank(testString) {
 }
 
 function arrayToCSV(data) {
-  const csvRows = data.map(row => row.map(cell => {
-    // Escape double quotes in CSV data
-    const cellString = String(cell).replace(/"/g, '""');
-    // Wrap values containing commas or double quotes in double quotes
-    return /,|"/.test(cellString) ? `"${cellString}"` : cellString;
-  }).join(','));
+  const csvRows = data.map((row) =>
+    row
+      .map((cell) => {
+        // Escape double quotes in CSV data
+        const cellString = String(cell).replace(/"/g, '""');
+        // Wrap values containing commas or double quotes in double quotes
+        return /,|"/.test(cellString) ? `"${cellString}"` : cellString;
+      })
+      .join(',')
+  );
 
   return csvRows.join('\r\n') + returnNewlineIfNotBlank(csvRows);
 }
@@ -82,10 +99,14 @@ function processRow(row) {
   // console.log(row);['119113', '5 SOWTON EX8 9DD', '{"apiVersion":"1.0.1
 
   // Check not blank or header row
-  if (row.length !== 3) { return '' }
-  if (row[2].toString() === 'response') { return '' }
+  if (row.length !== 3) {
+    return '';
+  }
+  if (row[2].toString() === 'response') {
+    return '';
+  }
 
-  // Get info for a single row 
+  // Get info for a single row
   const id = row[0];
   const inputAddress = row[1];
   const matchedAddresses = getAddressesFromResponse(row[2]);
@@ -94,7 +115,18 @@ function processRow(row) {
   const finalMatches = [];
   for (const matchedAddress of matchedAddresses) {
     // Add each address with quotes for csv parsing
-    const final_row = [id, inputAddress, matchedAddress[0], matchedAddress[1] , matchedAddress[2] , matchedAddress[3] , matchedAddress[4] , matchedAddress[5] , matchedAddress[6], matchedAddress[7]];
+    const final_row = [
+      id,
+      inputAddress,
+      matchedAddress[0],
+      matchedAddress[1],
+      matchedAddress[2],
+      matchedAddress[3],
+      matchedAddress[4],
+      matchedAddress[5],
+      matchedAddress[6],
+      matchedAddress[7],
+    ];
     finalMatches.push(final_row);
   }
 
@@ -106,15 +138,16 @@ function processRow(row) {
 async function downloadAndProcess(url, headerStatus) {
   let final_csv = '';
   if (headerStatus.toString() !== 'False') {
-    final_csv = 'id,inputAddress,matchedAddress,uprn,matchType,confidenceScore,documentScore,rank,addressType(Paf/Nag),recommendationCode\n';
-  } 
+    final_csv =
+      'id,inputAddress,matchedAddress,uprn,matchType,confidenceScore,documentScore,rank,addressType(Paf/Nag),recommendationCode\n';
+  }
   const response = await fetch(url);
   const arrayBuffer = await response.arrayBuffer();
   const inflated = await pako.inflate(arrayBuffer);
   const csvString = new TextDecoder().decode(inflated);
   const parsedCSV = Papa.parse(csvString).data;
 
-  parsedCSV.forEach(row => {
+  parsedCSV.forEach((row) => {
     // Row = [id, inputAddress, APIresponse]
     final_csv = final_csv + processRow(row);
   });
@@ -122,9 +155,8 @@ async function downloadAndProcess(url, headerStatus) {
   return await final_csv;
 }
 
-
 async function changeLinkToButton(linkParentMetadata) {
-  // Make the Download Button 
+  // Make the Download Button
   const originalButton = document.querySelector('#downloadButtonTemplate');
   const clonedButton = originalButton.cloneNode(true);
 
@@ -132,15 +164,20 @@ async function changeLinkToButton(linkParentMetadata) {
 
   linkParentMetadata.parent.append(clonedButton);
 
-  clonedButton.addEventListener('click', async function() {
+  clonedButton.addEventListener('click', async function () {
     // Make Spin Load
     clonedButton.classList.add('ons-is-loading');
 
     // Get header option status
-    const headerStatus = linkParentMetadata.headerRowCell.textContent.trim().replace(/\s+/g, ' ');
+    const headerStatus = linkParentMetadata.headerRowCell.textContent
+      .trim()
+      .replace(/\s+/g, ' ');
 
     // Get CSV content
-    const csv = await downloadAndProcess(linkParentMetadata.link.href, headerStatus);
+    const csv = await downloadAndProcess(
+      linkParentMetadata.link.href,
+      headerStatus
+    );
 
     // Make a new blob
     const blob = new Blob([csv], { type: 'text/csv' });
@@ -149,7 +186,10 @@ async function changeLinkToButton(linkParentMetadata) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    const fileName = getNameOfJobFromCell(cell, linkParentMetadata.link.textContent);
+    const fileName = getNameOfJobFromCell(
+      cell,
+      linkParentMetadata.link.textContent
+    );
     a.download = fileName + '.csv';
     a.click();
     clonedButton.classList.remove('ons-is-loading');
@@ -159,20 +199,17 @@ async function changeLinkToButton(linkParentMetadata) {
 
 function getNameOfJobFromCell(cell, backupName) {
   const row = cell.closest('tr');
-  const cells = row.querySelectorAll('td'); 
-  const secondCellText = cells[1].textContent; 
+  const cells = row.querySelectorAll('td');
+  const secondCellText = cells[1].textContent;
   const strippedText = secondCellText.trim();
   const result = strippedText === '' ? backupName : strippedText;
 
   return result;
 }
 
-window.addEventListener('load', async function() {
+window.addEventListener('load', async function () {
   const linksAndParents = getAllLinks();
   for (const l of linksAndParents) {
     await changeLinkToButton(l);
   }
 });
-
-
-

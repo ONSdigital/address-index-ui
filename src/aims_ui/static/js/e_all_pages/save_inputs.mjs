@@ -1,16 +1,15 @@
-import { 
+import {
   saveToLocalStorage,
   wipeLocalStorage,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
-
 
 // Add all the inputs into an array, ignoring dropdowns
 function getInputObjects() {
   const inps = document.querySelectorAll('.ons-input');
   const final = [];
   for (const a of inps) {
-    if ( ! a.classList.contains('ons-input--select') ) {
-      if (! a.classList.contains('nocache') ) {
+    if (!a.classList.contains('ons-input--select')) {
+      if (!a.classList.contains('nocache')) {
         final.push(a);
       }
     }
@@ -20,11 +19,11 @@ function getInputObjects() {
 
 function getInputObjectValues() {
   const inputs = getInputObjects();
-  const input_obj = {}
+  const input_obj = {};
   for (const a of inputs) {
     input_obj[a.id] = a.value;
   }
-  return input_obj
+  return input_obj;
 }
 
 function setupEventListeners(loc) {
@@ -64,6 +63,3 @@ function init() {
 }
 
 window.addEventListener('load', init);
-
-
-
