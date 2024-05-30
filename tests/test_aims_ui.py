@@ -7,6 +7,7 @@ from flask import url_for
 from src import aims_ui
 
 
+
 def test_info_page(client):
   """Test the info page exists, and the ENV variable is being displayed."""
   required_keys = ['ENV', 'PLATFORM', 'VERSION']
@@ -33,3 +34,4 @@ def test_static_pages_are_200(client):
           f'Page not found error for {url}, got response: {response}')
 
     assert response.status_code == 200
+
