@@ -67,22 +67,10 @@
 {# End of grid #}
 </div>
 
-{# Add script to remove form resubmission message #}
-<script>
-if ( window.history.replaceState ) {
-  window.history.replaceState( null, null, window.location.href );
-}
-
-
-const postcodeInput = document.querySelector('#postcode');
-postcodeInput.addEventListener('input', (e) => {
-	e.target.value = e.target.value.toUpperCase();
-  }
-);
-
-</script>
  
 <script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
+
+<script type=module src="static/js/a_single_matches/postcode.mjs"></script>
 
 <script type=module src="static/js/e_all_pages/save_inputs.mjs"></script>
 <script type=module src="static/js/e_all_pages/apply_custom_settings.mjs"></script>

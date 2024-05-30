@@ -12,9 +12,16 @@ function setDefaultValuesIfUnset() {
   setDefaultResponseFormatCustomResponse();
 }
 
+function removeResubmissionMessage() {
+  if ( window.history.replaceState ) {
+    window.history.replaceState( null, null, window.location.href );
+  }
+}
+
 function init() {
   console.log('all_pages_first loaded');
   setDefaultValuesIfUnset();
+  removeResubmissionMessage();
 }
 
 window.addEventListener('load', init);

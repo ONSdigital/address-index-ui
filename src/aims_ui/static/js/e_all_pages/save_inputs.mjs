@@ -27,9 +27,7 @@ function getInputObjectValues() {
   return input_obj
 }
 
-function setupEventListeners() {
-  const loc = window.location.href;
-
+function setupEventListeners(loc) {
   // Add event listener to save data when the form is submitted
   const form = document.querySelector('form');
   form.addEventListener('submit', (e) => {
@@ -43,7 +41,7 @@ function setupEventListeners() {
   });
 }
 
-function loadStoredValuesIfExist() {
+function loadStoredValuesIfExist(loc) {
   // Load values on page load if they exist
   const stored_vals = localStorage.getItem(loc);
   if (stored_vals) {
@@ -59,8 +57,9 @@ function loadStoredValuesIfExist() {
 
 function init() {
   console.log('save_inputs loaded');
-  loadStoredValuesIfExist();
-  setupEventListeners();
+  const loc = window.location.href;
+  loadStoredValuesIfExist(loc);
+  setupEventListeners(loc);
 }
 
 window.addEventListener('load', init);
