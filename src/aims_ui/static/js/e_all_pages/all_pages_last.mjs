@@ -14,6 +14,7 @@ function widenCheckboxes() {
 }
 
 function init() {
+  console.log('all_pages_last loaded');
   widenCheckboxes();
 }
 

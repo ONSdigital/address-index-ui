@@ -1,6 +1,6 @@
 import { 
   getCustomColumnWidths,
-} from './local_storage_helpers.mjs';
+} from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 function stripObjOfColClass(obj) {
   for (const eachClass of obj.classList) {
@@ -33,6 +33,7 @@ function removeRadioWidths() {
 }
 
 function init() {
+  console.log('apply_custom_column_widths loaded');
   const customColumnWidths = (getCustomColumnWidths());
   applyColumnWidths(customColumnWidths);
   // Remove formatting for radios that would otherwise force them to be too wide

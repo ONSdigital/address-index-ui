@@ -3,7 +3,7 @@ import {
   setDefaultColumnWidths,
   setDefaultAdditionalRequestStatus,
   setDefaultResponseFormatCustomResponse,
-} from './local_storage_helpers.mjs';
+} from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 function setDefaultValuesIfUnset() {
   setDefaultTitleChoice();
@@ -13,6 +13,7 @@ function setDefaultValuesIfUnset() {
 }
 
 function init() {
+  console.log('all_pages_first loaded');
   setDefaultValuesIfUnset();
 }
 

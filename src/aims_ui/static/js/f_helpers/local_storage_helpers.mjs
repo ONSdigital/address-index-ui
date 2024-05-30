@@ -92,3 +92,12 @@ export function setAdditionalRequestStatus(settings){
   localStorage.setItem('custom_settings_additional_request_info', stringifiedSettings);
 }
 
+// save_inputs local storage
+export function saveToLocalStorage(inputObjectValues) {
+  const values = JSON.stringify(inputObjectValues);
+  localStorage.setItem(loc, values);
+}
+export function wipeLocalStorage(loc) {
+  localStorage.removeItem(loc);
+}
+

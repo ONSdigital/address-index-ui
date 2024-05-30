@@ -1,7 +1,7 @@
 import { 
   getAddressTitlePrefference,
   getAdditionalRequestStatus,
-} from './local_storage_helpers.mjs';
+} from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 function getMatchTypeDescription(matchType) {
   // Expect 'S' 'M' 'N' for single multiple none
@@ -109,6 +109,7 @@ function applyTitlePrefference(prefference) {
 }
 
 function init() {
+  console.log('apply_custom_settings loaded');
   const prefference = getAddressTitlePrefference();
   applyTitlePrefference(prefference);
   applyVisibilityOfRequestStatus();

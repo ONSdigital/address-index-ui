@@ -5,7 +5,7 @@ import {
   getRequestTypeCustomResponse,
   updateReqBodyStyle,
   getReqBodyStyle,
-} from '../local_storage_helpers.mjs';
+} from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 
 function addChangeEventListeners(radioText, radioAddObj, reqType, reqBody, reqBodyContainer) {
