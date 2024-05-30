@@ -23,11 +23,11 @@ function getParamsFromPage() {
 }
 
 function setupEventListeners() {
-  typeaheadContainer = document.querySelector('#address-autosuggest-container')
+  const typeaheadContainer = document.querySelector('#address-autosuggest-container')
   typeaheadContainer.setAttribute('data-query-params', getParamsFromPage() );
 
   // Every time the typeahead is focussed on, refresh the parameters
-  typeaheadContainer.addEventListener('focusin', (e) => {
+  typeaheadContainer.addEventListener('focusin', () => {
     typeaheadContainer.setAttribute('data-query-params', getParamsFromPage() );
   });
 }
