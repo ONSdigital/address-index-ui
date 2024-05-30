@@ -77,21 +77,16 @@
 {# End of grid #}
 </div>
 
-{# Add script to remove form resubmission message #}
-<script>
-if ( window.history.replaceState ) {
-  window.history.replaceState( null, null, window.location.href );
-}
+<script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
 
+{# Specific page helpers here: (commented out if none required) #}
+{# <script type=module src="static/js/a_single_matches/singlesearch.mjs"></script> #}
 
-</script>
+<script type=module src="static/js/e_all_pages/save_inputs.mjs"></script>
+<script type=module src="static/js/e_all_pages/apply_custom_settings.mjs"></script>
+<script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
 
-<script type=module src="static/src/all_pages_js.mjs"></script>
-<script type=module src="static/src/save_inputs.mjs"></script>
-<script type=module src="static/src/apply_custom_settings.mjs"></script>
-<script type=module src="static/src/custom_column_widths.mjs"></script>
-<script type=module src="/static/src/all_pages_last.mjs"></script>
-
+<script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
 
 {% endblock %}
 {% endblock %}

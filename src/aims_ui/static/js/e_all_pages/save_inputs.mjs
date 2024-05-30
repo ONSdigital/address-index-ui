@@ -42,6 +42,7 @@ function setupEventListeners(loc) {
 }
 
 function loadStoredValuesIfExist(loc) {
+  const inputs = getInputObjects();
   // Load values on page load if they exist
   const stored_vals = localStorage.getItem(loc);
   if (stored_vals) {
