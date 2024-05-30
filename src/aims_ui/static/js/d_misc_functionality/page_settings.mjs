@@ -5,7 +5,7 @@ import {
   setNewColumnWidths,
   getAdditionalRequestStatus,
   setAdditionalRequestStatus,
-} from './local_storage_helpers.mjs';
+} from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 function updateAddressTitlePrefference(e) {
   updateAddressFormatPrefference(e);
