@@ -1,26 +1,31 @@
-import { 
+import {
   updateCustomResponseFormat,
   updateCustomResponseRequestType,
   getFormatPrefferenceCustomResponse,
   getRequestTypeCustomResponse,
   updateReqBodyStyle,
   getReqBodyStyle,
-} from '../local_storage_helpers.mjs';
+} from '/static/js/f_helpers/local_storage_helpers.mjs';
 
-
-function addChangeEventListeners(radioText, radioAddObj, reqType, reqBody, reqBodyContainer) {
+function addChangeEventListeners(
+  radioText,
+  radioAddObj,
+  reqType,
+  reqBody,
+  reqBodyContainer
+) {
   // Radio Listeners
-  radioText.addEventListener('change', (e) => {
+  radioText.addEventListener('change', () => {
     updateCustomResponseFormat('response-type-text');
     makeAppropriateResponseFormatVisible('response-type-text');
   });
-  radioAddObj.addEventListener('change', (e) => {
+  radioAddObj.addEventListener('change', () => {
     updateCustomResponseFormat('response-type-object');
     makeAppropriateResponseFormatVisible('response-type-object');
   });
 
   // Dropdown (POST/GET) listeners
- reqType.addEventListener('change', (e) => {
+  reqType.addEventListener('change', (e) => {
     // Save the state to local storage
     const requestType = e.target.value;
     updateCustomResponseRequestType(requestType);
@@ -33,21 +38,30 @@ function addChangeEventListeners(radioText, radioAddObj, reqType, reqBody, reqBo
   });
 
   // Save the size of the body element
-  const callback = function(mutationsList, observer) {
-    for(let mutation of mutationsList) {
-      if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+  const callback = function (mutationsList, observer) {
+    for (let mutation of mutationsList) {
+      if (
+        mutation.type === 'attributes' &&
+        mutation.attributeName === 'style'
+      ) {
         const newStyle = reqBody.getAttribute('style');
         updateReqBodyStyle(newStyle);
       }
     }
   };
 
-  const observer = new MutationObserver(callback); 
+  const observer = new MutationObserver(callback);
   const config = { attributes: true, attributeFilter: ['style'] };
   observer.observe(reqBody, config);
 }
 
-function setupStatuses(radioText, radioAddObj, reqType, reqBody, reqBodyConatiner) {
+function setupStatuses(
+  radioText,
+  radioAddObj,
+  reqType,
+  reqBody,
+  reqBodyConatiner
+) {
   // Set status of radio option
   const savedTextStatus = getFormatPrefferenceCustomResponse();
   const radioToSelect = document.querySelector('#' + savedTextStatus);
@@ -68,15 +82,19 @@ function setupStatuses(radioText, radioAddObj, reqType, reqBody, reqBodyConatine
 }
 
 function makeAppropriateResponseFormatVisible(responseFormatPrefference) {
-  const addressObjectContainer = document.querySelector('#address-object-container');
-  const formattedTextContainer = document.querySelector('#formatted-text-container');
+  const addressObjectContainer = document.querySelector(
+    '#address-object-container'
+  );
+  const formattedTextContainer = document.querySelector(
+    '#formatted-text-container'
+  );
   const codeResponseElement = document.querySelector('#code-response-element');
 
   if (responseFormatPrefference === 'response-type-object') {
     addressObjectContainer.classList.remove('ons-u-hidden');
     formattedTextContainer.classList.add('ons-u-hidden');
   } else {
-    // Only show if the response isn't blank 
+    // Only show if the response isn't blank
     if (codeResponseElement.textContent !== '') {
       formattedTextContainer.classList.remove('ons-u-hidden');
       addressObjectContainer.classList.add('ons-u-hidden');
@@ -89,10 +107,18 @@ function init() {
   const radioAddObj = document.querySelector('#response-type-object');
   const reqType = document.querySelector('#request-type');
   const reqBody = document.querySelector('#request-body-text-area');
-  const reqBodyContainer = document.querySelector('#text-area-label-and-input-container');
-  
+  const reqBodyContainer = document.querySelector(
+    '#text-area-label-and-input-container'
+  );
+
   // Save status to local storage
-  addChangeEventListeners(radioText, radioAddObj, reqType, reqBody, reqBodyContainer);
+  addChangeEventListeners(
+    radioText,
+    radioAddObj,
+    reqType,
+    reqBody,
+    reqBodyContainer
+  );
 
   // Load from local storage
   setupStatuses(radioText, radioAddObj, reqType, reqBody, reqBodyContainer);
@@ -103,7 +129,3 @@ function init() {
 }
 
 window.addEventListener('load', init);
-
-
-
-
