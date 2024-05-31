@@ -1,0 +1,37 @@
+{
+  "name": "address-index-ui",
+  "version": "1.0.0",
+  "description": "To run this project:",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ONSdigital/address-index-ui.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ONSdigital/address-index-ui/issues"
+  },
+  "homepage": "https://github.com/ONSdigital/address-index-ui#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.3.0",
+    "eslint": "^9.3.0",
+    "eslint-config-portsoc": "^1.0.1",
+    "globals": "^15.3.0",
+    "prettier": "^3.2.5"
+  },
+  "eslintConfig": {
+    "extends": "portsoc",
+    "root": true,
+    "env": {
+      "browser": true
+    }
+  }
+}

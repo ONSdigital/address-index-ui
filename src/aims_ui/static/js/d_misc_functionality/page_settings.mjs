@@ -1,11 +1,11 @@
-import { 
-  getAddressTitlePrefference, 
+import {
+  getAddressTitlePrefference,
   updateAddressFormatPrefference,
   getCustomColumnWidths,
   setNewColumnWidths,
   getAdditionalRequestStatus,
   setAdditionalRequestStatus,
-} from './local_storage_helpers.mjs';
+} from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 function updateAddressTitlePrefference(e) {
   updateAddressFormatPrefference(e);
@@ -47,16 +47,16 @@ function setupNagAndPafListeners() {
 // Column Width Prefferences
 function setValuesOfColumnWidthPrefferences() {
   const colWidths = getCustomColumnWidths();
-    for (const [key, width] of Object.entries(colWidths)) {
-      const colInput = document.querySelector('#selector_'+key);
-      colInput.value = width;
+  for (const [key, width] of Object.entries(colWidths)) {
+    const colInput = document.querySelector('#selector_' + key);
+    colInput.value = width;
   }
 }
 
 function saveWidthValues(widthSelectors) {
   const newWidthValues = {};
   for (const selector of widthSelectors) {
-    const selectorName = selector.id.replace('selector_','');
+    const selectorName = selector.id.replace('selector_', '');
     newWidthValues[selectorName] = selector.value;
   }
   setNewColumnWidths(newWidthValues);
@@ -65,8 +65,9 @@ function saveWidthValues(widthSelectors) {
 function setupColumnWidthCustomiserListeners() {
   const widthSelectors = document.querySelectorAll('.columnWidthCustomiser');
   for (const selector of widthSelectors) {
-    selector.addEventListener('change', (e) => 
-      { saveWidthValues(widthSelectors) });
+    selector.addEventListener('change', (e) => {
+      saveWidthValues(widthSelectors);
+    });
   }
 }
 
@@ -79,10 +80,10 @@ function setupAdditionalRequestStatus() {
 
   if (current_status.match_type === 'true') {
     matchTypeCheckbox.checked = true;
-  } 
+  }
   if (current_status.recommendation_code === 'true') {
     recomCodeCheckbox.checked = true;
-  } 
+  }
 }
 
 function setupAdditionalRequestListeners() {
@@ -104,7 +105,6 @@ function setupAdditionalRequestListeners() {
   });
 }
 
-
 function init() {
   setupNagAndPafListeners();
   setupNagAndPafStatus();
@@ -115,9 +115,3 @@ function init() {
 }
 
 window.addEventListener('load', init);
-
-
-
-
-
-
