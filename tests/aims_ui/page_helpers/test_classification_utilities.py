@@ -4,1694 +4,1696 @@ from src import aims_ui
 from aims_ui.page_helpers.classification_utilities import check_reverse_classification
 
 def test_check_reverse_classification():
-    """ Check that the classification can be obtained from the string value """
+  """ Check that the classification can be obtained from the string value """
     
-    result = check_reverse_classification('C')
-    assert result == 'Commercial'
-    
-    result = check_reverse_classification('CA')
-    assert result == 'Agricultural'
-    
-    result = check_reverse_classification('CA01')
-    assert result == 'Farm / Non-Residential Associated Building'
-    
-    result = check_reverse_classification('CA02')
-    assert result == 'Fishery'
-    
-    result = check_reverse_classification('CA02FF')
-    assert result == 'Fish Farming'
-    
-    result = check_reverse_classification('CA02FH')
-    assert result == 'Fish Hatchery'
-    
-    result = check_reverse_classification('CA02FP')
-    assert result == 'Fish Processing'
-    
-    result = check_reverse_classification('CA02OY')
-    assert result == 'Oyster / Mussel Bed'
-    
-    result = check_reverse_classification('CA03')
-    assert result == 'Horticulture'
-    
-    result = check_reverse_classification('CA03SH')
-    assert result == 'Smallholding'
-    
-    result = check_reverse_classification('CA03VY')
-    assert result == 'Vineyard'
-    
-    result = check_reverse_classification('CA03WB')
-    assert result == 'Watercress Bed'
-    
-    result = check_reverse_classification('CA04')
-    assert result == 'Slaughter House / Abattoir'
-    
-    result = check_reverse_classification('CB')
-    assert result == 'Ancillary Building'
-    
-    result = check_reverse_classification('CC')
-    assert result == 'Community Services'
-    
-    result = check_reverse_classification('CC02')
-    assert result == 'Law Court'
-    
-    result = check_reverse_classification('CC03')
-    assert result == 'Prison'
-    
-    result = check_reverse_classification('CC03HD')
-    assert result == 'HM Detention Centre'
-    
-    result = check_reverse_classification('CC03PR')
-    assert result == 'HM Prison Service'
-    
-    result = check_reverse_classification('CC03SC')
-    assert result == 'Secure Residential Accommodation'
-    
-    result = check_reverse_classification('CC04')
-    assert result == 'Public / Village Hall / Other Community Facility'
-    
-    result = check_reverse_classification('CC04YR')
-    assert result == 'Youth Recreational / Social Club'
-    
-    result = check_reverse_classification('CC05')
-    assert result == 'Public Convenience'
-    
-    result = check_reverse_classification('CC06')
-    assert result == 'Cemetery / Crematorium / Graveyard. In Current Use.'
-    
-    result = check_reverse_classification('CC06CB')
-    assert result == 'Columbarium'
-    
-    result = check_reverse_classification('CC06CR')
-    assert result == 'Chapel Of Rest'
-    
-    result = check_reverse_classification('CC06CN')
-    assert result == 'Crematorium'
-    
-    result = check_reverse_classification('CC06CY')
-    assert result == 'Cemetery'
-    
-    result = check_reverse_classification('CC06MC')
-    assert result == 'Military Cemetery'
-    
-    result = check_reverse_classification('CC06MY')
-    assert result == 'Mortuary'
-    
-    result = check_reverse_classification('CC07')
-    assert result == 'Church Hall / Religious Meeting Place / Hall'
-    
-    result = check_reverse_classification('CC08')
-    assert result == 'Community Service Centre / Office'
-    
-    result = check_reverse_classification('CC09')
-    assert result == 'Public Household Waste Recycling Centre (HWRC)'
-    
-    result = check_reverse_classification('CC10')
-    assert result == 'Recycling Site'
-    
-    result = check_reverse_classification('CC11')
-    assert result == 'CCTV'
-    
-    result = check_reverse_classification('CC12')
-    assert result == 'Job Centre'
-    
-    result = check_reverse_classification('CE')
-    assert result == 'Education'
-    
-    result = check_reverse_classification('CE01')
-    assert result == 'College'
-    
-    result = check_reverse_classification('CE01FE')
-    assert result == 'Further Education'
-    
-    result = check_reverse_classification('CE01HE')
-    assert result == 'Higher Education'
-    
-    result = check_reverse_classification('CE02')
-    assert result == "Children''s Nursery / Crèche"
-    
-    result = check_reverse_classification('CE03')
-    assert result == 'Preparatory / First / Primary / Infant / Junior / Middle School'
-    
-    result = check_reverse_classification('CE03FS')
-    assert result == 'First School'
-    
-    result = check_reverse_classification('CE03IS')
-    assert result == 'Infant School'
-    
-    result = check_reverse_classification('CE03JS')
-    assert result == 'Junior School'
-    
-    result = check_reverse_classification('CE03MS')
-    assert result == 'Middle School'
-    
-    result = check_reverse_classification('CE03NP')
-    assert result == 'Non State Primary / Preparatory School'
-    
-    result = check_reverse_classification('CE03PS')
-    assert result == 'Primary School'
-    
-    result = check_reverse_classification('CE04')
-    assert result == 'Secondary / High School'
-    
-    result = check_reverse_classification('CE04NS')
-    assert result == 'Non State Secondary School'
-    
-    result = check_reverse_classification('CE04SS')
-    assert result == 'Secondary School'
-    
-    result = check_reverse_classification('CE05')
-    assert result == 'University'
-    
-    result = check_reverse_classification('CE06')
-    assert result == 'Special Needs Establishment.'
-    
-    result = check_reverse_classification('CE07')
-    assert result == 'Other Educational Establishment'
-    
-    result = check_reverse_classification('CH')
-    assert result == 'Hotel / Motel / Boarding / Guest House'
-    
-    result = check_reverse_classification('CH01')
-    assert result == 'Boarding / Guest House / Bed And Breakfast / Youth Hostel'
-    
-    result = check_reverse_classification('CH01YH')
-    assert result == 'Youth Hostel'
-    
-    result = check_reverse_classification('CH02')
-    assert result == 'Holiday Let/Accomodation/Short-Term Let Other Than CH01'
-    
-    result = check_reverse_classification('CH03')
-    assert result == 'Hotel/Motel'
-    
-    result = check_reverse_classification('CI')
-    assert result == 'Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites'
-    
-    result = check_reverse_classification('CI01')
-    assert result == 'Factory/Manufacturing'
-    
-    result = check_reverse_classification('CI01AW')
-    assert result == 'Aircraft Works'
-    
-    result = check_reverse_classification('CI01BB')
-    assert result == 'Boat Building'
-    
-    result = check_reverse_classification('CI01BR')
-    assert result == 'Brick Works'
-    
-    result = check_reverse_classification('CI01BW')
-    assert result == 'Brewery'
-    
-    result = check_reverse_classification('CI01CD')
-    assert result == 'Cider Manufacture'
-    
-    result = check_reverse_classification('CI01CM')
-    assert result == 'Chemical Works'
-    
-    result = check_reverse_classification('CI01CW')
-    assert result == 'Cement Works'
-    
-    result = check_reverse_classification('CI01DA')
-    assert result == 'Dairy Processing'
-    
-    result = check_reverse_classification('CI01DY')
-    assert result == 'Distillery'
-    
-    result = check_reverse_classification('CI01FL')
-    assert result == 'Flour Mill'
-    
-    result = check_reverse_classification('CI01FO')
-    assert result == 'Food Processing'
-    
-    result = check_reverse_classification('CI01GW')
-    assert result == 'Glassworks'
-    
-    result = check_reverse_classification('CI01MG')
-    assert result == 'Manufacturing'
-    
-    result = check_reverse_classification('CI01OH')
-    assert result == 'Oast House'
-    
-    result = check_reverse_classification('CI01OR')
-    assert result == 'Oil Refining'
-    
-    result = check_reverse_classification('CI01PG')
-    assert result == 'Pottery Manufacturing'
-    
-    result = check_reverse_classification('CI01PM')
-    assert result == 'Paper Mill'
-    
-    result = check_reverse_classification('CI01PW')
-    assert result == 'Printing Works'
-    
-    result = check_reverse_classification('CI01YD')
-    assert result == 'Shipyard'
-    
-    result = check_reverse_classification('CI01SR')
-    assert result == 'Sugar Refinery'
-    
-    result = check_reverse_classification('CI01SW')
-    assert result == 'Steel Works'
-    
-    result = check_reverse_classification('CI01TL')
-    assert result == 'Timber Mill'
-    
-    result = check_reverse_classification('CI01WN')
-    assert result == 'Winery'
-    
-    result = check_reverse_classification('CI02')
-    assert result == 'Mineral / Ore Working / Quarry / Mine'
-    
-    result = check_reverse_classification('CI02MA')
-    assert result == 'Mineral Mining / Active'
-    
-    result = check_reverse_classification('CI02MD')
-    assert result == 'Mineral Distribution / Storage'
-    
-    result = check_reverse_classification('CI02MP')
-    assert result == 'Mineral Processing'
-    
-    result = check_reverse_classification('CI02OA')
-    assert result == 'Oil / Gas Extraction / Active'
-    
-    result = check_reverse_classification('CI02QA')
-    assert result == 'Mineral Quarrying / Open Extraction / Active'
-    
-    result = check_reverse_classification('CI03')
-    assert result == 'Workshop / Light Industrial'
-    
-    result = check_reverse_classification('CI03GA')
-    assert result == 'Servicing Garage'
-    
-    result = check_reverse_classification('CI04')
-    assert result == 'Warehouse / Store / Storage Depot'
-    
-    result = check_reverse_classification('CI04CS')
-    assert result == 'Crop Handling / Storage'
-    
-    result = check_reverse_classification('CI04PL')
-    assert result == 'Postal Sorting / Distribution'
-    
-    result = check_reverse_classification('CI04SO')
-    assert result == 'Solid Fuel Storage'
-    
-    result = check_reverse_classification('CI04TS')
-    assert result == 'Timber Storage'
-    
-    result = check_reverse_classification('CI05')
-    assert result == 'Wholesale Distribution'
-    
-    result = check_reverse_classification('CI05SF')
-    assert result == 'Solid Fuel Distribution'
-    
-    result = check_reverse_classification('CI05TD')
-    assert result == 'Timber Distribution'
-    
-    result = check_reverse_classification('CI06')
-    assert result == 'Recycling Plant'
-    
-    result = check_reverse_classification('CI07')
-    assert result == 'Incinerator / Waste Transfer Station'
-    
-    result = check_reverse_classification('CI08')
-    assert result == 'Maintenance Depot'
-    
-    result = check_reverse_classification('CL')
-    assert result == 'Leisure - Applicable to recreational sites and enterprises'
-    
-    result = check_reverse_classification('CL01')
-    assert result == 'Amusements'
-    
-    result = check_reverse_classification('CL01LP')
-    assert result == 'Leisure Pier'
-    
-    result = check_reverse_classification('CL02')
-    assert result == 'Holiday / Campsite'
-    
-    result = check_reverse_classification('CL02CG')
-    assert result == 'Camping'
-    
-    result = check_reverse_classification('CL02CV')
-    assert result == 'Caravanning'
-    
-    result = check_reverse_classification('CL02HA')
-    assert result == 'Holiday Accommodation'
-    
-    result = check_reverse_classification('CL02HO')
-    assert result == 'Holiday Centre'
-    
-    result = check_reverse_classification('CL02YC')
-    assert result == 'Youth Organisation Camp'
-    
-    result = check_reverse_classification('CL03')
-    assert result == 'Library'
-    
-    result = check_reverse_classification('CL03RR')
-    assert result == 'Reading Room'
-    
-    result = check_reverse_classification('CL04')
-    assert result == 'Museum / Gallery'
-    
-    result = check_reverse_classification('CL04AC')
-    assert result == 'Art Centre / Gallery'
-    
-    result = check_reverse_classification('CL04AM')
-    assert result == 'Aviation Museum'
-    
-    result = check_reverse_classification('CL04HG')
-    assert result == 'Heritage Centre'
-    
-    result = check_reverse_classification('CL04IM')
-    assert result == 'Industrial Museum'
-    
-    result = check_reverse_classification('CL04MM')
-    assert result == 'Military Museum'
-    
-    result = check_reverse_classification('CL04SM')
-    assert result == 'Science Museum'
-    
-    result = check_reverse_classification('CL04TM')
-    assert result == 'Transport Museum'
-    
-    result = check_reverse_classification('CL04NM')
-    assert result == 'Maritime Museum'
-    
-    result = check_reverse_classification('CL06')
-    assert result == 'Indoor / Outdoor Leisure / Sporting Activity / Centre'
-    
-    result = check_reverse_classification('CL06AH')
-    assert result == 'Athletics Facility'
-    
-    result = check_reverse_classification('CL06BF')
-    assert result == 'Bowls Facility'
-    
-    result = check_reverse_classification('CL06CK')
-    assert result == 'Cricket Facility'
-    
-    result = check_reverse_classification('CL06CU')
-    assert result == 'Curling Facility'
-    
-    result = check_reverse_classification('CL06YF')
-    assert result == 'Cycling Sports Facility'
-    
-    result = check_reverse_classification('CL06DS')
-    assert result == 'Diving / Swimming Facility'
-    
-    result = check_reverse_classification('CL06EQ')
-    assert result == 'Equestrian Sports Facility'
-    
-    result = check_reverse_classification('CL06FB')
-    assert result == 'Football Facility'
-    
-    result = check_reverse_classification('CL06FI')
-    assert result == 'Fishing / Angling Facility'
-    
-    result = check_reverse_classification('CL06GF')
-    assert result == 'Golf Facility'
-    
-    result = check_reverse_classification('CL06GL')
-    assert result == 'Gliding Facility'
-    
-    result = check_reverse_classification('CL06GR')
-    assert result == 'Greyhound Racing Facility'
-    
-    result = check_reverse_classification('CL06HF')
-    assert result == 'Hockey Facility'
-    
-    result = check_reverse_classification('CL06HR')
-    assert result == 'Horse Racing Facility'
-    
-    result = check_reverse_classification('CL06HV')
-    assert result == 'Historic Vessel / Aircraft / Vehicle'
-    
-    result = check_reverse_classification('CL06LS')
-    assert result == 'Activity / Leisure / Sports Centre'
-    
-    result = check_reverse_classification('CL06ME')
-    assert result == 'Model Sports Facility'
-    
-    result = check_reverse_classification('CL06MF')
-    assert result == 'Motor Sports Facility'
-    
-    result = check_reverse_classification('CL06PF')
-    assert result == 'Playing Field'
-    
-    result = check_reverse_classification('CL06QS')
-    assert result == 'Racquet Sports Facility'
-    
-    result = check_reverse_classification('CL06RF')
-    assert result == 'Rugby Facility'
-    
-    result = check_reverse_classification('CL06RG')
-    assert result == 'Recreation Ground'
-    
-    result = check_reverse_classification('CL06SI')
-    assert result == 'Shinty Facility'
-    
-    result = check_reverse_classification('CL06SK')
-    assert result == 'Skateboarding Facility'
-    
-    result = check_reverse_classification('CL06SX')
-    assert result == 'Civilian Firing Facility'
-    
-    result = check_reverse_classification('CL06TB')
-    assert result == 'Tenpin Bowling Facility'
-    
-    result = check_reverse_classification('CL06TN')
-    assert result == 'Public Tennis Court'
-    
-    result = check_reverse_classification('CL06WA')
-    assert result == 'Water Sports Facility'
-    
-    result = check_reverse_classification('CL06WP')
-    assert result == 'Winter Sports Facility'
-    
-    result = check_reverse_classification('CL06WY')
-    assert result == 'Wildlife Sports Facility'
-    
-    result = check_reverse_classification('CL07')
-    assert result == 'Bingo Hall / Cinema / Conference / Exhibition Centre / Theatre / Concert Hall'
-    
-    result = check_reverse_classification('CL07TH')
-    assert result == 'Theatre'
-    
-    result = check_reverse_classification('CL07CI')
-    assert result == 'Cinema'
-    
-    result = check_reverse_classification('CL07EN')
-    assert result == 'Entertainment Complex'
-    
-    result = check_reverse_classification('CL07EX')
-    assert result == 'Conference / Exhibition Centre'
-    
-    result = check_reverse_classification('CL08')
-    assert result == 'Zoo / Theme Park'
-    
-    result = check_reverse_classification('CL08AK')
-    assert result == 'Amusement Park'
-    
-    result = check_reverse_classification('CL08MX')
-    assert result == 'Model Village Site'
-    
-    result = check_reverse_classification('CL08WZ')
-    assert result == 'Wildlife / Zoological Park'
-    
-    result = check_reverse_classification('CL08AQ')
-    assert result == 'Aquatic Attraction'
-    
-    result = check_reverse_classification('CL09')
-    assert result == 'Beach Hut (Recreational, Non-Residential Use Only)'
-    
-    result = check_reverse_classification('CL10')
-    assert result == 'Licensed Private Members Club'
-    
-    result = check_reverse_classification('CL10RE')
-    assert result == 'Recreational / Social Club'
-    
-    result = check_reverse_classification('CL11')
-    assert result == 'Arena / Stadium'
-    
-    result = check_reverse_classification('CL11SD')
-    assert result == 'Stadium'
-    
-    result = check_reverse_classification('CL11SJ')
-    assert result == 'Showground'
-    
-    result = check_reverse_classification('CM')
-    assert result == 'Medical'
-    
-    result = check_reverse_classification('CM01')
-    assert result == 'Dentist'
-    
-    result = check_reverse_classification('CM02')
-    assert result == 'General Practice Surgery / Clinic'
-    
-    result = check_reverse_classification('CM02HL')
-    assert result == 'Health Care Services'
-    
-    result = check_reverse_classification('CM02HC')
-    assert result == 'Health Centre'
-    
-    result = check_reverse_classification('CM03')
-    assert result == 'Hospital / Hospice'
-    
-    result = check_reverse_classification('CM03HI')
-    assert result == 'Hospice'
-    
-    result = check_reverse_classification('CM03HP')
-    assert result == 'Hospital'
-    
-    result = check_reverse_classification('CM04')
-    assert result == 'Medical / Testing / Research Laboratory'
-    
-    result = check_reverse_classification('CM05')
-    assert result == 'Professional Medical Service'
-    
-    result = check_reverse_classification('CM05ZS')
-    assert result == 'Assessment / Development Services'
-    
-    result = check_reverse_classification('CN')
-    assert result == 'Animal Centre'
-    
-    result = check_reverse_classification('CN01')
-    assert result == 'Cattery / Kennel'
-    
-    result = check_reverse_classification('CN02')
-    assert result == 'Animal Services'
-    
-    result = check_reverse_classification('CN02AX')
-    assert result == 'Animal Quarantining'
-    
-    result = check_reverse_classification('CN03')
-    assert result == 'Equestrian'
-    
-    result = check_reverse_classification('CN03HB')
-    assert result == 'Horse Racing / Breeding Stable'
-    
-    result = check_reverse_classification('CN03SB')
-    assert result == 'Commercial Stabling / Riding'
-    
-    result = check_reverse_classification('CN04')
-    assert result == 'Vet / Animal Medical Treatment'
-    
-    result = check_reverse_classification('CN05')
-    assert result == 'Animal / Bird / Marine Sanctuary'
-    
-    result = check_reverse_classification('CN05AN')
-    assert result == 'Animal Sanctuary'
-    
-    result = check_reverse_classification('CN05MR')
-    assert result == 'Marine Sanctuary'
-    
-    result = check_reverse_classification('CO')
-    assert result == 'Office'
-    
-    result = check_reverse_classification('CO01')
-    assert result == 'Office / Work Studio'
-    
-    result = check_reverse_classification('CO01EM')
-    assert result == 'Embassy / High Commission / Consulate'
-    
-    result = check_reverse_classification('CO01FM')
-    assert result == 'Film Studio'
-    
-    result = check_reverse_classification('CO01GV')
-    assert result == 'Central Government Service'
-    
-    result = check_reverse_classification('CO01LG')
-    assert result == 'Local Government Service'
-    
-    result = check_reverse_classification('CO02')
-    assert result == 'Broadcasting (TV / Radio)'
-    
-    result = check_reverse_classification('CR')
-    assert result == 'Retail'
-    
-    result = check_reverse_classification('CR01')
-    assert result == 'Bank / Financial Service'
-    
-    result = check_reverse_classification('CR02')
-    assert result == 'Retail Service Agent'
-    
-    result = check_reverse_classification('CR02PO')
-    assert result == 'Post Office'
-    
-    result = check_reverse_classification('CR04')
-    assert result == 'Market (Indoor / Outdoor)'
-    
-    result = check_reverse_classification('CR04FK')
-    assert result == 'Fish Market'
-    
-    result = check_reverse_classification('CR04FV')
-    assert result == 'Fruit / Vegetable Market'
-    
-    result = check_reverse_classification('CR04LV')
-    assert result == 'Livestock Market'
-    
-    result = check_reverse_classification('CR05')
-    assert result == 'Petrol Filling Station'
-    
-    result = check_reverse_classification('CR06')
-    assert result == 'Public House / Bar / Nightclub'
-    
-    result = check_reverse_classification('CR07')
-    assert result == 'Restaurant / Cafeteria'
-    
-    result = check_reverse_classification('CR08')
-    assert result == 'Shop / Showroom'
-    
-    result = check_reverse_classification('CR08GC')
-    assert result == 'Garden Centre'
-    
-    result = check_reverse_classification('CR09')
-    assert result == 'Other Licensed Premise / Vendor'
-    
-    result = check_reverse_classification('CR10')
-    assert result == 'Fast Food Outlet / Takeaway (Hot / Cold)'
-    
-    result = check_reverse_classification('CR11')
-    assert result == 'Automated Teller Machine (ATM)'
-    
-    result = check_reverse_classification('CS')
-    assert result == 'Storage Land'
-    
-    result = check_reverse_classification('CS01')
-    assert result == 'General Storage Land'
-    
-    result = check_reverse_classification('CS02')
-    assert result == 'Builders Yard'
-    
-    result = check_reverse_classification('CT')
-    assert result == 'Transport'
-    
-    result = check_reverse_classification('CT01')
-    assert result == 'Airfield / Airstrip / Airport / Air Transport Infrastructure Facility'
-    
-    result = check_reverse_classification('CT01AF')
-    assert result == 'Airfield'
-    
-    result = check_reverse_classification('CT01AY')
-    assert result == 'Air Passenger Terminal'
-    
-    result = check_reverse_classification('CT01AI')
-    assert result == 'Air Transport Infrastructure Services'
-    
-    result = check_reverse_classification('CT01AP')
-    assert result == 'Airport'
-    
-    result = check_reverse_classification('CT01HS')
-    assert result == 'Helicopter Station'
-    
-    result = check_reverse_classification('CT01HT')
-    assert result == 'Heliport / Helipad'
-    
-    result = check_reverse_classification('CT02')
-    assert result == 'Bus Shelter'
-    
-    result = check_reverse_classification('CT03')
-    assert result == 'Car / Coach / Commercial Vehicle / Taxi Parking / Park And Ride Site'
-    
-    result = check_reverse_classification('CT03PK')
-    assert result == 'Public Park And Ride'
-    
-    result = check_reverse_classification('CT03PP')
-    assert result == 'Public Car Parking'
-    
-    result = check_reverse_classification('CT03PU')
-    assert result == 'Public Coach Parking'
-    
-    result = check_reverse_classification('CT03VP')
-    assert result == 'Public Commercial Vehicle Parking'
-    
-    result = check_reverse_classification('CT04')
-    assert result == 'Goods Freight Handling / Terminal'
-    
-    result = check_reverse_classification('CT04AE')
-    assert result == 'Air Freight Terminal'
-    
-    result = check_reverse_classification('CT04CF')
-    assert result == 'Container Freight'
-    
-    result = check_reverse_classification('CT04RH')
-    assert result == 'Road Freight Transport'
-    
-    result = check_reverse_classification('CT04RT')
-    assert result == 'Rail Freight Transport'
-    
-    result = check_reverse_classification('CT05')
-    assert result == 'Marina'
-    
-    result = check_reverse_classification('CT06')
-    assert result == 'Mooring'
-    
-    result = check_reverse_classification('CT07')
-    assert result == 'Railway Asset'
-    
-    result = check_reverse_classification('CT08')
-    assert result == 'Station / Interchange / Terminal / Halt'
-    
-    result = check_reverse_classification('CT08BC')
-    assert result == 'Bus / Coach Station'
-    
-    result = check_reverse_classification('CT08RS')
-    assert result == 'Railway Station'
-    
-    result = check_reverse_classification('CT08VH')
-    assert result == 'Vehicular Rail Terminal'
-    
-    result = check_reverse_classification('CT09')
-    assert result == 'Transport Track / Way'
-    
-    result = check_reverse_classification('CT09CL')
-    assert result == 'Cliff Railway'
-    
-    result = check_reverse_classification('CT09CX')
-    assert result == 'Chair Lift / Cable Car / Ski Tow'
-    
-    result = check_reverse_classification('CT09MO')
-    assert result == 'Monorail'
-    
-    result = check_reverse_classification('CT10')
-    assert result == 'Vehicle Storage'
-    
-    result = check_reverse_classification('CT10BG')
-    assert result == 'Boat Storage'
-    
-    result = check_reverse_classification('CT10BU')
-    assert result == 'Bus / Coach Depot'
-    
-    result = check_reverse_classification('CT11')
-    assert result == 'Transport Related Infrastructure'
-    
-    result = check_reverse_classification('CT11AD')
-    assert result == 'Aqueduct'
-    
-    result = check_reverse_classification('CT11LK')
-    assert result == 'Lock'
-    
-    result = check_reverse_classification('CT11WE')
-    assert result == 'Weir'
-    
-    result = check_reverse_classification('CT11WG')
-    assert result == 'Weighbridge / Load Gauge'
-    
-    result = check_reverse_classification('CT12')
-    assert result == 'Overnight Lorry Park'
-    
-    result = check_reverse_classification('CT13')
-    assert result == 'Harbour / Port / Dock / Dockyard / Slipway / Landing Stage / Pier / Jetty / Pontoon / Terminal / Berthing / Quay'
-    
-    result = check_reverse_classification('CT13FR')
-    assert result == 'Passenger Ferry Terminal'
-    
-    result = check_reverse_classification('CT13NB')
-    assert result == 'Non-Tanker Nautical Berthing'
-    
-    result = check_reverse_classification('CT13NF')
-    assert result == 'Nautical Refuelling Facility'
-    
-    result = check_reverse_classification('CT13SA')
-    assert result == 'Slipway'
-    
-    result = check_reverse_classification('CT13SP')
-    assert result == 'Ship Passenger Terminal'
-    
-    result = check_reverse_classification('CT13TK')
-    assert result == 'Tanker Berthing'
-    
-    result = check_reverse_classification('CT13VF')
-    assert result == 'Vehicular Ferry Terminal'
-    
-    result = check_reverse_classification('CU')
-    assert result == 'Utility'
-    
-    result = check_reverse_classification('CU01')
-    assert result == 'Electricity Sub-Station'
-    
-    result = check_reverse_classification('CU02')
-    assert result == 'Landfill'
-    
-    result = check_reverse_classification('CU03')
-    assert result == 'Power Station / Energy Production'
-    
-    result = check_reverse_classification('CU03ED')
-    assert result == 'Electricity Distribution Facility'
-    
-    result = check_reverse_classification('CU03EP')
-    assert result == 'Electricity Production Facility'
-    
-    result = check_reverse_classification('CU03WF')
-    assert result == 'Wind Farm'
-    
-    result = check_reverse_classification('CU03WU')
-    assert result == 'Wind Turbine'
-    
-    result = check_reverse_classification('CU04')
-    assert result == 'Pump House / Pumping Station / Water Tower'
-    
-    result = check_reverse_classification('CU04WC')
-    assert result == 'Water Controlling / Pumping'
-    
-    result = check_reverse_classification('CU04WD')
-    assert result == 'Water Distribution / Pumping'
-    
-    result = check_reverse_classification('CU04WM')
-    assert result == 'Water Quality Monitoring'
-    
-    result = check_reverse_classification('CU04WS')
-    assert result == 'Water Storage'
-    
-    result = check_reverse_classification('CU04WW')
-    assert result == 'Waste Water Distribution / Pumping'
-    
-    result = check_reverse_classification('CU06')
-    assert result == 'Telecommunication'
-    
-    result = check_reverse_classification('CU06TE')
-    assert result == 'Telecommunications Mast'
-    
-    result = check_reverse_classification('CU06TX')
-    assert result == 'Telephone Exchange'
-    
-    result = check_reverse_classification('CU07')
-    assert result == 'Water / Waste Water / Sewage Treatment Works'
-    
-    result = check_reverse_classification('CU07WR')
-    assert result == 'Waste Water Treatment'
-    
-    result = check_reverse_classification('CU07WT')
-    assert result == 'Water Treatment'
-    
-    result = check_reverse_classification('CU08')
-    assert result == 'Gas / Oil Storage / Distribution'
-    
-    result = check_reverse_classification('CU08GG')
-    assert result == 'Gas Governor'
-    
-    result = check_reverse_classification('CU08GH')
-    assert result == 'Gas Holder'
-    
-    result = check_reverse_classification('CU08OT')
-    assert result == 'Oil Terminal'
-    
-    result = check_reverse_classification('CU09')
-    assert result == 'Other Utility Use'
-    
-    result = check_reverse_classification('CU09OV')
-    assert result == 'Observatory'
-    
-    result = check_reverse_classification('CU09RA')
-    assert result == 'Radar Station'
-    
-    result = check_reverse_classification('CU09SE')
-    assert result == 'Satellite Earth Station'
-    
-    result = check_reverse_classification('CU09CQ')
-    assert result == 'Cable Terminal Station'
-    
-    result = check_reverse_classification('CU10')
-    assert result == 'Waste Management'
-    
-    result = check_reverse_classification('CU11')
-    assert result == 'Telephone Box'
-    
-    result = check_reverse_classification('CU11OP')
-    assert result == 'Other Public Telephones'
-    
-    result = check_reverse_classification('CU12')
-    assert result == 'Dam'
-    
-    result = check_reverse_classification('CX')
-    assert result == 'Emergency / Rescue Service'
-    
-    result = check_reverse_classification('CX01')
-    assert result == 'Police / Transport Police / Station'
-    
-    result = check_reverse_classification('CX01PT')
-    assert result == 'Police Training'
-    
-    result = check_reverse_classification('CX02')
-    assert result == 'Fire Station'
-    
-    result = check_reverse_classification('CX02FT')
-    assert result == 'Fire Service Training'
-    
-    result = check_reverse_classification('CX03')
-    assert result == 'Ambulance Station'
-    
-    result = check_reverse_classification('CX03AA')
-    assert result == 'Air Sea Rescue / Air Ambulance'
-    
-    result = check_reverse_classification('CX04')
-    assert result == 'Lifeboat Services / Station'
-    
-    result = check_reverse_classification('CX05')
-    assert result == 'Coastguard Rescue / Lookout / Station'
-    
-    result = check_reverse_classification('CX06')
-    assert result == 'Mountain Rescue Station'
-    
-    result = check_reverse_classification('CX07')
-    assert result == 'Lighthouse'
-    
-    result = check_reverse_classification('CX08')
-    assert result == 'Police Box / Kiosk'
-    
-    result = check_reverse_classification('CZ')
-    assert result == 'Information'
-    
-    result = check_reverse_classification('CZ01')
-    assert result == 'Advertising Hoarding'
-    
-    result = check_reverse_classification('CZ02')
-    assert result == 'Tourist Information Signage'
-    
-    result = check_reverse_classification('CZ02VI')
-    assert result == 'Visitor Information'
-    
-    result = check_reverse_classification('CZ03')
-    assert result == 'Traffic Information Signage'
-    
-    result = check_reverse_classification('L')
-    assert result == 'Land'
-    
-    result = check_reverse_classification('LA')
-    assert result == 'Agricultural - Applicable to land in farm ownership and not run as a separate business enterprise'
-    
-    result = check_reverse_classification('LA01')
-    assert result == 'Grazing Land'
-    
-    result = check_reverse_classification('LA02')
-    assert result == 'Permanent Crop / Crop Rotation'
-    
-    result = check_reverse_classification('LA02OC')
-    assert result == 'Orchard'
-    
-    result = check_reverse_classification('LB')
-    assert result == 'Ancillary Building'
-    
-    result = check_reverse_classification('LB99AV')
-    assert result == 'Aviary / Dovecot / Cage'
-    
-    result = check_reverse_classification('LB99BD')
-    assert result == 'Bandstand'
-    
-    result = check_reverse_classification('LB99PI')
-    assert result == 'Pavilion / Changing Room'
-    
-    result = check_reverse_classification('LB99SV')
-    assert result == 'Sports Viewing Structure'
-    
-    result = check_reverse_classification('LC')
-    assert result == 'Burial Ground'
-    
-    result = check_reverse_classification('LC01')
-    assert result == 'Historic / Disused Cemetery / Graveyard'
-    
-    result = check_reverse_classification('LD')
-    assert result == 'Development'
-    
-    result = check_reverse_classification('LD01')
-    assert result == 'Development Site'
-    
-    result = check_reverse_classification('LD01CC')
-    assert result == 'Commercial Construction Site'
-    
-    result = check_reverse_classification('LD01CO')
-    assert result == 'Community Construction Site'
-    
-    result = check_reverse_classification('LD01RN')
-    assert result == 'Residential Construction Site'
-    
-    result = check_reverse_classification('LD01TC')
-    assert result == 'Transport Construction Site'
-    
-    result = check_reverse_classification('LF')
-    assert result == 'Forestry'
-    
-    result = check_reverse_classification('LF02')
-    assert result == 'Forest / Arboretum / Pinetum (Managed / Unmanaged)'
-    
-    result = check_reverse_classification('LF02AU')
-    assert result == 'Arboretum'
-    
-    result = check_reverse_classification('LF03')
-    assert result == 'Woodland'
-    
-    result = check_reverse_classification('LL')
-    assert result == 'Allotment'
-    
-    result = check_reverse_classification('LM')
-    assert result == 'Amenity - Open areas not attracting visitors'
-    
-    result = check_reverse_classification('LM01')
-    assert result == 'Landscaped Roundabout'
-    
-    result = check_reverse_classification('LM02')
-    assert result == 'Verge / Central Reservation'
-    
-    result = check_reverse_classification('LM02NV')
-    assert result == 'Natural Central Reservation'
-    
-    result = check_reverse_classification('LM02VE')
-    assert result == 'Natural Verge'
-    
-    result = check_reverse_classification('LM03')
-    assert result == 'Maintained Amenity Land'
-    
-    result = check_reverse_classification('LM04')
-    assert result == 'Maintained Surfaced Area'
-    
-    result = check_reverse_classification('LM04MV')
-    assert result == 'Made Central Reservation'
-    
-    result = check_reverse_classification('LM04PV')
-    assert result == 'Pavement'
-    
-    result = check_reverse_classification('LO')
-    assert result == 'Open Space'
-    
-    result = check_reverse_classification('LO01')
-    assert result == 'Heath / Moorland'
-    
-    result = check_reverse_classification('LP')
-    assert result == 'Park'
-    
-    result = check_reverse_classification('LP01')
-    assert result == 'Public Park / Garden'
-    
-    result = check_reverse_classification('LP02')
-    assert result == 'Public Open Space / Nature Reserve'
-    
-    result = check_reverse_classification('LP03')
-    assert result == 'Playground'
-    
-    result = check_reverse_classification('LP03PA')
-    assert result == 'Play Area'
-    
-    result = check_reverse_classification('LP03PD')
-    assert result == 'Paddling Pool'
-    
-    result = check_reverse_classification('LP04')
-    assert result == 'Private Park / Garden'
-    
-    result = check_reverse_classification('LU')
-    assert result == 'Unused Land'
-    
-    result = check_reverse_classification('LU01')
-    assert result == 'Vacant / Derelict Land'
-    
-    result = check_reverse_classification('LW')
-    assert result == 'Water'
-    
-    result = check_reverse_classification('LW01')
-    assert result == 'Lake / Reservoir'
-    
-    result = check_reverse_classification('LW01BP')
-    assert result == 'Balancing Pond'
-    
-    result = check_reverse_classification('LW01BV')
-    assert result == 'Buried Reservoir'
-    
-    result = check_reverse_classification('LW02')
-    assert result == 'Named Pond'
-    
-    result = check_reverse_classification('LW02DE')
-    assert result == 'Dew Pond'
-    
-    result = check_reverse_classification('LW02DP')
-    assert result == 'Decoy Pond'
-    
-    result = check_reverse_classification('LW02IW')
-    assert result == 'Static Water'
-    
-    result = check_reverse_classification('LW03')
-    assert result == 'Waterway'
-    
-    result = check_reverse_classification('LW03LR')
-    assert result == 'Leats / Races'
-    
-    result = check_reverse_classification('LW03DR')
-    assert result == 'Drain'
-    
-    result = check_reverse_classification('M')
-    assert result == 'Military'
-    
-    result = check_reverse_classification('MA')
-    assert result == 'Army'
-    
-    result = check_reverse_classification('MA99AR')
-    assert result == 'Army Military Range'
-    
-    result = check_reverse_classification('MA99AS')
-    assert result == 'Army Site'
-    
-    result = check_reverse_classification('MA99AT')
-    assert result == 'Army Military Training'
-    
-    result = check_reverse_classification('MA99AG')
-    assert result == 'Army Military Storage'
-    
-    result = check_reverse_classification('MB')
-    assert result == 'Ancillary Building'
-    
-    result = check_reverse_classification('MB99TG')
-    assert result == 'Military Target'
-    
-    result = check_reverse_classification('MF')
-    assert result == 'Air Force'
-    
-    result = check_reverse_classification('MF99UG')
-    assert result == 'Air Force Military Storage'
-    
-    result = check_reverse_classification('MF99UR')
-    assert result == 'Air Force Military Range'
-    
-    result = check_reverse_classification('MF99US')
-    assert result == 'Air Force Site'
-    
-    result = check_reverse_classification('MF99UT')
-    assert result == 'Air Force Military Training'
-    
-    result = check_reverse_classification('MG')
-    assert result == 'Defence Estates'
-    
-    result = check_reverse_classification('MN')
-    assert result == 'Navy'
-    
-    result = check_reverse_classification('MN99VG')
-    assert result == 'Naval Military Storage'
-    
-    result = check_reverse_classification('MN99VR')
-    assert result == 'Naval Military Range'
-    
-    result = check_reverse_classification('MN99VS')
-    assert result == 'Naval Site'
-    
-    result = check_reverse_classification('MN99VT')
-    assert result == 'Naval Military Training'
-    
-    result = check_reverse_classification('O')
-    assert result == 'Other (Ordnance Survey Only)'
-    
-    result = check_reverse_classification('OA')
-    assert result == 'Aid To Navigation'
-    
-    result = check_reverse_classification('OA01')
-    assert result == 'Aid To Aeronautical Navigation'
-    
-    result = check_reverse_classification('OA01AL')
-    assert result == 'Aeronautical Navigation Beacon / Light'
-    
-    result = check_reverse_classification('OA01LL')
-    assert result == 'Landing Light'
-    
-    result = check_reverse_classification('OA01SQ')
-    assert result == 'Signal Square'
-    
-    result = check_reverse_classification('OA01WK')
-    assert result == 'Wind Sock / Wind Tee'
-    
-    result = check_reverse_classification('OA02')
-    assert result == 'Aid To Nautical Navigation'
-    
-    result = check_reverse_classification('OA02DM')
-    assert result == 'Daymark'
-    
-    result = check_reverse_classification('OA02FG')
-    assert result == 'Fog Horn Warning'
-    
-    result = check_reverse_classification('OA02NL')
-    assert result == 'Nautical Navigation Beacon / Light'
-    
-    result = check_reverse_classification('OA03')
-    assert result == 'Aid To Road Navigation'
-    
-    result = check_reverse_classification('OA03GP')
-    assert result == 'Guide Post'
-    
-    result = check_reverse_classification('OC')
-    assert result == 'Coastal Protection / Flood Prevention'
-    
-    result = check_reverse_classification('OC01')
-    assert result == 'Boulder Wall / Sea Wall'
-    
-    result = check_reverse_classification('OC02')
-    assert result == 'Flood Gate / Flood Sluice Gate / Flood Valve'
-    
-    result = check_reverse_classification('OC03')
-    assert result == 'Groyne'
-    
-    result = check_reverse_classification('OC04')
-    assert result == 'Rip-Rap'
-    
-    result = check_reverse_classification('OE')
-    assert result == 'Emergency Support'
-    
-    result = check_reverse_classification('OE01')
-    assert result == 'Beach Office / First Aid Facility'
-    
-    result = check_reverse_classification('OE02')
-    assert result == 'Emergency Telephone (Non Motorway)'
-    
-    result = check_reverse_classification('OE03')
-    assert result == 'Fire Alarm Structure / Fire Observation Tower / Fire Beater Facility'
-    
-    result = check_reverse_classification('OE04')
-    assert result == 'Emergency Equipment Point / Emergency Siren / Warning Flag'
-    
-    result = check_reverse_classification('OE05')
-    assert result == 'Lifeguard Facility'
-    
-    result = check_reverse_classification('OE06')
-    assert result == 'Life / Belt / Buoy / Float / Jacket / Safety Rope'
-    
-    result = check_reverse_classification('OF')
-    assert result == 'Street Furniture'
-    
-    result = check_reverse_classification('OG')
-    assert result == 'Agricultural Support Objects'
-    
-    result = check_reverse_classification('OG01')
-    assert result == 'Fish Ladder / Lock / Pen / Trap'
-    
-    result = check_reverse_classification('OG02')
-    assert result == 'Livestock Pen / Dip'
-    
-    result = check_reverse_classification('OG03')
-    assert result == 'Currick'
-    
-    result = check_reverse_classification('OG04')
-    assert result == 'Slurry Bed / Pit'
-    
-    result = check_reverse_classification('OH')
-    assert result == 'Historical Site / Object'
-    
-    result = check_reverse_classification('OH01')
-    assert result == 'Historic Structure / Object'
-    
-    result = check_reverse_classification('OI')
-    assert result == 'Industrial Support'
-    
-    result = check_reverse_classification('OI01')
-    assert result == 'Adit / Incline / Level'
-    
-    result = check_reverse_classification('OI02')
-    assert result == 'Caisson / Dry Dock / Grid'
-    
-    result = check_reverse_classification('OI03')
-    assert result == 'Channel / Conveyor / Conduit / Pipe'
-    
-    result = check_reverse_classification('OI04')
-    assert result == 'Chimney / Flue'
-    
-    result = check_reverse_classification('OI05')
-    assert result == 'Crane / Hoist / Winch / Material Elevator'
-    
-    result = check_reverse_classification('OI06')
-    assert result == 'Flare Stack'
-    
-    result = check_reverse_classification('OI07')
-    assert result == 'Hopper / Silo / Cistern / Tank'
-    
-    result = check_reverse_classification('OI08')
-    assert result == 'Grab / Skip / Other Industrial Waste Machinery / Discharging'
-    
-    result = check_reverse_classification('OI09')
-    assert result == 'Kiln / Oven / Smelter'
-    
-    result = check_reverse_classification('OI10')
-    assert result == 'Manhole / Shaft'
-    
-    result = check_reverse_classification('OI11')
-    assert result == 'Industrial Overflow / Sluice / Valve / Valve Housing'
-    
-    result = check_reverse_classification('OI12')
-    assert result == 'Cooling Tower'
-    
-    result = check_reverse_classification('OI13')
-    assert result == 'Solar Panel / Waterwheel'
-    
-    result = check_reverse_classification('OI14')
-    assert result == 'Telephone Pole / Post'
-    
-    result = check_reverse_classification('OI15')
-    assert result == 'Electricity Distribution Pole / Pylon'
-    
-    result = check_reverse_classification('ON')
-    assert result == 'Significant Natural Object'
-    
-    result = check_reverse_classification('ON01')
-    assert result == 'Boundary / Significant / Historic Tree / Pollard'
-    
-    result = check_reverse_classification('ON02')
-    assert result == 'Boundary / Significant Rock / Boulder'
-    
-    result = check_reverse_classification('ON03')
-    assert result == 'Natural Hole (Blow / Shake / Swallow)'
-    
-    result = check_reverse_classification('OO')
-    assert result == 'Ornamental / Cultural Object'
-    
-    result = check_reverse_classification('OO02')
-    assert result == 'Mausoleum / Tomb / Grave'
-    
-    result = check_reverse_classification('OO03')
-    assert result == 'Simple Ornamental Object'
-    
-    result = check_reverse_classification('OO04')
-    assert result == 'Maze'
-    
-    result = check_reverse_classification('OP')
-    assert result == 'Sport / Leisure Support'
-    
-    result = check_reverse_classification('OP01')
-    assert result == 'Butt / Hide'
-    
-    result = check_reverse_classification('OP02')
-    assert result == 'Gallop / Ride'
-    
-    result = check_reverse_classification('OP03')
-    assert result == 'Miniature Railway'
-    
-    result = check_reverse_classification('OR')
-    assert result == 'Royal Mail Infrastructure'
-    
-    result = check_reverse_classification('OR01')
-    assert result == 'Postal Box'
-    
-    result = check_reverse_classification('OR02')
-    assert result == 'Postal Delivery Box / Pouch'
-    
-    result = check_reverse_classification('OR03')
-    assert result == 'PO Box'
-    
-    result = check_reverse_classification('OR04')
-    assert result == 'Additional Mail / Packet Addressee'
-    
-    result = check_reverse_classification('OS')
-    assert result == 'Scientific / Observation Support'
-    
-    result = check_reverse_classification('OS01')
-    assert result == 'Meteorological Station / Equipment'
-    
-    result = check_reverse_classification('OS02')
-    assert result == 'Radar / Satellite Infrastructure'
-    
-    result = check_reverse_classification('OS03')
-    assert result == 'Telescope / Observation Infrastructure / Astronomy'
-    
-    result = check_reverse_classification('OT')
-    assert result == 'Transport Support'
-    
-    result = check_reverse_classification('OT01')
-    assert result == 'Cattle Grid / Ford'
-    
-    result = check_reverse_classification('OT02')
-    assert result == 'Elevator / Escalator / Steps'
-    
-    result = check_reverse_classification('OT03')
-    assert result == 'Footbridge / Walkway'
-    
-    result = check_reverse_classification('OT04')
-    assert result == 'Pole / Post / Bollard (Restricting Vehicular Access)'
-    
-    result = check_reverse_classification('OT05')
-    assert result == 'Subway / Underpass'
-    
-    result = check_reverse_classification('OT06')
-    assert result == 'Customs Inspection Facility'
-    
-    result = check_reverse_classification('OT07')
-    assert result == 'Lay-By'
-    
-    result = check_reverse_classification('OT08')
-    assert result == 'Level Crossing'
-    
-    result = check_reverse_classification('OT09')
-    assert result == 'Mail Pick Up'
-    
-    result = check_reverse_classification('OT10')
-    assert result == 'Railway Pedestrian Crossing'
-    
-    result = check_reverse_classification('OT11')
-    assert result == 'Railway Buffer'
-    
-    result = check_reverse_classification('OT12')
-    assert result == 'Rail Drag'
-    
-    result = check_reverse_classification('OT13')
-    assert result == 'Rail Infrastructure Services'
-    
-    result = check_reverse_classification('OT14')
-    assert result == 'Rail Kilometre Distance Marker'
-    
-    result = check_reverse_classification('OT15')
-    assert result == 'Railway Lighting'
-    
-    result = check_reverse_classification('OT16')
-    assert result == 'Rail Mile Distance Marker'
-    
-    result = check_reverse_classification('OT17')
-    assert result == 'Railway Turntable'
-    
-    result = check_reverse_classification('OT18')
-    assert result == 'Rail Weighbridge'
-    
-    result = check_reverse_classification('OT19')
-    assert result == 'Rail Signalling'
-    
-    result = check_reverse_classification('OT20')
-    assert result == 'Railway Traverse'
-    
-    result = check_reverse_classification('OT21')
-    assert result == 'Goods Tramway'
-    
-    result = check_reverse_classification('OT22')
-    assert result == 'Road Drag'
-    
-    result = check_reverse_classification('OT23')
-    assert result == 'Vehicle Dip'
-    
-    result = check_reverse_classification('OT24')
-    assert result == 'Road Turntable'
-    
-    result = check_reverse_classification('OT25')
-    assert result == 'Road Mile Distance Marker'
-    
-    result = check_reverse_classification('OT26')
-    assert result == 'Road Kilometre Distance Marker'
-    
-    result = check_reverse_classification('OT27')
-    assert result == 'Road Infrastructure Services'
-    
-    result = check_reverse_classification('OU')
-    assert result == 'Unsupported Site'
-    
-    result = check_reverse_classification('OU01')
-    assert result == 'Cycle Parking Facility'
-    
-    result = check_reverse_classification('OU04')
-    assert result == 'Picnic / Barbeque Site'
-    
-    result = check_reverse_classification('OU05')
-    assert result == 'Travelling Persons Site'
-    
-    result = check_reverse_classification('OU08')
-    assert result == 'Shelter (Not Including Bus Shelter)'
-    
-    result = check_reverse_classification('P')
-    assert result == 'Parent Shell'
-    
-    result = check_reverse_classification('PP')
-    assert result == 'Property Shell'
-    
-    result = check_reverse_classification('PS')
-    assert result == 'Street Record'
-    
-    result = check_reverse_classification('R')
-    assert result == 'Residential'
-    
-    result = check_reverse_classification('RB')
-    assert result == 'Ancillary Building'
-    
-    result = check_reverse_classification('RC')
-    assert result == 'Car Park Space'
-    
-    result = check_reverse_classification('RC01')
-    assert result == 'Allocated Parking'
-    
-    result = check_reverse_classification('RD')
-    assert result == 'Dwelling'
-    
-    result = check_reverse_classification('RD01')
-    assert result == 'Caravan'
-    
-    result = check_reverse_classification('RD02')
-    assert result == 'Detached'
-    
-    result = check_reverse_classification('RD03')
-    assert result == 'Semi-Detached'
-    
-    result = check_reverse_classification('RD04')
-    assert result == 'Terraced'
-    
-    result = check_reverse_classification('RD06')
-    assert result == 'Self Contained Flat (Includes Maisonette / Apartment)'
-    
-    result = check_reverse_classification('RD07')
-    assert result == 'House Boat'
-    
-    result = check_reverse_classification('RD08')
-    assert result == 'Sheltered Accommodation'
-    
-    result = check_reverse_classification('RD10')
-    assert result == 'Privately Owned Holiday Caravan / Chalet'
-    
-    result = check_reverse_classification('RG')
-    assert result == 'Garage'
-    
-    result = check_reverse_classification('RG02')
-    assert result == 'Lock-Up Garage / Garage Court'
-    
-    result = check_reverse_classification('RH')
-    assert result == 'House In Multiple Occupation'
-    
-    result = check_reverse_classification('RH01')
-    assert result == 'HMO Parent'
-    
-    result = check_reverse_classification('RH02')
-    assert result == 'HMO Bedsit / Other Non Self Contained Accommodation'
-    
-    result = check_reverse_classification('RH03')
-    assert result == 'HMO Not Further Divided'
-    
-    result = check_reverse_classification('RI')
-    assert result == 'Residential Institution'
-    
-    result = check_reverse_classification('RI01')
-    assert result == 'Care / Nursing Home'
-    
-    result = check_reverse_classification('RI02')
-    assert result == 'Communal Residence'
-    
-    result = check_reverse_classification('RI02NC')
-    assert result == 'Non-Commercial Lodgings'
-    
-    result = check_reverse_classification('RI02RC')
-    assert result == 'Religious Community'
-    
-    result = check_reverse_classification('RI03')
-    assert result == 'Residential Education'
-    
-    result = check_reverse_classification('U')
-    assert result == 'Unclassified'
-    
-    result = check_reverse_classification('UC')
-    assert result == 'Awaiting Classification'
-    
-    result = check_reverse_classification('UP')
-    assert result == 'Pending Internal Investigation'
-    
-    result = check_reverse_classification('X')
-    assert result == 'Dual Use'
-    
-    result = check_reverse_classification('Z')
-    assert result == 'Object of Interest'
-    
-    result = check_reverse_classification('ZA')
-    assert result == 'Archaeological Dig Site'
-    
-    result = check_reverse_classification('ZM')
-    assert result == 'Monument'
-    
-    result = check_reverse_classification('ZM01')
-    assert result == 'Obelisk / Milestone / Standing Stone'
-    
-    result = check_reverse_classification('ZM01OB')
-    assert result == 'Obelisk'
-    
-    result = check_reverse_classification('ZM01ST')
-    assert result == 'Standing Stone'
-    
-    result = check_reverse_classification('ZM02')
-    assert result == 'Memorial / Market Cross'
-    
-    result = check_reverse_classification('ZM03')
-    assert result == 'Statue'
-    
-    result = check_reverse_classification('ZM04')
-    assert result == 'Castle / Historic Ruin'
-    
-    result = check_reverse_classification('ZM05')
-    assert result == 'Other Structure'
-    
-    result = check_reverse_classification('ZM05BS')
-    assert result == 'Boundary Stone'
-    
-    result = check_reverse_classification('ZM05PN')
-    assert result == 'Permanent Art Display / Sculpture'
-    
-    result = check_reverse_classification('ZM05CE')
-    assert result == 'Cascade / Fountain'
-    
-    result = check_reverse_classification('ZM05WI')
-    assert result == 'Windmill (Inactive)'
-    
-    result = check_reverse_classification('ZS')
-    assert result == 'Stately Home'
-    
-    result = check_reverse_classification('ZU')
-    assert result == 'Underground Feature'
-    
-    result = check_reverse_classification('ZU01')
-    assert result == 'Cave'
-    
-    result = check_reverse_classification('ZU04')
-    assert result == 'Pothole / Natural Hole'
-    
-    result = check_reverse_classification('ZV')
-    assert result == 'Other Underground Feature'
-    
-    result = check_reverse_classification('ZV01')
-    assert result == 'Cellar'
-    
-    result = check_reverse_classification('ZV02')
-    assert result == 'Disused Mine'
-    
-    result = check_reverse_classification('ZV02MI')
-    assert result == 'Mineral Mining / Inactive'
-    
-    result = check_reverse_classification('ZV02OI')
-    assert result == 'Oil And / Gas Extraction/ Inactive'
-    
-    result = check_reverse_classification('ZV02QI')
-    assert result == 'Mineral Quarrying And / Open Extraction / Inactive'
-    
-    result = check_reverse_classification('ZV03')
-    assert result == 'Well / Spring'
-    
-    result = check_reverse_classification('ZV03SG')
-    assert result == 'Spring'
-    
-    result = check_reverse_classification('ZV03WL')
-    assert result == 'Well'
-    
-    result = check_reverse_classification('ZW')
-    assert result == 'Place Of Worship'
-    
-    result = check_reverse_classification('ZW99AB')
-    assert result == 'Abbey'
-    
-    result = check_reverse_classification('ZW99CA')
-    assert result == 'Cathedral'
-    
-    result = check_reverse_classification('ZW99CH')
-    assert result == 'Church'
-    
-    result = check_reverse_classification('ZW99CP')
-    assert result == 'Chapel'
-    
-    result = check_reverse_classification('ZW99GU')
-    assert result == 'Gurdwara'
-    
-    result = check_reverse_classification('ZW99KH')
-    assert result == 'Kingdom Hall'
-    
-    result = check_reverse_classification('ZW99MQ')
-    assert result == 'Mosque'
-    
-    result = check_reverse_classification('ZW99MT')
-    assert result == 'Minster'
-    
-    result = check_reverse_classification('ZW99SU')
-    assert result == 'Stupa'
-    
-    result = check_reverse_classification('ZW99SY')
-    assert result == 'Synagogue'
-    
-    result = check_reverse_classification('ZW99TP')
-    assert result == 'Temple'
-    
-    result = check_reverse_classification('ZW99LG')
-    assert result == 'Lych Gate'
+  result = check_reverse_classification('Commercial')
+  assert result == 'C*'
 
+  result = check_reverse_classification('Agricultural')
+  assert result == 'CA*'
+
+  result = check_reverse_classification('Farm / Non-Residential Associated Building')
+  assert result == 'CA01*'
+
+  result = check_reverse_classification('Fishery')
+  assert result == 'CA02*'
+
+  result = check_reverse_classification('Fish Farming')
+  assert result == 'CA02FF*'
+
+  result = check_reverse_classification('Fish Hatchery')
+  assert result == 'CA02FH*'
+
+  result = check_reverse_classification('Fish Processing')
+  assert result == 'CA02FP*'
+
+  result = check_reverse_classification('Oyster / Mussel Bed')
+  assert result == 'CA02OY*'
+
+  result = check_reverse_classification('Horticulture')
+  assert result == 'CA03*'
+
+  result = check_reverse_classification('Smallholding')
+  assert result == 'CA03SH*'
+
+  result = check_reverse_classification('Vineyard')
+  assert result == 'CA03VY*'
+
+  result = check_reverse_classification('Watercress Bed')
+  assert result == 'CA03WB*'
+
+  result = check_reverse_classification('Slaughter House / Abattoir')
+  assert result == 'CA04*'
+
+  result = check_reverse_classification('Community Services')
+  assert result == 'CC*'
+
+  result = check_reverse_classification('Law Court')
+  assert result == 'CC02*'
+
+  result = check_reverse_classification('Prison')
+  assert result == 'CC03*'
+
+  result = check_reverse_classification('HM Detention Centre')
+  assert result == 'CC03HD*'
+
+  result = check_reverse_classification('HM Prison Service')
+  assert result == 'CC03PR*'
+
+  result = check_reverse_classification('Secure Residential Accommodation')
+  assert result == 'CC03SC*'
+
+  result = check_reverse_classification('Public / Village Hall / Other Community Facility')
+  assert result == 'CC04*'
+
+  result = check_reverse_classification('Youth Recreational / Social Club')
+  assert result == 'CC04YR*'
+
+  result = check_reverse_classification('Public Convenience')
+  assert result == 'CC05*'
+
+  result = check_reverse_classification('Cemetery / Crematorium / Graveyard. In Current Use.')
+  assert result == 'CC06*'
+
+  result = check_reverse_classification('Columbarium')
+  assert result == 'CC06CB*'
+
+  result = check_reverse_classification('Chapel Of Rest')
+  assert result == 'CC06CR*'
+
+  result = check_reverse_classification('Crematorium')
+  assert result == 'CC06CN*'
+
+  result = check_reverse_classification('Cemetery')
+  assert result == 'CC06CY*'
+
+  result = check_reverse_classification('Military Cemetery')
+  assert result == 'CC06MC*'
+
+  result = check_reverse_classification('Mortuary')
+  assert result == 'CC06MY*'
+
+  result = check_reverse_classification('Church Hall / Religious Meeting Place / Hall')
+  assert result == 'CC07*'
+
+  result = check_reverse_classification('Community Service Centre / Office')
+  assert result == 'CC08*'
+
+  result = check_reverse_classification('Public Household Waste Recycling Centre (HWRC)')
+  assert result == 'CC09*'
+
+  result = check_reverse_classification('Recycling Site')
+  assert result == 'CC10*'
+
+  result = check_reverse_classification('CCTV')
+  assert result == 'CC11*'
+
+  result = check_reverse_classification('Job Centre')
+  assert result == 'CC12*'
+
+  result = check_reverse_classification('Education')
+  assert result == 'CE*'
+
+  result = check_reverse_classification('College')
+  assert result == 'CE01*'
+
+  result = check_reverse_classification('Further Education')
+  assert result == 'CE01FE*'
+
+  result = check_reverse_classification('Higher Education')
+  assert result == 'CE01HE*'
+
+  result = check_reverse_classification("Children''s Nursery / Crèche")
+  assert result == 'CE02*'
+
+  result = check_reverse_classification('Preparatory / First / Primary / Infant / Junior / Middle School')
+  assert result == 'CE03*'
+
+  result = check_reverse_classification('First School')
+  assert result == 'CE03FS*'
+
+  result = check_reverse_classification('Infant School')
+  assert result == 'CE03IS*'
+
+  result = check_reverse_classification('Junior School')
+  assert result == 'CE03JS*'
+
+  result = check_reverse_classification('Middle School')
+  assert result == 'CE03MS*'
+
+  result = check_reverse_classification('Non State Primary / Preparatory School')
+  assert result == 'CE03NP*'
+
+  result = check_reverse_classification('Primary School')
+  assert result == 'CE03PS*'
+
+  result = check_reverse_classification('Secondary / High School')
+  assert result == 'CE04*'
+
+  result = check_reverse_classification('Non State Secondary School')
+  assert result == 'CE04NS*'
+
+  result = check_reverse_classification('Secondary School')
+  assert result == 'CE04SS*'
+
+  result = check_reverse_classification('University')
+  assert result == 'CE05*'
+
+  result = check_reverse_classification('Special Needs Establishment.')
+  assert result == 'CE06*'
+
+  result = check_reverse_classification('Other Educational Establishment')
+  assert result == 'CE07*'
+
+  result = check_reverse_classification('Hotel / Motel / Boarding / Guest House')
+  assert result == 'CH*'
+
+  result = check_reverse_classification('Boarding / Guest House / Bed And Breakfast / Youth Hostel')
+  assert result == 'CH01*'
+
+  result = check_reverse_classification('Youth Hostel')
+  assert result == 'CH01YH*'
+
+  result = check_reverse_classification('Holiday Let/Accomodation/Short-Term Let Other Than CH01')
+  assert result == 'CH02*'
+
+  result = check_reverse_classification('Hotel/Motel')
+  assert result == 'CH03*'
+
+  result = check_reverse_classification('Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites')
+  assert result == 'CI*'
+
+  result = check_reverse_classification('Factory/Manufacturing')
+  assert result == 'CI01*'
+
+  result = check_reverse_classification('Aircraft Works')
+  assert result == 'CI01AW*'
+
+  result = check_reverse_classification('Boat Building')
+  assert result == 'CI01BB*'
+
+  result = check_reverse_classification('Brick Works')
+  assert result == 'CI01BR*'
+
+  result = check_reverse_classification('Brewery')
+  assert result == 'CI01BW*'
+
+  result = check_reverse_classification('Cider Manufacture')
+  assert result == 'CI01CD*'
+
+  result = check_reverse_classification('Chemical Works')
+  assert result == 'CI01CM*'
+
+  result = check_reverse_classification('Cement Works')
+  assert result == 'CI01CW*'
+
+  result = check_reverse_classification('Dairy Processing')
+  assert result == 'CI01DA*'
+
+  result = check_reverse_classification('Distillery')
+  assert result == 'CI01DY*'
+
+  result = check_reverse_classification('Flour Mill')
+  assert result == 'CI01FL*'
+
+  result = check_reverse_classification('Food Processing')
+  assert result == 'CI01FO*'
+
+  result = check_reverse_classification('Glassworks')
+  assert result == 'CI01GW*'
+
+  result = check_reverse_classification('Manufacturing')
+  assert result == 'CI01MG*'
+
+  result = check_reverse_classification('Oast House')
+  assert result == 'CI01OH*'
+
+  result = check_reverse_classification('Oil Refining')
+  assert result == 'CI01OR*'
+
+  result = check_reverse_classification('Pottery Manufacturing')
+  assert result == 'CI01PG*'
+
+  result = check_reverse_classification('Paper Mill')
+  assert result == 'CI01PM*'
+
+  result = check_reverse_classification('Printing Works')
+  assert result == 'CI01PW*'
+
+  result = check_reverse_classification('Shipyard')
+  assert result == 'CI01YD*'
+
+  result = check_reverse_classification('Sugar Refinery')
+  assert result == 'CI01SR*'
+
+  result = check_reverse_classification('Steel Works')
+  assert result == 'CI01SW*'
+
+  result = check_reverse_classification('Timber Mill')
+  assert result == 'CI01TL*'
+
+  result = check_reverse_classification('Winery')
+  assert result == 'CI01WN*'
+
+  result = check_reverse_classification('Mineral / Ore Working / Quarry / Mine')
+  assert result == 'CI02*'
+
+  result = check_reverse_classification('Mineral Mining / Active')
+  assert result == 'CI02MA*'
+
+  result = check_reverse_classification('Mineral Distribution / Storage')
+  assert result == 'CI02MD*'
+
+  result = check_reverse_classification('Mineral Processing')
+  assert result == 'CI02MP*'
+
+  result = check_reverse_classification('Oil / Gas Extraction / Active')
+  assert result == 'CI02OA*'
+
+  result = check_reverse_classification('Mineral Quarrying / Open Extraction / Active')
+  assert result == 'CI02QA*'
+
+  result = check_reverse_classification('Workshop / Light Industrial')
+  assert result == 'CI03*'
+
+  result = check_reverse_classification('Servicing Garage')
+  assert result == 'CI03GA*'
+
+  result = check_reverse_classification('Warehouse / Store / Storage Depot')
+  assert result == 'CI04*'
+
+  result = check_reverse_classification('Crop Handling / Storage')
+  assert result == 'CI04CS*'
+
+  result = check_reverse_classification('Postal Sorting / Distribution')
+  assert result == 'CI04PL*'
+
+  result = check_reverse_classification('Solid Fuel Storage')
+  assert result == 'CI04SO*'
+
+  result = check_reverse_classification('Timber Storage')
+  assert result == 'CI04TS*'
+
+  result = check_reverse_classification('Wholesale Distribution')
+  assert result == 'CI05*'
+
+  result = check_reverse_classification('Solid Fuel Distribution')
+  assert result == 'CI05SF*'
+
+  result = check_reverse_classification('Timber Distribution')
+  assert result == 'CI05TD*'
+
+  result = check_reverse_classification('Recycling Plant')
+  assert result == 'CI06*'
+
+  result = check_reverse_classification('Incinerator / Waste Transfer Station')
+  assert result == 'CI07*'
+
+  result = check_reverse_classification('Maintenance Depot')
+  assert result == 'CI08*'
+
+  result = check_reverse_classification('Leisure - Applicable to recreational sites and enterprises')
+  assert result == 'CL*'
+
+  result = check_reverse_classification('Amusements')
+  assert result == 'CL01*'
+
+  result = check_reverse_classification('Leisure Pier')
+  assert result == 'CL01LP*'
+
+  result = check_reverse_classification('Holiday / Campsite')
+  assert result == 'CL02*'
+
+  result = check_reverse_classification('Camping')
+  assert result == 'CL02CG*'
+
+  result = check_reverse_classification('Caravanning')
+  assert result == 'CL02CV*'
+
+  result = check_reverse_classification('Holiday Accommodation')
+  assert result == 'CL02HA*'
+
+  result = check_reverse_classification('Holiday Centre')
+  assert result == 'CL02HO*'
+
+  result = check_reverse_classification('Youth Organisation Camp')
+  assert result == 'CL02YC*'
+
+  result = check_reverse_classification('Library')
+  assert result == 'CL03*'
+
+  result = check_reverse_classification('Reading Room')
+  assert result == 'CL03RR*'
+
+  result = check_reverse_classification('Museum / Gallery')
+  assert result == 'CL04*'
+
+  result = check_reverse_classification('Art Centre / Gallery')
+  assert result == 'CL04AC*'
+
+  result = check_reverse_classification('Aviation Museum')
+  assert result == 'CL04AM*'
+
+  result = check_reverse_classification('Heritage Centre')
+  assert result == 'CL04HG*'
+
+  result = check_reverse_classification('Industrial Museum')
+  assert result == 'CL04IM*'
+
+  result = check_reverse_classification('Military Museum')
+  assert result == 'CL04MM*'
+
+  result = check_reverse_classification('Science Museum')
+  assert result == 'CL04SM*'
+
+  result = check_reverse_classification('Transport Museum')
+  assert result == 'CL04TM*'
+
+  result = check_reverse_classification('Maritime Museum')
+  assert result == 'CL04NM*'
+
+  result = check_reverse_classification('Indoor / Outdoor Leisure / Sporting Activity / Centre')
+  assert result == 'CL06*'
+
+  result = check_reverse_classification('Athletics Facility')
+  assert result == 'CL06AH*'
+
+  result = check_reverse_classification('Bowls Facility')
+  assert result == 'CL06BF*'
+
+  result = check_reverse_classification('Cricket Facility')
+  assert result == 'CL06CK*'
+
+  result = check_reverse_classification('Curling Facility')
+  assert result == 'CL06CU*'
+
+  result = check_reverse_classification('Cycling Sports Facility')
+  assert result == 'CL06YF*'
+
+  result = check_reverse_classification('Diving / Swimming Facility')
+  assert result == 'CL06DS*'
+
+  result = check_reverse_classification('Equestrian Sports Facility')
+  assert result == 'CL06EQ*'
+
+  result = check_reverse_classification('Football Facility')
+  assert result == 'CL06FB*'
+
+  result = check_reverse_classification('Fishing / Angling Facility')
+  assert result == 'CL06FI*'
+
+  result = check_reverse_classification('Golf Facility')
+  assert result == 'CL06GF*'
+
+  result = check_reverse_classification('Gliding Facility')
+  assert result == 'CL06GL*'
+
+  result = check_reverse_classification('Greyhound Racing Facility')
+  assert result == 'CL06GR*'
+
+  result = check_reverse_classification('Hockey Facility')
+  assert result == 'CL06HF*'
+
+  result = check_reverse_classification('Horse Racing Facility')
+  assert result == 'CL06HR*'
+
+  result = check_reverse_classification('Historic Vessel / Aircraft / Vehicle')
+  assert result == 'CL06HV*'
+
+  result = check_reverse_classification('Activity / Leisure / Sports Centre')
+  assert result == 'CL06LS*'
+
+  result = check_reverse_classification('Model Sports Facility')
+  assert result == 'CL06ME*'
+
+  result = check_reverse_classification('Motor Sports Facility')
+  assert result == 'CL06MF*'
+
+  result = check_reverse_classification('Playing Field')
+  assert result == 'CL06PF*'
+
+  result = check_reverse_classification('Racquet Sports Facility')
+  assert result == 'CL06QS*'
+
+  result = check_reverse_classification('Rugby Facility')
+  assert result == 'CL06RF*'
+
+  result = check_reverse_classification('Recreation Ground')
+  assert result == 'CL06RG*'
+
+  result = check_reverse_classification('Shinty Facility')
+  assert result == 'CL06SI*'
+
+  result = check_reverse_classification('Skateboarding Facility')
+  assert result == 'CL06SK*'
+
+  result = check_reverse_classification('Civilian Firing Facility')
+  assert result == 'CL06SX*'
+
+  result = check_reverse_classification('Tenpin Bowling Facility')
+  assert result == 'CL06TB*'
+
+  result = check_reverse_classification('Public Tennis Court')
+  assert result == 'CL06TN*'
+
+  result = check_reverse_classification('Water Sports Facility')
+  assert result == 'CL06WA*'
+
+  result = check_reverse_classification('Winter Sports Facility')
+  assert result == 'CL06WP*'
+
+  result = check_reverse_classification('Wildlife Sports Facility')
+  assert result == 'CL06WY*'
+
+  result = check_reverse_classification('Bingo Hall / Cinema / Conference / Exhibition Centre / Theatre / Concert Hall')
+  assert result == 'CL07*'
+
+  result = check_reverse_classification('Theatre')
+  assert result == 'CL07TH*'
+
+  result = check_reverse_classification('Cinema')
+  assert result == 'CL07CI*'
+
+  result = check_reverse_classification('Entertainment Complex')
+  assert result == 'CL07EN*'
+
+  result = check_reverse_classification('Conference / Exhibition Centre')
+  assert result == 'CL07EX*'
+
+  result = check_reverse_classification('Zoo / Theme Park')
+  assert result == 'CL08*'
+
+  result = check_reverse_classification('Amusement Park')
+  assert result == 'CL08AK*'
+
+  result = check_reverse_classification('Model Village Site')
+  assert result == 'CL08MX*'
+
+  result = check_reverse_classification('Wildlife / Zoological Park')
+  assert result == 'CL08WZ*'
+
+  result = check_reverse_classification('Aquatic Attraction')
+  assert result == 'CL08AQ*'
+
+  result = check_reverse_classification('Beach Hut (Recreational, Non-Residential Use Only)')
+  assert result == 'CL09*'
+
+  result = check_reverse_classification('Licensed Private Members Club')
+  assert result == 'CL10*'
+
+  result = check_reverse_classification('Recreational / Social Club')
+  assert result == 'CL10RE*'
+
+  result = check_reverse_classification('Arena / Stadium')
+  assert result == 'CL11*'
+
+  result = check_reverse_classification('Stadium')
+  assert result == 'CL11SD*'
+
+  result = check_reverse_classification('Showground')
+  assert result == 'CL11SJ*'
+
+  result = check_reverse_classification('Medical')
+  assert result == 'CM*'
+
+  result = check_reverse_classification('Dentist')
+  assert result == 'CM01*'
+
+  result = check_reverse_classification('General Practice Surgery / Clinic')
+  assert result == 'CM02*'
+
+  result = check_reverse_classification('Health Care Services')
+  assert result == 'CM02HL*'
+
+  result = check_reverse_classification('Health Centre')
+  assert result == 'CM02HC*'
+
+  result = check_reverse_classification('Hospital / Hospice')
+  assert result == 'CM03*'
+
+  result = check_reverse_classification('Hospice')
+  assert result == 'CM03HI*'
+
+  result = check_reverse_classification('Hospital')
+  assert result == 'CM03HP*'
+
+  result = check_reverse_classification('Medical / Testing / Research Laboratory')
+  assert result == 'CM04*'
+
+  result = check_reverse_classification('Professional Medical Service')
+  assert result == 'CM05*'
+
+  result = check_reverse_classification('Assessment / Development Services')
+  assert result == 'CM05ZS*'
+
+  result = check_reverse_classification('Animal Centre')
+  assert result == 'CN*'
+
+  result = check_reverse_classification('Cattery / Kennel')
+  assert result == 'CN01*'
+
+  result = check_reverse_classification('Animal Services')
+  assert result == 'CN02*'
+
+  result = check_reverse_classification('Animal Quarantining')
+  assert result == 'CN02AX*'
+
+  result = check_reverse_classification('Equestrian')
+  assert result == 'CN03*'
+
+  result = check_reverse_classification('Horse Racing / Breeding Stable')
+  assert result == 'CN03HB*'
+
+  result = check_reverse_classification('Commercial Stabling / Riding')
+  assert result == 'CN03SB*'
+
+  result = check_reverse_classification('Vet / Animal Medical Treatment')
+  assert result == 'CN04*'
+
+  result = check_reverse_classification('Animal / Bird / Marine Sanctuary')
+  assert result == 'CN05*'
+
+  result = check_reverse_classification('Animal Sanctuary')
+  assert result == 'CN05AN*'
+
+  result = check_reverse_classification('Marine Sanctuary')
+  assert result == 'CN05MR*'
+
+  result = check_reverse_classification('Office')
+  assert result == 'CO*'
+
+  result = check_reverse_classification('Office / Work Studio')
+  assert result == 'CO01*'
+
+  result = check_reverse_classification('Embassy / High Commission / Consulate')
+  assert result == 'CO01EM*'
+
+  result = check_reverse_classification('Film Studio')
+  assert result == 'CO01FM*'
+
+  result = check_reverse_classification('Central Government Service')
+  assert result == 'CO01GV*'
+
+  result = check_reverse_classification('Local Government Service')
+  assert result == 'CO01LG*'
+
+  result = check_reverse_classification('Broadcasting (TV / Radio)')
+  assert result == 'CO02*'
+
+  result = check_reverse_classification('Retail')
+  assert result == 'CR*'
+
+  result = check_reverse_classification('Bank / Financial Service')
+  assert result == 'CR01*'
+
+  result = check_reverse_classification('Retail Service Agent')
+  assert result == 'CR02*'
+
+  result = check_reverse_classification('Post Office')
+  assert result == 'CR02PO*'
+
+  result = check_reverse_classification('Market (Indoor / Outdoor)')
+  assert result == 'CR04*'
+
+  result = check_reverse_classification('Fish Market')
+  assert result == 'CR04FK*'
+
+  result = check_reverse_classification('Fruit / Vegetable Market')
+  assert result == 'CR04FV*'
+
+  result = check_reverse_classification('Livestock Market')
+  assert result == 'CR04LV*'
+
+  result = check_reverse_classification('Petrol Filling Station')
+  assert result == 'CR05*'
+
+  result = check_reverse_classification('Public House / Bar / Nightclub')
+  assert result == 'CR06*'
+
+  result = check_reverse_classification('Restaurant / Cafeteria')
+  assert result == 'CR07*'
+
+  result = check_reverse_classification('Shop / Showroom')
+  assert result == 'CR08*'
+
+  result = check_reverse_classification('Garden Centre')
+  assert result == 'CR08GC*'
+
+  result = check_reverse_classification('Other Licensed Premise / Vendor')
+  assert result == 'CR09*'
+
+  result = check_reverse_classification('Fast Food Outlet / Takeaway (Hot / Cold)')
+  assert result == 'CR10*'
+
+  result = check_reverse_classification('Automated Teller Machine (ATM)')
+  assert result == 'CR11*'
+
+  result = check_reverse_classification('Storage Land')
+  assert result == 'CS*'
+
+  result = check_reverse_classification('General Storage Land')
+  assert result == 'CS01*'
+
+  result = check_reverse_classification('Builders Yard')
+  assert result == 'CS02*'
+
+  result = check_reverse_classification('Transport')
+  assert result == 'CT*'
+
+  result = check_reverse_classification('Airfield / Airstrip / Airport / Air Transport Infrastructure Facility')
+  assert result == 'CT01*'
+
+  result = check_reverse_classification('Airfield')
+  assert result == 'CT01AF*'
+
+  result = check_reverse_classification('Air Passenger Terminal')
+  assert result == 'CT01AY*'
+
+  result = check_reverse_classification('Air Transport Infrastructure Services')
+  assert result == 'CT01AI*'
+
+  result = check_reverse_classification('Airport')
+  assert result == 'CT01AP*'
+
+  result = check_reverse_classification('Helicopter Station')
+  assert result == 'CT01HS*'
+
+  result = check_reverse_classification('Heliport / Helipad')
+  assert result == 'CT01HT*'
+
+  result = check_reverse_classification('Bus Shelter')
+  assert result == 'CT02*'
+
+  result = check_reverse_classification('Car / Coach / Commercial Vehicle / Taxi Parking / Park And Ride Site')
+  assert result == 'CT03*'
+
+  result = check_reverse_classification('Public Park And Ride')
+  assert result == 'CT03PK*'
+
+  result = check_reverse_classification('Public Car Parking')
+  assert result == 'CT03PP*'
+
+  result = check_reverse_classification('Public Coach Parking')
+  assert result == 'CT03PU*'
+
+  result = check_reverse_classification('Public Commercial Vehicle Parking')
+  assert result == 'CT03VP*'
+
+  result = check_reverse_classification('Goods Freight Handling / Terminal')
+  assert result == 'CT04*'
+
+  result = check_reverse_classification('Air Freight Terminal')
+  assert result == 'CT04AE*'
+
+  result = check_reverse_classification('Container Freight')
+  assert result == 'CT04CF*'
+
+  result = check_reverse_classification('Road Freight Transport')
+  assert result == 'CT04RH*'
+
+  result = check_reverse_classification('Rail Freight Transport')
+  assert result == 'CT04RT*'
+
+  result = check_reverse_classification('Marina')
+  assert result == 'CT05*'
+
+  result = check_reverse_classification('Mooring')
+  assert result == 'CT06*'
+
+  result = check_reverse_classification('Railway Asset')
+  assert result == 'CT07*'
+
+  result = check_reverse_classification('Station / Interchange / Terminal / Halt')
+  assert result == 'CT08*'
+
+  result = check_reverse_classification('Bus / Coach Station')
+  assert result == 'CT08BC*'
+
+  result = check_reverse_classification('Railway Station')
+  assert result == 'CT08RS*'
+
+  result = check_reverse_classification('Vehicular Rail Terminal')
+  assert result == 'CT08VH*'
+
+  result = check_reverse_classification('Transport Track / Way')
+  assert result == 'CT09*'
+
+  result = check_reverse_classification('Cliff Railway')
+  assert result == 'CT09CL*'
+
+  result = check_reverse_classification('Chair Lift / Cable Car / Ski Tow')
+  assert result == 'CT09CX*'
+
+  result = check_reverse_classification('Monorail')
+  assert result == 'CT09MO*'
+
+  result = check_reverse_classification('Vehicle Storage')
+  assert result == 'CT10*'
+
+  result = check_reverse_classification('Boat Storage')
+  assert result == 'CT10BG*'
+
+  result = check_reverse_classification('Bus / Coach Depot')
+  assert result == 'CT10BU*'
+
+  result = check_reverse_classification('Transport Related Infrastructure')
+  assert result == 'CT11*'
+
+  result = check_reverse_classification('Aqueduct')
+  assert result == 'CT11AD*'
+
+  result = check_reverse_classification('Lock')
+  assert result == 'CT11LK*'
+
+  result = check_reverse_classification('Weir')
+  assert result == 'CT11WE*'
+
+  result = check_reverse_classification('Weighbridge / Load Gauge')
+  assert result == 'CT11WG*'
+
+  result = check_reverse_classification('Overnight Lorry Park')
+  assert result == 'CT12*'
+
+  result = check_reverse_classification('Harbour / Port / Dock / Dockyard / Slipway / Landing Stage / Pier / Jetty / Pontoon / Terminal / Berthing / Quay')
+  assert result == 'CT13*'
+
+  result = check_reverse_classification('Passenger Ferry Terminal')
+  assert result == 'CT13FR*'
+
+  result = check_reverse_classification('Non-Tanker Nautical Berthing')
+  assert result == 'CT13NB*'
+
+  result = check_reverse_classification('Nautical Refuelling Facility')
+  assert result == 'CT13NF*'
+
+  result = check_reverse_classification('Slipway')
+  assert result == 'CT13SA*'
+
+  result = check_reverse_classification('Ship Passenger Terminal')
+  assert result == 'CT13SP*'
+
+  result = check_reverse_classification('Tanker Berthing')
+  assert result == 'CT13TK*'
+
+  result = check_reverse_classification('Vehicular Ferry Terminal')
+  assert result == 'CT13VF*'
+
+  result = check_reverse_classification('Utility')
+  assert result == 'CU*'
+
+  result = check_reverse_classification('Electricity Sub-Station')
+  assert result == 'CU01*'
+
+  result = check_reverse_classification('Landfill')
+  assert result == 'CU02*'
+
+  result = check_reverse_classification('Power Station / Energy Production')
+  assert result == 'CU03*'
+
+  result = check_reverse_classification('Electricity Distribution Facility')
+  assert result == 'CU03ED*'
+
+  result = check_reverse_classification('Electricity Production Facility')
+  assert result == 'CU03EP*'
+
+  result = check_reverse_classification('Wind Farm')
+  assert result == 'CU03WF*'
+
+  result = check_reverse_classification('Wind Turbine')
+  assert result == 'CU03WU*'
+
+  result = check_reverse_classification('Pump House / Pumping Station / Water Tower')
+  assert result == 'CU04*'
+
+  result = check_reverse_classification('Water Controlling / Pumping')
+  assert result == 'CU04WC*'
+
+  result = check_reverse_classification('Water Distribution / Pumping')
+  assert result == 'CU04WD*'
+
+  result = check_reverse_classification('Water Quality Monitoring')
+  assert result == 'CU04WM*'
+
+  result = check_reverse_classification('Water Storage')
+  assert result == 'CU04WS*'
+
+  result = check_reverse_classification('Waste Water Distribution / Pumping')
+  assert result == 'CU04WW*'
+
+  result = check_reverse_classification('Telecommunication')
+  assert result == 'CU06*'
+
+  result = check_reverse_classification('Telecommunications Mast')
+  assert result == 'CU06TE*'
+
+  result = check_reverse_classification('Telephone Exchange')
+  assert result == 'CU06TX*'
+
+  result = check_reverse_classification('Water / Waste Water / Sewage Treatment Works')
+  assert result == 'CU07*'
+
+  result = check_reverse_classification('Waste Water Treatment')
+  assert result == 'CU07WR*'
+
+  result = check_reverse_classification('Water Treatment')
+  assert result == 'CU07WT*'
+
+  result = check_reverse_classification('Gas / Oil Storage / Distribution')
+  assert result == 'CU08*'
+
+  result = check_reverse_classification('Gas Governor')
+  assert result == 'CU08GG*'
+
+  result = check_reverse_classification('Gas Holder')
+  assert result == 'CU08GH*'
+
+  result = check_reverse_classification('Oil Terminal')
+  assert result == 'CU08OT*'
+
+  result = check_reverse_classification('Other Utility Use')
+  assert result == 'CU09*'
+
+  result = check_reverse_classification('Observatory')
+  assert result == 'CU09OV*'
+
+  result = check_reverse_classification('Radar Station')
+  assert result == 'CU09RA*'
+
+  result = check_reverse_classification('Satellite Earth Station')
+  assert result == 'CU09SE*'
+
+  result = check_reverse_classification('Cable Terminal Station')
+  assert result == 'CU09CQ*'
+
+  result = check_reverse_classification('Waste Management')
+  assert result == 'CU10*'
+
+  result = check_reverse_classification('Telephone Box')
+  assert result == 'CU11*'
+
+  result = check_reverse_classification('Other Public Telephones')
+  assert result == 'CU11OP*'
+
+  result = check_reverse_classification('Dam')
+  assert result == 'CU12*'
+
+  result = check_reverse_classification('Emergency / Rescue Service')
+  assert result == 'CX*'
+
+  result = check_reverse_classification('Police / Transport Police / Station')
+  assert result == 'CX01*'
+
+  result = check_reverse_classification('Police Training')
+  assert result == 'CX01PT*'
+
+  result = check_reverse_classification('Fire Station')
+  assert result == 'CX02*'
+
+  result = check_reverse_classification('Fire Service Training')
+  assert result == 'CX02FT*'
+
+  result = check_reverse_classification('Ambulance Station')
+  assert result == 'CX03*'
+
+  result = check_reverse_classification('Air Sea Rescue / Air Ambulance')
+  assert result == 'CX03AA*'
+
+  result = check_reverse_classification('Lifeboat Services / Station')
+  assert result == 'CX04*'
+
+  result = check_reverse_classification('Coastguard Rescue / Lookout / Station')
+  assert result == 'CX05*'
+
+  result = check_reverse_classification('Mountain Rescue Station')
+  assert result == 'CX06*'
+
+  result = check_reverse_classification('Lighthouse')
+  assert result == 'CX07*'
+
+  result = check_reverse_classification('Police Box / Kiosk')
+  assert result == 'CX08*'
+
+  result = check_reverse_classification('Information')
+  assert result == 'CZ*'
+
+  result = check_reverse_classification('Advertising Hoarding')
+  assert result == 'CZ01*'
+
+  result = check_reverse_classification('Tourist Information Signage')
+  assert result == 'CZ02*'
+
+  result = check_reverse_classification('Visitor Information')
+  assert result == 'CZ02VI*'
+
+  result = check_reverse_classification('Traffic Information Signage')
+  assert result == 'CZ03*'
+
+  result = check_reverse_classification('Land')
+  assert result == 'L*'
+
+  result = check_reverse_classification('Agricultural - Applicable to land in farm ownership and not run as a separate business enterprise')
+  assert result == 'LA*'
+
+  result = check_reverse_classification('Grazing Land')
+  assert result == 'LA01*'
+
+  result = check_reverse_classification('Permanent Crop / Crop Rotation')
+  assert result == 'LA02*'
+
+  result = check_reverse_classification('Orchard')
+  assert result == 'LA02OC*'
+
+  result = check_reverse_classification('Aviary / Dovecot / Cage')
+  assert result == 'LB99AV*'
+
+  result = check_reverse_classification('Bandstand')
+  assert result == 'LB99BD*'
+
+  result = check_reverse_classification('Pavilion / Changing Room')
+  assert result == 'LB99PI*'
+
+  result = check_reverse_classification('Sports Viewing Structure')
+  assert result == 'LB99SV*'
+
+  result = check_reverse_classification('Burial Ground')
+  assert result == 'LC*'
+
+  result = check_reverse_classification('Historic / Disused Cemetery / Graveyard')
+  assert result == 'LC01*'
+
+  result = check_reverse_classification('Development')
+  assert result == 'LD*'
+
+  result = check_reverse_classification('Development Site')
+  assert result == 'LD01*'
+
+  result = check_reverse_classification('Commercial Construction Site')
+  assert result == 'LD01CC*'
+
+  result = check_reverse_classification('Community Construction Site')
+  assert result == 'LD01CO*'
+
+  result = check_reverse_classification('Residential Construction Site')
+  assert result == 'LD01RN*'
+
+  result = check_reverse_classification('Transport Construction Site')
+  assert result == 'LD01TC*'
+
+  result = check_reverse_classification('Forestry')
+  assert result == 'LF*'
+
+  result = check_reverse_classification('Forest / Arboretum / Pinetum (Managed / Unmanaged)')
+  assert result == 'LF02*'
+
+  result = check_reverse_classification('Arboretum')
+  assert result == 'LF02AU*'
+
+  result = check_reverse_classification('Woodland')
+  assert result == 'LF03*'
+
+  result = check_reverse_classification('Allotment')
+  assert result == 'LL*'
+
+  result = check_reverse_classification('Amenity - Open areas not attracting visitors')
+  assert result == 'LM*'
+
+  result = check_reverse_classification('Landscaped Roundabout')
+  assert result == 'LM01*'
+
+  result = check_reverse_classification('Verge / Central Reservation')
+  assert result == 'LM02*'
+
+  result = check_reverse_classification('Natural Central Reservation')
+  assert result == 'LM02NV*'
+
+  result = check_reverse_classification('Natural Verge')
+  assert result == 'LM02VE*'
+
+  result = check_reverse_classification('Maintained Amenity Land')
+  assert result == 'LM03*'
+
+  result = check_reverse_classification('Maintained Surfaced Area')
+  assert result == 'LM04*'
+
+  result = check_reverse_classification('Made Central Reservation')
+  assert result == 'LM04MV*'
+
+  result = check_reverse_classification('Pavement')
+  assert result == 'LM04PV*'
+
+  result = check_reverse_classification('Open Space')
+  assert result == 'LO*'
+
+  result = check_reverse_classification('Heath / Moorland')
+  assert result == 'LO01*'
+
+  result = check_reverse_classification('Park')
+  assert result == 'LP*'
+
+  result = check_reverse_classification('Public Park / Garden')
+  assert result == 'LP01*'
+
+  result = check_reverse_classification('Public Open Space / Nature Reserve')
+  assert result == 'LP02*'
+
+  result = check_reverse_classification('Playground')
+  assert result == 'LP03*'
+
+  result = check_reverse_classification('Play Area')
+  assert result == 'LP03PA*'
+
+  result = check_reverse_classification('Paddling Pool')
+  assert result == 'LP03PD*'
+
+  result = check_reverse_classification('Private Park / Garden')
+  assert result == 'LP04*'
+
+  result = check_reverse_classification('Unused Land')
+  assert result == 'LU*'
+
+  result = check_reverse_classification('Vacant / Derelict Land')
+  assert result == 'LU01*'
+
+  result = check_reverse_classification('Water')
+  assert result == 'LW*'
+
+  result = check_reverse_classification('Lake / Reservoir')
+  assert result == 'LW01*'
+
+  result = check_reverse_classification('Balancing Pond')
+  assert result == 'LW01BP*'
+
+  result = check_reverse_classification('Buried Reservoir')
+  assert result == 'LW01BV*'
+
+  result = check_reverse_classification('Named Pond')
+  assert result == 'LW02*'
+
+  result = check_reverse_classification('Dew Pond')
+  assert result == 'LW02DE*'
+
+  result = check_reverse_classification('Decoy Pond')
+  assert result == 'LW02DP*'
+
+  result = check_reverse_classification('Static Water')
+  assert result == 'LW02IW*'
+
+  result = check_reverse_classification('Waterway')
+  assert result == 'LW03*'
+
+  result = check_reverse_classification('Leats / Races')
+  assert result == 'LW03LR*'
+
+  result = check_reverse_classification('Drain')
+  assert result == 'LW03DR*'
+
+  result = check_reverse_classification('Military')
+  assert result == 'M*'
+
+  result = check_reverse_classification('Army')
+  assert result == 'MA*'
+
+  result = check_reverse_classification('Army Military Range')
+  assert result == 'MA99AR*'
+
+  result = check_reverse_classification('Army Site')
+  assert result == 'MA99AS*'
+
+  result = check_reverse_classification('Army Military Training')
+  assert result == 'MA99AT*'
+
+  result = check_reverse_classification('Army Military Storage')
+  assert result == 'MA99AG*'
+
+  result = check_reverse_classification('Military Target')
+  assert result == 'MB99TG*'
+
+  result = check_reverse_classification('Air Force')
+  assert result == 'MF*'
+
+  result = check_reverse_classification('Air Force Military Storage')
+  assert result == 'MF99UG*'
+
+  result = check_reverse_classification('Air Force Military Range')
+  assert result == 'MF99UR*'
+
+  result = check_reverse_classification('Air Force Site')
+  assert result == 'MF99US*'
+
+  result = check_reverse_classification('Air Force Military Training')
+  assert result == 'MF99UT*'
+
+  result = check_reverse_classification('Defence Estates')
+  assert result == 'MG*'
+
+  result = check_reverse_classification('Navy')
+  assert result == 'MN*'
+
+  result = check_reverse_classification('Naval Military Storage')
+  assert result == 'MN99VG*'
+
+  result = check_reverse_classification('Naval Military Range')
+  assert result == 'MN99VR*'
+
+  result = check_reverse_classification('Naval Site')
+  assert result == 'MN99VS*'
+
+  result = check_reverse_classification('Naval Military Training')
+  assert result == 'MN99VT*'
+
+  result = check_reverse_classification('Other (Ordnance Survey Only)')
+  assert result == 'O*'
+
+  result = check_reverse_classification('Aid To Navigation')
+  assert result == 'OA*'
+
+  result = check_reverse_classification('Aid To Aeronautical Navigation')
+  assert result == 'OA01*'
+
+  result = check_reverse_classification('Aeronautical Navigation Beacon / Light')
+  assert result == 'OA01AL*'
+
+  result = check_reverse_classification('Landing Light')
+  assert result == 'OA01LL*'
+
+  result = check_reverse_classification('Signal Square')
+  assert result == 'OA01SQ*'
+
+  result = check_reverse_classification('Wind Sock / Wind Tee')
+  assert result == 'OA01WK*'
+
+  result = check_reverse_classification('Aid To Nautical Navigation')
+  assert result == 'OA02*'
+
+  result = check_reverse_classification('Daymark')
+  assert result == 'OA02DM*'
+
+  result = check_reverse_classification('Fog Horn Warning')
+  assert result == 'OA02FG*'
+
+  result = check_reverse_classification('Nautical Navigation Beacon / Light')
+  assert result == 'OA02NL*'
+
+  result = check_reverse_classification('Aid To Road Navigation')
+  assert result == 'OA03*'
+
+  result = check_reverse_classification('Guide Post')
+  assert result == 'OA03GP*'
+
+  result = check_reverse_classification('Coastal Protection / Flood Prevention')
+  assert result == 'OC*'
+
+  result = check_reverse_classification('Boulder Wall / Sea Wall')
+  assert result == 'OC01*'
+
+  result = check_reverse_classification('Flood Gate / Flood Sluice Gate / Flood Valve')
+  assert result == 'OC02*'
+
+  result = check_reverse_classification('Groyne')
+  assert result == 'OC03*'
+
+  result = check_reverse_classification('Rip-Rap')
+  assert result == 'OC04*'
+
+  result = check_reverse_classification('Emergency Support')
+  assert result == 'OE*'
+
+  result = check_reverse_classification('Beach Office / First Aid Facility')
+  assert result == 'OE01*'
+
+  result = check_reverse_classification('Emergency Telephone (Non Motorway)')
+  assert result == 'OE02*'
+
+  result = check_reverse_classification('Fire Alarm Structure / Fire Observation Tower / Fire Beater Facility')
+  assert result == 'OE03*'
+
+  result = check_reverse_classification('Emergency Equipment Point / Emergency Siren / Warning Flag')
+  assert result == 'OE04*'
+
+  result = check_reverse_classification('Lifeguard Facility')
+  assert result == 'OE05*'
+
+  result = check_reverse_classification('Life / Belt / Buoy / Float / Jacket / Safety Rope')
+  assert result == 'OE06*'
+
+  result = check_reverse_classification('Street Furniture')
+  assert result == 'OF*'
+
+  result = check_reverse_classification('Agricultural Support Objects')
+  assert result == 'OG*'
+
+  result = check_reverse_classification('Fish Ladder / Lock / Pen / Trap')
+  assert result == 'OG01*'
+
+  result = check_reverse_classification('Livestock Pen / Dip')
+  assert result == 'OG02*'
+
+  result = check_reverse_classification('Currick')
+  assert result == 'OG03*'
+
+  result = check_reverse_classification('Slurry Bed / Pit')
+  assert result == 'OG04*'
+
+  result = check_reverse_classification('Historical Site / Object')
+  assert result == 'OH*'
+
+  result = check_reverse_classification('Historic Structure / Object')
+  assert result == 'OH01*'
+
+  result = check_reverse_classification('Industrial Support')
+  assert result == 'OI*'
+
+  result = check_reverse_classification('Adit / Incline / Level')
+  assert result == 'OI01*'
+
+  result = check_reverse_classification('Caisson / Dry Dock / Grid')
+  assert result == 'OI02*'
+
+  result = check_reverse_classification('Channel / Conveyor / Conduit / Pipe')
+  assert result == 'OI03*'
+
+  result = check_reverse_classification('Chimney / Flue')
+  assert result == 'OI04*'
+
+  result = check_reverse_classification('Crane / Hoist / Winch / Material Elevator')
+  assert result == 'OI05*'
+
+  result = check_reverse_classification('Flare Stack')
+  assert result == 'OI06*'
+
+  result = check_reverse_classification('Hopper / Silo / Cistern / Tank')
+  assert result == 'OI07*'
+
+  result = check_reverse_classification('Grab / Skip / Other Industrial Waste Machinery / Discharging')
+  assert result == 'OI08*'
+
+  result = check_reverse_classification('Kiln / Oven / Smelter')
+  assert result == 'OI09*'
+
+  result = check_reverse_classification('Manhole / Shaft')
+  assert result == 'OI10*'
+
+  result = check_reverse_classification('Industrial Overflow / Sluice / Valve / Valve Housing')
+  assert result == 'OI11*'
+
+  result = check_reverse_classification('Cooling Tower')
+  assert result == 'OI12*'
+
+  result = check_reverse_classification('Solar Panel / Waterwheel')
+  assert result == 'OI13*'
+
+  result = check_reverse_classification('Telephone Pole / Post')
+  assert result == 'OI14*'
+
+  result = check_reverse_classification('Electricity Distribution Pole / Pylon')
+  assert result == 'OI15*'
+
+  result = check_reverse_classification('Significant Natural Object')
+  assert result == 'ON*'
+
+  result = check_reverse_classification('Boundary / Significant / Historic Tree / Pollard')
+  assert result == 'ON01*'
+
+  result = check_reverse_classification('Boundary / Significant Rock / Boulder')
+  assert result == 'ON02*'
+
+  result = check_reverse_classification('Natural Hole (Blow / Shake / Swallow)')
+  assert result == 'ON03*'
+
+  result = check_reverse_classification('Ornamental / Cultural Object')
+  assert result == 'OO*'
+
+  result = check_reverse_classification('Mausoleum / Tomb / Grave')
+  assert result == 'OO02*'
+
+  result = check_reverse_classification('Simple Ornamental Object')
+  assert result == 'OO03*'
+
+  result = check_reverse_classification('Maze')
+  assert result == 'OO04*'
+
+  result = check_reverse_classification('Sport / Leisure Support')
+  assert result == 'OP*'
+
+  result = check_reverse_classification('Butt / Hide')
+  assert result == 'OP01*'
+
+  result = check_reverse_classification('Gallop / Ride')
+  assert result == 'OP02*'
+
+  result = check_reverse_classification('Miniature Railway')
+  assert result == 'OP03*'
+
+  result = check_reverse_classification('Royal Mail Infrastructure')
+  assert result == 'OR*'
+
+  result = check_reverse_classification('Postal Box')
+  assert result == 'OR01*'
+
+  result = check_reverse_classification('Postal Delivery Box / Pouch')
+  assert result == 'OR02*'
+
+  result = check_reverse_classification('PO Box')
+  assert result == 'OR03*'
+
+  result = check_reverse_classification('Additional Mail / Packet Addressee')
+  assert result == 'OR04*'
+
+  result = check_reverse_classification('Scientific / Observation Support')
+  assert result == 'OS*'
+
+  result = check_reverse_classification('Meteorological Station / Equipment')
+  assert result == 'OS01*'
+
+  result = check_reverse_classification('Radar / Satellite Infrastructure')
+  assert result == 'OS02*'
+
+  result = check_reverse_classification('Telescope / Observation Infrastructure / Astronomy')
+  assert result == 'OS03*'
+
+  result = check_reverse_classification('Transport Support')
+  assert result == 'OT*'
+
+  result = check_reverse_classification('Cattle Grid / Ford')
+  assert result == 'OT01*'
+
+  result = check_reverse_classification('Elevator / Escalator / Steps')
+  assert result == 'OT02*'
+
+  result = check_reverse_classification('Footbridge / Walkway')
+  assert result == 'OT03*'
+
+  result = check_reverse_classification('Pole / Post / Bollard (Restricting Vehicular Access)')
+  assert result == 'OT04*'
+
+  result = check_reverse_classification('Subway / Underpass')
+  assert result == 'OT05*'
+
+  result = check_reverse_classification('Customs Inspection Facility')
+  assert result == 'OT06*'
+
+  result = check_reverse_classification('Lay-By')
+  assert result == 'OT07*'
+
+  result = check_reverse_classification('Level Crossing')
+  assert result == 'OT08*'
+
+  result = check_reverse_classification('Mail Pick Up')
+  assert result == 'OT09*'
+
+  result = check_reverse_classification('Railway Pedestrian Crossing')
+  assert result == 'OT10*'
+
+  result = check_reverse_classification('Railway Buffer')
+  assert result == 'OT11*'
+
+  result = check_reverse_classification('Rail Drag')
+  assert result == 'OT12*'
+
+  result = check_reverse_classification('Rail Infrastructure Services')
+  assert result == 'OT13*'
+
+  result = check_reverse_classification('Rail Kilometre Distance Marker')
+  assert result == 'OT14*'
+
+  result = check_reverse_classification('Railway Lighting')
+  assert result == 'OT15*'
+
+  result = check_reverse_classification('Rail Mile Distance Marker')
+  assert result == 'OT16*'
+
+  result = check_reverse_classification('Railway Turntable')
+  assert result == 'OT17*'
+
+  result = check_reverse_classification('Rail Weighbridge')
+  assert result == 'OT18*'
+
+  result = check_reverse_classification('Rail Signalling')
+  assert result == 'OT19*'
+
+  result = check_reverse_classification('Railway Traverse')
+  assert result == 'OT20*'
+
+  result = check_reverse_classification('Goods Tramway')
+  assert result == 'OT21*'
+
+  result = check_reverse_classification('Road Drag')
+  assert result == 'OT22*'
+
+  result = check_reverse_classification('Vehicle Dip')
+  assert result == 'OT23*'
+
+  result = check_reverse_classification('Road Turntable')
+  assert result == 'OT24*'
+
+  result = check_reverse_classification('Road Mile Distance Marker')
+  assert result == 'OT25*'
+
+  result = check_reverse_classification('Road Kilometre Distance Marker')
+  assert result == 'OT26*'
+
+  result = check_reverse_classification('Road Infrastructure Services')
+  assert result == 'OT27*'
+
+  result = check_reverse_classification('Unsupported Site')
+  assert result == 'OU*'
+
+  result = check_reverse_classification('Cycle Parking Facility')
+  assert result == 'OU01*'
+
+  result = check_reverse_classification('Picnic / Barbeque Site')
+  assert result == 'OU04*'
+
+  result = check_reverse_classification('Travelling Persons Site')
+  assert result == 'OU05*'
+
+  result = check_reverse_classification('Shelter (Not Including Bus Shelter)')
+  assert result == 'OU08*'
+
+  result = check_reverse_classification('Parent Shell')
+  assert result == 'P*'
+
+  result = check_reverse_classification('Property Shell')
+  assert result == 'PP*'
+
+  result = check_reverse_classification('Street Record')
+  assert result == 'PS*'
+
+  result = check_reverse_classification('Residential')
+  assert result == 'R*'
+
+  result = check_reverse_classification('Car Park Space')
+  assert result == 'RC*'
+
+  result = check_reverse_classification('Allocated Parking')
+  assert result == 'RC01*'
+
+  result = check_reverse_classification('Dwelling')
+  assert result == 'RD*'
+
+  result = check_reverse_classification('Caravan')
+  assert result == 'RD01*'
+
+  result = check_reverse_classification('Detached')
+  assert result == 'RD02*'
+
+  result = check_reverse_classification('Semi-Detached')
+  assert result == 'RD03*'
+
+  result = check_reverse_classification('Terraced')
+  assert result == 'RD04*'
+
+  result = check_reverse_classification('Self Contained Flat (Includes Maisonette / Apartment)')
+  assert result == 'RD06*'
+
+  result = check_reverse_classification('House Boat')
+  assert result == 'RD07*'
+
+  result = check_reverse_classification('Sheltered Accommodation')
+  assert result == 'RD08*'
+
+  result = check_reverse_classification('Privately Owned Holiday Caravan / Chalet')
+  assert result == 'RD10*'
+
+  result = check_reverse_classification('Garage')
+  assert result == 'RG*'
+
+  result = check_reverse_classification('Lock-Up Garage / Garage Court')
+  assert result == 'RG02*'
+
+  result = check_reverse_classification('House In Multiple Occupation')
+  assert result == 'RH*'
+
+  result = check_reverse_classification('HMO Parent')
+  assert result == 'RH01*'
+
+  result = check_reverse_classification('HMO Bedsit / Other Non Self Contained Accommodation')
+  assert result == 'RH02*'
+
+  result = check_reverse_classification('HMO Not Further Divided')
+  assert result == 'RH03*'
+
+  result = check_reverse_classification('Residential Institution')
+  assert result == 'RI*'
+
+  result = check_reverse_classification('Care / Nursing Home')
+  assert result == 'RI01*'
+
+  result = check_reverse_classification('Communal Residence')
+  assert result == 'RI02*'
+
+  result = check_reverse_classification('Non-Commercial Lodgings')
+  assert result == 'RI02NC*'
+
+  result = check_reverse_classification('Religious Community')
+  assert result == 'RI02RC*'
+
+  result = check_reverse_classification('Residential Education')
+  assert result == 'RI03*'
+
+  result = check_reverse_classification('Unclassified')
+  assert result == 'U*'
+
+  result = check_reverse_classification('Awaiting Classification')
+  assert result == 'UC*'
+
+  result = check_reverse_classification('Pending Internal Investigation')
+  assert result == 'UP*'
+
+  result = check_reverse_classification('Dual Use')
+  assert result == 'X*'
+
+  result = check_reverse_classification('Object of Interest')
+  assert result == 'Z*'
+
+  result = check_reverse_classification('Archaeological Dig Site')
+  assert result == 'ZA*'
+
+  result = check_reverse_classification('Monument')
+  assert result == 'ZM*'
+
+  result = check_reverse_classification('Obelisk / Milestone / Standing Stone')
+  assert result == 'ZM01*'
+
+  result = check_reverse_classification('Obelisk')
+  assert result == 'ZM01OB*'
+
+  result = check_reverse_classification('Standing Stone')
+  assert result == 'ZM01ST*'
+
+  result = check_reverse_classification('Memorial / Market Cross')
+  assert result == 'ZM02*'
+
+  result = check_reverse_classification('Statue')
+  assert result == 'ZM03*'
+
+  result = check_reverse_classification('Castle / Historic Ruin')
+  assert result == 'ZM04*'
+
+  result = check_reverse_classification('Other Structure')
+  assert result == 'ZM05*'
+
+  result = check_reverse_classification('Boundary Stone')
+  assert result == 'ZM05BS*'
+
+  result = check_reverse_classification('Permanent Art Display / Sculpture')
+  assert result == 'ZM05PN*'
+
+  result = check_reverse_classification('Cascade / Fountain')
+  assert result == 'ZM05CE*'
+
+  result = check_reverse_classification('Windmill (Inactive)')
+  assert result == 'ZM05WI*'
+
+  result = check_reverse_classification('Stately Home')
+  assert result == 'ZS*'
+
+  result = check_reverse_classification('Underground Feature')
+  assert result == 'ZU*'
+
+  result = check_reverse_classification('Cave')
+  assert result == 'ZU01*'
+
+  result = check_reverse_classification('Pothole / Natural Hole')
+  assert result == 'ZU04*'
+
+  result = check_reverse_classification('Other Underground Feature')
+  assert result == 'ZV*'
+
+  result = check_reverse_classification('Cellar')
+  assert result == 'ZV01*'
+
+  result = check_reverse_classification('Disused Mine')
+  assert result == 'ZV02*'
+
+  result = check_reverse_classification('Mineral Mining / Inactive')
+  assert result == 'ZV02MI*'
+
+  result = check_reverse_classification('Oil And / Gas Extraction/ Inactive')
+  assert result == 'ZV02OI*'
+
+  result = check_reverse_classification('Mineral Quarrying And / Open Extraction / Inactive')
+  assert result == 'ZV02QI*'
+
+  result = check_reverse_classification('Well / Spring')
+  assert result == 'ZV03*'
+
+  result = check_reverse_classification('Spring')
+  assert result == 'ZV03SG*'
+
+  result = check_reverse_classification('Well')
+  assert result == 'ZV03WL*'
+
+  result = check_reverse_classification('Place Of Worship')
+  assert result == 'ZW*'
+
+  result = check_reverse_classification('Abbey')
+  assert result == 'ZW99AB*'
+
+  result = check_reverse_classification('Cathedral')
+  assert result == 'ZW99CA*'
+
+  result = check_reverse_classification('Church')
+  assert result == 'ZW99CH*'
+
+  result = check_reverse_classification('Chapel')
+  assert result == 'ZW99CP*'
+
+  result = check_reverse_classification('Gurdwara')
+  assert result == 'ZW99GU*'
+
+  result = check_reverse_classification('Kingdom Hall')
+  assert result == 'ZW99KH*'
+
+  result = check_reverse_classification('Mosque')
+  assert result == 'ZW99MQ*'
+
+  result = check_reverse_classification('Minster')
+  assert result == 'ZW99MT*'
+
+  result = check_reverse_classification('Stupa')
+  assert result == 'ZW99SU*'
+
+  result = check_reverse_classification('Synagogue')
+  assert result == 'ZW99SY*'
+
+  result = check_reverse_classification('Temple')
+  assert result == 'ZW99TP*'
+
+  result = check_reverse_classification('Lych Gate')
+  assert result == 'ZW99LG*'
+
+
+  # Ancillary tests
+
+  # result = check_reverse_classification('Ancillary Building')
+  # assert result == 'CB*'
+
+  # result = check_reverse_classification('Ancillary Building')
+  # assert result == 'LB*'
+
+  # result = check_reverse_classification('Ancillary Building')
+  # assert result == 'MB*'
+
+  # result = check_reverse_classification('Ancillary Building')
+  # assert result == 'RB*'
