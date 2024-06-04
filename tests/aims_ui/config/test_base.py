@@ -13,12 +13,36 @@ def get_base_config_dict():
 
   return config_dict
 
+def test_default_group_access():
+  """ Check that the default group access is denied for custom pages """
+
+  conf = get_base_config_dict()
+  user_groups_conf = conf.get('USER_GROUPS')
+  for group in user_groups_conf:
+    if group.get('name') == 'default':
+      default_group = group
+  
+  default_pages_removed = default_group.get('pages_to_remove')
+
+  # Ensure custom response is in the default group's pages to remove
+  assert 'custom_response' in default_pages_removed
+
+  # Check bulk limits for the default group
+  bulk_limits = default_group.get('bulk_limits')
+
+  assert bulk_limits.get('limit_mini_bulk') == 5000
+  assert bulk_limits.get('limit_vast_bulk') == 100000
+  assert bulk_limits.get('limit_uprn_match') == 5000
+
+
+
 def test_secure_cookie():
   """ Check that the secure cookie is set to True """
 
   conf = get_base_config_dict()
 
   assert conf['SESSION_COOKIE_SECURE'] == True
+
 
 def test_base_classification_list():
   """ Check that the default_classification contains expected keys """
@@ -70,7 +94,7 @@ def test_base_classification_list():
 
   # Get the actual config keys
   conf_keys = get_base_config_dict().keys()
-  
+
   # Check every single expected key is present
   for key in conf_keys:
     assert key in keys_that_should_be_present
