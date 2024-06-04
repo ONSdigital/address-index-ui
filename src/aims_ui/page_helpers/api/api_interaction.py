@@ -310,7 +310,7 @@ def get_classifications():
           headers=header,
       )
     except:
-      logging.warn(
+      logging.warning(
           'No Class Code endpoint found, falling back to Preset Options')
       class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
 
