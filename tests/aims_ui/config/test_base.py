@@ -13,15 +13,16 @@ def get_base_config_dict():
 
   return config_dict
 
+
 def test_default_group_access():
-  """ Check that the default group access is denied for custom pages """
+  """ Check that the default group denies api access, has correct bulk limits """
 
   conf = get_base_config_dict()
   user_groups_conf = conf.get('USER_GROUPS')
   for group in user_groups_conf:
     if group.get('name') == 'default':
       default_group = group
-  
+
   default_pages_removed = default_group.get('pages_to_remove')
 
   # Ensure custom response is in the default group's pages to remove
@@ -33,7 +34,6 @@ def test_default_group_access():
   assert bulk_limits.get('limit_mini_bulk') == 5000
   assert bulk_limits.get('limit_vast_bulk') == 100000
   assert bulk_limits.get('limit_uprn_match') == 5000
-
 
 
 def test_secure_cookie():
