@@ -83,14 +83,14 @@ def get_epoch_options():
           headers=header,
       )
     except:
-      logging.warn('No epoch endpoint found, falling back to Preset Options')
+      logging.warning('No epoch endpoint found, falling back to Preset Options')
       sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
       default = app.config.get('DEFAULT_EPOCH_SELECTED')
 
       return sorted_epochs, default
 
     if epoch_call.status_code != 200:
-      logging.warn('No epoch endpoint found, falling back to Preset Options')
+      logging.warning('No epoch endpoint found, falling back to Preset Options')
       sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
       default = app.config.get('DEFAULT_EPOCH_SELECTED')
 
@@ -99,7 +99,7 @@ def get_epoch_options():
     # If there are no errors from the epoch call, extract the epochs
     epoch_options = json.loads(epoch_call.text).get('epochs')
   else:
-    logging.warn('Test mode, falling back to Preset Options')
+    logging.warning('Test mode, falling back to Preset Options')
     sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
     default = app.config.get('DEFAULT_EPOCH_SELECTED')
 
@@ -317,7 +317,7 @@ def get_classifications():
       return class_list
 
     if class_call.status_code != 200:
-      logging.warn(
+      logging.warning(
           'No Class Code endpoint found, falling back to Preset Options')
       class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
 
