@@ -3,6 +3,7 @@ from flask import Flask
 from src import aims_ui
 from aims_ui.models.endpoint_options import get_options
 
+
 def test_get_options_percentage_match():
   # Get the percentage match generated results
   result = get_options('percentage_match')
@@ -11,4 +12,3 @@ def test_get_options_percentage_match():
   final_values = ['%' + str(x) for x in percent_values]
 
   assert result == final_values
-

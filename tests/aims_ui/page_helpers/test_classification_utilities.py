@@ -3,16 +3,18 @@ from flask import Flask
 from src import aims_ui
 from aims_ui.page_helpers.classification_utilities import check_reverse_classification
 
+
 def test_check_reverse_classification():
   """ Check that the classification can be obtained from the string value """
-    
+
   result = check_reverse_classification('Commercial')
   assert result == 'C*'
 
   result = check_reverse_classification('Agricultural')
   assert result == 'CA*'
 
-  result = check_reverse_classification('Farm / Non-Residential Associated Building')
+  result = check_reverse_classification(
+      'Farm / Non-Residential Associated Building')
   assert result == 'CA01*'
 
   result = check_reverse_classification('Fishery')
@@ -63,7 +65,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Secure Residential Accommodation')
   assert result == 'CC03SC*'
 
-  result = check_reverse_classification('Public / Village Hall / Other Community Facility')
+  result = check_reverse_classification(
+      'Public / Village Hall / Other Community Facility')
   assert result == 'CC04*'
 
   result = check_reverse_classification('Youth Recreational / Social Club')
@@ -72,7 +75,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Public Convenience')
   assert result == 'CC05*'
 
-  result = check_reverse_classification('Cemetery / Crematorium / Graveyard. In Current Use.')
+  result = check_reverse_classification(
+      'Cemetery / Crematorium / Graveyard. In Current Use.')
   assert result == 'CC06*'
 
   result = check_reverse_classification('Columbarium')
@@ -93,13 +97,15 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Mortuary')
   assert result == 'CC06MY*'
 
-  result = check_reverse_classification('Church Hall / Religious Meeting Place / Hall')
+  result = check_reverse_classification(
+      'Church Hall / Religious Meeting Place / Hall')
   assert result == 'CC07*'
 
   result = check_reverse_classification('Community Service Centre / Office')
   assert result == 'CC08*'
 
-  result = check_reverse_classification('Public Household Waste Recycling Centre (HWRC)')
+  result = check_reverse_classification(
+      'Public Household Waste Recycling Centre (HWRC)')
   assert result == 'CC09*'
 
   result = check_reverse_classification('Recycling Site')
@@ -126,7 +132,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification("Children''s Nursery / Crèche")
   assert result == 'CE02*'
 
-  result = check_reverse_classification('Preparatory / First / Primary / Infant / Junior / Middle School')
+  result = check_reverse_classification(
+      'Preparatory / First / Primary / Infant / Junior / Middle School')
   assert result == 'CE03*'
 
   result = check_reverse_classification('First School')
@@ -141,7 +148,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Middle School')
   assert result == 'CE03MS*'
 
-  result = check_reverse_classification('Non State Primary / Preparatory School')
+  result = check_reverse_classification(
+      'Non State Primary / Preparatory School')
   assert result == 'CE03NP*'
 
   result = check_reverse_classification('Primary School')
@@ -165,22 +173,27 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Other Educational Establishment')
   assert result == 'CE07*'
 
-  result = check_reverse_classification('Hotel / Motel / Boarding / Guest House')
+  result = check_reverse_classification(
+      'Hotel / Motel / Boarding / Guest House')
   assert result == 'CH*'
 
-  result = check_reverse_classification('Boarding / Guest House / Bed And Breakfast / Youth Hostel')
+  result = check_reverse_classification(
+      'Boarding / Guest House / Bed And Breakfast / Youth Hostel')
   assert result == 'CH01*'
 
   result = check_reverse_classification('Youth Hostel')
   assert result == 'CH01YH*'
 
-  result = check_reverse_classification('Holiday Let/Accomodation/Short-Term Let Other Than CH01')
+  result = check_reverse_classification(
+      'Holiday Let/Accomodation/Short-Term Let Other Than CH01')
   assert result == 'CH02*'
 
   result = check_reverse_classification('Hotel/Motel')
   assert result == 'CH03*'
 
-  result = check_reverse_classification('Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites')
+  result = check_reverse_classification(
+      'Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites'
+  )
   assert result == 'CI*'
 
   result = check_reverse_classification('Factory/Manufacturing')
@@ -255,7 +268,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Winery')
   assert result == 'CI01WN*'
 
-  result = check_reverse_classification('Mineral / Ore Working / Quarry / Mine')
+  result = check_reverse_classification(
+      'Mineral / Ore Working / Quarry / Mine')
   assert result == 'CI02*'
 
   result = check_reverse_classification('Mineral Mining / Active')
@@ -270,7 +284,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Oil / Gas Extraction / Active')
   assert result == 'CI02OA*'
 
-  result = check_reverse_classification('Mineral Quarrying / Open Extraction / Active')
+  result = check_reverse_classification(
+      'Mineral Quarrying / Open Extraction / Active')
   assert result == 'CI02QA*'
 
   result = check_reverse_classification('Workshop / Light Industrial')
@@ -312,7 +327,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Maintenance Depot')
   assert result == 'CI08*'
 
-  result = check_reverse_classification('Leisure - Applicable to recreational sites and enterprises')
+  result = check_reverse_classification(
+      'Leisure - Applicable to recreational sites and enterprises')
   assert result == 'CL*'
 
   result = check_reverse_classification('Amusements')
@@ -372,7 +388,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Maritime Museum')
   assert result == 'CL04NM*'
 
-  result = check_reverse_classification('Indoor / Outdoor Leisure / Sporting Activity / Centre')
+  result = check_reverse_classification(
+      'Indoor / Outdoor Leisure / Sporting Activity / Centre')
   assert result == 'CL06*'
 
   result = check_reverse_classification('Athletics Facility')
@@ -465,7 +482,9 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Wildlife Sports Facility')
   assert result == 'CL06WY*'
 
-  result = check_reverse_classification('Bingo Hall / Cinema / Conference / Exhibition Centre / Theatre / Concert Hall')
+  result = check_reverse_classification(
+      'Bingo Hall / Cinema / Conference / Exhibition Centre / Theatre / Concert Hall'
+  )
   assert result == 'CL07*'
 
   result = check_reverse_classification('Theatre')
@@ -495,7 +514,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Aquatic Attraction')
   assert result == 'CL08AQ*'
 
-  result = check_reverse_classification('Beach Hut (Recreational, Non-Residential Use Only)')
+  result = check_reverse_classification(
+      'Beach Hut (Recreational, Non-Residential Use Only)')
   assert result == 'CL09*'
 
   result = check_reverse_classification('Licensed Private Members Club')
@@ -537,7 +557,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Hospital')
   assert result == 'CM03HP*'
 
-  result = check_reverse_classification('Medical / Testing / Research Laboratory')
+  result = check_reverse_classification(
+      'Medical / Testing / Research Laboratory')
   assert result == 'CM04*'
 
   result = check_reverse_classification('Professional Medical Service')
@@ -585,7 +606,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Office / Work Studio')
   assert result == 'CO01*'
 
-  result = check_reverse_classification('Embassy / High Commission / Consulate')
+  result = check_reverse_classification(
+      'Embassy / High Commission / Consulate')
   assert result == 'CO01EM*'
 
   result = check_reverse_classification('Film Studio')
@@ -642,7 +664,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Other Licensed Premise / Vendor')
   assert result == 'CR09*'
 
-  result = check_reverse_classification('Fast Food Outlet / Takeaway (Hot / Cold)')
+  result = check_reverse_classification(
+      'Fast Food Outlet / Takeaway (Hot / Cold)')
   assert result == 'CR10*'
 
   result = check_reverse_classification('Automated Teller Machine (ATM)')
@@ -660,7 +683,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Transport')
   assert result == 'CT*'
 
-  result = check_reverse_classification('Airfield / Airstrip / Airport / Air Transport Infrastructure Facility')
+  result = check_reverse_classification(
+      'Airfield / Airstrip / Airport / Air Transport Infrastructure Facility')
   assert result == 'CT01*'
 
   result = check_reverse_classification('Airfield')
@@ -669,7 +693,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Air Passenger Terminal')
   assert result == 'CT01AY*'
 
-  result = check_reverse_classification('Air Transport Infrastructure Services')
+  result = check_reverse_classification(
+      'Air Transport Infrastructure Services')
   assert result == 'CT01AI*'
 
   result = check_reverse_classification('Airport')
@@ -684,7 +709,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Bus Shelter')
   assert result == 'CT02*'
 
-  result = check_reverse_classification('Car / Coach / Commercial Vehicle / Taxi Parking / Park And Ride Site')
+  result = check_reverse_classification(
+      'Car / Coach / Commercial Vehicle / Taxi Parking / Park And Ride Site')
   assert result == 'CT03*'
 
   result = check_reverse_classification('Public Park And Ride')
@@ -723,7 +749,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Railway Asset')
   assert result == 'CT07*'
 
-  result = check_reverse_classification('Station / Interchange / Terminal / Halt')
+  result = check_reverse_classification(
+      'Station / Interchange / Terminal / Halt')
   assert result == 'CT08*'
 
   result = check_reverse_classification('Bus / Coach Station')
@@ -774,7 +801,9 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Overnight Lorry Park')
   assert result == 'CT12*'
 
-  result = check_reverse_classification('Harbour / Port / Dock / Dockyard / Slipway / Landing Stage / Pier / Jetty / Pontoon / Terminal / Berthing / Quay')
+  result = check_reverse_classification(
+      'Harbour / Port / Dock / Dockyard / Slipway / Landing Stage / Pier / Jetty / Pontoon / Terminal / Berthing / Quay'
+  )
   assert result == 'CT13*'
 
   result = check_reverse_classification('Passenger Ferry Terminal')
@@ -822,7 +851,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Wind Turbine')
   assert result == 'CU03WU*'
 
-  result = check_reverse_classification('Pump House / Pumping Station / Water Tower')
+  result = check_reverse_classification(
+      'Pump House / Pumping Station / Water Tower')
   assert result == 'CU04*'
 
   result = check_reverse_classification('Water Controlling / Pumping')
@@ -849,7 +879,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Telephone Exchange')
   assert result == 'CU06TX*'
 
-  result = check_reverse_classification('Water / Waste Water / Sewage Treatment Works')
+  result = check_reverse_classification(
+      'Water / Waste Water / Sewage Treatment Works')
   assert result == 'CU07*'
 
   result = check_reverse_classification('Waste Water Treatment')
@@ -921,7 +952,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Lifeboat Services / Station')
   assert result == 'CX04*'
 
-  result = check_reverse_classification('Coastguard Rescue / Lookout / Station')
+  result = check_reverse_classification(
+      'Coastguard Rescue / Lookout / Station')
   assert result == 'CX05*'
 
   result = check_reverse_classification('Mountain Rescue Station')
@@ -951,7 +983,9 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Land')
   assert result == 'L*'
 
-  result = check_reverse_classification('Agricultural - Applicable to land in farm ownership and not run as a separate business enterprise')
+  result = check_reverse_classification(
+      'Agricultural - Applicable to land in farm ownership and not run as a separate business enterprise'
+  )
   assert result == 'LA*'
 
   result = check_reverse_classification('Grazing Land')
@@ -978,7 +1012,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Burial Ground')
   assert result == 'LC*'
 
-  result = check_reverse_classification('Historic / Disused Cemetery / Graveyard')
+  result = check_reverse_classification(
+      'Historic / Disused Cemetery / Graveyard')
   assert result == 'LC01*'
 
   result = check_reverse_classification('Development')
@@ -1002,7 +1037,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Forestry')
   assert result == 'LF*'
 
-  result = check_reverse_classification('Forest / Arboretum / Pinetum (Managed / Unmanaged)')
+  result = check_reverse_classification(
+      'Forest / Arboretum / Pinetum (Managed / Unmanaged)')
   assert result == 'LF02*'
 
   result = check_reverse_classification('Arboretum')
@@ -1014,7 +1050,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Allotment')
   assert result == 'LL*'
 
-  result = check_reverse_classification('Amenity - Open areas not attracting visitors')
+  result = check_reverse_classification(
+      'Amenity - Open areas not attracting visitors')
   assert result == 'LM*'
 
   result = check_reverse_classification('Landscaped Roundabout')
@@ -1170,7 +1207,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Aid To Aeronautical Navigation')
   assert result == 'OA01*'
 
-  result = check_reverse_classification('Aeronautical Navigation Beacon / Light')
+  result = check_reverse_classification(
+      'Aeronautical Navigation Beacon / Light')
   assert result == 'OA01AL*'
 
   result = check_reverse_classification('Landing Light')
@@ -1200,13 +1238,15 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Guide Post')
   assert result == 'OA03GP*'
 
-  result = check_reverse_classification('Coastal Protection / Flood Prevention')
+  result = check_reverse_classification(
+      'Coastal Protection / Flood Prevention')
   assert result == 'OC*'
 
   result = check_reverse_classification('Boulder Wall / Sea Wall')
   assert result == 'OC01*'
 
-  result = check_reverse_classification('Flood Gate / Flood Sluice Gate / Flood Valve')
+  result = check_reverse_classification(
+      'Flood Gate / Flood Sluice Gate / Flood Valve')
   assert result == 'OC02*'
 
   result = check_reverse_classification('Groyne')
@@ -1224,16 +1264,19 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Emergency Telephone (Non Motorway)')
   assert result == 'OE02*'
 
-  result = check_reverse_classification('Fire Alarm Structure / Fire Observation Tower / Fire Beater Facility')
+  result = check_reverse_classification(
+      'Fire Alarm Structure / Fire Observation Tower / Fire Beater Facility')
   assert result == 'OE03*'
 
-  result = check_reverse_classification('Emergency Equipment Point / Emergency Siren / Warning Flag')
+  result = check_reverse_classification(
+      'Emergency Equipment Point / Emergency Siren / Warning Flag')
   assert result == 'OE04*'
 
   result = check_reverse_classification('Lifeguard Facility')
   assert result == 'OE05*'
 
-  result = check_reverse_classification('Life / Belt / Buoy / Float / Jacket / Safety Rope')
+  result = check_reverse_classification(
+      'Life / Belt / Buoy / Float / Jacket / Safety Rope')
   assert result == 'OE06*'
 
   result = check_reverse_classification('Street Furniture')
@@ -1275,7 +1318,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Chimney / Flue')
   assert result == 'OI04*'
 
-  result = check_reverse_classification('Crane / Hoist / Winch / Material Elevator')
+  result = check_reverse_classification(
+      'Crane / Hoist / Winch / Material Elevator')
   assert result == 'OI05*'
 
   result = check_reverse_classification('Flare Stack')
@@ -1284,7 +1328,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Hopper / Silo / Cistern / Tank')
   assert result == 'OI07*'
 
-  result = check_reverse_classification('Grab / Skip / Other Industrial Waste Machinery / Discharging')
+  result = check_reverse_classification(
+      'Grab / Skip / Other Industrial Waste Machinery / Discharging')
   assert result == 'OI08*'
 
   result = check_reverse_classification('Kiln / Oven / Smelter')
@@ -1293,7 +1338,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Manhole / Shaft')
   assert result == 'OI10*'
 
-  result = check_reverse_classification('Industrial Overflow / Sluice / Valve / Valve Housing')
+  result = check_reverse_classification(
+      'Industrial Overflow / Sluice / Valve / Valve Housing')
   assert result == 'OI11*'
 
   result = check_reverse_classification('Cooling Tower')
@@ -1305,19 +1351,23 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Telephone Pole / Post')
   assert result == 'OI14*'
 
-  result = check_reverse_classification('Electricity Distribution Pole / Pylon')
+  result = check_reverse_classification(
+      'Electricity Distribution Pole / Pylon')
   assert result == 'OI15*'
 
   result = check_reverse_classification('Significant Natural Object')
   assert result == 'ON*'
 
-  result = check_reverse_classification('Boundary / Significant / Historic Tree / Pollard')
+  result = check_reverse_classification(
+      'Boundary / Significant / Historic Tree / Pollard')
   assert result == 'ON01*'
 
-  result = check_reverse_classification('Boundary / Significant Rock / Boulder')
+  result = check_reverse_classification(
+      'Boundary / Significant Rock / Boulder')
   assert result == 'ON02*'
 
-  result = check_reverse_classification('Natural Hole (Blow / Shake / Swallow)')
+  result = check_reverse_classification(
+      'Natural Hole (Blow / Shake / Swallow)')
   assert result == 'ON03*'
 
   result = check_reverse_classification('Ornamental / Cultural Object')
@@ -1368,7 +1418,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Radar / Satellite Infrastructure')
   assert result == 'OS02*'
 
-  result = check_reverse_classification('Telescope / Observation Infrastructure / Astronomy')
+  result = check_reverse_classification(
+      'Telescope / Observation Infrastructure / Astronomy')
   assert result == 'OS03*'
 
   result = check_reverse_classification('Transport Support')
@@ -1383,7 +1434,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Footbridge / Walkway')
   assert result == 'OT03*'
 
-  result = check_reverse_classification('Pole / Post / Bollard (Restricting Vehicular Access)')
+  result = check_reverse_classification(
+      'Pole / Post / Bollard (Restricting Vehicular Access)')
   assert result == 'OT04*'
 
   result = check_reverse_classification('Subway / Underpass')
@@ -1503,7 +1555,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Terraced')
   assert result == 'RD04*'
 
-  result = check_reverse_classification('Self Contained Flat (Includes Maisonette / Apartment)')
+  result = check_reverse_classification(
+      'Self Contained Flat (Includes Maisonette / Apartment)')
   assert result == 'RD06*'
 
   result = check_reverse_classification('House Boat')
@@ -1512,7 +1565,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Sheltered Accommodation')
   assert result == 'RD08*'
 
-  result = check_reverse_classification('Privately Owned Holiday Caravan / Chalet')
+  result = check_reverse_classification(
+      'Privately Owned Holiday Caravan / Chalet')
   assert result == 'RD10*'
 
   result = check_reverse_classification('Garage')
@@ -1527,7 +1581,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('HMO Parent')
   assert result == 'RH01*'
 
-  result = check_reverse_classification('HMO Bedsit / Other Non Self Contained Accommodation')
+  result = check_reverse_classification(
+      'HMO Bedsit / Other Non Self Contained Accommodation')
   assert result == 'RH02*'
 
   result = check_reverse_classification('HMO Not Further Divided')
@@ -1632,7 +1687,8 @@ def test_check_reverse_classification():
   result = check_reverse_classification('Oil And / Gas Extraction/ Inactive')
   assert result == 'ZV02OI*'
 
-  result = check_reverse_classification('Mineral Quarrying And / Open Extraction / Inactive')
+  result = check_reverse_classification(
+      'Mineral Quarrying And / Open Extraction / Inactive')
   assert result == 'ZV02QI*'
 
   result = check_reverse_classification('Well / Spring')
@@ -1682,7 +1738,6 @@ def test_check_reverse_classification():
 
   result = check_reverse_classification('Lych Gate')
   assert result == 'ZW99LG*'
-
 
   # Ancillary tests - Noteable because these need to be replaced with a more specific label
 

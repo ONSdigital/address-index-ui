@@ -83,14 +83,16 @@ def get_epoch_options():
           headers=header,
       )
     except:
-      logging.warning('No epoch endpoint found, falling back to Preset Options')
+      logging.warning(
+          'No epoch endpoint found, falling back to Preset Options')
       sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
       default = app.config.get('DEFAULT_EPOCH_SELECTED')
 
       return sorted_epochs, default
 
     if epoch_call.status_code != 200:
-      logging.warning('No epoch endpoint found, falling back to Preset Options')
+      logging.warning(
+          'No epoch endpoint found, falling back to Preset Options')
       sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
       default = app.config.get('DEFAULT_EPOCH_SELECTED')
 
@@ -295,15 +297,28 @@ def get_params(all_user_input, removeVerbose=False):
 
   return '&'.join(params)
 
+
 def handle_ancillary_duplicates(class_list):
   """ Residential, Commercial, Militaery and Land have duplicate ancillary descriptions"""
   # Replace the english decriptions with additional hierarchey descriptions
 
   codes_and_replacemnt_labels = [
-    { 'code': 'RB', 'label': 'Residential Ancillary Building' },
-    { 'code': 'LB', 'label': 'Land Ancillary Building' },
-    { 'code': 'CB', 'label': 'Commercial Ancillary Building' },
-    { 'code': 'MB', 'label': 'Military Ancillary Building' },
+      {
+          'code': 'RB',
+          'label': 'Residential Ancillary Building'
+      },
+      {
+          'code': 'LB',
+          'label': 'Land Ancillary Building'
+      },
+      {
+          'code': 'CB',
+          'label': 'Commercial Ancillary Building'
+      },
+      {
+          'code': 'MB',
+          'label': 'Military Ancillary Building'
+      },
   ]
 
   for class_option in class_list:
@@ -311,9 +326,8 @@ def handle_ancillary_duplicates(class_list):
       aquired_code = class_option.get('code', '')
 
       if replacement.get('code') == aquired_code:
-        print('Replacing', aquired_code, 's label with', replacement.get('label'))
         class_option['label'] = replacement.get('label')
-  
+
   return class_list
 
 
