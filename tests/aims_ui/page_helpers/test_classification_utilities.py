@@ -1684,16 +1684,16 @@ def test_check_reverse_classification():
   assert result == 'ZW99LG*'
 
 
-  # Ancillary tests
+  # Ancillary tests - Noteable because these need to be replaced with a more specific label
 
-  # result = check_reverse_classification('Ancillary Building')
-  # assert result == 'CB*'
+  result = check_reverse_classification('Residential Ancillary Building')
+  assert result == 'RB*'
 
-  # result = check_reverse_classification('Ancillary Building')
-  # assert result == 'LB*'
+  result = check_reverse_classification('Land Ancillary Building')
+  assert result == 'LB*'
 
-  # result = check_reverse_classification('Ancillary Building')
-  # assert result == 'MB*'
+  result = check_reverse_classification('Military Ancillary Building')
+  assert result == 'MB*'
 
-  # result = check_reverse_classification('Ancillary Building')
-  # assert result == 'RB*'
+  result = check_reverse_classification('Commercial Ancillary Building')
+  assert result == 'CB*'

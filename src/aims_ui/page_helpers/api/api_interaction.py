@@ -295,6 +295,27 @@ def get_params(all_user_input, removeVerbose=False):
 
   return '&'.join(params)
 
+def handle_ancillary_duplicates(class_list):
+  """ Residential, Commercial, Militaery and Land have duplicate ancillary descriptions"""
+  # Replace the english decriptions with additional hierarchey descriptions
+
+  codes_and_replacemnt_labels = [
+    { 'code': 'RB', 'label': 'Residential Ancillary Building' },
+    { 'code': 'LB', 'label': 'Land Ancillary Building' },
+    { 'code': 'CB', 'label': 'Commercial Ancillary Building' },
+    { 'code': 'MB', 'label': 'Military Ancillary Building' },
+  ]
+
+  for class_option in class_list:
+    for replacement in codes_and_replacemnt_labels:
+      aquired_code = class_option.get('code', '')
+
+      if replacement.get('code') == aquired_code:
+        print('Replacing', aquired_code, 's label with', replacement.get('label'))
+        class_option['label'] = replacement.get('label')
+  
+  return class_list
+
 
 def get_classifications():
   """Return classification endpoint result as json pairs"""
@@ -314,18 +335,18 @@ def get_classifications():
           'No Class Code endpoint found, falling back to Preset Options')
       class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
 
-      return class_list
+      return handle_ancillary_duplicates(class_list)
 
     if class_call.status_code != 200:
       logging.warning(
           'No Class Code endpoint found, falling back to Preset Options')
       class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
 
-      return class_list
+      return handle_ancillary_duplicates(class_list)
 
     # If there were no errors reaching the endpoint
     class_list = json.loads(class_call.text).get('classifications')
   else:
     class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
 
-  return class_list
+  return handle_ancillary_duplicates(class_list)
