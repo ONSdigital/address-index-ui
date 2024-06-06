@@ -30,3 +30,20 @@ def test_get_username():
     username = get_username()
     assert 'test45uSerName' == username
  
+def test_current_group():
+  """ Test default group is returned if user not in any group """
+
+  test_email = 'userNotLoggedIn@ons.gov.uk'
+  with app.test_request_context(headers={'X-Goog-Authenticated-User-Email': test_email}):
+    group = get_current_group()
+    assert group.get('name') == 'default'
+
+  test_email = 'blank@ons.gov.uk'
+  with app.test_request_context(headers={'X-Goog-Authenticated-User-Email': test_email}):
+    group = get_current_group()
+    assert group.get('name') == 'default'
+
+  test_email = ''
+  with app.test_request_context(headers={'X-Goog-Authenticated-User-Email': test_email}):
+    group = get_current_group()
+    assert group.get('name') == 'default'
