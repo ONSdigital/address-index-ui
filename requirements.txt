@@ -9,3 +9,4 @@ gunicorn==20.1.0
 itsdangerous==2.1.2
 pyjwt==2.4.0
 cryptography==41.0.6
+pytest
