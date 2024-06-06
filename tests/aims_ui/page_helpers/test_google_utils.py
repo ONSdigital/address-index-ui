@@ -47,3 +47,11 @@ def test_current_group():
   with app.test_request_context(headers={'X-Goog-Authenticated-User-Email': test_email}):
     group = get_current_group()
     assert group.get('name') == 'default'
+
+def test_FAIL():
+  """ this tet should fail, to test the CI/CD pipeline """
+
+  i_am_a_sad_test = False
+
+  assert i_am_a_sad_test == True
+
