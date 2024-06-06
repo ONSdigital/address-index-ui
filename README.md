@@ -10,22 +10,17 @@ Pre-requisites:
 
 ## Setup Environment Variables
 
-`export FLASK_APP="aims_ui"`
-`export FLASK_ENV="development"`
-`export API_AUTH_TYPE="JWT"`
-
-`export API_URL=[enter_api_url]`
-`export API_JWT_TOKEN=[enter_jwt_token_here]`
-
-`export BM_API_URL=[enter_bulk_match_url]`
-`export BM_JWT_TOKEN=[enter_jwt_token_here]`
-
-`export API_BSC_AUTH_USERNAME=[enter_bsc_username]`
-`export API_BSC_AUTH_PASSWORD=[enter_bsc_password]`
-
-`export PROJECT_DOMAIN=[enter_project_domain]`
-
-Optional:
+| Environment Variable         | Value                      | Command                                     |
+|-----------------------------|----------------------------|---------------------------------------------|
+| `export FLASK_APP`          | `"aims_ui"`                | `export FLASK_APP="aims_ui"`                 |
+| `export FLASK_ENV`          | `"development"`            | `export FLASK_ENV="development"`             |
+| `export API_AUTH_TYPE`      | `"JWT"`                    | `export API_AUTH_TYPE="JWT"`                 |
+| `export API_JWT_TOKEN`      | `[enter_jwt_token_here]`   | `export API_JWT_TOKEN="[enter_jwt_token_here]"` |
+| `export BM_API_URL`         | `[enter_bulk_match_url]`   | `export BM_API_URL="[enter_bulk_match_url]"` |
+| `export BM_JWT_TOKEN`       | `[enter_jwt_token_here]`   | `export BM_JWT_TOKEN="[enter_jwt_token_here]"` |
+| `export API_BSC_AUTH_USERNAME` | `[enter_bsc_username]`  | `export API_BSC_AUTH_USERNAME="[enter_bsc_username]"` |
+| `export API_BSC_AUTH_PASSWORD` | `[enter_bsc_password]`  | `export API_BSC_AUTH_PASSWORD="[enter_bsc_password]"` |
+| `export PROJECT_DOMAIN`     | `[enter_project_domain]`   | `export PROJECT_DOMAIN="[enter_project_domain]"` |
 
 Set the "groups" of users (by default all users including the "NotLoggedInUser" are in the "default" group
 
@@ -54,7 +49,9 @@ Set the "groups" of users (by default all users including the "NotLoggedInUser" 
 `npx prettier --write "**/*.mjs"`
 
 ### To Test
-`python3 -m pytest`
+
+#### Python
+`python3 -m pytest tests/pytest_tests`
 
 FOR WINDOWS USERS ONLY:
 

@@ -1,6 +1,5 @@
 from flask import url_for
 
-from src import aims_ui
 from src.aims_ui.app_helpers.logging import setup_logging
 
 
