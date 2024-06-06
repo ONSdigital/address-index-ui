@@ -1,4 +1,4 @@
-name: Python application
+name: CI
 
 on:
   push:
@@ -11,11 +11,44 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      docker:
+        image: docker:19.03.12
+        options: --privileged
+        ports:
+          - 9200:9200
+          - 9300:9300
+          - 1234:9000
+          - 5601:5601
+          - 9001:9000
+          - 5000:5000
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up Python
+    - name: Set up Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install docker-compose -y
+
+    - name: Build and start services
+      run: docker-compose up -d --build
+
+    - name: Wait for services to be up
+      run: |
+        echo "Waiting for Elasticsearch to be ready..."
+        until curl -s http://localhost:9200 > /dev/null; do
+          echo "Waiting for Elasticsearch..."
+          sleep 10
+        done
+        echo "Waiting for API to be ready..."
+        until curl -s http://localhost:9001 > /dev/null; do
+          echo "Waiting for API..."
+          sleep 10
+        done
+
+    - name: Install Python
       uses: actions/setup-python@v2
       with:
         python-version: '3.9'
@@ -25,12 +58,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Install package
-      run: |
-        pip install -e .
-
     - name: Run tests
-      run: |
-        python3 -m pytest tests/pytest_tests
-
+      run: python -m pytest tests/pytest_tests
 
