@@ -16,13 +16,13 @@ def multiple_uprn_lookup(siblings):
   try:
     class_call = requests.post(url_endpoint, json=data, headers=header)
   except:
-    logging.warn(
+    logging.warning(
         'WARNING No multiple UPRN lookup endpoint found, check connection and that you are connecting to the latetst version of the API'
     )
     return False
 
   if class_call.status_code != 200:
-    logging.warn('WARNING Issue on /addresses/multiuprn')
+    logging.warning('WARNING Issue on /addresses/multiuprn')
     return False
 
   return class_call
