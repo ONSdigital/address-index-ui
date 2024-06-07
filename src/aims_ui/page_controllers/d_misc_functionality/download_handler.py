@@ -7,6 +7,7 @@ from flask import send_file
 from flask_login import login_required
 from aims_ui import app, get_classifications_cached
 from aims_ui.page_controllers.b_multiple_matches.utils.multiple_address_utils import job_url_if_authorised
+from aims_ui.page_error import page_error
 
 # For the gz download
 
@@ -60,24 +61,31 @@ def download_handler(file_name):
 
   proxy = StringIO()
   writer = csv.writer(proxy)
-  dir_path = os.path.dirname(os.path.realpath(__file__))
+
+  current_file_path = os.path.dirname(os.path.realpath(__file__))
+  root_dir_path = os.path.dirname(os.path.dirname(current_file_path))
+
+  # Initially set file to None for 404 not found handling
+  f = None
 
   if file_name == 'classifications_list':
-    f = open(f'{dir_path}/static/downloads/classifications.csv', 'rb')
+    f = open(f'{root_dir_path}/static/downloads/classifications.csv', 'rb')
 
   elif file_name == 'example_multiple_address':
-    f = open(f'{dir_path}/static/downloads/example_multiple_match_upload.csv',
-             'rb')
+    f = open(
+        f'{root_dir_path}/static/downloads/example_multiple_match_upload.csv',
+        'rb')
   elif file_name == 'example_multiple_address_big':
     f = open(
-        f'{dir_path}/static/downloads/example_multiple_match_5k_upload.csv',
+        f'{root_dir_path}/static/downloads/example_multiple_match_5k_upload.csv',
         'rb')
   elif file_name == 'tool_tip_clerical_information':
-    f = open(f'{dir_path}/static/downloads/tool_tip_clerical_information.csv',
-             'rb')
+    f = open(
+        f'{root_dir_path}/static/downloads/tool_tip_clerical_information.csv',
+        'rb')
   elif file_name == 'uprn_example_multiple_address':
     f = open(
-        f'{dir_path}/static/downloads/uprn_example_multiple_match_upload.csv',
+        f'{root_dir_path}/static/downloads/uprn_example_multiple_match_upload.csv',
         'rb')
 
   elif 'googlefiledownload' in file_name:
@@ -98,6 +106,10 @@ def download_handler(file_name):
                      mimetype='application/gzip',
                      download_name=f'{file_name}.csv.gz',
                      as_attachment=True)
+  
+  # if the file_name is not found, return a 404
+  if not f:
+    return page_error(None, '', override_error_description='File not found', override_error_name='404')
 
   return send_file(f,
                    mimetype='text/csv',

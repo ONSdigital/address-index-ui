@@ -83,14 +83,16 @@ def get_epoch_options():
           headers=header,
       )
     except:
-      logging.warn('No epoch endpoint found, falling back to Preset Options')
+      logging.warning(
+          'No epoch endpoint found, falling back to Preset Options')
       sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
       default = app.config.get('DEFAULT_EPOCH_SELECTED')
 
       return sorted_epochs, default
 
     if epoch_call.status_code != 200:
-      logging.warn('No epoch endpoint found, falling back to Preset Options')
+      logging.warning(
+          'No epoch endpoint found, falling back to Preset Options')
       sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
       default = app.config.get('DEFAULT_EPOCH_SELECTED')
 
@@ -99,7 +101,7 @@ def get_epoch_options():
     # If there are no errors from the epoch call, extract the epochs
     epoch_options = json.loads(epoch_call.text).get('epochs')
   else:
-    logging.warn('Test mode, falling back to Preset Options')
+    logging.warning('Test mode, falling back to Preset Options')
     sorted_epochs = app.config.get('DEFAULT_EPOCH_OPTIONS')
     default = app.config.get('DEFAULT_EPOCH_SELECTED')
 
@@ -296,6 +298,39 @@ def get_params(all_user_input, removeVerbose=False):
   return '&'.join(params)
 
 
+def handle_ancillary_duplicates(class_list):
+  """ Residential, Commercial, Militaery and Land have duplicate ancillary descriptions"""
+  # Replace the english decriptions with additional hierarchey descriptions
+
+  codes_and_replacemnt_labels = [
+      {
+          'code': 'RB',
+          'label': 'Residential Ancillary Building'
+      },
+      {
+          'code': 'LB',
+          'label': 'Land Ancillary Building'
+      },
+      {
+          'code': 'CB',
+          'label': 'Commercial Ancillary Building'
+      },
+      {
+          'code': 'MB',
+          'label': 'Military Ancillary Building'
+      },
+  ]
+
+  for class_option in class_list:
+    for replacement in codes_and_replacemnt_labels:
+      aquired_code = class_option.get('code', '')
+
+      if replacement.get('code') == aquired_code:
+        class_option['label'] = replacement.get('label')
+
+  return class_list
+
+
 def get_classifications():
   """Return classification endpoint result as json pairs"""
   # All classification list aquesition should come through here
@@ -310,22 +345,22 @@ def get_classifications():
           headers=header,
       )
     except:
-      logging.warn(
+      logging.warning(
           'No Class Code endpoint found, falling back to Preset Options')
       class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
 
-      return class_list
+      return handle_ancillary_duplicates(class_list)
 
     if class_call.status_code != 200:
-      logging.warn(
+      logging.warning(
           'No Class Code endpoint found, falling back to Preset Options')
       class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
 
-      return class_list
+      return handle_ancillary_duplicates(class_list)
 
     # If there were no errors reaching the endpoint
     class_list = json.loads(class_call.text).get('classifications')
   else:
     class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
 
-  return class_list
+  return handle_ancillary_duplicates(class_list)
