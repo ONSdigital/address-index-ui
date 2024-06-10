@@ -53,6 +53,9 @@ Set the "groups" of users (by default all users including the "NotLoggedInUser" 
 #### Python
 `python3 -m pytest tests/pytest_tests`
 
+### Javascript 
+`npm run test:jest`
+
 FOR WINDOWS USERS ONLY:
 
 *Ensure you have python 3.9 installed*
