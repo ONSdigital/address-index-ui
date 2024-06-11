@@ -5,7 +5,7 @@ export function forceCapsInput() {
   });
 }
 
-export function init() {
+function init() {
   console.log('postcode specific loaded');
   forceCapsInput();
 }

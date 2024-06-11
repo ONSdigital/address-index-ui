@@ -1,5 +1,5 @@
 // Script to adjust the parameters for typeahead whenever they're updated
-function getParamsFromPage() {
+export function getParamsFromPage() {
   let finalParams = '&';
   const lfForm = document.querySelector('.match-form-container');
   const inputs = lfForm.querySelectorAll('input');
@@ -21,7 +21,7 @@ function getParamsFromPage() {
   return finalParams;
 }
 
-function setupEventListeners() {
+export function setupEventListeners() {
   const typeaheadContainer = document.querySelector(
     '#address-autosuggest-container'
   );
