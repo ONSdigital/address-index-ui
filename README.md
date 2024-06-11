@@ -46,7 +46,7 @@ Set the "groups" of users (by default all users including the "NotLoggedInUser" 
 `yapf --style='{based_on_style: pep8, indent_width: 2}' -ir .`
 
 ### For js/mjs:
-`npx prettier --write "**/*.mjs"`
+`npm run lint`  
 
 ### To Test
 
