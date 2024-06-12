@@ -15,8 +15,8 @@
     "transform": {
       "^.+\\.mjs$": "babel-jest"
     },
-    "testMatch": [
-      "**/tests/jest_js_tests/**/*.mjs"
+   "testMatch": [
+      "**/tests/jest_js_tests/**/*.test.mjs"
     ],
     "moduleFileExtensions": [
       "js",
