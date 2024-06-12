@@ -1,6 +1,7 @@
-function getAllLinks() {
+export function getAllLinks() {
   const tableLinks = [];
   const table = document.querySelector('#adjustLinksTable');
+  console.log(table);
   const links = table.querySelectorAll('a');
   for (const link of links) {
     const linkElement = link;
