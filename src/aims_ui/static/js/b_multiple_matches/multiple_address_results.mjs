@@ -1,4 +1,4 @@
-function getAllLinks() {
+export function getAllLinks() {
   const tableLinks = [];
   const table = document.querySelector('#adjustLinksTable');
   const links = table.querySelectorAll('a');
@@ -19,7 +19,7 @@ function getAllLinks() {
   return tableLinks;
 }
 
-function findIfPafOrNagWasUsed(address) {
+export function findIfPafOrNagWasUsed(address) {
   // Receiving a single "address" from a response, return PAF or NAG
   const formattedAddress = address['formattedAddress'];
   const pafAddress = address['formattedAddressPaf'];
