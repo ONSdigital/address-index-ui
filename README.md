@@ -46,12 +46,15 @@ Set the "groups" of users (by default all users including the "NotLoggedInUser" 
 `yapf --style='{based_on_style: pep8, indent_width: 2}' -ir .`
 
 ### For js/mjs:
-`npx prettier --write "**/*.mjs"`
+`npm run lint`  
 
 ### To Test
 
 #### Python
 `python3 -m pytest tests/pytest_tests`
+
+### Javascript 
+`npm run test:jest`
 
 FOR WINDOWS USERS ONLY:
 
