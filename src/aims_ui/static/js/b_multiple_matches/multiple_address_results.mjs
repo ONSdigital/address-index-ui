@@ -143,8 +143,10 @@ async function downloadAndProcess(url, headerStatus) {
   }
   const response = await fetch(url);
   const arrayBuffer = await response.arrayBuffer();
+  // eslint-disable-next-line no-undef
   const inflated = await pako.inflate(arrayBuffer);
   const csvString = new TextDecoder().decode(inflated);
+  // eslint-disable-next-line no-undef
   const parsedCSV = Papa.parse(csvString).data;
 
   parsedCSV.forEach((row) => {
