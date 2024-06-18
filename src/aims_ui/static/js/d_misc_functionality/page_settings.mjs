@@ -5,11 +5,14 @@ import {
   setNewColumnWidths,
   getAdditionalRequestStatus,
   setAdditionalRequestStatus,
+  setJobAgePrefference,
+  getJobAgePrefference,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 function updateAddressTitlePrefference(e) {
   updateAddressFormatPrefference(e);
 }
+
 
 // Paf and Nag Prefferences
 function setupNagAndPafStatus() {
@@ -71,6 +74,26 @@ function setupColumnWidthCustomiserListeners() {
   }
 }
 
+// Job Age Prefferences
+function setupJobAgePrefferences() {
+  const currentStatus = getJobAgePrefference();
+
+  const oldJobsCheckbox = document.querySelector('#old_jobs_checkbox');
+
+  if (currentStatus === 'true') {
+    oldJobsCheckbox.checked = true;
+  }
+}
+
+function setupJobAgePrefferencesListeners() {
+  const jobAgeCheckbox = document.querySelector('#old_jobs_checkbox');
+
+  jobAgeCheckbox.addEventListener('change', (e) => {
+    const statusOfCheckbox = jobAgeCheckbox.checked;
+    setJobAgePrefference(statusOfCheckbox.toString());
+  });
+}
+
 // Additional Request Details
 function setupAdditionalRequestStatus() {
   const current_status = getAdditionalRequestStatus();
@@ -112,6 +135,8 @@ function init() {
   setupColumnWidthCustomiserListeners();
   setupAdditionalRequestStatus();
   setupAdditionalRequestListeners();
+  setupJobAgePrefferences();
+  setupJobAgePrefferencesListeners();
 }
 
 window.addEventListener('load', init);
