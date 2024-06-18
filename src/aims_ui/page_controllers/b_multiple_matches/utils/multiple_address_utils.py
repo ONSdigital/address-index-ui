@@ -1,3 +1,4 @@
+import datetime
 import json
 import logging
 from aims_ui.page_helpers.api.api_helpers import job_api
@@ -27,7 +28,17 @@ def get_tag_data(tag):
   return data
 
 
-def job_data_by_current_user():
+def get_job_age(job):
+  """ Return the age of the job """
+  enddate = job.get('enddate')
+  # e.g. (string) 'enddate': '2023-03-23T11:11:14'
+  current_time = datetime.datetime.now()
+  enddate = datetime.datetime.strptime(enddate, '%Y-%m-%dT%H:%M:%S')
+  age = current_time - enddate
+  return age
+
+
+def job_data_by_current_user(include_old_jobs):
   """ From a list of all jobs, filter by userId """
   # Get the full list of jobs
   r = job_api('/jobs')
@@ -42,8 +53,15 @@ def job_data_by_current_user():
     userid = job.get('userid', {})
     tag_data = get_tag_data(userid)
     username = tag_data.get('username', '')
+    job_age = get_job_age(job)
     if current_user == username:
-      final_jobs.append(job)
+      # Include all jobs if include_old_jobs is True
+      if include_old_jobs:
+        final_jobs.append(job)
+      else:
+        # Return only jobs that are less than 14 days old
+        if job_age.days < 14:
+          final_jobs.append(job)
 
   return final_jobs
 
