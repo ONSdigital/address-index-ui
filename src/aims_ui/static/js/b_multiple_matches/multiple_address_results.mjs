@@ -54,7 +54,7 @@ function getAddressesFromResponse(apiResponse) {
     const documentScore = address['underlyingScore'];
     const rank = i;
     const addressTypePafNag = findIfPafOrNagWasUsed(address);
-    const recommendationCode = response.recommendationCode;
+    const airRating = address['airRating'];
     const addressToAdd = [
       formattedAddress,
       uprn,
@@ -63,7 +63,7 @@ function getAddressesFromResponse(apiResponse) {
       documentScore,
       rank,
       addressTypePafNag,
-      recommendationCode,
+      airRating,
     ];
     matchedAddresses.push(addressToAdd);
   }
@@ -139,7 +139,7 @@ async function downloadAndProcess(url, headerStatus) {
   let final_csv = '';
   if (headerStatus.toString() !== 'False') {
     final_csv =
-      'id,inputAddress,matchedAddress,uprn,matchType,confidenceScore,documentScore,rank,addressType(Paf/Nag),recommendationCode\n';
+      'id,inputAddress,matchedAddress,uprn,matchType,confidenceScore,documentScore,rank,addressType(Paf/Nag),airRating\n';
   }
   const response = await fetch(url);
   const arrayBuffer = await response.arrayBuffer();
