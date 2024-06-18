@@ -60,7 +60,8 @@ def multiple_address_results():
       'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'RECS PROCESSED',
       'DOWNLOAD LINK'
   ]
-  results = job_data_by_current_user()
+  include_old_jobs = True
+  results = job_data_by_current_user(include_old_jobs)
 
   formatted_results = [[
       job.get('jobid'),
