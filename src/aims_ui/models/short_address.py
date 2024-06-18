@@ -126,6 +126,7 @@ class ShortAddress():
         'confidenceScoreFormatted',
         confidence_score=self.confidence_score.value)
     self.underlying_score = AddressAttribute(address_data, 'underlyingScore')
+    self.airRating = AddressAttribute(address_data, 'airRating')
     if include_hierarchy:
       self.hierarchy = AddressAttribute(address_data, 'hierarchy')
     else:
