@@ -74,7 +74,7 @@ def multiple_address_match(file, all_user_input, download=False):
 
 
 def multiple_address_match_original(file, all_user_input, download=False):
-  csv_headers = ['id', 'inputAddress',  'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag)', 'recommendationCode']  # yapf: disable
+  csv_headers = ['id', 'inputAddress',  'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag)', 'aiRating']  # yapf: disable
 
   contents = file.readlines()
   remove_header_row(contents)
@@ -88,7 +88,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
       writer.writerow(csv_headers)
 
     def write(id, addr, m_addr, address_type, uprn, m_type, confid_score,
-              doc_score, rank, recommendationCode):
+              doc_score, rank, ai_rating):
       writer.writerow([
           given_id,
           address_to_lookup.replace('"', ''),
@@ -99,7 +99,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
           adrs.underlying_score.value,
           rank,
           address_type,
-          recommendationCode,
+          ai_rating,
       ])
 
     def finalize(line_count, no_addresses_searched, single_match_total,
@@ -120,7 +120,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
     trs = []
 
     def write(id, addr, m_addr, address_type, uprn, m_type, confid_score,
-              doc_score, rank, recommendationCode):
+              doc_score, rank, ai_rating):
       trs.append({
           'tds': [
               {'value': remove_script_and_html_from_str(given_id) },
@@ -132,7 +132,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
               {'value': adrs.underlying_score.value},
               {'value': rank},
               {'value': address_type},
-              {'value': recommendationCode},
+              {'value': ai_rating},
           ]
       }) # yapf: disable
 
@@ -222,7 +222,7 @@ def multiple_address_match_original(file, all_user_input, download=False):
           adrs.confidence_score.value,
           adrs.underlying_score.value,
           rank,
-          responseAttributes.get('recommendationCode'),
+          adrs.airRating.value,
       )
 
   return finalize(line_count, no_addresses_searched, single_match_total,
