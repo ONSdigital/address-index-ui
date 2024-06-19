@@ -1,3 +1,5 @@
+import { getJobAgePrefference } from '/static/js/f_helpers/local_storage_helpers.mjs';
+
 export function getAllLinks() {
   const tableLinks = [];
   const table = document.querySelector('#adjustLinksTable');
@@ -209,7 +211,29 @@ function getNameOfJobFromCell(cell, backupName) {
   return result;
 }
 
+
+function addJobsFlagToCurrentURL() {
+  // Get the current prefference
+  const currentJobPrefference = getJobAgePrefference();
+  const currentURL = window.location.href;
+  // Check to see if the flag alredy exists
+  if (currentURL.includes('include_old_jobs')) {
+    return;
+  } else {
+    const url = new URL(currentURL);
+    url.searchParams.set('include_old_jobs', currentJobPrefference);
+    // Forward user to the new URL
+    window.history.pushState({}, '', url);
+    // Trigger new page load
+    window.location.reload();
+  }
+}
+
 window.addEventListener('load', async function () {
+  // Check the jobs flag - this is a fallback check as it should already be appended to the URL
+  addJobsFlagToCurrentURL();
+
+  // Change all links to "download" buttons
   const linksAndParents = getAllLinks();
   for (const l of linksAndParents) {
     await changeLinkToButton(l);
