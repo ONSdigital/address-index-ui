@@ -1,4 +1,4 @@
-import { getJobAgePrefference } from '/static/js/f_helpers/local_storage_helpers.mjs';
+import { getJobAgePrefference } from '../f_helpers/local_storage_helpers.mjs';
 
 export function getAllLinks() {
   const tableLinks = [];
@@ -210,7 +210,6 @@ function getNameOfJobFromCell(cell, backupName) {
 
   return result;
 }
-
 
 function addJobsFlagToCurrentURL() {
   // Get the current prefference
