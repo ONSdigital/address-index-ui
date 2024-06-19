@@ -13,7 +13,6 @@ function updateAddressTitlePrefference(e) {
   updateAddressFormatPrefference(e);
 }
 
-
 // Paf and Nag Prefferences
 function setupNagAndPafStatus() {
   const current_status = getAddressTitlePrefference();

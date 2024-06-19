@@ -83,16 +83,12 @@ export function setDefaultJobAgePrefferences() {
 }
 
 export function setJobAgePrefference(prefference) {
-  localStorage.setItem(
-    'job_age_prefference',
-    prefference, 
-  );
+  localStorage.setItem('job_age_prefference', prefference);
 }
 
 export function getJobAgePrefference() {
   return localStorage.getItem('job_age_prefference');
 }
-
 
 // AdditionalRequests status
 export function setDefaultAdditionalRequestStatus() {
