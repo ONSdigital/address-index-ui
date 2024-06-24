@@ -1,19 +1,21 @@
 import {
-  getAddressTitlePrefference,
-  updateAddressFormatPrefference,
+  getAddressTitlePreference,
+  updateAddressFormatPreference,
   getCustomColumnWidths,
   setNewColumnWidths,
   getAdditionalRequestStatus,
   setAdditionalRequestStatus,
+  setJobAgePreference,
+  getJobAgePreference,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
-function updateAddressTitlePrefference(e) {
-  updateAddressFormatPrefference(e);
+function updateAddressTitlePreference(e) {
+  updateAddressFormatPreference(e);
 }
 
-// Paf and Nag Prefferences
+// Paf and Nag Preferences
 function setupNagAndPafStatus() {
-  const current_status = getAddressTitlePrefference();
+  const current_status = getAddressTitlePreference();
   if (current_status === 'paf') {
     const pafRadio = document.querySelector('#paf-radio');
     pafRadio.checked = true;
@@ -32,20 +34,20 @@ function setupNagAndPafListeners() {
   const defRadio = document.querySelector('#default-radio');
 
   pafRadio.addEventListener('change', (e) => {
-    updateAddressTitlePrefference('paf');
+    updateAddressTitlePreference('paf');
   });
 
   nagRadio.addEventListener('change', (e) => {
-    updateAddressTitlePrefference('nag');
+    updateAddressTitlePreference('nag');
   });
 
   defRadio.addEventListener('change', (e) => {
-    updateAddressTitlePrefference('def');
+    updateAddressTitlePreference('def');
   });
 }
 
-// Column Width Prefferences
-function setValuesOfColumnWidthPrefferences() {
+// Column Width Preferences
+function setValuesOfColumnWidthPreferences() {
   const colWidths = getCustomColumnWidths();
   for (const [key, width] of Object.entries(colWidths)) {
     const colInput = document.querySelector('#selector_' + key);
@@ -69,6 +71,26 @@ function setupColumnWidthCustomiserListeners() {
       saveWidthValues(widthSelectors);
     });
   }
+}
+
+// Job Age Preferences
+function setupJobAgePreferences() {
+  const currentStatus = getJobAgePreference();
+
+  const oldJobsCheckbox = document.querySelector('#old_jobs_checkbox');
+
+  if (currentStatus === 'true') {
+    oldJobsCheckbox.checked = true;
+  }
+}
+
+function setupJobAgePreferencesListeners() {
+  const jobAgeCheckbox = document.querySelector('#old_jobs_checkbox');
+
+  jobAgeCheckbox.addEventListener('change', (e) => {
+    const statusOfCheckbox = jobAgeCheckbox.checked;
+    setJobAgePreference(statusOfCheckbox.toString());
+  });
 }
 
 // Additional Request Details
@@ -108,10 +130,12 @@ function setupAdditionalRequestListeners() {
 function init() {
   setupNagAndPafListeners();
   setupNagAndPafStatus();
-  setValuesOfColumnWidthPrefferences();
+  setValuesOfColumnWidthPreferences();
   setupColumnWidthCustomiserListeners();
   setupAdditionalRequestStatus();
   setupAdditionalRequestListeners();
+  setupJobAgePreferences();
+  setupJobAgePreferencesListeners();
 }
 
 window.addEventListener('load', init);

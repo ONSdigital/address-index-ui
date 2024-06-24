@@ -178,9 +178,9 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           search_type='download',
           download_url='/downloads/classifications_list',
       ),
-      'multiple_match_paf_nag_prefference':
+      'multiple_match_paf_nag_preference':
       Field(
-          'paf-nag-prefference',
+          'paf-nag-preference',
           search_type='radio',
           flag=False,
           display_title='Prioritise PAF or NAG addresses?',
@@ -275,7 +275,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             previous_value='5',
         ), common_fields['epoch'], common_fields['historical'],
         common_fields['match_threshold'],
-        common_fields['multiple_match_paf_nag_prefference'],
+        common_fields['multiple_match_paf_nag_preference'],
         common_fields['header_row_export'],
         Field(
             'display-type',
@@ -316,7 +316,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             description='Optional tag to organise matches',
             previous_value='',
         ),
-        common_fields['multiple_match_paf_nag_prefference'],
+        common_fields['multiple_match_paf_nag_preference'],
         common_fields['header_row_export'],
     ])
   elif endpoint_name == 'postcode':
