@@ -10,15 +10,15 @@ page_name = 'multiple_match_submit'
 
 
 def get_preffered_format_of_address(adrs, all_user_input):
-  address_prefference = all_user_input.get('paf-nag-prefference', 'default')
+  address_preference = all_user_input.get('paf-nag-preference', 'default')
   default_address = adrs.formatted_address.value
   paf_address = adrs.formatted_address_paf.value
   nag_address = adrs.formatted_address_nag.value
 
-  if address_prefference == 'PAF':
+  if address_preference == 'PAF':
     if paf_address != '':
       return 'PAF', paf_address
-  elif address_prefference == 'NAG':
+  elif address_preference == 'NAG':
     if nag_address != '':
       return 'NAG', nag_address
   # Default Addresses are all NAG

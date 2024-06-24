@@ -215,9 +215,9 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
   url = app.config.get('BM_API_URL') + '/bulk'
 
   # Change the paf-nag default selection
-  if all_user_input.get('paf-nag-prefference') == 'PAF':
+  if all_user_input.get('paf-nag-preference') == 'PAF':
     all_user_input['pafdefault'] = 'true'
-  del all_user_input['paf-nag-prefference']
+  del all_user_input['paf-nag-preference']
 
   header_row_export = all_user_input.get('header_row_export', 'False')
   header_row_export = null_or_undefined_to_False(header_row_export)
@@ -285,8 +285,8 @@ def get_params(all_user_input, removeVerbose=False):
     if param == 'classificationfilter':
       value = check_reverse_classification(value)
 
-    # Replace paf-nag-prefference
-    if str(param) == 'paf-nag-prefference':
+    # Replace paf-nag-preference
+    if str(param) == 'paf-nag-preference':
       param = 'pafdefault'
       value = 'true' if value == 'PAF' else 'false'
 
