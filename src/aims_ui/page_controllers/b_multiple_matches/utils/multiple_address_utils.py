@@ -30,7 +30,8 @@ def get_tag_data(tag):
 
 def get_job_age(job):
   """ Return the age of the job """
-  enddate = job.get('enddate')
+  # If there is no endate, choose a time older than now
+  enddate = job.get('enddate','2023-03-23T11:11:14')
   # e.g. (string) 'enddate': '2023-03-23T11:11:14'
   current_time = datetime.datetime.now()
   enddate = datetime.datetime.strptime(enddate, '%Y-%m-%dT%H:%M:%S')
