@@ -1,4 +1,4 @@
-import { getJobAgePrefference } from '../f_helpers/local_storage_helpers.mjs';
+import { getJobAgePreference } from '../f_helpers/local_storage_helpers.mjs';
 
 export function getAllLinks() {
   const tableLinks = [];
@@ -212,15 +212,15 @@ function getNameOfJobFromCell(cell, backupName) {
 }
 
 function addJobsFlagToCurrentURL() {
-  // Get the current prefference
-  const currentJobPrefference = getJobAgePrefference();
+  // Get the current preference
+  const currentJobPreference = getJobAgePreference();
   const currentURL = window.location.href;
   // Check to see if the flag alredy exists
   if (currentURL.includes('include_old_jobs')) {
     return;
   } else {
     const url = new URL(currentURL);
-    url.searchParams.set('include_old_jobs', currentJobPrefference);
+    url.searchParams.set('include_old_jobs', currentJobPreference);
     // Forward user to the new URL
     window.history.pushState({}, '', url);
     // Trigger new page load

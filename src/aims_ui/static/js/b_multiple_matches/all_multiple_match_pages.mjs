@@ -1,8 +1,8 @@
-import { getJobAgePrefference } from '/static/js/f_helpers/local_storage_helpers.mjs';
+import { getJobAgePreference } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 function updateResultsUrl() {
-  // Get the current prefference
-  const current_job_prefference = getJobAgePrefference();
+  // Get the current preference
+  const current_job_preference = getJobAgePreference();
   // Get all URLs on a page
   const allUrls = document.querySelectorAll('a');
   // Loop through all URLs, check if href is '/multiple_address_results'
@@ -14,7 +14,7 @@ function updateResultsUrl() {
       } else {
         // If it doesn't, add the flag
         const urlObj = new URL(url.href);
-        urlObj.searchParams.set('include_old_jobs', current_job_prefference);
+        urlObj.searchParams.set('include_old_jobs', current_job_preference);
         url.href = urlObj.href;
       }
     }
