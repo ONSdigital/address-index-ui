@@ -106,10 +106,13 @@ def download_handler(file_name):
                      mimetype='application/gzip',
                      download_name=f'{file_name}.csv.gz',
                      as_attachment=True)
-  
+
   # if the file_name is not found, return a 404
   if not f:
-    return page_error(None, '', override_error_description='File not found', override_error_name='404')
+    return page_error(None,
+                      '',
+                      override_error_description='File not found',
+                      override_error_name='404')
 
   return send_file(f,
                    mimetype='text/csv',

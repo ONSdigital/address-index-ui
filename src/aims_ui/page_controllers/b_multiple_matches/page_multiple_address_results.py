@@ -1,5 +1,5 @@
 from flask_login import login_required
-from flask import render_template
+from flask import render_template, request
 from aims_ui import app
 from .utils.multiple_address_utils import get_tag_data, job_data_by_current_user
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
@@ -60,7 +60,17 @@ def multiple_address_results():
       'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'RECS PROCESSED',
       'DOWNLOAD LINK'
   ]
-  results = job_data_by_current_user()
+
+  # Get the "include_old_jobs" query parameter, default to "false
+  include_old_jobs = request.args.get('include_old_jobs',
+                                      default='false').lower()
+  # Sanetise the input
+  if include_old_jobs == 'true':
+    include_old_jobs = True
+  else:
+    include_old_jobs = False
+
+  results = job_data_by_current_user(include_old_jobs)
 
   formatted_results = [[
       job.get('jobid'),

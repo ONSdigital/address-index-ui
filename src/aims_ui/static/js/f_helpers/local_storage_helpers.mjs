@@ -1,5 +1,5 @@
 // custom response helpers START
-export function getFormatPrefferenceCustomResponse() {
+export function getFormatPreferenceCustomResponse() {
   return localStorage.getItem('custom_response_return_format');
 }
 
@@ -19,8 +19,8 @@ export function updateCustomResponseRequestType(requestType) {
   localStorage.setItem('custom_response_request_type', requestType);
 }
 
-export function updateCustomResponseFormat(prefferenceRadioId) {
-  localStorage.setItem('custom_response_return_format', prefferenceRadioId);
+export function updateCustomResponseFormat(preferenceRadioId) {
+  localStorage.setItem('custom_response_return_format', preferenceRadioId);
 }
 
 export function setDefaultResponseFormatCustomResponse() {
@@ -36,17 +36,17 @@ export function setDefaultResponseFormatCustomResponse() {
 }
 // custom response helpers END
 
-export function updateAddressFormatPrefference(pafOrNag) {
-  localStorage.setItem('custom_settings_address_prefference', pafOrNag);
+export function updateAddressFormatPreference(pafOrNag) {
+  localStorage.setItem('custom_settings_address_preference', pafOrNag);
 }
 
-export function getAddressTitlePrefference() {
-  return localStorage.getItem('custom_settings_address_prefference');
+export function getAddressTitlePreference() {
+  return localStorage.getItem('custom_settings_address_preference');
 }
 
 export function setDefaultTitleChoice() {
-  if (!localStorage.getItem('custom_settings_address_prefference')) {
-    localStorage.setItem('custom_settings_address_prefference', 'def');
+  if (!localStorage.getItem('custom_settings_address_preference')) {
+    localStorage.setItem('custom_settings_address_preference', 'def');
   }
 }
 
@@ -71,6 +71,23 @@ export function setDefaultColumnWidths() {
 export function setNewColumnWidths(values) {
   const newValues = JSON.stringify(values);
   localStorage.setItem('custom_column_width', newValues);
+}
+
+// Old job preferences
+export function setDefaultJobAgePreferences() {
+  if (!localStorage.getItem('job_age_preference')) {
+    // By default do not include older jobs
+    const defaultOption = 'false';
+    setJobAgePreference(defaultOption);
+  }
+}
+
+export function setJobAgePreference(preference) {
+  localStorage.setItem('job_age_preference', preference);
+}
+
+export function getJobAgePreference() {
+  return localStorage.getItem('job_age_preference');
 }
 
 // AdditionalRequests status

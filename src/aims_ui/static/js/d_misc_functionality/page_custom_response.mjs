@@ -1,7 +1,7 @@
 import {
   updateCustomResponseFormat,
   updateCustomResponseRequestType,
-  getFormatPrefferenceCustomResponse,
+  getFormatPreferenceCustomResponse,
   getRequestTypeCustomResponse,
   updateReqBodyStyle,
   getReqBodyStyle,
@@ -63,7 +63,7 @@ function setupStatuses(
   reqBodyConatiner
 ) {
   // Set status of radio option
-  const savedTextStatus = getFormatPrefferenceCustomResponse();
+  const savedTextStatus = getFormatPreferenceCustomResponse();
   const radioToSelect = document.querySelector('#' + savedTextStatus);
   radioToSelect.checked = true;
 
@@ -81,7 +81,7 @@ function setupStatuses(
   }
 }
 
-function makeAppropriateResponseFormatVisible(responseFormatPrefference) {
+function makeAppropriateResponseFormatVisible(responseFormatPreference) {
   const addressObjectContainer = document.querySelector(
     '#address-object-container'
   );
@@ -90,7 +90,7 @@ function makeAppropriateResponseFormatVisible(responseFormatPrefference) {
   );
   const codeResponseElement = document.querySelector('#code-response-element');
 
-  if (responseFormatPrefference === 'response-type-object') {
+  if (responseFormatPreference === 'response-type-object') {
     addressObjectContainer.classList.remove('ons-u-hidden');
     formattedTextContainer.classList.add('ons-u-hidden');
   } else {
@@ -123,7 +123,7 @@ function init() {
   // Load from local storage
   setupStatuses(radioText, radioAddObj, reqType, reqBody, reqBodyContainer);
 
-  const savedTextStatus = getFormatPrefferenceCustomResponse();
+  const savedTextStatus = getFormatPreferenceCustomResponse();
   // Make Appropriate Option Visible
   makeAppropriateResponseFormatVisible(savedTextStatus);
 }

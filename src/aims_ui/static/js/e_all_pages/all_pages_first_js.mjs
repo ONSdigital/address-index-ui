@@ -3,6 +3,7 @@ import {
   setDefaultColumnWidths,
   setDefaultAdditionalRequestStatus,
   setDefaultResponseFormatCustomResponse,
+  setDefaultJobAgePreferences,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 function setDefaultValuesIfUnset() {
@@ -10,6 +11,7 @@ function setDefaultValuesIfUnset() {
   setDefaultColumnWidths();
   setDefaultAdditionalRequestStatus();
   setDefaultResponseFormatCustomResponse();
+  setDefaultJobAgePreferences();
 }
 
 function removeResubmissionMessage() {

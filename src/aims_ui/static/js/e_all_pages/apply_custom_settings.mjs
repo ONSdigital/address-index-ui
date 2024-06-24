@@ -1,5 +1,5 @@
 import {
-  getAddressTitlePrefference,
+  getAddressTitlePreference,
   getAdditionalRequestStatus,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
@@ -57,30 +57,30 @@ function applyVisibilityOfRequestStatus() {
   }
 }
 
-function getChosenTitleId(prefference) {
-  // Convert the prefference into HTML Ids
-  if (prefference === 'paf') {
+function getChosenTitleId(preference) {
+  // Convert the preference into HTML Ids
+  if (preference === 'paf') {
     return 'formattedAddressPaf';
-  } else if (prefference === 'nag') {
+  } else if (preference === 'nag') {
     return 'formattedAddressNag';
   }
   return 'formattedAddress';
 }
 
-function getUserFriendlyPrefference(prefference) {
-  if (prefference === 'def') {
+function getUserFriendlyPreference(preference) {
+  if (preference === 'def') {
     return '';
-  } else if (prefference === 'paf') {
+  } else if (preference === 'paf') {
     return ' (PAF Formatting)';
-  } else if (prefference === 'nag') {
+  } else if (preference === 'nag') {
     return ' (NAG Formatting)';
   }
 }
 
-function getAddressTitle(prefference, addressTitles) {
-  const chosenTitleId = getChosenTitleId(prefference);
+function getAddressTitle(preference, addressTitles) {
+  const chosenTitleId = getChosenTitleId(preference);
 
-  // Given 3 titles from a card, loop through and find the one that matches the prefference
+  // Given 3 titles from a card, loop through and find the one that matches the preference
   for (const title of addressTitles) {
     if (title.id === chosenTitleId) {
       return title;
@@ -88,38 +88,38 @@ function getAddressTitle(prefference, addressTitles) {
   }
 }
 
-function applyTitlePrefference(prefference) {
+function applyTitlePreference(preference) {
   // Select every result short form
   const resultCards = document.querySelectorAll('.result-short-form');
 
-  // For every result card, check if the title prefference is blank.
-  // If it is blank, show the default one, otherwise show the preffered one
+  // For every result card, check if the title preference is blank.
+  // If it is blank, show the default one, otherwise show the prefered one
   for (const card of resultCards) {
     const currentTitles = card.querySelectorAll('.address-titles');
-    const prefferedTitle = getAddressTitle(prefference, currentTitles);
-    const prefferedTitleTextContent = prefferedTitle.textContent.replace(
+    const preferedTitle = getAddressTitle(preference, currentTitles);
+    const preferedTitleTextContent = preferedTitle.textContent.replace(
       /\s+/g,
       ''
     );
 
-    if (prefferedTitleTextContent === '') {
-      // Blank preffered title? Show the default format of title
+    if (preferedTitleTextContent === '') {
+      // Blank prefered title? Show the default format of title
       const backupTitle = getAddressTitle('def', currentTitles);
       backupTitle.hidden = false;
       backupTitle.textContent =
         backupTitle.textContent + ' (Default Formatting)';
     } else {
-      prefferedTitle.hidden = false;
-      prefferedTitle.textContent =
-        prefferedTitle.textContent + getUserFriendlyPrefference(prefference);
+      preferedTitle.hidden = false;
+      preferedTitle.textContent =
+        preferedTitle.textContent + getUserFriendlyPreference(preference);
     }
   }
 }
 
 function init() {
   console.log('apply_custom_settings loaded');
-  const prefference = getAddressTitlePrefference();
-  applyTitlePrefference(prefference);
+  const preference = getAddressTitlePreference();
+  applyTitlePreference(preference);
   applyVisibilityOfRequestStatus();
 }
 
