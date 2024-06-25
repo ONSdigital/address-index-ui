@@ -19,7 +19,7 @@ def get_current_group():
 def get_user_email():
   # Set the 'not logged in' username to use with API requests (local only)
   user_email = request.headers.get('X-Goog-Authenticated-User-Email',
-                                   'NotLoggedinUser@ons.gov.uk')
+                                   'UserNotLoggedIn@ons.gov.uk')
   return user_email
 
 
