@@ -38,7 +38,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           search_type='checkbox',
           display_title='Include historical address data',
           description=
-          'Check this box to include historical address data in the search. This will allow inclusion of historical data.',
+          'Check this box to include historical address data in the search.',
       ),
       'england_boost_checkbox':
       Field(
