@@ -57,7 +57,7 @@ function applyVisibilityOfRequestStatus() {
   }
 }
 
-function getChosenTitleId(preference) {
+export function getChosenTitleId(preference) {
   // Convert the preference into HTML Ids
   if (preference === 'paf') {
     return 'formattedAddressPaf';
@@ -67,7 +67,7 @@ function getChosenTitleId(preference) {
   return 'formattedAddress';
 }
 
-function getUserFriendlyPreference(preference) {
+export function getUserFriendlyPreference(preference) {
   if (preference === 'def') {
     return '';
   } else if (preference === 'paf') {
@@ -77,7 +77,7 @@ function getUserFriendlyPreference(preference) {
   }
 }
 
-function getAddressTitle(preference, addressTitles) {
+export function getAddressTitle(preference, addressTitles) {
   const chosenTitleId = getChosenTitleId(preference);
 
   // Given 3 titles from a card, loop through and find the one that matches the preference
