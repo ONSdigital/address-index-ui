@@ -1,9 +1,9 @@
 import {
   getAddressTitlePreference,
   getAdditionalRequestStatus,
-} from '/static/js/f_helpers/local_storage_helpers.mjs';
+} from '../f_helpers/local_storage_helpers.mjs';
 
-function getMatchTypeDescription(matchType) {
+export function getMatchTypeDescription(matchType) {
   // Expect 'S' 'M' 'N' for single multiple none
   if (matchType === 'S') {
     return 'S - Single match with Confidence Score above threshold';
