@@ -147,12 +147,12 @@ test('Links aquired from table', () => {
   ];
 
   const tableElement = getTableElement(rows);
-  console.log(tableElement);
+  //console.log(tableElement);
 
   // Append the table to the document
   document.body.appendChild(tableElement);
   const links = getAllLinks();
-  console.log(links);
+  //console.log(links);
 
   // TODO fix this, do other tests first
   expect(1).toBe(1);

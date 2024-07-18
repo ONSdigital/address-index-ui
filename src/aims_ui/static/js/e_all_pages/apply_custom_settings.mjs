@@ -14,7 +14,7 @@ export function getMatchTypeDescription(matchType) {
   }
 }
 
-function getRecommendationCodeDescription(code) {
+export function getRecommendationCodeDescription(code) {
   if (code === 'A') {
     return 'A - Accept the top result';
   } else if (code === 'I') {
