@@ -49,8 +49,8 @@ export function getTableElement(rows) {
       if ('<a>'.includes(content)) {
         // Create a link element
         const link = document.createElement('a');
-        link.href = 'TestLink';
-        link.textContent = 'TestLink';
+        link.href = content;
+        link.textContent = 'TestLinkText';
         td.appendChild(link);
       } else {
         td.textContent = row[key];
