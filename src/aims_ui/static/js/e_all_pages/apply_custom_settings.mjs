@@ -1,9 +1,9 @@
 import {
   getAddressTitlePreference,
   getAdditionalRequestStatus,
-} from '/static/js/f_helpers/local_storage_helpers.mjs';
+} from '../f_helpers/local_storage_helpers.mjs';
 
-function getMatchTypeDescription(matchType) {
+export function getMatchTypeDescription(matchType) {
   // Expect 'S' 'M' 'N' for single multiple none
   if (matchType === 'S') {
     return 'S - Single match with Confidence Score above threshold';
@@ -14,7 +14,7 @@ function getMatchTypeDescription(matchType) {
   }
 }
 
-function getRecommendationCodeDescription(code) {
+export function getRecommendationCodeDescription(code) {
   if (code === 'A') {
     return 'A - Accept the top result';
   } else if (code === 'I') {
@@ -57,7 +57,7 @@ function applyVisibilityOfRequestStatus() {
   }
 }
 
-function getChosenTitleId(preference) {
+export function getChosenTitleId(preference) {
   // Convert the preference into HTML Ids
   if (preference === 'paf') {
     return 'formattedAddressPaf';
@@ -67,7 +67,7 @@ function getChosenTitleId(preference) {
   return 'formattedAddress';
 }
 
-function getUserFriendlyPreference(preference) {
+export function getUserFriendlyPreference(preference) {
   if (preference === 'def') {
     return '';
   } else if (preference === 'paf') {
@@ -77,7 +77,7 @@ function getUserFriendlyPreference(preference) {
   }
 }
 
-function getAddressTitle(preference, addressTitles) {
+export function getAddressTitle(preference, addressTitles) {
   const chosenTitleId = getChosenTitleId(preference);
 
   // Given 3 titles from a card, loop through and find the one that matches the preference
