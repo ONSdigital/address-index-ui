@@ -47,6 +47,12 @@
 	'variants': 'responsive',
 	})}}
 
+  {% if jobs.get('trs')|length == 0 %}
+    {{ onsPanel({
+      "body": "Looking for older jobs? Change the 'Show Older Jobs' setting in <a href='/settings'>the settings page.</a>"
+    }) }}
+  {% endif %}
+
 <script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
 
 {# Required for unzipping the bulk results on clientside #}
