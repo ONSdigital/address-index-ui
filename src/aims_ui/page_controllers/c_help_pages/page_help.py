@@ -84,7 +84,6 @@ def return_specific_help_page(page_html_name, common):
                                                   page_name,
                                                   page_html_name,
                                                   subfolder='sub_help_pages')
-  print(nested_page_location)
 
   return render_template(
       nested_page_location,
