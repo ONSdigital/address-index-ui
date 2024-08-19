@@ -1,14 +1,49 @@
 from aims_ui.page_error import page_error
 from aims_ui.page_helpers.google_utils import get_username
+from requests.exceptions import ConnectionError, Timeout
 import logging
 
-# Idea is so that all errors and logging for those errors goes through this file
-# This should make error handling in other files much cleaner and less repetitive
-
+""" Handle Errors Connecting to and in the response of the API - logging and user response """
 
 def basic_logging_info(page_name, user_input):
   return f'User: "{get_username()}" experienced an issue on page: "{page_name}", having entered: "{user_input}". Issue is:'
 
+def error_page_api_request(page_name, user_input, error):
+  if isinstance(error, ConnectionError):
+    return error_page_connection(page_name, user_input, error)
+  elif isinstance(error, Timeout):
+    return error_page_timeout(page_name, user_input, error)
+  else:
+    return error_page_unknown(page_name, user_input, error)  
+
+def error_page_unknown(page_name, user_input, error):
+  """ Return error page for unknown error """
+  logging.error(
+      basic_logging_info(page_name, user_input) + f' Generic Error: "{error}"')
+  return page_error(
+      page_name,
+      'Unknown Error',
+      [
+          'There was an unknown error connecting to the AIMS API.',
+          'Please try again later.',
+          'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+      ],
+  )
+
+def error_page_timeout(page_name, user_input, error):
+  """ Return error page for timeout error """
+  logging.error(
+      basic_logging_info(page_name, user_input) + f'Timeout Error: "{error}"')
+  return page_error(
+      page_name,
+      'Timeout Error',
+      [
+          'There was a timeout error connecting to the AIMS API.',
+          'This could be because the request was too large.',
+          'Try limiting the number of results, or using a more specific query.',
+          'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+      ],
+  )
 
 def error_page_xml(page_name, user_input):
   """ Return error page for XML attack """
@@ -41,7 +76,7 @@ def error_page_connection(page_name, user_input, error):
   )
 
 
-def error_page_api(page_name, user_input, result):
+def error_page_api_response(page_name, user_input, result):
   status_code = result.status_code
   if status_code == 429:
     logging.warning(basic_logging_info(page_name, user_input) + f' "Rate Limit Error": "{result.json()}"')
