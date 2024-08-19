@@ -2,11 +2,12 @@ from aims_ui.page_error import page_error
 from aims_ui.page_helpers.google_utils import get_username
 from requests.exceptions import ConnectionError, Timeout
 import logging
-
 """ Handle Errors Connecting to and in the response of the API - logging and user response """
+
 
 def basic_logging_info(page_name, user_input):
   return f'User: "{get_username()}" experienced an issue on page: "{page_name}", having entered: "{user_input}". Issue is:'
+
 
 def error_page_api_request(page_name, user_input, error):
   if isinstance(error, ConnectionError):
@@ -14,7 +15,8 @@ def error_page_api_request(page_name, user_input, error):
   elif isinstance(error, Timeout):
     return error_page_timeout(page_name, user_input, error)
   else:
-    return error_page_unknown(page_name, user_input, error)  
+    return error_page_unknown(page_name, user_input, error)
+
 
 def error_page_unknown(page_name, user_input, error):
   """ Return error page for unknown error """
@@ -30,6 +32,7 @@ def error_page_unknown(page_name, user_input, error):
       ],
   )
 
+
 def error_page_timeout(page_name, user_input, error):
   """ Return error page for timeout error """
   logging.error(
@@ -44,6 +47,7 @@ def error_page_timeout(page_name, user_input, error):
           'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
       ],
   )
+
 
 def error_page_xml(page_name, user_input):
   """ Return error page for XML attack """
@@ -63,8 +67,8 @@ def error_page_connection(page_name, user_input, error):
   """ Return error page for connection error """
   error_details_full = f"Exception Type: {type(error).__name__}\nError Details: {str(error)}"
   logging.error(
-      basic_logging_info(page_name, user_input) +  f'"{error_details_full}"')
-      
+      basic_logging_info(page_name, user_input) + f'"{error_details_full}"')
+
   return page_error(
       page_name,
       'Connection Error',
@@ -79,7 +83,9 @@ def error_page_connection(page_name, user_input, error):
 def error_page_api_response(page_name, user_input, result):
   status_code = result.status_code
   if status_code == 429:
-    logging.warning(basic_logging_info(page_name, user_input) + f' "Rate Limit Error": "{result.json()}"')
+    logging.warning(
+        basic_logging_info(page_name, user_input) +
+        f' "Rate Limit Error": "{result.json()}"')
     return page_error(
         page_name,
         'Rate Limit Error',
@@ -90,7 +96,9 @@ def error_page_api_response(page_name, user_input, result):
     )
 
   if status_code == 500:
-    logging.error(basic_logging_info(page_name, user_input) + f' "Server Error": "{result.json()}"')
+    logging.error(
+        basic_logging_info(page_name, user_input) +
+        f' "Server Error": "{result.json()}"')
     return page_error(
         page_name,
         'Internal Server Error',
@@ -101,7 +109,9 @@ def error_page_api_response(page_name, user_input, result):
     )
 
   if status_code == 400:
-    logging.error(basic_logging_info(page_name, user_input) + f' "Bad Request Error": "{result.json()}"')
+    logging.error(
+        basic_logging_info(page_name, user_input) +
+        f' "Bad Request Error": "{result.json()}"')
     return page_error(
         page_name,
         'Bad Request Error',
@@ -112,7 +122,9 @@ def error_page_api_response(page_name, user_input, result):
     )
 
   if status_code == 401:
-    logging.error(basic_logging_info(page_name, user_input) + f' "Authentication Error": "{result.json()}"')
+    logging.error(
+        basic_logging_info(page_name, user_input) +
+        f' "Authentication Error": "{result.json()}"')
     return page_error(
         page_name,
         'Authentication Error',
