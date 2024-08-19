@@ -19,10 +19,10 @@ page_name = 'postcode'
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def postcode():
   endpoints = get_endpoints(called_from=page_name)
-  access = check_user_has_access_to_page(page_name, endpoints)
-  page_locatinon = get_page_location(endpoints, page_name)
+  access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
+  page_locatinon = get_page_location(endpoints, page_name)
 
   if request.method == 'GET':
     delete_input(session)
