@@ -6,11 +6,14 @@ import logging
 # This should make error handling in other files much cleaner and less repetitive
 
 
+def basic_logging_info(page_name, user_input):
+  return f'User: "{get_username()}" experienced an issue on page: "{page_name}", having entered: "{user_input}". Issue is:'
+
+
 def error_page_xml(page_name, user_input):
   """ Return error page for XML attack """
   logging.warning(
-      f'XML Attack Detected on page: "{page_name}". \nThe user "{get_username()}" entered: "{user_input}"'
-  )
+      basic_logging_info(page_name, user_input) + ' "XML Attack Detected"')
   return page_error(
       page_name,
       'XML Attack Detected. This incident will be reported.',
@@ -25,8 +28,8 @@ def error_page_connection(page_name, user_input, error):
   """ Return error page for connection error """
   error_details_full = f"Exception Type: {type(error).__name__}\nError Details: {str(error)}"
   logging.error(
-      f'The user {get_username()} experienced a Connection Error on page: "{page_name}". \nError Details: "{error_details_full}"'
-  )
+      basic_logging_info(page_name, user_input) +  f'"{error_details_full}"')
+      
   return page_error(
       page_name,
       'Connection Error',
@@ -36,3 +39,51 @@ def error_page_connection(page_name, user_input, error):
           'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
       ],
   )
+
+
+def error_page_api(page_name, user_input, result):
+  status_code = result.status_code
+  if status_code == 429:
+    logging.warning(basic_logging_info(page_name, user_input) + f' "Rate Limit Error": "{result.json()}"')
+    return page_error(
+        page_name,
+        'Rate Limit Error',
+        [
+            'The API is currently under exceptional load and your request cannot be processed at this time.',
+            'Please try again later.',
+        ],
+    )
+
+  if status_code == 500:
+    logging.error(basic_logging_info(page_name, user_input) + f' "Server Error": "{result.json()}"')
+    return page_error(
+        page_name,
+        'Internal Server Error',
+        [
+            'There was an API error processing your request.',
+            'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+        ],
+    )
+
+  if status_code == 400:
+    logging.error(basic_logging_info(page_name, user_input) + f' "Bad Request Error": "{result.json()}"')
+    return page_error(
+        page_name,
+        'Bad Request Error',
+        [
+            'There was an error with the request you submitted.',
+            'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+        ],
+    )
+
+  if status_code == 401:
+    logging.error(basic_logging_info(page_name, user_input) + f' "Authentication Error": "{result.json()}"')
+    return page_error(
+        page_name,
+        'Authentication Error',
+        [
+            'There was an error with your authentication.',
+            'Please try logging in again or refreshing your page.',
+            'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+        ],
+    )
