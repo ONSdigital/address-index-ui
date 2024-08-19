@@ -114,7 +114,7 @@ def error_page_api_response(page_name, user_input, result):
         f' "Bad Request Error": "{result.json()}"')
     return page_error(
         page_name,
-        'Bad Request Error',
+        'Bad Request',
         [
             'There was an error with the request you submitted.',
             'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
