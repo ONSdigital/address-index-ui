@@ -12,10 +12,10 @@ page_name = 'settings'
 @app.route('/settings')
 def settings():
   endpoints = get_endpoints(called_from=page_name)
-  access = check_user_has_access_to_page(page_name, endpoints)
-  page_location = get_page_location(endpoints, page_name)
+  access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
+  page_location = get_page_location(endpoints, page_name)
 
   col_options = [{'value': x, 'text': x} for x in range(1, 8)]
   col_options_inc0 = [{'value': x, 'text': x} for x in range(0, 6)]

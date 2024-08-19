@@ -13,10 +13,10 @@ page_name = 'help'
 @app.route('/help/<subject>')
 def help(subject='None'):
   endpoints = get_endpoints(called_from=page_name)
-  access = check_user_has_access_to_page(page_name, endpoints)
-  page_location = get_page_location(endpoints, page_name)
+  access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
+  page_location = get_page_location(endpoints, page_name)
 
   # Get brief descriptions from the tooltips file, but any deffinitions
   # here will get a more lengthly explanation
