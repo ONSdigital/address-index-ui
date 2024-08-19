@@ -6,7 +6,16 @@ import logging
 
 
 def basic_logging_info(page_name, user_input):
-  return f'User: "{get_username()}" experienced an issue on page: "{page_name}", having entered: "{user_input}". Issue is:'
+  return f'User: "{get_username()}" experienced an issue on page: "{page_name}", having entered: "{user_input}". Issue is: '
+
+def error_page_no_access(page_name):
+  logging.warning(
+      basic_logging_info(page_name, 'NA') + f'User not in group with access to "{page_name}" page') 
+  return page_error(
+      page_name,
+      'You do not have access to this page',
+      [f'If you think you should have access, please contact the AIMS team and request access to the "{page_name}" page.',
+       'Contact can be made through the link at the bottom of the page'],)
 
 
 def error_page_api_request(page_name, user_input, error):
