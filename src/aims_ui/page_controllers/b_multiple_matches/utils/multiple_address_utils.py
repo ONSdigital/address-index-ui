@@ -36,9 +36,9 @@ def get_job_age(job):
 
   # e.g. (string) 'startdate': '2023-03-23T11:11:14'
   current_time = datetime.datetime.now()
-  startDate = datetime.datetime.strptime(startDate , '%Y-%m-%dT%H:%M:%S')
+  startDate = datetime.datetime.strptime(startDate, '%Y-%m-%dT%H:%M:%S')
 
-  age = current_time - startDate  
+  age = current_time - startDate
   return age
 
 

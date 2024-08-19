@@ -5,6 +5,7 @@
 
 {% block main %}
 
+
 {% call
     onsPanel({
 	'title': error_title,
@@ -13,8 +14,7 @@
 {{ onsList({
 	'id': 'no_data_found',
 	'classes': 'list--bare list--errors u-mb-s',
-	'itemsList': [{
-		'text': error_description, }]
+	'itemsList': error_description
     }) }}
 
 {% endcall %}
