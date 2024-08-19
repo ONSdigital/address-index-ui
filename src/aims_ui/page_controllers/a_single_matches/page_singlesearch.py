@@ -6,10 +6,10 @@ from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inpu
 from aims_ui.page_helpers.api.api_interaction import api, get_response_attributes
 from aims_ui.page_helpers.security_utils import detect_xml_injection, check_user_has_access_to_page
 from aims_ui.page_helpers.pages_location_utils import get_page_location
+from aims_ui.page_helpers.error_utils import error_page_xml, error_page_connection
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.models.get_addresses import get_addresses
-from aims_ui.page_error import page_error
 
 page_name = 'singlesearch'
 
@@ -41,11 +41,7 @@ def singlesearch():
   user_input = all_user_input.get('input', '')
   xml_injection = detect_xml_injection(user_input)
   if xml_injection:
-    return page_error(None,
-                      page_name,
-                      all_user_input,
-                      override_error_description=
-                      'XML Attack Detected. This incident will be reported.')
+    return error_page_xml(page_name, user_input)
 
   try:
     result = api(
@@ -55,7 +51,7 @@ def singlesearch():
     )
 
   except ConnectionError as e:
-    return page_error(None, e, page_name)
+    return error_page_connection(page_name, user_input, e)
 
   if result.status_code == 200:
     matched_addresses = get_addresses(result.json(), page_name)
