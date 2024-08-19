@@ -19,10 +19,10 @@ page_name = 'uprn_multiple_match'
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def uprn_multiple_match():
   endpoints = get_endpoints(called_from=page_name)
-  access = check_user_has_access_to_page(page_name, endpoints)
-  page_location = get_page_location(endpoints, page_name)
+  access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
+  page_location = get_page_location(endpoints, page_name)
 
   current_group = get_current_group()
   bulk_limits = current_group.get('bulk_limits')
