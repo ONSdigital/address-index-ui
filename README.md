@@ -40,6 +40,9 @@ Set the "groups" of users (by default all users including the "NotLoggedInUser" 
 
 `python3 -m flask run`
 
+# To run as a developer (Any file-saves restart server)
+`python3 run_ui_developer.py`
+
 ## To lint code
 
 ### For python:
