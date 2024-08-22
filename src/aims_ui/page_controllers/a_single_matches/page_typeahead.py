@@ -6,7 +6,7 @@ from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inpu
 from aims_ui.page_helpers.api.api_interaction import api, get_api_auth
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from aims_ui.page_helpers.pages_location_utils import get_page_location
-from aims_ui.page_helpers.error_utils import error_page_xml, error_page_api_request, error_page_api_response
+from aims_ui.page_helpers.error.error_utils import error_page_xml, error_page_api_request, error_page_api_response
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.models.get_addresses import get_addresses

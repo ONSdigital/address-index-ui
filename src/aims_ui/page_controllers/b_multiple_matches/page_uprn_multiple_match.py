@@ -8,6 +8,7 @@ from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inpu
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
+from aims_ui.page_helpers.error.error_utils import error_page_connection
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.page_error import page_error
@@ -71,7 +72,7 @@ def uprn_multiple_match():
       full_results, line_count = uprn_multiple_address_match_original(
           file, all_user_input)
     except ConnectionError as e:
-      return page_error(None, e, page_name)
+      return error_page_connection(page_name, all_user_input, e)
 
     return send_file(full_results,
                      mimetype='text/csv',
