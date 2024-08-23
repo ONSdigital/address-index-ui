@@ -46,7 +46,6 @@ def uprn():
   if xml_injection:
     return error_page_xml(page_name, user_input)
 
-
   try:
     result = api(
         '/addresses/uprn/',
