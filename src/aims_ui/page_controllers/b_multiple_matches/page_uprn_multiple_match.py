@@ -40,44 +40,42 @@ def uprn_multiple_match():
         endpoints=get_endpoints(called_from=page_name),
     )
 
-  if request.method == 'POST':
+  searchable_fields = get_fields(page_name)
+  all_user_input = load_save_store_inputs(
+      searchable_fields,
+      request,
+      session,
+  )
 
-    searchable_fields = get_fields(page_name)
-    all_user_input = load_save_store_inputs(
-        searchable_fields,
-        request,
-        session,
-    )
+  file = request.files['file']
 
-    file = request.files['file']
+  try:
+    file_valid, error_description, error_title = check_valid_upload(
+        file, uprn_bulk_limit, called_from='uprn')
+  except FileUploadException as e:
+    return error_response(searchable_fields,
+                          uprn_bulk_limit,
+                          error_description=e.error_description,
+                          error_title=e.error_title)
 
-    try:
-      file_valid, error_description, error_title = check_valid_upload(
-          file, uprn_bulk_limit, called_from='uprn')
-    except FileUploadException as e:
-      return error_response(searchable_fields,
-                            uprn_bulk_limit,
-                            error_description=e.error_description,
-                            error_title=e.error_title)
+  if not file_valid:
+    # File invalid? Return error
+    return error_response(searchable_fields,
+                          uprn_bulk_limit,
+                          page_location,
+                          error_description=error_description,
+                          error_title=error_title)
 
-    if not file_valid:
-      # File invalid? Return error
-      return error_response(searchable_fields,
-                            uprn_bulk_limit,
-                            page_location,
-                            error_description=error_description,
-                            error_title=error_title)
+  try:
+    full_results, line_count = uprn_multiple_address_match_original(
+        file, all_user_input)
+  except ConnectionError as e:
+    return error_page_connection(page_name, all_user_input, e)
 
-    try:
-      full_results, line_count = uprn_multiple_address_match_original(
-          file, all_user_input)
-    except ConnectionError as e:
-      return error_page_connection(page_name, all_user_input, e)
-
-    return send_file(full_results,
-                     mimetype='text/csv',
-                     download_name=f'result_size_{line_count}.csv',
-                     as_attachment=True)
+  return send_file(full_results,
+                   mimetype='text/csv',
+                   download_name=f'result_size_{line_count}.csv',
+                   as_attachment=True)
 
 
 def error_response(searchable_fields,

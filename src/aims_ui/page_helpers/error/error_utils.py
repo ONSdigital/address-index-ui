@@ -1,22 +1,7 @@
 from aims_ui.page_error import page_error
-from aims_ui.page_helpers.google_utils import get_username
+from aims_ui.page_helpers.error.error_logging import basic_logging_info, log_warn, log_err
 from requests.exceptions import ConnectionError, Timeout
-import logging
-""" Handle Errors Connecting to and in the response of the API - logging and user response """
-
-
-def basic_logging_info(page_name, user_input):
-  return f'User: "{get_username()}" experienced an issue on page: "{page_name}", having entered: "{user_input}". Issue is: '
-
-def error_page_no_access(page_name):
-  logging.warning(
-      basic_logging_info(page_name, 'NA') + f'User not in group with access to "{page_name}" page') 
-  return page_error(
-      page_name,
-      'You do not have access to this page',
-      [f'If you think you should have access, please contact the AIMS team and request access to the "{page_name}" page.',
-       'Contact can be made through the link at the bottom of the page'],)
-
+""" Handle Errors Messages for User when connecting to and in the response of the API """
 
 def error_page_api_request(page_name, user_input, error):
   if isinstance(error, ConnectionError):
@@ -27,10 +12,21 @@ def error_page_api_request(page_name, user_input, error):
     return error_page_unknown(page_name, user_input, error)
 
 
+def error_page_no_access(page_name):
+  log_warn(page_name, 'NA', f'User not in group with access to "{page_name}" page')
+  return page_error(
+      page_name,
+      'You do not have access to this page',
+      [
+          f'If you think you should have access, please contact the AIMS team and request access to the "{page_name}" page.',
+          'Contact can be made through the link at the bottom of the page'
+      ],
+  )
+
+
 def error_page_unknown(page_name, user_input, error):
   """ Return error page for unknown error """
-  logging.error(
-      basic_logging_info(page_name, user_input) + f' Generic Error: "{error}"')
+  log_err(page_name, user_input, f'Generic Error: "{error}"')
   return page_error(
       page_name,
       'Unknown Error',
@@ -44,8 +40,7 @@ def error_page_unknown(page_name, user_input, error):
 
 def error_page_timeout(page_name, user_input, error):
   """ Return error page for timeout error """
-  logging.error(
-      basic_logging_info(page_name, user_input) + f'Timeout Error: "{error}"')
+  log_err(page_name, user_input, f'Timeout Error: "{error}"')
   return page_error(
       page_name,
       'Timeout Error',
@@ -60,8 +55,7 @@ def error_page_timeout(page_name, user_input, error):
 
 def error_page_xml(page_name, user_input):
   """ Return error page for XML attack """
-  logging.warning(
-      basic_logging_info(page_name, user_input) + ' "XML Attack Detected"')
+  log_warn(page_name, user_input, 'XML Attack Detected')
   return page_error(
       page_name,
       'XML Attack Detected. This incident will be reported.',
@@ -75,8 +69,7 @@ def error_page_xml(page_name, user_input):
 def error_page_connection(page_name, user_input, error):
   """ Return error page for connection error """
   error_details_full = f"Exception Type: {type(error).__name__}\nError Details: {str(error)}"
-  logging.error(
-      basic_logging_info(page_name, user_input) + f'"{error_details_full}"')
+  log_err(page_name, user_input, f'Connection Error: "{error_details_full}"')
 
   return page_error(
       page_name,
@@ -92,9 +85,7 @@ def error_page_connection(page_name, user_input, error):
 def error_page_api_response(page_name, user_input, result):
   status_code = result.status_code
   if status_code == 429:
-    logging.warning(
-        basic_logging_info(page_name, user_input) +
-        f' "Rate Limit Error": "{result.json()}"')
+    log_warn(page_name, user_input, f'Rate Limit Error: "{result.json()}"')
     return page_error(
         page_name,
         'Rate Limit Error',
@@ -105,9 +96,7 @@ def error_page_api_response(page_name, user_input, result):
     )
 
   if status_code == 500:
-    logging.error(
-        basic_logging_info(page_name, user_input) +
-        f' "Server Error": "{result.json()}"')
+    log_err(page_name, user_input, f'Server Error: "{result.json()}"')
     return page_error(
         page_name,
         'Internal Server Error',
@@ -118,9 +107,7 @@ def error_page_api_response(page_name, user_input, result):
     )
 
   if status_code == 400:
-    logging.error(
-        basic_logging_info(page_name, user_input) +
-        f' "Bad Request Error": "{result.json()}"')
+    log_err(page_name, user_input, f'Bad Request Error: "{result.json()}"')
     return page_error(
         page_name,
         'Bad Request',
@@ -131,9 +118,7 @@ def error_page_api_response(page_name, user_input, result):
     )
 
   if status_code == 401:
-    logging.error(
-        basic_logging_info(page_name, user_input) +
-        f' "Authentication Error": "{result.json()}"')
+    log_err(page_name, user_input, f'Authentication Error: "{result.json()}"')
     return page_error(
         page_name,
         'Authentication Error',

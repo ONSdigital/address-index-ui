@@ -4,7 +4,6 @@ from aims_ui.page_helpers.error.error_utils import error_page_no_access
 from .google_utils import get_current_group
 
 
-
 def check_user_has_access_to_page(page_name):
   current_group = get_current_group()
   if not current_group:
