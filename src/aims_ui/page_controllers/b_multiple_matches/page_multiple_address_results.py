@@ -16,10 +16,10 @@ page_name = 'multiple_address_results'
 @app.route(f'/multiple_address_results', methods=['GET', 'POST'])
 def multiple_address_results():
   endpoints = get_endpoints(called_from=page_name)
-  access = check_user_has_access_to_page(page_name, endpoints)
-  page_location = get_page_location(endpoints, page_name)
+  access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
+  page_location = get_page_location(endpoints, page_name)
 
   username = get_username()
   current_group = get_current_group()
