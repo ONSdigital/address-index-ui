@@ -3,6 +3,7 @@ from aims_ui.page_helpers.error.error_logging import basic_logging_info, log_war
 from requests.exceptions import ConnectionError, Timeout
 """ Handle Errors Messages for User when connecting to and in the response of the API """
 
+
 def error_page_api_request(page_name, user_input, error):
   if isinstance(error, ConnectionError):
     return error_page_connection(page_name, user_input, error)
@@ -13,7 +14,8 @@ def error_page_api_request(page_name, user_input, error):
 
 
 def error_page_no_access(page_name):
-  log_warn(page_name, 'NA', f'User not in group with access to "{page_name}" page')
+  log_warn(page_name, 'NA',
+           f'User not in group with access to "{page_name}" page')
   return page_error(
       page_name,
       'You do not have access to this page',
