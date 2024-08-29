@@ -8,7 +8,7 @@ from aims_ui.models.get_fields import get_fields
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
-from aims_ui.page_error import page_error
+from aims_ui.page_helpers.error.error_utils import error_page_connection
 from .utils.multiple_match_lookup import multiple_address_match_original
 from .utils.upload_utils import check_valid_upload, FileUploadException
 
@@ -100,6 +100,7 @@ def multiple_address_original():
   try:
     file_valid, error_description, error_title = check_valid_upload(
         file, bulk_limits.get('limit_mini_bulk'))
+  # File Upload issues appear inside upload component
   except FileUploadException as e:
     return final(searchable_fields,
                  bulk_limits,
@@ -122,7 +123,7 @@ def multiple_address_original():
         full_results, line_count = multiple_address_match_original(
             file, all_user_input, download=True)
       except ConnectionError as e:
-        return page_error(None, e, page_name)
+        return error_page_connection(page_name, all_user_input, e)
 
       return send_file(full_results,
                        mimetype='text/csv',
@@ -134,7 +135,7 @@ def multiple_address_original():
         table_results, results_summary_table = multiple_address_match_original(
             file, all_user_input, download=False)
       except ConnectionError as e:
-        return page_error(None, e, page_name)
+        return error_page_connection(page_name, all_user_input, e)
 
       return final(searchable_fields,
                    bulk_limits,

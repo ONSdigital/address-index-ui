@@ -1,4 +1,4 @@
-from aims_ui.page_error import page_error
+from aims_ui.page_controllers.f_error_pages.page_error import page_error
 from aims_ui.page_helpers.error.error_logging import basic_logging_info, log_warn, log_err
 from requests.exceptions import ConnectionError, Timeout
 """ Handle Errors Messages for User when connecting to and in the response of the API """
@@ -83,11 +83,18 @@ def error_page_connection(page_name, user_input, error):
       ],
   )
 
+def clean_api_response(result):
+  try:
+    return str(result.json())
+  except:
+    return str(result.text)
 
 def error_page_api_response(page_name, user_input, result):
   status_code = result.status_code
+  clean_result = clean_api_response(result)
+
   if status_code == 429:
-    log_warn(page_name, user_input, f'Rate Limit Error: "{result.json()}"')
+    log_warn(page_name, user_input, f'Rate Limit Error: "{clean_result}"')
     return page_error(
         page_name,
         'Rate Limit Error',
@@ -98,7 +105,7 @@ def error_page_api_response(page_name, user_input, result):
     )
 
   if status_code == 500:
-    log_err(page_name, user_input, f'Server Error: "{result.json()}"')
+    log_err(page_name, user_input, f'Server Error: "{clean_result}"')
     return page_error(
         page_name,
         'Internal Server Error',
@@ -109,7 +116,7 @@ def error_page_api_response(page_name, user_input, result):
     )
 
   if status_code == 400:
-    log_err(page_name, user_input, f'Bad Request Error: "{result.json()}"')
+    log_err(page_name, user_input, f'Bad Request Error: "{clean_result}"')
     return page_error(
         page_name,
         'Bad Request',
@@ -120,7 +127,7 @@ def error_page_api_response(page_name, user_input, result):
     )
 
   if status_code == 401:
-    log_err(page_name, user_input, f'Authentication Error: "{result.json()}"')
+    log_err(page_name, user_input, f'Authentication Error: "{clean_result}"')
     return page_error(
         page_name,
         'Authentication Error',
@@ -130,3 +137,26 @@ def error_page_api_response(page_name, user_input, result):
             'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
         ],
     )
+
+  if status_code == 502:
+    log_err(page_name, user_input, f'Bad Gateway Error: "{clean_result}"')
+    return page_error(
+        page_name,
+        'Bad Gateway Error',
+        [
+            'An issue occured from a bad gateway.',
+            'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+        ],
+    )
+
+  log_err(page_name, user_input, f'Unknown HTTP error code: "{clean_result}"')
+  return page_error(
+      page_name,
+      'Unknown issue',
+      [
+          'An issue occured, we don\t know much else.',
+          'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+      ],
+  )
+
+
