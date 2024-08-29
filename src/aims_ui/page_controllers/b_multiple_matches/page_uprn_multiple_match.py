@@ -11,7 +11,7 @@ from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.error.error_utils import error_page_connection
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
-from aims_ui.page_error import page_error
+from aims_ui.page_controllers.f_error_pages.page_error import page_error
 
 page_name = 'uprn_multiple_match'
 
@@ -54,14 +54,12 @@ def uprn_multiple_match():
         file, uprn_bulk_limit, called_from='uprn')
   except FileUploadException as e:
     return error_response(searchable_fields,
-                          uprn_bulk_limit,
                           error_description=e.error_description,
                           error_title=e.error_title)
 
   if not file_valid:
     # File invalid? Return error
     return error_response(searchable_fields,
-                          uprn_bulk_limit,
                           page_location,
                           error_description=error_description,
                           error_title=error_title)
@@ -79,12 +77,15 @@ def uprn_multiple_match():
 
 
 def error_response(searchable_fields,
-                   uprn_bulk_limit,
                    page_location,
                    error_description='',
                    error_title='',
                    results_summary_table='',
                    table_results=''):
+
+  current_group = get_current_group()
+  bulk_limits = current_group.get('bulk_limits')
+  uprn_bulk_limit = bulk_limits.get('limit_uprn_match')
 
   return render_template(
       page_location,
@@ -108,7 +109,7 @@ def request_entity_too_large(error):
     if field.database_name == 'display-type':
       field.set_radio_status('Download')
 
-  return final(
+  return error_response(
       searchable_fields,
       'File size is too large. Please enter a file no larger than 2 MB',
       'File Size Error')
