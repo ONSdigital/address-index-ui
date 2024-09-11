@@ -1,4 +1,5 @@
 from aims_ui.page_controllers.f_error_pages.page_error import page_error
+from aims_ui.page_controllers.f_error_pages.page_service_error import page_service_error
 from aims_ui.page_helpers.error.error_logging import basic_logging_info, log_warn, log_err
 from requests.exceptions import ConnectionError, Timeout
 """ Handle Errors Messages for User when connecting to and in the response of the API """
@@ -140,7 +141,7 @@ def error_page_api_response(page_name, user_input, result):
 
   if status_code == 502:
     log_err(page_name, user_input, f'Bad Gateway Error: "{clean_result}"')
-    return page_error(
+    return page_service_error(
         page_name,
         'Bad Gateway Error',
         [
