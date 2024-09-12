@@ -1,5 +1,5 @@
 import re
-from aims_ui.page_error import page_error
+from aims_ui.page_controllers.f_error_pages.page_error import page_error
 from aims_ui.page_helpers.error.error_utils import error_page_no_access
 from .google_utils import get_current_group
 
