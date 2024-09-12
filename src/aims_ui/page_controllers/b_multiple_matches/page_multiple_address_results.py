@@ -51,7 +51,6 @@ def multiple_address_results():
         jobs=jobs,
         bulk_limits=bulk_limits,
     )
-
   #TODO SET TO FALSE --------------------------------------------------
 
   endpoints = get_endpoints(called_from=page_name)
@@ -65,10 +64,7 @@ def multiple_address_results():
   include_old_jobs = request.args.get('include_old_jobs',
                                       default='false').lower()
   # Sanetise the input
-  if include_old_jobs == 'true':
-    include_old_jobs = True
-  else:
-    include_old_jobs = False
+  include_old_jobs = True if include_old_jobs == 'true' else False
 
   results = job_data_by_current_user(include_old_jobs)
 

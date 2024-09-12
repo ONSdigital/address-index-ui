@@ -3,7 +3,7 @@ import logging
 from io import StringIO, BytesIO
 from aims_ui.models.get_addresses import get_addresses
 from .upload_utils import remove_script_and_html_from_str
-from aims_ui.page_error import page_error
+from aims_ui.page_controllers.f_error_pages.page_error import page_error
 from aims_ui.page_helpers.api.api_interaction import api, submit_mm_job, submit_uprn_mm_job, get_response_attributes
 
 page_name = 'multiple_match_submit'
