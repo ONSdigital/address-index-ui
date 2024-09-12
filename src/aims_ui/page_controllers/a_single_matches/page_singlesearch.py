@@ -55,7 +55,6 @@ def singlesearch():
     return error_page_api_request(page_name, user_input, e)
 
   # Errors after sucessful Response
-  result.status_code = 500
   if result.status_code != 200:
     return error_page_api_response(page_name, user_input, result)
 
