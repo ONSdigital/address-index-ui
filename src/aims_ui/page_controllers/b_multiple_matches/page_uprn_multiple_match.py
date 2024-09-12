@@ -71,9 +71,9 @@ def uprn_multiple_match():
     return error_page_connection(page_name, all_user_input, e)
 
   return send_file(full_results,
-                    mimetype='text/csv',
-                    download_name=f'result_size_{line_count}.csv',
-                    as_attachment=True)
+                   mimetype='text/csv',
+                   download_name=f'result_size_{line_count}.csv',
+                   as_attachment=True)
 
 
 def error_response(searchable_fields,
