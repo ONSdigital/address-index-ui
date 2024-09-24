@@ -1,4 +1,4 @@
-name: Python application
+name: Python and JavaScript application
 
 on:
   push:
@@ -15,22 +15,33 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    # Set up Python environment and run Python tests
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: '3.9'
 
-    - name: Install dependencies
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Install package
+    - name: Install Python package
       run: |
         pip install -e .
 
-    - name: Run tests
+    - name: Run Python tests
       run: |
         python3 -m pytest tests/pytest_tests
 
+    # Set up Node.js environment and run JavaScript tests
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # Replace with the Node.js version you need
 
+    - name: Install npm dependencies
+      run: npm install
+
+    - name: Run JavaScript tests
+      run: npm run test:jest
