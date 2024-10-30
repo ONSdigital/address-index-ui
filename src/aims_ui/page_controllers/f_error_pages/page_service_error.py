@@ -2,8 +2,8 @@ from flask import render_template
 from aims_ui import app
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.page_helpers.pages_location_utils import get_error_page_location
-
 """ User friendly error for service issues"""
+
 
 def page_service_error(
     called_from_page_name,

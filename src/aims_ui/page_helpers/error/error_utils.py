@@ -1,5 +1,6 @@
 from aims_ui.page_controllers.f_error_pages.page_error import page_error
 from aims_ui.page_controllers.f_error_pages.page_service_error import page_service_error
+from aims_ui.page_controllers.f_error_pages.page_specific_input_error import page_specific_input_error
 from aims_ui.page_helpers.error.error_logging import basic_logging_info, log_warn, log_err
 from requests.exceptions import ConnectionError, Timeout
 """ Handle Errors Messages for User when connecting to and in the response of the API """
@@ -120,14 +121,11 @@ def error_page_api_response(page_name, user_input, result):
 
   if status_code == 400:
     log_err(page_name, user_input, f'Bad Request Error: "{clean_result}"')
-    return page_service_error(
-        page_name,
-        'Bad Request',
-        [
-            'There was an error with the request you submitted.',
-            'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
-        ],
-    )
+    # TODO Decide here if it's got additional feedback for a specific input
+    # TODO   if not, then return a service error page
+
+    # Handle errors that the API has a suggesgion to fix! (i.e. "input" cannot be empty)
+    return page_specific_input_error(page_name, user_input, result)
 
   if status_code == 401:
     log_err(page_name, user_input, f'Authentication Error: "{clean_result}"')
