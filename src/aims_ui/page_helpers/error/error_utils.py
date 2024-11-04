@@ -6,6 +6,22 @@ from requests.exceptions import ConnectionError, Timeout
 """ Handle Errors Messages for User when connecting to and in the response of the API """
 
 
+def get_primary_error_message(full_response):
+  # {'response': 'Error calling API', 'status': {'code': 400, 'message': 'Missing parameter: input'}}
+  json_result = full_response.json()
+  api_response = json_result.get('status', {})
+
+  # In some cases the error will be in full_response.status.message "Missing parameter: input"
+  # In other cases the error will be in full_repsonse.errors [{'code':8, 'message': 'Limit parameter is too large'}]
+  primary_error_message = api_response.get(
+      'message', 'No further information provided by the API')
+  if json_result.get('errors'):
+    # There are errors in the 'errors' field, so use the first one
+    primary_error_message = json_result.get('errors')[0].get('message')
+
+  return primary_error_message
+
+
 def error_page_api_request(page_name, user_input, error):
   if isinstance(error, ConnectionError):
     return error_page_connection(page_name, user_input, error)
@@ -97,6 +113,9 @@ def error_page_api_response(page_name, user_input, result):
   status_code = result.status_code
   clean_result = clean_api_response(result)
 
+  # Error message from status message or first error in 'errors'
+  primary_error_message = get_primary_error_message(result)
+
   if status_code == 429:
     log_warn(page_name, user_input, f'Rate Limit Error: "{clean_result}"')
     return page_service_error(
@@ -105,6 +124,7 @@ def error_page_api_response(page_name, user_input, result):
         [
             'The API is currently under exceptional load and your request cannot be processed at this time.',
             'Please try again later.',
+            primary_error_message,
         ],
     )
 
@@ -116,6 +136,7 @@ def error_page_api_response(page_name, user_input, result):
         [
             'There was an API error processing your request.',
             'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+            primary_error_message
         ],
     )
 
@@ -125,7 +146,8 @@ def error_page_api_response(page_name, user_input, result):
     # TODO   if not, then return a service error page
 
     # Handle errors that the API has a suggesgion to fix! (i.e. "input" cannot be empty)
-    return page_specific_input_error(page_name, user_input, result)
+    return page_specific_input_error(page_name, user_input,
+                                     primary_error_message)
 
   if status_code == 401:
     log_err(page_name, user_input, f'Authentication Error: "{clean_result}"')
@@ -136,6 +158,7 @@ def error_page_api_response(page_name, user_input, result):
             'There was an error with your authentication.',
             'Please try logging in again or refreshing your page.',
             'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+            primary_error_message,
         ],
     )
 
@@ -147,6 +170,7 @@ def error_page_api_response(page_name, user_input, result):
         [
             'An issue occured from a bad gateway.',
             'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+            primary_error_message,
         ],
     )
 
@@ -157,5 +181,6 @@ def error_page_api_response(page_name, user_input, result):
       [
           'An issue occured, we don\'t know much else.',
           'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+          primary_error_message,
       ],
   )
