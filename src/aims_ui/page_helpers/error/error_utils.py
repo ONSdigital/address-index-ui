@@ -110,8 +110,10 @@ def clean_api_response(result):
 
 
 def error_page_api_response(page_name, user_input, result):
-  status_code = result.status_code
+  status_code = int(result.status_code)
   clean_result = clean_api_response(result)
+  print('STATUS CODE:', status_code)
+  print('CLEAN RESULT:', clean_result + '\n')
 
   # Error message from status message or first error in 'errors'
   primary_error_message = get_primary_error_message(result)
@@ -140,7 +142,7 @@ def error_page_api_response(page_name, user_input, result):
         ],
     )
 
-  if int(status_code) == 400:
+  if status_code == 400:
     log_err(page_name, user_input, f'Bad Request Error: "{clean_result}"')
     # TODO Decide here if it's got additional feedback for a specific input
     # TODO   if not, then return a service error page
@@ -148,6 +150,11 @@ def error_page_api_response(page_name, user_input, result):
     # Handle errors that the API has a suggesgion to fix! (i.e. "input" cannot be empty)
     return page_specific_input_error(page_name, user_input,
                                      primary_error_message)
+
+  if status_code == 404:
+    log_err(page_name, user_input, f'Not Found Error: "{clean_result}"')
+
+    return page_specific_input_error(page_name, user_input, primary_error_message)
 
   if status_code == 401:
     log_err(page_name, user_input, f'Authentication Error: "{clean_result}"')

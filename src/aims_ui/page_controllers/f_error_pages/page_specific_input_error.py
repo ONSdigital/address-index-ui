@@ -44,5 +44,9 @@ def match_api_error_message_to_name_of_field(primary_error_message):
     return 'epoch'
   if 'Limit parameter is ' in primary_error_message:
     return 'limit'
+  
+  # UPRN specific errors
   if 'UPRNs must be numeric' in primary_error_message:
+    return 'uprn'
+  if 'UPRN request didn' in primary_error_message:
     return 'uprn'
