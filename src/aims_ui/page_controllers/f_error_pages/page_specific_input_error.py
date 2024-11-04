@@ -14,13 +14,15 @@ def page_specific_input_error(
 ):
   endpoints = get_endpoints(called_from=page_name_with_error)
   page_location = get_page_location(
-      endpoints, page_name_with_error)  # I.e. singlesearch's location
-  searchable_fields = get_fields('singlesearch')
+      endpoints, page_name_with_error)
+  # Get the fields that are on the page with the error
+  searchable_fields = get_fields(page_name_with_error)
 
+  # Knowing the error from the API, get the databasename of the feild that matches the error 
   name_of_broken_field = match_api_error_message_to_name_of_field(
       primary_error_message)
 
-  # Loop through all fields and find the one that matches the name of the broken field
+  # Loop through all fields on the page, set it's "error_message" to the primary_error_message from the API
   for field in searchable_fields:
     if field.database_name == name_of_broken_field:
       field.error_message = primary_error_message
@@ -42,3 +44,5 @@ def match_api_error_message_to_name_of_field(primary_error_message):
     return 'epoch'
   if 'Limit parameter is ' in primary_error_message:
     return 'limit'
+  if 'UPRNs must be numeric' in primary_error_message:
+    return 'uprn'
