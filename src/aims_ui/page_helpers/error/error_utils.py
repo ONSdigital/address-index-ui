@@ -140,7 +140,7 @@ def error_page_api_response(page_name, user_input, result):
         ],
     )
 
-  if status_code == 400:
+  if int(status_code) == 400:
     log_err(page_name, user_input, f'Bad Request Error: "{clean_result}"')
     # TODO Decide here if it's got additional feedback for a specific input
     # TODO   if not, then return a service error page
