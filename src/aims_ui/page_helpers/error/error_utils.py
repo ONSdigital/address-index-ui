@@ -153,8 +153,10 @@ def error_page_api_response(page_name, user_input, result):
 
   if status_code == 404:
     log_err(page_name, user_input, f'Not Found Error: "{clean_result}"')
+    if (page_name == 'uprn') or (page_name == 'postcode'):
+      primary_error_message = 'Not found error. This is likely due to a blank search feild. Please check your inputs.'
 
-    return page_specific_input_error(page_name, user_input, primary_error_message)
+    return page_specific_input_error(page_name, user_input, primary_error_message, override_input_name=page_name)
 
   if status_code == 401:
     log_err(page_name, user_input, f'Authentication Error: "{clean_result}"')
