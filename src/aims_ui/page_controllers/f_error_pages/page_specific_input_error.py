@@ -34,6 +34,8 @@ def page_specific_input_error(
   for field in searchable_fields:
     if field.database_name == name_of_broken_field:
       field.error_message = primary_error_message
+    if field.database_name == 'input':
+      field.previous_value = user_input
 
   return render_template(
       page_location,
