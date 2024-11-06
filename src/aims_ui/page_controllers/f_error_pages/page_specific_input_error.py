@@ -21,6 +21,7 @@ def page_specific_input_error(
   searchable_fields = get_fields(page_name_with_error)
 
   # Knowing the error from the API, get the databasename of the feild that matches the error 
+  name_of_broken_field = page_name_with_error # Default to the "input" for the page!
   name_of_broken_field = match_api_error_message_to_name_of_field(
       primary_error_message)
 
@@ -57,4 +58,7 @@ def match_api_error_message_to_name_of_field(primary_error_message):
     return 'uprn'
   if 'UPRN request didn' in primary_error_message:
     return 'uprn'
+  
+  if 'Postcode supplied is not valid according to the UK addresses' in primary_error_message:
+    return 'postcode'
   
