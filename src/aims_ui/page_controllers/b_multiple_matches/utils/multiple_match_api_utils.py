@@ -105,4 +105,3 @@ def job_url_if_authorised(job_id):
   else:
     logging.error('Job download attempted on an unauthorised job')
     return False
-
