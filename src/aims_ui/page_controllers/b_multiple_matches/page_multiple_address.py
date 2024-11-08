@@ -7,9 +7,9 @@ from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
-from .utils.multiple_match_lookup import multiple_address_match
-from .utils.upload_utils import check_valid_upload
-from .utils.upload_utils import FileUploadException
+from .utils.submit_multiple_match_api import multiple_address_match
+from .utils.multiple_match_file_upload_utils import check_valid_upload
+from .utils.multiple_match_file_upload_utils import FileUploadException
 
 page_name = 'multiple_address'
 

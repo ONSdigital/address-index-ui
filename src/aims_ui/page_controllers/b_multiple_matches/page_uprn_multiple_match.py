@@ -1,17 +1,20 @@
-from flask import render_template, request, session, send_file
-from requests.exceptions import ConnectionError
+from flask import render_template, request, send_file, session
 from flask_login import login_required
+from requests.exceptions import ConnectionError
+
 from aims_ui import app
-from .utils.upload_utils import check_valid_upload, FileUploadException
-from .utils.multiple_match_lookup import uprn_multiple_address_match_original
-from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs
-from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
-from aims_ui.page_helpers.google_utils import get_current_group
-from aims_ui.page_helpers.pages_location_utils import get_page_location
-from aims_ui.page_helpers.error.error_utils import error_page_connection
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
-from aims_ui.page_controllers.f_error_pages.page_error import page_error
+from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_file_upload_utils import (
+    FileUploadException,
+    check_valid_upload
+)
+from aims_ui.page_controllers.b_multiple_matches.utils.submit_multiple_match_uprn import uprn_multiple_address_match
+from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs
+from aims_ui.page_helpers.error.error_utils import error_page_connection
+from aims_ui.page_helpers.google_utils import get_current_group
+from aims_ui.page_helpers.pages_location_utils import get_page_location
+from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 
 page_name = 'uprn_multiple_match'
 
@@ -65,7 +68,7 @@ def uprn_multiple_match():
                           error_title=error_title)
 
   try:
-    full_results, line_count = uprn_multiple_address_match_original(
+    full_results, line_count = uprn_multiple_address_match(
         file, all_user_input)
   except ConnectionError as e:
     return error_page_connection(page_name, all_user_input, e)

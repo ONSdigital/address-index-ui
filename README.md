@@ -47,6 +47,12 @@ Set the "groups" of users (by default all users including the "NotLoggedInUser" 
 
 ### For python:
 `yapf --style='{based_on_style: pep8, indent_width: 2}' -ir .`
+### For python imports:
+   - Pre-requisites: `pip install isort`
+                     `pip install autoflake`
+`autoflake --in-place --remove-all-unused-imports --remove-unused-variables \"${file}\"`
+`isort \"${file}\`
+This will remove unused imoports and organise imports consistantly
 
 ### For js/mjs:
 `npm run lint`  

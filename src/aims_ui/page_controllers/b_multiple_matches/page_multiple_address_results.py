@@ -1,7 +1,7 @@
 from flask_login import login_required
 from flask import render_template, request
 from aims_ui import app
-from .utils.multiple_address_utils import get_tag_data, job_data_by_current_user
+from .utils.multiple_match_api_utils import get_tag_data, job_data_by_current_user
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from aims_ui.page_helpers.table_utils import create_table
 from aims_ui.models.get_endpoints import get_endpoints

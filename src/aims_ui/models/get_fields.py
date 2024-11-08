@@ -22,6 +22,13 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           'Enter the number of matched addresses to return if multiple matches are available (1 - 50)',
           previous_value='1',
       ),
+      'file_upload':
+      Field(
+          'file_upload',
+          search_type='file_upload',
+          display_title='Upload a csv file',
+          description='Please upload a csv file',
+      ),
       'epoch':
       Field(
           'epoch',
@@ -274,7 +281,9 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             description=
             'Enter the number of matched addresses to return if multiple matches are available (1 - 10)',
             previous_value='5',
-        ), common_fields['epoch'], common_fields['historical'],
+        ),
+        common_fields['epoch'],
+        common_fields['historical'],
         common_fields['match_threshold'],
         common_fields['multiple_match_paf_nag_preference'],
         common_fields['header_row_export'],
@@ -293,7 +302,8 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
                     'text': 'Display in browser'
                 },
             ],
-        )
+        ),
+        common_fields['file_upload'],
     ])
 
   elif endpoint_name == 'uprn_multiple_match':
