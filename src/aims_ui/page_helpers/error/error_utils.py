@@ -1,15 +1,29 @@
-from aims_ui.page_controllers.f_error_pages.page_error import page_error
-from aims_ui.page_controllers.f_error_pages.page_service_error import page_service_error
-from aims_ui.page_controllers.f_error_pages.page_error_annotation_single import page_error_annotation_single
-from aims_ui.page_helpers.error.error_logging import basic_logging_info, log_warn, log_err
 from requests.exceptions import ConnectionError, Timeout
+
+from aims_ui.page_controllers.f_error_pages.page_error import page_error
+from aims_ui.page_controllers.f_error_pages.page_error_annotation_single import page_error_annotation_single
+from aims_ui.page_controllers.f_error_pages.page_service_error import page_service_error
+from aims_ui.page_helpers.error.error_logging import log_err, log_warn
+
 """ Handle Errors Messages for User when connecting to and in the response of the API """
 
 
-def get_primary_error_message(full_response):
-  # {'response': 'Error calling API', 'status': {'code': 400, 'message': 'Missing parameter: input'}}
-  json_result = full_response.json()
-  api_response = json_result.get('status', {})
+def get_primary_error_message(full_response, page_name, user_input):
+  """ Get the primary error message from the API response - it could be in mutliple places """
+  # Handle HTML responses (Can happen if the gateway is completely down)
+  if 'The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds' in full_response:
+    return 'The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds. This is probably because the Gateway is down.'
+
+  # Handle responses that aren't JSON
+  try:
+    # {'response': 'Error calling API', 'status': {'code': 400, 'message': 'Missing parameter: input'}}
+    json_result = full_response.json()
+    api_response = json_result.get('status', {})
+  except:
+    # If there was a problem parsing the JSON, return a generic error message and log
+    log_err(page_name, user_input,
+            f'Error parsing JSON from the API: "{full_response}"')
+    return 'Error parsing issue from the API'
 
   # In some cases the error will be in full_response.status.message "Missing parameter: input"
   # In other cases the error will be in full_repsonse.errors [{'code':8, 'message': 'Limit parameter is too large'}]
@@ -112,11 +126,10 @@ def clean_api_response(result):
 def error_page_api_response(page_name, user_input, result):
   status_code = int(result.status_code)
   clean_result = clean_api_response(result)
-  print('STATUS CODE:', status_code)
-  print('CLEAN RESULT:', clean_result + '\n')
 
   # Error message from status message or first error in 'errors'
-  primary_error_message = get_primary_error_message(result)
+  primary_error_message = get_primary_error_message(page_name, user_input,
+                                                    result)
 
   if status_code == 429:
     log_warn(page_name, user_input, f'Rate Limit Error: "{clean_result}"')
