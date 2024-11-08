@@ -4,7 +4,6 @@ from aims_ui.page_controllers.f_error_pages.page_error import page_error
 from aims_ui.page_controllers.f_error_pages.page_error_annotation_single import page_error_annotation_single
 from aims_ui.page_controllers.f_error_pages.page_service_error import page_service_error
 from aims_ui.page_helpers.error.error_logging import log_err, log_warn
-
 """ Handle Errors Messages for User when connecting to and in the response of the API """
 
 

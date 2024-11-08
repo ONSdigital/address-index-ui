@@ -1,11 +1,12 @@
 import logging
+
 from flask import render_template
-from aims_ui import app
+
 from aims_ui.models.get_endpoints import get_endpoints
-from aims_ui.page_controllers.f_error_pages.page_error import page_error
 from aims_ui.models.get_fields import get_fields
-from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.google_utils import get_current_group
+from aims_ui.page_helpers.pages_location_utils import get_page_location
+
 """ Manage errors specific to multiple match pages """
 
 
@@ -17,6 +18,9 @@ def page_error_annotation_multiple(
 ):
   logging.error('Error on page: {}'.format(page_name_with_error))
   logging.error('Error message: {}'.format(primary_error_message))
+
+  # Convert the primary error message to a string if it's an exception
+  primary_error_message = convert_exception_to_error_message(primary_error_message)
 
   endpoints = get_endpoints(called_from=page_name_with_error)
   page_location = get_page_location(endpoints, page_name_with_error)
@@ -50,10 +54,27 @@ def page_error_annotation_multiple(
       bulk_limits=bulk_limits,
   )
 
+def convert_exception_to_error_message(primary_error_message):
+  """ Convert an exception to a string """
+
+  # If the primary error message is an instance of an Exception
+  if isinstance(primary_error_message, Exception):
+    primary_error_message = str(primary_error_message)
+  
+  if 'Expecting value: line 2 column 1':
+    # Error message when there's a connection error to the API
+    return 'Connection error to the API'
+
+  # TODO add here other error message from submission of multiple_address_match_from_singlesearch
+  return primary_error_message
+ 
 
 def match_api_error_message_to_name_of_field(primary_error_message):
   """ Given an error message, return the name of the field that caused the error """
+  default_element_for_error_message = 'file_upload'
+ 
+  # If the primary error message is a string, decide which element to return based on the error message
   if 'Record Limit Exceeded' in primary_error_message:
     return 'file_upload'
 
-  return 'file_upload'  # Default to file
+  return default_element_for_error_message 

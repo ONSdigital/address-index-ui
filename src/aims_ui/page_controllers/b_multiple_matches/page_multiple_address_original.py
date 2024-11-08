@@ -119,7 +119,7 @@ def multiple_address_original():
   if results_type == 'Download':
     try:
       full_results, line_count = multiple_address_match_from_singlesearch_download(
-          file, all_user_input, download=True)
+          file, all_user_input)
     except Exception as e:
       return page_error_annotation_multiple(page_name, all_user_input, e)
 
@@ -131,7 +131,7 @@ def multiple_address_original():
   elif results_type == 'Display':
     try:
       table_results, results_summary_table = multiple_address_match_from_singlesearch_display(
-          file, all_user_input, download=False)
+          file, all_user_input)
     except Exception as e:
       return page_error_annotation_multiple(page_name, all_user_input, e)
 
