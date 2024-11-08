@@ -9,6 +9,7 @@
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/autosuggest/_macro.njk" import onsAutosuggest %}
 {% from "components/panel/_macro.njk" import onsPanel %}
+{% from "components/upload/_macro.njk" import onsUpload %}
 
 {% set col = namespace(value=-1) %}
 {% set row = namespace(value=0) %}
@@ -96,6 +97,23 @@
 	    "for": "",
 	    "classes": field.classes if show else ' '.join([field.only_display_in_results_page,field.classes])  ,
      	"text": field.display_title, }) }}
+
+	{% elif field.search_type == "file_upload" %}
+    {{ onsUpload({
+      "id": field.database_name,
+      "name": field.database_name,
+      "type":"file",
+      "classes":"input input--text input-type__input input--upload",
+      "accept": ".csv,.CSV",
+      "error": {
+        "id": field.error_title,
+        "text": field.error_message} if field.error_message != '' else None,
+      "label": {
+          "description": "Please upload a CSV file",
+          "text":  "Please upload a CSV file", },
+    }) }}
+
+
 
 	{% elif field.search_type == "autosuggest" %}
 	{{ onsAutosuggest({

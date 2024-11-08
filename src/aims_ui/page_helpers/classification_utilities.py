@@ -3,7 +3,6 @@ from requests.models import Response
 import json
 
 
-
 def check_reverse_classification(value):
   # Check if the string value has been entered, then swap it for it's classification code
   autosuggest_list = get_autosuggest_list()
@@ -41,27 +40,30 @@ def check_valid_classification(all_user_input, response):
     return response
   return add_classification_error_to_response_object(response)
 
+
 def add_classification_error_to_response_object(response):
-    """Given an API response, inject the error state we would expect for an invalid result."""
-    errors_array = [{
-        'code': 15,
-        'message': 'Invalid classification filter value provided. Filters must exactly match a classification code (see /classifications) or use a pattern match such as RD*. There are also four presets: residential, commercial, workplace, and educational.'
-    }]
+  """Given an API response, inject the error state we would expect for an invalid result."""
+  errors_array = [{
+      'code':
+      15,
+      'message':
+      'Invalid classification filter value provided. Filters must exactly match a classification code (see /classifications) or use a pattern match such as RD*. There are also four presets: residential, commercial, workplace, and educational.'
+  }]
 
-    # Get the existing content
-    content = response.json()
+  # Get the existing content
+  content = response.json()
 
-    # Update the 'status' and 'errors' fields
-    content['status'] = {'code': 400, 'message': 'Bad Request'}
-    content['errors'] = errors_array
+  # Update the 'status' and 'errors' fields
+  content['status'] = {'code': 400, 'message': 'Bad Request'}
+  content['errors'] = errors_array
 
-    # Create a new Response object
-    new_response = Response()
-    new_response.status_code = 400
-    new_response.headers = response.headers
-    new_response._content = json.dumps(content).encode('utf-8')
-    new_response.encoding = 'utf-8'
-    new_response.url = response.url
-    new_response.request = response.request
+  # Create a new Response object
+  new_response = Response()
+  new_response.status_code = 400
+  new_response.headers = response.headers
+  new_response._content = json.dumps(content).encode('utf-8')
+  new_response.encoding = 'utf-8'
+  new_response.url = response.url
+  new_response.request = response.request
 
-    return new_response
+  return new_response

@@ -1,15 +1,15 @@
 from flask import render_template, request, session
 from flask_login import login_required
-from requests.exceptions import ConnectionError
+
 from aims_ui import app
-from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs, save_epoch_number
-from aims_ui.page_helpers.api.api_interaction import api, get_response_attributes
-from aims_ui.page_helpers.security_utils import detect_xml_injection, check_user_has_access_to_page
-from aims_ui.page_helpers.pages_location_utils import get_page_location
-from aims_ui.page_helpers.error.error_utils import error_page_xml, error_page_api_request, error_page_api_response
+from aims_ui.models.get_addresses import get_addresses
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
-from aims_ui.models.get_addresses import get_addresses
+from aims_ui.page_helpers.api.api_interaction import api, get_response_attributes
+from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs, save_epoch_number
+from aims_ui.page_helpers.error.error_utils import error_page_api_request, error_page_api_response, error_page_xml
+from aims_ui.page_helpers.pages_location_utils import get_page_location
+from aims_ui.page_helpers.security_utils import check_user_has_access_to_page, detect_xml_injection
 
 page_name = 'singlesearch'
 

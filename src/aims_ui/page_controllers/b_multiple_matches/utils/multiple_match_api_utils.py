@@ -1,6 +1,7 @@
 import datetime
 import json
 import logging
+
 from aims_ui.page_helpers.api.api_helpers import job_api
 from aims_ui.page_helpers.google_utils import get_username
 
@@ -104,3 +105,4 @@ def job_url_if_authorised(job_id):
   else:
     logging.error('Job download attempted on an unauthorised job')
     return False
+
