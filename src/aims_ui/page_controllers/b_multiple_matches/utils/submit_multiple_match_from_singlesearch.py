@@ -38,32 +38,6 @@ def multiple_address_match_from_singlesearch_display(file, all_user_input):
         ]
     }) # yapf: disable
 
-  def finalize(line_count, no_addresses_searched, single_match_total,
-               multiple_match_total, no_match_total):
-    headers = [
-        'Number of addresses searched:', 'Single matches:', 'Multiple Matches',
-        'No Match:'
-    ]
-    answers = [
-        no_addresses_searched, single_match_total, multiple_match_total,
-        no_match_total
-    ]
-    results_summary_table_trs = [{
-        'tds': [{
-            'value': headers[x]
-        }, {
-            'value': answers[x]
-        }]
-    } for x in range(0, len(headers))]
-
-    return {
-        'ths': ths,
-        'trs': trs
-    }, {
-        'ths': [],
-        'trs': results_summary_table_trs
-    },
-
   def get_match_type(n_addr):
     return '<p style="background-color:orange;">M</p>' if n_addr > 1 else '<p style="background-color:Aquamarine;">S</p>'
 
@@ -119,8 +93,21 @@ def multiple_address_match_from_singlesearch_display(file, all_user_input):
           adrs.airRating.value,
       )
 
-  return finalize(line_count, no_addresses_searched, single_match_total,
-                  multiple_match_total, no_match_total)
+    headers = [
+        'Number of addresses searched:', 'Single matches:', 'Multiple Matches',
+        'No Match:'
+    ]
+    answers = [
+        no_addresses_searched, single_match_total, multiple_match_total,
+        no_match_total
+    ]
+
+
+    results_summary_table_trs = [{
+        'tds': [{'value': headers[x]}, {'value': answers[x] }]
+    } for x in range(0, len(headers))] # yapf: disable
+
+    return {'ths': ths,'trs': trs }, { 'ths': [], 'trs': results_summary_table_trs} # yapf: disable
 
 
 def multiple_address_match_from_singlesearch_download(file, all_user_input):
@@ -149,15 +136,6 @@ def multiple_address_match_from_singlesearch_download(file, all_user_input):
         address_type,
         ai_rating,
     ])
-
-  def finalize(line_count, no_addresses_searched, single_match_total,
-               multiple_match_total, no_match_total):
-    # Creating the byteIO object from the StringIO Object
-    mem = BytesIO()
-    mem.write(proxy.getvalue().encode())
-    mem.seek(0)
-    proxy.close()
-    return mem, line_count
 
   def get_match_type(n_addr):
     return 'M' if n_addr > 1 else 'S'
@@ -214,5 +192,10 @@ def multiple_address_match_from_singlesearch_download(file, all_user_input):
           adrs.airRating.value,
       )
 
-  return finalize(line_count, no_addresses_searched, single_match_total,
-                  multiple_match_total, no_match_total)
+    # Creating the byteIO object from the StringIO Object
+    mem = BytesIO()
+    mem.write(proxy.getvalue().encode())
+    mem.seek(0)
+    proxy.close()
+
+    return mem, line_count

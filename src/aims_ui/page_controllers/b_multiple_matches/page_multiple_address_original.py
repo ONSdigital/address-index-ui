@@ -1,3 +1,4 @@
+
 from flask import render_template, request, send_file, session
 from flask_login import login_required
 
@@ -105,7 +106,6 @@ def multiple_address_original():
                                           e.error_description)
 
   if not file_valid:
-    print('FILE IS NOT VALID')
     return page_error_annotation_multiple(page_name, all_user_input,
                                           error_description)
 
