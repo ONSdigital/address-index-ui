@@ -3,7 +3,9 @@ from io import BytesIO, StringIO
 
 from aims_ui.models.get_addresses import get_addresses
 from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_utils import (
-    get_preffered_format_of_address, remove_header_row)
+    get_preffered_format_of_address,
+    remove_header_row
+)
 from aims_ui.page_helpers.api.api_interaction import api, get_response_attributes
 
 from .multiple_match_file_upload_utils import remove_script_and_html_from_str
@@ -178,7 +180,7 @@ def multiple_address_match_from_singlesearch_download(file, all_user_input):
     for rank, adrs in enumerate(matched_addresses, start=1):
       line_count += 1
       actual_address_type, preffered_address_format = \
-          get_preffered_format_of_address(adrs,all_user_input)
+          get_preffered_format_of_address(adrs, all_user_input)
       write(
           given_id,
           address_to_lookup,
@@ -192,10 +194,10 @@ def multiple_address_match_from_singlesearch_download(file, all_user_input):
           adrs.airRating.value,
       )
 
-    # Creating the byteIO object from the StringIO Object
-    mem = BytesIO()
-    mem.write(proxy.getvalue().encode())
-    mem.seek(0)
-    proxy.close()
+  # Creating the byteIO object from the StringIO Object
+  mem = BytesIO()
+  mem.write(proxy.getvalue().encode())
+  mem.seek(0)
+  proxy.close()
 
-    return mem, line_count
+  return mem, line_count
