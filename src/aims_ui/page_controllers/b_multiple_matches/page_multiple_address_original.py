@@ -1,4 +1,3 @@
-
 from flask import render_template, request, send_file, session
 from flask_login import login_required
 
@@ -14,8 +13,7 @@ from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from .utils.multiple_match_file_upload_utils import check_valid_upload
 from .utils.submit_multiple_match_from_singlesearch import (
     multiple_address_match_from_singlesearch_display,
-    multiple_address_match_from_singlesearch_download
-)
+    multiple_address_match_from_singlesearch_download)
 
 page_name = 'multiple_address_original'
 
