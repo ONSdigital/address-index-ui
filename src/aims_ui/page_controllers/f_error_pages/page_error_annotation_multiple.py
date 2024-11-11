@@ -61,7 +61,7 @@ def convert_exception_to_error_message(primary_error_message):
   if isinstance(primary_error_message, Exception):
     primary_error_message = str(primary_error_message)
   
-  if 'Expecting value: line 2 column 1':
+  if 'Expecting value: line 2 column 1' in primary_error_message:
     # Error message when there's a connection error to the API
     return 'Connection error to the API'
 

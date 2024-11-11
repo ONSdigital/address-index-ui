@@ -13,7 +13,8 @@ from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from .utils.multiple_match_file_upload_utils import check_valid_upload
 from .utils.submit_multiple_match_from_singlesearch import (
     multiple_address_match_from_singlesearch_display,
-    multiple_address_match_from_singlesearch_download)
+    multiple_address_match_from_singlesearch_download
+)
 
 page_name = 'multiple_address_original'
 
@@ -80,11 +81,6 @@ def multiple_address_original():
 
   if request.method == 'GET':
     delete_input(session)
-    # Set default selected radio
-    for field in searchable_fields:
-      if field.database_name == 'display-type':
-        field.set_radio_status('Download')
-
     return render_template(
         page_location,
         searchable_fields=searchable_fields,
@@ -109,6 +105,7 @@ def multiple_address_original():
                                           e.error_description)
 
   if not file_valid:
+    print('FILE IS NOT VALID')
     return page_error_annotation_multiple(page_name, all_user_input,
                                           error_description)
 
