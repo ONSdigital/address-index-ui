@@ -1,7 +1,9 @@
-from .field import Field
-from .endpoint_options import get_options
 from flask import url_for
+
 from aims_ui import get_epoch_options_cached
+
+from .endpoint_options import get_options
+from .field import Field
 
 # This will change when DS changes
 hidden_field_class = ' ons-u-hidden '
@@ -292,6 +294,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             search_type='radio',
             flag=False,
             display_title='How would you like your results?',
+            default_radio_selection='Download',
             radio_options=[
                 {
                     'id': 'Download',
@@ -323,7 +326,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         ),
         Field(
             'name',
-            display_title="Name (Optinal)",
+            display_title="Name (Optional)",
             description='Optional tag to organise matches',
             previous_value='',
         ),
