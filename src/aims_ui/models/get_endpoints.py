@@ -1,6 +1,8 @@
-from .endpoint import Endpoint
 from flask import url_for
-from aims_ui.page_helpers.google_utils import get_username, get_current_group
+
+from aims_ui.page_helpers.google_utils import get_current_group, get_username
+
+from .endpoint import Endpoint
 
 
 def get_current_selected_endpoint(endpoints, called_from):
@@ -76,7 +78,7 @@ def get_endpoints(called_from=None):
           url=url_for('settings')),
   ]
 
-  username = get_username()
+  get_username()
 
   called_from = '' if called_from == None else called_from
   current_selected_endpoint = get_current_selected_endpoint(
