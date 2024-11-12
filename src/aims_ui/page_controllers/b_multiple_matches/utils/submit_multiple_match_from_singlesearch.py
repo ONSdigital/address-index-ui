@@ -3,9 +3,7 @@ from io import BytesIO, StringIO
 
 from aims_ui.models.get_addresses import get_addresses
 from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_utils import (
-    get_preffered_format_of_address,
-    remove_header_row
-)
+    get_preffered_format_of_address, remove_header_row)
 from aims_ui.page_helpers.api.api_interaction import api, get_response_attributes
 
 from .multiple_match_file_upload_utils import remove_script_and_html_from_str
@@ -14,7 +12,10 @@ page_name = 'multiple_match_submit'
 
 
 def multiple_address_match_from_singlesearch_display(file, all_user_input):
-  csv_headers = ['id', 'inputAddress',  'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag)', 'aiRating']  # yapf: disable
+  csv_headers = [
+      'id', 'inputAddress', 'matchedAddress', 'uprn', 'matchType',
+      'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag)', 'aiRating'
+  ]  # yapf: disable
 
   contents = file.readlines()
   remove_header_row(contents)
@@ -27,18 +28,18 @@ def multiple_address_match_from_singlesearch_display(file, all_user_input):
             doc_score, rank, ai_rating):
     trs.append({
         'tds': [
-            {'value': remove_script_and_html_from_str(given_id) },
-            {'value': remove_script_and_html_from_str(address_to_lookup) },
+            {'value': remove_script_and_html_from_str(given_id)},
+            {'value': remove_script_and_html_from_str(address_to_lookup)},
             {'value': m_addr},
-            {'value': adrs.uprn.value},
+            {'value': uprn},
             {'value': match_type},
-            {'value': adrs.confidence_score.value},
-            {'value': adrs.underlying_score.value},
+            {'value': confid_score},
+            {'value': doc_score},
             {'value': rank},
             {'value': address_type},
             {'value': ai_rating},
         ]
-    }) # yapf: disable
+    })  # yapf: disable
 
   def get_match_type(n_addr):
     return '<p style="background-color:orange;">M</p>' if n_addr > 1 else '<p style="background-color:Aquamarine;">S</p>'
@@ -75,13 +76,13 @@ def multiple_address_match_from_singlesearch_display(file, all_user_input):
     elif no_results == 0:
       no_match_total += 1
 
-    match_type = get_match_type(len(matched_addresses))
+    match_type = get_match_type(no_results)
     no_addresses_searched += 1
 
     for rank, adrs in enumerate(matched_addresses, start=1):
       line_count += 1
       actual_address_type, preffered_address_format = \
-          get_preffered_format_of_address(adrs,all_user_input)
+          get_preffered_format_of_address(adrs, all_user_input)
       write(
           given_id,
           address_to_lookup,
@@ -95,21 +96,22 @@ def multiple_address_match_from_singlesearch_display(file, all_user_input):
           adrs.airRating.value,
       )
 
-    headers = [
-        'Number of addresses searched:', 'Single matches:', 'Multiple Matches',
-        'No Match:'
-    ]
-    answers = [
-        no_addresses_searched, single_match_total, multiple_match_total,
-        no_match_total
-    ]
+  # Unindent the following code so it's outside the 'for line in contents:' loop
+  headers = [
+      'Number of addresses searched:', 'Single matches:', 'Multiple Matches',
+      'No Match:'
+  ]
+  answers = [
+      no_addresses_searched, single_match_total, multiple_match_total,
+      no_match_total
+  ]
 
+  results_summary_table_trs = [{
+      'tds': [{'value': headers[x]}, {'value': answers[x]}]
+  } for x in range(len(headers))]  # yapf: disable
 
-    results_summary_table_trs = [{
-        'tds': [{'value': headers[x]}, {'value': answers[x] }]
-    } for x in range(0, len(headers))] # yapf: disable
+  return {'ths': ths, 'trs': trs}, {'ths': [], 'trs': results_summary_table_trs}  # yapf: disable
 
-    return {'ths': ths,'trs': trs }, { 'ths': [], 'trs': results_summary_table_trs} # yapf: disable
 
 
 def multiple_address_match_from_singlesearch_download(file, all_user_input):
