@@ -1,11 +1,12 @@
 import logging
 
-from flask import render_template
+from flask import render_template, request
 
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
+
 """ Manage errors specific to multiple match pages """
 
 
@@ -47,6 +48,12 @@ def page_error_annotation_multiple(
       print('Error message: {}'.format(primary_error_message))
       print('on field: {}'.format(field.database_name))
 
+  # Set the limit to whatever it was before
+  limit = request.form.get('limit')
+  for field in searchable_fields:
+    if field.database_name == 'limit':
+      field.previous_value = limit
+
   return render_template(
       page_location,
       endpoints=endpoints,
@@ -70,6 +77,11 @@ def convert_exception_to_error_message(primary_error_message):
     # User friendly error message when the file is too large
     primary_error_message = 'File size is too large. Please enter a file no larger than 2 MB'
     return primary_error_message
+  
+  if 'Limit Parameter Error' in primary_error_message:
+    # User friendly error message when the limit parameter is not a positive integer
+    primary_error_message = f'Limit parameter must be a positive integer between 1 and 10'
+    return primary_error_message
 
   return primary_error_message
 
@@ -81,5 +93,8 @@ def match_api_error_message_to_name_of_field(primary_error_message):
   # If the primary error message is a string, decide which element to return based on the error message
   if 'Record Limit Exceeded' in primary_error_message:
     return 'file_upload'
+  
+  if 'Limit parameter' in primary_error_message:
+    return 'limit'
 
   return default_element_for_error_message
