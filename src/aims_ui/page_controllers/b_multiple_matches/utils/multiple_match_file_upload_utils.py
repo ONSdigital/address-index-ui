@@ -2,6 +2,13 @@ import logging
 
 ALLOWED_EXTENSIONS = {'csv'}
 
+def validate_limit_parameter(all_user_input):
+  """ Throw an exception if the 'limit' parameter is not valid """
+  # Raise exception with title 'Limit Parameter Error' and description 'Limit parameter must be a positive integer'
+  limit = all_user_input.get('limit', '')
+  if not limit.isdigit():
+    raise Exception('Limit Parameter Error', 'Limit parameter must be a positive integer')
+
 
 class FileUploadException(Exception):
   """Exception raised for errors caused by uploading a file, from size to content validation"""
