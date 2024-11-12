@@ -1,7 +1,4 @@
-import requests
-import json
-import re
-from aims_ui import app, get_classifications_cached
+from aims_ui import get_classifications_cached
 
 
 def get_class_subset(code):
