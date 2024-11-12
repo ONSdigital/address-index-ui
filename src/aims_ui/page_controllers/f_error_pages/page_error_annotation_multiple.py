@@ -6,6 +6,7 @@ from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
+
 """ Manage errors specific to multiple match pages """
 
 
@@ -66,7 +67,11 @@ def convert_exception_to_error_message(primary_error_message):
     # Error message when there's a connection error to the API
     return 'Connection error to the API'
 
-  # TODO add here other error message from submission of multiple_address_match_from_singlesearch
+  if 'Request Entity Too Large' in primary_error_message:
+    # User friendly error message when the file is too large
+    primary_error_message = 'File size is too large. Please enter a file no larger than 2 MB'
+    return primary_error_message
+
   return primary_error_message
 
 
