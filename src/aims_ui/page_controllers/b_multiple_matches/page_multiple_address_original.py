@@ -13,7 +13,8 @@ from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from .utils.multiple_match_file_upload_utils import check_valid_upload
 from .utils.submit_multiple_match_from_singlesearch import (
     multiple_address_match_from_singlesearch_display,
-    multiple_address_match_from_singlesearch_download)
+    multiple_address_match_from_singlesearch_download
+)
 
 page_name = 'multiple_address_original'
 
@@ -48,22 +49,6 @@ def final(
   )
 
 
-# In the event of a file being too large, send this custom template
-@app.errorhandler(413)
-def request_entity_too_large(error):
-  # TODO searchable fields unable to set page values to what they were before error
-  searchable_fields = get_fields(page_name)
-
-  for field in searchable_fields:
-    if field.database_name == 'display-type':
-      field.set_radio_status('Download')
-
-  return final(
-      searchable_fields,
-      'File size is too large. Please enter a file no larger than 2 MB',
-      'File Size Error')
-
-
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def multiple_address_original():
@@ -87,11 +72,15 @@ def multiple_address_original():
         bulk_limits=bulk_limits,
     )
 
-  all_user_input = load_save_store_inputs(
-      searchable_fields,
-      request,
-      session,
-  )
+  try:
+    all_user_input = load_save_store_inputs(
+        searchable_fields,
+        request,
+        session,
+    )
+  except Exception as e:
+    # Particularly to handle files that are too large
+    return page_error_annotation_multiple(page_name, {}, e)
 
   file = request.files['file_upload']
 
