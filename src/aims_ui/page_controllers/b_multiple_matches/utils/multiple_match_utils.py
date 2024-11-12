@@ -3,6 +3,15 @@
 page_name = 'multiple_match_submit'
 
 
+def get_results_display_type(searchable_fields):
+  # Get the 'Download' or 'Display' selected option ('Download' is default)
+  display_type = 'Download'
+  for field in searchable_fields:
+    if field.database_name == 'display-type':
+      display_type = field.get_selected_radio()
+  return display_type
+
+
 def get_preffered_format_of_address(adrs, all_user_input):
   address_preference = all_user_input.get('paf-nag-preference', 'default')
   default_address = adrs.formatted_address.value
