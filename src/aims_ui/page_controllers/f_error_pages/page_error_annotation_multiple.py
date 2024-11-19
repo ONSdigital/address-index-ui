@@ -86,7 +86,7 @@ def convert_exception_to_error_message(primary_error_message):
   return primary_error_message
 
 
-def match_api_error_message_to_name_of_field(primary_error_message):
+def match_api_error_message_to_name_of_field(primary_error_message, page_name_with_error):
   """ Given an error message, return the name of the field that caused the error """
   default_element_for_error_message = 'file_upload'
 
