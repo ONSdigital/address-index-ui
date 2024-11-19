@@ -35,7 +35,7 @@ def page_error_annotation_multiple(
 
   # Knowing the error from the API, get the databasename of the feild that matches the error
   name_of_broken_field = match_api_error_message_to_name_of_field(
-      primary_error_message)
+      primary_error_message, page_name_with_error)
 
   # Override the input name if it's been set as a parameter
   if override_input_name:
