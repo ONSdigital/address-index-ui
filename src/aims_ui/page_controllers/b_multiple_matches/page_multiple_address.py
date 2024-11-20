@@ -49,7 +49,7 @@ def multiple_address():
   except Exception as e:
     return page_error_annotation_multiple(page_name, {}, e)
 
-  file = request.files['file']
+  file = request.files['file_upload']
 
   try:
     file_valid, error_description, error_title = check_valid_upload(
@@ -64,7 +64,8 @@ def multiple_address():
 
   multiple_address_match(file, all_user_input, download=True)
 
-  results_page_location = get_page_location(endpoints, 'multiple_address_results')
+  results_page_location = get_page_location(endpoints,
+                                            'multiple_address_results')
   # No errors, forward to the job-view page
   return render_template(
       results_page_location,

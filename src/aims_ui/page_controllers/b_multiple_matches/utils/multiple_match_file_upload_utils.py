@@ -2,16 +2,21 @@ import logging
 
 ALLOWED_EXTENSIONS = {'csv'}
 
+
 def validate_limit_parameter(all_user_input):
   """ Valid limit rules and exceptions for multiple match pages """
   # Raise exception with title 'Limit Parameter Error' and description 'Limit parameter must be a positive integer'
   limit = all_user_input.get('limit', '')
   if not limit.isdigit():
-    raise Exception('Limit Parameter Error', 'Limit parameter must be a positive integer between 1 and 10')
-  
+    raise Exception(
+        'Limit Parameter Error',
+        'Limit parameter must be a positive integer between 1 and 10')
+
   # If limit is not between 1 and 10
   if not 1 <= int(limit) <= 10:
-    raise Exception('Limit Parameter Error', 'Limit parameter must be a positive integer between 1 and 10')
+    raise Exception(
+        'Limit Parameter Error',
+        'Limit parameter must be a positive integer between 1 and 10')
 
 
 class FileUploadException(Exception):

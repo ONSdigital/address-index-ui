@@ -59,6 +59,7 @@ def page_error_annotation_multiple(
       endpoints=endpoints,
       searchable_fields=searchable_fields,
       bulk_limits=bulk_limits,
+      uprn_bulk_limit=400,
   )
 
 
@@ -77,7 +78,7 @@ def convert_exception_to_error_message(primary_error_message):
     # User friendly error message when the file is too large
     primary_error_message = 'File size is too large. Please enter a file no larger than 2 MB'
     return primary_error_message
-  
+
   if 'Limit Parameter Error' in primary_error_message:
     # User friendly error message when the limit parameter is not a positive integer
     primary_error_message = f'Limit parameter must be a positive integer between 1 and 10'
@@ -86,14 +87,15 @@ def convert_exception_to_error_message(primary_error_message):
   return primary_error_message
 
 
-def match_api_error_message_to_name_of_field(primary_error_message, page_name_with_error):
+def match_api_error_message_to_name_of_field(primary_error_message,
+                                             page_name_with_error):
   """ Given an error message, return the name of the field that caused the error """
   default_element_for_error_message = 'file_upload'
 
   # If the primary error message is a string, decide which element to return based on the error message
   if 'Record Limit Exceeded' in primary_error_message:
     return 'file_upload'
-  
+
   if 'Limit parameter' in primary_error_message:
     return 'limit'
 
