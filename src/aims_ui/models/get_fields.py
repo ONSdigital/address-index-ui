@@ -312,6 +312,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
   elif endpoint_name == 'uprn_multiple_match':
     return ([
         common_fields['header_row_export'],
+        common_fields['file_upload'],
     ])
 
   elif endpoint_name == 'multiple_address':
