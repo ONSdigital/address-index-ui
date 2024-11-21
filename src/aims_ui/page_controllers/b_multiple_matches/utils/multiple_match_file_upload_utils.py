@@ -136,10 +136,11 @@ def check_valid_upload(file, limit, called_from='address'):
           f'One or more duplicate IDs have been detected. Check that all ID fields are unique.'
       )
     
-    if check_for_non_numeric_id_or_uprn(file):
+    error_line = check_for_non_numeric_id_or_uprn(file)
+    if error_line != False:
       raise FileUploadException(
         error_title='Non-numeric ID or UPRN Detected',
-        error_description='One of more lines of the file contain a non-numeric ID or UPRN. Please check that there is no header row and that all ID and UPRN fields are numeric.',
+        error_description=f'One of more lines of the file contain a non-numeric ID or UPRN. <br> Please check that there is no header row and that all ID and UPRN fields are numeric. <br> We detected a problem on {error_line}',
       )
 
   return True, '', '',
