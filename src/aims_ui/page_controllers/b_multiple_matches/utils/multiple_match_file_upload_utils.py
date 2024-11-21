@@ -86,20 +86,23 @@ def check_for_duplicate_id(file):
   ids = set()
   uprns = set()
 
+  line_count = 0
   for row in contents:
     row = row.strip().decode('utf-8').split(',', maxsplit=1)
     id, uprn = row
 
     # Check if the id or uprn already exists in their respective sets
     if id in ids or uprn in uprns:
-      return True
+      return True, line_count
 
     # Add the id and uprn to their respective sets
     ids.add(id)
     uprns.add(uprn)
 
+    line_count += 1
+
   # If no duplicates were found
-  return False
+  return False, 0
 
 
 def check_valid_upload(file, limit, called_from='address'):
@@ -129,31 +132,36 @@ def check_valid_upload(file, limit, called_from='address'):
 
   if called_from == 'uprn':
     # Check that there aren't any duplicate ID fields
-    if check_for_duplicate_id(file):
+    error_detected, error_line = check_for_duplicate_id(file)
+    if error_detected:
       raise FileUploadException(
           error_title='Duplicate ID or UPRNs Detected',
           error_description=
-          f'One or more duplicate IDs have been detected. Check that all ID fields are unique.'
+          f'One or more duplicate IDs have been detected. <br><br>Check that all ID fields are unique. <br><br> We detected a problem on line: {error_line}'
       )
-    
-    error_line = check_for_non_numeric_id_or_uprn(file)
-    if error_line != False:
+
+    error_detected, error_line = check_for_non_numeric_id_or_uprn(file)
+    if error_detected != False:
       raise FileUploadException(
-        error_title='Non-numeric ID or UPRN Detected',
-        error_description=f'One of more lines of the file contain a non-numeric ID or UPRN. <br> Please check that there is no header row and that all ID and UPRN fields are numeric. <br> We detected a problem on {error_line}',
+          error_title='Non-numeric ID or UPRN Detected',
+          error_description=
+          f'One of more lines of the file contain a non-numeric ID or UPRN. <br><br> Please check that there is no header row and that all ID and UPRN fields are numeric. <br><br> We detected a problem on line: {error_line}',
       )
 
   return True, '', '',
+
 
 def check_for_non_numeric_id_or_uprn(file):
   contents = file.readlines()
   file.seek(0)
 
+  row_counter = 0
   for row in contents:
     row = row.strip().decode('utf-8').split(',', maxsplit=1)
     id, uprn = row
 
     if not id.isdigit() or not uprn.isdigit():
-      return True
+      return True, row_counter
+    row_counter += 1
 
   return False
