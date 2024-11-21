@@ -4,7 +4,9 @@ from io import BytesIO, StringIO
 
 from aims_ui.models.get_addresses import get_addresses
 from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_utils import (
-    get_preffered_format_of_address, remove_header_row)
+    get_preffered_format_of_address,
+    remove_header_row
+)
 from aims_ui.page_controllers.f_error_pages.page_error import page_error
 from aims_ui.page_helpers.api.api_interaction import submit_uprn_mm_job
 
@@ -12,15 +14,13 @@ page_name = 'multiple_match_submit'
 
 
 def uprn_multiple_address_match(file, all_user_input):
-  # Only provide downloadable output
-  csv_headers = ['uprn', 'matchedAddress', 'confidenceScore']
-
   contents = file.readlines()
   remove_header_row(contents)
 
   proxy = StringIO()
   writer = csv.writer(proxy)
 
+  csv_headers = ['uprn', 'matchedAddress', 'confidenceScore']
   if all_user_input.get('header_row_export') == 'True':
     writer.writerow(csv_headers)
 
