@@ -4,9 +4,7 @@ from io import BytesIO, StringIO
 
 from aims_ui.models.get_addresses import get_addresses
 from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_utils import (
-    get_preffered_format_of_address,
-    remove_header_row
-)
+    get_preffered_format_of_address, remove_header_row)
 from aims_ui.page_controllers.f_error_pages.page_error import page_error
 from aims_ui.page_helpers.api.api_interaction import submit_uprn_mm_job
 
