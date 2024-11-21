@@ -5,6 +5,7 @@ from flask import render_template
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.page_helpers.pages_location_utils import get_page_location
+
 """ When an error message would be better shown next to an input in the Design System, manage that here """
 
 
@@ -59,9 +60,7 @@ def match_api_error_message_to_name_of_field(primary_error_message):
     return 'limit'
 
   # UPRN specific errors
-  if 'UPRNs must be numeric' in primary_error_message:
-    return 'uprn'
-  if 'UPRN request didn' in primary_error_message:
+  if 'UPRN' in primary_error_message:
     return 'uprn'
 
   if 'Postcode supplied is not valid according to the UK addresses' in primary_error_message:

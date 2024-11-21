@@ -166,7 +166,9 @@ def error_page_api_response(page_name, user_input, result):
   if status_code == 404:
     log_err(page_name, user_input, f'Not Found Error: "{clean_result}"')
     # 404 errors that relate to blank input fields, otherwise a generic error message is shown
-    if (page_name == 'uprn') or (page_name == 'postcode'):
+    primary_error_message = get_primary_error_message(result, page_name,
+                                                      user_input)
+    if page_name == 'postcode':
       primary_error_message = 'Not found error. This is likely due to a blank search feild. Please check your inputs.'
 
     return page_error_annotation_single(page_name,
