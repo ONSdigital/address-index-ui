@@ -1,5 +1,7 @@
 import logging
 
+from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_utils import remove_header_row
+
 ALLOWED_EXTENSIONS = {'csv'}
 
 
@@ -104,6 +106,37 @@ def check_for_duplicate_id(file):
   # If no duplicates were found
   return False, 0
 
+def check_for_valid_header_row(file):
+  """ Check if the header row is valid, or if there is no header row """
+  contents = file.readlines()
+  file.seek(0)
+
+  # True if a header row has been removed
+  if remove_header_row(contents):
+    return False, 0
+
+  # Now if there's still a non-numeric header row, throw error
+  return check_for_non_numeric_id_or_uprn(file)
+
+
+def check_for_non_numeric_id_or_uprn(file):
+  """ Check if the ID or UPRN fields are non-numeric, ignoring the header row """
+  contents = file.readlines()
+  file.seek(0)
+
+  remove_header_row(contents)
+
+  row_counter = 2 # Start after header row and +1 to adjust for 0th array index
+  for row in contents:
+    row = row.strip().decode('utf-8').split(',', maxsplit=1)
+    id, uprn = row
+
+    if not id.isdigit() or not uprn.isdigit():
+      return True, row_counter
+    row_counter += 1
+
+  return False, 0
+
 
 def check_valid_upload(file, limit, called_from='address'):
 
@@ -131,6 +164,24 @@ def check_valid_upload(file, limit, called_from='address'):
                               error_description='Please select a file')
 
   if called_from == 'uprn':
+    # Check that a valid header is being used, or none at all (also valid)
+    error_detected, error_line = check_for_valid_header_row(file)
+    if error_detected:
+      raise FileUploadException(
+          error_title='Invalid Header Row Detected',
+          error_description=
+          f'An invalid header row was detected. <br><br> Please check that the header row is either valid or that there is no header row at all. <br><br> We detected a problem on line: {error_line}',
+      )
+
+    # Check that all the IDs and UPRNS are numeric
+    error_detected, error_line = check_for_non_numeric_id_or_uprn(file)
+    if error_detected != False:
+      raise FileUploadException(
+          error_title='Non-numeric ID or UPRN Detected',
+          error_description=
+          f'One of more lines of the file contain a non-numeric ID or UPRN. <br><br> Please check that there is no header row and that all ID and UPRN fields are numeric. <br><br> We detected a problem on line: {error_line}',
+      )
+
     # Check that there aren't any duplicate ID fields
     error_detected, error_line = check_for_duplicate_id(file)
     if error_detected:
@@ -140,28 +191,6 @@ def check_valid_upload(file, limit, called_from='address'):
           f'One or more duplicate IDs have been detected. <br><br>Check that all ID fields are unique. <br><br> We detected a problem on line: {error_line}'
       )
 
-    error_detected, error_line = check_for_non_numeric_id_or_uprn(file)
-    if error_detected != False:
-      raise FileUploadException(
-          error_title='Non-numeric ID or UPRN Detected',
-          error_description=
-          f'One of more lines of the file contain a non-numeric ID or UPRN. <br><br> Please check that there is no header row and that all ID and UPRN fields are numeric. <br><br> We detected a problem on line: {error_line}',
-      )
-
+   
   return True, '', '',
 
-
-def check_for_non_numeric_id_or_uprn(file):
-  contents = file.readlines()
-  file.seek(0)
-
-  row_counter = 0
-  for row in contents:
-    row = row.strip().decode('utf-8').split(',', maxsplit=1)
-    id, uprn = row
-
-    if not id.isdigit() or not uprn.isdigit():
-      return True, row_counter
-    row_counter += 1
-
-  return False
