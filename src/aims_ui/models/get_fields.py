@@ -109,57 +109,6 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           display_title=
           'Boost a region. This is used as a "tie breaker" when the same address from different regions is present.',
       ),
-      'england_boost':
-      Field(
-          'eboost',
-          display_title='England Boost (1-10)',
-          classes='ons-input--w-4',
-          description='Boost the results in favour of England Addresses',
-      ),
-      'wales_boost':
-      Field(
-          'wboost',
-          display_title='Wales Boost (1-10)',
-          classes='ons-input--w-4',
-          description='Boost the results in favour of Wales Addresses',
-      ),
-      'scotland_boost':
-      Field(
-          'sboost',
-          display_title='Scotland Boost (1-10)',
-          classes='ons-input--w-4',
-          description='Boost the results in favour of Scotland Addresses',
-      ),
-      'northern_ireland_boost':
-      Field(
-          'nboost',
-          display_title='Northern Ireland Boost (1-10)',
-          classes='ons-input--w-4',
-          description=
-          'Boost the results in favour of Northern Ireland Addresses',
-      ),
-      'channel_islands_boost':
-      Field(
-          'lboost',
-          display_title='Channel Islands Boost (1-10)',
-          classes='ons-input--w-4',
-          description=
-          'Boost the results in favour of Channel Islands Addresses',
-      ),
-      'isle_of_man_boost':
-      Field(
-          'nboost',
-          display_title='Isle of Man Boost (1-10)',
-          classes='ons-input--w-4',
-          description='Boost the results in favour of Isle of Man Addresses',
-      ),
-      'offshore_boost':
-      Field(
-          'jboost',
-          display_title='Offshore etc. Boost (1-10)',
-          classes='ons-input--w-4',
-          description='Boost the results in favour of Offshore etc. Addresses',
-      ),
       'auxilary_search':
       Field(
           'includeauxiliarysearch',
@@ -257,13 +206,58 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             description=
             'Unlike other matches, Typeahead has variable boosts. <br><br>You can increase the value for a particular country or countries. <br><br>If for example you set Scotland Boost to 10 and type in 53 Port you get all Scottish results on screen, if you then add a c the results are all from England as there are no Scottish matches for that input.',
         ),
-        common_fields['england_boost'],
-        common_fields['wales_boost'],
-        common_fields['scotland_boost'],
-        common_fields['northern_ireland_boost'],
-        common_fields['channel_islands_boost'],
-        common_fields['isle_of_man_boost'],
-        common_fields['offshore_boost'],
+        Field(
+            'eboost',
+            display_title='England Boost (1-10)',
+            classes='ons-input--w-4',
+            description='Boost the results in favour of England Addresses',
+            previous_value='0',
+        ),
+        Field(
+            'wboost',
+            display_title='Wales Boost (1-10)',
+            classes='ons-input--w-4',
+            description='Boost the results in favour of Wales Addresses',
+            previous_value='0',
+        ),
+        Field(
+            'sboost',
+            display_title='Scotland Boost (1-10)',
+            classes='ons-input--w-4',
+            description='Boost the results in favour of Scotland Addresses',
+            previous_value='0',
+        ),
+        Field(
+            'nboost',
+            display_title='Northern Ireland Boost (1-10)',
+            classes='ons-input--w-4',
+            description=
+            'Boost the results in favour of Northern Ireland Addresses',
+            previous_value='0',
+        ),
+        Field(
+            'lboost',
+            display_title='Channel Islands Boost (1-10)',
+            classes='ons-input--w-4',
+            description=
+            'Boost the results in favour of Channel Islands Addresses',
+            previous_value='0',
+        ),
+        Field(
+            'nboost',
+            display_title='Isle of Man Boost (1-10)',
+            classes='ons-input--w-4',
+            description='Boost the results in favour of Isle of Man Addresses',
+            previous_value='0',
+        ),
+        Field(
+            'jboost',
+            display_title='Offshore etc. Boost (1-10)',
+            classes='ons-input--w-4',
+            description=
+            'Boost the results in favour of Offshore etc. Addresses',
+            previous_value='0',
+        ),
         Field(
             'fallback',
             search_type='checkbox',
