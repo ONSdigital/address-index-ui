@@ -1,4 +1,3 @@
-import { saveToLocalStorage } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 function getAllInputs() {
   const matchForm = document.querySelector('.match-form-container');
@@ -29,7 +28,27 @@ export function getParamsFromPage() {
 }
 
 function saveParamsToLocalStorage(inputs) {
-  saveToLocalStorage(inputs, 'typeahead_params');
+  const valuesToSave = [];
+  for (const input of inputs) {
+    const valueKeyPair = {};
+    valueKeyPair[input.getAttribute('id')] = input.value;
+    valuesToSave.push(valueKeyPair);
+  }
+  localStorage.setItem('typeaheadParams', JSON.stringify(valuesToSave));
+}
+
+function loadTypeaheadValues() {
+  const typeaheadParams = JSON.parse(localStorage.getItem('typeaheadParams'));
+  if (typeaheadParams) {
+    const inputs = getAllInputs();
+    for (const input of inputs) {
+      for (const param of typeaheadParams) {
+        if (input.getAttribute('id') in param) {
+          input.value = param[input.getAttribute('id')];
+        }
+      }
+    }
+  }
 }
 
 export function setupEventListeners() {
@@ -47,10 +66,6 @@ export function setupEventListeners() {
       saveParamsToLocalStorage(allInputs);
     });
   }
-}
-
-function loadTypeaheadValues() {
-  console.log(localStorage.getItem('typeahead_params'));
 }
 
 function init() {
