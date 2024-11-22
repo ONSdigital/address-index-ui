@@ -39,16 +39,25 @@ function saveParamsToLocalStorage(inputs) {
 
 function loadTypeaheadValues() {
   const typeaheadParams = JSON.parse(localStorage.getItem('typeaheadParams'));
-  if (typeaheadParams) {
-    const inputs = getAllInputs();
-    for (const input of inputs) {
-      for (const param of typeaheadParams) {
-        if (input.getAttribute('id') in param) {
-          input.value = param[input.getAttribute('id')];
-        }
+  const inputs = getAllInputs();
+
+  // if typeaheadParams is null, return
+  if (!typeaheadParams) {
+    return;
+  }
+
+  console.log('typeaheadParams', typeaheadParams);
+  console.log('inputs', inputs);
+
+  for (const input of inputs) {
+    for (const param of typeaheadParams) {
+      if (input.id === param.id) {
+        console.log('Setting: ', input.id, ' to ', param.value);
+        input.value = param.value;
       }
     }
   }
+
 }
 
 export function setupEventListeners() {
