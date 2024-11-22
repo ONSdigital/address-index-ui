@@ -106,6 +106,7 @@ def check_for_duplicate_id(file):
   # If no duplicates were found
   return False, 0
 
+
 def check_for_valid_header_row(file):
   """ Check if the header row is valid, or if there is no header row """
   contents = file.readlines()
@@ -117,7 +118,7 @@ def check_for_valid_header_row(file):
 
   # Now if there's still a non-numeric header row, throw error
   error_detected, error_line = check_for_non_numeric_id_or_uprn(file)
-  return error_detected, 1 # Override to line 1 as it's a problem with header row
+  return error_detected, 1  # Override to line 1 as it's a problem with header row
 
 
 def check_for_non_numeric_id_or_uprn(file):
@@ -127,7 +128,7 @@ def check_for_non_numeric_id_or_uprn(file):
 
   remove_header_row(contents)
 
-  row_counter = 2 # Start after header row and +1 to adjust for 0th array index
+  row_counter = 2  # Start after header row and +1 to adjust for 0th array index
   for row in contents:
     row = row.strip().decode('utf-8').split(',', maxsplit=1)
     id, uprn = row
@@ -192,6 +193,4 @@ def check_valid_upload(file, limit, called_from='address'):
           f'One or more duplicate IDs have been detected. <br><br>Check that all ID fields are unique. <br><br> We detected a problem on line: {error_line}'
       )
 
-   
   return True, '', '',
-
