@@ -22,16 +22,16 @@ def singlesearch():
   if access != True:
     return access
   page_location = get_page_location(endpoints, page_name)
+  searchable_fields = get_fields(page_name)
 
   if request.method == 'GET':
     delete_input(session)
     return render_template(
         page_location,
-        searchable_fields=get_fields(page_name),
+        searchable_fields=searchable_fields,
         endpoints=endpoints,
     )
 
-  searchable_fields = get_fields(page_name)
   all_user_input = load_save_store_inputs(
       searchable_fields,
       request,

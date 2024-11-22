@@ -1,16 +1,15 @@
 from flask import render_template, request, session
 from flask_login import login_required
-from requests.exceptions import ConnectionError
+
 from aims_ui import app
-from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs, save_epoch_number
-from aims_ui.page_helpers.api.api_interaction import api, get_api_auth
-from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
-from aims_ui.page_helpers.pages_location_utils import get_page_location
-from aims_ui.page_helpers.error.error_utils import error_page_xml, error_page_api_request, error_page_api_response
+from aims_ui.models.get_addresses import get_addresses
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
-from aims_ui.models.get_addresses import get_addresses
-from aims_ui.page_controllers.f_error_pages.page_error import page_error
+from aims_ui.page_helpers.api.api_interaction import api, get_api_auth
+from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs, save_epoch_number
+from aims_ui.page_helpers.error.error_utils import error_page_api_request, error_page_api_response
+from aims_ui.page_helpers.pages_location_utils import get_page_location
+from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 
 page_name = 'typeahead'
 
@@ -23,18 +22,18 @@ def typeahead():
   if access != True:
     return access
   page_location = get_page_location(endpoints, page_name)
+  searchable_fields = get_fields(page_name)
 
   if request.method == 'GET':
     delete_input(session)
 
     return render_template(
         page_location,
-        searchable_fields=get_fields(page_name),
+        searchable_fields=searchable_fields,
         endpoints=get_endpoints(called_from=page_name),
         api_auth=get_api_auth(),
     )
 
-  searchable_fields = get_fields(page_name)
   all_user_input = load_save_store_inputs(
       searchable_fields,
       request,
