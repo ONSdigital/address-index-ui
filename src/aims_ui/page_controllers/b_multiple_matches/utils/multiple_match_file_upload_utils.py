@@ -116,7 +116,8 @@ def check_for_valid_header_row(file):
     return False, 0
 
   # Now if there's still a non-numeric header row, throw error
-  return check_for_non_numeric_id_or_uprn(file)
+  error_detected, error_line = check_for_non_numeric_id_or_uprn(file)
+  return error_detected, 1 # Override to line 1 as it's a problem with header row
 
 
 def check_for_non_numeric_id_or_uprn(file):
