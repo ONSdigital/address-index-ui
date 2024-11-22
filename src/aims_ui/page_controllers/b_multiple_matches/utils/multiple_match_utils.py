@@ -29,7 +29,7 @@ def get_preffered_format_of_address(adrs, all_user_input):
 
 
 def remove_header_row(contents):
-  # Remove these header rows (if they exist, there may be no header row)
+  """ Remove the header row from the file if it exists """
   header_rows = ['id,address', 'id,searchAddress', '<feff>id,address']
   remove_index = None
   for i in range(0, len(contents)):
@@ -44,6 +44,8 @@ def remove_header_row(contents):
 
   if remove_index != None:
     contents.pop(remove_index)
+    return True
+  return False
 
 
 def jsonify_address(address_to_lookup):
