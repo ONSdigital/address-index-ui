@@ -7,6 +7,7 @@ function getAllInputs() {
 
 // Script to adjust the parameters for typeahead whenever they're updated
 export function getParamsFromPage() {
+  console.log('Setting the new parameters');
   let finalParams = '&';
   const inputs = getAllInputs();
   for (const input of inputs) {
@@ -24,6 +25,8 @@ export function getParamsFromPage() {
     }
   }
   finalParams = finalParams.substring(0, finalParams.length - 1);
+  console.log('Final params: ', finalParams);
+  console.log();
   return finalParams;
 }
 
@@ -39,22 +42,15 @@ function saveParamsToLocalStorage(inputs) {
 
 function loadTypeaheadValues() {
   const typeaheadParams = JSON.parse(localStorage.getItem('typeaheadParams'));
-  const inputs = getAllInputs();
 
   // if typeaheadParams is null, return
   if (!typeaheadParams) {
     return;
   }
 
-  console.log('typeaheadParams', typeaheadParams);
-  console.log('inputs', inputs);
-
   for (const param of typeaheadParams) {
-    console.log('param:', param);
     const inputElement = document.querySelector('#' + param[0]); // Get element with id
-    console.log('Input Element is:', inputElement);
     inputElement.value = param[1];
-    console.log('Setting the inputElement value to:', param[1]);
   }
 }
 
