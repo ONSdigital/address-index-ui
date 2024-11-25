@@ -51,10 +51,14 @@ function loadTypeaheadValues() {
 
   for (const input of inputs) {
     for (const param of typeaheadParams) {
+      console.log('Input: ', input.id, ' Param: ', param.id);
       if (input.id === param.id) {
         console.log('Setting: ', input.id, ' to ', param.value);
         input.value = param.value;
+      } else {
+        console.log('No match for ', input.id, ' and ', param.id);
       }
+      console.log('');
     }
   }
 
@@ -79,8 +83,8 @@ export function setupEventListeners() {
 
 function init() {
   console.log('typeahead specific loaded');
-  setupEventListeners();
   loadTypeaheadValues();
+  setupEventListeners();
 }
 
 window.addEventListener('load', init);
