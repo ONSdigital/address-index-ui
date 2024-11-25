@@ -1,7 +1,7 @@
 
 function getAllInputs() {
   const matchForm = document.querySelector('.match-form-container');
-  const inputs = matchForm.querySelectorAll('input');
+  const inputs = matchForm.querySelectorAll('input:not([type="radio"]):not([type="checkbox"])');
   return inputs
 }
 
