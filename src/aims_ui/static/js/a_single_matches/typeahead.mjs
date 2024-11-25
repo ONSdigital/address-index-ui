@@ -7,7 +7,6 @@ function getAllInputs() {
 
 // Script to adjust the parameters for typeahead whenever they're updated
 export function getParamsFromPage() {
-  console.log('Setting the new parameters');
   let finalParams = '&';
   const inputs = getAllInputs();
   for (const input of inputs) {
@@ -25,8 +24,6 @@ export function getParamsFromPage() {
     }
   }
   finalParams = finalParams.substring(0, finalParams.length - 1);
-  console.log('Final params: ', finalParams);
-  console.log();
   return finalParams;
 }
 
@@ -72,7 +69,6 @@ export function setupEventListeners() {
 }
 
 function init() {
-  console.log('typeahead specific loaded');
   loadTypeaheadValues();
   setupEventListeners();
 }
