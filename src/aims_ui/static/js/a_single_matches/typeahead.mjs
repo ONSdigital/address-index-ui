@@ -51,12 +51,12 @@ function loadTypeaheadValues() {
 
   for (const input of inputs) {
     for (const param of typeaheadParams) {
-      console.log('Input: ', input.id, ' Param: ', param.id);
+      console.log('Input: ', input, ' Param: ', param);
       if (input.id === param.id) {
         console.log('Setting: ', input.id, ' to ', param.value);
         input.value = param.value;
       } else {
-        console.log('No match for ', input.id, ' and ', param.id);
+        console.log('No match for ', input, ' and ', param);
       }
       console.log('');
     }
