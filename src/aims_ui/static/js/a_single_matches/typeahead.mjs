@@ -30,11 +30,9 @@ export function getParamsFromPage() {
 function saveParamsToLocalStorage(inputs) {
   const valuesToSave = [];
   for (const input of inputs) {
-    const valueKeyPair = [];
     const inputId = input.getAttribute('id');
     const inputValue = input.value;
-    valueKeyPair[inputId, inputValue];
-    valuesToSave.push(valueKeyPair);
+    valuesToSave.push([inputId, inputValue]);
   }
   localStorage.setItem('typeaheadParams', JSON.stringify(valuesToSave));
 }
@@ -52,9 +50,11 @@ function loadTypeaheadValues() {
   console.log('inputs', inputs);
 
   for (const param of typeaheadParams) {
-    console.log('Param: ', param);
+    console.log('param:', param);
     const inputElement = document.querySelector('#' + param[0]); // Get element with id
+    console.log('Input Element is:', inputElement);
     inputElement.value = param[1];
+    console.log('Setting the inputElement value to:', param[1]);
   }
 }
 
