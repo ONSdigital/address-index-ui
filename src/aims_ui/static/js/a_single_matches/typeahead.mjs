@@ -62,7 +62,7 @@ export function setupEventListeners() {
 
   const allInputs = getAllInputs();
   for (const input of allInputs) {
-    input.addEventListener('change', () => {
+    input.addEventListener('input', () => {
       // When any input is changed, update the query parameters
       typeaheadContainer.setAttribute('data-query-params', getParamsFromPage());
       // Also save the input values
