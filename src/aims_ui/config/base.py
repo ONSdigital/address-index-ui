@@ -48,7 +48,7 @@ USER_GROUPS = [
     },
     {
         'name': 'developers',
-        'usernames': USER_AUTHS.get('developers', ['felix.aldam-gates@ons.gov.uk']),
+        'usernames': USER_AUTHS.get('developers', ['felix.aldam-gates']),
         'pages_to_remove': [],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
