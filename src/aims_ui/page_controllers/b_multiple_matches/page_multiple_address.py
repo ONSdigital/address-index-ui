@@ -45,7 +45,7 @@ def multiple_address():
         request,
         session,
     )
-    validate_limit_parameter(all_user_input)
+    validate_limit_parameter(all_user_input, limit_name='limitperaddress')
   except Exception as e:
     return page_error_annotation_multiple(page_name, {}, e)
 
@@ -64,9 +64,11 @@ def multiple_address():
 
   multiple_address_match(file, all_user_input, download=True)
 
-  results_page_location = get_page_location(endpoints,
-                                            'multiple_address_results')
-  # No errors, forward to the job-view page
+ 
+  # Using urlfor get the location of the results page and forward the user
+
+
+
   return render_template(
       results_page_location,
       endpoints=endpoints,

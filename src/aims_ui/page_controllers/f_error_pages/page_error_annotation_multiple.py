@@ -6,6 +6,7 @@ from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
+
 """ Manage errors specific to multiple match pages """
 
 
@@ -15,8 +16,7 @@ def page_error_annotation_multiple(
     primary_error_message,
     override_input_name=None,
 ):
-  logging.error('Error on page: {}'.format(page_name_with_error))
-  logging.error('Error message: {}'.format(primary_error_message))
+  """ Handle errors for specific inputs that occur on the multiple match page """
 
   # Convert the primary error message to a string if it's an exception
   primary_error_message = convert_exception_to_error_message(
@@ -40,12 +40,19 @@ def page_error_annotation_multiple(
   if override_input_name:
     name_of_broken_field = override_input_name
 
+  # Log all the info so far
+  logging.error({
+      'name_of_broken_field': name_of_broken_field,
+      'primary_error_message': primary_error_message,
+      'overriden_input_name': override_input_name,
+      'page_name_with_error': page_name_with_error,
+      'user_input': user_input,
+  })
+
   # Loop through all fields on the page, set it's "error_message" to the primary_error_message from the API
   for field in searchable_fields:
     if field.database_name == name_of_broken_field:
       field.error_message = primary_error_message
-      print('Error message: {}'.format(primary_error_message))
-      print('on field: {}'.format(field.database_name))
 
   # Set the limit to whatever it was before
   limit = request.form.get('limit')
@@ -91,11 +98,18 @@ def match_api_error_message_to_name_of_field(primary_error_message,
   """ Given an error message, return the name of the field that caused the error """
   default_element_for_error_message = 'file_upload'
 
+  # Make the primaery error message lowercase
+  primary_error_message = primary_error_message.lower()
+
   # If the primary error message is a string, decide which element to return based on the error message
-  if 'Record Limit Exceeded' in primary_error_message:
+  if 'record limit exceeded' in primary_error_message:
     return 'file_upload'
 
-  if 'Limit parameter' in primary_error_message:
-    return 'limit'
+  if page_name_with_error != 'multiple_address':
+    if 'limit' in primary_error_message:
+      return 'limit'
+  
+  if 'limit' in primary_error_message:
+    return 'limitperaddress'
 
   return default_element_for_error_message
