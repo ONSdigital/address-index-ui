@@ -11,8 +11,10 @@ def validate_limit_parameter(all_user_input, limit_name='limit'):
   limit = all_user_input.get(limit_name, 'not set')
 
   if limit == 'not set':
-    raise Exception('Limit Parameter Error',
-                    'Limit parameter appears to be unset. Please set a limit between 1 and 10')
+    raise Exception(
+        'Limit Parameter Error',
+        'Limit parameter appears to be unset. Please set a limit between 1 and 10'
+    )
   if not limit.isdigit():
     raise Exception(
         'Limit Parameter Error',

@@ -1,4 +1,4 @@
-from flask import render_template, request, session
+from flask import redirect, render_template, request, session, url_for
 from flask_login import login_required
 
 from aims_ui import app
@@ -64,14 +64,6 @@ def multiple_address():
 
   multiple_address_match(file, all_user_input, download=True)
 
- 
   # Using urlfor get the location of the results page and forward the user
-
-
-
-  return render_template(
-      results_page_location,
-      endpoints=endpoints,
-      searchable_fields=searchable_fields,
-      bulk_limits=bulk_limits,
-  )
+  return redirect(
+      url_for('multiple_address_results').replace('http', 'https', 1))
