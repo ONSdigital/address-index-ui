@@ -1,8 +1,6 @@
+from flask import redirect, url_for
+
 from aims_ui import app
-from flask import (
-    redirect,
-    url_for,
-)
 
 
 # Keep this for backwards compatibility!
