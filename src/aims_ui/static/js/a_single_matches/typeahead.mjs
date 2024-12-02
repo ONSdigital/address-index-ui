@@ -60,10 +60,11 @@ function loadTypeaheadValues() {
           radioInput.checked = true;
         }
       }
+    } else {
+      // Otherwise just use the ID to select the element
+      const inputElement = document.querySelector('#' + param[0]); // Get element with id
+      inputElement.value = param[1];
     }
-    // Otherwise just use the ID to select the element
-    const inputElement = document.querySelector('#' + param[0]); // Get element with id
-    inputElement.value = param[1];
   }
 }
 
