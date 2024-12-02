@@ -5,6 +5,12 @@ function getAllInputs() {
   return inputs
 }
 
+function getAllRadioInputs() {
+  const matchForm = document.querySelector('.match-form-container');
+  const inputs = matchForm.querySelectorAll('input[type="radio"]');
+  return inputs
+}
+
 // Script to adjust the parameters for typeahead whenever they're updated
 export function getParamsFromPage() {
   let finalParams = '&';
@@ -46,6 +52,16 @@ function loadTypeaheadValues() {
   }
 
   for (const param of typeaheadParams) {
+    // If param[0] is numeric, change the way we select it
+    if (!isNaN(param[0])) {
+      const allRadioInputs = getAllRadioInputs();
+      for (const radioInput of allRadioInputs) {
+        if (radioInput.id === param[0]) {
+          radioInput.checked = true;
+        }
+      }
+    }
+    // Otherwise just use the ID to select the element
     const inputElement = document.querySelector('#' + param[0]); // Get element with id
     inputElement.value = param[1];
   }
