@@ -27,6 +27,7 @@ class Field:
   only_display_in_results_page: bool = False
   autosuggest_url: str = ''
   download_url: str = ''
+  error_message: str = ''
 
   def __post_init__(self):
     self.dropdown_options = self.format_dropdown_options(

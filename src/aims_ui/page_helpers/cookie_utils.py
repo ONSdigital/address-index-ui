@@ -17,7 +17,7 @@ def save_epoch_number(session, epoch_version_number):
 
 
 def load_epoch_number(session):
-  """Load the epoch number given the session, return to default if undeffined"""
+  """Load the epoch number given the session, return to default if undefined"""
   epoch_version_number = session.get('epoch_version_number', {})
   if epoch_version_number == {}:
     epochs, default = (get_epoch_options_cached())

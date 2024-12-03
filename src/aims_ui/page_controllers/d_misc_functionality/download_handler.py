@@ -1,12 +1,15 @@
-import os
-import json
 import csv
+import json
+import os
+from io import BytesIO, StringIO
+
 import requests
-from io import StringIO, BytesIO
 from flask import send_file
 from flask_login import login_required
+
+import aims_ui
 from aims_ui import app, get_classifications_cached
-from aims_ui.page_controllers.b_multiple_matches.utils.multiple_address_utils import job_url_if_authorised
+from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_api_utils import job_url_if_authorised
 from aims_ui.page_controllers.f_error_pages.page_error import page_error
 
 # For the gz download
@@ -16,7 +19,7 @@ from aims_ui.page_controllers.f_error_pages.page_error import page_error
 @app.route('/autosuggest/<autosuggest_type>.json', methods=['GET', 'POST'])
 def autosuggest(autosuggest_type):
   """ Autosuggest data for various typeaheads """
-  dir_path = os.path.dirname(os.path.realpath(__file__))
+  os.path.dirname(os.path.realpath(__file__))
 
   if 'classification' in autosuggest_type:
     formatted_class_list = []
@@ -40,7 +43,9 @@ def autosuggest(autosuggest_type):
   elif 'api-urls' in autosuggest_type:
     formatted_autosuggest_list = []
 
-    file_path = f'{dir_path}/static/downloads/api-url-options.csv'
+    project_root = os.path.dirname(os.path.abspath(aims_ui.__file__))
+    file_path = f'{project_root}/static/downloads/api-url-options.csv'
+
     with open(file_path, 'r', encoding='utf-8') as f:
       list_from_file = [line.strip() for line in f]
 
@@ -60,7 +65,7 @@ def download_handler(file_name):
   # Create example_csv
 
   proxy = StringIO()
-  writer = csv.writer(proxy)
+  csv.writer(proxy)
 
   current_file_path = os.path.dirname(os.path.realpath(__file__))
   root_dir_path = os.path.dirname(os.path.dirname(current_file_path))

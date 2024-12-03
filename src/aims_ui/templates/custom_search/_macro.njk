@@ -9,6 +9,7 @@
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/autosuggest/_macro.njk" import onsAutosuggest %}
 {% from "components/panel/_macro.njk" import onsPanel %}
+{% from "components/upload/_macro.njk" import onsUpload %}
 
 {% set col = namespace(value=-1) %}
 {% set row = namespace(value=0) %}
@@ -36,7 +37,12 @@
 		"label": { "text": field.display_title,
 			   "classes": '' if show else field.only_display_in_results_page,
 			   "description": '' if not show else field.description },
-		"value": field.previous_value,   })}}
+		"value": field.previous_value,
+    "error": {
+         "id": field.database_name,
+         "text": field.error_message,
+        } if field.error_message != '' else None,
+    })}}
 
 	{% elif field.search_type == "dropdown" %}
 	{{onsSelect({
@@ -46,7 +52,12 @@
 		"label": { "text": field.display_title,
 			   "classes": '' if show else field.only_display_in_results_page,
 			   "description": field.description },
-		"options": field.dropdown_options })}}
+		"options": field.dropdown_options,
+    "error": {
+         "id": field.database_name,
+         "text": field.error_message,
+        } if field.error_message != '' else None,
+     })}}
 	{% elif field.search_type == "checkbox" %}
 	{{onsCheckbox({
 		"id": field.database_name,
@@ -56,8 +67,13 @@
 			   "classes": '' if show else field.only_display_in_results_page,
 			   "description": field.description },
 		"value": True,
-		"checked": field.checkbox_value, })}}
-		<br>
+		"checked": field.checkbox_value, 
+    "error": {
+         "id": field.database_name,
+         "text": field.error_message,
+        } if field.error_message != '' else None
+     })  }}
+     <br>
 
 	{% elif field.search_type == "radio" %}
 	{% call onsQuestion({
@@ -67,7 +83,12 @@
 	{{ onsRadios({
             "name": field.database_name,
             "dontWrap": true,
-            "radios": field.radio_options }) }}
+            "radios": field.radio_options,
+            "error": {
+              "id": field.database_name,
+              "text": field.error_message,
+              } if field.error_message != '' else None,
+     }) }}
 	{% endcall %}
 
 	{% elif field.search_type == "label" %}
@@ -77,19 +98,40 @@
 	    "classes": field.classes if show else ' '.join([field.only_display_in_results_page,field.classes])  ,
      	"text": field.display_title, }) }}
 
+	{% elif field.search_type == "file_upload" %}
+    {{ onsUpload({
+      "id": field.database_name,
+      "name": field.database_name,
+      "type":"file",
+      "classes":"input input--text input-type__input input--upload",
+      "accept": ".csv,.CSV",
+      "error": {
+        "id": field.error_title,
+        "text": field.error_message} if field.error_message != '' else None,
+      "label": {
+          "description": "Please upload a CSV file",
+          "text":  "Please upload a CSV file", },
+    }) }}
+
+
+
 	{% elif field.search_type == "autosuggest" %}
 	{{ onsAutosuggest({
              "id": field.database_name,
 	     "input": {
   	       "label": { 
-	               "text": field.display_title,
+	           "text": field.display_title,
 	   	       "classes": '' if show else field.only_display_in_results_page,
 	  	       "description": field.description,
-                       "autocomplete": "off"
-		     },
-                "name": field.database_name,
-  	        "classes": 'ons-input--w-50'
-		},
+             "autocomplete": "off"
+		       },
+            "name": field.database_name,
+  	        "classes": 'ons-input--w-50',
+            "error": {
+              "id": field.database_name,
+              "text": field.error_message,
+              } if field.error_message != '' else None
+		      },
              "instructions": "Use up and down keys to navigate suggestions once you\'ve typed more than two characters. Use the enter key to select a suggestion. Touch device users, explore by touch or with swipe gestures.",
              "ariaYouHaveSelected": "You have selected",
              "ariaMinChars": "Enter 3 or more characters for suggestions.",
@@ -105,7 +147,8 @@
              "typeMore": "Continue entering to get suggestions",
   	     "allowMultiple": "true",
 	     "value": field.previous_value,
-        }) }}
+     } ) }}
+ 
 
 	{% elif field.search_type == "download" %}
 	<h4>Unsure? <a href={{field.download_url}}>Click here to download a list of classifications</a>.</h4>

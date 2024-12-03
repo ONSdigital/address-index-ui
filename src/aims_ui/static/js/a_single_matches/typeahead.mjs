@@ -1,8 +1,20 @@
+
+function getAllInputs() {
+  const matchForm = document.querySelector('.match-form-container');
+  const inputs = matchForm.querySelectorAll('input');
+  return inputs
+}
+
+function getAllRadioInputs() {
+  const matchForm = document.querySelector('.match-form-container');
+  const inputs = matchForm.querySelectorAll('input[type="radio"]');
+  return inputs
+}
+
 // Script to adjust the parameters for typeahead whenever they're updated
 export function getParamsFromPage() {
   let finalParams = '&';
-  const lfForm = document.querySelector('.match-form-container');
-  const inputs = lfForm.querySelectorAll('input');
+  const inputs = getAllInputs();
   for (const input of inputs) {
     if (input.type === 'text' && input.value !== '') {
       finalParams = finalParams + input.getAttribute('id') + '=' + input.value;
@@ -21,20 +33,60 @@ export function getParamsFromPage() {
   return finalParams;
 }
 
+function saveParamsToLocalStorage(inputs) {
+  const valuesToSave = [];
+  for (const input of inputs) {
+    const inputId = input.getAttribute('id');
+    const inputValue = input.value;
+    valuesToSave.push([inputId, inputValue]);
+  }
+  localStorage.setItem('typeaheadParams', JSON.stringify(valuesToSave));
+}
+
+function loadTypeaheadValues() {
+  const typeaheadParams = JSON.parse(localStorage.getItem('typeaheadParams'));
+
+  // if typeaheadParams is null, return
+  if (!typeaheadParams) {
+    return;
+  }
+
+  for (const param of typeaheadParams) {
+    // If param[0] is numeric, change the way we select it
+    if (!isNaN(param[0])) {
+      const allRadioInputs = getAllRadioInputs();
+      for (const radioInput of allRadioInputs) {
+        if (radioInput.id === param[0]) {
+          radioInput.checked = true;
+        }
+      }
+    } else {
+      // Otherwise just use the ID to select the element
+      const inputElement = document.querySelector('#' + param[0]); // Get element with id
+      inputElement.value = param[1];
+    }
+  }
+}
+
 export function setupEventListeners() {
   const typeaheadContainer = document.querySelector(
     '#address-autosuggest-container'
   );
   typeaheadContainer.setAttribute('data-query-params', getParamsFromPage());
 
-  // Every time the typeahead is focussed on, refresh the parameters
-  typeaheadContainer.addEventListener('focusin', () => {
-    typeaheadContainer.setAttribute('data-query-params', getParamsFromPage());
-  });
+  const allInputs = getAllInputs();
+  for (const input of allInputs) {
+    input.addEventListener('input', () => {
+      // When any input is changed, update the query parameters
+      typeaheadContainer.setAttribute('data-query-params', getParamsFromPage());
+      // Also save the input values
+      saveParamsToLocalStorage(allInputs);
+    });
+  }
 }
 
 function init() {
-  console.log('typeahead specific loaded');
+  loadTypeaheadValues();
   setupEventListeners();
 }
 

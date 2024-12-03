@@ -126,7 +126,7 @@ from aims_ui.page_controllers.d_misc_functionality.page_custom_response import c
 from aims_ui.page_controllers.e_redirect_routes.login import login
 from aims_ui.page_controllers.e_redirect_routes.signout import logout
 
-# Setup 'single_mathes' page controllers
+# Setup 'single_matches' page controllers
 from aims_ui.page_controllers.a_single_matches.page_uprn import uprn
 from aims_ui.page_controllers.a_single_matches.page_postcode import postcode
 from aims_ui.page_controllers.a_single_matches.page_typeahead import typeahead

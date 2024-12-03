@@ -1,17 +1,19 @@
-import os
-import logging
-import json
-import requests
-from aims_ui import app
-from aims_ui.page_helpers.classification_utilities import check_reverse_classification
-from .api_helpers import get_header, job_api
-from aims_ui.page_helpers.google_utils import get_username
-from aims_ui.page_controllers.b_multiple_matches.utils.multiple_address_utils import generate_tag_name
-import urllib
-import logging
-import xml.etree.ElementTree as ET
-import jwt
 import datetime
+import json
+import logging
+import os
+import urllib
+import xml.etree.ElementTree as ET
+
+import jwt
+import requests
+
+from aims_ui import app
+from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_api_utils import generate_tag_name
+from aims_ui.page_helpers.classification_utilities import check_reverse_classification, check_valid_classification
+from aims_ui.page_helpers.google_utils import get_username
+
+from .api_helpers import get_header, job_api
 
 
 def api(url, called_from, all_user_input):
@@ -34,6 +36,9 @@ def api(url, called_from, all_user_input):
       params=params,
       headers=header,
   )
+
+  # Check classification, simulate HTTP error if it's invalid - otherwise return r
+  r = check_valid_classification(all_user_input, r)
 
   return r
 
