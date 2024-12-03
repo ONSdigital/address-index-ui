@@ -1,7 +1,9 @@
-from .field import Field
-from .endpoint_options import get_options
 from flask import url_for
+
 from aims_ui import get_epoch_options_cached
+
+from .endpoint_options import get_options
+from .field import Field
 
 # This will change when DS changes
 hidden_field_class = ' ons-u-hidden '
@@ -21,6 +23,13 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           description=
           'Enter the number of matched addresses to return if multiple matches are available (1 - 50)',
           previous_value='1',
+      ),
+      'file_upload':
+      Field(
+          'file_upload',
+          search_type='file_upload',
+          display_title='Upload a csv file',
+          description='Please upload a csv file',
       ),
       'epoch':
       Field(
@@ -99,57 +108,6 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           search_type='label',
           display_title=
           'Boost a region. This is used as a "tie breaker" when the same address from different regions is present.',
-      ),
-      'england_boost':
-      Field(
-          'eboost',
-          display_title='England Boost (1-10)',
-          classes='ons-input--w-4',
-          description='Boost the results in favour of England Addresses',
-      ),
-      'wales_boost':
-      Field(
-          'wboost',
-          display_title='Wales Boost (1-10)',
-          classes='ons-input--w-4',
-          description='Boost the results in favour of Wales Addresses',
-      ),
-      'scotland_boost':
-      Field(
-          'sboost',
-          display_title='Scotland Boost (1-10)',
-          classes='ons-input--w-4',
-          description='Boost the results in favour of Scotland Addresses',
-      ),
-      'northern_ireland_boost':
-      Field(
-          'nboost',
-          display_title='Northern Ireland Boost (1-10)',
-          classes='ons-input--w-4',
-          description=
-          'Boost the results in favour of Northern Ireland Addresses',
-      ),
-      'channel_islands_boost':
-      Field(
-          'lboost',
-          display_title='Channel Islands Boost (1-10)',
-          classes='ons-input--w-4',
-          description=
-          'Boost the results in favour of Channel Islands Addresses',
-      ),
-      'isle_of_man_boost':
-      Field(
-          'nboost',
-          display_title='Isle of Man Boost (1-10)',
-          classes='ons-input--w-4',
-          description='Boost the results in favour of Isle of Man Addresses',
-      ),
-      'offshore_boost':
-      Field(
-          'jboost',
-          display_title='Offshore etc. Boost (1-10)',
-          classes='ons-input--w-4',
-          description='Boost the results in favour of Offshore etc. Addresses',
       ),
       'auxilary_search':
       Field(
@@ -248,13 +206,58 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             description=
             'Unlike other matches, Typeahead has variable boosts. <br><br>You can increase the value for a particular country or countries. <br><br>If for example you set Scotland Boost to 10 and type in 53 Port you get all Scottish results on screen, if you then add a c the results are all from England as there are no Scottish matches for that input.',
         ),
-        common_fields['england_boost'],
-        common_fields['wales_boost'],
-        common_fields['scotland_boost'],
-        common_fields['northern_ireland_boost'],
-        common_fields['channel_islands_boost'],
-        common_fields['isle_of_man_boost'],
-        common_fields['offshore_boost'],
+        Field(
+            'eboost',
+            display_title='England Boost (1-10)',
+            classes='ons-input--w-4',
+            description='Boost the results in favour of England Addresses',
+            previous_value='0',
+        ),
+        Field(
+            'wboost',
+            display_title='Wales Boost (1-10)',
+            classes='ons-input--w-4',
+            description='Boost the results in favour of Wales Addresses',
+            previous_value='0',
+        ),
+        Field(
+            'sboost',
+            display_title='Scotland Boost (1-10)',
+            classes='ons-input--w-4',
+            description='Boost the results in favour of Scotland Addresses',
+            previous_value='0',
+        ),
+        Field(
+            'nboost',
+            display_title='Northern Ireland Boost (1-10)',
+            classes='ons-input--w-4',
+            description=
+            'Boost the results in favour of Northern Ireland Addresses',
+            previous_value='0',
+        ),
+        Field(
+            'lboost',
+            display_title='Channel Islands Boost (1-10)',
+            classes='ons-input--w-4',
+            description=
+            'Boost the results in favour of Channel Islands Addresses',
+            previous_value='0',
+        ),
+        Field(
+            'nboost',
+            display_title='Isle of Man Boost (1-10)',
+            classes='ons-input--w-4',
+            description='Boost the results in favour of Isle of Man Addresses',
+            previous_value='0',
+        ),
+        Field(
+            'jboost',
+            display_title='Offshore etc. Boost (1-10)',
+            classes='ons-input--w-4',
+            description=
+            'Boost the results in favour of Offshore etc. Addresses',
+            previous_value='0',
+        ),
         Field(
             'fallback',
             search_type='checkbox',
@@ -274,7 +277,9 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             description=
             'Enter the number of matched addresses to return if multiple matches are available (1 - 10)',
             previous_value='5',
-        ), common_fields['epoch'], common_fields['historical'],
+        ),
+        common_fields['epoch'],
+        common_fields['historical'],
         common_fields['match_threshold'],
         common_fields['multiple_match_paf_nag_preference'],
         common_fields['header_row_export'],
@@ -283,6 +288,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             search_type='radio',
             flag=False,
             display_title='How would you like your results?',
+            default_radio_selection='Download',
             radio_options=[
                 {
                     'id': 'Download',
@@ -293,12 +299,14 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
                     'text': 'Display in browser'
                 },
             ],
-        )
+        ),
+        common_fields['file_upload'],
     ])
 
   elif endpoint_name == 'uprn_multiple_match':
     return ([
         common_fields['header_row_export'],
+        common_fields['file_upload'],
     ])
 
   elif endpoint_name == 'multiple_address':
@@ -313,12 +321,13 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         ),
         Field(
             'name',
-            display_title="Name (Optinal)",
+            display_title="Name (Optional)",
             description='Optional tag to organise matches',
             previous_value='',
         ),
         common_fields['multiple_match_paf_nag_preference'],
         common_fields['header_row_export'],
+        common_fields['file_upload'],
     ])
   elif endpoint_name == 'postcode':
     return ([

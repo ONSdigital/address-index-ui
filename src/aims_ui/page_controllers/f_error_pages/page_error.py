@@ -2,8 +2,8 @@ from flask import render_template
 from aims_ui import app
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.page_helpers.pages_location_utils import get_error_page_location
-
 """ Red text issue box for errors that should be critial to the user and not issues with service availablity """
+
 
 def page_error(
     called_from_page_name,

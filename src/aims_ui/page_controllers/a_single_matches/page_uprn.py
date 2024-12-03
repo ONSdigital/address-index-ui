@@ -1,16 +1,17 @@
 from flask import render_template, request, session
-from requests.exceptions import ConnectionError
 from flask_login import login_required
+
 from aims_ui import app
-from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs, save_epoch_number
-from aims_ui.page_helpers.api.api_interaction import api
-from aims_ui.page_helpers.security_utils import detect_xml_injection, check_user_has_access_to_page
-from aims_ui.page_helpers.pages_location_utils import get_page_location
-from aims_ui.page_helpers.error.error_utils import error_page_xml, error_page_api_request, error_page_api_response
+from aims_ui.models.get_addresses import get_addresses
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
-from aims_ui.models.get_addresses import get_addresses
-from aims_ui.page_controllers.f_error_pages.page_error import page_error
+from aims_ui.page_controllers.f_error_pages.page_error_annotation_single import page_error_annotation_single
+from aims_ui.page_helpers.api.api_interaction import api
+from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs, save_epoch_number
+from aims_ui.page_helpers.error.error_utils import error_page_api_request, error_page_api_response, error_page_xml
+from aims_ui.page_helpers.pages_location_utils import get_page_location
+from aims_ui.page_helpers.security_utils import check_user_has_access_to_page, detect_xml_injection
+from aims_ui.page_helpers.validation_utils import validate_uprn
 
 page_name = 'uprn'
 
@@ -52,16 +53,24 @@ def uprn():
         page_name,
         all_user_input,
     )
-
   # Deal with errors connecting to the API
   except Exception as e:
     return error_page_api_request(page_name, user_input, e)
 
+  try:
+    validate_uprn(user_input)
+  except Exception as e:
+    # Return annotation page directly
+    return page_error_annotation_single(page_name, user_input, e.args[1])
+
+  override_with_blank = False
   # Errors after sucessful Response
   if result.status_code != 200:
     return error_page_api_response(page_name, user_input, result)
 
-  matched_addresses = get_addresses(result.json(), page_name)
+  # Only extract addresses if matched_addresses not a blank array
+  matched_addresses = [] if override_with_blank else get_addresses(
+      result.json(), page_name)
 
   # Save epoch number
   save_epoch_number(session, all_user_input.get('epoch', ''))

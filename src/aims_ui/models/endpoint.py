@@ -1,5 +1,6 @@
-from flask import url_for
 from dataclasses import dataclass, field
+
+from flask import url_for
 
 
 @dataclass

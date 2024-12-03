@@ -1,8 +1,38 @@
-from aims_ui.page_controllers.f_error_pages.page_error import page_error
-from aims_ui.page_controllers.f_error_pages.page_service_error import page_service_error
-from aims_ui.page_helpers.error.error_logging import basic_logging_info, log_warn, log_err
 from requests.exceptions import ConnectionError, Timeout
+
+from aims_ui.page_controllers.f_error_pages.page_error import page_error
+from aims_ui.page_controllers.f_error_pages.page_error_annotation_single import page_error_annotation_single
+from aims_ui.page_controllers.f_error_pages.page_service_error import page_service_error
+from aims_ui.page_helpers.error.error_logging import log_err, log_warn
 """ Handle Errors Messages for User when connecting to and in the response of the API """
+
+
+def get_primary_error_message(full_response, page_name, user_input):
+  """ Get the primary error message from the API response - it could be in mutliple places """
+  # Handle HTML responses (Can happen if the gateway is completely down)
+  if 'The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds' in full_response:
+    return 'The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds. This is probably because the Gateway is down.'
+
+  # Handle responses that aren't JSON
+  try:
+    # {'response': 'Error calling API', 'status': {'code': 400, 'message': 'Missing parameter: input'}}
+    json_result = full_response.json()
+    api_response = json_result.get('status', {})
+  except:
+    # If there was a problem parsing the JSON, return a generic error message and log
+    log_err(page_name, user_input,
+            f'Error parsing JSON from the API: "{full_response}"')
+    return 'Error parsing issue from the API'
+
+  # In some cases the error will be in full_response.status.message "Missing parameter: input"
+  # In other cases the error will be in full_repsonse.errors [{'code':8, 'message': 'Limit parameter is too large'}]
+  primary_error_message = api_response.get(
+      'message', 'No further information provided by the API')
+  if json_result.get('errors'):
+    # There are errors in the 'errors' field, so use the first one
+    primary_error_message = json_result.get('errors')[0].get('message')
+
+  return primary_error_message
 
 
 def error_page_api_request(page_name, user_input, error):
@@ -93,8 +123,12 @@ def clean_api_response(result):
 
 
 def error_page_api_response(page_name, user_input, result):
-  status_code = result.status_code
+  status_code = int(result.status_code)
   clean_result = clean_api_response(result)
+
+  # Error message from status message or first error in 'errors'
+  primary_error_message = get_primary_error_message(page_name, user_input,
+                                                    result)
 
   if status_code == 429:
     log_warn(page_name, user_input, f'Rate Limit Error: "{clean_result}"')
@@ -104,6 +138,7 @@ def error_page_api_response(page_name, user_input, result):
         [
             'The API is currently under exceptional load and your request cannot be processed at this time.',
             'Please try again later.',
+            primary_error_message,
         ],
     )
 
@@ -115,19 +150,31 @@ def error_page_api_response(page_name, user_input, result):
         [
             'There was an API error processing your request.',
             'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+            primary_error_message
         ],
     )
 
   if status_code == 400:
     log_err(page_name, user_input, f'Bad Request Error: "{clean_result}"')
-    return page_service_error(
-        page_name,
-        'Bad Request',
-        [
-            'There was an error with the request you submitted.',
-            'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
-        ],
-    )
+    # Handle errors that the API has a suggesgion to fix! (i.e. "input" cannot be empty)
+    primary_error_message = get_primary_error_message(result, page_name,
+                                                      user_input)
+
+    return page_error_annotation_single(page_name, user_input,
+                                        primary_error_message)
+
+  if status_code == 404:
+    log_err(page_name, user_input, f'Not Found Error: "{clean_result}"')
+    # 404 errors that relate to blank input fields, otherwise a generic error message is shown
+    primary_error_message = get_primary_error_message(result, page_name,
+                                                      user_input)
+    if page_name == 'postcode':
+      primary_error_message = 'Not found error. This is likely due to a blank search feild. Please check your inputs.'
+
+    return page_error_annotation_single(page_name,
+                                        user_input,
+                                        primary_error_message,
+                                        override_input_name=page_name)
 
   if status_code == 401:
     log_err(page_name, user_input, f'Authentication Error: "{clean_result}"')
@@ -138,6 +185,7 @@ def error_page_api_response(page_name, user_input, result):
             'There was an error with your authentication.',
             'Please try logging in again or refreshing your page.',
             'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+            primary_error_message,
         ],
     )
 
@@ -149,6 +197,7 @@ def error_page_api_response(page_name, user_input, result):
         [
             'An issue occured from a bad gateway.',
             'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+            primary_error_message,
         ],
     )
 
@@ -159,5 +208,6 @@ def error_page_api_response(page_name, user_input, result):
       [
           'An issue occured, we don\'t know much else.',
           'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+          primary_error_message,
       ],
   )

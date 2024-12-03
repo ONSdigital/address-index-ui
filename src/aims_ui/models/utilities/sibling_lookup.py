@@ -1,8 +1,8 @@
-import json
-import requests
 import logging
+
+import requests
+
 from aims_ui import app
-from flask import request
 from aims_ui.page_helpers.api.api_helpers import get_header
 
 
