@@ -61,6 +61,8 @@ This will remove unused imoports and organise imports consistantly
 
 #### Python
 `python3 -m pytest tests/pytest_tests`
+##### (Not headless so you can see tests in a browser)
+`python3 -m pytest tests/pytest_tests --browser chromium --slowmo 2000 --headed`
 
 ### Javascript 
 `npm run test:jest`
