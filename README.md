@@ -18,6 +18,7 @@ Pre-requisites:
 | `export API_JWT_TOKEN`      | `[enter_jwt_token_here]`   | `export API_JWT_TOKEN="[enter_jwt_token_here]"` |
 | `export BM_API_URL`         | `[enter_bulk_match_url]`   | `export BM_API_URL="[enter_bulk_match_url]"` |
 | `export BM_JWT_TOKEN`       | `[enter_jwt_token_here]`   | `export BM_JWT_TOKEN="[enter_jwt_token_here]"` |
+| `export API_JWT_K_VALUE` | `[enter_API_JWT_K_VALUE_here] | `export API_JWT_K_VALUE="NA"` |
 | `export API_BSC_AUTH_USERNAME` | `[enter_bsc_username]`  | `export API_BSC_AUTH_USERNAME="[enter_bsc_username]"` |
 | `export API_BSC_AUTH_PASSWORD` | `[enter_bsc_password]`  | `export API_BSC_AUTH_PASSWORD="[enter_bsc_password]"` |
 | `export PROJECT_DOMAIN`     | `[enter_project_domain]`   | `export PROJECT_DOMAIN="[enter_project_domain]"` |
