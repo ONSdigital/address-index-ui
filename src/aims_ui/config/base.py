@@ -1,6 +1,7 @@
 """FLASK BASE CONFIG"""
 import os
 import json
+import base64
 
 JSONIFY_PRETTYPRINT_REGULAR = True
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024
@@ -20,6 +21,11 @@ AIMS_UI_PAGES_LOCATION = 'aims_ui_pages'
 
 API_BSC_AUTH_USERNAME = os.getenv('API_BSC_AUTH_USERNAME')
 API_BSC_AUTH_PASSWORD = os.getenv('API_BSC_AUTH_PASSWORD')
+
+API_JWT_K_VALUE = str(os.getenv('API_JWT_K_VALUE'))
+API_JWT_K_VALUE = base64.b64decode(API_JWT_K_VALUE)
+
+FLASK_ENV = str(os.getenv('FLASK_ENV')).upper()
 
 # Default usernames for paywall
 USER_AUTHS = json.loads(os.getenv('USER_AUTHS', '{}'))
@@ -42,19 +48,19 @@ DEFAULT_BULK_LIMITS = {
 USER_GROUPS = [
     {
         'name': 'default',  # UNSPECIFIED USERS WILL BE IN THIS GROUP
-        'usernames': USER_AUTHS.get('default', []),
+        'usernames': USER_AUTHS.get('default', ['testDefaultExplicit']),
         'pages_to_remove': ['custom_response'],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'developers',
-        'usernames': USER_AUTHS.get('developers', ['felix.aldam-gates', 'UserNotLoggedIn']),
+        'usernames': USER_AUTHS.get('developers', ['felix.aldam-gates', 'testDeveloperExplicit']),
         'pages_to_remove': [],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'bulk_removed',
-        'usernames': USER_AUTHS.get('bulk_removed', []),
+        'usernames': USER_AUTHS.get('bulk_removed', ['testBulkRemovedExplicit']),
         'pages_to_remove': [
             'multiple_address_original', 'uprn_multiple_match',
             'multiple_address', 'multiple_address_results'
@@ -63,7 +69,7 @@ USER_GROUPS = [
     },
     {
         'name': 'limited_bulk',
-        'usernames': USER_AUTHS.get('limited_bulk', []),
+        'usernames': USER_AUTHS.get('limited_bulk', ['testBulkLimitedExplicit']),
         'pages_to_remove': [],
         'bulk_limits': {
             'limit_mini_bulk': 10,
