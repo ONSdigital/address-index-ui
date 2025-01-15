@@ -4,8 +4,9 @@ BASE_URL = "http://127.0.0.1:5000/"
 ALL_PAGE_NAMES = [
     'singlesearch', 'uprn', 'postcode', 'typeahead',
     'multiple_address_original', 'multiple_address_results',
-    'multiple_address', 'uprn_multiple_match', 'custom_response', 'help',
-    'settings'
+    'multiple_address', 'uprn_multiple_match', 'custom_response', 'help', 'help_submit_feedback',
+    'help_confidence_score', 'help_help_and_documentation',
+    'settings', 
 ]
 
 ROLES = ['default', 'developers', 'bulk_removed', 'limited_bulk']
@@ -155,6 +156,24 @@ ENDPOINTS = [{
     'url': 'help/home',
     'nav_link_in_header': True, 
     'page_description': 'See information about the other pages and how to contact support.',
+}, {
+    'page_name': 'Help',
+    'page_name_test': 'help_confidence_score',
+    'url': 'help/confidence_score',
+    'nav_link_in_header': False, 
+    'page_description': 'Explanation of confidence Score',  
+}, {
+    'page_name': 'Help',
+    'page_name_test': 'help_submit_feedback',
+    'url': 'help/submit_feedback',
+    'nav_link_in_header': False, 
+    'page_description': 'Explanation of how to submit feedback to the service',  
+}, {
+    'page_name': 'Help',
+    'page_name_test': 'help_help_and_documentation',
+    'url': 'help/help_and_documentation',
+    'nav_link_in_header': False, 
+    'page_description': 'Generic helpful resources for using the UI and service',  
 }, {
     'page_name': 'Settings',
     'page_name_test': 'settings',
