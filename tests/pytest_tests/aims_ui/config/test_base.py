@@ -79,6 +79,7 @@ def test_base_classification_list():
       'API_BSC_AUTH_USERNAME',
       'API_JWT_TOKEN',
       'API_JWT_TOKEN_BEARER',
+      'API_JWT_K_VALUE',
       'BM_API_URL',
       'BM_JWT_TOKEN',
       'BM_JWT_TOKEN_BEARER',
@@ -90,6 +91,7 @@ def test_base_classification_list():
       'PROJECT_DOMAIN',
       'USER_AUTHS',
       'USER_GROUPS',
+      'FLASK_ENV',
   ]
 
   # Get the actual config keys
