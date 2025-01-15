@@ -18,24 +18,21 @@ def test_header_visible(page: Page):
   expect(page.locator('header')).to_be_visible()
 
 
-@pytest.mark.parametrize('user_role', ['default'])
+@pytest.mark.parametrize('user_role', ROLES)
 def test_available_header_pages(page: Page, user_role: str):
   """ Test that the header contains the correct navigation links for each role """
 
-  # Set the role as a cookie
   page.context.clear_cookies()
 
   # Get a username and details about a user given a role
   user_info_for_role = role_to_username(user_role)
 
   username = user_info_for_role.get('username')
-  cookie_to_set = {
-      'name': 'X-Goog-Authenticated-User-Email',
-      'value': f'{username}',
-      'url': f'{BASE_URL}'
-  }
 
-  page.context.add_cookies([cookie_to_set])
+  # Set the username in the browser
+  page.set_extra_http_headers({
+    'X-Goog-Authenticated-User-Email': username,
+  })
   # The browser now thinks that a username assocaited with the current role is logged in
 
   # For every page (including ones that *might* be inaccesible)
@@ -45,7 +42,7 @@ def test_available_header_pages(page: Page, user_role: str):
     page.goto(testing_page_uri)
 
     # Check the header is visible (even for inaccessible pages)
-#    expect(page.locator('header')).to_be_visible()
+    expect(page.locator('header')).to_be_visible()
 
     # Get all allowed pages for the current role
     allowed_pages_info = user_info_for_role.get('allowed_pages_info')
