@@ -48,19 +48,19 @@ DEFAULT_BULK_LIMITS = {
 USER_GROUPS = [
     {
         'name': 'default',  # UNSPECIFIED USERS WILL BE IN THIS GROUP
-        'usernames': USER_AUTHS.get('default', ['testDefaultExplicit']),
+        'usernames': USER_AUTHS.get('default', []),
         'pages_to_remove': ['custom_response'],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'developers',
-        'usernames': USER_AUTHS.get('developers', ['felix.aldam-gates', 'testDeveloperExplicit']),
+        'usernames': USER_AUTHS.get('developers', ['felix.aldam-gates']),
         'pages_to_remove': [],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'bulk_removed',
-        'usernames': USER_AUTHS.get('bulk_removed', ['testBulkRemovedExplicit']),
+        'usernames': USER_AUTHS.get('bulk_removed', []),
         'pages_to_remove': [
             'multiple_address_original', 'uprn_multiple_match',
             'multiple_address', 'multiple_address_results'
@@ -69,7 +69,7 @@ USER_GROUPS = [
     },
     {
         'name': 'limited_bulk',
-        'usernames': USER_AUTHS.get('limited_bulk', ['testBulkLimitedExplicit']),
+        'usernames': USER_AUTHS.get('limited_bulk', []),
         'pages_to_remove': [],
         'bulk_limits': {
             'limit_mini_bulk': 10,
