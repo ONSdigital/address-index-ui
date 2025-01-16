@@ -1,9 +1,16 @@
 """ Playwright tests against each page. """
-from playwright.sync_api import Page, BrowserType, expect
 import pytest
-from pprint import pprint
+from playwright.sync_api import Page, expect
 
-from tests.pytest_tests.pytest_playwright_tests.utils.constants import BASE_URL, ALL_PAGE_NAMES, ROLES, role_to_username, get_page_url_from_page_name, get_just_header_pages
+from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
+    ALL_PAGE_NAMES,
+    BASE_URL,
+    ROLES,
+    get_just_header_pages,
+    get_page_url_from_page_name,
+    role_to_username
+)
+from tests.pytest_tests.pytest_playwright_tests.utils.setup_helpers import login_as_role
 
 
 def test_title_tag(page: Page):
@@ -24,16 +31,8 @@ def test_available_header_pages(page: Page, user_role: str):
 
   page.context.clear_cookies()
 
-  # Get a username and details about a user given a role
-  user_info_for_role = role_to_username(user_role)
-
-  username = user_info_for_role.get('username')
-
-  # Set the username in the browser
-  page.set_extra_http_headers({
-    'X-Goog-Authenticated-User-Email': username,
-  })
-  # The browser now thinks that a username assocaited with the current role is logged in
+  # Login with a username matching the role and return username
+  username = login_as_role(page, user_role)
 
   # For every page (including ones that *might* be inaccesible)
   for page_name in ALL_PAGE_NAMES:
@@ -45,20 +44,25 @@ def test_available_header_pages(page: Page, user_role: str):
     expect(page.locator('header')).to_be_visible()
 
     # Get all allowed pages for the current role
+    user_info_for_role = role_to_username(user_role)
     allowed_pages_info = user_info_for_role.get('allowed_pages_info')
 
     # Remove any pages that are subpages from the header check
     expected_header_pages = get_just_header_pages(allowed_pages_info)
 
-    print(f'\n FOR THE USERNAME "{username}", with ROLE {user_role}, the EXPECTED HEADER PAGES are: {[ "name: " + x.get("page_name") + " url:" + x.get("url") for x in expected_header_pages]}\n\n')
+    print(
+        f'\n FOR THE USERNAME "{username}", with ROLE {user_role}, the EXPECTED HEADER PAGES are: {[ "name: " + x.get("page_name") + " url:" + x.get("url") for x in expected_header_pages]}\n\n'
+    )
 
     # Loop over all expected pages, check for link in header
     for allowed_page in expected_header_pages:
-      link_element = page.locator('.ons-navigation__link').filter(has_text=allowed_page.get('page_name'))
+      link_element = page.locator('.ons-navigation__link').filter(
+          has_text=allowed_page.get('page_name'))
       expected_page_uri = f'/{allowed_page.get("url")}'
 
       actual_link_element_uri = link_element.get_attribute('href')
       if actual_link_element_uri != expected_page_uri:
-        print(f'\n Checking link element: {link_element} \n to have expected uri: "{expected_page_uri}"\n it actually has: "{actual_link_element_uri}"\n\n')
+        print(
+            f'\n Checking link element: {link_element} \n to have expected uri: "{expected_page_uri}"\n it actually has: "{actual_link_element_uri}"\n\n'
+        )
       expect(link_element).to_have_attribute('href', expected_page_uri)
-
