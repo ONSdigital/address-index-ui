@@ -1,21 +1,55 @@
 """ Constants for the playwright tests. """
 BASE_URL = "http://127.0.0.1:5000/"
 
+EPOCH_OPTIONS = [
+    {
+        'number': '39',
+        'text_label': 'Exeter Sample'
+    },
+    {
+        'number': '80',
+        'text_label': 'Census no extras'
+    },
+    {
+        'number': '87',
+        'text_label': 'September 2021'
+    },
+    {
+        'number': '89',
+        'text_label': 'December 2021'
+    },
+]
+
+LOCATION_OPTIONS = [
+    'England', 'Scotland', 'Wales', 'Northern Ireland', 'Channel Islands',
+    'Isle of man', 'Offshore etc.'
+]
+
 ALL_PAGE_NAMES = [
-    'singlesearch', 'uprn', 'postcode', 'typeahead',
-    'multiple_address_original', 'multiple_address_results',
-    'multiple_address', 'uprn_multiple_match', 'custom_response', 'help', 'help_submit_feedback',
-    'help_confidence_score', 'help_help_and_documentation',
-    'settings', 
+    'singlesearch',
+    'uprn',
+    'postcode',
+    'typeahead',
+    'multiple_address_original',
+    'multiple_address_results',
+    'multiple_address',
+    'uprn_multiple_match',
+    'custom_response',
+    'help',
+    'help_submit_feedback',
+    'help_confidence_score',
+    'help_help_and_documentation',
+    'settings',
 ]
 
 ROLES = ['default', 'developers', 'bulk_removed', 'limited_bulk']
 
 DEFAULT_BULK_LIMITS = {
-  'limit_mini_bulk': 5000,
-  'limit_vast_bulk': 100000,
-  'limit_uprn_match': 5000,
+    'limit_mini_bulk': 5000,
+    'limit_vast_bulk': 100000,
+    'limit_uprn_match': 5000,
 }
+
 
 def role_to_username(role: str):
   """ Given a role, give an example username, expected page access and bulk limits """
@@ -55,14 +89,14 @@ def role_to_username(role: str):
         }
       },
   }]
-  # yapf: enable 
+  # yapf: enable
 
   # Loop over all roles to build from removeable pages
   for group in user_role_map:
     allowed_pages = []
     for page_name in ALL_PAGE_NAMES:
-        if page_name not in group.get('pages_to_remove'):
-            allowed_pages.append(page_name)
+      if page_name not in group.get('pages_to_remove'):
+        allowed_pages.append(page_name)
     group['allowed_pages'] = allowed_pages
     group['allowed_pages_info'] = get_allowed_pages_full_info(allowed_pages)
 
@@ -76,8 +110,11 @@ def role_to_username(role: str):
 def get_allowed_pages_full_info(allowed_pages: list):
   """ Given a list of allowed pages, return the page info for all pages """
   print('allowed_pages:', allowed_pages)
-  allowed_pages_info = [page for page in ENDPOINTS if page.get('page_name_test') in allowed_pages]
+  allowed_pages_info = [
+      page for page in ENDPOINTS if page.get('page_name_test') in allowed_pages
+  ]
   return allowed_pages_info
+
 
 def get_page_url_from_page_name(page_name: str):
   """ Given a page name, return the page URL """
@@ -87,6 +124,7 @@ def get_page_url_from_page_name(page_name: str):
 
   raise ValueError(f"Unknown page name: {page_name}")
 
+
 def get_just_header_pages(allowed_pages_info: list):
   """ Given a list of allowed pages, return the pages that should be in the header """
   header_pages = []
@@ -94,6 +132,7 @@ def get_just_header_pages(allowed_pages_info: list):
     if page.get('nav_link_in_header'):
       header_pages.append(page)
   return header_pages
+
 
 # yapf: disable
 ENDPOINTS = [{
@@ -106,79 +145,79 @@ ENDPOINTS = [{
     'page_name': 'Single UPRN',
     'page_name_test': 'uprn',
     'url': 'uprn',
-    'nav_link_in_header': True, 
+    'nav_link_in_header': True,
     'page_description': 'Search for a property via its unique property reference number. This is a 12 digit number which contains no characters.',
 }, {
     'page_name': 'Postcode',
     'page_name_test': 'postcode',
     'url': 'postcode',
-    'nav_link_in_header': True, 
+    'nav_link_in_header': True,
     'page_description': "Search for a property using its postcode. This is effective and a valid postcode will return a list of possible addresses.",
 }, {
     'page_name': 'Typeahead',
     'page_name_test': 'typeahead',
     'url': 'typeahead',
-    'nav_link_in_header': True, 
+    'nav_link_in_header': True,
     'page_description': 'This search types ahead. Autosuggest on steroids basically. Useful if you quickly want a user to find an address.',
 }, {
     'page_name': 'Multiple Address',
     'page_name_test': 'multiple_address_original',
     'url': 'multiple_address_original',
-    'nav_link_in_header': True, 
+    'nav_link_in_header': True,
     'page_description':'Search for not just  one address. Several. Get lots of results you can look through. This service completes many single searches from a file.',
 }, {
     'page_name': 'Multiple Address',
     'page_name_test': 'multiple_address',
     'url': 'multiple_address',
-    'nav_link_in_header': False, 
+    'nav_link_in_header': False,
     'page_description':'Used to submit a large multiple match request with a file to an asynchronous job manager.',
 }, {
     'page_name': 'Multiple Address',
     'page_name_test': 'multiple_address_results',
     'url': 'multiple_address_results',
-    'nav_link_in_header': False, 
+    'nav_link_in_header': False,
     'page_description':'Used to submit a large multiple match request with a file to an asynchronous job manager.',
 }, {
     'page_name': 'Multiple UPRN',
     'page_name_test': 'uprn_multiple_match',
     'url': 'uprn_multiple_match',
-    'nav_link_in_header': True, 
+    'nav_link_in_header': True,
     'page_description': 'Search for multiple addresses providing mulitple UPRNs (Unique Property Reference Numbers)',
 }, {
     'page_name': 'API',
     'page_name_test': 'custom_response',
     'url': 'custom_response',
-    'nav_link_in_header': True, 
+    'nav_link_in_header': True,
     'page_description': 'Submit requests directly to the API and receive JSON style fromatting in return. Use this if you want to test out API features that the UI currently does not support',
 }, {
     'page_name': 'Help',
     'page_name_test': 'help',
     'url': 'help/home',
-    'nav_link_in_header': True, 
+    'nav_link_in_header': True,
     'page_description': 'See information about the other pages and how to contact support.',
 }, {
     'page_name': 'Help',
     'page_name_test': 'help_confidence_score',
     'url': 'help/confidence_score',
-    'nav_link_in_header': False, 
-    'page_description': 'Explanation of confidence Score',  
+    'nav_link_in_header': False,
+    'page_description': 'Explanation of confidence Score',
 }, {
     'page_name': 'Help',
     'page_name_test': 'help_submit_feedback',
     'url': 'help/submit_feedback',
-    'nav_link_in_header': False, 
-    'page_description': 'Explanation of how to submit feedback to the service',  
+    'nav_link_in_header': False,
+    'page_description': 'Explanation of how to submit feedback to the service',
 }, {
     'page_name': 'Help',
     'page_name_test': 'help_help_and_documentation',
     'url': 'help/help_and_documentation',
-    'nav_link_in_header': False, 
-    'page_description': 'Generic helpful resources for using the UI and service',  
+    'nav_link_in_header': False,
+    'page_description': 'Generic helpful resources for using the UI and service',
 }, {
     'page_name': 'Settings',
     'page_name_test': 'settings',
     'url': 'settings',
-    'nav_link_in_header': True, 
+    'nav_link_in_header': True,
     'page_description': 'User preferences are stored locally on their web-browser. Adjust or reset those settings here.',
 }]
 # yapf: enable

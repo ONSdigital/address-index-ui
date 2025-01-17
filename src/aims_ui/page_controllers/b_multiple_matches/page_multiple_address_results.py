@@ -53,7 +53,6 @@ def multiple_address_results():
         bulk_limits=bulk_limits,
     )
 
-
   # Get the "include_old_jobs" query parameter, default to "false
   include_old_jobs = request.args.get('include_old_jobs',
                                       default='false').lower()
