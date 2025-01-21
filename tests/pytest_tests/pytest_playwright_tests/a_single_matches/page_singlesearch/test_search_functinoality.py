@@ -27,7 +27,7 @@ TESTS = [
         'test_outputs': [
             {
               'type': 'text',
-              'visible_text': '10023117117', 
+              'visible_text': '10023117117',
             },
        ]
     },
@@ -36,37 +36,18 @@ TESTS = [
 
 
 @pytest.mark.parametrize('test', TESTS)
-def test_search_filters(page: Page, test: dict, login_and_goto):
+def test_search_filters(page: Page, test: dict, login_and_goto, set_inputs):
   """ Given a dict of inputs, check against the dict of outputs """
-  print(f'Testing Single Searh Story with inputs: {test.get("test_inputs")} and expected outputs: {test.get("test_outputs")}')
+  print(
+      f'Testing Single Search Story with inputs: {test.get("test_inputs")} and expected outputs: {test.get("test_outputs")}'
+  )
 
   # Login as the user for this test
   page = login_and_goto(test.get('user_role'), 'singlesearch')
 
   # Fill in the inputs
   test_inputs = test.get('test_inputs')
-
-  for inp in test_inputs:
-    # Select input by label, or css if label not provided
-    input_label_text = inp.get('label_text')
-    input_type = inp.get('type')
-
-    if input_label_text:
-      input_element = page.get_by_label(input_label_text)
-    else: 
-      css_selector = inp.get('css_selector')
-      input_element = page.locator(f'{css_selector}')
-    
-    if input_type == 'input':
-      input_element.fill(inp.get('content_to_set'))
-    elif input_type == 'checkbox':
-      if inp.get('content_to_set') == 'checked':
-        input_element.check()
-      else:
-        input_element.uncheck()
-
-  # Submit the search
-  page.get_by_text('Search', exact=True).click()
+  page = set_inputs(test_inputs)
 
   # Check the outputs
   test_outputs = test.get('test_outputs')

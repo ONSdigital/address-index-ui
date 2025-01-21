@@ -26,3 +26,37 @@ def login_and_goto(page: Page):
     return page
 
   return _login_and_goto
+
+
+@pytest.fixture
+def set_inputs(page: Page):
+  """ Fixture to set inputs on a page, given the input selection methods and content """
+
+  def _set_inputs(inputs: list):
+    """ An input should be a dict with the following keys: type, label_text/css_selector, content_to_set"""
+
+    for inp in inputs:
+      # Select input by label, or css if label not provided
+      input_label_text = inp.get('label_text')
+      input_type = inp.get('type')
+
+      if input_label_text:
+        input_element = page.get_by_label(input_label_text)
+      else:
+        css_selector = inp.get('css_selector')
+        input_element = page.locator(f'{css_selector}')
+
+      if input_type == 'input':
+        input_element.fill(str(inp.get('content_to_set')))
+      elif input_type == 'checkbox':
+        if inp.get('content_to_set') == 'checked':
+          input_element.check()
+        else:
+          input_element.uncheck()
+
+    # Submit the search
+    page.get_by_text('Search', exact=True).click()
+
+    return page
+
+  return _set_inputs
