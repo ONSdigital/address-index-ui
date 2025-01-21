@@ -46,7 +46,8 @@ def test_epoch_options_present(page: Page, epoch: str):
   """ The radio buttons that select an epoch """
   page.goto(BASE_URL)
 
-  epoch_radio = page.locator(f'input[type="radio"][id="{epoch.get("number")}"]')
+  epoch_radio = page.locator(
+      f'input[type="radio"][id="{epoch.get("number")}"]')
 
   expect(epoch_radio).to_be_visible()
 

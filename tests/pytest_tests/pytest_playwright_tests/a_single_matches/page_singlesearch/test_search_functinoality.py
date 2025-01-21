@@ -5,78 +5,75 @@ from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
     ALL_PAGE_NAMES, BASE_URL, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS,
     get_just_header_pages, get_page_url_from_page_name, role_to_username)
 
+# Define input settings for all elements, expected result
 
-# Check presence of reusable components and their labels
-def test_reusable_components(page: Page):
-  page.goto(BASE_URL)
-
-  expect(page).to_have_title('Address Index')
-
-
-def test_search_box(page: Page):
-  page.goto(BASE_URL)
-
-  expect(page.locator('input[name="input"]')).to_be_visible()
-
-
-def test_classification_filter(page: Page):
-  page.goto(BASE_URL)
-
-  expect(page.locator('input[name="classificationfilter"]')).to_be_visible()
-
-
-def test_classification_download(page: Page):
-  page.goto(BASE_URL)
-
-  # Check that a link with the href x is visible
-  expect(
-      page.locator('a',
-                   has_text="Click here to download a list of classifications")
-  ).to_be_visible()
-
-
-@pytest.mark.parametrize('location', LOCATION_OPTIONS)
-def test_checkbox_locations(page: Page, location: str):
-  page.goto(BASE_URL)
-  checkbox = page.get_by_text(location)
-
-  expect(checkbox).to_be_visible()
+# yapf: disable
+TESTS = [
+    {
+        'test_name': 'basic_search',
+        'user_role': 'default',
+        'test_inputs': [
+          {
+            'type': 'input',
+            'label_text': 'Enter Search String',
+            'content_to_set': 'Big Wave Media',
+          },
+          {
+            'type': 'checkbox',
+            'css_selector': 'input[type="radio"][id="39"]',
+            'content_to_set': 'checked',
+          }
+        ],
+        'test_outputs': [
+            {
+              'type': 'text',
+              'visible_text': '10023117117', 
+            },
+       ]
+    },
+]
+# yapf: enable
 
 
-#@pytest.mark.parametrize('epoch', EPOCH_OPTIONS)
-#def test_checkbox_locations(page: Page, epoch: str):
-#  page.goto(BASE_URL)
-#
-#  epoch_radio = page.get_by_role('input').filter(has_text=epoch.get('number'))
-#
-#  expect(epoch_radio).to_be_visible()
+@pytest.mark.parametrize('test', TESTS)
+def test_search_filters(page: Page, test: dict, login_and_goto):
+  """ Given a dict of inputs, check against the dict of outputs """
+  print(f'Testing Single Searh Story with inputs: {test.get("test_inputs")} and expected outputs: {test.get("test_outputs")}')
 
+  # Login as the user for this test
+  page = login_and_goto(test.get('user_role'), 'singlesearch')
 
-def test_minimum_match(page: Page):
-  page.goto(BASE_URL)
+  # Fill in the inputs
+  test_inputs = test.get('test_inputs')
 
-  expect(page.get_by_label('Minimum match %')).to_be_visible()
+  for inp in test_inputs:
+    # Select input by label, or css if label not provided
+    input_label_text = inp.get('label_text')
+    input_type = inp.get('type')
 
+    if input_label_text:
+      input_element = page.get_by_label(input_label_text)
+    else: 
+      css_selector = inp.get('css_selector')
+      input_element = page.locator(f'{css_selector}')
+    
+    if input_type == 'input':
+      input_element.fill(inp.get('content_to_set'))
+    elif input_type == 'checkbox':
+      if inp.get('content_to_set') == 'checked':
+        input_element.check()
+      else:
+        input_element.uncheck()
 
-def test_limit(page: Page):
-  page.goto(BASE_URL)
+  # Submit the search
+  page.get_by_text('Search', exact=True).click()
 
-  expect(page.get_by_label('Limit')).to_be_visible()
+  # Check the outputs
+  test_outputs = test.get('test_outputs')
 
+  for out in test_outputs:
+    output_type = out.get('type')
+    output_visible_text = out.get('visible_text')
 
-#def test_include_historical_data(page: Page):
-#  page.goto(BASE_URL)
-#
-#  expect(page.get_by_text('Include historical address data').filter(has_not=page.locator('span'))).to_be_visible()
-
-
-def test_submit_button(page: Page):
-  page.goto(BASE_URL)
-
-  expect(page.get_by_text('Search', exact=True)).to_be_visible()
-
-
-def test_clear_button(page: Page):
-  page.goto(BASE_URL)
-
-  expect(page.get_by_text('Clear filters')).to_be_visible()
+    if output_type == 'text':
+      expect(page.get_by_text(output_visible_text)).to_be_visible()
