@@ -109,7 +109,6 @@ def role_to_username(role: str):
 
 def get_allowed_pages_full_info(allowed_pages: list):
   """ Given a list of allowed pages, return the page info for all pages """
-  print('allowed_pages:', allowed_pages)
   allowed_pages_info = [
       page for page in ENDPOINTS if page.get('page_name_test') in allowed_pages
   ]
