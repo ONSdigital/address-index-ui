@@ -1,14 +1,8 @@
 """ Playwright tests against each page. """
 import pytest
 from playwright.sync_api import Page, expect
-
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
-    ALL_PAGE_NAMES,
-    BASE_URL,
-    ROLES,
-    get_just_header_pages,
-    role_to_username
-)
+    ALL_PAGE_NAMES, BASE_URL, ROLES, get_just_header_pages, role_to_username)
 
 
 def test_title_tag(page: Page):
