@@ -1,5 +1,16 @@
 """ Validation for user inputs when it isn't handled by submitting to the API and dealing with the error """
 
+from aims_ui.page_controllers.f_error_pages.page_error_annotation_single import page_error_annotation_single
+
+def validate_limit(limit):
+  try:
+    limit = int(limit)
+  except ValueError:
+    return 'Limit parameter is not numeric'
+  if limit > 50:
+    return 'Limit parameter is too large, maximum = 50'
+  return None
+
 
 def validate_uprn(uprn):
   """ Check if a UPRN complies with valid format """
