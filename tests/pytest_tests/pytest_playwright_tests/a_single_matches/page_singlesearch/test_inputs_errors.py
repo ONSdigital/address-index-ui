@@ -114,11 +114,11 @@ illegal_limits = [
     },
     {
         'value': 100,
-        'error_message': 'Limit must be less than or equal to 50'
+        'error_message': 'Limit parameter is too large, maximum = 50'
     },
     {
         'value': 51,
-        'error_message': 'Limit must be less than or equal to 50'
+        'error_message': 'Limit parameter is too large, maximum = 50'
     },
     {
         'value': 'abc',
