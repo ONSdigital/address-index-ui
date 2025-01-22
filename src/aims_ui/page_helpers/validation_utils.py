@@ -2,6 +2,7 @@
 
 from aims_ui.page_controllers.f_error_pages.page_error_annotation_single import page_error_annotation_single
 
+
 def validate_limit(limit):
   try:
     limit = int(limit)

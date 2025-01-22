@@ -44,13 +44,12 @@ def singlesearch():
   xml_injection = detect_xml_injection(user_input)
   if xml_injection:
     return error_page_xml(page_name, user_input)
-  
+
   # limit_invalid is none or the error message
   limit = all_user_input.get('limit', 1)
   limit_invalid = validate_limit(limit)
   if limit_invalid:
-    return page_error_annotation_single(page_name, user_input,
-                                      limit_invalid)
+    return page_error_annotation_single(page_name, user_input, limit_invalid)
 
   try:
     result = api(
