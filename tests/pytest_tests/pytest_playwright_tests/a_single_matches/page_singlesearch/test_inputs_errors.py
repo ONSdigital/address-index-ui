@@ -21,6 +21,27 @@ GENERIC_TEST_INPUTS = {
     }
 }
 
+def test_epoch_options(page: Page, set_inputs):
+  """ The test Epoch Options should be available including 50 which the tets dataset shouldn't have """
+  page.goto(BASE_URL)
+
+  test_inputs = [
+      GENERIC_TEST_INPUTS['searchable_address'],
+    {
+        'type': 'checkbox',
+        'css_selector': 'input[type="radio"][id="50"]',
+        'content_to_set': 'checked',
+    }
+  ]
+
+  print(f'Testing Single Search Story for Epoch Options with inputs: {test_inputs}')
+
+  # Set inputs and submit
+  page = set_inputs(test_inputs)
+
+  # Expect the Epoch 50 to be visible
+  expect(page.get_by_text('Requested Epoch is not available. Current available epochs are 39, 93.')).to_be_visible()
+
 
 def test_blank_input(page: Page, set_inputs):
   """ If there's a blank input parameter submitted, the component should show an error message """

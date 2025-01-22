@@ -7,16 +7,12 @@ EPOCH_OPTIONS = [
         'text_label': 'Exeter Sample'
     },
     {
-        'number': '80',
-        'text_label': 'Census no extras'
+        'number': '50',
+        'text_label': 'September 1999'
     },
     {
-        'number': '87',
-        'text_label': 'September 2021'
-    },
-    {
-        'number': '89',
-        'text_label': 'December 2021'
+        'number': '93',
+        'text_label': 'October 2022'
     },
 ]
 
