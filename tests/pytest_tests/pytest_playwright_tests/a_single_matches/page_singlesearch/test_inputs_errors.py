@@ -22,6 +22,27 @@ GENERIC_TEST_INPUTS = {
 }
 
 
+def test_blank_input(page: Page, set_inputs):
+  """ If there's a blank input parameter submitted, the component should show an error message """
+  page.goto(BASE_URL)
+
+  test_inputs = [
+      {
+          'type': 'input',
+          'label_text': 'Enter Search String',
+          'content_to_set': ''
+      },
+      GENERIC_TEST_INPUTS['available_epoch'],
+  ]
+
+  print(f'Testing Single Search Blank Input Story with inputs: {test_inputs}')
+
+  # Set inputs and submit
+  page = set_inputs(test_inputs)
+
+  expect(page.get_by_text('Missing parameter: input')).to_be_visible()
+
+
 def test_search_uprn_sugesgion(page: Page, set_inputs):
   """ If a completely numerical search is submitted, the "UPRN search" suggestion should be shown """
   page.goto(BASE_URL)
