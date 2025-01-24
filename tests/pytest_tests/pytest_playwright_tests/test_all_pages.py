@@ -35,10 +35,10 @@ class TestPageElements:
     expected_header_pages = get_just_header_pages(allowed_pages_info)
 
     print(
-        f'\n FOR THE USERNAME "{user_info_for_role.get("username")}",'
+        f'FOR THE USERNAME "{user_info_for_role.get("username")}",'
         f' with ROLE {user_role},'
         f' the EXPECTED HEADER PAGES are:'
-        f' {[ "  name: " + x.get("page_name") + "\n    url:" + x.get("url") for x in expected_header_pages]}\n'
+        f' {[ "  name: " + x.get("page_name") + "    url:" + x.get("url") for x in expected_header_pages]}'
     )
 
     for allowed_page in expected_header_pages:
