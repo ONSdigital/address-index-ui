@@ -3,7 +3,8 @@ from playwright.sync_api import Page, expect
 
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
     ALL_PAGE_NAMES, BASE_URL, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS,
-    get_just_header_pages, get_page_url_from_page_name, role_to_username)
+    TEST_XML_INJECTIONS, get_just_header_pages, get_page_url_from_page_name,
+    role_to_username)
 
 import re
 """ When there is a problem with an input, the Design System Component should show an error message or prompt """
@@ -21,26 +22,31 @@ GENERIC_TEST_INPUTS = {
     }
 }
 
+
 def test_epoch_options(page: Page, set_inputs):
   """ The test Epoch Options should be available including 50 which the tets dataset shouldn't have """
   page.goto(BASE_URL)
 
   test_inputs = [
-      GENERIC_TEST_INPUTS['searchable_address'],
-    {
-        'type': 'checkbox',
-        'css_selector': 'input[type="radio"][id="50"]',
-        'content_to_set': 'checked',
-    }
+      GENERIC_TEST_INPUTS['searchable_address'], {
+          'type': 'checkbox',
+          'css_selector': 'input[type="radio"][id="50"]',
+          'content_to_set': 'checked',
+      }
   ]
 
-  print(f'Testing Single Search Story for Epoch Options with inputs: {test_inputs}')
+  print(
+      f'Testing Single Search Story for Epoch Options with inputs: {test_inputs}'
+  )
 
   # Set inputs and submit
   page = set_inputs(test_inputs)
 
-  # Expect the Epoch 50 to be visible
-  expect(page.get_by_text('Requested Epoch is not available. Current available epochs are 39, 93.')).to_be_visible()
+  # As Epoch '50' is unavailable, expect an error message
+  expect(
+      page.get_by_text(
+          'Requested Epoch is not available. Current available epochs are 39, 93.'
+      )).to_be_visible()
 
 
 def test_blank_input(page: Page, set_inputs):
@@ -83,7 +89,7 @@ def test_search_uprn_sugesgion(page: Page, set_inputs):
   # Expect the suggestion to be visible
   expect(uprn_suggesgion_link).to_be_visible()
 
-  # Expect the link to include the inputted UPRN
+  # Go to the suggested link which should take the user to the UPRN page with the UPRN pre-inputted
   link_element = page.get_by_text('Try this service for UPRN searches')
   link_element.click()
 
@@ -92,18 +98,19 @@ def test_search_uprn_sugesgion(page: Page, set_inputs):
   expect(uprn_input).to_have_value('039482934')
 
 
-def test_search_xml_error(page: Page, set_inputs):
-  """ If an xml injection is attempted, the page should show an error message """
+@pytest.mark.parametrize('xml_injection', TEST_XML_INJECTIONS)
+def test_search_xml_error(page: Page, set_inputs, xml_injection):
+  """ If an xml injection is attempted, in the 'search input' the page should show an error message """
   page.goto(BASE_URL)
 
-  test_inputs = [{
-      'type':
-      'input',
-      'label_text':
-      'Enter Search String',
-      'content_to_set':
-      """<?xml version="1.0" ?> <!DOCTYPE root [   <!ENTITY test SYSTEM "file:///etc/passwd"> ]> <root>   <foo>&test;</foo> </root>""",
-  }]
+  test_inputs = [
+      {
+          'type': 'input',
+          'label_text': 'Enter Search String',
+          'content_to_set': xml_injection,
+      },
+      GENERIC_TEST_INPUTS['available_epoch'],
+  ]
 
   print(f'Testing Single Search Story with inputs: {test_inputs}')
 

