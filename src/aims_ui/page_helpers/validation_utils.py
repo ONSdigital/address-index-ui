@@ -3,13 +3,13 @@
 from aims_ui.page_controllers.f_error_pages.page_error_annotation_single import page_error_annotation_single
 
 
-def validate_limit(limit):
+def validate_limit(limit, validation_limit=50):
   try:
     limit = int(limit)
   except ValueError:
     return 'Limit parameter is not numeric'
-  if limit > 50:
-    return 'Limit parameter is too large, maximum = 50'
+  if limit > validation_limit:
+    return f'Limit parameter is too large, maximum = {validation_limit}'
   return None
 
 

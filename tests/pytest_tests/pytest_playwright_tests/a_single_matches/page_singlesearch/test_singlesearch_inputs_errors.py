@@ -3,8 +3,8 @@ from playwright.sync_api import Page, expect
 
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
     ALL_PAGE_NAMES, BASE_URL, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS,
-    TEST_XML_INJECTIONS, get_just_header_pages, get_page_url_from_page_name,
-    role_to_username)
+    XML_ERROR_MESSAGE, TEST_XML_INJECTIONS, get_just_header_pages,
+    get_page_url_from_page_name, role_to_username)
 
 import re
 """ When there is a problem with an input, the Design System Component should show an error message or prompt """
@@ -118,9 +118,7 @@ def test_search_xml_error(page: Page, set_inputs, xml_injection):
   page = set_inputs(test_inputs)
 
   # Expect error message to be visible
-  expect(
-      page.get_by_text('XML Attack Detected. This incident will be reported.')
-  ).to_be_visible()
+  expect(page.get_by_text(XML_ERROR_MESSAGE)).to_be_visible()
 
 
 illegal_classifications = ['Octopus', 'Chicken', '*£"&^$', 'NonSense']
