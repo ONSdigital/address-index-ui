@@ -52,7 +52,6 @@ def postcode():
   if limit_invalid:
     return page_error_annotation_single(page_name, user_input, limit_invalid)
 
-
   try:
     result = api(
         '/addresses/postcode/',
