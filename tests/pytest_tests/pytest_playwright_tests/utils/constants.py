@@ -14,6 +14,7 @@ TEST_XML_INJECTIONS = [
     """<root><script>var injectedValue = 'ThisIsInjected'; alert('JS variable set: ' + injectedValue);</script></root>"""
 ]
 
+XML_ERROR_MESSAGE = 'XML Attack Detected. This incident will be reported.'
 
 EPOCH_OPTIONS = [
     {
