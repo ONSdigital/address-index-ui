@@ -50,15 +50,34 @@ def test_epoch_options(page: Page, set_inputs):
       )).to_be_visible()
 
 
-def test_blank_input(page: Page, set_inputs):
-  """ If there's a blank input parameter submitted, the component should show an error message """
+# yapf: disable
+illegal_postcode_inputs = [
+    {
+        'postcode_input':'',
+        'error_message': 'Not found error. This is likely due to a blank search feild. Please check your inputs.'
+    },
+    {
+        'postcode_input':'CHEESE',
+        'error_message': 'Postcode supplied is not valid according to the UK addresses pattern match.',
+    },
+    {
+        'postcode_input':'23488732472',
+        'error_message': 'Postcode supplied is not valid according to the UK addresses pattern match.',
+    },
+]
+# yapf: enable
+
+
+@pytest.mark.parametrize('illegal_postcode', illegal_postcode_inputs)
+def test_blank_input(page: Page, set_inputs, illegal_postcode):
+  """ Enter an illegal option into the postcode input and check for error message """
   page.goto(page_url)
 
   test_inputs = [
       {
           'type': 'input',
           'label_text': 'To get started, enter a PostCode',
-          'content_to_set': ''
+          'content_to_set': illegal_postcode.get('postcode_input'),
       },
       GENERIC_TEST_INPUTS['available_epoch'],
   ]
@@ -68,7 +87,8 @@ def test_blank_input(page: Page, set_inputs):
   # Set inputs and submit
   page = set_inputs(test_inputs)
 
-  expect(page.get_by_text('Not found error. This is likely due to a blank search feild. Please check your inputs.')).to_be_visible()
+  expect(page.get_by_text(
+      illegal_postcode.get('error_message'))).to_be_visible()
 
 
 @pytest.mark.parametrize('xml_injection', TEST_XML_INJECTIONS)

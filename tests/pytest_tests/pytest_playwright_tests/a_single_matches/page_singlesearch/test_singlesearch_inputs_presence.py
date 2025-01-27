@@ -4,9 +4,8 @@ from playwright.sync_api import Page, expect
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
     ALL_PAGE_NAMES, BASE_URL, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS,
     get_just_header_pages, get_page_url_from_page_name, role_to_username)
-
-
 """ Check that expected inputs are present """
+
 
 # Check presence of reusable components and their labels
 def test_search_box(page: Page):
