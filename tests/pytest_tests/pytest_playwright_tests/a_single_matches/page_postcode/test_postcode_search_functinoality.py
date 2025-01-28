@@ -4,6 +4,7 @@ from playwright.sync_api import Page, expect
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
     ALL_PAGE_NAMES, BASE_URL, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS,
     get_just_header_pages, get_page_url_from_page_name, role_to_username)
+from tests.pytest_tests.pytest_playwright_tests.utils.constants import GENERIC_TEST_INPUTS
 
 # Define input settings for all elements, expected result
 
@@ -13,21 +14,13 @@ TESTS = [
         'test_name': 'basic_search',
         'user_role': 'default',
         'test_inputs': [
-          {
-            'type': 'input',
-            'label_text': 'Enter Search String',
-            'content_to_set': 'Big Wave Media',
-          },
-          {
-            'type': 'checkbox',
-            'css_selector': 'input[type="radio"][id="39"]',
-            'content_to_set': 'checked',
-          }
+          GENERIC_TEST_INPUTS['searchable_postcode'],
+          GENERIC_TEST_INPUTS['available_epoch'],
         ],
         'test_outputs': [
             {
               'type': 'text',
-              'visible_text': '10023117117',
+              'visible_text': '100040222196',
             },
        ]
     },
@@ -39,11 +32,11 @@ TESTS = [
 def test_search_filters(page: Page, test: dict, login_and_goto, set_inputs):
   """ Given a dict of inputs, check against the dict of outputs """
   print(
-      f'Testing Single Search Story with inputs: {test.get("test_inputs")} and expected outputs: {test.get("test_outputs")}'
+      f'Testing Postcode Story with inputs: {test.get("test_inputs")} and expected outputs: {test.get("test_outputs")}'
   )
 
   # Login as the user for this test
-  page = login_and_goto(test.get('user_role'), 'singlesearch')
+  page = login_and_goto(test.get('user_role'), 'postcode')
 
   # Fill in the inputs
   test_inputs = test.get('test_inputs')
