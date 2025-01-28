@@ -32,7 +32,7 @@ TESTS = [
 def test_search_filters(page: Page, test: dict, login_and_goto, set_inputs):
   """ Given a dict of inputs, check against the dict of outputs """
   print(
-      f'Testing Postcode Story with inputs: {test.get("test_inputs")} and expected outputs: {test.get("test_outputs")}'
+      f'Testing Postcode "{test.get("test_name")}" with inputs: {test.get("test_inputs")} and expected outputs: {test.get("test_outputs")}'
   )
 
   # Login as the user for this test
