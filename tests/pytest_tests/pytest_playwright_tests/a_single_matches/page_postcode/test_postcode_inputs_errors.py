@@ -5,22 +5,10 @@ from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
     ALL_PAGE_NAMES, BASE_URL, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS,
     XML_ERROR_MESSAGE, TEST_XML_INJECTIONS, get_just_header_pages,
     get_page_url_from_page_name, role_to_username)
+from tests.pytest_tests.pytest_playwright_tests.utils.constants import GENERIC_TEST_INPUTS
 
 import re
 """ When there is a problem with an input, the Design System Component should show an error message or prompt """
-
-GENERIC_TEST_INPUTS = {
-    'searchable_postcode': {
-        'type': 'input',
-        'label_text': 'To get started, enter a PostCode',
-        'content_to_set': 'EX4 3EU',
-    },
-    'available_epoch': {
-        'type': 'checkbox',
-        'css_selector': 'input[type="radio"][id="39"]',
-        'content_to_set': 'checked',
-    }
-}
 
 page_name = 'postcode'
 page_url = f'{BASE_URL}{get_page_url_from_page_name(page_name)}'

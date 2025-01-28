@@ -14,6 +14,25 @@ TEST_XML_INJECTIONS = [
     """<root><script>var injectedValue = 'ThisIsInjected'; alert('JS variable set: ' + injectedValue);</script></root>"""
 ]
 
+# Inputs that should cause no errors
+GENERIC_TEST_INPUTS = {
+    'searchable_address': {
+        'type': 'input',
+        'label_text': 'Enter Search String',
+        'content_to_set': '039482934',
+    },
+    'searchable_postcode': {
+        'type': 'input',
+        'label_text': 'To get started, enter a PostCode',
+        'content_to_set': 'EX4 3EU',
+    },
+    'available_epoch': {
+        'type': 'checkbox',
+        'css_selector': 'input[type="radio"][id="39"]',
+        'content_to_set': 'checked',
+    }
+}
+
 XML_ERROR_MESSAGE = 'XML Attack Detected. This incident will be reported.'
 
 EPOCH_OPTIONS = [
