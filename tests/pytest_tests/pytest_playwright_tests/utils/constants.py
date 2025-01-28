@@ -14,12 +14,24 @@ TEST_XML_INJECTIONS = [
     """<root><script>var injectedValue = 'ThisIsInjected'; alert('JS variable set: ' + injectedValue);</script></root>"""
 ]
 
+
+def set_input_content(generic_test_input: dict, input_to_set: str):
+  """ Given a generic test input and a string, set the input content """
+
+  # Make a local copy of the generic test input
+  test_input = generic_test_input.copy()
+
+  test_input['content_to_set'] = input_to_set
+
+  return test_input
+
+
 # Inputs that should cause no errors
 GENERIC_TEST_INPUTS = {
     'searchable_address': {
         'type': 'input',
         'label_text': 'Enter Search String',
-        'content_to_set': '039482934',
+        'content_to_set': 'test address',
     },
     'searchable_postcode': {
         'type': 'input',
@@ -30,6 +42,16 @@ GENERIC_TEST_INPUTS = {
         'type': 'checkbox',
         'css_selector': 'input[type="radio"][id="39"]',
         'content_to_set': 'checked',
+    },
+    'available_classification': {
+        'type': 'input',
+        'label_text': 'Classification',
+        'content_to_set': 'R',
+    },
+    'available_limit': {
+        'type': 'input',
+        'label_text': 'Limit',
+        'content_to_set': '10',
     }
 }
 

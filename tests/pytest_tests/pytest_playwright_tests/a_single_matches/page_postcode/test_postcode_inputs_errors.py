@@ -3,7 +3,7 @@ from playwright.sync_api import Page, expect
 
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
     ALL_PAGE_NAMES, BASE_URL, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS,
-    XML_ERROR_MESSAGE, TEST_XML_INJECTIONS, get_just_header_pages,
+    XML_ERROR_MESSAGE, TEST_XML_INJECTIONS, get_just_header_pages, set_input_content,
     get_page_url_from_page_name, role_to_username)
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import GENERIC_TEST_INPUTS
 
@@ -62,11 +62,7 @@ def test_blank_input(page: Page, set_inputs, illegal_postcode):
   page.goto(page_url)
 
   test_inputs = [
-      {
-          'type': 'input',
-          'label_text': 'To get started, enter a PostCode',
-          'content_to_set': illegal_postcode.get('postcode_input'),
-      },
+      set_input_content(GENERIC_TEST_INPUTS['searchable_postcode'], illegal_postcode.get('postcode_input')),
       GENERIC_TEST_INPUTS['available_epoch'],
   ]
 
@@ -85,11 +81,7 @@ def test_search_xml_error(page: Page, set_inputs, xml_injection):
   page.goto(page_url)
 
   test_inputs = [
-      {
-          'type': 'input',
-          'label_text': 'To get started, enter a PostCode',
-          'content_to_set': xml_injection,
-      },
+      set_input_content(GENERIC_TEST_INPUTS['searchable_postcode'], xml_injection),
       GENERIC_TEST_INPUTS['available_epoch'],
   ]
 
@@ -112,11 +104,8 @@ def test_classification_error(page: Page, illegal_classification, set_inputs):
 
   test_inputs = [
       GENERIC_TEST_INPUTS['searchable_postcode'],
-      GENERIC_TEST_INPUTS['available_epoch'], {
-          'type': 'input',
-          'label_text': 'Classification',
-          'content_to_set': illegal_classification,
-      }
+      GENERIC_TEST_INPUTS['available_epoch'], 
+      set_input_content(GENERIC_TEST_INPUTS['available_classification'], illegal_classification),
   ]
 
   print(f'Testing {page_name} Story with inputs: {test_inputs}')
@@ -166,12 +155,9 @@ def test_limit_parameter(page: Page, illegal_limits, set_inputs):
 
   test_inputs = [
       GENERIC_TEST_INPUTS['searchable_postcode'],
-      GENERIC_TEST_INPUTS['available_epoch'], {
-          'type': 'input',
-          'label_text': 'Limit',
-          'content_to_set': illegal_limits.get('value'),
-      }
-  ]
+      GENERIC_TEST_INPUTS['available_epoch'], 
+      set_input_content(GENERIC_TEST_INPUTS['available_limit'], illegal_limits.get('value')),
+ ]
 
   print(f'Testing {page_name} Story with inputs: {test_inputs}')
 
