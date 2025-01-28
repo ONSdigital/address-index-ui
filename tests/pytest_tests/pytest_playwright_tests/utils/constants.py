@@ -1,3 +1,4 @@
+import os, csv
 """ Constants for the playwright tests. """
 BASE_URL = "http://127.0.0.1:5000/"
 
@@ -13,6 +14,33 @@ TEST_XML_INJECTIONS = [
     """<?xml version="1.0"?><?xml-stylesheet type="text/xsl" href="http://malicious.example.com/evil.xsl"?><root><data>Test</data></root>""",
     """<root><script>var injectedValue = 'ThisIsInjected'; alert('JS variable set: ' + injectedValue);</script></root>"""
 ]
+
+DOWNLOADS = {
+    'classifications': {
+        'file_name': 'classifications.csv',
+        'description': 'A list of all classifications from the API',
+        'content': None,
+    },
+}
+
+# Loop over key, value in downloads
+for key, download in DOWNLOADS.items():
+  current_dir = os.path.dirname(__file__)
+
+  # Build the path to "current_dir/downloads/classifications.csv"
+  csv_file_path = os.path.join(current_dir, 'downloads',
+                               download.get('file_name'))
+
+  # Open and read the CSV
+  with open(csv_file_path, "r", encoding="utf-8") as csv_file:
+    reader = csv.reader(csv_file)
+
+    content = []
+    for row in reader:
+      content.append(row)
+
+  # By comparing each row, if an error is thrown it gives the exact line the problem is on
+  download['content'] = content
 
 
 def set_input_content(generic_test_input: dict, input_to_set: str):

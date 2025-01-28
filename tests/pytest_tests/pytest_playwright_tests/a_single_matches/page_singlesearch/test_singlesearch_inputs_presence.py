@@ -1,9 +1,11 @@
 import pytest
 from playwright.sync_api import Page, expect
+import csv
 
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
     ALL_PAGE_NAMES, BASE_URL, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS,
-    get_just_header_pages, get_page_url_from_page_name, role_to_username)
+    DOWNLOADS, get_just_header_pages, get_page_url_from_page_name,
+    role_to_username)
 """ Check that expected inputs are present """
 
 
@@ -65,6 +67,29 @@ def test_limit(page: Page):
   page.goto(BASE_URL)
 
   expect(page.get_by_label('Limit')).to_be_visible()
+
+
+def test_download_classification(page: Page):
+  page.goto(BASE_URL)
+
+  with page.expect_download() as download_info:
+    page.get_by_text(
+        "Click here to download a list of classifications").click()
+
+  download = download_info.value
+
+  # Save to a temporary path or let Playwright pick a location
+  download_path = download.path()  # Local path where the file got downloaded
+
+  with open(download_path, "r", encoding="utf-8") as csv_file:
+    reader = csv.reader(csv_file)
+
+    actual_file_content = []
+    for row in reader:
+      actual_file_content.append(row)
+  expected_file_content = DOWNLOADS.get('classifications').get('content')
+
+  assert actual_file_content == expected_file_content
 
 
 def test_include_historical_data(page: Page):
