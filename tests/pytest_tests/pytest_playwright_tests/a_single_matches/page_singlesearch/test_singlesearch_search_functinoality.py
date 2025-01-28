@@ -2,7 +2,7 @@ import pytest
 from playwright.sync_api import Page, expect
 
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
-    ALL_PAGE_NAMES, BASE_URL, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS,
+    ALL_PAGE_NAMES, BASE_URL, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS, set_input_content,
     get_just_header_pages, get_page_url_from_page_name, role_to_username)
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import GENERIC_TEST_INPUTS
 
@@ -14,11 +14,7 @@ TESTS = [
         'test_name': 'basic_search',
         'user_role': 'default',
         'test_inputs': [
-          {
-            'type': 'input',
-            'label_text': 'Enter Search String',
-            'content_to_set': 'Big Wave Media',
-          },
+          set_input_content(GENERIC_TEST_INPUTS['searchable_address'], 'Big Wave Media'),
           GENERIC_TEST_INPUTS['available_epoch'],
         ],
         'test_outputs': [
