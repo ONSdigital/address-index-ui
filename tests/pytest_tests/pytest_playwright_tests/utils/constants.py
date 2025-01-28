@@ -1,5 +1,8 @@
-import os, csv
+from tests.pytest_tests.pytest_playwright_tests.utils.constatns_generation import (
+    build_downloads_info, build_user_role_map)
+
 """ Constants for the playwright tests. """
+
 BASE_URL = "http://127.0.0.1:5000/"
 
 TEST_XML_INJECTIONS = [
@@ -14,6 +17,7 @@ TEST_XML_INJECTIONS = [
     """<?xml version="1.0"?><?xml-stylesheet type="text/xsl" href="http://malicious.example.com/evil.xsl"?><root><data>Test</data></root>""",
     """<root><script>var injectedValue = 'ThisIsInjected'; alert('JS variable set: ' + injectedValue);</script></root>"""
 ]
+XML_ERROR_MESSAGE = 'XML Attack Detected. This incident will be reported.'
 
 DOWNLOADS = {
     'classifications': {
@@ -22,36 +26,7 @@ DOWNLOADS = {
         'content': None,
     },
 }
-
-# Loop over key, value in downloads
-for key, download in DOWNLOADS.items():
-  current_dir = os.path.dirname(__file__)
-
-  # Build the path to "current_dir/downloads/classifications.csv"
-  csv_file_path = os.path.join(current_dir, 'downloads',
-                               download.get('file_name'))
-
-  # Open and read the CSV
-  with open(csv_file_path, "r", encoding="utf-8") as csv_file:
-    reader = csv.reader(csv_file)
-
-    content = []
-    for row in reader:
-      content.append(row)
-
-  # By comparing each row, if an error is thrown it gives the exact line the problem is on
-  download['content'] = content
-
-
-def set_input_content(generic_test_input: dict, input_to_set: str):
-  """ Given a generic test input and a string, set the input content """
-
-  # Make a local copy of the generic test input
-  test_input = generic_test_input.copy()
-
-  test_input['content_to_set'] = input_to_set
-
-  return test_input
+build_downloads_info = build_downloads_info(DOWNLOADS)
 
 
 # Inputs that should cause no errors
@@ -83,7 +58,17 @@ GENERIC_TEST_INPUTS = {
     }
 }
 
-XML_ERROR_MESSAGE = 'XML Attack Detected. This incident will be reported.'
+def set_input_content(generic_test_input: dict, input_to_set: str):
+  """ Given a generic test input and a string, set the input content """
+
+  # Make a local copy of the generic test input
+  test_input = generic_test_input.copy()
+
+  test_input['content_to_set'] = input_to_set
+
+  return test_input
+
+
 
 EPOCH_OPTIONS = [
     {
@@ -129,89 +114,6 @@ DEFAULT_BULK_LIMITS = {
     'limit_vast_bulk': 100000,
     'limit_uprn_match': 5000,
 }
-
-
-def role_to_username(role: str):
-  """ Given a role, give an example username, expected page access and bulk limits """
-  # yapf: disable
-  user_role_map = [{
-      'role': 'default',
-      'username': '',
-      'pages_to_remove': ['custom_response'],
-      'default_bulk_limits': DEFAULT_BULK_LIMITS,
-  }, {
-      'role': 'default',
-      'username': 'testDefaultExplicit',
-      'pages_to_remove': ['custom_response'],
-      'default_bulk_limits': DEFAULT_BULK_LIMITS,
-  }, {
-      'role': 'developers',
-      'username': 'testDeveloperExplicit',
-      'pages_to_remove': [],
-      'default_bulk_limits': DEFAULT_BULK_LIMITS,
-  }, {
-      'role': 'bulk_removed',
-      'username': 'testBulkRemovedExplicit',
-       'pages_to_remove': [
-            'multiple_address_original', 'uprn_multiple_match',
-            'multiple_address', 'multiple_address_results'
-        ],
-      'default_bulk_limits': DEFAULT_BULK_LIMITS,
-  }, {
-      'role': 'limited_bulk',
-      'username': 'testBulkLimitedExplicit',
-      'pages_to_remove': [],
-      'bulk_limits': {
-            'bulk_limits': {
-            'limit_mini_bulk': 10,
-            'limit_vast_bulk': 550,
-            'limit_uprn_match': 50,
-        }
-      },
-  }]
-  # yapf: enable
-
-  # Loop over all roles to build from removeable pages
-  for group in user_role_map:
-    allowed_pages = []
-    for page_name in ALL_PAGE_NAMES:
-      if page_name not in group.get('pages_to_remove'):
-        allowed_pages.append(page_name)
-    group['allowed_pages'] = allowed_pages
-    group['allowed_pages_info'] = get_allowed_pages_full_info(allowed_pages)
-
-  for user in user_role_map:
-    if user.get('role') == role:
-      return user
-
-  raise ValueError(f"Unknown role: {role}")
-
-
-def get_allowed_pages_full_info(allowed_pages: list):
-  """ Given a list of allowed pages, return the page info for all pages """
-  allowed_pages_info = [
-      page for page in ENDPOINTS if page.get('page_name_test') in allowed_pages
-  ]
-  return allowed_pages_info
-
-
-def get_page_url_from_page_name(page_name: str):
-  """ Given a page name, return the page URL """
-  for page in ENDPOINTS:
-    if page.get('page_name_test') == page_name:
-      return page.get('url')
-
-  raise ValueError(f"Unknown page name: {page_name}")
-
-
-def get_just_header_pages(allowed_pages_info: list):
-  """ Given a list of allowed pages, return the pages that should be in the header """
-  header_pages = []
-  for page in allowed_pages_info:
-    if page.get('nav_link_in_header'):
-      header_pages.append(page)
-  return header_pages
-
 
 # yapf: disable
 ENDPOINTS = [{
@@ -300,3 +202,72 @@ ENDPOINTS = [{
     'page_description': 'User preferences are stored locally on their web-browser. Adjust or reset those settings here.',
 }]
 # yapf: enable
+
+
+# yapf: disable
+USER_ROLE_MAP = [{
+      'role': 'default',
+      'username': '',
+      'pages_to_remove': ['custom_response'],
+      'default_bulk_limits': DEFAULT_BULK_LIMITS,
+  }, {
+      'role': 'default',
+      'username': 'testDefaultExplicit',
+      'pages_to_remove': ['custom_response'],
+      'default_bulk_limits': DEFAULT_BULK_LIMITS,
+  }, {
+      'role': 'developers',
+      'username': 'testDeveloperExplicit',
+      'pages_to_remove': [],
+      'default_bulk_limits': DEFAULT_BULK_LIMITS,
+  }, {
+      'role': 'bulk_removed',
+      'username': 'testBulkRemovedExplicit',
+       'pages_to_remove': [
+            'multiple_address_original', 'uprn_multiple_match',
+            'multiple_address', 'multiple_address_results'
+        ],
+      'default_bulk_limits': DEFAULT_BULK_LIMITS,
+  }, {
+      'role': 'limited_bulk',
+      'username': 'testBulkLimitedExplicit',
+      'pages_to_remove': [],
+      'bulk_limits': {
+            'bulk_limits': {
+            'limit_mini_bulk': 10,
+            'limit_vast_bulk': 550,
+            'limit_uprn_match': 50,
+        }
+      },
+  }]
+# yapf: disable
+
+build_user_role_map = build_user_role_map(USER_ROLE_MAP, ALL_PAGE_NAMES, ENDPOINTS)
+ 
+def role_to_username(role: str):
+  """ Given a role, give an example username, expected page access and bulk limits """
+  for user in USER_ROLE_MAP:
+    if user.get('role') == role:
+      return user
+
+  raise ValueError(f"Unknown role: {role}")
+
+
+def get_page_url_from_page_name(page_name: str):
+  """ Given a page name, return the page URL """
+  for page in ENDPOINTS:
+    if page.get('page_name_test') == page_name:
+      return page.get('url')
+
+  raise ValueError(f"Unknown page name: {page_name}")
+
+
+def get_just_header_pages(allowed_pages_info: list):
+  """ Given a list of allowed pages, return the pages that should be in the header """
+  header_pages = []
+  for page in allowed_pages_info:
+    if page.get('nav_link_in_header'):
+      header_pages.append(page)
+  return header_pages
+
+
