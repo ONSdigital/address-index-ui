@@ -2,8 +2,9 @@ import pytest
 from playwright.sync_api import Page, expect
 
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
-    ALL_PAGE_NAMES, BASE_URL, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS, set_input_content,
-    get_just_header_pages, get_page_url_from_page_name, role_to_username)
+    ALL_PAGE_NAMES, BASE_URL, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS,
+    set_input_content, get_just_header_pages, get_page_url_from_page_name,
+    role_to_username)
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import GENERIC_TEST_INPUTS
 
 # Define input settings for all elements, expected result
