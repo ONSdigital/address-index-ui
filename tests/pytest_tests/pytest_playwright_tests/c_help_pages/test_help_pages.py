@@ -69,7 +69,6 @@ def test_help_pages(page: Page, test: dict, login_and_goto):
   for out in test_outputs:
     output_type = out.get('type')
     output_visible_text = out.get('visible_text')
-    output_expected_url = out.get('url')
 
     if output_type == 'link':
       link_to_help_page = page.get_by_text(output_visible_text)
