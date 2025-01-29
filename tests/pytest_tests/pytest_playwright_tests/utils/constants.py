@@ -18,14 +18,58 @@ TEST_XML_INJECTIONS = [
 ]
 XML_ERROR_MESSAGE = 'XML Attack Detected. This incident will be reported.'
 
-DOWNLOADS = {
-    'classifications': {
-        'file_name': 'classifications.csv',
+DOWNLOADS = [
+    {
+        'download_name': 'classifications',
         'description': 'A list of all classifications from the API',
-        'content': None,
+        'url_modifier': 'downloads/classifications_list',
+        'file_name': 'classifications.csv',
+        'expected_content': None,
     },
-}
-build_downloads_info = build_downloads_info(DOWNLOADS)
+    {
+        'download_name': 'Example Multiple Address',
+        'description':
+        'An example of how multuple addresses in a CSV file should be submitted',
+        'url_modifier': 'downloads/example_multiple_address',
+        'file_name': 'example_multiple_match_upload.csv',
+        'expected_content': None,
+    },
+    {
+        'download_name': 'Large Example Multiple Address',
+        'description':
+        'An example of how multuple addresses in a CSV file should be submitted for the Large Bulk interface',
+        'url_modifier': 'downloads/example_multiple_address_big',
+        'file_name': 'example_multiple_match_5k_upload.csv',
+        'expected_content': None,
+    },
+    {
+        'download_name': 'Tool Tip Information',
+        'description':
+        'In order to provide the tooltips, this file is provided to give a description for each attribute.',
+        'url_modifier': 'downloads/tool_tip_clerical_information',
+        'file_name': 'tool_tip_clerical_information.csv',
+        'expected_content': None,
+    },
+    {
+        'download_name': 'UPRN Example Multiple Address',
+        'description': 'Example of how to submit multiple UPRNs in a CSV file',
+        'url_modifier': 'downloads/uprn_example_multiple_address',
+        'file_name': 'uprn_example_multiple_match_upload.csv',
+        'expected_content': None,
+    },
+]
+
+DOWNLOADS = build_downloads_info(DOWNLOADS)
+
+
+def get_download_info(download_name: str):
+  """ Given a download name, return the download information """
+  for download in DOWNLOADS:
+    if download.get('download_name') == download_name:
+      return download
+
+  raise ValueError(f"Unknown download name: {download_name}")
+
 
 # Inputs that should cause no errors
 GENERIC_TEST_INPUTS = {
