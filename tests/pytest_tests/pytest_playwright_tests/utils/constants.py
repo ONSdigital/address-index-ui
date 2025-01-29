@@ -1,6 +1,5 @@
 from tests.pytest_tests.pytest_playwright_tests.utils.constatns_generation import (
     build_downloads_info, build_user_role_map)
-
 """ Constants for the playwright tests. """
 
 BASE_URL = "http://127.0.0.1:5000/"
@@ -27,7 +26,6 @@ DOWNLOADS = {
     },
 }
 build_downloads_info = build_downloads_info(DOWNLOADS)
-
 
 # Inputs that should cause no errors
 GENERIC_TEST_INPUTS = {
@@ -58,6 +56,7 @@ GENERIC_TEST_INPUTS = {
     }
 }
 
+
 def set_input_content(generic_test_input: dict, input_to_set: str):
   """ Given a generic test input and a string, set the input content """
 
@@ -67,7 +66,6 @@ def set_input_content(generic_test_input: dict, input_to_set: str):
   test_input['content_to_set'] = input_to_set
 
   return test_input
-
 
 
 EPOCH_OPTIONS = [
@@ -203,7 +201,6 @@ ENDPOINTS = [{
 }]
 # yapf: enable
 
-
 # yapf: disable
 USER_ROLE_MAP = [{
       'role': 'default',
@@ -243,7 +240,7 @@ USER_ROLE_MAP = [{
 # yapf: disable
 
 build_user_role_map = build_user_role_map(USER_ROLE_MAP, ALL_PAGE_NAMES, ENDPOINTS)
- 
+
 def role_to_username(role: str):
   """ Given a role, give an example username, expected page access and bulk limits """
   for user in USER_ROLE_MAP:
@@ -269,5 +266,3 @@ def get_just_header_pages(allowed_pages_info: list):
     if page.get('nav_link_in_header'):
       header_pages.append(page)
   return header_pages
-
-
