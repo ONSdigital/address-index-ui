@@ -31,7 +31,9 @@ def get_allowed_pages_full_info(allowed_pages: list, endpoints: list):
   ]
   return allowed_pages_info
 
-def build_user_role_map(user_role_map: dict, all_page_names: list, endpoints: list):
+
+def build_user_role_map(user_role_map: dict, all_page_names: list,
+                        endpoints: list):
   """ Loop through all groups and build the 'allowed pages array"""
   for group in user_role_map:
     allowed_pages = []
@@ -39,8 +41,7 @@ def build_user_role_map(user_role_map: dict, all_page_names: list, endpoints: li
       if page_name not in group.get('pages_to_remove'):
         allowed_pages.append(page_name)
     group['allowed_pages'] = allowed_pages
-    group['allowed_pages_info'] = get_allowed_pages_full_info(allowed_pages, endpoints)
+    group['allowed_pages_info'] = get_allowed_pages_full_info(
+        allowed_pages, endpoints)
 
   return user_role_map
-
-
