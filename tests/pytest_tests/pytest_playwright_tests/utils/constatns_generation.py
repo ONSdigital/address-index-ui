@@ -1,25 +1,30 @@
 import os, csv
 
 
-def build_downloads_info(DOWNLOADS):
+def get_content_of_file(file_name: str):
+  """ Given a file name, return the content of the file """
+  current_dir = os.path.dirname(__file__)
+
+  # Build the path to "current_dir/downloads/classifications.csv"
+  csv_file_path = os.path.join(current_dir, 'downloads', file_name)
+
+  # Open and read the CSV
+  with open(csv_file_path, "r", encoding="utf-8") as csv_file:
+    reader = csv.reader(csv_file)
+
+    content = []
+    for row in reader:
+      content.append(row)
+
+  return content
+
+
+def build_downloads_info(DOWNLOADS: list):
+  """ Build info into the DOWNLOADS global dict, such as expected file content"""
   # Loop over key, value in downloads
-  for key, download in DOWNLOADS.items():
-    current_dir = os.path.dirname(__file__)
-
-    # Build the path to "current_dir/downloads/classifications.csv"
-    csv_file_path = os.path.join(current_dir, 'downloads',
-                                 download.get('file_name'))
-
-    # Open and read the CSV
-    with open(csv_file_path, "r", encoding="utf-8") as csv_file:
-      reader = csv.reader(csv_file)
-
-      content = []
-      for row in reader:
-        content.append(row)
-
-    # By comparing each row, if an error is thrown it gives the exact line the problem is on
-    download['content'] = content
+  for download in DOWNLOADS:
+    file_content = get_content_of_file(download.get('file_name'))
+    download['expected_content'] = file_content
 
   return DOWNLOADS
 

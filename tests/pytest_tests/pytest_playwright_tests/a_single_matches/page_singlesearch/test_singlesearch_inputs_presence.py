@@ -5,7 +5,7 @@ import csv
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
     ALL_PAGE_NAMES, BASE_URL, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS,
     DOWNLOADS, get_just_header_pages, get_page_url_from_page_name,
-    role_to_username)
+    get_download_info, role_to_username)
 """ Check that expected inputs are present """
 
 
@@ -87,9 +87,11 @@ def test_download_classification(page: Page):
     actual_file_content = []
     for row in reader:
       actual_file_content.append(row)
-  expected_file_content = DOWNLOADS.get('classifications').get('content')
 
-  assert actual_file_content == expected_file_content
+  expected_download_content = get_download_info(
+      'classifications')['expected_content']
+
+  assert actual_file_content == expected_download_content
 
 
 def test_include_historical_data(page: Page):
