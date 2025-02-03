@@ -18,6 +18,7 @@ TEST_XML_INJECTIONS = [
 ]
 XML_ERROR_MESSAGE = 'XML Attack Detected. This incident will be reported.'
 
+# Downloads are files that can be downoaded, whereas static files are served inside html page as content
 DOWNLOADS = [
     {
         'download_name': 'classifications',
@@ -59,7 +60,30 @@ DOWNLOADS = [
     },
 ]
 
+# Downloads are files that can be downoaded, whereas static files are served inside html page as content
+STATIC_FILES = [
+    {
+        'download_name': 'Autosuggest Classifications',
+        'description':
+        'The Classifications data in a format for the autosuggest. Includes a reversed version of the same data for reverse surfing.',
+        'static_file': True,
+        'url_modifier': 'autosuggest/classifications.json',
+        'file_name': 'autosuggest_classifications.json',
+        'expected_content': None,
+    },
+    {
+        'download_name': 'Autosuggest API URLs',
+        'description':
+        'API endpoints for the autosuggest in the developers page',
+        'static_file': True,
+        'url_modifier': 'autosuggest/api-urls.json',
+        'file_name': 'autosuggest_api_urls.json',
+        'expected_content': None,
+    },
+]
+
 DOWNLOADS = build_downloads_info(DOWNLOADS)
+STATIC_FILES = build_downloads_info(STATIC_FILES)
 
 
 def get_download_info(download_name: str):
