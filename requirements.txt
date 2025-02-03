@@ -13,3 +13,4 @@ pytest
 watchdog
 pytest-playwright
 playwright
+pytest-xdist
