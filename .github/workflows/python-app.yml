@@ -15,6 +15,22 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    # Clone the API repository
+    - name: Clone API repository
+      run: git clone https://github.com/ONSdigital/address-index-api.git api_service
+
+    # Set up Docker Compose and start the API service
+    - name: Start API with Docker Compose
+      run: |
+        cd api_service
+        docker-compose up -d
+        docker ps -a  # Show running containers for debugging
+
+    # Wait for API to be ready (checking port 9001)
+    - name: Wait for API to be ready
+      run: |
+        timeout 60s bash -c 'until curl -s http://localhost:9001/healthcheck; do sleep 5; done'
+
     # Set up Python environment and run Python tests
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -29,6 +45,10 @@ jobs:
     - name: Install Python package
       run: |
         pip install -e .
+
+    - name: Install Playwright Browsers
+      run: |
+        python3 -m playwright install --with-deps
 
     - name: Run Python tests
       run: |
@@ -45,3 +65,11 @@ jobs:
 
     - name: Run JavaScript tests
       run: npm run test:jest
+
+    # Stop Docker Compose and clean up
+    - name: Stop and clean up Docker containers
+      if: always()
+      run: |
+        cd api_service
+        docker-compose down
+
