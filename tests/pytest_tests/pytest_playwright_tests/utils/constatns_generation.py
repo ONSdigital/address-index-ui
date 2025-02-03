@@ -1,4 +1,4 @@
-import os, csv
+import os, csv, json
 
 
 def get_content_of_file(file_name: str):
@@ -6,11 +6,16 @@ def get_content_of_file(file_name: str):
   current_dir = os.path.dirname(__file__)
 
   # Build the path to "current_dir/downloads/classifications.csv"
-  csv_file_path = os.path.join(current_dir, 'downloads', file_name)
+  file_path = os.path.join(current_dir, 'downloads', file_name)
+
+  if 'json' in file_name:
+    with open(file_path, "r", encoding='utf-8-sig') as inp_file:
+      content = json.load(inp_file)
+    return content
 
   # Open and read the CSV
-  with open(csv_file_path, "r", encoding="utf-8") as csv_file:
-    reader = csv.reader(csv_file)
+  with open(file_path, "r", encoding="utf-8") as inp_file:
+    reader = csv.reader(inp_file)
 
     content = []
     for row in reader:
