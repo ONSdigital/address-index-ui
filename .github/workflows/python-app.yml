@@ -34,7 +34,7 @@ jobs:
     # Wait for API to be ready (checking port 9001)
     - name: Wait for API to be ready
       run: |
-        timeout 60s bash -c 'until curl -s http://localhost:9001/healthcheck; do sleep 5; done'
+        timeout 340s bash -c 'until curl -s http://localhost:9001; do sleep 5; done'
 
     # Set up Python environment and run Python tests
     - name: Set up Python
