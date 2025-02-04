@@ -92,6 +92,7 @@ def test_base_classification_list():
       'USER_AUTHS',
       'USER_GROUPS',
       'FLASK_ENV',
+      'UI_EXPOSED_PORT',
   ]
 
   # Get the actual config keys
