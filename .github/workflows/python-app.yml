@@ -61,11 +61,11 @@ jobs:
         python3 -m playwright install --with-deps
 
     - name: Run Flask Server
+      env:
+        FLASK_ENV: testing
+        API_URL: http://localhost:9001
       run: |
-        FLASK_ENV: "testing"
-        API_URL: "localhost:9001"
-        
-        python3 -m flask run &
+        python3 wsgi.py &
 
     - name: Run Python tests
       run: |
