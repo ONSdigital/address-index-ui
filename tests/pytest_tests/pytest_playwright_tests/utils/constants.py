@@ -2,7 +2,7 @@ from tests.pytest_tests.pytest_playwright_tests.utils.constatns_generation impor
     build_downloads_info, build_user_role_map)
 """ Constants for the playwright tests. """
 
-BASE_URL = "http://127.0.0.1:5000/"
+BASE_URL = "http://127.0.0.1:5001/"
 
 TEST_XML_INJECTIONS = [
     """<?xml version="1.0" ?><!DOCTYPE root [<!ENTITY ext SYSTEM "file:///etc/passwd">]><root><test>&ext;</test></root>""",
