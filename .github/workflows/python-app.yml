@@ -1,4 +1,4 @@
-name: Python and JavaScript application
+name: Python and JS tests run
 
 on:
   push:
@@ -12,9 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Check out the AIMS UI repository
     - name: Checkout repository
       uses: actions/checkout@v2
   
+    # Install Docker Compose for deploying the API
     - name: Install Docker Compose
       run: |
         sudo apt-get update
@@ -24,14 +26,14 @@ jobs:
     - name: Clone API repository
       run: git clone https://github.com/ONSdigital/address-index-api.git api_service
 
-    # Set up Docker Compose and start the API service
+    # Start Docker image of the API
     - name: Start API with Docker Compose
       run: |
         cd api_service
         docker-compose up -d
         docker ps -a  # Show running containers for debugging
 
-    # Wait for API to be ready (checking port 9001)
+    # Wait for API to be ready (checking port 9001) (will return 'hello world' when ready)
     - name: Wait for API to be ready
       run: |
         timeout 340s bash -c 'until curl -s http://localhost:9001; do sleep 5; done'
@@ -41,7 +43,7 @@ jobs:
       run: |
         scripts/load_templates.sh
 
-    # Set up Python environment and run Python tests
+    # Set up Python environment 
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -52,7 +54,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Install Python package
+    - name: Install the UI as a python package
       run: |
         pip install -e .
 
@@ -60,18 +62,19 @@ jobs:
       run: |
         python3 -m playwright install --with-deps
 
+    # Run flask server in "testing" environment
     - name: Run Flask Server
       env:
         FLASK_ENV: testing
-        API_URL: http://localhost:9001
       run: |
         python3 wsgi.py &
 
+    # Run Python tests
     - name: Run Python tests
       run: |
         python3 -m pytest tests/pytest_tests -n 4
 
-    # Set up Node.js environment and run JavaScript tests
+    # Set up Node.js environment
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
