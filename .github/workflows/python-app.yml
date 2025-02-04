@@ -69,7 +69,7 @@ jobs:
 
     - name: Run Python tests
       run: |
-        python3 -m pytest tests/pytest_tests
+        python3 -m pytest tests/pytest_tests -n 4
 
     # Set up Node.js environment and run JavaScript tests
     - name: Set up Node.js
