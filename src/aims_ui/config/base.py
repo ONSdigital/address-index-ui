@@ -3,6 +3,9 @@ import os
 import json
 import base64
 
+# Port that the Flask server will run on
+UI_EXPOSED_PORT = 5000
+
 JSONIFY_PRETTYPRINT_REGULAR = True
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024
 API_AUTH_TYPE = os.getenv('API_AUTH_TYPE')
