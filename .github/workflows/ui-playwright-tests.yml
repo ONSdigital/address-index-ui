@@ -24,7 +24,7 @@ jobs:
 
     - name: Start the API via Docker Compose
       run: |
-        docker-compose -f api-demo/docker-compose.yml up -d
+        docker-compose -f api_demo/docker-compose.yml up -d
         docker ps -a  # for debugging - shows running containers
 
     # Wait for API to be ready (checking port 9001) (will return 'hello world' when ready)
