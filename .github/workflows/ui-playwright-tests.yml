@@ -84,6 +84,6 @@ jobs:
     - name: Stop and clean up Docker containers
       if: always()
       run: |
-        cd api_service
+        cd api_demo
         docker-compose down
 
