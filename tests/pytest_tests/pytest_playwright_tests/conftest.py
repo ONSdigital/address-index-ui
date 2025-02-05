@@ -27,6 +27,19 @@ def login_and_goto(page: Page):
 
   return _login_and_goto
 
+@pytest.fixture
+def login_and_goto_url(page: Page):
+  """ Fixture to login as a user role and go to a specific URL """
+
+  def _login_and_goto_url(user_role: str, url: str):
+    page.context.clear_cookies()
+    login_as_role(page, user_role)
+    page.goto(f"{BASE_URL}{url}")
+    return page
+
+  return _login_and_goto_url
+
+
 
 @pytest.fixture
 def set_inputs(page: Page):

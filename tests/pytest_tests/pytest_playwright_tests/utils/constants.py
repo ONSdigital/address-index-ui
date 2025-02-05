@@ -272,7 +272,7 @@ ENDPOINTS = [{
     'page_name_test': 'login_redirect',
     'redirect': True,
     'url': 'login',
-    'redirect_url': '/',
+    'redirect_url': '',
     'nav_link_in_header': False,
     'page_description': 'Page for local login, now redirects to the home page as login managed by Google IAM',
 }, {
@@ -280,7 +280,8 @@ ENDPOINTS = [{
     'page_name_test': 'logout_redirect',
     'redirect': True,
     'url': 'logout',
-    'redirect_url': 'https://accounts.google.com/logout',
+    'redirect_url': None, # Expect visible elements instead
+    'redirect_visible_elements': ['Sign in', 'Use your Google Account', 'Email or phone'],
     'nav_link_in_header': False,
     'page_description': 'Generic helpful resources for using the UI and service',
 },
@@ -341,7 +342,7 @@ def get_redirect_endpoints():
   for page in ENDPOINTS:
     if page.get('redirect'):
       redirect_endpoints.append(page)
-  return []
+  return redirect_endpoints
 
 def get_page_url_from_page_name(page_name: str):
   """ Given a page name, return the page URL """
