@@ -109,7 +109,12 @@ GENERIC_TEST_INPUTS = {
     },
     'available_epoch': {
         'type': 'checkbox',
-        'css_selector': 'input[type="radio"][id="39"]',
+        'css_selector': 'input[type="radio"][id="111"]',
+        'content_to_set': 'checked',
+    },
+   'unavailable_epoch': {
+        'type': 'checkbox',
+        'css_selector': 'input[type="radio"][id="50"]',
         'content_to_set': 'checked',
     },
     'available_classification': {
@@ -138,15 +143,11 @@ def set_input_content(generic_test_input: dict, input_to_set: str):
 
 EPOCH_OPTIONS = [
     {
-        'number': '39',
-        'text_label': 'Exeter Sample'
-    },
-    {
         'number': '50',
         'text_label': 'September 1999'
     },
     {
-        'number': '93',
+        'number': '111',
         'text_label': 'October 2022'
     },
 ]
@@ -266,7 +267,24 @@ ENDPOINTS = [{
     'url': 'settings',
     'nav_link_in_header': True,
     'page_description': 'User preferences are stored locally on their web-browser. Adjust or reset those settings here.',
-}]
+}, {
+    'page_name': 'Login',
+    'page_name_test': 'login_redirect',
+    'redirect': True,
+    'url': 'login',
+    'redirect_url': '/',
+    'nav_link_in_header': False,
+    'page_description': 'Page for local login, now redirects to the home page as login managed by Google IAM',
+}, {
+    'page_name': 'Log Out',
+    'page_name_test': 'logout_redirect',
+    'redirect': True,
+    'url': 'logout',
+    'redirect_url': 'https://accounts.google.com/logout',
+    'nav_link_in_header': False,
+    'page_description': 'Generic helpful resources for using the UI and service',
+},
+]
 # yapf: enable
 
 # yapf: disable
@@ -317,6 +335,13 @@ def role_to_username(role: str):
 
   raise ValueError(f"Unknown role: {role}")
 
+def get_redirect_endpoints():
+  """ Return a list of endpoints that are redirects """
+  redirect_endpoints = []
+  for page in ENDPOINTS:
+    if page.get('redirect'):
+      redirect_endpoints.append(page)
+  return []
 
 def get_page_url_from_page_name(page_name: str):
   """ Given a page name, return the page URL """
