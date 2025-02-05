@@ -19,11 +19,8 @@ def test_epoch_options(page: Page, set_inputs):
   page.goto(page_url)
 
   test_inputs = [
-      GENERIC_TEST_INPUTS['searchable_postcode'], {
-          'type': 'checkbox',
-          'css_selector': 'input[type="radio"][id="50"]',
-          'content_to_set': 'checked',
-      }
+      GENERIC_TEST_INPUTS['searchable_postcode'], 
+      GENERIC_TEST_INPUTS['unavailable_epoch'], 
   ]
 
   print(f'Testing {page_name} Story with inputs: {test_inputs}')
@@ -34,7 +31,7 @@ def test_epoch_options(page: Page, set_inputs):
   # As Epoch '50' is unavailable, expect an error message
   expect(
       page.get_by_text(
-          'Requested Epoch is not available. Current available epochs are 39, 93.'
+          'Requested Epoch is not available. Current available epochs are 111.'
       )).to_be_visible()
 
 

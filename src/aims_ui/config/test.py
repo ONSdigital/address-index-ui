@@ -33,20 +33,15 @@ for user in app.config.get('USER_GROUPS'):
     if user.get('name') == additional_username.get('name_of_group'):
       user['usernames'].extend(additional_username.get('usernames'))
 
-DEFAULT_EPOCH_SELECTED = '39'
+DEFAULT_EPOCH_SELECTED = '111'
 DEFAULT_EPOCH_OPTIONS = [{
-    'id': '39',
-    'text': '39',
-    'value': '39',
-    'description': 'Exeter Sample'
-}, {
     'id': '50',
     'text': '50',
     'value': '50',
     'description': 'September 1999'
 }, {
-    'id': '93',
-    'text': '93',
-    'value': '93',
+    'id': '111',
+    'text': '111',
+    'value': '111',
     'description': 'October 2022'
 }]
