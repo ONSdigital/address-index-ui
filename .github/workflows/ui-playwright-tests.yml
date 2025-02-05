@@ -1,4 +1,4 @@
-name: Python and JS tests run
+name: Python and JS tests run against API demo
 
 on:
   push:
@@ -22,16 +22,10 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y docker-compose
 
-    # Clone the API repository
-    - name: Clone API repository
-      run: git clone https://github.com/ONSdigital/address-index-api.git api_service
-
-    # Start Docker image of the API
-    - name: Start API with Docker Compose
+    - name: Start the API via Docker Compose
       run: |
-        cd api_service
-        docker-compose up -d
-        docker ps -a  # Show running containers for debugging
+        docker-compose -f api-demo/docker-compose.yml up -d
+        docker ps -a  # for debugging - shows running containers
 
     # Wait for API to be ready (checking port 9001) (will return 'hello world' when ready)
     - name: Wait for API to be ready
