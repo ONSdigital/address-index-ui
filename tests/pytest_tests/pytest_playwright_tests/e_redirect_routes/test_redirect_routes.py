@@ -1,9 +1,7 @@
 import pytest
 from playwright.sync_api import Page, expect
 
-from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
-    ALL_PAGE_NAMES, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS, BASE_URL, USER_ROLE_MAP,
-    get_just_header_pages, get_page_url_from_page_name, get_redirect_endpoints, role_to_username)
+from tests.pytest_tests.pytest_playwright_tests.utils.constants import USER_ROLE_MAP, get_redirect_endpoints
 
 """ Test routes that when loaded, simply redirect the user elsewhere """
 

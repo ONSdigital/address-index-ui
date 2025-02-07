@@ -2,12 +2,13 @@ import pytest
 from playwright.sync_api import Page, expect
 
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
-    ALL_PAGE_NAMES, BASE_URL, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS,
-    XML_ERROR_MESSAGE, TEST_XML_INJECTIONS, get_just_header_pages,
-    set_input_content, get_page_url_from_page_name, role_to_username)
-from tests.pytest_tests.pytest_playwright_tests.utils.constants import GENERIC_TEST_INPUTS
+    BASE_URL,
+    GENERIC_TEST_INPUTS,
+    TEST_XML_INJECTIONS,
+    XML_ERROR_MESSAGE,
+    set_input_content
+)
 
-import re
 """ When there is a problem with an input, the Design System Component should show an error message or prompt """
 
 
