@@ -1,11 +1,15 @@
-import pytest
-from playwright.sync_api import Page, expect
 import csv
 
+import pytest
+from playwright.sync_api import Page, expect
+
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
-    ALL_PAGE_NAMES, BASE_URL, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS,
-    DOWNLOADS, get_just_header_pages, get_page_url_from_page_name,
-    get_download_info, role_to_username)
+    BASE_URL,
+    EPOCH_OPTIONS,
+    LOCATION_OPTIONS,
+    get_download_info
+)
+
 """ Check that expected inputs are present """
 
 

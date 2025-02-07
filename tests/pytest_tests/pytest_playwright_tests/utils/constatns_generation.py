@@ -1,4 +1,6 @@
-import os, csv, json
+import csv
+import json
+import os
 
 
 def get_content_of_file(file_name: str):

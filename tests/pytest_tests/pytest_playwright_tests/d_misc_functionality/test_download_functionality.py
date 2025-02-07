@@ -1,14 +1,12 @@
-import pytest
-from playwright.sync_api import Page, expect
 import csv
-import os
 import io
 import json
 
-from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
-    ALL_PAGE_NAMES, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS, BASE_URL, STATIC_FILES,
-    DOWNLOADS, get_just_header_pages, get_page_url_from_page_name,
-    role_to_username)
+import pytest
+from playwright.sync_api import Page
+
+from tests.pytest_tests.pytest_playwright_tests.utils.constants import BASE_URL, DOWNLOADS, STATIC_FILES
+
 """ Check that all downloads links return expected file content """
 
 page_url = f'{BASE_URL}static/downloads/'

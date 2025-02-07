@@ -1,6 +1,5 @@
 from flask import Flask
 
-from src import aims_ui
 from src.aims_ui.config import base as config_base
 
 

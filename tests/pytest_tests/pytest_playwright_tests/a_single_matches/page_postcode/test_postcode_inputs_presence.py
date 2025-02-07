@@ -2,8 +2,11 @@ import pytest
 from playwright.sync_api import Page, expect
 
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
-    ALL_PAGE_NAMES, ROLES, LOCATION_OPTIONS, EPOCH_OPTIONS, BASE_URL,
-    get_just_header_pages, get_page_url_from_page_name, role_to_username)
+    BASE_URL,
+    EPOCH_OPTIONS,
+    get_page_url_from_page_name
+)
+
 """ Check that expected inputs are present """
 
 page_name = 'postcode'
