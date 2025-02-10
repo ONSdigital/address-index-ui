@@ -1,5 +1,7 @@
 name: Python and JS tests run against API demo
-
+permissions:
+  contents: read
+  pull-requests: read
 on:
   push:
     branches: [ '**' ]
