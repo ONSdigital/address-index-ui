@@ -9,13 +9,11 @@
 /addresses/ids
 /addresses/eq
 /addresses/eq/uprn/{uprn}
-/addresses/rh/partial
-/addresses/rh/postcode/{postcode}
-/addresses/rh/uprn/{uprn}
 /classifications
 /codelists
 /custodians
 /logicalstatuses
 /sources
 /version
+/addresses/eq/bucket
 /epochs

@@ -8,6 +8,7 @@ import atexit
 
 
 class RestartServerHandler(PatternMatchingEventHandler):
+
   def __init__(self, patterns):
     super().__init__(patterns=patterns)
     self.process = None

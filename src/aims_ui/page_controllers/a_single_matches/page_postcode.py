@@ -8,9 +8,11 @@ from aims_ui.page_helpers.security_utils import detect_xml_injection, check_user
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.error.error_utils import error_page_xml, error_page_api_request, error_page_api_response
 from aims_ui.models.get_endpoints import get_endpoints
+from aims_ui.page_helpers.validation_utils import validate_limit
 from aims_ui.models.get_fields import get_fields
 from aims_ui.models.get_addresses import get_addresses
 from aims_ui.page_controllers.f_error_pages.page_error import page_error
+from aims_ui.page_controllers.f_error_pages.page_error_annotation_single import page_error_annotation_single
 
 page_name = 'postcode'
 
@@ -43,6 +45,12 @@ def postcode():
   xml_injection = detect_xml_injection(user_input)
   if xml_injection:
     return error_page_xml(page_name, user_input)
+
+  # limit_invalid is none or the error message
+  limit = all_user_input.get('limit', 1)
+  limit_invalid = validate_limit(limit, validation_limit=200)
+  if limit_invalid:
+    return page_error_annotation_single(page_name, user_input, limit_invalid)
 
   try:
     result = api(

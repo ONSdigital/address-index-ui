@@ -9,5 +9,4 @@ gunicorn==22.0.0
 itsdangerous==2.1.2
 pyjwt==2.4.0
 cryptography==43.0.1
-pytest
 watchdog
