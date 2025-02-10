@@ -1,0 +1,19 @@
+﻿[{"en": "\ufeff/addresses"}
+, {"en": "/addresses/partial"}
+, {"en": "/addresses/postcode/{postcode}"}
+, {"en": "/addresses/groupedpostcode/{postcode}"}
+, {"en": "/addresses/random"}
+, {"en": "/addresses/uprn/{uprn}"}
+, {"en": "/addresses/multiuprn"}
+, {"en": "/bulk"}
+, {"en": "/addresses/ids"}
+, {"en": "/addresses/eq"}
+, {"en": "/addresses/eq/uprn/{uprn}"}
+, {"en": "/classifications"}
+, {"en": "/codelists"}
+, {"en": "/custodians"}
+, {"en": "/logicalstatuses"}
+, {"en": "/sources"}
+, {"en": "/version"}
+, {"en": "/addresses/eq/bucket"}
+, {"en": "/epochs"}]

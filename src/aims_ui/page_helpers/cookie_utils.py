@@ -46,6 +46,7 @@ def load_input(all_user_input, session, searchable_fields):
 
 def get_all_inputs(searchable_fields, request):
   """Using fields, retreive values of html objects"""
+
   def get_val(value_html_id):
     return request.form.get(value_html_id)
 

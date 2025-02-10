@@ -4,6 +4,7 @@ from .utilities.sibling_lookup import getHierarchy
 
 
 class AddressAttribute():
+
   def __init__(
       self,
       address_data,
@@ -85,6 +86,7 @@ class AddressAttribute():
 
 
 class ShortAddress():
+
   def __init__(self,
                address_data,
                include_hierarchy=False,

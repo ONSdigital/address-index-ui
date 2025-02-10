@@ -3,9 +3,8 @@
 To run this project:
 
 Pre-requisites:
-* Python 3.9.x
-* https://github.com/ONSdigital/address-index-api
-(Clone then run `docker-compose up` to start local Elastic Search including test data)
+* Python 3.12.1
+* `docker-compose up` on https://github.com/ONSdigital/address-index-api/blob/master/docker-compose.yml to start the API
 
 
 ## Setup Environment Variables
@@ -18,19 +17,22 @@ Pre-requisites:
 | `export API_JWT_TOKEN`      | `[enter_jwt_token_here]`   | `export API_JWT_TOKEN="[enter_jwt_token_here]"` |
 | `export BM_API_URL`         | `[enter_bulk_match_url]`   | `export BM_API_URL="[enter_bulk_match_url]"` |
 | `export BM_JWT_TOKEN`       | `[enter_jwt_token_here]`   | `export BM_JWT_TOKEN="[enter_jwt_token_here]"` |
+| `export API_JWT_K_VALUE` | `[enter_API_JWT_K_VALUE_here] | `export API_JWT_K_VALUE="NA"` |
 | `export API_BSC_AUTH_USERNAME` | `[enter_bsc_username]`  | `export API_BSC_AUTH_USERNAME="[enter_bsc_username]"` |
 | `export API_BSC_AUTH_PASSWORD` | `[enter_bsc_password]`  | `export API_BSC_AUTH_PASSWORD="[enter_bsc_password]"` |
 | `export PROJECT_DOMAIN`     | `[enter_project_domain]`   | `export PROJECT_DOMAIN="[enter_project_domain]"` |
+*Note: JWT token is exported WITHOUT 'Bearer ' before it*
 
 Set the "groups" of users (by default all users including the "NotLoggedInUser" are in the "default" group
-
 `export USER_AUTHS='{"developers":["NotLoggedinUer"]}'`
 
-*Note: JWT token is exported WITHOUT 'Bearer ' before it*
 
 ## Install Python Packages
 
 `pip install -r requirements.txt`
+
+if running tests as well
+`pip install -r requirements_test.txt`
 
 ## Install project as a python package*
 
@@ -60,7 +62,10 @@ This will remove unused imoports and organise imports consistantly
 ### To Test
 
 #### Python
-`python3 -m pytest tests/pytest_tests`
+1. Ensure the API is up and running on port 9001
+2. Run the UI with the wsgi.py script `python wsgi.py`
+3. Headless: `python3 -m pytest tests/pytest_tests -n 4`
+4. Visible: `python3 -m pytest tests/pytest_tests --browser chromium --slowmo 2000 --headed`
 
 ### Javascript 
 `npm run test:jest`
@@ -81,3 +86,4 @@ FOR WINDOWS USERS ONLY:
 `set FLASK_APP=src/aims_ui`
 `python -m flask run`
 
+* Note that the above is for Command Prompt not Powershell - use `$Env:<variable-name>`for powershell launch

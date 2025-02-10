@@ -1,6 +1,10 @@
 """FLASK BASE CONFIG"""
 import os
 import json
+import base64
+
+# Port that the Flask server will run on
+UI_EXPOSED_PORT = 5000
 
 JSONIFY_PRETTYPRINT_REGULAR = True
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024
@@ -20,6 +24,11 @@ AIMS_UI_PAGES_LOCATION = 'aims_ui_pages'
 
 API_BSC_AUTH_USERNAME = os.getenv('API_BSC_AUTH_USERNAME')
 API_BSC_AUTH_PASSWORD = os.getenv('API_BSC_AUTH_PASSWORD')
+
+API_JWT_K_VALUE = str(os.getenv('API_JWT_K_VALUE'))
+API_JWT_K_VALUE = base64.b64decode(API_JWT_K_VALUE)
+
+FLASK_ENV = str(os.getenv('FLASK_ENV')).upper()
 
 # Default usernames for paywall
 USER_AUTHS = json.loads(os.getenv('USER_AUTHS', '{}'))
@@ -48,7 +57,7 @@ USER_GROUPS = [
     },
     {
         'name': 'developers',
-        'usernames': USER_AUTHS.get('developers', ['felix.aldam-gates', 'UserNotLoggedIn']),
+        'usernames': USER_AUTHS.get('developers', ['felix.aldam-gates']),
         'pages_to_remove': [],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },

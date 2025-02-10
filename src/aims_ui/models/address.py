@@ -4,6 +4,7 @@ from .utilities.sibling_lookup import getHierarchy
 
 
 class Pao():
+
   def __init__(self, pao):
     self.paoText = pao.get('paoText')
     self.paoStartNumber = pao.get('paoStartNumber')
@@ -13,6 +14,7 @@ class Pao():
 
 
 class Sao():
+
   def __init__(self, sao):
     self.saoText = sao.get('saoText')
     self.saoStartNumber = sao.get('saoStartNumber')
@@ -22,11 +24,13 @@ class Sao():
 
 
 class BasicValue():
+
   def __init__(self, nag_paf, name, default_blank=''):
     self.value = nag_paf.get(name, default_blank)
 
 
 class Nag():
+
   def __init__(self, nag):
     nag = nag[0] if nag else {}
 
@@ -79,6 +83,7 @@ class Nag():
 
 
 class Paf():
+
   def __init__(self, paf):
     if not paf:
       paf = {}
@@ -138,6 +143,7 @@ class Paf():
 
 
 class AddressAttribute():
+
   def __init__(
       self,
       address_data,
@@ -234,6 +240,7 @@ class AddressAttribute():
 
 
 class Address():
+
   def __init__(self,
                address_data,
                include_hierarchy=False,

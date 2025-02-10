@@ -1,6 +1,5 @@
 from flask import Flask
 
-from src import aims_ui
 from src.aims_ui.config import base as config_base
 
 
@@ -79,6 +78,7 @@ def test_base_classification_list():
       'API_BSC_AUTH_USERNAME',
       'API_JWT_TOKEN',
       'API_JWT_TOKEN_BEARER',
+      'API_JWT_K_VALUE',
       'BM_API_URL',
       'BM_JWT_TOKEN',
       'BM_JWT_TOKEN_BEARER',
@@ -90,6 +90,8 @@ def test_base_classification_list():
       'PROJECT_DOMAIN',
       'USER_AUTHS',
       'USER_GROUPS',
+      'FLASK_ENV',
+      'UI_EXPOSED_PORT',
   ]
 
   # Get the actual config keys

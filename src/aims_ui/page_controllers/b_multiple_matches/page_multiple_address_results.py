@@ -25,15 +25,17 @@ def multiple_address_results():
   current_group = get_current_group()
   bulk_limits = current_group.get('bulk_limits')
 
-  #TODO Set To FALSE (debug only)----------------------------------------------
-  if False:
-    headers = [
-        'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'RECS PROCESSED',
-        'DOWNLOAD LINK'
-    ]
+  headers = [
+      'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'RECS PROCESSED',
+      'DOWNLOAD LINK'
+  ]
+
+  endpoints = get_endpoints(called_from=page_name)
+
+  # Load testing values for testing mode
+  if app.config.get('FLASK_ENV') == 'TESTING':
     job_id = 6
 
-    endpoints = get_endpoints(called_from=page_name)
     formatted_results = [
         [
             '22', 'Example', '10,000 of A Jillion', 'bob', 'True', 'complete',
@@ -44,21 +46,12 @@ def multiple_address_results():
     jobs = create_table(headers, formatted_results)
 
     # Download the zip
-
     return render_template(
-        f'{pages_location}{page_name}.html',
+        page_location,
         endpoints=endpoints,
         jobs=jobs,
         bulk_limits=bulk_limits,
     )
-  #TODO SET TO FALSE --------------------------------------------------
-
-  endpoints = get_endpoints(called_from=page_name)
-
-  headers = [
-      'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'RECS PROCESSED',
-      'DOWNLOAD LINK'
-  ]
 
   # Get the "include_old_jobs" query parameter, default to "false
   include_old_jobs = request.args.get('include_old_jobs',
