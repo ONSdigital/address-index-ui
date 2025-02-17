@@ -1,11 +1,14 @@
-# address-index-ui
+# README
 
-To run this project:
+It is now recomended users download the entire AIMS stack including the UI and API bundled together with pre-loaded example address data from [https://github.com/ONSdigital/aims-diy](https://github.com/ONSdigital/aims-diy) as it's the easiest way to see the UI in action.
+
+The UI can be run without an API, however many features that require the API will not work as intended. 
+
+Therefore if you want to run the UI locally you will need to connect it to an instance of AIMS. It is recomended you use the bundled version of the API from [https://github.com/ONSdigital/aims-diy](https://github.com/ONSdigital/aims-diy) while commenting out the "UI" portion of the docker-compose.
 
 Pre-requisites:
+* Access to an API as described above
 * Python 3.12.1
-* `docker-compose up` on https://github.com/ONSdigital/address-index-api/blob/master/docker-compose.yml to start the API
-
 
 ## Setup Environment Variables
 
@@ -31,7 +34,7 @@ Set the "groups" of users (by default all users including the "NotLoggedInUser" 
 
 `pip install -r requirements.txt`
 
-if running tests as well
+If running tests as well
 `pip install -r requirements_test.txt`
 
 ## Install project as a python package*
