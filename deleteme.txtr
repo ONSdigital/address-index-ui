@@ -1,1 +1,0 @@
-Added to check that a PR that doesn't have a version bump is rejected through the GitHub Action
