@@ -1,0 +1,24 @@
+name: Enforce Version Bump
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-version-bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v41
+
+      - name: Check if version.txt was modified
+        run: |
+          if ! echo "${{ steps.changed-files.outputs.all_changed_files }}" | grep -q "version.txt"; then
+            echo "Error: version.txt was not modified in this PR. Please bump the version number."
+            exit 1
+          fi
