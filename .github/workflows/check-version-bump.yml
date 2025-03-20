@@ -16,7 +16,7 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@cbda684547adc8c052d50711417fa61b428a9f88
+        uses: tj-actions/changed-files@v46.0.1
 
       - name: Check if version.txt was modified
         run: |
