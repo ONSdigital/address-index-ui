@@ -9,9 +9,9 @@ import jwt
 import requests
 
 from aims_ui import app
-from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_api_utils import generate_tag_name
 from aims_ui.page_helpers.classification_utilities import check_reverse_classification, check_valid_classification
 from aims_ui.page_helpers.google_utils import get_username
+from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_api_utils import get_multiple_match_api_header
 
 from .api_helpers import get_header, job_api
 
@@ -208,35 +208,23 @@ def submit_uprn_mm_job(uprns_and_ids, all_user_input):
 
   return r
 
+def set_paf_nag_preference(all_user_input):
+  if all_user_input.get('paf-nag-preference') == 'PAF':
+    all_user_input['pafdefault'] = 'true'
+  del all_user_input['paf-nag-preference']
 
-def null_or_undefined_to_False(var):
-  if var is None or str(var).strip().lower() in ['null', 'undefined']:
-    return 'False'
-  return var
-
+  return all_user_input
 
 def submit_mm_job(user, addresses, all_user_input, uprn=False):
   """API helper for job endpoints """
   url = app.config.get('BM_API_URL') + '/bulk'
 
   # Change the paf-nag default selection
-  if all_user_input.get('paf-nag-preference') == 'PAF':
-    all_user_input['pafdefault'] = 'true'
-  del all_user_input['paf-nag-preference']
-
-  header_row_export = all_user_input.get('header_row_export', 'False')
-  header_row_export = null_or_undefined_to_False(header_row_export)
+  all_user_input = set_paf_nag_preference(all_user_input)
 
   params = get_params(all_user_input, removeVerbose=True)
 
-  optional_metadata = {'header_row_export': header_row_export}
-  username = get_username()
-  full_tag = generate_tag_name(username,
-                               str(all_user_input.get('name', '')[:25]),
-                               optional_metadata=optional_metadata)
-
-  header = get_header(bulk=True)
-  header['user'] = full_tag
+  header = get_multiple_match_api_header(all_user_input)
 
   addresses = str(addresses).replace('"', '')  # Remove Quotes from address
   addresses = str(addresses).replace(
@@ -256,7 +244,7 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
                  "\n\n | Response Body: " + r.text)
 
   logging.info('Submmitted MMJob on endpoint"' + str(url) +
-               '"  with UserId as "' + str(username) + '"' +
+               '"  with UserId as "' + str(get_username()) + '"' +
                'Request details: ' + str(log_message))
 
   if r.status_code != 200:
