@@ -2,13 +2,8 @@ import pytest
 from playwright.sync_api import Page, expect
 
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
-    BASE_URL,
-    GENERIC_TEST_INPUTS,
-    TEST_XML_INJECTIONS,
-    XML_ERROR_MESSAGE,
-    set_input_content
-)
-
+    BASE_URL, GENERIC_TEST_INPUTS, TEST_XML_INJECTIONS, XML_ERROR_MESSAGE,
+    set_input_content)
 """ When there is a problem with an input, the Design System Component should show an error message or prompt """
 
 
@@ -17,7 +12,7 @@ def test_epoch_options(page: Page, set_inputs):
   page.goto(BASE_URL)
 
   test_inputs = [
-      GENERIC_TEST_INPUTS['searchable_address'], 
+      GENERIC_TEST_INPUTS['searchable_address'],
       GENERIC_TEST_INPUTS['unavailable_epoch'],
   ]
 
