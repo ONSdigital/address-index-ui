@@ -203,10 +203,11 @@ def submit_uprn_mm_job(uprns_and_ids, all_user_input):
       data=just_uprns_stringified,
   )
 
-  logging.info('Submmitted Multi-UPRN match on endpoint"' + str(url) +
+  logging.info('Submmitted Multiple Match UPRN job on endpoint"' + str(url) +
                '"  with UserId as "' + str(username) + '"')
 
   return r
+
 
 def set_paf_nag_preference(all_user_input):
   if all_user_input.get('paf-nag-preference') == 'PAF':
@@ -215,6 +216,7 @@ def set_paf_nag_preference(all_user_input):
 
   return all_user_input
 
+
 def submit_mm_job(user, addresses, all_user_input, uprn=False):
   """API helper for job endpoints """
   url = app.config.get('BM_API_URL') + '/bulk'
@@ -222,13 +224,15 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
   # Change the paf-nag default selection
   all_user_input = set_paf_nag_preference(all_user_input)
 
-  params = get_params(all_user_input, removeVerbose=True)
-
   header = get_multiple_match_api_header(all_user_input)
 
+  # Add some header data into parameters (if the API needs it as a param)
+  all_user_input['uimetadata'] = header.get('uimetadata')
+  params = get_params(all_user_input, removeVerbose=True)
+
   addresses = str(addresses).replace('"', '')  # Remove Quotes from address
-  addresses = str(addresses).replace(
-      "'", '"')  # Replace quotes for correct JSON formatting
+  addresses = str(addresses).replace("'",
+                                     '"')  # Switch quotes for JSON formatting
 
   r = requests.post(
       url,
@@ -243,8 +247,8 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
                  "\n\n | Response Headers: " + str(r.headers) +
                  "\n\n | Response Body: " + r.text)
 
-  logging.info('Submmitted MMJob on endpoint"' + str(url) +
-               '"  with UserId as "' + str(get_username()) + '"' +
+  logging.info('\nSubmmitted Multiple Match Address Job on endpoint "' +
+               str(url) + '"  with UserId as "' + str(get_username()) + '"' +
                'Request details: ' + str(log_message))
 
   if r.status_code != 200:

@@ -2,6 +2,7 @@ import requests
 from aims_ui import app
 from aims_ui.page_helpers.google_utils import get_username
 
+
 def get_header_jwt(bulk):
   """ Get JWT token for the bulk manager or regular API """
   api_jwt = 'API_JWT_TOKEN_BEARER'
