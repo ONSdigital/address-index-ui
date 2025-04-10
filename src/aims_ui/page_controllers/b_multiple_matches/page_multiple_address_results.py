@@ -63,15 +63,15 @@ def multiple_address_results():
   jobs_data = job_data_by_current_user(include_old_jobs)
   jobs_data_plus_metadata = get_results_plus_metadata(jobs_data)
 
-  # Format the info for each job to appear in the UI table 
+  # Format the info for each job to appear in the UI table
   jobs_data_plus_metadata_table_rows = [[
-    job.get('jobid'),
-    job.get('jobname'),
-    job.get('status'),
-    job.get('username'),
-    job.get('header_row_export'),
-    job.get('recssofarmessage'),
-    job.get('downloadlink'),
+      job.get('jobid'),
+      job.get('jobname'),
+      job.get('status'),
+      job.get('username'),
+      job.get('header_row_export'),
+      job.get('recssofarmessage'),
+      job.get('downloadlink'),
   ] for job in jobs_data_plus_metadata]
 
   # EXAMPLE results format
