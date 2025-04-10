@@ -6,10 +6,12 @@ from aims_ui.page_helpers.api.api_helpers import job_api
 from aims_ui.page_helpers.google_utils import get_username
 from aims_ui.page_helpers.api.api_helpers import get_header
 
+
 def null_or_undefined_to_False(var):
   if var is None or str(var).strip().lower() in ['null', 'undefined']:
     return 'False'
   return var
+
 
 def get_header_row_export_selection(all_user_input):
   header_row_export = all_user_input.get('header_row_export', 'False')
@@ -30,7 +32,7 @@ def get_multiple_match_api_header(all_user_input):
 
   # Additional Metadata can be stored in 'uiMetadata' header
   uiMetadata = {'header_row_export': header_row_export}
-  header['uiMetadata'] = json.dumps(uiMetadata)
+  header['uimetadata'] = json.dumps(uiMetadata)
 
   return header
 
