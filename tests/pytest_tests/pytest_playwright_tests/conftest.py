@@ -27,6 +27,7 @@ def login_and_goto(page: Page):
 
   return _login_and_goto
 
+
 @pytest.fixture
 def login_and_goto_url(page: Page):
   """ Fixture to login as a user role and go to a specific URL """
@@ -38,7 +39,6 @@ def login_and_goto_url(page: Page):
     return page
 
   return _login_and_goto_url
-
 
 
 @pytest.fixture

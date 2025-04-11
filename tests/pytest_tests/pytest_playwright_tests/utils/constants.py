@@ -1,8 +1,5 @@
 from tests.pytest_tests.pytest_playwright_tests.utils.constatns_generation import (
-    build_downloads_info,
-    build_user_role_map
-)
-
+    build_downloads_info, build_user_role_map)
 """ Constants for the playwright tests. """
 
 BASE_URL = "http://127.0.0.1:5001/"
@@ -115,7 +112,7 @@ GENERIC_TEST_INPUTS = {
         'css_selector': 'input[type="radio"][id="111"]',
         'content_to_set': 'checked',
     },
-   'unavailable_epoch': {
+    'unavailable_epoch': {
         'type': 'checkbox',
         'css_selector': 'input[type="radio"][id="50"]',
         'content_to_set': 'checked',

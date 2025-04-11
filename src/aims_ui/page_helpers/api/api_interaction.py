@@ -9,9 +9,9 @@ import jwt
 import requests
 
 from aims_ui import app
-from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_api_utils import generate_tag_name
 from aims_ui.page_helpers.classification_utilities import check_reverse_classification, check_valid_classification
 from aims_ui.page_helpers.google_utils import get_username
+from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_api_utils import get_multiple_match_api_header
 
 from .api_helpers import get_header, job_api
 
@@ -203,16 +203,18 @@ def submit_uprn_mm_job(uprns_and_ids, all_user_input):
       data=just_uprns_stringified,
   )
 
-  logging.info('Submmitted Multi-UPRN match on endpoint"' + str(url) +
+  logging.info('Submmitted Multiple Match UPRN job on endpoint"' + str(url) +
                '"  with UserId as "' + str(username) + '"')
 
   return r
 
 
-def null_or_undefined_to_False(var):
-  if var is None or str(var).strip().lower() in ['null', 'undefined']:
-    return 'False'
-  return var
+def set_paf_nag_preference(all_user_input):
+  if all_user_input.get('paf-nag-preference') == 'PAF':
+    all_user_input['pafdefault'] = 'true'
+  del all_user_input['paf-nag-preference']
+
+  return all_user_input
 
 
 def submit_mm_job(user, addresses, all_user_input, uprn=False):
@@ -220,27 +222,17 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
   url = app.config.get('BM_API_URL') + '/bulk'
 
   # Change the paf-nag default selection
-  if all_user_input.get('paf-nag-preference') == 'PAF':
-    all_user_input['pafdefault'] = 'true'
-  del all_user_input['paf-nag-preference']
+  all_user_input = set_paf_nag_preference(all_user_input)
 
-  header_row_export = all_user_input.get('header_row_export', 'False')
-  header_row_export = null_or_undefined_to_False(header_row_export)
+  header = get_multiple_match_api_header(all_user_input)
 
+  # Add some header data into parameters (if the API needs it as a param)
+  all_user_input['uimetadata'] = header.get('uimetadata')
   params = get_params(all_user_input, removeVerbose=True)
 
-  optional_metadata = {'header_row_export': header_row_export}
-  username = get_username()
-  full_tag = generate_tag_name(username,
-                               str(all_user_input.get('name', '')[:25]),
-                               optional_metadata=optional_metadata)
-
-  header = get_header(bulk=True)
-  header['user'] = full_tag
-
   addresses = str(addresses).replace('"', '')  # Remove Quotes from address
-  addresses = str(addresses).replace(
-      "'", '"')  # Replace quotes for correct JSON formatting
+  addresses = str(addresses).replace("'",
+                                     '"')  # Switch quotes for JSON formatting
 
   r = requests.post(
       url,
@@ -255,8 +247,8 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
                  "\n\n | Response Headers: " + str(r.headers) +
                  "\n\n | Response Body: " + r.text)
 
-  logging.info('Submmitted MMJob on endpoint"' + str(url) +
-               '"  with UserId as "' + str(username) + '"' +
+  logging.info('\nSubmmitted Multiple Match Address Job on endpoint "' +
+               str(url) + '"  with UserId as "' + str(get_username()) + '"' +
                'Request details: ' + str(log_message))
 
   if r.status_code != 200:
