@@ -4,12 +4,7 @@ import pytest
 from playwright.sync_api import Page, expect
 
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
-    BASE_URL,
-    EPOCH_OPTIONS,
-    LOCATION_OPTIONS,
-    get_download_info
-)
-
+    BASE_URL, EPOCH_OPTIONS, LOCATION_OPTIONS, get_download_info)
 """ Check that expected inputs are present """
 
 

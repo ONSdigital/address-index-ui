@@ -6,8 +6,9 @@ from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from aims_ui.page_helpers.table_utils import create_table
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.page_helpers.pages_location_utils import get_page_location
-from aims_ui.page_helpers.api.api_interaction import job_result_formatter
 from aims_ui.page_helpers.google_utils import get_username, get_current_group
+from aims_ui.page_controllers.b_multiple_matches.utils.multiple_address_results import get_results_plus_metadata
+import json
 
 page_name = 'multiple_address_results'
 
@@ -59,32 +60,31 @@ def multiple_address_results():
   # Sanetise the input
   include_old_jobs = True if include_old_jobs == 'true' else False
 
-  results = job_data_by_current_user(include_old_jobs)
+  jobs_data = job_data_by_current_user(include_old_jobs)
+  jobs_data_plus_metadata = get_results_plus_metadata(jobs_data)
 
-  formatted_results = [[
+  # Format the info for each job to appear in the UI table
+  jobs_data_plus_metadata_table_rows = [[
       job.get('jobid'),
-      get_tag_data(job.get('userid')).get('user_tag'),
+      job.get('jobname'),
       job.get('status'),
-      get_tag_data(job.get('userid')).get('username'),
-      get_tag_data(job.get('userid')).get('header_row_export', 'NA'),
-      f"{job.get('recssofar')}  of  {job.get('totalrecs')}",
-      job_result_formatter(job.get('jobid'))
-  ] for job in results]
+      job.get('username'),
+      job.get('header_row_export'),
+      job.get('recssofarmessage'),
+      job.get('downloadlink'),
+  ] for job in jobs_data_plus_metadata]
 
   # EXAMPLE results format
   # results = [
-  #   ['34', '10,000 of 67,924', 'in-progress', '-'],
-  #   ['80', '30,501 of 80,924', 'in-progress', '-'],
-  #   ['212', '23 of 924', 'in-progress', '-'],
-  #   ['4', '40,000 of 40,000', 'complete', 'http://www.example.com'],
-  #   ]
+  #   ['200', 'da', 'progress', USER ID, HEADER ROW, RECS PROCESSED, DOWNLOAD LINK]
+  #   [JOBID, NAME, STATUS, USER ID, HEADER ROW, RECS PROCESSED, DOWNLOAD LINK]
 
-  jobs = []
-  jobs = create_table(headers, formatted_results)
+  jobs_table = []
+  jobs_table = create_table(headers, jobs_data_plus_metadata_table_rows)
 
   return render_template(
       page_location,
       endpoints=endpoints,
-      jobs=jobs,
+      jobs=jobs_table,
       bulk_limits=bulk_limits,
   )

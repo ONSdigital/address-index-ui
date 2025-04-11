@@ -3,15 +3,22 @@ from aims_ui import app
 from aims_ui.page_helpers.google_utils import get_username
 
 
+def get_header_jwt(bulk):
+  """ Get JWT token for the bulk manager or regular API """
+  api_jwt = 'API_JWT_TOKEN_BEARER'
+  bulk_jwt = 'BM_JWT_TOKEN_BEARER'
+  auth = bulk_jwt if bulk else api_jwt
+
+  return app.config.get(auth)
+
+
 def get_header(username=True, bulk=False):
   """ Get defaut header for API requests """
-  api_jwt = app.config.get('API_JWT_TOKEN_BEARER')
-  bulk_jwt = app.config.get('BM_JWT_TOKEN_BEARER')
-  auth = bulk_jwt if bulk else api_jwt
+  jwt = get_header_jwt(bulk)
 
   header = {
       "Content-Type": "application/json",
-      "Authorization": auth,
+      "Authorization": jwt,
   }
 
   if username:
