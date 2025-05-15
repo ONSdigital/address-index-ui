@@ -66,31 +66,47 @@ Optional Variables (set them according to your setup)
 `pip install -r requirements_test.txt`
 
 5) Install Project as Python Package
+
 Run in the root directory
+
 `pip install -e .`
 
 6) Install Design System Components
-Run the script located in this project at `scripts/load_templates.sh`
+
+Run the script located in this project at 
+
+`scripts/load_templates.sh`
 
 7) Running the UI
+
 `python3 -m flask run`
+
 Or to run as a developer, where every file save will restart the flask application:
+
 `python3 run_ui_developer.py`
 
 ### Tools ### 
 
 #### Python
 1) Python Linters
+
 To lint python code using [https://github.com/google/yapf](YAPF)
+
 `yapf --style='{based_on_style: pep8, indent_width: 2}' -ir .`
+
 2) To Lint Imports Specifically
+
    - Pre-requisites: `pip install isort`
                      `pip install autoflake`
+
 `autoflake --in-place --remove-all-unused-imports --remove-unused-variables \"${file}\"`
+
 `isort \"${file}\`
 
 #### JS/MJS ####
+
 1) Linting js files
+
 `npm run lint`  
 
 ### Tests ### 
