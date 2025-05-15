@@ -2,7 +2,7 @@
 
 ### What is this repository for? ###
 
-This repository contains the Flask web app that is used to interact with the [https://github.com/ONSdigital/aims-api/](Address Index API).
+This repository contains the Flask web app that is used to interact with the [https://github.com/ONSdigital/aims-api/](Address_Index_API).
 
 A functioning version of the API is required to use this application, which can be setup using the Address Index API instructions.
 
