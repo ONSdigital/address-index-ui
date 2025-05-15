@@ -61,7 +61,8 @@ Optional Variables (set them according to your setup)
 
 `pip install -r requirements.txt`
 
-If also running tests:
+   If also running tests:
+
 `pip install -r requirements_test.txt`
 
 5) Install Project as Python Package
