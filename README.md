@@ -2,17 +2,17 @@
 
 ### What is this repository for? ###
 
-This repository contains the Flask web app that is used to interact with the [https://github.com/ONSdigital/aims-api/](Address_Index_API).
+This repository contains the Flask web app that is used to interact with the [Address Index API ](https://github.com/ONSdigital/aims-api/).
 
 A functioning version of the API is required to use this application, which can be setup using the Address Index API instructions.
 
 ### How do I run the UI? ###
 
-It is now recomended users download the entire AIMS stack including the UI and API bundled together with pre-loaded example address data from [https://github.com/ONSdigital/aims-diy](https://github.com/ONSdigital/aims-diy) as it's the easiest way to see the UI in action.
+It is now recomended users download the entire AIMS stack including the UI and API bundled together with pre-loaded example address data from [aims-diy](https://github.com/ONSdigital/aims-diy) as it's the easiest way to see the UI in action.
 
 The UI can be run without an API, however many features that require the API will not work as intended. 
 
-If users want to run the UI and API seperately, it is recomended you use the bundled version of the API from the [https://github.com/ONSdigital/aims-diy](aims-diy repositroy), while commenting out the "UI" portion of the docker-compose.
+If users want to run the UI and API seperately, it is recomended you use the bundled version of the API from the [aims-diy repositroy](https://github.com/ONSdigital/aims-diy), while commenting out the "UI" portion of the docker-compose.
 
 ### How do I get set up for development? ###
 
@@ -48,11 +48,12 @@ Optional Variables (set them according to your setup)
 | `API_BSC_AUTH_PASSWORD` | `[enter_bsc_password]`         | `export API_BSC_AUTH_PASSWORD="[enter_bsc_password]"` | `$Env:API_BSC_AUTH_PASSWORD = "[enter_bsc_password]"` |
 | `PROJECT_DOMAIN`        | `[enter_project_domain]`       | `export PROJECT_DOMAIN="[enter_project_domain]"`      | `$Env:PROJECT_DOMAIN = "[enter_project_domain]"`      |
 | `USER_AUTHS`            | `{"developers":["NotLoggedinUser"]}`| `export USER_AUTHS='{"developers":["NotLoggedinUser"]}'`| `$Env:USER_AUTHS='{"developers":["NotLoggedinUser"]}'`|
+
 *Note: JWT token is exported WITHOUT 'Bearer ' before it*
 
 
 | Environment Variable    | Options | Notes |
-| ----------------------- | ------------------------------ | ----------------------------------------------------- | ----------------------------------------------------- |
+| ----------------------- | ------------------------------ | ----------------------------------------------------- | 
 | `FLASK_ENV`             | `"development", "testing", "production"`| Use development when actively developing, testing for running tests and production in production |
 
 
