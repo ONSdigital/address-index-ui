@@ -98,6 +98,25 @@ def job_data_by_current_user(include_old_jobs):
   return final_jobs
 
 
+def count_active_jobs():
+  """ Count the number of jobs in progress """
+  # Currently we are allowing max 8 jobs (Wrapper defaults to 7)
+
+  jobcount = 0
+
+  # Get the list of running jobs
+  r = job_api('/jobs?status=in_progress')
+
+  # [{'jobid': 1, 'userid': ...},
+  jobs_json = r.json().get('jobs', [])
+
+  for job in jobs_json:
+    jobcount = jobcount +1
+    # any other info to be gathered?
+
+  return jobcount
+
+
 def job_data_by_job_id(job_id):
   url = f'/bulk-progress/{job_id}'
   r = job_api(url)
