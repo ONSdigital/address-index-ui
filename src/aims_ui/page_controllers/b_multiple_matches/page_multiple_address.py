@@ -66,7 +66,7 @@ def multiple_address():
 
   jobcount = count_active_jobs()
   if jobcount > max_jobs:
-    jobs_error_description = f'Bulk service too busy, {jobcount} running, maximum to allow new job is {max_jobs}'
+    jobs_error_description = f'Bulk service too busy, {jobcount} jobs running, maximum to allow a new job to start is {max_jobs}'
     return page_error_annotation_multiple(page_name, all_user_input,
                                      jobs_error_description)
 

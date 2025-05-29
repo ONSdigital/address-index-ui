@@ -105,7 +105,7 @@ def count_active_jobs():
   jobcount = 0
 
   # Get the list of running jobs
-  r = job_api('/jobs?status=in_progress')
+  r = job_api('/jobs?status=in-progress')
 
   # [{'jobid': 1, 'userid': ...},
   jobs_json = r.json().get('jobs', [])
