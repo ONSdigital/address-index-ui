@@ -114,6 +114,7 @@ def count_active_jobs():
     jobcount = jobcount +1
     # any other info to be gathered?
 
+  print(f'Bulk Jobs Running: {jobcount}')
   return jobcount
 
 
