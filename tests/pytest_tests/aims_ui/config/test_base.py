@@ -82,6 +82,7 @@ def test_base_classification_list():
       'BM_API_URL',
       'BM_JWT_TOKEN',
       'BM_JWT_TOKEN_BEARER',
+      'BM_MAX_JOBS',
       'DEFAULT_BULK_LIMITS',
       'DEFAULT_CLASSIFICATION_CLASS_LIST',
       'DEFAULT_EPOCH_OPTIONS',

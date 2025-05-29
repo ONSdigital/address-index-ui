@@ -12,9 +12,11 @@ from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 
 from .utils.multiple_match_file_upload_utils import check_valid_upload, validate_limit_parameter
 from .utils.submit_multiple_match_api import multiple_address_match
+from .utils.multiple_match_api_utils import count_active_jobs
 
 page_name = 'multiple_address'
 
+max_jobs = app.config.get('BM_MAX_JOBS')
 
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
@@ -61,6 +63,13 @@ def multiple_address():
   if not file_valid:
     return page_error_annotation_multiple(page_name, all_user_input,
                                           error_description)
+
+  jobcount = count_active_jobs()
+  if jobcount > max_jobs:
+    jobs_error_description = f'Bulk service too busy, {jobcount} jobs running, maximum to allow a new job to start is {max_jobs}'
+    return page_error_annotation_multiple(page_name, all_user_input,
+                                     jobs_error_description)
+
 
   multiple_address_match(file, all_user_input, download=True)
 
