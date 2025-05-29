@@ -1,7 +1,6 @@
 from flask import redirect, render_template, request, session, url_for
 from flask_login import login_required
 
-import config.base
 from aims_ui import app
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
@@ -17,7 +16,7 @@ from .utils.multiple_match_api_utils import count_active_jobs
 
 page_name = 'multiple_address'
 
-max_jobs = config.base.BM_MAX_JOBS
+max_jobs = app.config.get('BM_MAX_JOBS')
 
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
