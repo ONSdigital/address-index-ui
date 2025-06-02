@@ -93,8 +93,22 @@ def error_page_xml(page_name, user_input):
       page_name,
       'XML Attack Detected. This incident will be reported.',
       [
-          'If you beleive this is an eroneous detection, please contact the AIMS team using the link at the bottom of the page.',
+          'If you believe this is an erroneous detection, please contact the AIMS team using the link at the bottom of the page.',
           'You can also try removing special characters from the address and try again.',
+      ],
+  )
+
+
+def error_page_too_many_jobs(page_name, user_input,job_count, max_jobs):
+  """ Return error page for too many BM jobs attack """
+  jobs_error_description = f'Bulk service too busy, {job_count} jobs running, maximum to allow a new job to start is {max_jobs}'
+  log_err(page_name, user_input, jobs_error_description)
+  return page_error(
+      page_name,
+      'Bulk job creation aborted. Service too busy.',
+      [
+          f'There are currently {job_count} jobs running.',
+          f'The maximum to allow a new job to start is {max_jobs}.'
       ],
   )
 

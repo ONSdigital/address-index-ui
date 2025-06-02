@@ -9,6 +9,7 @@ from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inpu
 from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
+from page_helpers.error.error_utils import error_page_too_many_jobs
 
 from .utils.multiple_match_file_upload_utils import check_valid_upload, validate_limit_parameter
 from .utils.submit_multiple_match_api import multiple_address_match
@@ -64,11 +65,9 @@ def multiple_address():
     return page_error_annotation_multiple(page_name, all_user_input,
                                           error_description)
 
-  jobcount = count_active_jobs()
-  if jobcount > max_jobs:
-    jobs_error_description = f'Bulk service too busy, {jobcount} jobs running, maximum to allow a new job to start is {max_jobs}'
-    return page_error_annotation_multiple(page_name, all_user_input,
-                                     jobs_error_description)
+  job_count = count_active_jobs()
+  if job_count > max_jobs:
+    return error_page_too_many_jobs(page_name, all_user_input,job_count, max_jobs)
 
 
   multiple_address_match(file, all_user_input, download=True)
