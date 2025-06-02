@@ -108,7 +108,8 @@ def error_page_too_many_jobs(page_name, user_input,job_count, max_jobs):
       'Bulk job creation aborted. Service too busy.',
       [
           f'There are currently {job_count} jobs running.',
-          f'The maximum to allow a new job to start is {max_jobs}.'
+          f'A new job can only be initiated when there are {max_jobs} or fewer running concurrently.',
+          'Please try again later.'
       ],
   )
 
