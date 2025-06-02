@@ -18,7 +18,7 @@ BM_JWT_TOKEN_BEARER = 'Bearer ' + str(BM_JWT_TOKEN if BM_JWT_TOKEN else '')
 
 PROJECT_DOMAIN = os.getenv('PROJECT_DOMAIN')
 BM_API_URL = os.getenv('BM_API_URL')
-BM_MAX_JOBS = os.getenv('BM_MAX_JOBS',7)
+BM_MAX_JOBS = os.getenv('BM_MAX_JOBS',1)
 
 SESSION_COOKIE_SECURE = True
 AIMS_UI_PAGES_LOCATION = 'aims_ui_pages'
