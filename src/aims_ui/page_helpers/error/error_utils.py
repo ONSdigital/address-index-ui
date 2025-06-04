@@ -100,7 +100,7 @@ def error_page_xml(page_name, user_input):
 
 
 def error_page_too_many_jobs(page_name, user_input,job_count, max_jobs):
-  """ Return error page for too many BM jobs attack """
+  """ Return error page for too many BM jobs already in progress """
   jobs_error_description = f'Bulk service too busy, {job_count} jobs running, maximum to allow a new job to start is {max_jobs}'
   log_err(page_name, user_input, jobs_error_description)
   return page_error(
