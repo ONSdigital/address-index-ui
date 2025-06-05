@@ -4,6 +4,8 @@ from aims_ui.page_controllers.f_error_pages.page_error import page_error
 from aims_ui.page_controllers.f_error_pages.page_error_annotation_single import page_error_annotation_single
 from aims_ui.page_controllers.f_error_pages.page_service_error import page_service_error
 from aims_ui.page_helpers.error.error_logging import log_err, log_warn
+from aims_ui.page_controllers.f_error_pages.page_error_annotation_multiple import page_error_annotation_multiple
+
 """ Handle Errors Messages for User when connecting to and in the response of the API """
 
 
@@ -137,6 +139,42 @@ def clean_api_response(result):
     return str(result.text)
 
 
+def error_page_bm_response(page_name, user_input, result):
+  status_code = int(result.status_code)
+  clean_result = clean_api_response(result)
+
+  if status_code == 400:
+    log_err(page_name, user_input, f'Bad Request Error: "{clean_result}"')
+    # Handle errors that the API has a suggesgion to fix! (i.e. "input" cannot be empty)
+    primary_error_message = result.json().get('error', {})
+
+    return page_error_annotation_multiple(page_name, user_input,
+                                              primary_error_message)
+
+  if status_code == 500:
+    log_err(page_name, user_input, f'Server Error: "{clean_result}"')
+    return page_service_error(
+      page_name,
+     'Internal Server Error',
+     [
+       'There was an API error processing your request.',
+       'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+       clean_result
+    ],
+  )
+
+  log_err(page_name, user_input, f'Unknown HTTP error code: "{clean_result}"')
+  return page_service_error(
+    page_name,
+   'Unknown issue',
+   [
+     'An issue occured, we don\'t know much else.',
+     'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+     clean_result,
+   ],
+  )
+
+
 def error_page_api_response(page_name, user_input, result):
   status_code = int(result.status_code)
   clean_result = clean_api_response(result)
@@ -144,7 +182,6 @@ def error_page_api_response(page_name, user_input, result):
   # Error message from status message or first error in 'errors'
   primary_error_message = get_primary_error_message(page_name, user_input,
                                                     result)
-
   if status_code == 429:
     log_warn(page_name, user_input, f'Rate Limit Error: "{clean_result}"')
     return page_service_error(
