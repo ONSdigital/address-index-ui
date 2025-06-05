@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, session, url_for
+from flask import render_template, request, session, redirect, url_for
 from flask_login import login_required
 
 from aims_ui import app
@@ -9,7 +9,7 @@ from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inpu
 from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
-from aims_ui.page_helpers.error.error_utils import error_page_too_many_jobs
+from aims_ui.page_helpers.error.error_utils import error_page_too_many_jobs, error_page_bm_response
 
 from .utils.multiple_match_file_upload_utils import check_valid_upload, validate_limit_parameter
 from .utils.submit_multiple_match_api import multiple_address_match
@@ -70,8 +70,10 @@ def multiple_address():
     return error_page_too_many_jobs(page_name, all_user_input,job_count, max_jobs)
 
 
-  multiple_address_match(file, all_user_input, download=True)
+  result = multiple_address_match(file, all_user_input, download=True)
+  # Using url for get the location of the results page and forward the user
 
-  # Using urlfor get the location of the results page and forward the user
+  if result.status_code != 200:
+    return error_page_bm_response(page_name, all_user_input, result)
   return redirect(
-      url_for('multiple_address_results').replace('http', 'https', 1))
+    url_for('multiple_address_results').replace('http', 'https', 1))
