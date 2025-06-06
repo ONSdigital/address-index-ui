@@ -31,7 +31,7 @@ Required Variables (the UI will not run without these being set) ✅
 
 | Environment Variable    | Value                          | Bash Command                                          | PowerShell Command                                    |
 | ----------------------- | ------------------------------ | ----------------------------------------------------- | ----------------------------------------------------- |
-| `FLASK_APP`             | `"aims_ui"`                    | ```export FLASK_APP="aims_ui"```                          | `$Env:FLASK_APP = "aims_ui"`                          |
+| `FLASK_APP`             | `"aims_ui"`                    | `export FLASK_APP="aims_ui"`                          | `$Env:FLASK_APP = "aims_ui"`                          |
 | `FLASK_ENV`             | `"development"`                | `export FLASK_ENV="development"`                      | `$Env:FLASK_ENV = "development"`                      |
 
 
@@ -55,6 +55,134 @@ Optional Variables (set them according to your setup)
 | Environment Variable    | Options | Notes |
 | ----------------------- | ------------------------------ | ----------------------------------------------------- | 
 | `FLASK_ENV`             | `"development", "testing", "production"`| Use development when actively developing, testing for running tests and production in production |
+
+#### Required Variables (the UI will not run without these being set)
+
+**FLASK_APP**  
+Value: `"aims_ui"`
+
+```sh
+export FLASK_APP="aims_ui"
+```
+
+```powershell
+$Env:FLASK_APP = "aims_ui"
+```
+
+**FLASK_ENV**  
+Value: `"development"`
+
+```sh
+export FLASK_ENV="development"
+```
+
+```powershell
+$Env:FLASK_ENV = "development"
+```
+
+---
+
+#### Optional Variables (set them according to your setup)
+
+**API_AUTH_TYPE**  
+Value: `"JWT"`
+
+```sh
+export API_AUTH_TYPE="JWT"
+```
+
+```powershell
+$Env:API_AUTH_TYPE = "JWT"
+```
+
+**API_JWT_TOKEN***  
+Value: `[enter_jwt_token_here]`
+
+```sh
+export API_JWT_TOKEN="[enter_jwt_token_here]"
+```
+
+```powershell
+$Env:API_JWT_TOKEN = "[enter_jwt_token_here]"
+```
+
+**BM_API_URL**  
+Value: `[enter_bulk_match_url]`
+
+```sh
+export BM_API_URL="[enter_bulk_match_url]"
+```
+
+```powershell
+$Env:BM_API_URL = "[enter_bulk_match_url]"
+```
+
+**BM_JWT_TOKEN***  
+Value: `[enter_jwt_token_here]`
+
+```sh
+export BM_JWT_TOKEN="[enter_jwt_token_here]"
+```
+
+```powershell
+$Env:BM_JWT_TOKEN = "[enter_jwt_token_here]"
+```
+
+**API_JWT_K_VALUE***  
+Value: `[enter_API_JWT_K_VALUE_here]`
+
+```sh
+export API_JWT_K_VALUE="NA"
+```
+
+```powershell
+$Env:API_JWT_K_VALUE = "NA"
+```
+
+**API_BSC_AUTH_USERNAME**  
+Value: `[enter_bsc_username]`
+
+```sh
+export API_BSC_AUTH_USERNAME="[enter_bsc_username]"
+```
+
+```powershell
+$Env:API_BSC_AUTH_USERNAME = "[enter_bsc_username]"
+```
+
+**API_BSC_AUTH_PASSWORD**  
+Value: `[enter_bsc_password]`
+
+```sh
+export API_BSC_AUTH_PASSWORD="[enter_bsc_password]"
+```
+
+```powershell
+$Env:API_BSC_AUTH_PASSWORD = "[enter_bsc_password]"
+```
+
+**PROJECT_DOMAIN**  
+Value: `[enter_project_domain]`
+
+```sh
+export PROJECT_DOMAIN="[enter_project_domain]"
+```
+
+```powershell
+$Env:PROJECT_DOMAIN = "[enter_project_domain]"
+```
+
+**USER_AUTHS**  
+Value: `{"developers":["NotLoggedinUser"]}`
+
+```sh
+export USER_AUTHS='{"developers":["NotLoggedinUser"]}'
+```
+
+```powershell
+$Env:USER_AUTHS = '{"developers":["NotLoggedinUser"]}'
+```
+
 
 4) Install Python Prerequisites
 
