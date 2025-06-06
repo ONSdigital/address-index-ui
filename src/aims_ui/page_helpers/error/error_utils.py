@@ -148,7 +148,6 @@ def get_primary_bm_error(result):
     return clean_api_response(result)
 
 
-
 def error_page_bm_response(page_name, user_input, result):
   status_code = int(result.status_code)
   clean_result = clean_api_response(result)
@@ -157,9 +156,14 @@ def error_page_bm_response(page_name, user_input, result):
   # most errors will be 400s
   if status_code == 400:
     log_err(page_name, user_input, f'Bad Request Error: "{clean_result}"')
-
-    return page_error_annotation_multiple(page_name, user_input,
-                                              primary_error_message)
+    return page_error(
+      page_name,
+     f'{status_code} error: Bad Request',
+     [
+     'The AIMS Bulk Manager has reported the following problem:',
+     primary_error_message
+   ],
+  )
 
   # catch all for non-400s
   log_err(page_name, user_input, f'{status_code} error: "{clean_result}"')
