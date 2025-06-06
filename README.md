@@ -29,19 +29,13 @@ If users want to run the UI and API seperately, it is recomended you use the bun
 
 Required Variables (the UI will not run without these being set) ✅
 
-| Environment Variable    | Value                          | Bash Command                                          | PowerShell Command                                    |
+| Environment Variable    | Value                          | Bash Command                                          | Command Prompt Command                              | PowerShell Command                                    |
 | ----------------------- | ------------------------------ | ----------------------------------------------------- | ----------------------------------------------------- |
-| `FLASK_APP`             | `"aims_ui"`                    | `export FLASK_APP="aims_ui"`                          | `$Env:FLASK_APP = "aims_ui"`                          |
-| `FLASK_ENV`             | `"development"`                | `export FLASK_ENV="development"`                      | `$Env:FLASK_ENV = "development"`                      |
-
+| `FLASK_APP`             | `"aims_ui"`                    | `export FLASK_APP="aims_ui"`                          | `set FLASK_APP=aims_ui`                              | `$Env:FLASK_APP = "aims_ui"`                          |
+| `FLASK_ENV`             | `"development"`                | `export FLASK_ENV="development"`                      | `set FLASK_ENV=development`                          | `$Env:FLASK_ENV = "development"`                      |
 
 Optional Variables (set them according to your setup)
 | Environment Variable    | Value                          | Bash Command                                          | Command Prompt Command                              | PowerShell Command                                    |
-| ----------------------- | ------------------------------ | ----------------------------------------------------- | --------------------------------------------------- | ----------------------------------------------------- |
-| `FLASK_APP`             | `"aims_ui"`                    | `export FLASK_APP="aims_ui"`                          | `set FLASK_APP=aims_ui`                              | `$Env:FLASK_APP = "aims_ui"`                          |
-| `FLASK_ENV`             | `"development"`                | `export FLASK_ENV="development"`                      | `set FLASK_ENV=development`                          | `$Env:FLASK_ENV = "development"`                      |
-|                         |                                |                                                       |                                                     |                                                       |
-| **Optional Variables (set them according to your setup)** |                                |                                                       |                                                     |                                                       |
 | `API_AUTH_TYPE`         | `"JWT"`                        | `export API_AUTH_TYPE="JWT"`                          | `set API_AUTH_TYPE=JWT`                              | `$Env:API_AUTH_TYPE = "JWT"`                          |
 | `API_JWT_TOKEN`*        | `[enter_jwt_token_here]`       | `export API_JWT_TOKEN="[enter_jwt_token_here]"`       | `set API_JWT_TOKEN=[enter_jwt_token_here]`           | `$Env:API_JWT_TOKEN = "[enter_jwt_token_here]"`       |
 | `BM_API_URL`            | `[enter_bulk_match_url]`       | `export BM_API_URL="[enter_bulk_match_url]"`          | `set BM_API_URL=[enter_bulk_match_url]`              | `$Env:BM_API_URL = "[enter_bulk_match_url]"`          |
