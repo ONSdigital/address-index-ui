@@ -139,38 +139,36 @@ def clean_api_response(result):
     return str(result.text)
 
 
+def get_primary_bm_error(result):
+# Bulk manager validation error responses have an element called error
+# but for other problems it is possible for this element to be absent e.g. backend not found
+  try:
+    return result.json().get('error', {})
+  except:
+    return clean_api_response(result)
+
+
+
 def error_page_bm_response(page_name, user_input, result):
   status_code = int(result.status_code)
   clean_result = clean_api_response(result)
+  primary_error_message = get_primary_bm_error(result)
 
+  # most errors will be 400s
   if status_code == 400:
     log_err(page_name, user_input, f'Bad Request Error: "{clean_result}"')
-    # Handle errors that the API has a suggesgion to fix! (i.e. "input" cannot be empty)
-    primary_error_message = result.json().get('error', {})
 
     return page_error_annotation_multiple(page_name, user_input,
                                               primary_error_message)
 
-  if status_code == 500:
-    log_err(page_name, user_input, f'Server Error: "{clean_result}"')
-    return page_service_error(
-      page_name,
-     'Internal Server Error',
-     [
-       'There was an API error processing your request.',
-       'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
-       clean_result
-    ],
-  )
-
-  log_err(page_name, user_input, f'Unknown HTTP error code: "{clean_result}"')
+  # catch all for non-400s
+  log_err(page_name, user_input, f'{status_code} error: "{clean_result}"')
   return page_service_error(
     page_name,
-   'Unknown issue',
+   f'{status_code} error',
    [
-     'An issue occured, we don\'t know much else.',
-     'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
      clean_result,
+     'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
    ],
   )
 
