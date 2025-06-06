@@ -31,7 +31,7 @@ Required Variables (the UI will not run without these being set) ✅
 
 | Environment Variable    | Value                          | Bash Command                                          | PowerShell Command                                    |
 | ----------------------- | ------------------------------ | ----------------------------------------------------- | ----------------------------------------------------- |
-| `FLASK_APP`             | `"aims_ui"`                    | `export FLASK_APP="aims_ui"`                          | `$Env:FLASK_APP = "aims_ui"`                          |
+| `FLASK_APP`             | `"aims_ui"`                    | ```export FLASK_APP="aims_ui"```                          | `$Env:FLASK_APP = "aims_ui"`                          |
 | `FLASK_ENV`             | `"development"`                | `export FLASK_ENV="development"`                      | `$Env:FLASK_ENV = "development"`                      |
 
 
