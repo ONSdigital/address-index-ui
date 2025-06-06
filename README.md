@@ -56,65 +56,108 @@ Optional Variables (set them according to your setup)
 | ----------------------- | ------------------------------ | ----------------------------------------------------- | 
 | `FLASK_ENV`             | `"development", "testing", "production"`| Use development when actively developing, testing for running tests and production in production |
 
-
 4) Install Python Prerequisites
 
-`pip install -r requirements.txt`
+```sh
+pip install -r requirements.txt
+```
 
-   If also running tests:
+If also running tests:
 
-`pip install -r requirements_test.txt`
+```sh
+pip install -r requirements_test.txt
+```
 
 5) Install Project as Python Package
 
 Run in the root directory
 
-`pip install -e .`
+```sh
+pip install -e .
+```
 
 6) Install Design System Components
 
-Run the script located in this project at 
+Run the script located in this project at
 
-`scripts/load_templates.sh`
+```sh
+scripts/load_templates.sh
+```
 
 7) Running the UI
 
-`python3 -m flask run`
+```sh
+python3 -m flask run
+```
 
-Or to run as a developer, where every file save will restart the flask application:
+Or to run as a developer (auto-restarts on file save):
 
-`python3 run_ui_developer.py`
+```sh
+python3 run_ui_developer.py
+```
 
-### Tools ### 
+### Tools ###
 
 #### Python
+
 1) Python Linters
 
-To lint python code using [https://github.com/google/yapf](YAPF)
+To lint Python code using [YAPF](https://github.com/google/yapf)
 
-`yapf --style='{based_on_style: pep8, indent_width: 2}' -ir .`
+```sh
+yapf --style='{based_on_style: pep8, indent_width: 2}' -ir .
+```
 
 2) To Lint Imports Specifically
 
-   - Pre-requisites: `pip install isort`
-                     `pip install autoflake`
+Pre-requisites: 
 
-`autoflake --in-place --remove-all-unused-imports --remove-unused-variables \"${file}\"`
+```sh
+pip install isort
+pip install autoflake
+```
 
-`isort \"${file}\`
+```sh
+autoflake --in-place --remove-all-unused-imports --remove-unused-variables "${file}"
+```
+
+```sh
+isort "${file}"
+```
 
 #### JS/MJS ####
 
-1) Linting js files
+1) Linting JS files
 
-`npm run lint`  
+```sh
+npm run lint
+```
 
-### Tests ### 
-To test the full application with [https://github.com/microsoft/playwright](Playwright)
-1. Ensure the API is up and running on port 9001
-2. Run the UI with the wsgi.py script `python wsgi.py`
-3. Headless: `python3 -m pytest tests/pytest_tests -n 4`
-4. Visible: `python3 -m pytest tests/pytest_tests --browser chromium --slowmo 2000 --headed`
+### Tests ###
 
-To run the standalone js tests:
-`npm run test:jest`
+To test the full application with [Playwright](https://github.com/microsoft/playwright)
+
+1. Ensure the API is up and running on port 9001  
+2. Run the UI with the wsgi.py script
+
+```sh
+python wsgi.py
+```
+
+3. Headless:
+
+```sh
+python3 -m pytest tests/pytest_tests -n 4
+```
+
+4. Visible:
+
+```sh
+python3 -m pytest tests/pytest_tests --browser chromium --slowmo 2000 --headed
+```
+
+To run the standalone JS tests:
+
+```sh
+npm run test:jest
+```
