@@ -251,10 +251,6 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
                str(url) + '"  with UserId as "' + str(get_username()) + '"' +
                'Request details: ' + str(log_message))
 
-  if r.status_code != 200:
-    logging.error(log_message)
-    raise Exception(f"Request failed with status code {r.status_code}")
-
   return r
 
 
