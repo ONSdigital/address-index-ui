@@ -1,92 +1,164 @@
-# README
+# README #
 
-It is now recomended users download the entire AIMS stack including the UI and API bundled together with pre-loaded example address data from [https://github.com/ONSdigital/aims-diy](https://github.com/ONSdigital/aims-diy) as it's the easiest way to see the UI in action.
+### What is this repository for? ###
+
+This repository contains the Flask web app that is used to interact with the [Address Index API ](https://github.com/ONSdigital/aims-api/).
+
+A functioning version of the API is required to use this application, which can be setup using the Address Index API instructions.
+
+### How do I run the UI? ###
+
+It is now recomended users download the entire AIMS stack including the UI and API bundled together with pre-loaded example address data from [aims-diy](https://github.com/ONSdigital/aims-diy) as it's the easiest way to see the UI in action.
 
 The UI can be run without an API, however many features that require the API will not work as intended. 
 
-Therefore if you want to run the UI locally you will need to connect it to an instance of AIMS. It is recomended you use the bundled version of the API from [https://github.com/ONSdigital/aims-diy](https://github.com/ONSdigital/aims-diy) while commenting out the "UI" portion of the docker-compose.
+If users want to run the UI and API seperately, it is recomended you use the bundled version of the API from the [aims-diy repositroy](https://github.com/ONSdigital/aims-diy), while commenting out the "UI" portion of the docker-compose.
 
-Pre-requisites:
-* Access to an API as described above
-* Python 3.12.1
+### How do I get set up for development? ###
 
-## Setup Environment Variables
+1) Required Installations
+   * Access to an API as described above
+   * Python 3.12.1
 
-| Environment Variable         | Value                      | Command                                     |
-|-----------------------------|----------------------------|---------------------------------------------|
-| `export FLASK_APP`          | `"aims_ui"`                | `export FLASK_APP="aims_ui"`                 |
-| `export FLASK_ENV`          | `"development"`            | `export FLASK_ENV="development"`             |
-| `export API_AUTH_TYPE`      | `"JWT"`                    | `export API_AUTH_TYPE="JWT"`                 |
-| `export API_JWT_TOKEN`      | `[enter_jwt_token_here]`   | `export API_JWT_TOKEN="[enter_jwt_token_here]"` |
-| `export BM_API_URL`         | `[enter_bulk_match_url]`   | `export BM_API_URL="[enter_bulk_match_url]"` |
-| `export BM_JWT_TOKEN`       | `[enter_jwt_token_here]`   | `export BM_JWT_TOKEN="[enter_jwt_token_here]"` |
-| `export API_JWT_K_VALUE` | `[enter_API_JWT_K_VALUE_here] | `export API_JWT_K_VALUE="NA"` |
-| `export API_BSC_AUTH_USERNAME` | `[enter_bsc_username]`  | `export API_BSC_AUTH_USERNAME="[enter_bsc_username]"` |
-| `export API_BSC_AUTH_PASSWORD` | `[enter_bsc_password]`  | `export API_BSC_AUTH_PASSWORD="[enter_bsc_password]"` |
-| `export PROJECT_DOMAIN`     | `[enter_project_domain]`   | `export PROJECT_DOMAIN="[enter_project_domain]"` |
+2) Create Project from GitHub (IntelliJ shown as example)
+   * File, New, Project from Version Control, GitHub
+   * Git Repository URL - select "https://github.com/ONSdigital/address-index-ui"
+   * Clone
+
+3) Setup Environment Variables
+
+Required Variables (the UI will not run without these being set) ✅
+
+| Environment Variable    | Value                          | Bash Command                                          | Command Prompt Command                              | PowerShell Command                                    |
+| ----------------------- | ------------------------------ | ----------------------------------------------------- | --------------------------------------------------- | ----------------------------------------------------- |
+| `FLASK_APP`             | `"aims_ui"`                    | `export FLASK_APP="aims_ui"`                          | `set FLASK_APP=aims_ui`                              | `$Env:FLASK_APP = "aims_ui"`                          |
+| `FLASK_ENV`             | `"development"`                | `export FLASK_ENV="development"`                      | `set FLASK_ENV=development`                          | `$Env:FLASK_ENV = "development"`                      |
+
+Optional Variables (set them according to your setup) 
+
+| Environment Variable    | Value                          | Bash Command                                          | Command Prompt Command                              | PowerShell Command                                    |
+| ----------------------- | ------------------------------ | ----------------------------------------------------- | --------------------------------------------------- | ----------------------------------------------------- |
+| `API_AUTH_TYPE`         | `"JWT"`                        | `export API_AUTH_TYPE="JWT"`                          | `set API_AUTH_TYPE=JWT`                              | `$Env:API_AUTH_TYPE = "JWT"`                          |
+| `API_JWT_TOKEN`*        | `[enter_jwt_token_here]`       | `export API_JWT_TOKEN="[enter_jwt_token_here]"`       | `set API_JWT_TOKEN=[enter_jwt_token_here]`           | `$Env:API_JWT_TOKEN = "[enter_jwt_token_here]"`       |
+| `BM_API_URL`            | `[enter_bulk_match_url]`       | `export BM_API_URL="[enter_bulk_match_url]"`          | `set BM_API_URL=[enter_bulk_match_url]`              | `$Env:BM_API_URL = "[enter_bulk_match_url]"`          |
+| `BM_JWT_TOKEN`*         | `[enter_jwt_token_here]`       | `export BM_JWT_TOKEN="[enter_jwt_token_here]"`        | `set BM_JWT_TOKEN=[enter_jwt_token_here]`            | `$Env:BM_JWT_TOKEN = "[enter_jwt_token_here]"`        |
+| `BM_MAX_JOBS`           | `"1"`                          | `export BM_MAX_JOBS="1"`                              | `set BM_MAX_JOBS=1`                                  | `$Env:BM_MAX_JOBS = "1"`                              |
+| `API_JWT_K_VALUE`*      | `[enter_API_JWT_K_VALUE_here]` | `export API_JWT_K_VALUE="NA"`                         | `set API_JWT_K_VALUE=NA`                             | `$Env:API_JWT_K_VALUE = "NA"`                         |
+| `API_BSC_AUTH_USERNAME` | `[enter_bsc_username]`         | `export API_BSC_AUTH_USERNAME="[enter_bsc_username]"` | `set API_BSC_AUTH_USERNAME=[enter_bsc_username]`     | `$Env:API_BSC_AUTH_USERNAME = "[enter_bsc_username]"` |
+| `API_BSC_AUTH_PASSWORD` | `[enter_bsc_password]`         | `export API_BSC_AUTH_PASSWORD="[enter_bsc_password]"` | `set API_BSC_AUTH_PASSWORD=[enter_bsc_password]`     | `$Env:API_BSC_AUTH_PASSWORD = "[enter_bsc_password]"` |
+| `PROJECT_DOMAIN`        | `[enter_project_domain]`       | `export PROJECT_DOMAIN="[enter_project_domain]"`      | `set PROJECT_DOMAIN=[enter_project_domain]`          | `$Env:PROJECT_DOMAIN = "[enter_project_domain]"`      |
+| `USER_AUTHS`            | `{"developers":["NotLoggedinUser"]}`| `export USER_AUTHS='{"developers":["NotLoggedinUser"]}'`| `set USER_AUTHS={"developers":["NotLoggedinUser"]}`   | `$Env:USER_AUTHS='{"developers":["NotLoggedinUser"]}'` |
+
 *Note: JWT token is exported WITHOUT 'Bearer ' before it*
 
-Set the "groups" of users (by default all users including the "NotLoggedInUser" are in the "default" group
-`export USER_AUTHS='{"developers":["NotLoggedinUer"]}'`
+
+| Environment Variable    | Options | Notes |
+| ----------------------- | ------------------------------ | ----------------------------------------------------- | 
+| `FLASK_ENV`             | `"development", "testing", "production"`| Use development when actively developing, testing for running tests and production in production |
 
 
-## Install Python Packages
+4) Install Python Prerequisites
 
-`pip install -r requirements.txt`
+```sh
+pip install -r requirements.txt
+```
 
-If running tests as well
-`pip install -r requirements_test.txt`
+If also running tests:
 
-## Install project as a python package*
+```sh
+pip install -r requirements_test.txt
+```
 
-`pip install -e .`
+5) Install Project as Python Package
 
-# To run Flask Project
+Run in the root directory
 
-`python3 -m flask run`
+```sh
+pip install -e .
+```
 
-# To run as a developer (Any file-saves restart server)
-`python3 run_ui_developer.py`
+6) Install Design System Components
 
-## To lint code
+Run the script located in this project at
 
-### For python:
-`yapf --style='{based_on_style: pep8, indent_width: 2}' -ir .`
-### For python imports:
-   - Pre-requisites: `pip install isort`
-                     `pip install autoflake`
-`autoflake --in-place --remove-all-unused-imports --remove-unused-variables \"${file}\"`
-`isort \"${file}\`
-This will remove unused imoports and organise imports consistantly
+```sh
+scripts/load_templates.sh
+```
 
-### For js/mjs:
-`npm run lint`  
+7) Running the UI
 
-### To Test
+```sh
+python3 -m flask run
+```
+
+Or to run as a developer (auto-restarts on file save):
+
+```sh
+python3 run_ui_developer.py
+```
+
+### Tools ###
 
 #### Python
-1. Ensure the API is up and running on port 9001
-2. Run the UI with the wsgi.py script `python wsgi.py`
-3. Headless: `python3 -m pytest tests/pytest_tests -n 4`
-4. Visible: `python3 -m pytest tests/pytest_tests --browser chromium --slowmo 2000 --headed`
 
-### Javascript 
-`npm run test:jest`
+1) Python Linters
 
-FOR WINDOWS USERS ONLY:
+To lint Python code using [YAPF](https://github.com/google/yapf)
 
-*Ensure you have python 3.9 installed*
+```sh
+yapf --style='{based_on_style: pep8, indent_width: 2}' -ir .
+```
 
-*Run a command window as an administrator and cd to the project root*
-`pip install -r requirements.txt`
+2) To Lint Imports Specifically
 
-*Download the design system templates from https://github.com/ONSdigital/design-system/releases*
+Pre-requisites: 
 
-*Unzip the components and layout directories into the project's templates folder*
+```sh
+pip install isort
+pip install autoflake
+```
 
-*Set environment variables and run (on localhost:5000)*
-`set FLASK_ENV=development`
-`set FLASK_APP=src/aims_ui`
-`python -m flask run`
+```sh
+autoflake --in-place --remove-all-unused-imports --remove-unused-variables "${file}"
+```
 
-* Note that the above is for Command Prompt not Powershell - use `$Env:<variable-name>`for powershell launch
+```sh
+isort "${file}"
+```
+
+#### JS/MJS ####
+
+1) Linting JS files
+
+```sh
+npm run lint
+```
+
+### Tests ###
+
+To test the full application with [Playwright](https://github.com/microsoft/playwright)
+
+1. Ensure the API is up and running on port 9001  
+2. Run the UI with the wsgi.py script
+
+```sh
+python wsgi.py
+```
+
+3. Headless:
+
+```sh
+python3 -m pytest tests/pytest_tests -n 4
+```
+
+4. Visible:
+
+```sh
+python3 -m pytest tests/pytest_tests --browser chromium --slowmo 2000 --headed
+```
+
+To run the standalone JS tests:
+
+```sh
+npm run test:jest
+```
