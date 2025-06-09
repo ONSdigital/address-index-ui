@@ -4,6 +4,8 @@ from aims_ui.page_controllers.f_error_pages.page_error import page_error
 from aims_ui.page_controllers.f_error_pages.page_error_annotation_single import page_error_annotation_single
 from aims_ui.page_controllers.f_error_pages.page_service_error import page_service_error
 from aims_ui.page_helpers.error.error_logging import log_err, log_warn
+from aims_ui.page_controllers.f_error_pages.page_error_annotation_multiple import page_error_annotation_multiple
+
 """ Handle Errors Messages for User when connecting to and in the response of the API """
 
 
@@ -137,6 +139,44 @@ def clean_api_response(result):
     return str(result.text)
 
 
+def get_primary_bm_error(result):
+# Bulk manager validation error responses have an element called error
+# but for other problems it is possible for this element to be absent e.g. backend not found
+  try:
+    return result.json().get('error', {})
+  except:
+    return clean_api_response(result)
+
+
+def error_page_bm_response(page_name, user_input, result):
+  status_code = int(result.status_code)
+  clean_result = clean_api_response(result)
+  primary_error_message = get_primary_bm_error(result)
+
+  # most errors will be 400s
+  if status_code == 400:
+    log_err(page_name, user_input, f'Bad Request Error: "{clean_result}"')
+    return page_error(
+      page_name,
+     f'{status_code} error: Bad Request',
+     [
+     'The AIMS Bulk Manager has reported the following problem:',
+     primary_error_message
+   ],
+  )
+
+  # catch all for non-400s
+  log_err(page_name, user_input, f'{status_code} error: "{clean_result}"')
+  return page_service_error(
+    page_name,
+   f'{status_code} error',
+   [
+     clean_result,
+     'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+   ],
+  )
+
+
 def error_page_api_response(page_name, user_input, result):
   status_code = int(result.status_code)
   clean_result = clean_api_response(result)
@@ -144,7 +184,7 @@ def error_page_api_response(page_name, user_input, result):
   # Error message from status message or first error in 'errors'
   primary_error_message = get_primary_error_message(page_name, user_input,
                                                     result)
-
+  
   if status_code == 429:
     log_warn(page_name, user_input, f'Rate Limit Error: "{clean_result}"')
     return page_service_error(
