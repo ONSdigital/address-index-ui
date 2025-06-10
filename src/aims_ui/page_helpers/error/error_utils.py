@@ -4,13 +4,12 @@ from aims_ui.page_controllers.f_error_pages.page_error import page_error
 from aims_ui.page_controllers.f_error_pages.page_error_annotation_single import page_error_annotation_single
 from aims_ui.page_controllers.f_error_pages.page_service_error import page_service_error
 from aims_ui.page_helpers.error.error_logging import log_err, log_warn
-from aims_ui.page_controllers.f_error_pages.page_error_annotation_multiple import page_error_annotation_multiple
 
 """ Handle Errors Messages for User when connecting to and in the response of the API """
 
 
 def get_primary_error_message(full_response, page_name, user_input):
-  """ Get the primary error message from the API response - it could be in mutliple places """
+  """ Get the primary error message from the API response - it could be in multiple places """
   # Handle HTML responses (Can happen if the gateway is completely down)
   if 'The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds' in full_response:
     return 'The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds. This is probably because the Gateway is down.'
@@ -27,7 +26,7 @@ def get_primary_error_message(full_response, page_name, user_input):
     return 'Error parsing issue from the API'
 
   # In some cases the error will be in full_response.status.message "Missing parameter: input"
-  # In other cases the error will be in full_repsonse.errors [{'code':8, 'message': 'Limit parameter is too large'}]
+  # In other cases the error will be in full_response.errors [{'code':8, 'message': 'Limit parameter is too large'}]
   primary_error_message = api_response.get(
       'message', 'No further information provided by the API')
   if json_result.get('errors'):
@@ -184,7 +183,7 @@ def error_page_api_response(page_name, user_input, result):
   # Error message from status message or first error in 'errors'
   primary_error_message = get_primary_error_message(page_name, user_input,
                                                     result)
-  
+
   if status_code == 429:
     log_warn(page_name, user_input, f'Rate Limit Error: "{clean_result}"')
     return page_service_error(
@@ -211,7 +210,7 @@ def error_page_api_response(page_name, user_input, result):
 
   if status_code == 400:
     log_err(page_name, user_input, f'Bad Request Error: "{clean_result}"')
-    # Handle errors that the API has a suggesgion to fix! (i.e. "input" cannot be empty)
+    # Handle errors that the API has a suggestion to fix! (i.e. "input" cannot be empty)
     primary_error_message = get_primary_error_message(result, page_name,
                                                       user_input)
 
@@ -224,7 +223,7 @@ def error_page_api_response(page_name, user_input, result):
     primary_error_message = get_primary_error_message(result, page_name,
                                                       user_input)
     if page_name == 'postcode':
-      primary_error_message = 'Not found error. This is likely due to a blank search feild. Please check your inputs.'
+      primary_error_message = 'Not found error. This is likely due to a blank search field. Please check your inputs.'
 
     return page_error_annotation_single(page_name,
                                         user_input,
@@ -250,7 +249,7 @@ def error_page_api_response(page_name, user_input, result):
         page_name,
         'Bad Gateway Error',
         [
-            'An issue occured from a bad gateway.',
+            'An issue occurred from a bad gateway.',
             'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
             primary_error_message,
         ],
@@ -261,7 +260,7 @@ def error_page_api_response(page_name, user_input, result):
       page_name,
       'Unknown issue',
       [
-          'An issue occured, we don\'t know much else.',
+          'An issue occurred, we don\'t know much else.',
           'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
           primary_error_message,
       ],

@@ -8,11 +8,11 @@ A functioning version of the API is required to use this application, which can 
 
 ### How do I run the UI? ###
 
-It is now recomended users download the entire AIMS stack including the UI and API bundled together with pre-loaded example address data from [aims-diy](https://github.com/ONSdigital/aims-diy) as it's the easiest way to see the UI in action.
+It is now recommended users download the entire AIMS stack including the UI and API bundled together with pre-loaded example address data from [aims-diy](https://github.com/ONSdigital/aims-diy) as it's the easiest way to see the UI in action.
 
 The UI can be run without an API, however many features that require the API will not work as intended. 
 
-If users want to run the UI and API seperately, it is recomended you use the bundled version of the API from the [aims-diy repositroy](https://github.com/ONSdigital/aims-diy), while commenting out the "UI" portion of the docker-compose.
+If users want to run the UI and API separately, it is recomended you use the bundled version of the API from the [aims-diy repositroy](https://github.com/ONSdigital/aims-diy), while commenting out the "UI" portion of the docker-compose.
 
 ### How do I get set up for development? ###
 
