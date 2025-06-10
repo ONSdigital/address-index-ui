@@ -35,7 +35,7 @@ def test_epoch_options(page: Page, set_inputs):
 illegal_postcode_inputs = [
     {
         'postcode_input':'',
-        'error_message': 'Not found error. This is likely due to a blank search feild. Please check your inputs.'
+        'error_message': 'Not found error. This is likely due to a blank search field. Please check your inputs.'
     },
     {
         'postcode_input':'CHEESE',
