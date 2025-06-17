@@ -4,7 +4,6 @@ from aims_ui.page_controllers.f_error_pages.page_error import page_error
 from aims_ui.page_controllers.f_error_pages.page_error_annotation_single import page_error_annotation_single
 from aims_ui.page_controllers.f_error_pages.page_service_error import page_service_error
 from aims_ui.page_helpers.error.error_logging import log_err, log_warn
-
 """ Handle Errors Messages for User when connecting to and in the response of the API """
 
 
@@ -100,7 +99,7 @@ def error_page_xml(page_name, user_input):
   )
 
 
-def error_page_too_many_jobs(page_name, user_input,job_count, max_jobs):
+def error_page_too_many_jobs(page_name, user_input, job_count, max_jobs):
   """ Return error page for too many BM jobs already in progress """
   jobs_error_description = f'Bulk service too busy, {job_count} jobs running, maximum to allow a new job to start is {max_jobs}'
   log_err(page_name, user_input, jobs_error_description)
@@ -139,8 +138,8 @@ def clean_api_response(result):
 
 
 def get_primary_bm_error(result):
-# Bulk manager validation error responses have an element called error
-# but for other problems it is possible for this element to be absent e.g. backend not found
+  # Bulk manager validation error responses have an element called error
+  # but for other problems it is possible for this element to be absent e.g. backend not found
   try:
     return result.json().get('error', {})
   except:
@@ -156,23 +155,23 @@ def error_page_bm_response(page_name, user_input, result):
   if status_code == 400:
     log_err(page_name, user_input, f'Bad Request Error: "{clean_result}"')
     return page_error(
-      page_name,
-     f'{status_code} error: Bad Request',
-     [
-     'The AIMS Bulk Manager has reported the following problem:',
-     primary_error_message
-   ],
-  )
+        page_name,
+        f'{status_code} error: Bad Request',
+        [
+            'The AIMS Bulk Manager has reported the following problem:',
+            primary_error_message
+        ],
+    )
 
   # catch all for non-400s
   log_err(page_name, user_input, f'{status_code} error: "{clean_result}"')
   return page_service_error(
-    page_name,
-   f'{status_code} error',
-   [
-     clean_result,
-     'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
-   ],
+      page_name,
+      f'{status_code} error',
+      [
+          clean_result,
+          'If this problem persists, please contact the AIMS team using the link at the bottom of the page.',
+      ],
   )
 
 
