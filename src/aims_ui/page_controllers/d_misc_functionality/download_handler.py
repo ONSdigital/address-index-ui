@@ -14,6 +14,8 @@ from aims_ui.page_controllers.f_error_pages.page_error import page_error
 
 # For the gz download
 
+page_name = 'download_handler'
+
 
 @login_required
 @app.route('/autosuggest/<autosuggest_type>.json', methods=['GET', 'POST'])
@@ -98,7 +100,17 @@ def download_handler(file_name):
     # Now download that gzip location, extract and send as a download
     # The file name is now the JOBID (do a server lookup, find the download link to avoid injection
 
+    # False if user is not authorised
     url = job_url_if_authorised(file_name)
+
+    if not url:
+      return page_error(
+          called_from_page_name=page_name,
+          error_title='401 - User is not authorised',
+          error_description=[
+              'You are not authorised to download this file.',
+              'Please contact the AIMS team if you think this is an error.'
+          ])
 
     # Download the csv.gz
     response = requests.get(url)
@@ -114,10 +126,13 @@ def download_handler(file_name):
 
   # if the file_name is not found, return a 404
   if not f:
-    return page_error(None,
-                      '',
-                      override_error_description='File not found',
-                      override_error_name='404')
+    return page_error(
+        called_from_page_name=page_name,
+        error_title='404 - File not found',
+        error_description=[
+            'This file does not exist or has been removed.',
+            'Please contact the AIMS team if you think this is an error.'
+        ])
 
   return send_file(f,
                    mimetype='text/csv',

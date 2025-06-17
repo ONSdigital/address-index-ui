@@ -19,6 +19,7 @@ page_name = 'multiple_address'
 
 max_jobs = app.config.get('BM_MAX_JOBS')
 
+
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def multiple_address():
@@ -67,8 +68,8 @@ def multiple_address():
 
   job_count = count_active_jobs()
   if job_count > max_jobs:
-    return error_page_too_many_jobs(page_name, all_user_input,job_count, max_jobs)
-
+    return error_page_too_many_jobs(page_name, all_user_input, job_count,
+                                    max_jobs)
 
   result = multiple_address_match(file, all_user_input, download=True)
   # Using url for get the location of the results page and forward the user
@@ -76,4 +77,4 @@ def multiple_address():
   if result.status_code != 200:
     return error_page_bm_response(page_name, all_user_input, result)
   return redirect(
-    url_for('multiple_address_results').replace('http', 'https', 1))
+      url_for('multiple_address_results').replace('http', 'https', 1))

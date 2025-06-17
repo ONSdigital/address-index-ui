@@ -111,7 +111,7 @@ def count_active_jobs():
   jobs_json = r.json().get('jobs', [])
 
   for job in jobs_json:
-    jobcount = jobcount +1
+    jobcount = jobcount + 1
     # any other info to be gathered?
 
   logging.info(f'Bulk Jobs Running: {jobcount}')
