@@ -1,4 +1,4 @@
-setuptools==70.0.0
+setuptools==78.1.1
 Flask==3.0.1
 flask-login==0.6.3
 flask-session==0.3.2
@@ -6,7 +6,7 @@ six
 importlib-metadata==4.5.0
 requests
 Werkzeug~=3.0.1
-gunicorn==22.0.0
+gunicorn==23.0.0
 itsdangerous==2.1.2
 pyjwt==2.4.0
 cryptography==44.0.1
