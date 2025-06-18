@@ -2,6 +2,20 @@
 import os
 import json
 import base64
+import logging
+
+
+# Temporary: refactor these from google_utils
+def get_username(user_email):
+  username = user_email.replace('accounts.google.com:', '')
+  username = username.replace('@ons.gov.uk', '')
+
+  return username
+
+def get_usernames(usernames):
+  """ Run the 'get_username' function on a list of usernames """
+  return [ get_username(x) for x in usernames ] 
+
 
 # Port that the Flask server will run on
 UI_EXPOSED_PORT = 5000
@@ -52,19 +66,22 @@ DEFAULT_BULK_LIMITS = {
 USER_GROUPS = [
     {
         'name': 'default',  # UNSPECIFIED USERS WILL BE IN THIS GROUP
-        'usernames': USER_AUTHS.get('default', []),
+        'description': 'Users that do not fall into another group will be part of this group',  
+        'usernames': get_usernames(USER_AUTHS.get('default', [])),
         'pages_to_remove': ['custom_response'],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'developers',
-        'usernames': USER_AUTHS.get('developers', ['felix.aldam-gates']),
+        'description': 'Developer users who might need more granular access to the API and are comfortable dealing with errors and less guard rails',
+        'usernames': get_usernames(USER_AUTHS.get('developers', [])),
         'pages_to_remove': [],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'bulk_removed',
-        'usernames': USER_AUTHS.get('bulk_removed', []),
+        'description': 'Completely remove access to the bulk match pages',
+        'usernames': get_usernames(USER_AUTHS.get('bulk_removed', [])),
         'pages_to_remove': [
             'multiple_address_original', 'uprn_multiple_match',
             'multiple_address', 'multiple_address_results'
@@ -73,7 +90,8 @@ USER_GROUPS = [
     },
     {
         'name': 'limited_bulk',
-        'usernames': USER_AUTHS.get('limited_bulk', []),
+        'description': 'Limit the matching capacity but leave access to the pages',
+        'usernames': get_usernames(USER_AUTHS.get('limited_bulk', [])), 
         'pages_to_remove': [],
         'bulk_limits': {
             'limit_mini_bulk': 10,
@@ -81,8 +99,25 @@ USER_GROUPS = [
             'limit_uprn_match': 50,
         }
     },
+
+    {
+        'name': 'bulk_external',  
+        'description': 'Changes the way the bulk works, only returning UPRNS instead of other values for licensing compliance',
+        'usernames': get_usernames(USER_AUTHS.get('bulk_external', [])),
+        'pages_to_remove': ['custom_response', 'multiple_address_results', 
+                            'multiple_address',
+                            'singlesearch', 'uprn', 'postcode', 'typeahead',
+                            'multiple_address', 'custom_response', 
+                            ],
+        'bulk_limits': DEFAULT_BULK_LIMITS,
+    },
 ]
 # yapf: enable
+
+# REMOVE ME BEFORE PROD
+logging.info('Groups Info: ' + str(USER_GROUPS))
+logging.info('Groups Info: ' + str(USER_GROUPS))
+logging.info('Groups Info: ' + str(USER_GROUPS))
 
 # For each group, create a list of "allowed pages"
 for group in USER_GROUPS:
