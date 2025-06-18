@@ -99,18 +99,6 @@ USER_GROUPS = [
             'limit_uprn_match': 50,
         }
     },
-
-    {
-        'name': 'bulk_external',  
-        'description': 'Changes the way the bulk works, only returning UPRNS instead of other values for licensing compliance',
-        'usernames': get_usernames(USER_AUTHS.get('bulk_external', [])),
-        'pages_to_remove': ['custom_response', 'multiple_address_results', 
-                            'multiple_address',
-                            'singlesearch', 'uprn', 'postcode', 'typeahead',
-                            'multiple_address', 'custom_response', 
-                            ],
-        'bulk_limits': DEFAULT_BULK_LIMITS,
-    },
 ]
 # yapf: enable
 
