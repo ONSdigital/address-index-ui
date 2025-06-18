@@ -103,9 +103,9 @@ USER_GROUPS = [
 # yapf: enable
 
 # REMOVE ME BEFORE PROD
-logging.info('Groups Info: ' + str(USER_GROUPS))
-logging.info('Groups Info: ' + str(USER_GROUPS))
-logging.info('Groups Info: ' + str(USER_GROUPS))
+logging.error('Groups Info: ' + str(USER_GROUPS))
+logging.error('Groups Info: ' + str(USER_GROUPS))
+logging.error('Groups Info: ' + str(USER_GROUPS))
 
 # For each group, create a list of "allowed pages"
 for group in USER_GROUPS:
