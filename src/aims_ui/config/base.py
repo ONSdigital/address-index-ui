@@ -47,6 +47,8 @@ FLASK_ENV = str(os.getenv('FLASK_ENV')).upper()
 
 # Default usernames for paywall
 USER_AUTHS = json.loads(os.getenv('USER_AUTHS', '{}'))
+logging.error('RAW User Auths: ' + str(USER_AUTHS))
+logging.error('Developers: ' + str(USER_AUTHS.get('developers', [])))
 
 # Define order of pages on header and Paywall Limitations
 ALL_PAGE_NAMES = [
