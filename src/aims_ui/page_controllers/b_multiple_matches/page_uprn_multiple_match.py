@@ -10,7 +10,7 @@ from aims_ui.page_controllers.b_multiple_matches.utils.submit_multiple_match_upr
 from aims_ui.page_controllers.f_error_pages.page_error_annotation_multiple import page_error_annotation_multiple
 from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs
 from aims_ui.page_helpers.error.error_utils import error_page_connection
-from aims_ui.page_helpers.google_utils import get_current_group
+from aims_ui.app_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 
