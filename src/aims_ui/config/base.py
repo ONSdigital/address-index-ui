@@ -4,18 +4,7 @@ import json
 import base64
 import logging
 
-
-# Temporary: refactor these from google_utils
-def get_username(user_email):
-  username = user_email.replace('accounts.google.com:', '')
-  username = username.replace('@ons.gov.uk', '')
-
-  return username
-
-def get_usernames(usernames):
-  """ Run the 'get_username' function on a list of usernames """
-  return [ get_username(x) for x in usernames ] 
-
+from aims_ui.app_helpers.google_utils import get_usernames
 
 # Port that the Flask server will run on
 UI_EXPOSED_PORT = 5000
@@ -47,8 +36,6 @@ FLASK_ENV = str(os.getenv('FLASK_ENV')).upper()
 
 # Default usernames for paywall
 USER_AUTHS = json.loads(os.getenv('USER_AUTHS', '{}'))
-logging.error('RAW User Auths: ' + str(USER_AUTHS))
-logging.error('Developers: ' + str(USER_AUTHS.get('developers', [])))
 
 # Define order of pages on header and Paywall Limitations
 ALL_PAGE_NAMES = [

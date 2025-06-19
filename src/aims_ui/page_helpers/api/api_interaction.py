@@ -10,7 +10,7 @@ import requests
 
 from aims_ui import app
 from aims_ui.page_helpers.classification_utilities import check_reverse_classification, check_valid_classification
-from aims_ui.page_helpers.google_utils import get_username
+from aims_ui.app_helpers.google_utils import get_username
 from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_api_utils import get_multiple_match_api_header
 
 from .api_helpers import get_header, job_api

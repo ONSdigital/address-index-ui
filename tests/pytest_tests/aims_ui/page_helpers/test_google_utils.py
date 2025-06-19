@@ -1,7 +1,7 @@
 from flask import Flask, request
 
 from src import aims_ui
-from aims_ui.page_helpers.google_utils import get_current_group, get_user_email, get_username
+from aims_ui.app_helpers.google_utils import get_current_group, get_user_email, get_username
 
 # Setup fake app for testing
 app = Flask(__name__)
