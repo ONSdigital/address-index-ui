@@ -1,4 +1,4 @@
-from aims_ui.app_helpers.google_utils import get_username
+from aims_ui.page_helpers.google_utils import get_username
 import logging
 
 

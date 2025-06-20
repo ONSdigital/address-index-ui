@@ -6,7 +6,7 @@ from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from aims_ui.page_helpers.table_utils import create_table
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.page_helpers.pages_location_utils import get_page_location
-from aims_ui.app_helpers.google_utils import get_username, get_current_group
+from aims_ui.page_helpers.google_utils import get_username, get_current_group
 from aims_ui.page_controllers.b_multiple_matches.utils.multiple_address_results import get_results_plus_metadata
 import json
 
