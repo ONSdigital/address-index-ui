@@ -1,6 +1,6 @@
 import requests
 from aims_ui import app
-from aims_ui.app_helpers.google_utils import get_username
+from aims_ui.page_helpers.google_utils import get_username
 
 
 def get_header_jwt(bulk):

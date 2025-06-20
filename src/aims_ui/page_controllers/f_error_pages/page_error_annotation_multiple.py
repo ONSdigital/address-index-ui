@@ -4,7 +4,7 @@ from flask import render_template, request
 
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
-from aims_ui.app_helpers.google_utils import get_current_group
+from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 """ Manage errors specific to multiple match pages """
 

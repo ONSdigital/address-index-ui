@@ -1,6 +1,6 @@
 from flask import url_for
 
-from aims_ui.app_helpers.google_utils import get_current_group, get_username
+from aims_ui.page_helpers.google_utils import get_current_group, get_username
 
 from .endpoint import Endpoint
 
