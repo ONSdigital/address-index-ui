@@ -4,8 +4,6 @@ import json
 import base64
 import logging
 
-from aims_ui.app_helpers.google_utils import get_usernames
-
 # Port that the Flask server will run on
 UI_EXPOSED_PORT = 5000
 
@@ -56,21 +54,21 @@ USER_GROUPS = [
     {
         'name': 'default',  # UNSPECIFIED USERS WILL BE IN THIS GROUP
         'description': 'Users that do not fall into another group will be part of this group',  
-        'usernames': get_usernames(USER_AUTHS.get('default', [])),
+        'usernames': USER_AUTHS.get('default', []),
         'pages_to_remove': ['custom_response'],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'developers',
         'description': 'Developer users who might need more granular access to the API and are comfortable dealing with errors and less guard rails',
-        'usernames': get_usernames(USER_AUTHS.get('developers', [])),
+        'usernames': USER_AUTHS.get('developers', []),
         'pages_to_remove': [],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'bulk_removed',
         'description': 'Completely remove access to the bulk match pages',
-        'usernames': get_usernames(USER_AUTHS.get('bulk_removed', [])),
+        'usernames': USER_AUTHS.get('bulk_removed', []),
         'pages_to_remove': [
             'multiple_address_original', 'uprn_multiple_match',
             'multiple_address', 'multiple_address_results'
@@ -80,7 +78,7 @@ USER_GROUPS = [
     {
         'name': 'limited_bulk',
         'description': 'Limit the matching capacity but leave access to the pages',
-        'usernames': get_usernames(USER_AUTHS.get('limited_bulk', [])), 
+        'usernames': USER_AUTHS.get('limited_bulk', []),
         'pages_to_remove': [],
         'bulk_limits': {
             'limit_mini_bulk': 10,
