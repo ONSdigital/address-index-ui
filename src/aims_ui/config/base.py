@@ -2,6 +2,7 @@
 import os
 import json
 import base64
+import logging
 
 # Port that the Flask server will run on
 UI_EXPOSED_PORT = 5000
@@ -52,18 +53,21 @@ DEFAULT_BULK_LIMITS = {
 USER_GROUPS = [
     {
         'name': 'default',  # UNSPECIFIED USERS WILL BE IN THIS GROUP
+        'description': 'Users that do not fall into another group will be part of this group',  
         'usernames': USER_AUTHS.get('default', []),
         'pages_to_remove': ['custom_response'],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'developers',
-        'usernames': USER_AUTHS.get('developers', ['felix.aldam-gates']),
+        'description': 'Developer users who might need more granular access to the API and are comfortable dealing with errors and less guard rails',
+        'usernames': USER_AUTHS.get('developers', []),
         'pages_to_remove': [],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
         'name': 'bulk_removed',
+        'description': 'Completely remove access to the bulk match pages',
         'usernames': USER_AUTHS.get('bulk_removed', []),
         'pages_to_remove': [
             'multiple_address_original', 'uprn_multiple_match',
@@ -73,6 +77,7 @@ USER_GROUPS = [
     },
     {
         'name': 'limited_bulk',
+        'description': 'Limit the matching capacity but leave access to the pages',
         'usernames': USER_AUTHS.get('limited_bulk', []),
         'pages_to_remove': [],
         'bulk_limits': {
