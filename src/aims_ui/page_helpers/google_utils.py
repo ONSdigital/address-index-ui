@@ -24,9 +24,14 @@ def get_user_email():
 
 
 def get_username():
+  """ Function to remove email domain markup leaving just username """
   # Get just the username from logged in SSO auth, given "request"
   user_email = get_user_email()
   username = user_email.replace('accounts.google.com:', '')
   username = username.replace('@ons.gov.uk', '')
 
   return username
+
+def get_usernames(usernames):
+  """ Run the 'get_username' function on a list of usernames """
+  return [ get_username(x) for x in usernames ] 
