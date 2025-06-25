@@ -32,7 +32,7 @@ def validate_job_name(all_user_input):
   """ Check user input for job name """
   all_user_input.get('name', '').strip()
 
-  job_name_max_length = app.config.get('BM_JOB_NAME_MAX_LENGTH')
+  job_name_max_length = app.config.get('BM_JOB_NAME_CHAR_LIMIT')
 
   # If the number of characters in the job name is more than set in config
   if len(all_user_input.get('name', '')) > job_name_max_length:
