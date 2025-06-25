@@ -1,8 +1,7 @@
 """FLASK BASE CONFIG"""
-import os
-import json
 import base64
-import logging
+import json
+import os
 
 # Port that the Flask server will run on
 UI_EXPOSED_PORT = 5000
@@ -16,6 +15,7 @@ API_JWT_TOKEN_BEARER = 'Bearer ' + str(API_JWT_TOKEN if API_JWT_TOKEN else '')
 
 BM_JWT_TOKEN = os.getenv('BM_JWT_TOKEN')
 BM_JWT_TOKEN_BEARER = 'Bearer ' + str(BM_JWT_TOKEN if BM_JWT_TOKEN else '')
+BM_JOB_NAME_CHAR_LIMIT = int(os.getenv('BM_JOB_NAME_CHAR_LIMIT', '20'))
 
 PROJECT_DOMAIN = os.getenv('PROJECT_DOMAIN')
 BM_API_URL = os.getenv('BM_API_URL')
@@ -53,7 +53,7 @@ DEFAULT_BULK_LIMITS = {
 USER_GROUPS = [
     {
         'name': 'default',  # UNSPECIFIED USERS WILL BE IN THIS GROUP
-        'description': 'Users that do not fall into another group will be part of this group',  
+        'description': 'Users that do not fall into another group will be part of this group',
         'usernames': USER_AUTHS.get('default', []),
         'pages_to_remove': ['custom_response'],
         'bulk_limits': DEFAULT_BULK_LIMITS,

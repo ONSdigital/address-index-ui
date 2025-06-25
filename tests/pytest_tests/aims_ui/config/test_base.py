@@ -93,6 +93,7 @@ def test_base_classification_list():
       'USER_GROUPS',
       'FLASK_ENV',
       'UI_EXPOSED_PORT',
+      'BM_JOB_NAME_CHAR_LIMIT',
   ]
 
   # Get the actual config keys
