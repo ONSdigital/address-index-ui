@@ -324,7 +324,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             'name',
             display_title="Name (Optional)",
             description=
-            f'Optional tag to organise matches ({max_char_limit}character max)',
+            f'Optional tag to organise matches ({max_char_limit} character max)',
             char_check_limit={
                 'limit': max_char_limit,
                 'charCountOverLimitSingular': '{x} character too many',
