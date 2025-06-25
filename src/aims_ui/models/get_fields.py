@@ -322,7 +322,14 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         Field(
             'name',
             display_title="Name (Optional)",
-            description='Optional tag to organise matches',
+            description='Optional tag to organise matches (25 character max)',
+            char_check_limit= {
+              'limit': 25,
+              "charCountOverLimitSingular": "{x} character too many",
+              "charCountOverLimitPlural": "{x} characters too many",
+              "charCountSingular": "You have {x} character remaining",
+              "charCountPlural": "You have {x} characters remaining",
+            },
             previous_value='',
         ),
         common_fields['multiple_match_paf_nag_preference'],
