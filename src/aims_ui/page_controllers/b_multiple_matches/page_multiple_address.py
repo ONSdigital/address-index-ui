@@ -1,4 +1,4 @@
-from flask import render_template, request, session, redirect, url_for
+from flask import redirect, render_template, request, session, url_for
 from flask_login import login_required
 
 from aims_ui import app
@@ -6,14 +6,14 @@ from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.page_controllers.f_error_pages.page_error_annotation_multiple import page_error_annotation_multiple
 from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs
+from aims_ui.page_helpers.error.error_utils import error_page_bm_response, error_page_too_many_jobs
 from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
-from aims_ui.page_helpers.error.error_utils import error_page_too_many_jobs, error_page_bm_response
 
-from .utils.multiple_match_file_upload_utils import check_valid_upload, validate_limit_parameter
-from .utils.submit_multiple_match_api import multiple_address_match
 from .utils.multiple_match_api_utils import count_active_jobs
+from .utils.multiple_match_file_upload_utils import check_valid_upload, validate_job_name, validate_limit_parameter
+from .utils.submit_multiple_match_api import multiple_address_match
 
 page_name = 'multiple_address'
 
@@ -49,7 +49,9 @@ def multiple_address():
         request,
         session,
     )
+    # Manual Validation of parameters
     validate_limit_parameter(all_user_input, limit_name='limitperaddress')
+    validate_job_name(all_user_input)
   except Exception as e:
     return page_error_annotation_multiple(page_name, {}, e)
 

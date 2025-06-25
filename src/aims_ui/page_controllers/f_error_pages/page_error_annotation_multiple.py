@@ -53,11 +53,14 @@ def page_error_annotation_multiple(
     if field.database_name == name_of_broken_field:
       field.error_message = primary_error_message
 
-  # Set the limit to whatever it was before
+  # Set the limit and name to whatever it was before
   limit = request.form.get('limit')
+  name = request.form.get('name')
   for field in searchable_fields:
     if field.database_name == 'limit':
       field.previous_value = limit
+    if field.database_name == 'name':
+      field.previous_value = name
 
   return render_template(
       page_location,
@@ -73,7 +76,8 @@ def convert_exception_to_error_message(primary_error_message):
 
   # If the primary error message is an instance of an Exception
   if isinstance(primary_error_message, Exception):
-    primary_error_message = str(primary_error_message)
+    primary_error_message = str(primary_error_message).replace(
+        '(', '').replace(')', '').replace("'", '')
 
   if 'Expecting value: line 2 column 1' in primary_error_message:
     # Error message when there's a connection error to the API
@@ -103,6 +107,9 @@ def match_api_error_message_to_name_of_field(primary_error_message,
   # If the primary error message is a string, decide which element to return based on the error message
   if 'record limit exceeded' in primary_error_message:
     return 'file_upload'
+
+  if 'job name' in primary_error_message:
+    return 'name'
 
   if page_name_with_error != 'multiple_address':
     if 'limit' in primary_error_message:
