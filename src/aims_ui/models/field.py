@@ -28,6 +28,7 @@ class Field:
   autosuggest_url: str = ''
   download_url: str = ''
   error_message: str = ''
+  char_check_limit: dict = field(default_factory=dict)
 
   def __post_init__(self):
     self.dropdown_options = self.format_dropdown_options(
