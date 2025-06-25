@@ -38,6 +38,7 @@
 			   "classes": '' if show else field.only_display_in_results_page,
 			   "description": '' if not show else field.description },
 		"value": field.previous_value,
+		"charCheckLimit": '' if not field.char_check_limit else field.char_check_limit,
     "error": {
          "id": field.database_name,
          "text": field.error_message,

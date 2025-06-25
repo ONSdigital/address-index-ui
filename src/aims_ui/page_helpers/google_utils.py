@@ -32,6 +32,7 @@ def get_username():
 
   return username
 
+
 def get_usernames(usernames):
   """ Run the 'get_username' function on a list of usernames """
-  return [ get_username(x) for x in usernames ] 
+  return [get_username(x) for x in usernames]

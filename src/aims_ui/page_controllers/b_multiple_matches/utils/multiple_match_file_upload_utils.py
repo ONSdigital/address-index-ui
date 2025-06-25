@@ -1,5 +1,6 @@
 import logging
 
+from aims_ui import app
 from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_utils import remove_header_row
 
 ALLOWED_EXTENSIONS = {'csv'}
@@ -25,6 +26,20 @@ def validate_limit_parameter(all_user_input, limit_name='limit'):
     raise Exception(
         'Limit Parameter Error',
         'Limit parameter must be a positive integer between 1 and 10')
+
+
+def validate_job_name(all_user_input):
+  """ Check user input for job name """
+  all_user_input.get('name', '').strip()
+
+  job_name_max_length = app.config.get('BM_JOB_NAME_CHAR_LIMIT')
+
+  # If the number of characters in the job name is more than set in config
+  if len(all_user_input.get('name', '')) > job_name_max_length:
+    raise Exception(
+        'Job Name Error',
+        f'Job name must be less than {job_name_max_length} characters long. Please try again.'
+    )
 
 
 class FileUploadException(Exception):

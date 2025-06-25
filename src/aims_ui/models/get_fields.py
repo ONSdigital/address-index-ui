@@ -1,6 +1,6 @@
 from flask import url_for
 
-from aims_ui import get_epoch_options_cached
+from aims_ui import app, get_epoch_options_cached
 
 from .endpoint_options import get_options
 from .field import Field
@@ -310,6 +310,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
     ])
 
   elif endpoint_name == 'multiple_address':
+    max_char_limit = app.config.get('BM_JOB_NAME_CHAR_LIMIT')
     return ([
         Field(
             'limitperaddress',
@@ -322,7 +323,15 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         Field(
             'name',
             display_title="Name (Optional)",
-            description='Optional tag to organise matches',
+            description=
+            f'Optional tag to organise matches ({max_char_limit} character max)',
+            char_check_limit={
+                'limit': max_char_limit,
+                'charCountOverLimitSingular': '{x} character too many',
+                'charCountOverLimitPlural': '{x} characters too many',
+                'charCountSingular': 'You have {x} character remaining',
+                'charCountPlural': 'You have {x} characters remaining',
+            },
             previous_value='',
         ),
         common_fields['multiple_match_paf_nag_preference'],
