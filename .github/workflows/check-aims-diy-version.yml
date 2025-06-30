@@ -44,7 +44,7 @@ jobs:
           patch_diff=$(( uiPatch - diyPatch ))
 
           echo "The UI version is $uiVersion, the diy version of the UI is $diyUiVersion. Consider upgrading."
-          echo "Version Difference Breakdown: Major diff: $maj_diff, Minor diff: $min_diff, Patch diff: $patch_diff."
+          echo "Version Difference Breakdown: Major diff: $maj_diff (max 1), Minor diff: $min_diff (max 1), Patch diff: $patch_diff (max 25)."
 
           # Fail if ≥1 major version behind
           if (( maj_diff >= 1 )); then
