@@ -94,7 +94,7 @@ jobs:
             const diyVersion    = '${{ steps.compare.outputs.diyVersion }}';
 
             // Create a non-required red status bubble
-            await github.repos.createCommitStatus({
+            await github.rest.repos.createCommitStatus({
               owner,
               repo,
               sha,
