@@ -3,6 +3,7 @@ name: AIMS-DIY Version Check
 permissions:
   contents: write
   pull-requests: write
+  checks: write
 
 on:
   pull_request:
