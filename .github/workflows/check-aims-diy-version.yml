@@ -96,7 +96,7 @@ jobs:
             await github.rest.checks.create({
               owner,
               repo,
-              head_sha,
+              sha,
               name: 'AIMS-DIY Version',
               status: 'completed',
               conclusion: 'failure',
