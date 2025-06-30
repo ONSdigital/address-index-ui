@@ -42,12 +42,17 @@ jobs:
           # calculate diffs
           maj_diff=$((diyMajor - uiMajor))
           min_diff=$((diyMinor - uiMinor ))
+          patch_diff=$((diyPatch - uiPatch))
 
           # Fail for a major version difference or a minor version difference greater than 20
           if (( maj_diff >= 1 )); then
             echo "::error::You are $maj_diff major version(s) behind (local $uiVersionvs diy $diyUiVersion)."
             exit 1
-          elif (( maj_diff == 0 && min_diff > 20 )); then
+          elif (( min_diff > 2 )); then
             echo "::error::You are $maj_diff major version(s) behind (local $uiVersionvs diy $diyUiVersion)."
             exit 1
+          elif (( patch_diff > 25 )); then
+            echo "::error::You are $patch_diff patch version(s) behind (local $uiVersionvs diy $diyUiVersion)."
+          else
+            echo "You are up to date with the AIMS-DIY version, as it is not more than 20 MINOR versions behind, nor a MAJOR version."
           fi
