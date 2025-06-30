@@ -104,7 +104,7 @@ jobs:
               status: 'completed',
               conclusion: 'failure',
               output: {
-                title: `UI ${uiVersion} is behind diy ${diyVersion}`,
+                title: `Current UI is @version ${uiVersion} which is behind AIMS-DIY Repo @version ${diyVersion}`,
                 summary: 'Consider upgrading the AIMS-DIY repo with the latest UI image.',
               },
             });
