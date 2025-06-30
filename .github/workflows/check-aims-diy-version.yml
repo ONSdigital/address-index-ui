@@ -40,9 +40,9 @@ jobs:
           IFS='.' read -r diyMajor diyMinor diyPatch <<< "$diyUiVersion"
 
           # calculate diffs
-          maj_diff=$(( uiMajor - diyMajor))
-          min_diff=$(( uiMinor - diyMinor  ))
-          patch_diff=$(( uiPatch - diyPatch ))
+          maj_diff=$((uiMajor - diyMajor))
+          min_diff=$((uiMinor - diyMinor))
+          patch_diff=$((uiPatch - diyPatch ))
 
           # Fail for a major version difference or a minor version difference greater than 20
           if ( maj_diff >= 1 ); then
