@@ -90,14 +90,14 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const { owner, repo } = context.repo;
-            const sha           = context.sha;
+            const head_sha           = context.sha;
             const uiVersion     = '${{ steps.compare.outputs.uiVersion }}';
             const diyVersion    = '${{ steps.compare.outputs.diyVersion }}';
 
             await github.rest.checks.create({
               owner,
               repo,
-              sha,
+              head_sha,
               name: 'AIMS-DIY Version',
               status: 'completed',
               conclusion: 'failure',
