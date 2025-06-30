@@ -48,17 +48,17 @@ jobs:
 
           # Fail if ≥1 major version behind
           if (( maj_diff >= 1 )); then
-            echo "::error::You are $maj_diff major version(s) behind (local $uiVersion vs diy $diyUiVersion)."
+            echo "::warning::You are $maj_diff major version(s) behind (local $uiVersion vs diy $diyUiVersion)."
             exit 1
 
           # If same major but ≥1 minor behind
           elif (( maj_diff == 0 && min_diff >= 1 )); then
-            echo "::error::You are $min_diff minor version(s) behind (local $uiVersion vs diy $diyUiVersion)."
+            echo "::warning::You are $min_diff minor version(s) behind (local $uiVersion vs diy $diyUiVersion)."
             exit 1
 
           # If same major and minor but >25 patches behind
           elif (( maj_diff == 0 && min_diff == 0 && patch_diff > 25 )); then
-            echo "::error::You are $patch_diff patch version(s) behind (local $uiVersion vs diy $diyUiVersion)."
+            echo "::warning::You are $patch_diff patch version(s) behind (local $uiVersion vs diy $diyUiVersion)."
             exit 1
 
           fi
