@@ -82,7 +82,7 @@ jobs:
           echo "diyVersion=$diyUiVersion" >> $GITHUB_OUTPUT
 
 
-      - name: Report as GitHub status
+      - name: Report as a check run
         if: steps.compare.outputs.behind == 'true'
         uses: actions/github-script@v7
         with:
@@ -93,12 +93,15 @@ jobs:
             const uiVersion     = '${{ steps.compare.outputs.uiVersion }}';
             const diyVersion    = '${{ steps.compare.outputs.diyVersion }}';
 
-            // Create a non-required red status bubble
-            await github.rest.repos.createCommitStatus({
+            await github.rest.checks.create({
               owner,
               repo,
-              sha,
-              state:       'error',               // red icon in the PR UI
-              context:     'AIMS-DIY Version',    // status name
-              description: `UI ${uiVersion} is behind diy ${diyVersion}. Consider upgrading the AIMS-DIY Repository with the latest UI image.`,
+              head_sha,
+              name: 'AIMS-DIY Version',
+              status: 'completed',
+              conclusion: 'failure',
+              output: {
+                title: `UI ${uiVersion} behind diy ${diyVersion}`,
+                summary: `Consider upgrading the AIMS-DIY repo with the latest UI image.`
+              }
             });
