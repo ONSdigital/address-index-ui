@@ -1,0 +1,53 @@
+name: AIMS-DIY Version Check
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  compare-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout aims-ui code
+        uses: actions/checkout@v4
+
+      - name: Checkout aims-diy repo
+        uses: actions/checkout@v4
+        with:
+          repository: ONSdigital/aims-diy
+          path: diy
+
+      - name: Read versions and compare
+        shell: bash
+        run: |
+          # read local version
+          uiVersion=$(< version.txt)
+
+          # extract remote version from docker-compose
+          diyUiVersion=$(grep -A1 'address-index-ui:' diy/docker-compose.yml \
+                   | grep image \
+                   | sed -E 's/.*:([^"]+)".*/\1/')
+
+          echo "The UI version is $uiVersion, the diy version of the UI is $diyUiVersion."
+
+          # split versions for MAJOR.MINOR.PATCH
+          IFS='.' read -r uiMajor uiMinor uiPatch <<< "$uiVersion"
+          IFS='.' read -r diyMajor diyMinor diyPatch <<< "$diyUiVersion"
+
+          # calculate diffs
+          maj_diff=$((diyMajor - uiMajor))
+          min_diff=$((diyMinor - uiMinor ))
+
+          # Fail for a major version difference or a minor version difference greater than 20
+          if (( maj_diff >= 1 )); then
+            echo "::error::You are $maj_diff major version(s) behind (local $uiVersionvs diy $diyUiVersion)."
+            exit 1
+          elif (( maj_diff == 0 && min_diff > 20 )); then
+            echo "::error::You are $maj_diff major version(s) behind (local $uiVersionvs diy $diyUiVersion)."
+            exit 1
+          fi
