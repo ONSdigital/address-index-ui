@@ -55,4 +55,5 @@ jobs:
             echo "::error::You are $patch_diff Patch version(s) behind (local $uiVersionvs diy $diyUiVersion)."
           else
             echo "You are up to date with the AIMS-DIY version, as it is not more than 25 PATCH versions behind, nor 1 MINOR versions, nor a MAJOR version."
+            echo "The difference is Major: $maj_diff, Minor: $min_diff, Patch: $patch_diff."
           fi
