@@ -22,7 +22,8 @@ jobs:
           repository: ONSdigital/aims-diy
           path: diy
 
-      - name: Read versions and compare
+      - id: compare
+        name: Read versions and compare
         shell: bash
         run: |
           # read local version
@@ -43,7 +44,7 @@ jobs:
           min_diff=$(( uiMinor - diyMinor ))
           patch_diff=$(( uiPatch - diyPatch ))
 
-          echo "The UI version is $uiVersion, the diy version of the UI is $diyUiVersion. Consider upgrading."
+          echo "The UI version is $uiVersion, the diy version of the UI is $diyUiVersion. Consider upgrading the AIMS-DIY Repository with the latest UI image."
           echo "Version Difference Breakdown: Major diff: $maj_diff (max 1), Minor diff: $min_diff (max 1), Patch diff: $patch_diff (max 25)."
 
           # Fail if ≥1 major version behind
@@ -57,5 +58,47 @@ jobs:
           # If same major and minor but >25 patches behind
           elif (( maj_diff == 0 && min_diff == 0 && patch_diff > 25 )); then
             echo "::warning::You are $patch_diff patch version(s) behind (local $uiVersion vs diy $diyUiVersion)."
-
           fi
+
+          # write a "behind" flag if ANY of our thresholds tripped
+          if (( maj_diff >= 1 )) || 
+             (( maj_diff == 0 && min_diff >= 1 )) || 
+             (( maj_diff == 0 && min_diff == 0 && patch_diff > 25 )); then
+            echo "behind=true" >> $GITHUB_OUTPUT
+          else
+            echo "behind=false" >> $GITHUB_OUTPUT
+          fi
+        
+          # Export outputs for the next step
+          behind=false
+          if (( maj_diff >= 1 )) || \
+             (( maj_diff == 0 && min_diff >= 1 )) || \
+             (( maj_diff == 0 && min_diff == 0 && patch_diff > 25 )); then
+            behind=true
+          fi
+
+          echo "behind=$behind"        >> $GITHUB_OUTPUT
+          echo "uiVersion=$uiVersion"  >> $GITHUB_OUTPUT
+          echo "diyVersion=$diyUiVersion" >> $GITHUB_OUTPUT
+
+
+      - name: Report as GitHub status
+        if: steps.compare.outputs.behind == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const sha           = context.sha;
+            const uiVersion     = '${{ steps.compare.outputs.uiVersion }}';
+            const diyVersion    = '${{ steps.compare.outputs.diyVersion }}';
+
+            // Create a non-required red status bubble
+            await github.repos.createCommitStatus({
+              owner,
+              repo,
+              sha,
+              state:       'error',               // red icon in the PR UI
+              context:     'AIMS-DIY Version',    // status name
+              description: `UI ${uiVersion} is behind diy ${diyVersion}. Consider upgrading the AIMS-DIY Repository with the latest UI image.`,
+            });
