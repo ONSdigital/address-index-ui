@@ -46,12 +46,17 @@ def test_secure_cookie():
 def test_base_classification_list():
   """ Check that the default_classification contains expected keys """
 
-  # Deffine keys that should always be in the config
+  # Define keys that should always be in the config
   keys_that_should_be_present = [
       'DEBUG',
       'TESTING',
       'PROPAGATE_EXCEPTIONS',
       'SECRET_KEY',
+      'SECRET_KEY_FALLBACKS',
+      'TRUSTED_HOSTS',
+      'SESSION_COOKIE_PARTITIONED',
+      'MAX_FORM_MEMORY_SIZE',
+      'MAX_FORM_PARTS',
       'PERMANENT_SESSION_LIFETIME',
       'USE_X_SENDFILE',
       'SERVER_NAME',

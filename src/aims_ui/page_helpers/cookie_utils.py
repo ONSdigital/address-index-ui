@@ -50,18 +50,21 @@ def get_all_inputs(searchable_fields, request):
   def get_val(value_html_id):
     return request.form.get(value_html_id)
 
+  print("searchable fields = ", searchable_fields)
   usr_input = {}
   for field in searchable_fields:
-    # Check for checkboxes, convert values for true/false numerical translation
-    if field.search_type == 'checkbox':
-      if field.checkbox_true_value == 0:
-        usr_input[field.database_name] = get_val(field.database_name)
-      else:
-        usr_input[field.database_name] = field.checkbox_true_value if get_val(
+    # Do not include fields that have no user input
+    if field.database_name != 'None':
+      # Check for checkboxes, convert values for true/false numerical translation
+      if field.search_type == 'checkbox':
+        if field.checkbox_true_value == 0:
+          usr_input[field.database_name] = get_val(field.database_name)
+        else:
+          usr_input[field.database_name] = field.checkbox_true_value if get_val(
             field.database_name) else field.checkbox_false_value
 
-    else:
-      usr_input[field.database_name] = get_val(field.database_name)
+      else:
+        usr_input[field.database_name] = get_val(field.database_name)
 
   return usr_input
 
