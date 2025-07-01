@@ -19,8 +19,9 @@ from .api_helpers import get_header, job_api
 def api(url, called_from, all_user_input):
   """API helper for individual API lookups"""
   header = get_header()
-
+  print("all user input = " , all_user_input)
   params = get_params(all_user_input)
+  print("params = " , params)
   if (called_from == 'uprn') or (called_from == 'postcode'):
     url = app.config.get('API_URL') + url + all_user_input.get(called_from, '')
   elif (called_from == 'singlesearch'):
