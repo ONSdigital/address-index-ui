@@ -57,6 +57,7 @@ def test_base_classification_list():
       'SESSION_COOKIE_PARTITIONED',
       'MAX_FORM_MEMORY_SIZE',
       'MAX_FORM_PARTS',
+      'PROVIDE_AUTOMATIC_OPTIONS',
       'PERMANENT_SESSION_LIFETIME',
       'USE_X_SENDFILE',
       'SERVER_NAME',
