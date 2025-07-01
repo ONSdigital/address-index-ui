@@ -50,7 +50,6 @@ def get_all_inputs(searchable_fields, request):
   def get_val(value_html_id):
     return request.form.get(value_html_id)
 
-  print("searchable fields = ", searchable_fields)
   usr_input = {}
   for field in searchable_fields:
     # Do not include fields that have no user input
