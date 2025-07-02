@@ -180,8 +180,8 @@ def error_page_api_response(page_name, user_input, result):
   clean_result = clean_api_response(result)
 
   # Error message from status message or first error in 'errors'
-  primary_error_message = get_primary_error_message(page_name, user_input,
-                                                    result)
+  primary_error_message = get_primary_error_message(result, page_name, user_input)
+
 
   if status_code == 429:
     log_warn(page_name, user_input, f'Rate Limit Error: "{clean_result}"')
