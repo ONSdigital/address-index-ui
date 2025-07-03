@@ -31,6 +31,15 @@
 {% endif %}
 
 <form method=post enctype=multipart/form-data>
+
+	{# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
+<div class="ons-grid">
+
+{# 1Column boarder#}
+  <div id="space_col_1" class="ons-grid__col ons-col-1@m "></div>
+
+{# Content is the searchboxes, taing up 4 col#}
+  <div id="content_col_2" class="ons-grid__col ons-col-4@m ">
 {{ customSearch ({ "Fields": searchable_fields,
 		   "endpoints": endpoints, 
 		   "remove_buttons": True,
@@ -48,9 +57,15 @@
 
 </form>
 
+</div>
 
+{# 1 Col boarder between filters and results #}
+<div id="space_col_3" class="ons-grid__col ons-col-1@m "></div>
+
+{# 5 Col results page #}
+  <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
 {# Escape the main page contents, create wider grid so that the table can have max width #}
-</div></div></div>
+</div></div>
 <div class="ons-grid__col ons-col-1@m"></div>
 <div class="ons-grid__col ons-col-10@m">
 <br>
@@ -71,6 +86,8 @@
 <script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
 
 <script type=module src="static/js/b_multiple_matches/all_multiple_match_pages.mjs"></script>
+
+<script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
 
 <script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
 
