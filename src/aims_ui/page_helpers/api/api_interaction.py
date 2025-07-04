@@ -20,6 +20,11 @@ def api(url, called_from, all_user_input):
   """API helper for individual API lookups"""
   header = get_header()
 
+  # remove UI params if present
+  all_user_input.pop('header_row_export', None)
+  all_user_input.pop('display-type', None)
+  all_user_input.pop('file_upload', None)
+
   params = get_params(all_user_input)
   if (called_from == 'uprn') or (called_from == 'postcode'):
     url = app.config.get('API_URL') + url + all_user_input.get(called_from, '')
