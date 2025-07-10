@@ -20,6 +20,14 @@ def get_header_row_export_selection(all_user_input):
   return header_row_export
 
 
+def get_paf_nag_preference_selection(all_user_input):
+  print('all_user_input=', all_user_input)
+  pafdefault = all_user_input.get('pafdefault', 'false')
+  pafdefault = null_or_undefined_to_False(pafdefault)
+
+  return pafdefault
+
+
 def get_multiple_match_api_header(all_user_input):
   """ Add additional headers for bulk API requests """
   header = get_header(username=True, bulk=True)
@@ -27,11 +35,14 @@ def get_multiple_match_api_header(all_user_input):
   # Get user's header row export choice, if none assume False
   header_row_export = get_header_row_export_selection(all_user_input)
 
+  # Get user's paf_nag_preference
+  pafdefault = get_paf_nag_preference_selection(all_user_input)
+
   # Bulk manager now has 'topic' header for the user's "name" (for the job) field
   header['topic'] = str(all_user_input.get('name', '')[:25])
 
   # Additional Metadata can be stored in 'uiMetadata' header
-  uiMetadata = {'header_row_export': header_row_export}
+  uiMetadata = {'header_row_export': header_row_export, 'pafdefault': pafdefault}
   header['uimetadata'] = json.dumps(uiMetadata)
 
   return header
