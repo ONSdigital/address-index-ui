@@ -217,6 +217,8 @@ def submit_uprn_mm_job(uprns_and_ids, all_user_input):
 def set_paf_nag_preference(all_user_input):
   if all_user_input.get('paf-nag-preference') == 'PAF':
     all_user_input['pafdefault'] = 'true'
+  else:
+    all_user_input['pafdefault'] = 'false'
   del all_user_input['paf-nag-preference']
 
   return all_user_input

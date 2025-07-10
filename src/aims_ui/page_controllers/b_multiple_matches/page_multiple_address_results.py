@@ -27,7 +27,7 @@ def multiple_address_results():
   bulk_limits = current_group.get('bulk_limits')
 
   headers = [
-      'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'RECS PROCESSED',
+      'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'PAF OR NAG', 'RECS PROCESSED',
       'DOWNLOAD LINK'
   ]
 
@@ -39,7 +39,7 @@ def multiple_address_results():
 
     formatted_results = [
         [
-            '22', 'Example', '10,000 of A Jillion', 'bob', 'True', 'complete',
+            '22', 'Example', '10,000 of A Jillion', 'bob', 'True', 'PAF' 'complete',
             f'<a href="/downloads/googlefiledownload{job_id}">job_id {job_id}</a>'
         ],
     ]
@@ -70,14 +70,15 @@ def multiple_address_results():
       job.get('status'),
       job.get('username'),
       job.get('header_row_export'),
+      job.get('paf_nag_preference'),
       job.get('recssofarmessage'),
       job.get('downloadlink'),
   ] for job in jobs_data_plus_metadata]
 
   # EXAMPLE results format
   # results = [
-  #   ['200', 'da', 'progress', USER ID, HEADER ROW, RECS PROCESSED, DOWNLOAD LINK]
-  #   [JOBID, NAME, STATUS, USER ID, HEADER ROW, RECS PROCESSED, DOWNLOAD LINK]
+  #   ['200', 'da', 'progress', USER ID, HEADER ROW, PAF OR NAG, RECS PROCESSED, DOWNLOAD LINK]
+  #   [JOBID, NAME, STATUS, USER ID, HEADER ROW, PAF OR NAG, RECS PROCESSED, DOWNLOAD LINK]
 
   jobs_table = []
   jobs_table = create_table(headers, jobs_data_plus_metadata_table_rows)
