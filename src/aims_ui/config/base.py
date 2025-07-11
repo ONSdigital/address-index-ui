@@ -38,7 +38,7 @@ USER_AUTHS = json.loads(os.getenv('USER_AUTHS', '{}'))
 # Define order of pages on header and Paywall Limitations
 ALL_PAGE_NAMES = [
     'singlesearch', 'uprn', 'postcode', 'typeahead',
-    'multiple_address_original', 'multiple_address_results',
+    'multiple_address_original', 'multiple_address_results', 'multiple_address_attributes',
     'multiple_address', 'uprn_multiple_match', 'custom_response', 'help',
     'settings'
 ]
@@ -71,7 +71,7 @@ USER_GROUPS = [
         'usernames': USER_AUTHS.get('bulk_removed', []),
         'pages_to_remove': [
             'multiple_address_original', 'uprn_multiple_match',
-            'multiple_address', 'multiple_address_results'
+            'multiple_address', 'multiple_address_results', 'multiple_address_attributes'
         ],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },

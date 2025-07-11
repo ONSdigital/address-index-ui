@@ -164,6 +164,7 @@ ALL_PAGE_NAMES = [
     'typeahead',
     'multiple_address_original',
     'multiple_address_results',
+    'multiple_address_attributes',
     'multiple_address',
     'uprn_multiple_match',
     'custom_response',
@@ -226,6 +227,12 @@ ENDPOINTS = [{
     'nav_link_in_header': False,
     'page_description':'Used to submit a large multiple match request with a file to an asynchronous job manager.',
 }, {
+    'page_name': 'Multiple Address',
+    'page_name_test': 'multiple_address_attributes',
+    'url': 'multiple_address_attributes',
+    'nav_link_in_header': False,
+    'page_description':'Used to submit a large multiple match request with a file to an asynchronous job manager.',
+},{
     'page_name': 'Multiple UPRN',
     'page_name_test': 'uprn_multiple_match',
     'url': 'uprn_multiple_match',
