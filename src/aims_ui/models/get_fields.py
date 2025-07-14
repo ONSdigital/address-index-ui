@@ -396,7 +396,105 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['epoch'],
         common_fields['historical'],
     ])
-
+  elif endpoint_name == 'multiple_address_attributes':
+    return ([
+        Field(
+          'parentUprn',
+          search_type='checkbox',
+          display_title='Include historical address data',
+          checkbox_value=True,
+          description=
+          'Check this box to include historical address data in the search.',
+        ),
+        Field(
+          'latitude',
+          search_type='checkbox',
+          display_title='Include historical address data',
+          checkbox_value=True,
+          description=
+          'Check this box to include historical address data in the search.',
+        ),
+        Field(
+          'longitude',
+          search_type='checkbox',
+          display_title='Include historical address data',
+          checkbox_value=True,
+          description=
+          'Check this box to include historical address data in the search.',
+        ),
+        Field(
+          'easting',
+          search_type='checkbox',
+          display_title='Include historical address data',
+          checkbox_value=True,
+          description=
+          'Check this box to include historical address data in the search.',
+        ),
+        Field(
+            'northing',
+            search_type='checkbox',
+            display_title='Include historical address data',
+            checkbox_value=True,
+            description=
+            'Check this box to include historical address data in the search.',
+        ),
+        Field(
+            'classificationCode',
+            search_type='checkbox',
+            display_title='Include historical address data',
+            checkbox_value=True,
+            description=
+            'Check this box to include historical address data in the search.',
+        ),
+        Field(
+            'lpiLogicalStatus',
+            search_type='checkbox',
+            display_title='Include historical address data',
+            checkbox_value=True,
+            description=
+            'Check this box to include historical address data in the search.',
+        ),
+        Field(
+            'countryCode',
+            search_type='checkbox',
+            display_title='Include historical address data',
+            checkbox_value=True,
+            description=
+            'Check this box to include historical address data in the search.',
+        ),
+        Field(
+            'formattedAddressNag',
+            search_type='checkbox',
+            display_title='Include historical address data',
+            checkbox_value=True,
+            description=
+            'Check this box to include historical address data in the search.',
+        ),
+        Field(
+            'formattedAddressPaf',
+            search_type='checkbox',
+            display_title='Include historical address data',
+            checkbox_value=True,
+            description=
+            'Check this box to include historical address data in the search.',
+        ),
+        Field(
+            'welshFormattedAddressNag',
+            search_type='checkbox',
+            display_title='Include historical address data',
+            checkbox_value=True,
+            description=
+            'Check this box to include historical address data in the search.',
+        ),
+        Field(
+            'welshFormattedAddressPaf',
+            search_type='checkbox',
+            display_title='Include historical address data',
+            checkbox_value=True,
+            description=
+            'Check this box to include historical address data in the search.',
+        )
+    ])
   elif endpoint_name == 'singlesearch':
     fields = [
         Field(
