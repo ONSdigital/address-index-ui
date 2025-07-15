@@ -401,98 +401,98 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         Field(
           'parentUprn',
           search_type='checkbox',
-          display_title='Include historical address data',
-          checkbox_value=True,
+          display_title='Include Parent UPRN',
+          checkbox_value=False,
           description=
-          'Check this box to include historical address data in the search.',
+          'Check to include the parent UPRN in the response.',
         ),
         Field(
           'latitude',
           search_type='checkbox',
-          display_title='Include historical address data',
-          checkbox_value=True,
+          display_title='Include Latitude (geo)',
+          checkbox_value=False,
           description=
-          'Check this box to include historical address data in the search.',
+          'Check to include the latitude of the address in the response.',
         ),
         Field(
           'longitude',
           search_type='checkbox',
-          display_title='Include historical address data',
-          checkbox_value=True,
+          display_title='Include Longitude (geo)',
+          checkbox_value=False,
           description=
-          'Check this box to include historical address data in the search.',
+          'Check to include the longitude of the address in the response.',
         ),
         Field(
           'easting',
           search_type='checkbox',
-          display_title='Include historical address data',
-          checkbox_value=True,
+          display_title='Include Easting (geo)',
+          checkbox_value=False,
           description=
-          'Check this box to include historical address data in the search.',
+          'Check to include the easting of the address in the response.',
         ),
         Field(
             'northing',
             search_type='checkbox',
-            display_title='Include historical address data',
-            checkbox_value=True,
+            display_title='Include Northing (geo)',
+            checkbox_value=False,
             description=
-            'Check this box to include historical address data in the search.',
+            'Check to include the northing of the address in the response.',
         ),
         Field(
             'classificationCode',
             search_type='checkbox',
-            display_title='Include historical address data',
-            checkbox_value=True,
+            display_title='Include Classification Code',
+            checkbox_value=False,
             description=
-            'Check this box to include historical address data in the search.',
+            'Check to include the ABP classification code in the response.',
         ),
         Field(
             'lpiLogicalStatus',
             search_type='checkbox',
-            display_title='Include historical address data',
-            checkbox_value=True,
+            display_title='Include Logical Status (historic, etc.)',
+            checkbox_value=False,
             description=
-            'Check this box to include historical address data in the search.',
+            'Check to include the LPI Logical Status in the response.',
         ),
         Field(
             'countryCode',
             search_type='checkbox',
-            display_title='Include historical address data',
-            checkbox_value=True,
+            display_title='Include Country Code (e.g. E,S,W)',
+            checkbox_value=False,
             description=
-            'Check this box to include historical address data in the search.',
+            'Check to include the ABP Country Code in the response.',
         ),
         Field(
             'formattedAddressNag',
             search_type='checkbox',
-            display_title='Include historical address data',
-            checkbox_value=True,
+            display_title='Include formatted address from NAG',
+            checkbox_value=False,
             description=
-            'Check this box to include historical address data in the search.',
+            'Check to include the National Address Gazetteer address in the response.',
         ),
         Field(
             'formattedAddressPaf',
             search_type='checkbox',
-            display_title='Include historical address data',
-            checkbox_value=True,
+            display_title='Include formatted address from PAF',
+            checkbox_value=False,
             description=
-            'Check this box to include historical address data in the search.',
+            'Check to include the Postcode Address File address in the response.',
         ),
         Field(
             'welshFormattedAddressNag',
             search_type='checkbox',
-            display_title='Include historical address data',
-            checkbox_value=True,
+            display_title='Include Welsh formatted address from NAG',
+            checkbox_value=False,
             description=
-            'Check this box to include historical address data in the search.',
+            'Check to include the Welsh National Address Gazetteer address in the response.',
         ),
         Field(
             'welshFormattedAddressPaf',
             search_type='checkbox',
-            display_title='Include historical address data',
-            checkbox_value=True,
+            display_title='Include Welsh formatted address from PAF',
+            checkbox_value=False,
             description=
-            'Check this box to include historical address data in the search.',
+            'Check to include the Welsh Postal Address File address in the response.',
         )
     ])
   elif endpoint_name == 'singlesearch':
