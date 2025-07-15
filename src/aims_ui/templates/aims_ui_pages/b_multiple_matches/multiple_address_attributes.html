@@ -33,12 +33,17 @@
 	}) }}
 
 {{onsPanel({
-"body": "<p>Bulk address results always contain the following fields:</p>
-<p>id, inputAddress, matchedAddress, uprn, matchType, confidenceScore, documentScore, rank, addressType(Paf/Nag) and airRating.</p>
+"body": "<p>Bulk address results always contain the following fields: id, inputAddress, matchedAddress, uprn, matchType, confidenceScore, documentScore, rank, addressType(Paf/Nag) and airRating.</p>
 <p>The fields below can optionally be added to the response, check to include.</p>"
     })}}
 <br>
+<div class="ons-grid">
 
+{# 1Column boarder#}
+  <div id="space_col_1" class="ons-grid__col ons-col-1@m "></div>
+
+{# Content is the searchboxes, taing up 4 col#}
+  <div id="content_col_2" class="ons-grid__col ons-col-6@m ">
 
 {{ customSearch ({ "Fields": searchable_fields,
 		   "endpoints": endpoints,
@@ -47,6 +52,8 @@
 		   "remove_search_button":False,
            "results_page": results_page, }) }}
 
+  </div>
+</div>
 <script type=module src="static/js/b_multiple_matches/all_multiple_match_pages.mjs"></script>
 
 <script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
