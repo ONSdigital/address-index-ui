@@ -43,7 +43,7 @@
   <div id="space_col_1" class="ons-grid__col ons-col-1@m "></div>
 
 {# Content is the searchboxes, taing up 4 col#}
-  <div id="content_col_2" class="ons-grid__col ons-col-6@m ">
+  <div id="content_col_2" class="ons-grid__col ons-col-4@m ">
 
 {{ customSearch ({ "Fields": searchable_fields,
 		   "endpoints": endpoints,
@@ -53,8 +53,40 @@
            "results_page": results_page, }) }}
 
   </div>
+  <div id="space_col_3" class="ons-grid__col ons-col-1@m "></div>
+
+  <div id="content_col_6" class="ons-grid__col ons-col-6@m ">
+
+	{{onsPanel({
+"body": "<p>EXAMPLE OUTPUT:<br>
+	         {<br>
+                'uprn': '100100082563',<br>
+                'parentUprn': '0',<br>
+                'formattedAddress': '11 High Street, Llandaff, Cardiff, CF5 2DX',<br>
+                'formattedAddressNag': '11 High Street, Llandaff, Cardiff, CF5 2DX',<br>
+                'formattedAddressPaf': '11 High Street, Llandaff, Cardiff, CF5 2DX',<br>
+                'welshFormattedAddressNag': '11 Stryd Fawr, Llandaf, Caerdydd, CF5 2DX',<br>
+                'welshFormattedAddressPaf': '11 High Street, Llandaff, Caerdydd, CF5 2DX',<br>
+                'geo': {<br>
+                    'latitude': 51.49401,<br>
+                    'longitude': -3.218726,<br>
+                    'easting': 315490,<br>
+                    'northing': 177934<br>
+                },<br>
+                'classificationCode': 'CH02',<br>
+                'countryCode': 'W',<br>
+                'lpiLogicalStatus': '1',<br>
+                'confidenceScore': 60.9787,<br>
+                'underlyingScore': 16.997744,<br>
+                'airRating': 'I'<br>
+            }</p>"
+    })}}
+<br>
+  </div>
+
 </div>
 <script type=module src="static/js/b_multiple_matches/all_multiple_match_pages.mjs"></script>
+<script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
 
 <script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
 
