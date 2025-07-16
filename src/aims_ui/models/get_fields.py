@@ -399,36 +399,36 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
   elif endpoint_name == 'multiple_address_attributes':
     return ([
         Field(
-          'parentUprn',
-          search_type='checkbox',
-          display_title='Include Parent UPRN',
-          checkbox_value=False,
-          # description=
-          # 'Check to include the parent UPRN in the response.',
+            'parentuprn',
+            search_type='checkbox',
+            display_title='Include Parent UPRN',
+            checkbox_value=False,
+            # description=
+            # 'Check to include the parent UPRN in the response.',
         ),
         Field(
-          'latitude',
-          search_type='checkbox',
-          display_title='Include Latitude (geo)',
-          checkbox_value=False,
-          # description=
-          # 'Check to include the latitude of the address in the response.',
+            'latitude',
+            search_type='checkbox',
+            display_title='Include Latitude (geo)',
+            checkbox_value=False,
+            # description=
+            # 'Check to include the latitude of the address in the response.',
         ),
         Field(
-          'longitude',
-          search_type='checkbox',
-          display_title='Include Longitude (geo)',
-          checkbox_value=False,
-          # description=
-          # 'Check to include the longitude of the address in the response.',
+            'longitude',
+            search_type='checkbox',
+            display_title='Include Longitude (geo)',
+            checkbox_value=False,
+            # description=
+            # 'Check to include the longitude of the address in the response.',
         ),
         Field(
-          'easting',
-          search_type='checkbox',
-          display_title='Include Easting (geo)',
-          checkbox_value=False,
-          # description=
-          # 'Check to include the easting of the address in the response.',
+            'easting',
+            search_type='checkbox',
+            display_title='Include Easting (geo)',
+            checkbox_value=False,
+            # description=
+            # 'Check to include the easting of the address in the response.',
         ),
         Field(
             'northing',
@@ -439,7 +439,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             # 'Check to include the northing of the address in the response.',
         ),
         Field(
-            'classificationCode',
+            'classificationcode',
             search_type='checkbox',
             display_title='Include Classification Code',
             checkbox_value=False,
@@ -447,7 +447,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             # 'Check to include the ABP classification code in the response.',
         ),
         Field(
-            'lpiLogicalStatus',
+            'lpilogicalstatus',
             search_type='checkbox',
             display_title='Include Logical Status (historic, etc.)',
             checkbox_value=False,
@@ -455,7 +455,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             # 'Check to include the LPI Logical Status in the response.',
         ),
         Field(
-            'countryCode',
+            'countrycode',
             search_type='checkbox',
             display_title='Include Country Code (e.g. E,S,W)',
             checkbox_value=False,
@@ -463,7 +463,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             # 'Check to include the ABP Country Code in the response.',
         ),
         Field(
-            'formattedAddressNag',
+            'formattedaddressnag',
             search_type='checkbox',
             display_title='Include formatted address from NAG',
             checkbox_value=False,
@@ -471,7 +471,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             # 'Check to include the National Address Gazetteer address in the response.',
         ),
         Field(
-            'formattedAddressPaf',
+            'formattedaddresspaf',
             search_type='checkbox',
             display_title='Include formatted address from PAF',
             checkbox_value=False,
@@ -479,7 +479,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             # 'Check to include the Postcode Address File address in the response.',
         ),
         Field(
-            'welshFormattedAddressNag',
+            'welshformattedaddressnag',
             search_type='checkbox',
             display_title='Include Welsh NAG formatted address',
             checkbox_value=False,
@@ -487,7 +487,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             # 'Check to include the Welsh National Address Gazetteer address in the response.',
         ),
         Field(
-            'welshFormattedAddressPaf',
+            'welshformattedaddresspaf',
             search_type='checkbox',
             display_title='Include Welsh PAF formatted address',
             checkbox_value=False,
