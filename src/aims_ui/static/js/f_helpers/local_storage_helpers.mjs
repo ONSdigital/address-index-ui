@@ -111,11 +111,38 @@ export function setAdditionalRequestStatus(settings) {
   );
 }
 
+// Getters and setters for Custom Response
+//                 "parentUprn": "0",
+//                 "formattedAddressNag": "Solva, Southwick Road, Denmead, PO7 6LA",
+//                 "formattedAddressPaf": "Solva, Southwick Road, Denmead, Waterlooville, PO7 6LA",
+//                 "welshFormattedAddressNag": "",
+//                 "welshFormattedAddressPaf": "Solva, Southwick Road, Denmead, Waterlooville, PO7 6LA",
+//                 "geo": {
+//                     "latitude": 50.902946,
+//                     "longitude": -1.0706598,
+//                     "easting": 465444,
+//                     "northing": 111909
+//                 },
+//                 "classificationCode": "RD02",
+//                 "countryCode": "E",
+//                 "lpiLogicalStatus": "1",
+
+export function setParentUprnPreference(preference) {
+  localStorage.setItem('parentuprn_preference', preference);
+}
+
+export function getParentUprnPreference() {
+  return localStorage.getItem('parentuprn_preference');
+}
+
+
+
 // save_inputs local storage
 export function saveToLocalStorage(inputObjectValues, loc) {
   const values = JSON.stringify(inputObjectValues);
   localStorage.setItem(loc, values);
 }
+
 export function wipeLocalStorage(loc) {
   localStorage.removeItem(loc);
 }
