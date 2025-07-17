@@ -135,6 +135,21 @@ export function getParentUprnPreference() {
   return localStorage.getItem('parentuprn_preference');
 }
 
+export function setFormattedAddressNagPreference(preference) {
+  localStorage.setItem('formattedaddressnag_preference', preference);
+}
+
+export function getFormattedAddressNagPreference() {
+  return localStorage.getItem('formattedaddressnag_preference');
+}
+
+export function setFormattedAddressPafPreference(preference) {
+  localStorage.setItem('formattedaddressnag_preference', preference);
+}
+
+export function getFormattedAddressPafPreference() {
+  return localStorage.getItem('formattedaddresspaf_preference');
+}
 
 
 // save_inputs local storage
