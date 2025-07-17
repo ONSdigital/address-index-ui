@@ -45,8 +45,16 @@
 		   "remove_buttons": True,
 		   "remove_clear_button": True,
 		   "remove_search_button":False,
-                   "results_page": results_page, }) }}
+           "results_page": results_page, }) }}
 <br>
+{{ onsInput({
+          "id": "custom-bulk-attributes",
+          "value": "parentUprn",
+          "classes": "ons-u-hidden",
+          "width": "20@m",
+          "name": "custom-bulk-attributes"
+         })
+}}
 {{ onsButton({
         "id": "downloadButtonMultipleMatch",
         "text": "Match Addresses",
@@ -88,6 +96,7 @@
 <script type=module src="static/js/b_multiple_matches/all_multiple_match_pages.mjs"></script>
 
 <script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
+<script type=module src="static/js/d_misc_functionality/page_load_multiple_address_attributes.mjs"></script>
 
 <script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
 

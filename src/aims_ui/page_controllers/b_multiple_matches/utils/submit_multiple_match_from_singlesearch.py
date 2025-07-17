@@ -10,7 +10,6 @@ from .multiple_match_file_upload_utils import remove_script_and_html_from_str
 
 page_name = 'multiple_match_submit'
 
-
 def multiple_address_match_from_singlesearch_display(file, all_user_input):
   csv_headers = [
       'id', 'inputAddress', 'matchedAddress', 'uprn', 'matchType',
@@ -116,7 +115,7 @@ def multiple_address_match_from_singlesearch_display(file, all_user_input):
 
 def multiple_address_match_from_singlesearch_download(file, all_user_input):
   csv_headers = ['id', 'inputAddress',  'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag)', 'aiRating']  # yapf: disable
-
+  csv_headers.append('parentUprn')
   contents = file.readlines()
   remove_header_row(contents)
 
@@ -128,8 +127,7 @@ def multiple_address_match_from_singlesearch_download(file, all_user_input):
 
   def write(id, addr, m_addr, address_type, uprn, m_type, confid_score,
             doc_score, rank, ai_rating):
-    writer.writerow([
-        given_id,
+    data = [given_id,
         address_to_lookup.replace('"', ''),
         m_addr,
         adrs.uprn.value,
@@ -138,8 +136,12 @@ def multiple_address_match_from_singlesearch_download(file, all_user_input):
         adrs.underlying_score.value,
         rank,
         address_type,
-        ai_rating,
-    ])
+        ai_rating]
+    # if adrs.parent_uprn.value is not None:
+    #     print(adrs.parent_uprn.value)
+    #     data.append(adrs.parent_uprn.value)
+    writer.writerow(data)
+
 
   def get_match_type(n_addr):
     return 'M' if n_addr > 1 else 'S'
