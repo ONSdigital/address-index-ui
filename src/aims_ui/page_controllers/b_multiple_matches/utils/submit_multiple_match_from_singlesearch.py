@@ -144,8 +144,11 @@ def multiple_address_match_from_singlesearch_download(file, all_user_input):
         rank,
         address_type,
         ai_rating]
-    # if adrs.parent_uprn.value is not None:
-    #     print(adrs.parent_uprn.value)
+    if len(custom_attributes) > 0:
+        for att in custom_attributes.split(" "):
+            data.append(eval(f'adrs.{att}.value'))
+
+    print(data)
     #     data.append(adrs.parent_uprn.value)
     writer.writerow(data)
 

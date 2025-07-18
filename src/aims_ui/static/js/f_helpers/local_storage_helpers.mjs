@@ -144,7 +144,7 @@ export function getFormattedAddressNagPreference() {
 }
 
 export function setFormattedAddressPafPreference(preference) {
-  localStorage.setItem('formattedaddressnag_preference', preference);
+  localStorage.setItem('formattedaddresspaf_preference', preference);
 }
 
 export function getFormattedAddressPafPreference() {
