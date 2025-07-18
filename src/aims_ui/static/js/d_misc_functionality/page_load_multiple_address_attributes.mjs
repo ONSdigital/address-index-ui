@@ -9,21 +9,23 @@ import {
 
 function getBulkAttributes() {
   var attributeList = ""
-  if (getParentUprnPreference()) {
+  if (getParentUprnPreference() == 'true') {
       attributeList = attributeList.concat("parentUprn ")
   }
-  if (getFormattedAddressNagPreference()) {
+  if (getFormattedAddressNagPreference() == 'true') {
       attributeList = attributeList.concat("formattedAddressNag ")
   }
-  if (getFormattedAddressPafPreference()) {
+  if (getFormattedAddressPafPreference() == 'true') {
       attributeList = attributeList.concat("formattedAddressPaf ")
   }
+   alert(attributeList)
    return attributeList
  }
 
  function setBulkAttributes() {
       const attributeInput = document.querySelector('#custom-bulk-attributes');
       attributeInput.value = getBulkAttributes()
+      //alert(attributeInput.value)
  }
 
 function init() {
