@@ -336,6 +336,12 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             ],
         ),
         common_fields['file_upload'],
+        Field(
+            'custom-bulk-attributes',
+            classes='ons-input--w-20 ons-u-hidden',
+            required=False,
+            previous_value='parentUprn'
+        ),
     ])
 
   elif endpoint_name == 'uprn_multiple_match':

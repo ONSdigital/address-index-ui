@@ -115,7 +115,14 @@ def multiple_address_match_from_singlesearch_display(file, all_user_input):
 
 def multiple_address_match_from_singlesearch_download(file, all_user_input):
   csv_headers = ['id', 'inputAddress',  'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag)', 'aiRating']  # yapf: disable
-  csv_headers.append('parentUprn')
+
+  custom_attributes = all_user_input.get('custom-bulk-attributes')
+  if len(custom_attributes) > 0:
+      custom_attributes = custom_attributes.rstrip(" ")
+      for att in custom_attributes.split(" "):
+          csv_headers.append(att)
+
+  print(csv_headers)
   contents = file.readlines()
   remove_header_row(contents)
 
