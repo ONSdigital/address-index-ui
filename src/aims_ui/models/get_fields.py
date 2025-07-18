@@ -340,7 +340,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             'custom-bulk-attributes',
             classes='ons-input--w-20 ons-u-hidden',
             required=False,
-            previous_value='parentUprn'
+            previous_value=''
         ),
     ])
 

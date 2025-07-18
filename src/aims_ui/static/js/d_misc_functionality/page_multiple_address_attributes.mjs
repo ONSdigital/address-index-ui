@@ -28,10 +28,10 @@ function setupParentUprnPreferencesListeners() {
 
 function setupFormattedAddressNagPreferences() {
   const currentStatus = getFormattedAddressNagPreference();
-  const formattedAddressNagCheckbox = document.querySelector('#formattedAddressnag');
+  const formattedAddressNagCheckbox = document.querySelector('#formattedaddressnag');
 
   if (currentStatus === 'true') {
-    FormattedAddressNagCheckbox.checked = true;
+    formattedAddressNagCheckbox.checked = true;
   }
 }
 
@@ -46,10 +46,10 @@ function setupFormattedAddressNagPreferencesListeners() {
 
 function setupFormattedAddressPafPreferences() {
   const currentStatus = getFormattedAddressPafPreference();
-  const formattedAddressPafCheckbox = document.querySelector('#formattedAddresspaf');
+  const formattedAddressPafCheckbox = document.querySelector('#formattedaddresspaf');
 
   if (currentStatus === 'true') {
-    FormattedAddressPafCheckbox.checked = true;
+    formattedAddressPafCheckbox.checked = true;
   }
 }
 

@@ -10,15 +10,15 @@ import {
 function getBulkAttributes() {
   var attributeList = ""
   if (getParentUprnPreference() == 'true') {
-      attributeList = attributeList.concat("parentUprn ")
+      attributeList = attributeList.concat("parent_uprn ")
   }
   if (getFormattedAddressNagPreference() == 'true') {
-      attributeList = attributeList.concat("formattedAddressNag ")
+      attributeList = attributeList.concat("formatted_address_nag ")
   }
   if (getFormattedAddressPafPreference() == 'true') {
-      attributeList = attributeList.concat("formattedAddressPaf ")
+      attributeList = attributeList.concat("formatted_address_paf ")
   }
-   alert(attributeList)
+   //alert(attributeList)
    return attributeList
  }
 
