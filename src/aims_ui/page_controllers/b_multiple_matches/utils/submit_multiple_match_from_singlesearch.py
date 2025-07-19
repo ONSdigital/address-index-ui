@@ -59,7 +59,6 @@ def multiple_address_match_from_singlesearch_display(file, all_user_input):
     if len(custom_attributes) > 0:
         startnum = 10
         endnum = len(data)
-        print("endnum=",endnum)
         for i in range(startnum, endnum):
             tdlist.append({'value': data[i]})
 

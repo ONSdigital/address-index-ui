@@ -151,6 +151,77 @@ export function getFormattedAddressPafPreference() {
   return localStorage.getItem('formattedaddresspaf_preference');
 }
 
+export function setFormattedAddressWelshNagPreference(preference) {
+  localStorage.setItem('formattedaddresswelshnag_preference', preference);
+}
+
+export function getFormattedAddressWelshNagPreference() {
+  return localStorage.getItem('formattedaddresswelshnag_preference');
+}
+
+export function setFormattedAddressWelshPafPreference(preference) {
+  localStorage.setItem('formattedaddresswelshpaf_preference', preference);
+}
+
+export function getFormattedAddressWelshPafPreference() {
+  return localStorage.getItem('formattedaddresswelshpaf_preference');
+}
+
+export function setLatitudePreference(preference) {
+  localStorage.setItem('latitude_preference', preference);
+}
+
+export function getLatitudePreference() {
+  return localStorage.getItem('latitude_preference');
+}
+
+export function setLongitudePreference(preference) {
+  localStorage.setItem('longitude_preference', preference);
+}
+
+export function getLongitudePreference() {
+  return localStorage.getItem('longitude_preference');
+}
+
+export function setEastingPreference(preference) {
+  localStorage.setItem('easting_preference', preference);
+}
+
+export function getEastingPreference() {
+  return localStorage.getItem('easting_preference');
+}
+
+export function setNorthingPreference(preference) {
+  localStorage.setItem('northing_preference', preference);
+}
+
+export function getNorthingPreference() {
+  return localStorage.getItem('northing_preference');
+}
+
+export function setClassificationCodePreference(preference) {
+  localStorage.setItem('classificationcode_preference', preference);
+}
+
+export function getClassificationCodePreference() {
+  return localStorage.getItem('classificationcode_preference');
+}
+
+export function getCountryCodePreference() {
+  return localStorage.getItem('counytrycode_preference');
+}
+
+export function setCountryCodePreference(preference) {
+  localStorage.setItem('countrycode_preference', preference);
+}
+
+export function setLpiLogicalStatusPreference(preference) {
+  localStorage.setItem('lpilogicalstatus_preference', preference);
+}
+
+export function setLpiLogicalStatusPreference() {
+  return localStorage.getItem('lpilogicalstatus_preference');
+}
 
 // save_inputs local storage
 export function saveToLocalStorage(inputObjectValues, loc) {
