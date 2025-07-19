@@ -3,8 +3,22 @@ import {
   getParentUprnPreference,
   setFormattedAddressNagPreference,
   getFormattedAddressNagPreference,
-  setFormattedAddressPafPreference,
-  getFormattedAddressPafPreference,
+  setFormattedAddressWelshPafPreference,
+  getFormattedAddressWelshPafPreference,
+  setLatitudePreference,
+  getLatitudePreference,
+  setLongitudePreference,
+  getLongitudePreference,
+  setEastingPreference,
+  getEastingPreference,
+  setNorthingPreference,
+  getNorthingPreference,
+  setClassificationCodePreference,
+  getClassificationCodePreference,
+  setCountryCodePreference,
+  getCountryCodePreference,
+  setLpiLogicalStatusPreference,
+  getLpiLogicalStatusPreference,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 // Response Attribute  Preferences
@@ -68,8 +82,22 @@ function init() {
   setupParentUprnPreferences();
   setupFormattedAddressNagPreferencesListeners();
   setupFormattedAddressNagPreferences();
-  setupFormattedAddressPafPreferencesListeners();
-  setupFormattedAddressPafPreferences();
+  setupFormattedAddressWelshPafPreferencesListeners();
+  setupFormattedAddressWelshPafPreferences();
+  setupLatitudePreferencesListeners();
+  setupLatitudePreferences();
+  setupLongitudePreferencesListeners();
+  setupLongitudePreferences();
+  setupEastingPreferencesListeners();
+  setupEastingPreferences();
+  setupNorthingPreferencesListeners();
+  setupNorthingPreferences();
+  setupClassificationCodePreferencesListeners();
+  setupClassificationCodePreferences();
+  setupCountryCodePreferencesListeners();
+  setupCountryCodePreferences();
+  setupLpiLogicalStatusPreferencesListeners();
+  setupLpiLogicalStatusPreferences();
 
 }
 
