@@ -135,8 +135,6 @@ def multiple_address_match_from_singlesearch_display(file, all_user_input):
           for att in custom_attributes.split(" "):
               data.append(eval(f'adrs.{att}.value'))
 
-      print(data)
-      #     data.append(adrs.parent_uprn.value)
       write(data)
 
   # Unindent the following code so it's outside the 'for line in contents:' loop
@@ -166,7 +164,6 @@ def multiple_address_match_from_singlesearch_download(file, all_user_input):
       for att in custom_attributes.split(" "):
           csv_headers.append(att)
 
-  print(csv_headers)
   contents = file.readlines()
   remove_header_row(contents)
 
@@ -192,8 +189,6 @@ def multiple_address_match_from_singlesearch_download(file, all_user_input):
         for att in custom_attributes.split(" "):
             data.append(eval(f'adrs.{att}.value'))
 
-    print(data)
-    #     data.append(adrs.parent_uprn.value)
     writer.writerow(data)
 
 
