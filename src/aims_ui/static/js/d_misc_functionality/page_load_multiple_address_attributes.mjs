@@ -3,6 +3,10 @@ import {
   getParentUprnPreference,
   setFormattedAddressNagPreference,
   getFormattedAddressNagPreference,
+  setFormattedAddressPafPreference,
+  getFormattedAddressPafPreference,
+  setFormattedAddressWelshNagPreference,
+  getFormattedAddressWelshNagPreference,
   setFormattedAddressWelshPafPreference,
   getFormattedAddressWelshPafPreference,
   setLatitudePreference,
@@ -32,7 +36,34 @@ function getBulkAttributes() {
   if (getFormattedAddressPafPreference() == 'true') {
       attributeList = attributeList.concat("formatted_address_paf ")
   }
-   //alert(attributeList)
+  if (getFormattedAddressWelshNagPreference() == 'true') {
+      attributeList = attributeList.concat("formatted_address_welsh_nag ")
+  }
+  if (getFormattedAddressWelshPafPreference() == 'true') {
+      attributeList = attributeList.concat("formatted_address_welsh_paf ")
+  }
+  if (getLatitudePreference() == 'true') {
+      attributeList = attributeList.concat("latitude ")
+  }
+  if (getLongitudePreference() == 'true') {
+      attributeList = attributeList.concat("longitude ")
+  }
+  if (getEastingPreference() == 'true') {
+      attributeList = attributeList.concat("easting ")
+  }
+  if (getNorthingPreference() == 'true') {
+      attributeList = attributeList.concat("northing ")
+  }
+    if (getClassificationCodePreference() == 'true') {
+      attributeList = attributeList.concat("classification_code ")
+  }
+    if (getCountryCodePreference() == 'true') {
+      attributeList = attributeList.concat("country_code ")
+  }
+    if (getLpiLogicalStatusPreference() == 'true') {
+      attributeList = attributeList.concat("lpi_logical_status ")
+  }
+   alert(attributeList)
    return attributeList
  }
 
