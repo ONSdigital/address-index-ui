@@ -37,10 +37,10 @@ function getBulkAttributes() {
       attributeList = attributeList.concat("formatted_address_paf ")
   }
   if (getFormattedAddressWelshNagPreference() == 'true') {
-      attributeList = attributeList.concat("formatted_address_welsh_nag ")
+      attributeList = attributeList.concat("welsh_formatted_address_nag ")
   }
   if (getFormattedAddressWelshPafPreference() == 'true') {
-      attributeList = attributeList.concat("formatted_address_welsh_paf ")
+      attributeList = attributeList.concat("welsh_formatted_address_paf ")
   }
   if (getLatitudePreference() == 'true') {
       attributeList = attributeList.concat("latitude ")
@@ -63,14 +63,12 @@ function getBulkAttributes() {
     if (getLpiLogicalStatusPreference() == 'true') {
       attributeList = attributeList.concat("lpi_logical_status ")
   }
-   alert(attributeList)
    return attributeList
  }
 
  function setBulkAttributes() {
       const attributeInput = document.querySelector('#custom-bulk-attributes');
       attributeInput.value = getBulkAttributes()
-      //alert(attributeInput.value)
  }
 
 function init() {

@@ -82,11 +82,12 @@ class AddressAttribute():
     if self.name == 'classificationCodeList':
       return get_classification_list(classification_code)
     if self.name == 'lpiLogicalStatus':
-      return getTextLogicalStatus(self.raw_value)
+      #return getTextLogicalStatus(self.raw_value)
+      return value
     if self.name == 'hierarchy':
       return getHierarchy(self.address_data)
     if self.name == 'parentUprn':
-        return value
+      return value
       # if str(value) != '0':
       #   return f'<a href="/address_info/{value}">{value}<a>'
       # else:

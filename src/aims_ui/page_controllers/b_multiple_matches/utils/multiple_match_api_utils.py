@@ -21,7 +21,6 @@ def get_header_row_export_selection(all_user_input):
 
 
 def get_paf_nag_preference_selection(all_user_input):
-  print('all_user_input=', all_user_input)
   pafdefault = all_user_input.get('pafdefault', 'false')
   pafdefault = null_or_undefined_to_False(pafdefault)
 
