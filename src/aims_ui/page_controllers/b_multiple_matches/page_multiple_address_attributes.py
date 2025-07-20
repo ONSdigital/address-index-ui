@@ -1,17 +1,12 @@
 from flask_login import login_required
 from flask import render_template, request
 from aims_ui import app
-from models.address import AddressAttribute
-from models.get_fields import get_fields
-from .utils.multiple_match_api_utils import get_tag_data, job_data_by_current_user
+from aims_ui.models.get_fields import get_fields
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
-from aims_ui.page_helpers.table_utils import create_table
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.google_utils import get_username, get_current_group
-from aims_ui.models.address import AddressAttribute
-from aims_ui.page_controllers.b_multiple_matches.utils.multiple_address_results import get_results_plus_metadata
-import json
+
 
 page_name = 'multiple_address_attributes'
 
