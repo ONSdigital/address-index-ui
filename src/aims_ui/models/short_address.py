@@ -74,7 +74,7 @@ class AddressAttribute():
     if self.name == 'geo.latitude':
       return str(value.get('latitude'))
     if self.name == 'geo.longitude':
-      return str(value.get('latitude'))
+      return str(value.get('longitude'))
     if self.name == 'geo.easting':
       return str(value.get('easting'))
     if self.name == 'geo.northing':
