@@ -112,20 +112,6 @@ export function setAdditionalRequestStatus(settings) {
 }
 
 // Getters and setters for Custom Response
-//                 "parentUprn": "0",
-//                 "formattedAddressNag": "Solva, Southwick Road, Denmead, PO7 6LA",
-//                 "formattedAddressPaf": "Solva, Southwick Road, Denmead, Waterlooville, PO7 6LA",
-//                 "welshFormattedAddressNag": "",
-//                 "welshFormattedAddressPaf": "Solva, Southwick Road, Denmead, Waterlooville, PO7 6LA",
-//                 "geo": {
-//                     "latitude": 50.902946,
-//                     "longitude": -1.0706598,
-//                     "easting": 465444,
-//                     "northing": 111909
-//                 },
-//                 "classificationCode": "RD02",
-//                 "countryCode": "E",
-//                 "lpiLogicalStatus": "1",
 
 export function setParentUprnPreference(preference) {
   localStorage.setItem('parentuprn_preference', preference);
@@ -207,19 +193,19 @@ export function getClassificationCodePreference() {
   return localStorage.getItem('classificationcode_preference');
 }
 
-export function getCountryCodePreference() {
-  return localStorage.getItem('counytrycode_preference');
-}
-
 export function setCountryCodePreference(preference) {
   localStorage.setItem('countrycode_preference', preference);
+}
+
+export function getCountryCodePreference() {
+  return localStorage.getItem('countrycode_preference');
 }
 
 export function setLpiLogicalStatusPreference(preference) {
   localStorage.setItem('lpilogicalstatus_preference', preference);
 }
 
-export function setLpiLogicalStatusPreference() {
+export function getLpiLogicalStatusPreference() {
   return localStorage.getItem('lpilogicalstatus_preference');
 }
 
