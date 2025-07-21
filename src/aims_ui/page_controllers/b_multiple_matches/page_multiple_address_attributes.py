@@ -20,14 +20,8 @@ def multiple_address_attributes():
     return access
   page_location = get_page_location(endpoints, page_name)
 
-  username = get_username()
   current_group = get_current_group()
   bulk_limits = current_group.get('bulk_limits')
-
-  headers = [
-      'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'PAF OR NAG', 'RECS PROCESSED',
-      'DOWNLOAD LINK'
-  ]
 
   endpoints = get_endpoints(called_from=page_name)
   searchable_fields = get_fields(page_name)
