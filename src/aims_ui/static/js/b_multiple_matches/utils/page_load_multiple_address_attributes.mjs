@@ -1,32 +1,20 @@
 import {
-  setParentUprnPreference,
   getParentUprnPreference,
-  setFormattedAddressNagPreference,
   getFormattedAddressNagPreference,
-  setFormattedAddressPafPreference,
   getFormattedAddressPafPreference,
-  setFormattedAddressWelshNagPreference,
   getFormattedAddressWelshNagPreference,
-  setFormattedAddressWelshPafPreference,
   getFormattedAddressWelshPafPreference,
-  setLatitudePreference,
   getLatitudePreference,
-  setLongitudePreference,
   getLongitudePreference,
-  setEastingPreference,
   getEastingPreference,
-  setNorthingPreference,
   getNorthingPreference,
-  setClassificationCodePreference,
   getClassificationCodePreference,
-  setCountryCodePreference,
   getCountryCodePreference,
-  setLpiLogicalStatusPreference,
   getLpiLogicalStatusPreference,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 function getBulkAttributes() {
-  var attributeList = ""
+  let attributeList = ""
   if (getParentUprnPreference() == 'true') {
       attributeList = attributeList.concat("parent_uprn ")
   }

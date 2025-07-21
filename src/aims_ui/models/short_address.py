@@ -88,10 +88,6 @@ class AddressAttribute():
       return getHierarchy(self.address_data)
     if self.name == 'parentUprn':
       return value
-      # if str(value) != '0':
-      #   return f'<a href="/address_info/{value}">{value}<a>'
-      # else:
-      #   return 'NA'
 
     return f'{value}'
 

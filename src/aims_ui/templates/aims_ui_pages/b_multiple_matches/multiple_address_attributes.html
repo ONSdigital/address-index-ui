@@ -16,17 +16,6 @@
 
 <h1>Match Multiple Addresses</h1>
 
-<h1 id="tempid"></h1>
-
-<div hidden=true>
-{{ onsButton({
-	    "id": 'downloadButtonTemplate',
-            "text": 'Download',
-	    "iconType": "download",
-	    "iconPosition": "before",
-            "variants": 'loader' }) }}
-</div>
-
 {{ customMultipleMatchNav ({
 	'current_path': url_for('multiple_address_attributes'),
 	'bulk_limits': bulk_limits,
@@ -85,8 +74,9 @@
   </div>
 
 </div>
+<script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
 <script type=module src="static/js/b_multiple_matches/all_multiple_match_pages.mjs"></script>
-<script type=module src="static/js/d_misc_functionality/page_multiple_address_attributes.mjs"></script>
+<script type=module src="static/js/b_multiple_matches/page_multiple_address_attributes.mjs"></script>
 <script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
 
 {% endblock %}
