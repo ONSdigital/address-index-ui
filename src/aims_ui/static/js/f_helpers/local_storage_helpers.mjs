@@ -114,99 +114,143 @@ export function setAdditionalRequestStatus(settings) {
 // Getters and setters for Custom Response
 
 export function setParentUprnPreference(preference) {
-  localStorage.setItem('parentuprn_preference', preference);
+  setCustomBulkAttributePreference('parentuprn', preference);
 }
 
 export function getParentUprnPreference() {
-  return localStorage.getItem('parentuprn_preference');
+  return isCustomBulkAttributesSelected('parentuprn');
 }
 
 export function setFormattedAddressNagPreference(preference) {
-  localStorage.setItem('formattedaddressnag_preference', preference);
+  setCustomBulkAttributePreference('formattedaddressnag', preference);
 }
 
 export function getFormattedAddressNagPreference() {
-  return localStorage.getItem('formattedaddressnag_preference');
+  return isCustomBulkAttributesSelected('formattedaddressnag');
 }
 
 export function setFormattedAddressPafPreference(preference) {
-  localStorage.setItem('formattedaddresspaf_preference', preference);
+  setCustomBulkAttributePreference('formattedaddresspaf', preference);
 }
 
 export function getFormattedAddressPafPreference() {
-  return localStorage.getItem('formattedaddresspaf_preference');
+  return isCustomBulkAttributesSelected('formattedaddresspaf');
 }
 
 export function setFormattedAddressWelshNagPreference(preference) {
-  localStorage.setItem('formattedaddresswelshnag_preference', preference);
+  setCustomBulkAttributePreference('formattedaddresswelshnag', preference);
 }
 
 export function getFormattedAddressWelshNagPreference() {
-  return localStorage.getItem('formattedaddresswelshnag_preference');
+  return isCustomBulkAttributesSelected('formattedaddresswelshnag');
 }
 
 export function setFormattedAddressWelshPafPreference(preference) {
-  localStorage.setItem('formattedaddresswelshpaf_preference', preference);
+  setCustomBulkAttributePreference('formattedaddresswelshpaf', preference);
 }
 
 export function getFormattedAddressWelshPafPreference() {
-  return localStorage.getItem('formattedaddresswelshpaf_preference');
+  return isCustomBulkAttributesSelected('formattedaddresswelshpaf');
 }
 
 export function setLatitudePreference(preference) {
-  localStorage.setItem('latitude_preference', preference);
+  setCustomBulkAttributePreference('latitude', preference);
 }
 
 export function getLatitudePreference() {
-  return localStorage.getItem('latitude_preference');
+  return isCustomBulkAttributesSelected('latitude');
 }
 
 export function setLongitudePreference(preference) {
-  localStorage.setItem('longitude_preference', preference);
+  setCustomBulkAttributePreference('longitude', preference);
 }
 
 export function getLongitudePreference() {
-  return localStorage.getItem('longitude_preference');
+  return isCustomBulkAttributesSelected('longitude');
 }
 
 export function setEastingPreference(preference) {
-  localStorage.setItem('easting_preference', preference);
+  setCustomBulkAttributePreference('easting', preference);
 }
 
 export function getEastingPreference() {
-  return localStorage.getItem('easting_preference');
+  return isCustomBulkAttributesSelected('easting');
 }
 
 export function setNorthingPreference(preference) {
-  localStorage.setItem('northing_preference', preference);
+  setCustomBulkAttributePreference('northing', preference);
 }
 
 export function getNorthingPreference() {
-  return localStorage.getItem('northing_preference');
+  return isCustomBulkAttributesSelected('northing');
 }
 
 export function setClassificationCodePreference(preference) {
-  localStorage.setItem('classificationcode_preference', preference);
+  setCustomBulkAttributePreference('classificationcode', preference);
 }
 
 export function getClassificationCodePreference() {
-  return localStorage.getItem('classificationcode_preference');
+  return isCustomBulkAttributesSelected('classificationcode');
 }
 
 export function setCountryCodePreference(preference) {
-  localStorage.setItem('countrycode_preference', preference);
+  setCustomBulkAttributePreference('countrycode', preference);
 }
 
 export function getCountryCodePreference() {
-  return localStorage.getItem('countrycode_preference');
+  return isCustomBulkAttributesSelected('countrycode');
 }
 
 export function setLpiLogicalStatusPreference(preference) {
-  localStorage.setItem('lpilogicalstatus_preference', preference);
+  setCustomBulkAttributePreference('lpilogicalstatus', preference);
 }
 
 export function getLpiLogicalStatusPreference() {
-  return localStorage.getItem('lpilogicalstatus_preference');
+  return isCustomBulkAttributesSelected('lpilogicalstatus');
+}
+
+
+// functions to allow bulk custom attributes to be grouped into one storage string
+
+function addItemToCustomBulkAttributes(fieldtoadd) {
+    let attArray = JSON.parse(localStorage.getItem('custom_bulk_response_attributes'));
+    if ((attArray) == null) {
+        attArray = [];
+    }
+    if (!(attArray.includes(fieldtoadd))) {
+      attArray.push(fieldtoadd)
+      localStorage.setItem('custom_bulk_response_attributes', JSON.stringify(attArray));
+    }
+}
+
+function removeItemFromCustomBulkAttributes(fieldtoremove) {
+    let attArray = JSON.parse(localStorage.getItem('custom_bulk_response_attributes'));
+    if (attArray != null) {
+      if (attArray.includes(fieldtoremove)) {
+        const index = altArray.indexOf(fieldtoremove);
+        const deletedItem = altArray.splice(index, 1);
+        localStorage.setItem('custom_bulk_response_attributes', JSON.stringify(attArray));
+      }
+    }
+}
+
+function isCustomBulkAttributesSelected(fieldtotest) {
+    const attArray = JSON.parse(localStorage.getItem('custom_bulk_response_attributes'));
+    if (attArray == null) {
+        return 'false'
+    }
+    if (attArray.includes(fieldtotest)) {
+         return 'true'
+      }
+    return 'false'
+}
+
+function setCustomBulkAttributePreference(fieldname, preference) {
+    if (preference == 'true') {
+        addItemToCustomBulkAttributes(fieldname)
+    } else {
+        removeItemFromCustomBulkAttributes(fieldname)
+    }
 }
 
 // save_inputs local storage
