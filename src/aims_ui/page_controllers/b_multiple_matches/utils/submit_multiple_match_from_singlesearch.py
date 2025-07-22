@@ -10,12 +10,17 @@ from .multiple_match_file_upload_utils import remove_script_and_html_from_str
 
 page_name = 'multiple_match_submit'
 
-
 def multiple_address_match_from_singlesearch_display(file, all_user_input):
   csv_headers = [
       'id', 'inputAddress', 'matchedAddress', 'uprn', 'matchType',
       'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag)', 'aiRating'
   ]  # yapf: disable
+
+  custom_attributes = all_user_input.get('custom-bulk-attributes')
+  if len(custom_attributes) > 0:
+      custom_attributes = custom_attributes.rstrip(" ")
+      for att in custom_attributes.split(" "):
+          csv_headers.append(att)
 
   contents = file.readlines()
   remove_header_row(contents)
@@ -24,22 +29,41 @@ def multiple_address_match_from_singlesearch_display(file, all_user_input):
   ths = [{'value': x, 'ariaSort': None} for x in csv_headers]
   trs = []
 
-  def write(id, addr, m_addr, address_type, uprn, m_type, confid_score,
-            doc_score, rank, ai_rating):
-    trs.append({
-        'tds': [
-            {'value': remove_script_and_html_from_str(given_id)},
-            {'value': remove_script_and_html_from_str(address_to_lookup)},
-            {'value': m_addr},
-            {'value': uprn},
-            {'value': match_type},
-            {'value': confid_score},
-            {'value': doc_score},
-            {'value': rank},
-            {'value': address_type},
-            {'value': ai_rating},
+  # data = [given_id,
+  #         address_to_lookup,
+  #         preffered_address_format,
+  #         actual_address_type,
+  #         adrs.uprn.value,
+  #         match_type,
+  #         adrs.confidence_score.value,
+  #         adrs.underlying_score.value,
+  #         rank,
+  #         adrs.airRating.value
+
+
+
+  def write(data):
+    tdlist =  [
+            {'value': remove_script_and_html_from_str(data[0])},
+            {'value': remove_script_and_html_from_str(data[1])},
+            {'value': data[2]},
+            {'value': data[4]},
+            {'value': data[5]},
+            {'value': data[6]},
+            {'value': data[7]},
+            {'value': data[8]},
+            {'value': data[3]},
+            {'value': data[9]},
         ]
-    })  # yapf: disable
+
+    if len(custom_attributes) > 0:
+        startnum = 10
+        endnum = len(data)
+        for i in range(startnum, endnum):
+            tdlist.append({'value': data[i]})
+
+    trs.append({'tds' : tdlist})  # yapf: disable
+
 
   def get_match_type(n_addr):
     return '<p style="background-color:orange;">M</p>' if n_addr > 1 else '<p style="background-color:Aquamarine;">S</p>'
@@ -83,8 +107,20 @@ def multiple_address_match_from_singlesearch_display(file, all_user_input):
       line_count += 1
       actual_address_type, preffered_address_format = \
           get_preffered_format_of_address(adrs, all_user_input)
-      write(
-          given_id,
+      # write(
+      #     given_id,
+      #     address_to_lookup,
+      #     preffered_address_format,
+      #     actual_address_type,
+      #     adrs.uprn.value,
+      #     match_type,
+      #     adrs.confidence_score.value,
+      #     adrs.underlying_score.value,
+      #     rank,
+      #     adrs.airRating.value,
+      # )
+
+      data = [given_id,
           address_to_lookup,
           preffered_address_format,
           actual_address_type,
@@ -93,8 +129,13 @@ def multiple_address_match_from_singlesearch_display(file, all_user_input):
           adrs.confidence_score.value,
           adrs.underlying_score.value,
           rank,
-          adrs.airRating.value,
-      )
+          adrs.airRating.value
+      ]
+      if len(custom_attributes) > 0:
+          for att in custom_attributes.split(" "):
+              data.append(eval(f'adrs.{att}.value'))
+
+      write(data)
 
   # Unindent the following code so it's outside the 'for line in contents:' loop
   headers = [
@@ -117,6 +158,12 @@ def multiple_address_match_from_singlesearch_display(file, all_user_input):
 def multiple_address_match_from_singlesearch_download(file, all_user_input):
   csv_headers = ['id', 'inputAddress',  'matchedAddress', 'uprn', 'matchType', 'confidenceScore', 'documentScore', 'rank', 'addressType(Paf/Nag)', 'aiRating']  # yapf: disable
 
+  custom_attributes = all_user_input.get('custom-bulk-attributes')
+  if len(custom_attributes) > 0:
+      custom_attributes = custom_attributes.rstrip(" ")
+      for att in custom_attributes.split(" "):
+          csv_headers.append(att)
+
   contents = file.readlines()
   remove_header_row(contents)
 
@@ -128,8 +175,7 @@ def multiple_address_match_from_singlesearch_download(file, all_user_input):
 
   def write(id, addr, m_addr, address_type, uprn, m_type, confid_score,
             doc_score, rank, ai_rating):
-    writer.writerow([
-        given_id,
+    data = [given_id,
         address_to_lookup.replace('"', ''),
         m_addr,
         adrs.uprn.value,
@@ -138,8 +184,13 @@ def multiple_address_match_from_singlesearch_download(file, all_user_input):
         adrs.underlying_score.value,
         rank,
         address_type,
-        ai_rating,
-    ])
+        ai_rating]
+    if len(custom_attributes) > 0:
+        for att in custom_attributes.split(" "):
+            data.append(eval(f'adrs.{att}.value'))
+
+    writer.writerow(data)
+
 
   def get_match_type(n_addr):
     return 'M' if n_addr > 1 else 'S'

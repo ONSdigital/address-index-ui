@@ -336,6 +336,12 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             ],
         ),
         common_fields['file_upload'],
+        Field(
+            'custom-bulk-attributes',
+            classes='ons-input--w-20 ons-u-hidden',
+            required=False,
+            previous_value=''
+        ),
     ])
 
   elif endpoint_name == 'uprn_multiple_match':
@@ -396,7 +402,83 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['epoch'],
         common_fields['historical'],
     ])
-
+  elif endpoint_name == 'multiple_address_attributes':
+    return ([
+        Field(
+            'parentuprn',
+            search_type='checkbox',
+            display_title='Include Parent UPRN',
+            checkbox_value=False,
+            # description=
+            # 'Check to include the parent UPRN in the response.',
+        ),
+        Field(
+            'latitude',
+            search_type='checkbox',
+            display_title='Include Latitude (geo)',
+            checkbox_value=False,
+        ),
+        Field(
+            'longitude',
+            search_type='checkbox',
+            display_title='Include Longitude (geo)',
+            checkbox_value=False,
+        ),
+        Field(
+            'easting',
+            search_type='checkbox',
+            display_title='Include Easting (geo)',
+            checkbox_value=False,
+        ),
+        Field(
+            'northing',
+            search_type='checkbox',
+            display_title='Include Northing (geo)',
+            checkbox_value=False,
+        ),
+        Field(
+            'classificationcode',
+            search_type='checkbox',
+            display_title='Include Classification Code',
+            checkbox_value=False,
+        ),
+        Field(
+            'lpilogicalstatus',
+            search_type='checkbox',
+            display_title='Include Logical Status (historic, etc.)',
+            checkbox_value=False,
+        ),
+        Field(
+            'countrycode',
+            search_type='checkbox',
+            display_title='Include Country Code (e.g. E,S,W)',
+            checkbox_value=False,
+        ),
+        Field(
+            'formattedaddressnag',
+            search_type='checkbox',
+            display_title='Include formatted address from NAG',
+            checkbox_value=False,
+        ),
+        Field(
+            'formattedaddresspaf',
+            search_type='checkbox',
+            display_title='Include formatted address from PAF',
+            checkbox_value=False,
+        ),
+        Field(
+            'welshformattedaddressnag',
+            search_type='checkbox',
+            display_title='Include Welsh NAG formatted address',
+            checkbox_value=False,
+        ),
+        Field(
+            'welshformattedaddresspaf',
+            search_type='checkbox',
+            display_title='Include Welsh PAF formatted address',
+            checkbox_value=False,
+        )
+    ])
   elif endpoint_name == 'singlesearch':
     fields = [
         Field(

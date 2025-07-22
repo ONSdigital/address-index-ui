@@ -14,7 +14,7 @@ class AddressAttribute():
   ):
     self.name = name
     self.address_data = address_data
-    self.raw_value = address_data.get(name)
+    self.raw_value = address_data.get(name.partition('.')[0])
     self.value = self.format_special(self.raw_value, classification_code,
                                      confidence_score)
     self.show = False
@@ -62,25 +62,32 @@ class AddressAttribute():
         return confidence_score
       else:
         return value
-
+    # geo can be returned as a block or as separate values
     if self.name == 'geo':
-      # README swapping the long/lat values fixes things - do not change, it's not a mistake!
       new_d = {
-          'longitude': str(value.get('latitude')),
-          'latitude': str(value.get('longitude')),
+          'latitude': str(value.get('latitude')),
+          'longitude': str(value.get('longitude')),
+          'easting': str(value.get('easting')),
+          'northing': str(value.get('northing')),
       }
       return new_d
+    if self.name == 'geo.latitude':
+      return str(value.get('latitude'))
+    if self.name == 'geo.longitude':
+      return str(value.get('longitude'))
+    if self.name == 'geo.easting':
+      return str(value.get('easting'))
+    if self.name == 'geo.northing':
+      return str(value.get('northing'))
     if self.name == 'classificationCodeList':
       return get_classification_list(classification_code)
     if self.name == 'lpiLogicalStatus':
-      return getTextLogicalStatus(self.raw_value)
+      #return getTextLogicalStatus(self.raw_value)
+      return value
     if self.name == 'hierarchy':
       return getHierarchy(self.address_data)
     if self.name == 'parentUprn':
-      if str(value) != '0':
-        return f'<a href="/address_info/{value}">{value}<a>'
-      else:
-        return 'NA'
+      return value
 
     return f'{value}'
 
@@ -101,22 +108,21 @@ class ShortAddress():
                                                   'formattedAddressNag')
     self.formatted_address_paf = AddressAttribute(address_data,
                                                   'formattedAddressPaf')
-    self.formatted_address_nisra = AddressAttribute(address_data,
-                                                    'formattedAddressNisra')
     self.welsh_formatted_address_nag = AddressAttribute(
         address_data, 'welshFormattedAddressNag')
     self.welsh_formatted_address_paf = AddressAttribute(
         address_data, 'welshFormattedAddressPaf')
     self.geo = AddressAttribute(address_data, 'geo')
+    self.latitude = AddressAttribute(address_data, 'geo.latitude')
+    self.longitude = AddressAttribute(address_data, 'geo.longitude')
+    self.easting = AddressAttribute(address_data, 'geo.easting')
+    self.northing = AddressAttribute(address_data, 'geo.northing')
     self.classification_code = AddressAttribute(address_data,
                                                 'classificationCode')
     self.classification_code_list = AddressAttribute(
         address_data,
         'classificationCodeList',
         classification_code=self.classification_code.value)
-    self.census_address_type = AddressAttribute(address_data,
-                                                'censusAddressType')
-    self.census_estab_type = AddressAttribute(address_data, 'censusEstabType')
     self.country_code = AddressAttribute(address_data, 'countryCode')
     self.lpi_logical_status = AddressAttribute(address_data,
                                                'lpiLogicalStatus')

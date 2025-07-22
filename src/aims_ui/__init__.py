@@ -136,6 +136,7 @@ from aims_ui.page_controllers.a_single_matches.page_singlesearch import singlese
 from aims_ui.page_controllers.b_multiple_matches.page_multiple_address import multiple_address
 from aims_ui.page_controllers.b_multiple_matches.page_multiple_address_results import multiple_address_results
 from aims_ui.page_controllers.b_multiple_matches.page_multiple_address_original import multiple_address_original
+from aims_ui.page_controllers.b_multiple_matches.page_multiple_address_attributes import multiple_address_attributes
 from aims_ui.page_controllers.b_multiple_matches.page_uprn_multiple_match import uprn_multiple_match
 
 # Setup 'help' page controller
