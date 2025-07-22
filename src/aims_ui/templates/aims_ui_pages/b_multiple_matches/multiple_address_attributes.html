@@ -1,0 +1,82 @@
+{% extends './aims_ui_pages/0-base_page_settings.html' %}
+
+{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
+{% from "components/input/_macro.njk" import onsInput %}
+{% from "components/upload/_macro.njk" import onsUpload %}
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+{% from 'custom_search/_macro.njk' import customSearch %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/question/_macro.njk" import onsQuestion %}
+{% from "components/table/_macro.njk" import onsTable %}
+{% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
+{% from "custom_multiple_match_nav/_macro.njk" import customMultipleMatchNav %}
+
+{% block main %}
+
+<h1>Match Multiple Addresses</h1>
+
+{{ customMultipleMatchNav ({
+	'current_path': url_for('multiple_address_attributes'),
+	'bulk_limits': bulk_limits,
+	}) }}
+
+{{onsPanel({
+"body": "<p>Bulk address results always contain the following fields: id, inputAddress, matchedAddress, uprn, matchType, confidenceScore, documentScore, rank, addressType(Paf/Nag) and airRating.</p>
+<p>The fields below can optionally be added to the response, check to include.</p>"
+    })}}
+<br>
+<div class="ons-grid">
+
+{# 1Column boarder#}
+  <div id="space_col_1" class="ons-grid__col ons-col-1@m "></div>
+
+{# Content is the searchboxes, taing up 4 col#}
+  <div id="content_col_2" class="ons-grid__col ons-col-4@m ">
+
+{{ customSearch ({ "Fields": searchable_fields,
+		   "endpoints": endpoints,
+		   "remove_buttons": True,
+		   "remove_clear_button": True,
+		   "remove_search_button":False,
+           "results_page": results_page, }) }}
+
+  </div>
+  <div id="space_col_3" class="ons-grid__col ons-col-1@m "></div>
+
+  <div id="content_col_6" class="ons-grid__col ons-col-6@m ">
+
+	{{onsPanel({
+"body": "<p>EXAMPLE OUTPUT:<br>
+	         {<br>
+                'uprn': '100100082563',<br>
+                'parentUprn': '0',<br>
+                'formattedAddress': '11 High Street, Llandaff, Cardiff, CF5 2DX',<br>
+                'formattedAddressNag': '11 High Street, Llandaff, Cardiff, CF5 2DX',<br>
+                'formattedAddressPaf': '11 High Street, Llandaff, Cardiff, CF5 2DX',<br>
+                'welshFormattedAddressNag': '11 Stryd Fawr, Llandaf, Caerdydd, CF5 2DX',<br>
+                'welshFormattedAddressPaf': '11 High Street, Llandaff, Caerdydd, CF5 2DX',<br>
+                'geo': {<br>
+                 &nbsp;&nbsp;'latitude': 51.49401,<br>
+                 &nbsp;&nbsp;'longitude': -3.218726,<br>
+                 &nbsp;&nbsp;'easting': 315490,<br>
+                 &nbsp;&nbsp;'northing': 177934<br>
+                },<br>
+                'classificationCode': 'CH02',<br>
+                'countryCode': 'W',<br>
+                'lpiLogicalStatus': '1',<br>
+                'confidenceScore': 60.9787,<br>
+                'underlyingScore': 16.997744,<br>
+                'airRating': 'I'<br>
+            }</p>"
+    })}}
+<br>
+  </div>
+
+</div>
+<script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
+<script type=module src="static/js/b_multiple_matches/all_multiple_match_pages.mjs"></script>
+<script type=module src="static/js/b_multiple_matches/page_multiple_address_attributes.mjs"></script>
+<script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
+
+{% endblock %}
