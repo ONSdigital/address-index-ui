@@ -64,6 +64,12 @@ def get_endpoints(called_from=None):
           'd_misc_functionality',
       ),
       Endpoint(
+          'Radius Search',
+          'radiussearch',
+          'Given a location, search for addresses within a radius of that location. This can be filtered by a classification"',
+          'a_single_matches',
+      ),
+       Endpoint(
           'Help',
           'help',
           'See information about the other pages and how to contact support.',

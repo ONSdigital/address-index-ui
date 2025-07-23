@@ -1,0 +1,55 @@
+{% extends './aims_ui_pages/0-base_page_settings.html' %}
+
+{% from "components/card/_macro.njk" import onsCard %}
+{% from 'components/panel/_macro.njk' import onsPanel %}
+{% from 'components/list/_macro.njk' import onsList %}
+{% from 'custom_search/_macro.njk' import customSearch %}
+{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+
+{# In order to specify wider than usual components, page must be in "pageContent" #}
+{% block pageContent %}
+{% block main %}
+
+<form method="POST" id="searchform">
+
+{# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
+<div class="ons-grid">
+
+{# 1Column boarder#}
+<div id="space_col_1" class="ons-grid__col ons-col-1@m "></div>
+
+{# Content is the searchboxes, containg up 4 col#}
+  <div id="content_col_2" class="ons-grid__col ons-col-4@m ">
+
+		<h1>Radius Search</h1>
+</form>
+<br>
+</div> 
+
+{# 1 Col boarder between filters and results #}
+<div id="space_col_3" class="ons-grid__col ons-col-1@m "></div>
+
+{# 5 Col results page #}
+  <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
+		<h1>Results Go Here</h1>
+
+
+{% if results_page %}
+<h2>We matched {{matched_address_number}}  addresses:</h2>
+{% endif %}
+
+</div>
+
+{# End of grid #}
+</div>
+
+<script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
+
+<script type=module src="static/js/e_all_pages/apply_custom_settings.mjs"></script>
+<script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
+
+<script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
+
+
+{% endblock %}
+{% endblock %}

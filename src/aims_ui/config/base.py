@@ -39,7 +39,7 @@ USER_AUTHS = json.loads(os.getenv('USER_AUTHS', '{}'))
 ALL_PAGE_NAMES = [
     'singlesearch', 'uprn', 'postcode', 'typeahead',
     'multiple_address_original', 'multiple_address_results', 'multiple_address_attributes',
-    'multiple_address', 'uprn_multiple_match', 'custom_response', 'help',
+    'multiple_address', 'uprn_multiple_match', 'radiussearch', 'custom_response', 'help',
     'settings'
 ]
 
