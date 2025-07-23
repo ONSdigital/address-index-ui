@@ -508,6 +508,18 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['limit'],
         common_fields['historical'],
     ]
+  elif endpoint_name == 'radiussearch':
+    fields = [
+        Field(
+            'input',
+            display_title='Enter search string',
+            classes='ons-input--w-50 nocache',
+            required=True,
+            description=
+            'Specifies the address search string (e.g. "14 Acacia Avenue, Ruislip, HA4 8RG").'
+        ),
+    ]
+ 
 
     if include_UPRN_redirect != False:
       uprn_search_url = url_for('uprn')
