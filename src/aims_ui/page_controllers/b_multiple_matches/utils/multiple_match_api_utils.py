@@ -41,7 +41,10 @@ def get_multiple_match_api_header(all_user_input):
   header['topic'] = str(all_user_input.get('name', '')[:25])
 
   # Additional Metadata can be stored in 'uiMetadata' header
-  uiMetadata = {'header_row_export': header_row_export, 'pafdefault': pafdefault}
+  uiMetadata = {
+      'header_row_export': header_row_export,
+      'pafdefault': pafdefault
+  }
   header['uimetadata'] = json.dumps(uiMetadata)
 
   return header
