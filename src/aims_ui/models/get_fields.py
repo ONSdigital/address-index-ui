@@ -484,6 +484,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             display_title='Latitude',
             classes='ons-input--w-50 nocache',
             required=True,
+            previous_value='53.3',
             description='Latitude of the location to search for (e.g. "53.3").'
         ),
         Field(
@@ -491,6 +492,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             display_title='Longitude',
             classes='ons-input--w-50 nocache',
             required=True,
+            previous_value='-2.9',
             description='Longitude of the location to search for (e.g. "-2.9").'
         ),
         Field(
@@ -498,6 +500,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             display_title='Range (km)',
             classes='ons-input--w-50 nocache',
             required=True,
+            previous_value='100',
             description=
             'Radius (in km) around the location to search within (e.g. "100").'
         ),
