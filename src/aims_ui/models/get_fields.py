@@ -480,7 +480,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
   elif endpoint_name == 'radiussearch':
     return ([
         Field(
-            'latitude',
+            'lat',
             display_title='Latitude',
             classes='ons-input--w-50 nocache',
             required=True,
@@ -488,7 +488,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             description='Latitude of the location to search for (e.g. "53.3").'
         ),
         Field(
-            'longitude',
+            'lon',
             display_title='Longitude',
             classes='ons-input--w-50 nocache',
             required=True,
@@ -506,7 +506,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         ),
         Field(
             'input',
-            display_title='Enter',
+            display_title='Search String',
             classes='ons-input--w-50 nocache',
             required=True,
             description=
