@@ -481,6 +481,39 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
     ])
   elif endpoint_name == 'radiussearch':
     return ([
+        Field(
+            'latitude',
+            display_title='Latitude',
+            classes='ons-input--w-50 nocache',
+            required=True,
+            description=
+            'Latitude of the location to search for (e.g. "53.3").'
+        ),
+        Field(
+          'longitude',
+          display_title='Longitude',
+          classes='ons-input--w-50 nocache',
+          required=True,
+          description=
+          'Longitude of the location to search for (e.g. "-2.9").'
+        ),
+        Field(
+          'radius',
+          display_title='Range (km)',
+          classes='ons-input--w-50 nocache',
+          required=True,
+          description=
+          'Radius (in km) around the location to search within (e.g. "100").'
+        ),
+        Field(
+          'input',
+          display_title='Enter',
+          classes='ons-input--w-50 nocache',
+          required=True,
+          description=
+          'Enter the search input (e.g. "14 Acacia Avenue, Ruislip, HA4 8RG").'
+        ),
+        common_fields['classification'],
         common_fields['limit'],
     ])
   elif endpoint_name == 'singlesearch':
