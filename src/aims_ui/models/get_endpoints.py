@@ -66,7 +66,7 @@ def get_endpoints(called_from=None):
       Endpoint(
           'Radius Search',
           'radiussearch',
-          'Given a location, search for addresses within a radius of that location. This can be filtered by a classification"',
+          'Given a location, search for addresses within a radius of that location. This can be filtered by a classification',
           'a_single_matches',
       ),
       Endpoint(
