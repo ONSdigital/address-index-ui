@@ -479,6 +479,10 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             checkbox_value=False,
         )
     ])
+  elif endpoint_name == 'radiussearch':
+    return ([
+        common_fields['limit'],
+    ])
   elif endpoint_name == 'singlesearch':
     fields = [
         Field(

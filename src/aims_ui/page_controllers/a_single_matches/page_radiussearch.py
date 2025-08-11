@@ -4,11 +4,14 @@ from flask_login import login_required
 from aims_ui import app
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
+from aims_ui.page_helpers.api.api_interaction import get_api_auth
 from aims_ui.page_helpers.cookie_utils import delete_input
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 
 page_name = 'radiussearch'
+
+
 
 
 @login_required
@@ -19,6 +22,7 @@ def radiussearch():
   if access != True:
     return access
   page_location = get_page_location(endpoints, page_name)
+  api_auth = get_api_auth()
 
   if request.method == 'GET':
     delete_input(session)
@@ -26,6 +30,7 @@ def radiussearch():
         page_location,
         searchable_fields=get_fields(page_name),
         endpoints=endpoints,
+        api_auth=api_auth,
     )
 
   # Posts - not yet handled
@@ -35,7 +40,8 @@ def radiussearch():
       page_location,
       endpoints=endpoints,
       searchable_fields=searchable_fields,
-     results_page=True,
+      results_page=True,
       matched_addresses=matched_addresses,
       matched_address_number=len(matched_addresses),
+      api_auth=api_auth,
   )

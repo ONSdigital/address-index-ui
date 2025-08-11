@@ -10,46 +10,292 @@
 {% block pageContent %}
 {% block main %}
 
-<form method="POST" id="searchform">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+            crossorigin=""></script>
+    <script src="https://code.jquery.com/jquery-1.11.2.js"></script>
+    <script type="text/javascript">
+        /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+        /* Latitude/longitude spherical geodesy tools                         (c) Chris Veness 2002-2016  */
+        /*                                                                                   MIT Licence  */
+        /* www.movable-type.co.uk/scripts/latlong.html                                                    */
+        /* www.movable-type.co.uk/scripts/geodesy/docs/module-latlon-spherical.html                       */
+        /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
-{# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
-<div class="ons-grid">
+        /**
+         * Creates a LatLon point on the earth's surface at the specified latitude / longitude.
+         *
+         * @constructor
+         * @param {number} lat - Latitude in degrees.
+         * @param {number} lon - Longitude in degrees.
+         *
+         * @example
+         *     const p1 = new LatLon(52.205, 0.119);
+         */
+        function LatLon(lat, lon) {
+            // allow instantiation without 'new'
+            if (!(this instanceof LatLon)) return new LatLon(lat, lon);
 
-{# 1Column boarder#}
-<div id="space_col_1" class="ons-grid__col ons-col-1@m "></div>
+            this.lat = Number(lat);
+            this.lon = Number(lon);
+        }
 
-{# Content is the searchboxes, containg up 4 col#}
-  <div id="content_col_2" class="ons-grid__col ons-col-4@m ">
+        /**
+         * Returns the distance from this point to destination point (using haversine formula).
+         */
+        LatLon.prototype.distanceTo = function(point, radius) {
+            if (!(point instanceof LatLon)) throw new TypeError('point is not LatLon object');
+            radius = (radius === undefined) ? 6371e3 : Number(radius);
 
-		<h1>Radius Search</h1>
-</form>
-<br>
-</div> 
+            const R = radius;
+            const f1 = this.lat.toRadians();
+            const l1 = this.lon.toRadians();
+            const f2 = point.lat.toRadians();
+            const l2 = point.lon.toRadians();
+            const df = f2 - f1;
+            const dl = l2 - l1;
 
-{# 1 Col boarder between filters and results #}
-<div id="space_col_3" class="ons-grid__col ons-col-1@m "></div>
+            const a = Math.sin(df / 2) * Math.sin(df / 2) +
+                Math.cos(f1) * Math.cos(f2) *
+                Math.sin(dl / 2) * Math.sin(dl / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const d = R * c;
 
-{# 5 Col results page #}
-  <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
-		<h1>Results Go Here</h1>
+            return d;
+        };
 
+        if (Number.prototype.toRadians === undefined) {
+            Number.prototype.toRadians = function() {
+                return this * Math.PI / 180;
+            };
+        }
 
-{% if results_page %}
-<h2>We matched {{matched_address_number}}  addresses:</h2>
-{% endif %}
+        if (Number.prototype.toDegrees === undefined) {
+            Number.prototype.toDegrees = function() {
+                return this * 180 / Math.PI;
+            };
+        }
 
-</div>
+        function makeHTMLTable(pArray) {
+            let result = "<tbody>";
+            for (let i = 0; i < pArray.length; i++) {
+                result += "<tr>";
+                for (let j = 0; j < pArray[i].length; j++) {
+                    result += "<td>" + pArray[i][j] + "</td>";
+                }
+                result += "</tr>";
+            }
+            result += "</tbody>";
+            return result;
+        }
 
-{# End of grid #}
+        let addresses = [
+            ["ONS Titchfield", "50.862617","-1.2470902", "NaN"],
+            ["ONS Newport", "51.566322","-3.0272245", "NaN"],
+            ["ONS London", "51.489655","-0.1318864", "NaN"]
+         ];
+
+        let locations = [];
+
+        function updateAll() {
+            const divId = "tableDiv";
+            const pointsArray = addresses;
+            updateTable(pointsArray, divId);
+            showMap();
+        }
+
+        function updateTable(pointsArray, divId) {
+            const testLat = document.getElementById('lat').value;
+            const testLon = document.getElementById('lon').value;
+            const testPoint = LatLon(testLat, testLon);
+            document.getElementById(divId).innerHTML = "<table><thead><tr><th>Address</th><th>Latitude</th><th>Longitude</th><th>Distance(mi)</th></thead></tr>" +
+                makeHTMLTable(recalculate(pointsArray, testPoint)) +
+                "</table>";
+        }
+
+        function recalculate(pArray, testPoint) {
+            for (let i = 0; i < pArray.length; i++) {
+                const makeLat = LatLon(pArray[i][1], pArray[i][2]);
+                pArray[i][3] = Number(((makeLat.distanceTo(testPoint)) * 0.000621371192).toFixed(2));
+            }
+            return pArray.sort((a, b) => a[3] - b[3]);
+        }
+
+        function showMap() {
+            let markLat = 0;
+            let markLon = 0;
+            const newLat = document.getElementById('lat');
+            const newLon = document.getElementById('lon');
+            if (newLat != null && newLat.value !== '') {
+                markLat = parseFloat(newLat.value);
+            }
+            if (newLon != null && newLon.value !== '') {
+                markLon = parseFloat(newLon.value);
+            }
+            const test = [
+                ["Start Point", markLat, markLon, "NaN"]
+            ];
+            locations = test.concat(addresses);
+            markersLayer.clearLayers();
+
+            for (let i = 0; i < locations.length; i++) {
+                const marker = L.marker([locations[i][1], locations[i][2]]).bindPopup(locations[i][0]).openPopup();
+                markersLayer.addLayer(marker);
+            }
+        }
+
+        let map;
+        const markersLayer = new L.LayerGroup();
+
+        function initMap() {
+            let cenLat = 50.7;
+            let cenLon = -3.5;
+            let iZoom = 6;
+            const testLat = document.getElementById('lat');
+            const testLon = document.getElementById('lon');
+            const testZoom = document.getElementById('izoom');
+            if (testLat != null && testLat.value !== '') {
+                cenLat = parseFloat(testLat.value);
+            }
+            if (testLon != null && testLon.value !== '') {
+                cenLon = parseFloat(testLon.value);
+            }
+            if (testZoom != null && testZoom.value !== '') {
+                iZoom = parseFloat(testZoom.value);
+            }
+            map = L.map('mapid').setView([cenLat, cenLon], iZoom);
+
+            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicnNtaXRoLWNzbCIsImEiOiJjbGc3MTh0OXQwajhoM2lwZDh1OGZoeTduIn0.ElYW8teUQzJdf4YH5EsfmA', {
+                maxZoom: 18,
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                    '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                    'Imagery \xA9 <a href="https://www.mapbox.com/">Mapbox</a>',
+                id: 'mapbox/streets-v12',
+                tileSize: 512,
+                zoomOffset: -1
+            }).addTo(map);
+
+            markersLayer.addTo(map);
+
+            function onMapClick(e) {
+                const latLng = e.latlng;
+                const clickLat = document.getElementById('lat');
+                const clickLon = document.getElementById('lon');
+                if (clickLat != null) {
+                    clickLat.value = latLng.lat;
+                }
+                if (clickLon != null) {
+                    clickLon.value = latLng.lng;
+                }
+                updateAll();
+            }
+
+            map.on('click', onMapClick);
+
+            map.on('zoomend', function() {
+                const zoom = map.getZoom();
+                testZoom.value = zoom;
+            });
+
+            function getParameterByName(name) {
+                const match = RegExp('[?&]' + name + '=(\[^&]*)').exec(window.location.search);
+                return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+            }
+        }
+
+        function getAddresses() {
+            let searchTerm;
+            if (document.getElementById("term").value === "") {
+                searchTerm = "";
+            } else {
+                searchTerm = document.getElementById("term").value;
+            }
+
+            getJSONResponseWithKey(
+
+                `http://{{api_auth.get('PROJECT_DOMAIN')}}/addresses?input=${searchTerm}` +
+                `&lat=${document.getElementById("lat").value}` +
+                `&lon=${document.getElementById("lon").value}` +
+                `&rangekm=${document.getElementById("range").value}` +
+                `&classificationfilter=${document.getElementById("filter").value}` +
+                `&limit=${document.getElementById("max").value}`
+            );
+        }
+
+        function getJSONResponseWithKey(durl) {
+            const userKey = "Bearer " + "{{api_auth.get('API_JWT_TOKEN')}}";
+            $("body").css("cursor", "progress");
+            $.support.cors = true;
+            $.ajax({
+                type: 'GET',
+                url: durl,
+                dataType: 'json',
+                headers: { "Authorization": userKey }
+            }).done(function(response) {
+                const jsonString = JSON.stringify(response, null, 2);
+                addresses = [];
+                for (let i = 0; i < response.response.addresses.length; i++) {
+                    const formAdd = response.response.addresses[i].formattedAddressNag;
+                    const resLat = response.response.addresses[i].geo.latitude;
+                    const resLon = response.response.addresses[i].geo.longitude;
+                    const line = [formAdd, resLat, resLon, "NaN"];
+                    addresses.push(line);
+                }
+                updateAll();
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                alert("failed");
+            }).always(function() {
+                $("body").css("cursor", "default");
+            });
+        }
+    </script>
+
+</head>
+
+<body onload="initMap();updateAll();">
+
+<div class="wrapper">
+
+    <h1>Address Index Range Demo:</h1>
+
+    <div class="controls">
+        <div class="group">
+            <div class="col3">Latitude: <input type="text" name="lat" id="lat" size="18" placeholder="51.5" value="53.3" /></div>
+            <div class="col3">Longitude: <input type="text" name="lon" id="lon" size="18" placeholder="0.12" value="-2.9" /></div>
+            <div class="col2">Range(km): <input type="text" name="range" id="range" size="2" placeholder="10" value="10" /></div>
+            <div class="col2">Zoom: <input type="text" name="izoom" id="izoom" size="2" placeholder="1-21" value="6" /></div>
+            <div class="col2"><input type="button" onclick="showMap()" name="Map" id="Map" value="Update Map" /></div>
+        </div>
+
+        <div class="group">
+            <div class="col5">Search Term: <input type="text" name="term" id="term" size="38" placeholder="e.g. Business Name, town" value="" /></div>
+            <div class="col3">Filter: <input type="text" name="filter" id="filter" size="20" placeholder="e.g. commercial, RD02" value="" /></div>
+            <div class="col2">Max:&nbsp;<input type="text" name="max" id="max" size="3" placeholder="max results" value="10" /></div>
+            <div class="col2"><input type="button" onclick="getAddresses()" name="Fetch" id="Fetch" value="Get Addresses" /></div>
+            <div class="col2">Auth:&nbsp;<input type="text" name="basic" id="basic" size="6" placeholder="Bearer" value="" /></div>
+        </div>
+    </div>
+
+    <div class="output">
+        <div class="group">
+
+            <div class="table-container col6">
+                <div id="tableDiv"></div>
+            </div>
+            <div class="map-container col6">
+                <div id="mapid"></div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 <script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
-
 <script type=module src="static/js/e_all_pages/apply_custom_settings.mjs"></script>
-<script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
-
 <script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
-
 
 {% endblock %}
 {% endblock %}
