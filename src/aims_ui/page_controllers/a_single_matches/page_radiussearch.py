@@ -12,8 +12,6 @@ from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 page_name = 'radiussearch'
 
 
-
-
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def radiussearch():
