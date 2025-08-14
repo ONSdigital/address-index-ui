@@ -7,7 +7,6 @@ from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.google_utils import get_username, get_current_group
 
-
 page_name = 'multiple_address_attributes'
 
 

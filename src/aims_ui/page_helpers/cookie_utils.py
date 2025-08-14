@@ -50,7 +50,6 @@ def get_all_inputs(searchable_fields, request):
   def get_val(value_html_id):
     return request.form.get(value_html_id)
 
-
   usr_input = {}
   for field in searchable_fields:
     # Do not include fields that have no user input
@@ -60,8 +59,9 @@ def get_all_inputs(searchable_fields, request):
         if field.checkbox_true_value == 0:
           usr_input[field.database_name] = get_val(field.database_name)
         else:
-          usr_input[field.database_name] = field.checkbox_true_value if get_val(
-            field.database_name) else field.checkbox_false_value
+          usr_input[
+              field.database_name] = field.checkbox_true_value if get_val(
+                  field.database_name) else field.checkbox_false_value
 
       else:
         usr_input[field.database_name] = get_val(field.database_name)
