@@ -7,6 +7,8 @@ import {
   setAdditionalRequestStatus,
   setJobAgePreference,
   getJobAgePreference,
+  setAddressTokenPreference,
+  getAddressTokenPreference,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 function updateAddressTitlePreference(e) {
@@ -93,6 +95,26 @@ function setupJobAgePreferencesListeners() {
   });
 }
 
+// Address Token Prefference
+function setupAddressTokenPreferences() {
+  const currentStatus = getAddressTokenPreference();
+
+  const includeTokensCheckbox = document.querySelector('#include_tokens_checkbox');
+
+  if (currentStatus === 'true') {
+    includeTokensCheckbox.checked = true;
+  }
+}
+
+function setupAddressTokenPreferencesListeners() {
+  const includeTokensCheckbox = document.querySelector('#include_tokens_checkbox');
+
+  includeTokensCheckbox.addEventListener('change', (e) => {
+    const statusOfCheckbox = includeTokensCheckbox.checked;
+    setAddressTokenPreference(statusOfCheckbox.toString());
+  });
+}
+
 // Additional Request Details
 function setupAdditionalRequestStatus() {
   const current_status = getAdditionalRequestStatus();
@@ -136,6 +158,8 @@ function init() {
   setupAdditionalRequestListeners();
   setupJobAgePreferences();
   setupJobAgePreferencesListeners();
+  setupAddressTokenPreferences();
+  setupAddressTokenPreferencesListeners();
 }
 
 window.addEventListener('load', init);
