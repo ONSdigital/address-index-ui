@@ -5,6 +5,8 @@
 {% from 'components/list/_macro.njk' import onsList %}
 {% from 'custom_search/_macro.njk' import customSearch %}
 {% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+{% from "components/table/_macro.njk" import onsTable %}
+{% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -16,27 +18,59 @@
 <div class="ons-grid">
 
 {# 1Column boarder#}
-<div id="space_col_1" class="ons-grid__col ons-col-1@m "></div>
+  <div id="space_col_1" class="ons-grid__col ons-col-1@m "></div>
 
-{# Content is the searchboxes, containg up 4 col#}
+{# Content is the searchboxes, taing up 4 col#}
   <div id="content_col_2" class="ons-grid__col ons-col-4@m ">
 
-		<h1>Radius Search</h1>
-</form>
+{{ customSearch ({ "Fields": searchable_fields,
+		   "endpoints": endpoints,
+		   "remove_search_button":False,
+                   "results_page": results_page, }) }}
 <br>
-</div> 
+</div>
 
-{# 1 Col boarder between filters and results #}
+</form>
+
 <div id="space_col_3" class="ons-grid__col ons-col-1@m "></div>
+
 
 {# 5 Col results page #}
   <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
-		<h1>Results Go Here</h1>
+
+	{# Title and description #}
+	{% for endpoint in endpoints %}
+	{% if endpoint.selected %}
+	<br>
+		{{ onsCard({
+		    "id": 	endpoint.id,
+		    "textId": 	'text',
+		    "titleSize":endpoint.title_size,
+		    "titleClasses": 'header__title',
+		    "title": 	endpoint.title,
+		    "url": 	endpoint.url,
+		    "text": 	endpoint.description_text,
+		}) }}
+	<br>
+	{% endif %}
+	{% endfor %}
 
 
-{% if results_page %}
-<h2>We matched {{matched_address_number}}  addresses:</h2>
-{% endif %}
+	{% if results_page %}
+	  {{ onsPanel({
+	  "body": "",
+	  "classes": "ons-u-hidden",
+	  "id": "requestOverviewStatsPanel",
+	  "attributes": {'valuesOfrequestAttributes': responseAttributes },
+	   }) }}
+	  <br>
+	  <br>
+	  <h2>We matched {{matched_address_number}}  addresses:</h2>
+	{% endif %}
+
+	{{ customAddressInfo ({
+		'matched_addresses': matched_addresses,
+		}) }}
 
 </div>
 
@@ -44,12 +78,9 @@
 </div>
 
 <script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
-
 <script type=module src="static/js/e_all_pages/apply_custom_settings.mjs"></script>
-<script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
-
+<script type=module src="static/js/a_single_matches/radiussearch.mjs"></script>
 <script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
-
 
 {% endblock %}
 {% endblock %}
