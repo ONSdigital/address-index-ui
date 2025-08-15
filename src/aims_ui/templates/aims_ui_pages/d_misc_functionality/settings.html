@@ -41,30 +41,6 @@ Settings on this page can change or break functionality on other pages. Only adj
     }}
 {% endcall %}
 
-{# Add a question for including the parser's breakdown of tokens - i.e. 'building name' etc #}
-{% call onsQuestion({
-    "title": 'Include Breakdown of Address Tokens',
-    "description": 'In singlesearch pages, the parser automatically breaks up a provided string into building number, building name, etc. Enabling this will cause the UI to show this output with the results section of a request.',
-    "legendIsQuestionTitle": true }) %}
-    {{
-        onsCheckboxes({
-            "checkboxesLabel": "",
-            "dontWrap": true,
-            "name": "Include Tokens",
-            "checkboxes": [
-                {
-                    "id": "include_tokens_checkbox",
-                    "label": {
-                        "text": "Include Breakdown of Address Tokens",
-                        "description": "Include tokens in the request details section"
-                    },
-                    "value": "false"
-                },
-            ]
-        })
-    }}
-{% endcall %}
-
 {# SET VISIBILITY OF REQUEST SPECIFIC RESULTS #}
 {% call onsQuestion({
     "title": 'Show Additional Request Details',
@@ -92,6 +68,15 @@ Settings on this page can change or break functionality on other pages. Only adj
                     },
                     "value": "true"
                 },
+                {
+                    "id": "tokenised_output",
+                    "label": {
+                        "text": "Include Breakdown of Address Tokens",
+                        "description": 'In singlesearch pages, the parser automatically breaks up a provided string into building number, building name, etc. Enabling this will cause the UI to show this output with the results section of a request.',
+                    },
+                    "value": "true"
+                },
+ 
             ]
         })
     }}

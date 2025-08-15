@@ -7,8 +7,6 @@ import {
   setAdditionalRequestStatus,
   setJobAgePreference,
   getJobAgePreference,
-  setAddressTokenPreference,
-  getAddressTokenPreference,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 function updateAddressTitlePreference(e) {
@@ -95,32 +93,13 @@ function setupJobAgePreferencesListeners() {
   });
 }
 
-// Address Token Prefference
-function setupAddressTokenPreferences() {
-  const currentStatus = getAddressTokenPreference();
-
-  const includeTokensCheckbox = document.querySelector('#include_tokens_checkbox');
-
-  if (currentStatus === 'true') {
-    includeTokensCheckbox.checked = true;
-  }
-}
-
-function setupAddressTokenPreferencesListeners() {
-  const includeTokensCheckbox = document.querySelector('#include_tokens_checkbox');
-
-  includeTokensCheckbox.addEventListener('change', (e) => {
-    const statusOfCheckbox = includeTokensCheckbox.checked;
-    setAddressTokenPreference(statusOfCheckbox.toString());
-  });
-}
-
 // Additional Request Details
 function setupAdditionalRequestStatus() {
   const current_status = getAdditionalRequestStatus();
 
   const matchTypeCheckbox = document.querySelector('#match_type');
   const recomCodeCheckbox = document.querySelector('#recommendation_code');
+  const tokenisedCheckbox = document.querySelector('#tokenised_output');
 
   if (current_status.match_type === 'true') {
     matchTypeCheckbox.checked = true;
@@ -128,11 +107,15 @@ function setupAdditionalRequestStatus() {
   if (current_status.recommendation_code === 'true') {
     recomCodeCheckbox.checked = true;
   }
+  if (current_status.tokenised_output === 'true') {
+    tokenisedCheckbox.checked = true;
+  }
 }
 
 function setupAdditionalRequestListeners() {
   const matchTypeCheckbox = document.querySelector('#match_type');
   const recomCodeCheckbox = document.querySelector('#recommendation_code');
+  const tokenisedCheckbox = document.querySelector('#tokenised_output');
 
   matchTypeCheckbox.addEventListener('change', (e) => {
     const currentSettings = getAdditionalRequestStatus();
@@ -147,6 +130,13 @@ function setupAdditionalRequestListeners() {
     currentSettings.recommendation_code = recomCodeStatus.toString();
     setAdditionalRequestStatus(currentSettings);
   });
+
+  tokenisedCheckbox.addEventListener('change', (e) => {
+    const currentSettings = getAdditionalRequestStatus();
+    const tokenisedStatus = tokenisedCheckbox.checked;
+    currentSettings.tokenised_output = tokenisedStatus.toString();
+    setAdditionalRequestStatus(currentSettings);
+  });
 }
 
 function init() {
@@ -158,8 +148,6 @@ function init() {
   setupAdditionalRequestListeners();
   setupJobAgePreferences();
   setupJobAgePreferencesListeners();
-  setupAddressTokenPreferences();
-  setupAddressTokenPreferencesListeners();
 }
 
 window.addEventListener('load', init);
