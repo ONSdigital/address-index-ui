@@ -4,7 +4,6 @@ import {
   setDefaultAdditionalRequestStatus,
   setDefaultResponseFormatCustomResponse,
   setDefaultJobAgePreferences,
-  setDefaultAddressTokenPreference 
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 function setDefaultValuesIfUnset() {
@@ -13,7 +12,6 @@ function setDefaultValuesIfUnset() {
   setDefaultAdditionalRequestStatus();
   setDefaultResponseFormatCustomResponse();
   setDefaultJobAgePreferences();
-  setDefaultAddressTokenPreference();
 }
 
 function removeResubmissionMessage() {

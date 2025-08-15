@@ -22,6 +22,7 @@ export function getRecommendationCodeDescription(code) {
   }
 }
 
+
 function applyVisibilityOfRequestStatus() {
   const settings = getAdditionalRequestStatus();
   const settingsPanel = document.querySelector('#requestOverviewStatsPanel');
@@ -31,6 +32,10 @@ function applyVisibilityOfRequestStatus() {
   const values = settingsPanel.getAttribute('valuesofrequestattributes');
   const validJsonString = values.replace(/'/g, '"');
   const jsonObj = JSON.parse(validJsonString);
+
+  const tokenisedOutputValues = settingsPanel.getAttribute('tokenisedOutput');
+  const tokenisedOutputString = tokenisedOutputValues.replace(/'/g, '"');
+  const tokenisedOutputJson = JSON.parse(tokenisedOutputString);
 
   let showPanel = false;
   let panelContents = '';
@@ -47,6 +52,20 @@ function applyVisibilityOfRequestStatus() {
       jsonObj.recommendationCode
     );
     settingsPanel.append(pg);
+  }
+  if (settings.tokenised_output === 'true') {
+    showPanel = true;
+    const titleForTokens = document.createElement('p');
+    const emphaisedTitle = document.createElement('em');
+    emphaisedTitle.textContent = 'Breakdown from Address Parser:';
+    titleForTokens.append(emphaisedTitle);
+    settingsPanel.append(titleForTokens);
+
+    for (const key in tokenisedOutputJson) {
+      const pg = document.createElement('p');
+      pg.textContent = `${key}: ${tokenisedOutputJson[key]}`;
+      settingsPanel.append(pg);
+    }
   }
 
   if (showPanel) {

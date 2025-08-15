@@ -90,25 +90,10 @@ export function getJobAgePreference() {
   return localStorage.getItem('job_age_preference');
 }
 
-// Address Token Preferences
-export function setAddressTokenPreference(preference) {
-  localStorage.setItem('address_token_preference', preference);
-}
-
-export function getAddressTokenPreference() {
-  return localStorage.getItem('address_token_preference');
-}
-
-export function setDefaultAddressTokenPreference() {
-  if (!localStorage.getItem('address_token_preference')) {
-    localStorage.setItem('address_token_preference', 'false');
-  }
-}
-
 // AdditionalRequests status
 export function setDefaultAdditionalRequestStatus() {
   if (!localStorage.getItem('custom_settings_additional_request_info')) {
-    const defaultOptions = { match_type: 'true', recommendation_code: 'true' };
+    const defaultOptions = { match_type: 'true', recommendation_code: 'true', tokenised_output: 'true'};
     setAdditionalRequestStatus(defaultOptions);
   }
 }

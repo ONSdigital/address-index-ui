@@ -6,7 +6,12 @@ from aims_ui.models.get_addresses import get_addresses
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.page_controllers.f_error_pages.page_error_annotation_single import page_error_annotation_single
-from aims_ui.page_helpers.api.api_interaction import api, get_api_auth, get_response_attributes
+from aims_ui.page_helpers.api.api_interaction import (
+    api,
+    get_api_auth,
+    get_response_attributes,
+    get_tokenised_attributes
+)
 from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs, save_epoch_number
 from aims_ui.page_helpers.error.error_utils import error_page_api_request, error_page_api_response, error_page_xml
 from aims_ui.page_helpers.pages_location_utils import get_page_location
@@ -75,6 +80,7 @@ def radiussearch():
 
    # Get the attributes of the Response a user might want
   responseAttributes = get_response_attributes(result.json())
+  tokenisedOutput = get_tokenised_attributes(result.json())
 
   print(result.json())
   print(user_input)
@@ -89,4 +95,5 @@ def radiussearch():
       matched_addresses=matched_addresses,
       matched_address_number=len(matched_addresses),
       responseAttributes=responseAttributes,
+      tokenisedOutput=tokenisedOutput,
   )

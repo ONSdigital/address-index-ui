@@ -56,8 +56,17 @@ def get_response_attributes(r):
   matchType = res.get('matchtype', 'N/A')
   recommendationCode = res.get('recommendationCode', 'N/A')
 
-  return {'matchType': matchType, 'recommendationCode': recommendationCode}
+  return {'matchType': matchType, 'recommendationCode': recommendationCode} 
 
+def get_tokenised_attributes(r):
+  """ Return the 'tokens' for a search - this is from the address parser """
+
+  # "r" should be result.json() from an API call
+  res = r.get('response')
+
+  tokenisedOutput = res.get('tokens', {})
+
+  return tokenisedOutput
 
 def get_api_auth():
   """Get the auth type for typeahead"""
