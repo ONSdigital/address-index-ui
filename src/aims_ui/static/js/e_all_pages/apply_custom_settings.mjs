@@ -55,12 +55,15 @@ function applyVisibilityOfRequestStatus() {
   }
   if (settings.tokenised_output === 'true') {
     showPanel = true;
+
+    // Now create the "title" and 'p' elements to break down the tokens
     const titleForTokens = document.createElement('p');
     const emphaisedTitle = document.createElement('em');
     emphaisedTitle.textContent = 'Breakdown from Address Parser:';
     titleForTokens.append(emphaisedTitle);
     settingsPanel.append(titleForTokens);
 
+    // For each of the tokens identified by the parser, append a 'p' element containing the token
     for (const key in tokenisedOutputJson) {
       const pg = document.createElement('p');
       pg.textContent = `${key}: ${tokenisedOutputJson[key]}`;
@@ -69,6 +72,7 @@ function applyVisibilityOfRequestStatus() {
   }
 
   if (showPanel) {
+    // By default the panel is hidden, this removes the hidden class if the above criteria are met
     const pg = document.createElement('p');
     pg.innerHTML = '<em>Request Details</em>';
     settingsPanel.prepend(pg);
