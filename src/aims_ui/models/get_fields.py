@@ -22,7 +22,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           classes='ons-input--w-4',
           description=
           'Enter the number of matched addresses to return if multiple matches are available (1 - 50)',
-          previous_value='1',
+          previous_value='10',
       ),
       'file_upload':
       Field(
