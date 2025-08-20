@@ -1,0 +1,14 @@
+
+/* CSS should be generally avoided as the Design System should make layout and accessability decisions. 
+However in this case, because of the use of components that are not directly from the DS, 
+we need to use CSS to layout the page correctly */
+
+#map { height: 100vh; width: 100%; }
+
+.coords {
+  position: fixed; bottom: 12px; left: 12px;
+  background: rgba(255,255,255,0.9); padding: 8px 10px; border-radius: 8px;
+  font-family: system-ui, sans-serif; font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
