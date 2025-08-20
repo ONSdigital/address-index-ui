@@ -3,7 +3,7 @@
 However in this case, because of the use of components that are not directly from the DS, 
 we need to use CSS to layout the page correctly */
 
-#map { height: 100vh; width: 100%; }
+#map { height: 50vh; width: 100%;}
 
 .coords {
   position: fixed; bottom: 12px; left: 12px;
@@ -11,4 +11,63 @@ we need to use CSS to layout the page correctly */
   font-family: system-ui, sans-serif; font-size: 14px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
+
+#pageContentContainer{
+  width: 100%;
+  display: flex;
+  justify-content: center;  
+  align-items: flex-start; 
+}
+
+
+#mapAndResultsContainer {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 10em; 
+}
+
+#mapAndResultsContainer > * {
+  flex: 1;
+  max-width: 50%;
+  box-sizing: border-box;
+}
+
+#centeredContainer {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#mapContainer {
+  width: 50%;
+  height: 50%;
+}
+
+/* 4 columns with gap-aware width; last row stretches evenly */
+#horizontalContainer {
+  /* Internal Flexbox stuff */
+  --gap: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+
+  /* Give margin at the top and sides */
+  margin: 1em 0;
+  width: 80%;
+}
+
+#horizontalContainer > .ons-field,
+#horizontalContainer > .ons-btn {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+
+  /* exactly 4 per row by default */
+  flex: 1 1 calc((100% - 3 * var(--gap)) / 4);
+  min-width: calc((100% - 3 * var(--gap)) / 4);  /* prevents squeezing to a 5th per row */
+}
+
 

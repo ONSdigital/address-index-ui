@@ -19,76 +19,64 @@
 
 <form method="POST" id="searchform">
 
-{# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
-<div class="ons-grid">
+<div id="pageContentContainer">
+	<div id="centeredContainer">
+		{{ customSearch ({ "Fields": searchable_fields,
+					"endpoints": endpoints,
+					"remove_search_button":False,
+					"results_page": results_page, }) }}
+		<br>
 
-{# 1Column boarder#}
-  <div id="space_col_1" class="ons-grid__col ons-col-1@m "></div>
 
-{# Content is the searchboxes, taing up 4 col#}
-  <div id="content_col_2" class="ons-grid__col ons-col-4@m ">
+		<div id="mapAndResultsContainer">
 
-{{ customSearch ({ "Fields": searchable_fields,
-		   "endpoints": endpoints,
-		   "remove_search_button":False,
-       "results_page": results_page, }) }}
-<br>
+			<div id="mapContainer">
+				<div id="map" aria-label="Interactive map"></div>
+			</div>
+
+			<div id="resultsContainer">
+				{# Title and description #}
+				{% for endpoint in endpoints %}
+				{% if endpoint.selected %}
+				<br>
+					{{ onsCard({
+							"id": 	endpoint.id,
+							"textId": 	'text',
+							"titleSize":endpoint.title_size,
+							"titleClasses": 'header__title',
+							"title": 	endpoint.title,
+							"url": 	endpoint.url,
+							"text": 	endpoint.description_text,
+					}) }}
+				<br>
+				{% endif %}
+				{% endfor %}
+
+
+				{% if results_page %}
+					{{ onsPanel({
+					"body": "",
+					"classes": "ons-u-hidden",
+					"id": "requestOverviewStatsPanel",
+					"attributes": {'valuesOfrequestAttributes': responseAttributes , 'tokenisedOutput': tokenisedOutput},
+					}) }}
+					<br>
+					<br>
+					<h2>We matched {{matched_address_number}}  addresses:</h2>
+				{% endif %}
+
+				{{ customAddressInfo ({
+					'matched_addresses': matched_addresses,
+					}) }}
+			</div>
+		</div>
+
+
+	</div>
 </div>
-
-
-<div id="mapContainer" style="width: 50%;">
-
-  <div id="map" aria-label="Interactive map"></div>
-
-</div>
-
 
 </form>
 
-<div id="space_col_3" class="ons-grid__col ons-col-1@m "></div>
-
-
-{# 5 Col results page #}
-  <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
-
-	{# Title and description #}
-	{% for endpoint in endpoints %}
-	{% if endpoint.selected %}
-	<br>
-		{{ onsCard({
-		    "id": 	endpoint.id,
-		    "textId": 	'text',
-		    "titleSize":endpoint.title_size,
-		    "titleClasses": 'header__title',
-		    "title": 	endpoint.title,
-		    "url": 	endpoint.url,
-		    "text": 	endpoint.description_text,
-		}) }}
-	<br>
-	{% endif %}
-	{% endfor %}
-
-
-	{% if results_page %}
-	  {{ onsPanel({
-	  "body": "",
-	  "classes": "ons-u-hidden",
-	  "id": "requestOverviewStatsPanel",
-	  "attributes": {'valuesOfrequestAttributes': responseAttributes , 'tokenisedOutput': tokenisedOutput},
-	   }) }}
-	  <br>
-	  <br>
-	  <h2>We matched {{matched_address_number}}  addresses:</h2>
-	{% endif %}
-
-	{{ customAddressInfo ({
-		'matched_addresses': matched_addresses,
-		}) }}
-
-</div>
-
-{# End of grid #}
-</div>
 
 <script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
 <script type=module src="static/js/e_all_pages/apply_custom_settings.mjs"></script>
