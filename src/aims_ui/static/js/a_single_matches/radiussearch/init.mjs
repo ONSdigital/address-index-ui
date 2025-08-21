@@ -1,4 +1,4 @@
-import { setupMap, setupLatLongListeners, setupInitialMarkerLocation } from "./interactive_map.mjs";
+import { setupMap, setupRadiusListeners, setupLatLongListeners, setupInitialMarkerLocation } from "./interactive_map.mjs";
 import { setupHorizontalInputs } from "./page_reformatting.mjs";
 
 function init() {
@@ -16,6 +16,8 @@ function init() {
   // Add initial Marker - This might not be desirable behaviour in future
   setupInitialMarkerLocation();
 
+  setupRadiusListeners();
+
 }
 
-window.addEventListener('load', init);
+window.addEventListener('DOMContentLoaded', init);
