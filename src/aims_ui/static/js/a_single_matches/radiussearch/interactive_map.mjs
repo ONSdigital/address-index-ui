@@ -1,10 +1,11 @@
 const INITIAL_LAT  = 51.566322;
 const INITIAL_LNG  = -3.0272245;
-const INITIAL_ZOOM = 14;
+const INITIAL_ZOOM = 12;
 
 // The Search Marker and Map are accessible to all functions
 let searchLocationMarker;
 let map;
+let searchRadiusCircle; 
 
 export function setupMap() {
   // Create the map
@@ -21,6 +22,35 @@ export function setupMap() {
   }).addTo(map);
 }
 
+function getRadiusMetres() {
+  const rangeInput = document.querySelector('#radius');
+  const rangeInMetres = Number(rangeInput.value) * 1000;
+
+  return rangeInMetres;
+}
+
+export function setupRadiusListeners() {
+  const rangeInput = document.querySelector('#radius');
+  rangeInput.addEventListener('input', updateSearchCircle);
+}
+
+function updateSearchCircle() {
+  // Get the value of the Range
+  const radiusMetres = getRadiusMetres();
+  const lat = searchLocationMarker.getLatLng().lat;
+  const lng = searchLocationMarker.getLatLng().lng;
+
+  // Add/update the circle here
+  if (!searchRadiusCircle) {
+    searchRadiusCircle = L.circle([lat, lng], {
+      radius: radiusMetres,
+    }).addTo(map);
+  } else {
+    searchRadiusCircle.setLatLng([lat, lng]);
+    searchRadiusCircle.setRadius(radiusMetres);
+  }
+}
+
 function updateSearchMarkerLocation(lat, lng) {
   // Drop or move the search marker
   if (!searchLocationMarker) {
@@ -28,6 +58,9 @@ function updateSearchMarkerLocation(lat, lng) {
   } else {
     searchLocationMarker.setLatLng([lat, lng]);
   }
+
+  // Update the location of the circle showing the radius being searched
+  updateSearchCircle();
 }
 
 export function setupInitialMarkerLocation() {
