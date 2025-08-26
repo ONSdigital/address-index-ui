@@ -146,7 +146,12 @@ window.onload = function() {
 
 
 
+{% if params.compressed_view == True %}
+  <h1>COMPRESSED {{params}} ENABLED</h1>
+{% else %}
 
+  <h1>REGAULR view</h1>
+{% endif %}
 
 {# Add the smaller cards, used on the overview when a search is done #}
 {% for address in params.matched_addresses %}
@@ -409,55 +414,7 @@ function cursorPointer(elm) {
 {% endif %}
 
 
-
-
-
-<style>
-article.result-short-form {
-    border-top: 1px solid #dfe0e2;
-    margin: 20px 0px 0px 0px;
-    padding: 20px 0;
-}
-.jupiter {
-    font-family: 'Lato Bold', sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
-}
-
-.saturn {
-    font-family: 'Lato Bold', sans-serif;
-    font-size: 1.556rem;
-    font-weight: 700;
-}
-
-.neptune {
-    font-family: 'Lato Bold', sans-serif;
-    font-size: 1.222rem;
-    font-weight: 700;
-}
-
-.venus {
-    font-family: 'Lato Bold', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-}
-
-.mars {
-    font-family: 'Lato Regular', sans-serif;
-    font-size: 1rem;
-}
-
-.mercury {
-    font-family: 'Lato Bold', sans-serif;
-    font-size: 0.8889rem;
-    font-weight: 700;
-}
-
-.pluto {
-    font-family: 'Lato Regular', sans-serif;
-    font-size: 0.8889rem;
-}
-
-</style>
+{# Add styles that create gaps between cards #}
+<link rel="stylesheet" href="static/css/custom_macros/custom_address_info.css">
 
 {% endmacro %}
