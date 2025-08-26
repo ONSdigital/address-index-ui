@@ -164,11 +164,17 @@ window.onload = function() {
           <td>{{ address.formatted_address.value }}</td>
           <td>{{ address.geo.value.latitude }}</td>
           <td>{{ address.geo.value.longitude}}</td>
-          <td>4</td>
+          <td class="distance_attribute" 
+            myLat="{{ address.geo.value.latitude}} "
+            myLon="{{ address.geo.value.longitude}} "
+            >NA</td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
+
+  {# Script that will populate the "Distance" value #}
+  <script type=module src="static/js/macros/custom_address_info/distance_calculator.mjs"></script>
 
 {% else %}
   {# Add the smaller cards, used on the overview when a search is done #}
