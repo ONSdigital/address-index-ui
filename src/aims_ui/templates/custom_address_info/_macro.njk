@@ -147,43 +147,66 @@ window.onload = function() {
 
 
 {% if params.compressed_view == True %}
-  <h1>COMPRESSED {{params}} ENABLED</h1>
-{% else %}
+  {# Compressed view only includes the name, geo and "distance" for the radius search page #}
 
-  <h1>REGAULR view</h1>
+  <table class="address-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Distance</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for address in params.matched_addresses %}
+        <tr>
+          <td>{{ address.formatted_address.value }}</td>
+          <td>{{ address.geo.value.latitude }}</td>
+          <td>{{ address.geo.value.longitude}}</td>
+          <td>4</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% else %}
+  {# Add the smaller cards, used on the overview when a search is done #}
+  {% for address in params.matched_addresses %}
+
+    <article class="result-short-form">
+      <a href={{'/address_info/' + address.uprn.value }}>
+
+      <h2 hidden id="formattedAddress" class="saturn address-titles"> 
+        {{ address.formatted_address.value }} </h2>
+
+      <h2 hidden id="formattedAddressNag" class="saturn address-titles"> 
+        {{ address.formatted_address_nag.value }} </h2>
+
+      <h2 hidden id="formattedAddressPaf" class="saturn address-titles"> 
+        {{ address.formatted_address_paf.value }} </h2>
+      </a>
+          <table class='clerical-data-table'> <tbody id='{{address.uprn.value}}'>
+
+    {% for attribute_name, address_attribute in address.__dict__.items() %}
+    {% if address_attribute.show %}
+      <tr><td class="mars">{{ attribute_name }}</td>
+          <td class="venus">{{ address_attribute.value }}</td>
+      </tr>
+    {% endif %}
+    {% endfor %}
+    <tbody> </table>
+    {#https://stackoverflow.com/questions/32806084/google-map-zoom-parameter-in-url-not-working#}
+        <p class="mars"><a href=" {{ 'https://maps.google.com/?q=' + address.geo.value.get('latitude') + ',' + address.geo.value.get('longitude') + '&ll=' +  address.geo.value.get('latitude') + ',' + address.geo.value.get('longitude') + '&z=18' +'&basemap=satellite' }}"
+        >Location Map</a></p>
+    </article>
+
+  {% endfor %}
 {% endif %}
 
-{# Add the smaller cards, used on the overview when a search is done #}
-{% for address in params.matched_addresses %}
 
-	<article class="result-short-form">
-	  <a href={{'/address_info/' + address.uprn.value }}>
 
-	  <h2 hidden id="formattedAddress" class="saturn address-titles"> 
-	  	{{ address.formatted_address.value }} </h2>
 
-	  <h2 hidden id="formattedAddressNag" class="saturn address-titles"> 
-	  	{{ address.formatted_address_nag.value }} </h2>
-
-	  <h2 hidden id="formattedAddressPaf" class="saturn address-titles"> 
-	  	{{ address.formatted_address_paf.value }} </h2>
-	  </a>
-        <table class='clerical-data-table'> <tbody id='{{address.uprn.value}}'>
-
-	{% for attribute_name, address_attribute in address.__dict__.items() %}
-	{% if address_attribute.show %}
-		<tr><td class="mars">{{ attribute_name }}</td>
-		    <td class="venus">{{ address_attribute.value }}</td>
-		</tr>
-	{% endif %}
-	{% endfor %}
-  <tbody> </table>
-  {#https://stackoverflow.com/questions/32806084/google-map-zoom-parameter-in-url-not-working#}
-	    <p class="mars"><a href=" {{ 'https://maps.google.com/?q=' + address.geo.value.get('latitude') + ',' + address.geo.value.get('longitude') + '&ll=' +  address.geo.value.get('latitude') + ',' + address.geo.value.get('longitude') + '&z=18' +'&basemap=satellite' }}"
-	    >Location Map</a></p>
-	</article>
-
-{% endfor %}
 
 <script>
   function getFavourites() {
@@ -310,111 +333,13 @@ localStorage.setItem('confidenceScores', []);
 
 {% endfor %}
 
-<script>
-function getName(row) {
-  const firstCell = row.children[0]; 
-  let text = firstCell.textContent.replace(/\s/g,'');
-  text = text.replace('Explainme','');
-  return text; 
-}
-
-function toggleFavourite(row, cell) {
-  const favouriteStatus = getFavouriteStatus(row, cell);
-  const favourites = getFavourites();
-  const name = getName(row);
-  if (favourites[name]) {
-    favourites[name] = !favourites[name];
-  } else {
-    favourites[name] = true;
-  }
-  localStorage.setItem('favourites', JSON.stringify(favourites));
-  setFavouriteStar(row, cell);
-}
-
-function getFavouriteStatus(row, cell) {
-  const name = getName(row);
-  const favourites = getFavourites();
-  const favSetting = favourites[name];
-  if (favSetting) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function setFavouriteStar(row, cell) {
-  if (getFavouriteStatus(row, cell)) {
-      // Note innerHTML is just the worst and should be removed at some point
-    cell.textContent = '★';
-  } else {
-    cell.textContent= '☆';
-  }
-}
-
-function addFavouritesColumn() {
-  for (const [i, row] of [...document.querySelectorAll('.clerical-data-table tr')].entries()) {
-    const cell = document.createElement(i ? "td" : "th");
-
-    cursorPointer(cell);
-    setFavouriteStar(row, cell);
-    cell.classList.add('ons-table__cell');
-    cell.addEventListener('click', function(){toggleFavourite(row, cell)}, false);
-
-    // Create custom event for changing other rows
-    const event = new CustomEvent('update-star', {detail: cell, bubbles:true});
-    cell.addEventListener('click', function(){ cell.dispatchEvent(event); }, false);
-    document.addEventListener('update-star', function(){ setFavouriteStar(row,cell); } );
-    
-    row.appendChild(cell);
-  };
-}
-
-function addAttribute(parent, attributeName, attributeValue) {
-  const tr = document.createElement('tr');
-  const attName = document.createElement('td');
-  const attValue = document.createElement('td');
-  attName.classList.add('mars', 'ons-table__cell');
-  attValue.classList.add('venus', 'ons-table__cell');
-  tr.append(attName, attValue);
-  attName.textContent = attributeName;
-  // Again, gross, but in this case we need HTML to be pasrsed!
-  attValue.innerHTML= attributeValue;
-  parent.append(tr);
-}
-
-function addFavouriteAttributes() {
-  const trs = document.querySelectorAll('tbody');
-  for (const tbl of trs) {
-    const uprn = tbl.id;
-    if ( addresses[uprn] ) {
-      const currentAddress = addresses[uprn];
-      // For each 'Favourated' attribute, add it!
-      for ( const attribute_name in currentAddress ) {
-        //console.log(attribute_name, currentAddress[attribute_name]);
-        //console.val(uprn          , {value: '10023117623', favourite: true});
-        const attLocalData = currentAddress[attribute_name];
-        if (attLocalData.favourite) {
-          addAttribute(tbl, attribute_name, attLocalData.value);
-        }
-      }
-    }
-  }
-}
-
-
-addFavouriteAttributes();
-
-addFavouritesColumn();
-function cursorPointer(elm) {
-  elm.style = ' cursor: pointer; ';
-}
-
-</script>
+{# Script to add the favourite attributes below each address #}
+<script type=module src="static/js/macros/custom_address_info/add_and_set_favourites.mjs"></script>
 
 {% endif %}
 
 
 {# Add styles that create gaps between cards #}
-<link rel="stylesheet" href="static/css/custom_macros/custom_address_info.css">
+<link rel="stylesheet" href="/static/css/custom_macros/custom_address_info.css">
 
 {% endmacro %}
