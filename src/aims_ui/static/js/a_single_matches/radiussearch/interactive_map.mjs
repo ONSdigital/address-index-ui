@@ -1,3 +1,5 @@
+import { replaceDistancePlaceholderWithSearchValues } from '/static/js/macros/custom_address_info/distance_calculator.mjs';
+
 const INITIAL_LAT  = 51.566322;
 const INITIAL_LNG  = -3.0272245;
 const INITIAL_ZOOM = 12;
@@ -105,5 +107,8 @@ export function setupLatLongListeners() {
 
     // Center the map on the new marker
     map.setView([lat, lng]);
+
+    // Re-calculate distances for addresses already on the screen
+    replaceDistancePlaceholderWithSearchValues();
  });
 }

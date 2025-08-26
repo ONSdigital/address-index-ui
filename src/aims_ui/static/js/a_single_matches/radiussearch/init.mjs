@@ -16,6 +16,7 @@ function init() {
   // Add initial Marker - This might not be desirable behaviour in future
   setupInitialMarkerLocation();
 
+  // When a user changes the radius, update the circle radius marker
   setupRadiusListeners();
 
 }
