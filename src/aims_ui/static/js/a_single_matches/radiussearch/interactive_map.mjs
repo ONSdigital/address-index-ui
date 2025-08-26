@@ -31,7 +31,12 @@ function getRadiusMetres() {
 
 export function setupRadiusListeners() {
   const rangeInput = document.querySelector('#radius');
-  rangeInput.addEventListener('input', updateSearchCircle);
+
+  // Event listener for range input to fit new circle in view and update the circle itself
+  rangeInput.addEventListener('input', () => {
+    updateSearchCircle();
+    updateMapToFitCircle();
+  });
 }
 
 function updateSearchCircle() {
@@ -49,6 +54,11 @@ function updateSearchCircle() {
     searchRadiusCircle.setLatLng([lat, lng]);
     searchRadiusCircle.setRadius(radiusMetres);
   }
+}
+
+function updateMapToFitCircle() {
+  const circleBounds = searchRadiusCircle.getBounds();
+  map.fitBounds(circleBounds, { padding: [30, 30] });
 }
 
 function updateSearchMarkerLocation(lat, lng) {
