@@ -1,6 +1,7 @@
 {% macro customAddressInfo(params) %}
 {% from 'components/label/_macro.njk' import onsLabel %}
 {% from 'custom_clerical_data/_macro.njk' import customClericalData %}
+{% from "components/table/_macro.njk" import onsTable %}
 
 {% if params.full_info %}
 
@@ -149,22 +150,22 @@ window.onload = function() {
 {% if params.compressed_view == True %}
   {# Compressed view only includes the name, geo and "distance" for the radius search page #}
 
-  <table class="address-table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Latitude</th>
-        <th>Longitude</th>
-        <th>Distance</th>
+  <table class="address-table ons-table">
+    <thead class="ons-table__head">
+      <tr class="ons-table__row">
+        <th class="ons-table__header"><span class="ons-table__header-text">Name</span></th>
+        <th class="ons-table__header"><span class="ons-table__header-text">Latitude</span></th>
+        <th class="ons-table__header"><span class="ons-table__header-text">Longitude</span></th>
+        <th class="ons-table__header"><span class="ons-table__header-text">Distance</span></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="ons-table__body">
       {% for address in params.matched_addresses %}
-        <tr>
-          <td>{{ address.formatted_address.value }}</td>
-          <td>{{ address.geo.value.latitude }}</td>
-          <td>{{ address.geo.value.longitude}}</td>
-          <td class="distance_attribute" 
+        <tr class="ons-table__row">
+          <td class="ons-table__cell">{{ address.formatted_address.value }}</td>
+          <td class="ons-table__cell">{{ address.geo.value.latitude }}</td>
+          <td class="ons-table__cell">{{ address.geo.value.longitude}}</td>
+          <td class="distance_attribute ons-table__cell" 
             myLat="{{ address.geo.value.latitude}} "
             myLon="{{ address.geo.value.longitude}} "
             >NA</td>
