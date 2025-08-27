@@ -1,7 +1,7 @@
 import { replaceDistancePlaceholderWithSearchValues } from '/static/js/macros/custom_address_info/distance_calculator.mjs';
 
-const INITIAL_LAT  = 51.566322;
-const INITIAL_LNG  = -3.0272245;
+const INITIAL_LAT  = getCurrentSearchLatValue(); //51.566322;
+const INITIAL_LNG  = getCurrentSearchLonValue(); //-3.0272245;
 const INITIAL_ZOOM = 12;
 
 // The Search Marker and Map are accessible to all functions
@@ -86,6 +86,16 @@ function updateLatLongSearchValues(lat, lng) {
 
   latInput.value = lat;
   lngInput.value = lng;
+}
+
+export function getCurrentSearchLatValue() {
+  const latSearchInput = document.querySelector('#lat');
+  return latSearchInput ? parseFloat(latSearchInput.value) : null;
+}
+
+export function getCurrentSearchLonValue() {
+  const lonSearchInput = document.querySelector('#lon');
+  return lonSearchInput ? parseFloat(lonSearchInput.value) : null;
 }
 
 export function setupLatLongListeners() {
