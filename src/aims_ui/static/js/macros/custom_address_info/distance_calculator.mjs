@@ -1,3 +1,5 @@
+import { getCurrentSearchLatValue, getCurrentSearchLonValue } from '/static/js/a_single_matches/radiussearch/interactive_map.mjs';
+
 // Calculate distance between two lat/long pairs on Earth (haversine, great-circle)
 // All lat/lon in decimal degrees. Returns distance in metres.
 
@@ -23,16 +25,6 @@ function distanceInMetres(lat1, lon1, lat2, lon2) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   return R * c; // metres
-}
-
-function getCurrentSearchLatValue() {
-  const latSearchInput = document.querySelector('#lat');
-  return latSearchInput ? parseFloat(latSearchInput.value) : null;
-}
-
-function getCurrentSearchLonValue() {
-  const lonSearchInput = document.querySelector('#lon');
-  return lonSearchInput ? parseFloat(lonSearchInput.value) : null;
 }
 
 function addCommasToDistance(metres) {
