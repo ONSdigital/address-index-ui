@@ -162,7 +162,10 @@ window.onload = function() {
     <tbody class="ons-table__body">
       {% for address in params.matched_addresses %}
         <tr class="ons-table__row">
-          <td class="ons-table__cell">{{ address.formatted_address.value }}</td>
+          <td class="ons-table__cell">
+          <a href="/address_info/{{ address.uprn.value }}">
+            {{ address.formatted_address.value }}
+          </a></td>
           <td class="ons-table__cell">{{ address.geo.value.latitude }}</td>
           <td class="ons-table__cell">{{ address.geo.value.longitude}}</td>
           <td class="distance_attribute ons-table__cell" 
@@ -341,7 +344,7 @@ localStorage.setItem('confidenceScores', []);
 {% endfor %}
 
 {# Script to add the favourite attributes below each address #}
-<script type=module src="static/js/macros/custom_address_info/add_and_set_favourites.mjs"></script>
+<script type=module src="static/js/macros/custom_address_info/favourites_star_and_local_storage.mjs"></script>
 
 {% endif %}
 
