@@ -3,7 +3,19 @@
 However in this case, because of the use of components that are not directly from the DS, 
 we need to use CSS to layout the page correctly */
 
-#map { height: 50vh; width: 100%;}
+#map { 
+  height: 50vh; 
+  width: 100%;
+
+  /* Add design system approved border around map */
+  --r: 0.75em;
+  --bw: 0.225em;
+  border-radius: var(--r);
+  box-shadow: 0 0 0 var(--bw) #707071; 
+
+  /* Add space below map */
+  margin-bottom: 1em;
+}
 
 .coords {
   position: fixed; bottom: 12px; left: 12px;
