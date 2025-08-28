@@ -180,6 +180,28 @@ window.onload = function() {
   {# Script that will populate the "Distance" value #}
   <script type=module src="static/js/macros/custom_address_info/distance_calculator.mjs"></script>
 
+  {# Add the addresses matched into localStorage so they can be accessed by js elsewhere #}
+  <script>
+
+  let matchedAddresses = []
+  function addAddressToLargeList(addressInfo) {
+    // Given a single address, add it to the array of addresses in js
+    matchedAddresses.push(addressInfo);
+  }
+
+  {% for address in params.matched_addresses %}
+    addAddressToLargeList({
+      'name': '{{address.formatted_address.value}}',
+      'uprn': '{{address.uprn.value}}',
+      'longitude': '{{address.geo.value.longitude}}',
+      'latitude': '{{address.geo.value.latitude}}',
+    });
+  {% endfor %}
+
+  localStorage.setItem('radiusSearchMostRecentAddresses', JSON.stringify(matchedAddresses));
+
+  </script>
+
 {% else %}
   {# Add the smaller cards, used on the overview when a search is done #}
   {% for address in params.matched_addresses %}
