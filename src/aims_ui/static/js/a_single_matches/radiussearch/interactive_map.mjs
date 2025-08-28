@@ -1,13 +1,22 @@
 import { replaceDistancePlaceholderWithSearchValues } from '/static/js/macros/custom_address_info/distance_calculator.mjs';
+import { makePinIcon } from '/static/js/a_single_matches/radiussearch/interactive_map_icons.mjs';
 
 const INITIAL_LAT  = getCurrentSearchLatValue(); //51.566322;
 const INITIAL_LNG  = getCurrentSearchLonValue(); //-3.0272245;
 const INITIAL_ZOOM = 12;
 
+// See https://service-manual.ons.gov.uk/design-system/foundations/colours
+const resultsMarkerIcon = makePinIcon("#a8bd3a");
+const searchMarkerIcon = makePinIcon("#206095");
+
+// Highlight colour for the search radius circle outline and content
+const highlightColourOutline ="#27a0cc";
+const highlightColourFill = "#27a0cc";
+
 // The Search Marker and Map are accessible to all functions
-let searchLocationMarker;
 let map;
 let searchRadiusCircle; 
+let searchLocationMarker;
 
 export function setupMap() {
   // Create the map
@@ -51,6 +60,8 @@ function updateSearchCircle() {
   if (!searchRadiusCircle) {
     searchRadiusCircle = L.circle([lat, lng], {
       radius: radiusMetres,
+      color: highlightColourOutline,
+      fillColor: highlightColourFill,
     }).addTo(map);
   } else {
     searchRadiusCircle.setLatLng([lat, lng]);
@@ -66,7 +77,7 @@ function updateMapToFitCircle() {
 function updateSearchMarkerLocation(lat, lng) {
   // Drop or move the search marker
   if (!searchLocationMarker) {
-    searchLocationMarker = L.marker([lat, lng]).addTo(map);
+    searchLocationMarker = L.marker([lat, lng], {icon: searchMarkerIcon} ).addTo(map);
   } else {
     searchLocationMarker.setLatLng([lat, lng]);
   }
@@ -121,4 +132,21 @@ export function setupLatLongListeners() {
     // Re-calculate distances for addresses already on the screen
     replaceDistancePlaceholderWithSearchValues();
  });
+}
+
+function getMatchedAddressesFromLocalStorage() {
+  const addresses = JSON.parse(localStorage.getItem('radiusSearchMostRecentAddresses')) || [];
+  return addresses;
+}
+
+export function addMatchedAddressMarkersToMap() {
+  const addresses = getMatchedAddressesFromLocalStorage();
+
+  for (const address of addresses) {
+    // Addresses in the format {name: '', uprn: '', longitude: '', latitude: ''}
+    const { name, uprn, longitude: long, latitude: lat } = address;
+
+    // The marker should be ONS colours and link to /address_info/{uprn}
+    L.marker([lat, long], {icon: resultsMarkerIcon} ).addTo(map).bindPopup(`${name} <br> <a href="/address_info/${uprn}">View Details</a>`);
+  }
 }
