@@ -82,11 +82,6 @@ def radiussearch():
   responseAttributes = get_response_attributes(result.json())
   tokenisedOutput = get_tokenised_attributes(result.json())
 
-  print(result.json())
-  print(user_input)
-  print(matched_addresses)
-  print(result)
-
   return render_template(
       page_location,
       endpoints=endpoints,
