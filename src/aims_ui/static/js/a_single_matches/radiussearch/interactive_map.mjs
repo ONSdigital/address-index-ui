@@ -22,7 +22,8 @@ export function setupMap() {
   // Create the map
   map = L.map('map', {
     zoomControl: true,
-    attributionControl: true
+    attributionControl: true,
+    doubleClickZoom: false
   }).setView([INITIAL_LAT, INITIAL_LNG], INITIAL_ZOOM);
 
   // OSM tile layer
@@ -69,7 +70,7 @@ function updateSearchCircle() {
   }
 }
 
-function updateMapToFitCircle() {
+export function updateMapToFitCircle() {
   const circleBounds = searchRadiusCircle.getBounds();
   map.fitBounds(circleBounds, { padding: [30, 30] });
 }
