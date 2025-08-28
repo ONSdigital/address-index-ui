@@ -496,7 +496,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             description='Longitude of the location to search for (e.g. "-2.9").'
         ),
         Field(
-            'radius',
+            'rangekm',
             display_title='Range (km)',
             classes='ons-input--w-50 nocache',
             required=True,

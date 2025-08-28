@@ -34,14 +34,14 @@ export function setupMap() {
 }
 
 function getRadiusMetres() {
-  const rangeInput = document.querySelector('#radius');
+  const rangeInput = document.querySelector('#rangekm');
   const rangeInMetres = Number(rangeInput.value) * 1000;
 
   return rangeInMetres;
 }
 
 export function setupRadiusListeners() {
-  const rangeInput = document.querySelector('#radius');
+  const rangeInput = document.querySelector('#rangekm');
 
   // Event listener for range input to fit new circle in view and update the circle itself
   rangeInput.addEventListener('input', () => {
