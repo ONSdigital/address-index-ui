@@ -55,6 +55,7 @@
     }
   },
   "dependencies": {
+    "form-data": "^4.0.4",
     "jest-environment-jsdom": "^29.7.0",
     "micromatch": "^4.0.8"
   }
