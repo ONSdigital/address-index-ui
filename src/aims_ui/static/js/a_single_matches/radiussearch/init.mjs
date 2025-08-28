@@ -1,4 +1,4 @@
-import { addMatchedAddressMarkersToMap, setupMap, setupRadiusListeners, setupLatLongListeners, setupInitialMarkerLocation } from "./interactive_map.mjs";
+import { updateMapToFitCircle, addMatchedAddressMarkersToMap, setupMap, setupRadiusListeners, setupLatLongListeners, setupInitialMarkerLocation } from "./interactive_map.mjs";
 import { setupHorizontalInputs } from "./page_reformatting.mjs";
 
 function init() {
@@ -21,6 +21,9 @@ function init() {
 
   // Add any results that are sat in local storage onto the map!
   addMatchedAddressMarkersToMap();
+
+  // On page load the circle might be bigger than the default, so refresh the map zoom
+  updateMapToFitCircle();
 }
 
 window.addEventListener('DOMContentLoaded', init);
