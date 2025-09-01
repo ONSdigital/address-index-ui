@@ -26,4 +26,7 @@ export function setupHorizontalInputs() {
   horizontalContainer.appendChild(newButtonContainer);
   inputContainer.appendChild(horizontalContainer);
 
+  // Finally, remove the "invisible" class from the full-match-form-container
+  const fullMatchFormContainer = document.getElementById('full-match-form-container');
+  fullMatchFormContainer.classList.remove('invisible');
 }

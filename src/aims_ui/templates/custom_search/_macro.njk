@@ -15,6 +15,12 @@
 {% set row = namespace(value=0) %}
 {% set max_col = 1 %}
 
+<!-- CSS specifically for the custom_search component -->
+<link rel="stylesheet" href="/static/css/custom_macros/custom_search.css">
+
+{# Wrap the entire search form in a container so that it can be hidden by default for some pages #}
+<div id="full-match-form-container" class="{{ 'invisible' if params.invisible else '' }}">
+
 <section class = "match-form-container" >
 {% for field in params.Fields %}
 
@@ -199,5 +205,6 @@
 
 </section>
 
+</div>
 {% endmacro %}
 
