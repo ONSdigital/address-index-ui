@@ -169,8 +169,8 @@ window.onload = function() {
           <td class="ons-table__cell">{{ address.geo.value.latitude }}</td>
           <td class="ons-table__cell">{{ address.geo.value.longitude}}</td>
           <td class="distance_attribute ons-table__cell" 
-            myLat="{{ address.geo.value.latitude}} "
-            myLon="{{ address.geo.value.longitude}} "
+            myLat="{{ address.geo.value.latitude}}"
+            myLon="{{ address.geo.value.longitude}}"
             >NA</td>
         </tr>
       {% endfor %}
@@ -192,10 +192,10 @@ window.onload = function() {
 
   {% for address in params.matched_addresses %}
     addAddressToLargeList({
-      'name': '{{address.formatted_address.value}}',
-      'uprn': '{{address.uprn.value}}',
-      'longitude': '{{address.geo.value.longitude}}',
-      'latitude': '{{address.geo.value.latitude}}',
+      uprn: {{ address.uprn.value | tojson }},
+      name: {{ address.formatted_address.value | tojson }},
+      longitude: {{ address.geo.value.longitude | tojson }},
+      latitude: {{ address.geo.value.latitude  | tojson }},
     });
   {% endfor %}
 
