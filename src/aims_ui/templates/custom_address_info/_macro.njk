@@ -181,9 +181,10 @@ window.onload = function() {
   <script type=module src="static/js/macros/custom_address_info/distance_calculator.mjs"></script>
 
   {# Add the addresses matched into localStorage so they can be accessed by js elsewhere #}
-  <script>
+  <script type="module">
+  import { getPageLocalValues, setPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
-  let matchedAddresses = []
+  const matchedAddresses = []
   function addAddressToLargeList(addressInfo) {
     // Given a single address, add it to the array of addresses in js
     matchedAddresses.push(addressInfo);
@@ -198,8 +199,8 @@ window.onload = function() {
     });
   {% endfor %}
 
-  localStorage.setItem('radiusSearchMostRecentAddresses', JSON.stringify(matchedAddresses));
-
+  setPageLocalValues('radiussearch', {radiusSearchMostRecentAddresses: matchedAddresses} )
+  
   </script>
 
 {% else %}
