@@ -1,14 +1,10 @@
 import { setSizeOfMapToPreviouslySetSize, setupResizeListeners, updateMapToFitCircle, addMatchedAddressMarkersToMap, setupMap, setupRadiusListeners, setupLatLongListeners, setupInitialMarkerLocation } from "./interactive_map.mjs";
 import { setupHorizontalInputs } from "./page_reformatting.mjs";
+import { setupScrollListeners, setScrollPosition } from "./scroll_helpers.mjs";
 
-function init() {
-  console.log('RADIUS SEARCH specific scripts loaded');
-
+function setupMapSpecificItems() {
   // Setup the interactive map
   setupMap();
-
-  // Take the generated Design System components and arrange them horizontally
-  setupHorizontalInputs();
 
   // Add Listeners to map
   setupLatLongListeners();
@@ -30,6 +26,29 @@ function init() {
 
   // Set the map size to whatever the user previously set it to (Before we start observing it for changes)
   setSizeOfMapToPreviouslySetSize();
+
+}
+
+function setupPageSpecificItems() {
+
+  // Take the generated Design System components and arrange them horizontally
+  setupHorizontalInputs();
+
+  // Return to last scroll postition if it was set
+  setScrollPosition();
+
+  // Listen for scrolling, save last location
+  setupScrollListeners();
+}
+
+function init() {
+  console.log('RADIUS SEARCH specific scripts loaded');
+
+  // Setup page specific items
+  setupPageSpecificItems();
+
+  // Setup map specific items
+  setupMapSpecificItems();
 
 }
 
