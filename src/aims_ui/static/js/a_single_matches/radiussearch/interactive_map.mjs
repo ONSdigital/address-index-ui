@@ -177,7 +177,8 @@ export function setupLatLongListeners() {
 }
 
 function getMatchedAddressesFromLocalStorage() {
-  const addresses = JSON.parse(localStorage.getItem('radiusSearchMostRecentAddresses')) || [];
+  const localPageValues = getPageLocalValues('radiussearch');
+  const addresses = localPageValues.radiusSearchMostRecentAddresses;
   return addresses;
 }
 
