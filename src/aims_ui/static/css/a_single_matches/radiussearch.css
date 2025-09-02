@@ -6,6 +6,11 @@ we need to use CSS to layout the page correctly */
 #map { 
   height: 50vh; 
   width: 100%;
+  max-width: 46vw;
+
+  /* Allow the map to be resized (must be refreshed in js) */
+  resize: both;
+  overflow: hidden;
 
   /* Add design system approved border around map */
   --r: 0.75em;
