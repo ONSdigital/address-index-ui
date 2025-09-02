@@ -1,5 +1,6 @@
 import { replaceDistancePlaceholderWithSearchValues } from '/static/js/macros/custom_address_info/distance_calculator.mjs';
 import { makePinIcon } from '/static/js/a_single_matches/radiussearch/interactive_map_icons.mjs';
+import { getPageLocalValues, setPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
 const INITIAL_LAT  = getCurrentSearchLatValue(); //51.566322;
 const INITIAL_LNG  = getCurrentSearchLonValue(); //-3.0272245;
@@ -15,6 +16,7 @@ const highlightColourFill = "#27a0cc";
 
 // The Search Marker and Map are accessible to all functions
 let map;
+let mapContainer;
 let searchRadiusCircle; 
 let searchLocationMarker;
 
@@ -32,6 +34,9 @@ export function setupMap() {
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
+
+  // Fill the global variable with the map and the map container
+  mapContainer = document.querySelector('#map');
 }
 
 function getRadiusMetres() {
@@ -49,6 +54,42 @@ export function setupRadiusListeners() {
     updateSearchCircle();
     updateMapToFitCircle();
   });
+}
+
+function getMapSize() {
+  // Returns the object containing previously set local storage values
+  const localPageValues = getPageLocalValues('radiussearch');
+  const previouslySetSize = localPageValues.mapSizePair;
+
+  // Note that if there is no previously set size, this will be undefined
+  return previouslySetSize;
+}
+
+export function setSizeOfMapToPreviouslySetSize() {
+  const previouslySetSize = getMapSize();
+
+  // If a previously set size exists, apply it to the map container
+  if (previouslySetSize) {
+    mapContainer.style.width = previouslySetSize.width + 'px';
+    mapContainer.style.height = previouslySetSize.height + 'px';
+  }
+}
+
+function setMapSizeInPageStorage(sizeX, sizeY) {
+  setPageLocalValues('radiussearch', { mapSizePair: { width: sizeX, height: sizeY } });
+}
+
+export function setupResizeListeners() {
+  // Observe changes to the map container's size, trigger map refresh and center search circle
+  let resizeObserver = new ResizeObserver(() => {
+    map.invalidateSize();
+    updateMapToFitCircle();
+
+    // Now get the px size of the map and save them
+    setMapSizeInPageStorage(mapContainer.offsetWidth, mapContainer.offsetHeight);
+  });
+
+  resizeObserver.observe(mapContainer);
 }
 
 function updateSearchCircle() {
