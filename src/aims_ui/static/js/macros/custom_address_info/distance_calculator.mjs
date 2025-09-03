@@ -53,4 +53,5 @@ export function replaceDistancePlaceholderWithSearchValues() {
 
 }
 
-window.addEventListener('DOMContentLoaded', replaceDistancePlaceholderWithSearchValues);
+// Call as soon as the script itself is loaded
+replaceDistancePlaceholderWithSearchValues();
