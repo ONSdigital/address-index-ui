@@ -49,8 +49,6 @@ function loadPreviousValuesForCompressedTableView() {
     const row = generateRow(address);
     tableBody.append(row);
   }
-
-  console.log(previousAddresses);
 }
 
 loadPreviousValuesForCompressedTableView();
