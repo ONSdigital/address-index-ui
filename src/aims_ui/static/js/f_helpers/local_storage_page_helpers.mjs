@@ -42,3 +42,26 @@ function getAllPageValues() {
 
   return allPageValues;
 }
+
+// Get global values, default to a blank object if undefined
+export function getGlobalValues() {
+  let globalValues = localStorage.getItem('global_values');
+  if (!globalValues) {
+    globalValues = '{}';
+  }
+  globalValues = JSON.parse(globalValues);
+  return globalValues;
+}
+
+// Set global values, merging with existing values 
+// setGlobalValues({'new_key': 'new_value'}) or
+// setGlobalValues({'existing_key': 'new_value'})
+export function setGlobalValues(newValues) {
+  // Get the current values
+  const currentValues = getGlobalValues();
+
+  // Merge with newValues provided in the format { key: value, ...}
+  const updatedValues = { ...currentValues, ...newValues };
+
+  localStorage.setItem('global_values', JSON.stringify(updatedValues));
+}
