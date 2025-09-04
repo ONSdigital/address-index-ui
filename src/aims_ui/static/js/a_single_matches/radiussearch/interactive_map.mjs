@@ -2,9 +2,16 @@ import { replaceDistancePlaceholderWithSearchValues } from '/static/js/macros/cu
 import { makePinIcon } from '/static/js/a_single_matches/radiussearch/interactive_map_icons.mjs';
 import { getPageLocalValues, setPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
-const INITIAL_LAT  = getCurrentSearchLatValue(); //51.566322;
-const INITIAL_LNG  = getCurrentSearchLonValue(); //-3.0272245;
-const INITIAL_ZOOM = 12;
+const defaultStartValues = {
+  // Lat and lon values for ONS HQ
+  'lat': 51.566322,
+  'lng': -3.0272245,
+  'zoom': 12,
+}
+
+const INITIAL_LAT  = getStartLatValue(); // Set above if not already stored
+const INITIAL_LNG  = getStartLonValue(); 
+const INITIAL_ZOOM = getStartZoomValue(); 
 
 // See https://service-manual.ons.gov.uk/design-system/foundations/colours
 const resultsMarkerIcon = makePinIcon("#a8bd3a");
@@ -92,6 +99,18 @@ export function setupResizeListeners() {
   resizeObserver.observe(mapContainer);
 }
 
+function setMapZoomInPageStorage(zoomLevel) {
+  setPageLocalValues('radiussearch', { mapZoomLevel: zoomLevel });
+  console.log(getPageLocalValues('radiussearch'));
+}
+
+export function setupZoomListeners() {
+  map.on('zoomend', () => {
+    const zoomLevel = map.getZoom();
+    setMapZoomInPageStorage(zoomLevel);
+  });
+}
+
 function updateSearchCircle() {
   // Get the value of the Range
   const radiusMetres = getRadiusMetres();
@@ -139,6 +158,10 @@ function updateLatLongSearchValues(lat, lng) {
 
   latInput.value = lat;
   lngInput.value = lng;
+
+  // Now create bubbling events so that any listeners on these inputs for changes are triggered
+  latInput.dispatchEvent(new Event('input', { bubbles: true }));
+  lngInput.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
 export function getCurrentSearchLatValue() {
@@ -149,6 +172,29 @@ export function getCurrentSearchLatValue() {
 export function getCurrentSearchLonValue() {
   const lonSearchInput = document.querySelector('#lon');
   return lonSearchInput ? parseFloat(lonSearchInput.value) : null;
+}
+
+function getPagePreviouslySearchedValues() {
+  const pageLocalValues = getPageLocalValues('radiussearch');
+  return pageLocalValues.pagePreviouslySearchedValues || {};
+}
+
+function getStartLatValue() {
+  // Get the previously searched values for this page
+  const pagePreviouslySearchedValues = getPagePreviouslySearchedValues();
+  return pagePreviouslySearchedValues.lat || defaultStartValues.lat;
+}
+
+function getStartLonValue() {
+  // Get the previously searched values for this page
+  const pagePreviouslySearchedValues = getPagePreviouslySearchedValues();
+  return pagePreviouslySearchedValues.lon || defaultStartValues.lng;
+}
+
+function getStartZoomValue() {
+  // Get the page local Values
+  const pageLocalValues = getPageLocalValues('radiussearch');
+  return pageLocalValues.mapZoomLevel || defaultStartValues.zoom;
 }
 
 export function setupLatLongListeners() {
@@ -177,8 +223,11 @@ export function setupLatLongListeners() {
 }
 
 function getMatchedAddressesFromLocalStorage() {
+  // Get the most recent addresses from local storage
   const localPageValues = getPageLocalValues('radiussearch');
-  const addresses = localPageValues.radiusSearchMostRecentAddresses;
+
+  // Default to an empty array if not found
+  const addresses = localPageValues.radiusSearchMostRecentAddresses || [];
   return addresses;
 }
 
