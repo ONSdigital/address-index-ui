@@ -24,6 +24,7 @@
 <section class = "match-form-container" >
 {% for field in params.Fields %}
 
+{# Check to see if the parameter is only meant to be shown on a results page #}
 {% if params.results_page %}
   {% set show = True %}
 {% elif not params.results_page and not field.only_display_in_results_page %}
@@ -32,7 +33,13 @@
   {% set show = False %}
 {% endif %}
 
-{# Check to see if the parameter is only meant to be shown on a results page #}
+{# Wrap each input type into an ID-based specific container if requested #}
+{% if params.component_wrappers %}
+	<div id="complete-container-for-{{field.database_name}}">
+{% endif %}
+
+
+{# Loop through each input object, returning the matching input type #}
 	<br>
 	{# Code to generate actual searchui here #}
 	{% if field.search_type == "input_box" %}
@@ -172,8 +179,15 @@
 	    {{ field.description }}
 	  {% endcall %}
 
-
 {% endif %}
+
+{# End the div for "component wrappers" #}
+{% if params.component_wrappers %}
+	</div>
+{% endif %}
+
+
+
 {% endfor %}
 
 {% if params.remove_search_button == False %}
