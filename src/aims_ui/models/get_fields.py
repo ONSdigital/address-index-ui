@@ -499,9 +499,9 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             'uprn',
             display_title='Enter a UPRN to get coordinates',
             previous_value=include_UPRN_redirect,
-            required=True,
+            search_button_variant=True,
             description=
-            'The Unique Property Reference Number consists of digits only, and refers to a single property'
+            'Enter a valid UPRN and click the search button to auto-fill the latitude and longitude fields.',
         ),
         Field(
             'rangekm',

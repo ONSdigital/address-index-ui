@@ -29,6 +29,7 @@ class Field:
   download_url: str = ''
   error_message: str = ''
   char_check_limit: dict = field(default_factory=dict)
+  search_button_variant: bool = False
 
   def __post_init__(self):
     self.dropdown_options = self.format_dropdown_options(

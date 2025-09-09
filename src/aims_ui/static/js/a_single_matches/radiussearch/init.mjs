@@ -1,4 +1,4 @@
-import { setSizeOfMapToPreviouslySetSize, setupResizeListeners, addMatchedAddressMarkersToMap, setupMap, setupRadiusListeners, setupLatLongListeners, setupInitialMarkerLocation } from "./interactive_map.mjs";
+import { updateMapToFitCircle, setSizeOfMapToPreviouslySetSize, setupResizeListeners, addMatchedAddressMarkersToMap, setupMap, setupRadiusListeners, setupLatLongListeners, setupInitialMarkerLocation } from "./interactive_map.mjs";
 import { setupHorizontalInputs } from "./page_reformatting.mjs";
 import { setupScrollListeners, setScrollPosition } from "./scroll_helpers.mjs";
 
