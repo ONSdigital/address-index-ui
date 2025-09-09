@@ -4,7 +4,7 @@ function searchForUprnAndUpdateLatLonFields() {
   // Get the UPRN input field value
   const uprnInput = document.querySelector('#uprn');
 
-  return {''}
+  return {};
 }
 
 // Firstly stop the button submitting the form when this button is clicked
