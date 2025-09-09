@@ -496,6 +496,14 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             description='Longitude of the location to search for (e.g. "-2.9").'
         ),
         Field(
+            'uprn',
+            display_title='Enter a UPRN to get coordinates',
+            previous_value=include_UPRN_redirect,
+            required=True,
+            description=
+            'The Unique Property Reference Number consists of digits only, and refers to a single property'
+        ),
+        Field(
             'rangekm',
             display_title='Range (km)',
             classes='ons-input--w-50 nocache',
