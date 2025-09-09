@@ -1,4 +1,3 @@
-
 /* CSS should be generally avoided as the Design System should make layout and accessability decisions. 
 However in this case, because of the use of components that are not directly from the DS, 
 we need to use CSS to layout the page correctly */
@@ -36,7 +35,6 @@ we need to use CSS to layout the page correctly */
   align-items: flex-start; 
 }
 
-
 #mapAndResultsContainer {
   width: 100%;
   display: flex;
@@ -61,30 +59,4 @@ we need to use CSS to layout the page correctly */
   width: 50%;
   height: 50%;
 }
-
-/* 4 columns with gap-aware width; last row stretches evenly */
-#horizontalContainer {
-  /* Internal Flexbox stuff */
-  --gap: 1em;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--gap);
-
-  /* Give margin at the top and sides */
-  margin: 1em 0;
-  width: 80%;
-}
-
-#horizontalContainer > .ons-field,
-#horizontalContainer > .ons-btn {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  margin-top: auto;
-
-  /* exactly 4 per row by default */
-  flex: 1 1 calc((100% - 3 * var(--gap)) / 4);
-  min-width: calc((100% - 3 * var(--gap)) / 4);  /* prevents squeezing to a 5th per row */
-}
-
 
