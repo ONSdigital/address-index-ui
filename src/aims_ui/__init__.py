@@ -148,3 +148,6 @@ from aims_ui.page_address_info import address_info
 
 # Import classifications here to avoid circular import
 from aims_ui.page_helpers.api.api_interaction import get_classifications
+
+# Setup API forwarding routes used to bypass crossorigin issues
+from aims_ui.api_access.routes.uprn_route import uprn_route
