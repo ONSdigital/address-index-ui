@@ -1,6 +1,7 @@
 import { updateMapToFitCircle, setSizeOfMapToPreviouslySetSize, setupResizeListeners, addMatchedAddressMarkersToMap, setupMap, setupRadiusListeners, setupLatLongListeners, setupInitialMarkerLocation } from "./interactive_map.mjs";
 import { setupHorizontalInputs } from "./page_reformatting.mjs";
 import { setupScrollListeners, setScrollPosition } from "./scroll_helpers.mjs";
+import { setupUprnSearchFunctionality } from "./uprn_helper.mjs";
 
 function setupMapSpecificItems() {
   // Setup the interactive map
@@ -46,6 +47,8 @@ function init() {
   // Setup map specific items
   setupMapSpecificItems();
 
+  // Setup UPRN search button
+  setupUprnSearchFunctionality();
 
 }
 
