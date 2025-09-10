@@ -10,7 +10,6 @@ matches the map (currently there is no design system component for this */
   justify-content: space-between;
 }
 
-
 .left-right-fifty-fifty {
   display: flex;
   flex-direction: row;
@@ -50,4 +49,8 @@ matches the map (currently there is no design system component for this */
   border-radius: var(--r);
   box-shadow: 0 0 0 var(--bw) #707071; 
   padding: 1em;
+}
+
+#complete-container-for-uprnLookupPanel {
+  margin-top: 0.6em;
 }
