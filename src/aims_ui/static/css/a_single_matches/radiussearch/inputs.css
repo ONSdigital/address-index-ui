@@ -54,3 +54,8 @@ matches the map (currently there is no design system component for this */
 #complete-container-for-uprnLookupPanel {
   margin-top: 0.6em;
 }
+
+#grouped-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
