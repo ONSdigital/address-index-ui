@@ -74,20 +74,21 @@ async function searchForUprn() {
   }
 }
 
-// Firstly stop the button submitting the form when this button is clicked
-export function setupUprnSearchFunctionality() {
+export function getUprnInputButton() {
   // Get the UPRN input container
   const containerForUprnInput = document.querySelector('#complete-container-for-uprn');
-
   // The only button in the UPRN container should be the one associated with the UPRN input
   const uprnSearchButton = containerForUprnInput.querySelector('button');
-  // Remove the "type=submit" attribute so it doesn't submit the form
-  uprnSearchButton.removeAttribute('type');
+
+  return uprnSearchButton;
+}
+
+// Firstly stop the button submitting the form when this button is clicked
+export function setupUprnSearchFunctionality() {
+  const uprnSearchButton = getUprnInputButton();
 
   // Add new click listener
   uprnSearchButton.addEventListener('click', async (e) => {
-    e.preventDefault(); // Stop the button from submitting the form
-
     // Submit the UPRN to the API and get the lat/lon values
     const searchResult = await searchForUprn();
     if (!searchResult) {
