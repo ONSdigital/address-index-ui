@@ -53,7 +53,6 @@
 		"value": field.previous_value,
 		"searchButton": '' if not field.search_button_variant else {
 			visuallyHideButtonText: true,
-			text: "Search",
 			"iconType": "search"
 		},
 		"charCheckLimit": '' if not field.char_check_limit else field.char_check_limit,
@@ -177,6 +176,7 @@
 	  %}
 	    {{ field.description }}
 	  {% endcall %}
+
 	{% elif field.search_type == "panel-info" %}
 	  {% call onsPanel({
 		"type": 'info' })
@@ -200,7 +200,7 @@
   <br>
   {% if not params.remove_buttons %}
     {{  onsButton({
-	"text": "Search", }) }}
+	"text": "Search" if not params.override_search_button_text else params.override_search_button_text , }) }}
   	<br>
 {% endif %}
 

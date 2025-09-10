@@ -22,7 +22,7 @@ function returnGroupedButtons(inputContainer) {
   return newButtonContainer;
 }
 
-function createUprnResponseArea() {
+function createUprnResponseContent() {
   const uprnTitle = crEl('h3', 'uprn-lookup-results-title');
   uprnTitle.textContent = 'No UPRN lookup performed yet'; 
   const uprnInfoLn1 = crEl('h4', 'uprn-lookup-results-info-ln1');
@@ -35,12 +35,16 @@ function createUprnResponseArea() {
 
 function getUprnSearchAndUprnResultsContainer(inputContainer) {
   const uprnContainer = inputContainer.querySelector('#complete-container-for-uprn');
+  const uprnResultsContainer = inputContainer.querySelector('#complete-container-for-uprnLookupPanel');
+  // Get the inside of the info panel
+  const insideResultsContainer = uprnResultsContainer.querySelector('.ons-panel__body');
 
-  // Create a new element
-  const uprnResults = createUprnResponseArea();
+  // Add content to the results container
+  const uprnResultsContent = createUprnResponseContent();
+  insideResultsContainer.append(uprnResultsContent);
 
   const uprnSearchAndResultsContainer = crEl('div', 'uprn-search-and-results-container', ['left-right-fifty-fifty']);
-  uprnSearchAndResultsContainer.append(uprnContainer, uprnResults);
+  uprnSearchAndResultsContainer.append(uprnContainer, uprnResultsContainer);
 
   return uprnSearchAndResultsContainer;
 }

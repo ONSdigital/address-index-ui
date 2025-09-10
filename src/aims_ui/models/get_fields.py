@@ -520,6 +520,12 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             description=
             'Enter the search input (e.g. "14 Acacia Avenue, Ruislip, HA4 8RG").'
         ),
+        Field(
+            'uprnLookupPanel',
+            search_type='panel',
+            display_title='UPRN Lookup',
+            description='',
+        ),
         common_fields['classification'],
         common_fields['limit'],
     ])

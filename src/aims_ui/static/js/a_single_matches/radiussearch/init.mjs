@@ -1,3 +1,4 @@
+import { setupSubmissionFromInputs } from "./form_helpers.mjs";
 import { updateMapToFitCircle, setupLatLongToMapListeners, setSizeOfMapToPreviouslySetSize, setupResizeListeners, addMatchedAddressMarkersToMap, setupMap, setupRadiusListeners, setupLatLongFromMapListeners, setupInitialMarkerLocation } from "./interactive_map.mjs";
 import { setupHorizontalInputs } from "./page_reformatting.mjs";
 import { setupScrollListeners, setScrollPosition } from "./scroll_helpers.mjs";
@@ -39,6 +40,8 @@ function setupPageSpecificItems() {
 
   // Listen for scrolling, save last location
   setupScrollListeners();
+
+  setupSubmissionFromInputs();
 }
 
 function init() {
