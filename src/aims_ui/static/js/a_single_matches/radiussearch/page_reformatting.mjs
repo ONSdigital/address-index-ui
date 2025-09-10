@@ -15,7 +15,7 @@ function returnGroupedButtons(inputContainer) {
   const buttons = inputContainer.querySelectorAll('.ons-btn');
 
   // Group buttons
-  const newButtonContainer = document.createElement('div');
+  const newButtonContainer = crEl('div', 'grouped-button-container');
   buttons.forEach(button => {
     newButtonContainer.appendChild(button);
   });
