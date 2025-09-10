@@ -152,7 +152,7 @@ export function setupInitialMarkerLocation() {
   updateSearchMarkerLocation(INITIAL_LAT, INITIAL_LNG);
 }
 
-function updateLatLongSearchValues(lat, lng) {
+export function updateLatLongSearchValues(lat, lng) {
   const latInput = document.querySelector('#lat');
   const lngInput = document.querySelector('#lon');
 
@@ -197,7 +197,24 @@ function getStartZoomValue() {
   return pageLocalValues.mapZoomLevel || defaultStartValues.zoom;
 }
 
-export function setupLatLongListeners() {
+function updateMapFromLatLonChange() {
+  // Change location of search marker (triggers circle update too)
+  updateSearchMarkerLocation(getCurrentSearchLatValue(), getCurrentSearchLonValue());
+  // Center the map on the new marker
+  updateMapToFitCircle();
+}
+
+// Update the MAP with change FROM THE INPUTS
+export function setupLatLongToMapListeners() {
+  const latInput = document.querySelector('#lat');
+  const lonInput = document.querySelector('#lon');
+
+  latInput.addEventListener('input', updateMapFromLatLonChange);
+  lonInput.addEventListener('input', updateMapFromLatLonChange);
+}
+
+// Update the boxes FROM INPUT FROM THE MAP
+export function setupLatLongFromMapListeners() {
   // When a user clicks on the map, we want it to hand the lat/long values of 
   //   the new marker to the input elements on the page
 

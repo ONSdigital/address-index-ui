@@ -1,4 +1,4 @@
-import { updateMapToFitCircle, setSizeOfMapToPreviouslySetSize, setupResizeListeners, addMatchedAddressMarkersToMap, setupMap, setupRadiusListeners, setupLatLongListeners, setupInitialMarkerLocation } from "./interactive_map.mjs";
+import { updateMapToFitCircle, setupLatLongToMapListeners, setSizeOfMapToPreviouslySetSize, setupResizeListeners, addMatchedAddressMarkersToMap, setupMap, setupRadiusListeners, setupLatLongFromMapListeners, setupInitialMarkerLocation } from "./interactive_map.mjs";
 import { setupHorizontalInputs } from "./page_reformatting.mjs";
 import { setupScrollListeners, setScrollPosition } from "./scroll_helpers.mjs";
 import { setupUprnSearchFunctionality } from "./uprn_helper.mjs";
@@ -7,8 +7,11 @@ function setupMapSpecificItems() {
   // Setup the interactive map
   setupMap();
 
-  // Add Listeners to map
-  setupLatLongListeners();
+  // Add Listeners to map to update the lat/long input boxes
+  setupLatLongFromMapListeners();
+
+  // Setup listeners on the lat/long inputs themselves to update the map
+  setupLatLongToMapListeners();
 
   // Add initial Marker - This might not be desirable behaviour in future
   setupInitialMarkerLocation();

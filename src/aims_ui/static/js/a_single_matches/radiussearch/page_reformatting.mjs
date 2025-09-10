@@ -21,7 +21,30 @@ function returnGroupedButtons(inputContainer) {
   });
   return newButtonContainer;
 }
- 
+
+function createUprnResponseArea() {
+  const uprnTitle = crEl('h3', 'uprn-lookup-results-title');
+  uprnTitle.textContent = 'No UPRN lookup performed yet'; 
+  const uprnInfoLn1 = crEl('h4', 'uprn-lookup-results-info-ln1');
+  const uprnInfoLn2 = crEl('h4', 'uprn-lookup-results-info-ln2');
+  const uprnResponseContainer = crEl('div', 'uprn-lookup-results-container');
+  uprnResponseContainer.append(uprnTitle, uprnInfoLn1, uprnInfoLn2);
+
+  return uprnResponseContainer;
+}
+
+function getUprnSearchAndUprnResultsContainer(inputContainer) {
+  const uprnContainer = inputContainer.querySelector('#complete-container-for-uprn');
+
+  // Create a new element
+  const uprnResults = createUprnResponseArea();
+
+  const uprnSearchAndResultsContainer = crEl('div', 'uprn-search-and-results-container', ['left-right-fifty-fifty']);
+  uprnSearchAndResultsContainer.append(uprnContainer, uprnResults);
+
+  return uprnSearchAndResultsContainer;
+}
+
 // Get the containers for UPRN and Long/Lat - organised to provide user with an option to use either
 function getLatLongContainer(inputerContainer) {
   // Get the lat/long container
@@ -35,12 +58,12 @@ function getLatLongContainer(inputerContainer) {
 }
 
 function getLatLonUprnContainer(inputContainer) {
-  const uprnContainer = inputContainer.querySelector('#complete-container-for-uprn');
+  const uprnResultsAndSearchContainer = getUprnSearchAndUprnResultsContainer(inputContainer);
   const latLonContainer = getLatLongContainer(inputContainer);
 
   // Create a new container 50/50 UP DOWN
   const latLonUprnContainer= crEl('div', 'lat-lon-uprn-container', ['up-down-fifty-fifty']);
-  latLonUprnContainer.append(latLonContainer, uprnContainer);
+  latLonUprnContainer.append(latLonContainer, uprnResultsAndSearchContainer);
 
   return latLonUprnContainer;
 }
