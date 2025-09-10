@@ -36,6 +36,9 @@ function createUprnResponseContent() {
 function getUprnSearchAndUprnResultsContainer(inputContainer) {
   const uprnContainer = inputContainer.querySelector('#complete-container-for-uprn');
   const uprnResultsContainer = inputContainer.querySelector('#complete-container-for-uprnLookupPanel');
+  // Make the panel invisible intially so that it's not implied a user MUST enter a UPRN
+  uprnResultsContainer.classList.add('invisible');
+
   // Get the inside of the info panel
   const insideResultsContainer = uprnResultsContainer.querySelector('.ons-panel__body');
 

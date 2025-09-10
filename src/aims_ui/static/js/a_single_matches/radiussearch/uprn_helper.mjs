@@ -2,6 +2,7 @@
 import { updateLatLongSearchValues } from "./interactive_map.mjs";
 
 function updateUprnResponse(title, ln1 = '', ln2 = '', uprn = '') {  
+  const containerForUprnLookupPanel = document.querySelector('#complete-container-for-uprnLookupPanel');
   const uprnTitle = document.querySelector('#uprn-lookup-results-title');
   const uprnInfoLn1 = document.querySelector('#uprn-lookup-results-info-ln1');
   const uprnInfoLn2 = document.querySelector('#uprn-lookup-results-info-ln2');
@@ -15,6 +16,9 @@ function updateUprnResponse(title, ln1 = '', ln2 = '', uprn = '') {
     uprnLink.textContent = 'View Details';
     uprnInfoLn2.append(uprnLink);
   }
+
+  // Make the panel visible now we have results
+  containerForUprnLookupPanel.classList.remove('invisible');
 }
 
 function updateResponseWithError(errorTitle, errorMessage) {
