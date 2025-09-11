@@ -6,24 +6,30 @@ from aims_ui.models.get_addresses import get_addresses
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.page_controllers.f_error_pages.page_error_annotation_single import page_error_annotation_single
-from aims_ui.page_helpers.api.api_interaction import api, get_response_attributes, get_tokenised_attributes
+from aims_ui.page_helpers.api.api_interaction import (
+    api,
+    get_api_auth,
+    get_response_attributes,
+    get_tokenised_attributes
+)
 from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs, save_epoch_number
 from aims_ui.page_helpers.error.error_utils import error_page_api_request, error_page_api_response, error_page_xml
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page, detect_xml_injection
 from aims_ui.page_helpers.validation_utils import validate_limit
 
-page_name = 'singlesearch'
+page_name = 'radiussearch'
 
 
 @login_required
-@app.route(f'/', methods=['GET', 'POST'])
-def singlesearch():
+@app.route(f'/{page_name}', methods=['GET', 'POST'])
+def radiussearch():
   endpoints = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
   page_location = get_page_location(endpoints, page_name)
+  api_auth = get_api_auth()
   searchable_fields = get_fields(page_name)
 
   if request.method == 'GET':
@@ -32,6 +38,7 @@ def singlesearch():
         page_location,
         searchable_fields=searchable_fields,
         endpoints=endpoints,
+        api_auth=api_auth,
     )
 
   all_user_input = load_save_store_inputs(
@@ -62,7 +69,7 @@ def singlesearch():
   except Exception as e:
     return error_page_api_request(page_name, user_input, e)
 
-  # Errors after sucessful Response
+   # Errors after sucessful Response
   if result.status_code != 200:
     return error_page_api_response(page_name, user_input, result)
 
@@ -71,17 +78,7 @@ def singlesearch():
   # Save a list of UPRNs and their respective confidence scores
   save_epoch_number(session, all_user_input.get('epoch', ''))
 
-  # Check to see if showing the comfortable redirect is appropriate
-  ss_input = all_user_input.get('input')
-  if ss_input.isdigit():
-    searchable_fields = get_fields(page_name, include_UPRN_redirect=ss_input)
-    all_user_input = load_save_store_inputs(
-        searchable_fields,
-        request,
-        session,
-    )
-
-  # Get the attributes of the Response a user might want
+   # Get the attributes of the Response a user might want
   responseAttributes = get_response_attributes(result.json())
   tokenisedOutput = get_tokenised_attributes(result.json())
 

@@ -10,14 +10,22 @@
 {% from "components/autosuggest/_macro.njk" import onsAutosuggest %}
 {% from "components/panel/_macro.njk" import onsPanel %}
 {% from "components/upload/_macro.njk" import onsUpload %}
+{% from 'components/list/_macro.njk' import onsList %}
 
 {% set col = namespace(value=-1) %}
 {% set row = namespace(value=0) %}
 {% set max_col = 1 %}
 
+<!-- CSS specifically for the custom_search component -->
+<link rel="stylesheet" href="/static/css/custom_macros/custom_search.css">
+
+{# Wrap the entire search form in a container so that it can be hidden by default for some pages #}
+<div id="full-match-form-container" class="{{ 'invisible' if params.invisible else '' }}">
+
 <section class = "match-form-container" >
 {% for field in params.Fields %}
 
+{# Check to see if the parameter is only meant to be shown on a results page #}
 {% if params.results_page %}
   {% set show = True %}
 {% elif not params.results_page and not field.only_display_in_results_page %}
@@ -26,7 +34,13 @@
   {% set show = False %}
 {% endif %}
 
-{# Check to see if the parameter is only meant to be shown on a results page #}
+{# Wrap each input type into an ID-based specific container if requested #}
+{% if params.component_wrappers %}
+	<div id="complete-container-for-{{field.database_name}}">
+{% endif %}
+
+
+{# Loop through each input object, returning the matching input type #}
 	<br>
 	{# Code to generate actual searchui here #}
 	{% if field.search_type == "input_box" %}
@@ -38,6 +52,10 @@
 			   "classes": '' if show else field.only_display_in_results_page,
 			   "description": '' if not show else field.description },
 		"value": field.previous_value,
+		"searchButton": '' if not field.search_button_variant else {
+			visuallyHideButtonText: true,
+			"iconType": "search"
+		},
 		"charCheckLimit": '' if not field.char_check_limit else field.char_check_limit,
     "error": {
          "id": field.database_name,
@@ -152,13 +170,26 @@
  
 
 	{% elif field.search_type == "download" %}
-	<h4>Unsure? <a href={{field.download_url}}>Click here to download a list of classifications</a>.</h4>
+		<h4>Unsure? <a href={{field.download_url}}>Click here to download a list of classifications</a>.</h4>
+
+	{% elif field.search_type == "error_panel" %}
+		{% call onsPanel({
+			'title': field.display_title,
+			'variant': 'error' }) %}
+		{{ onsList({
+			'id': 'error-list-for-' + field.database_name,
+			'classes': 'list--bare list--errors u-mb-s',
+			'itemsList': [''] }) }}
+		{% endcall %}
+
+
 	{% elif field.search_type == "panel" %}
 	  {% call onsPanel({
 		"type": 'warn' })
 	  %}
 	    {{ field.description }}
 	  {% endcall %}
+
 	{% elif field.search_type == "panel-info" %}
 	  {% call onsPanel({
 		"type": 'info' })
@@ -166,8 +197,15 @@
 	    {{ field.description }}
 	  {% endcall %}
 
-
 {% endif %}
+
+{# End the div for "component wrappers" #}
+{% if params.component_wrappers %}
+	</div>
+{% endif %}
+
+
+
 {% endfor %}
 
 {% if params.remove_search_button == False %}
@@ -175,7 +213,7 @@
   <br>
   {% if not params.remove_buttons %}
     {{  onsButton({
-	"text": "Search", }) }}
+	"text": "Search" if not params.override_search_button_text else params.override_search_button_text , }) }}
   	<br>
 {% endif %}
 
@@ -199,5 +237,6 @@
 
 </section>
 
+</div>
 {% endmacro %}
 

@@ -22,7 +22,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           classes='ons-input--w-4',
           description=
           'Enter the number of matched addresses to return if multiple matches are available (1 - 50)',
-          previous_value='1',
+          previous_value='10',
       ),
       'file_upload':
       Field(
@@ -336,12 +336,10 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             ],
         ),
         common_fields['file_upload'],
-        Field(
-            'custom-bulk-attributes',
-            classes='ons-input--w-20 ons-u-hidden',
-            required=False,
-            previous_value=''
-        ),
+        Field('custom-bulk-attributes',
+              classes='ons-input--w-20 ons-u-hidden',
+              required=False,
+              previous_value=''),
     ])
 
   elif endpoint_name == 'uprn_multiple_match':
@@ -479,6 +477,65 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             checkbox_value=False,
         )
     ])
+  elif endpoint_name == 'radiussearch':
+    return ([
+        Field(
+            'lat',
+            display_title='Latitude',
+            classes='ons-input--w-50 nocache',
+            required=True,
+            previous_value='51.566322',
+            description='Latitude of the location to search for (e.g. "53.3").'
+        ),
+        Field(
+            'lon',
+            display_title='Longitude',
+            classes='ons-input--w-50 nocache',
+            required=True,
+            previous_value='-3.0272245',
+            description='Longitude of the location to search for (e.g. "-2.9").'
+        ),
+        Field(
+            'uprn',
+            display_title='Enter a UPRN to get coordinates',
+            previous_value=include_UPRN_redirect,
+            search_button_variant=True,
+            description=
+            'Enter a valid UPRN and click the search button to auto-fill the latitude and longitude fields.',
+        ),
+        Field(
+            'rangekm',
+            display_title='Range (km)',
+            classes='ons-input--w-50 nocache',
+            required=True,
+            previous_value='5',
+            description=
+            'Radius (in km) around the location to search within (e.g. "100").'
+        ),
+        Field(
+            'input',
+            display_title='Search String',
+            classes='ons-input--w-50 nocache',
+            required=True,
+            description=
+            'Enter the search input (e.g. "14 Acacia Avenue, Ruislip, HA4 8RG").'
+        ),
+        # Create both panels here and use JS later to switch between them
+        Field(
+            'uprnLookupPanelInfo',
+            search_type='panel',
+            display_title='UPRN Lookup',
+            description='',
+        ),
+        Field(
+            'uprnLookupPanelError',
+            search_type='error_panel',
+            display_title='Error',
+            description='',
+        ),
+        common_fields['classification'],
+        common_fields['limit'],
+    ])
   elif endpoint_name == 'singlesearch':
     fields = [
         Field(
@@ -508,6 +565,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['limit'],
         common_fields['historical'],
     ]
+ 
 
     if include_UPRN_redirect != False:
       uprn_search_url = url_for('uprn')

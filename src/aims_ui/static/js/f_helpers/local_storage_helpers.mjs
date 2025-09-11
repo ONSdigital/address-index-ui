@@ -93,7 +93,7 @@ export function getJobAgePreference() {
 // AdditionalRequests status
 export function setDefaultAdditionalRequestStatus() {
   if (!localStorage.getItem('custom_settings_additional_request_info')) {
-    const defaultOptions = { match_type: 'true', recommendation_code: 'true' };
+    const defaultOptions = { match_type: 'true', recommendation_code: 'true', tokenised_output: 'true'};
     setAdditionalRequestStatus(defaultOptions);
   }
 }

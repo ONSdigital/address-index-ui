@@ -1,0 +1,61 @@
+
+/* CSS to make the inputs appear horizontally and organized in a way that
+matches the map (currently there is no design system component for this */
+
+
+.up-down-fifty-fifty {
+  display: flex;
+  flex-direction: column;
+  /* One item per row */
+  justify-content: space-between;
+}
+
+.left-right-fifty-fifty {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+.left-right-fifty-fifty > * {
+  width: 50%;
+  box-sizing: border-box; /* Ensure padding/border doesn’t break width */
+}
+
+#full-input-container {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  gap: 3em;
+}
+
+#search-and-limit-container,
+#range-classification-container {
+  align-items: flex-end;
+}
+
+#lat-lon-uprn-container {
+   /* Add design system approved border around inputs */
+  --r: 0.75em;
+  --bw: 0.225em;
+  border-radius: var(--r);
+  box-shadow: 0 0 0 var(--bw) #707071; 
+  padding: 1em;
+}
+
+#range-classification-input-limit-container {
+   /* Add design system approved border around inputs */
+  --r: 0.75em;
+  --bw: 0.225em;
+  border-radius: var(--r);
+  box-shadow: 0 0 0 var(--bw) #707071; 
+  padding: 1em;
+}
+
+#uprn-info-and-error-panel-container {
+  margin-top: 0.6em;
+}
+
+#grouped-button-container {
+  display: flex;
+  justify-content: flex-end;
+}

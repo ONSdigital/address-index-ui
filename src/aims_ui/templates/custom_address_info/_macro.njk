@@ -1,6 +1,7 @@
 {% macro customAddressInfo(params) %}
 {% from 'components/label/_macro.njk' import onsLabel %}
 {% from 'custom_clerical_data/_macro.njk' import customClericalData %}
+{% from "components/table/_macro.njk" import onsTable %}
 
 {% if params.full_info %}
 
@@ -146,39 +147,106 @@ window.onload = function() {
 
 
 
+{% if params.compressed_view == True %}
+  {# Compressed view only includes the name, geo and "distance" for the radius search page #}
+
+  <table class="address-table ons-table">
+    <thead class="ons-table__head">
+      <tr class="ons-table__row">
+        <th class="ons-table__header"><span class="ons-table__header-text">Name</span></th>
+        <th class="ons-table__header"><span class="ons-table__header-text">Latitude</span></th>
+        <th class="ons-table__header"><span class="ons-table__header-text">Longitude</span></th>
+        <th class="ons-table__header"><span class="ons-table__header-text">Distance</span></th>
+      </tr>
+    </thead>
+    <tbody class="ons-table__body">
+      {% for address in params.matched_addresses %}
+        <tr class="ons-table__row">
+          <td class="ons-table__cell">
+          <a href="/address_info/{{ address.uprn.value }}">
+            {{ address.formatted_address.value }}
+          </a></td>
+          <td class="ons-table__cell">{{ address.geo.value.latitude }}</td>
+          <td class="ons-table__cell">{{ address.geo.value.longitude}}</td>
+          <td class="distance_attribute ons-table__cell" 
+            myLat="{{ address.geo.value.latitude}}"
+            myLon="{{ address.geo.value.longitude}}"
+            >NA</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {# Script to populate the table above with previous results ONLY if it's not a results page #}
+  {% if params.results_page != True %}
+    <script type=module src="static/js/macros/custom_address_info/load_previous_values.mjs"></script>
+  {% endif %}
+
+  {# Script that will populate the "Distance" value #}
+  <script type=module src="static/js/macros/custom_address_info/distance_calculator.mjs"></script>
+
+  {# Add the addresses matched into localStorage so they can be accessed by js elsewhere #}
+  {# Only Run this script if it's a results page (i.e there are new results!) #}
+  {% if params.results_page == True %}
+    <script type="module">
+      import { getPageLocalValues, setPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
+
+      const matchedAddresses = []
+      function addAddressToLargeList(addressInfo) {
+        // Given a single address, add it to the array of addresses in js
+        matchedAddresses.push(addressInfo);
+      }
+
+      {% for address in params.matched_addresses %}
+        addAddressToLargeList({
+          uprn: {{ address.uprn.value | tojson }},
+          name: {{ address.formatted_address.value | tojson }},
+          longitude: {{ address.geo.value.longitude | tojson }},
+          latitude: {{ address.geo.value.latitude  | tojson }},
+        });
+      {% endfor %}
+
+      setPageLocalValues('radiussearch', {radiusSearchMostRecentAddresses: matchedAddresses} )
+    </script>
+  {% endif %}
+  
+{% else %}
+  {# Add the smaller cards, used on the overview when a search is done #}
+  {% for address in params.matched_addresses %}
+
+    <article class="result-short-form">
+      <a href={{'/address_info/' + address.uprn.value }}>
+
+      <h2 hidden id="formattedAddress" class="saturn address-titles"> 
+        {{ address.formatted_address.value }} </h2>
+
+      <h2 hidden id="formattedAddressNag" class="saturn address-titles"> 
+        {{ address.formatted_address_nag.value }} </h2>
+
+      <h2 hidden id="formattedAddressPaf" class="saturn address-titles"> 
+        {{ address.formatted_address_paf.value }} </h2>
+      </a>
+          <table class='clerical-data-table'> <tbody id='{{address.uprn.value}}'>
+
+    {% for attribute_name, address_attribute in address.__dict__.items() %}
+    {% if address_attribute.show %}
+      <tr><td class="mars">{{ attribute_name }}</td>
+          <td class="venus">{{ address_attribute.value }}</td>
+      </tr>
+    {% endif %}
+    {% endfor %}
+    <tbody> </table>
+    {#https://stackoverflow.com/questions/32806084/google-map-zoom-parameter-in-url-not-working#}
+        <p class="mars"><a href=" {{ 'https://maps.google.com/?q=' + address.geo.value.get('latitude') + ',' + address.geo.value.get('longitude') + '&ll=' +  address.geo.value.get('latitude') + ',' + address.geo.value.get('longitude') + '&z=18' +'&basemap=satellite' }}"
+        >Location Map</a></p>
+    </article>
+
+  {% endfor %}
+{% endif %}
 
 
-{# Add the smaller cards, used on the overview when a search is done #}
-{% for address in params.matched_addresses %}
 
-	<article class="result-short-form">
-	  <a href={{'/address_info/' + address.uprn.value }}>
 
-	  <h2 hidden id="formattedAddress" class="saturn address-titles"> 
-	  	{{ address.formatted_address.value }} </h2>
-
-	  <h2 hidden id="formattedAddressNag" class="saturn address-titles"> 
-	  	{{ address.formatted_address_nag.value }} </h2>
-
-	  <h2 hidden id="formattedAddressPaf" class="saturn address-titles"> 
-	  	{{ address.formatted_address_paf.value }} </h2>
-	  </a>
-        <table class='clerical-data-table'> <tbody id='{{address.uprn.value}}'>
-
-	{% for attribute_name, address_attribute in address.__dict__.items() %}
-	{% if address_attribute.show %}
-		<tr><td class="mars">{{ attribute_name }}</td>
-		    <td class="venus">{{ address_attribute.value }}</td>
-		</tr>
-	{% endif %}
-	{% endfor %}
-  <tbody> </table>
-  {#https://stackoverflow.com/questions/32806084/google-map-zoom-parameter-in-url-not-working#}
-	    <p class="mars"><a href=" {{ 'https://maps.google.com/?q=' + address.geo.value.get('latitude') + ',' + address.geo.value.get('longitude') + '&ll=' +  address.geo.value.get('latitude') + ',' + address.geo.value.get('longitude') + '&z=18' +'&basemap=satellite' }}"
-	    >Location Map</a></p>
-	</article>
-
-{% endfor %}
 
 <script>
   function getFavourites() {
@@ -305,159 +373,13 @@ localStorage.setItem('confidenceScores', []);
 
 {% endfor %}
 
-<script>
-function getName(row) {
-  const firstCell = row.children[0]; 
-  let text = firstCell.textContent.replace(/\s/g,'');
-  text = text.replace('Explainme','');
-  return text; 
-}
-
-function toggleFavourite(row, cell) {
-  const favouriteStatus = getFavouriteStatus(row, cell);
-  const favourites = getFavourites();
-  const name = getName(row);
-  if (favourites[name]) {
-    favourites[name] = !favourites[name];
-  } else {
-    favourites[name] = true;
-  }
-  localStorage.setItem('favourites', JSON.stringify(favourites));
-  setFavouriteStar(row, cell);
-}
-
-function getFavouriteStatus(row, cell) {
-  const name = getName(row);
-  const favourites = getFavourites();
-  const favSetting = favourites[name];
-  if (favSetting) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function setFavouriteStar(row, cell) {
-  if (getFavouriteStatus(row, cell)) {
-      // Note innerHTML is just the worst and should be removed at some point
-    cell.textContent = '★';
-  } else {
-    cell.textContent= '☆';
-  }
-}
-
-function addFavouritesColumn() {
-  for (const [i, row] of [...document.querySelectorAll('.clerical-data-table tr')].entries()) {
-    const cell = document.createElement(i ? "td" : "th");
-
-    cursorPointer(cell);
-    setFavouriteStar(row, cell);
-    cell.classList.add('ons-table__cell');
-    cell.addEventListener('click', function(){toggleFavourite(row, cell)}, false);
-
-    // Create custom event for changing other rows
-    const event = new CustomEvent('update-star', {detail: cell, bubbles:true});
-    cell.addEventListener('click', function(){ cell.dispatchEvent(event); }, false);
-    document.addEventListener('update-star', function(){ setFavouriteStar(row,cell); } );
-    
-    row.appendChild(cell);
-  };
-}
-
-function addAttribute(parent, attributeName, attributeValue) {
-  const tr = document.createElement('tr');
-  const attName = document.createElement('td');
-  const attValue = document.createElement('td');
-  attName.classList.add('mars', 'ons-table__cell');
-  attValue.classList.add('venus', 'ons-table__cell');
-  tr.append(attName, attValue);
-  attName.textContent = attributeName;
-  // Again, gross, but in this case we need HTML to be pasrsed!
-  attValue.innerHTML= attributeValue;
-  parent.append(tr);
-}
-
-function addFavouriteAttributes() {
-  const trs = document.querySelectorAll('tbody');
-  for (const tbl of trs) {
-    const uprn = tbl.id;
-    if ( addresses[uprn] ) {
-      const currentAddress = addresses[uprn];
-      // For each 'Favourated' attribute, add it!
-      for ( const attribute_name in currentAddress ) {
-        //console.log(attribute_name, currentAddress[attribute_name]);
-        //console.val(uprn          , {value: '10023117623', favourite: true});
-        const attLocalData = currentAddress[attribute_name];
-        if (attLocalData.favourite) {
-          addAttribute(tbl, attribute_name, attLocalData.value);
-        }
-      }
-    }
-  }
-}
-
-
-addFavouriteAttributes();
-
-addFavouritesColumn();
-function cursorPointer(elm) {
-  elm.style = ' cursor: pointer; ';
-}
-
-</script>
+{# Script to add the favourite attributes below each address #}
+<script type=module src="static/js/macros/custom_address_info/favourites_star_and_local_storage.mjs"></script>
 
 {% endif %}
 
 
-
-
-
-<style>
-article.result-short-form {
-    border-top: 1px solid #dfe0e2;
-    margin: 20px 0px 0px 0px;
-    padding: 20px 0;
-}
-.jupiter {
-    font-family: 'Lato Bold', sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
-}
-
-.saturn {
-    font-family: 'Lato Bold', sans-serif;
-    font-size: 1.556rem;
-    font-weight: 700;
-}
-
-.neptune {
-    font-family: 'Lato Bold', sans-serif;
-    font-size: 1.222rem;
-    font-weight: 700;
-}
-
-.venus {
-    font-family: 'Lato Bold', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-}
-
-.mars {
-    font-family: 'Lato Regular', sans-serif;
-    font-size: 1rem;
-}
-
-.mercury {
-    font-family: 'Lato Bold', sans-serif;
-    font-size: 0.8889rem;
-    font-weight: 700;
-}
-
-.pluto {
-    font-family: 'Lato Regular', sans-serif;
-    font-size: 0.8889rem;
-}
-
-</style>
+{# Add styles that create gaps between cards #}
+<link rel="stylesheet" href="/static/css/custom_macros/custom_address_info.css">
 
 {% endmacro %}

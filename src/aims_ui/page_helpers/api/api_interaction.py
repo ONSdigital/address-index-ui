@@ -9,9 +9,9 @@ import jwt
 import requests
 
 from aims_ui import app
+from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_api_utils import get_multiple_match_api_header
 from aims_ui.page_helpers.classification_utilities import check_reverse_classification, check_valid_classification
 from aims_ui.page_helpers.google_utils import get_username
-from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_api_utils import get_multiple_match_api_header
 
 from .api_helpers import get_header, job_api
 
@@ -28,7 +28,7 @@ def api(url, called_from, all_user_input):
   params = get_params(all_user_input)
   if (called_from == 'uprn') or (called_from == 'postcode'):
     url = app.config.get('API_URL') + url + all_user_input.get(called_from, '')
-  elif (called_from == 'singlesearch'):
+  elif (called_from == 'singlesearch') or (called_from == 'radiussearch'):
     url = app.config.get('API_URL') + url
 
   # bulks run without verbose for speed
@@ -56,8 +56,17 @@ def get_response_attributes(r):
   matchType = res.get('matchtype', 'N/A')
   recommendationCode = res.get('recommendationCode', 'N/A')
 
-  return {'matchType': matchType, 'recommendationCode': recommendationCode}
+  return {'matchType': matchType, 'recommendationCode': recommendationCode} 
 
+def get_tokenised_attributes(r):
+  """ Return the 'tokens' for a search - this is from the address parser """
+
+  # "r" should be result.json() from an API call
+  res = r.get('response')
+
+  tokenisedOutput = res.get('tokens', {})
+
+  return tokenisedOutput
 
 def get_api_auth():
   """Get the auth type for typeahead"""

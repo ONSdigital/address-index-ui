@@ -27,8 +27,8 @@ def multiple_address_results():
   bulk_limits = current_group.get('bulk_limits')
 
   headers = [
-      'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'PAF OR NAG', 'RECS PROCESSED',
-      'DOWNLOAD LINK'
+      'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'PAF OR NAG',
+      'RECS PROCESSED', 'DOWNLOAD LINK'
   ]
 
   endpoints = get_endpoints(called_from=page_name)
@@ -39,7 +39,8 @@ def multiple_address_results():
 
     formatted_results = [
         [
-            '22', 'Example', '10,000 of A Jillion', 'bob', 'True', 'PAF' 'complete',
+            '22', 'Example', '10,000 of A Jillion', 'bob', 'True', 'PAF'
+            'complete',
             f'<a href="/downloads/googlefiledownload{job_id}">job_id {job_id}</a>'
         ],
     ]

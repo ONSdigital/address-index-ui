@@ -64,6 +64,12 @@ def get_endpoints(called_from=None):
           'd_misc_functionality',
       ),
       Endpoint(
+          'Radius Search',
+          'radiussearch',
+          'To get started, click on the map or enter a latitude and longitude manually. Search around this location within a set range to see results plotted on the map.',
+          'a_single_matches',
+      ),
+      Endpoint(
           'Help',
           'help',
           'See information about the other pages and how to contact support.',
