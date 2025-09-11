@@ -55,7 +55,8 @@ def format_single_job(job_data):
     single_job_data['jobname'] = single_job_data.get('dataset', 'NA')
     single_job_data['header_row_export'] = get_friendly_header_row_export(
         ui_metadata)
-    single_job_data['paf_nag_preference'] = get_friendly_paf_nag_preference(ui_metadata)
+    single_job_data['paf_nag_preference'] = get_friendly_paf_nag_preference(
+        ui_metadata)
   else:
     # The userid stores a json of the metadata
     try:
@@ -64,7 +65,8 @@ def format_single_job(job_data):
       single_job_data['jobname'] = ui_metadata_old.get('user_tag', 'NA')
       single_job_data['header_row_export'] = get_friendly_header_row_export(
           ui_metadata_old)
-      single_job_data['paf_nag_preference'] = get_friendly_paf_nag_preference(ui_metadata_old)
+      single_job_data['paf_nag_preference'] = get_friendly_paf_nag_preference(
+          ui_metadata_old)
     except json.JSONDecodeError:
       # Not a json? Simply put all the data in the username column
       single_job_data['username'] = single_job_data.get('userid', 'NA')

@@ -1,0 +1,62 @@
+/* CSS should be generally avoided as the Design System should make layout and accessability decisions. 
+However in this case, because of the use of components that are not directly from the DS, 
+we need to use CSS to layout the page correctly */
+
+#map { 
+  height: 50vh; 
+  width: 100%;
+  max-width: 46vw;
+
+  /* Allow the map to be resized (must be refreshed in js) */
+  resize: both;
+  overflow: hidden;
+
+  /* Add design system approved border around map */
+  --r: 0.75em;
+  --bw: 0.225em;
+  border-radius: var(--r);
+  box-shadow: 0 0 0 var(--bw) #707071; 
+
+  /* Add space below map */
+  margin-bottom: 1em;
+}
+
+.coords {
+  position: fixed; bottom: 12px; left: 12px;
+  background: rgba(255,255,255,0.9); padding: 8px 10px; border-radius: 8px;
+  font-family: system-ui, sans-serif; font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#pageContentContainer{
+  width: 100%;
+  display: flex;
+  justify-content: center;  
+  align-items: flex-start; 
+}
+
+#mapAndResultsContainer {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 10em; 
+}
+
+#mapAndResultsContainer > * {
+  flex: 1;
+  max-width: 50%;
+  box-sizing: border-box;
+}
+
+#centeredContainer {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#mapContainer {
+  width: 50%;
+  height: 50%;
+}
+

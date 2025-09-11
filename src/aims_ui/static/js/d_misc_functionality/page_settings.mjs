@@ -99,6 +99,7 @@ function setupAdditionalRequestStatus() {
 
   const matchTypeCheckbox = document.querySelector('#match_type');
   const recomCodeCheckbox = document.querySelector('#recommendation_code');
+  const tokenisedCheckbox = document.querySelector('#tokenised_output');
 
   if (current_status.match_type === 'true') {
     matchTypeCheckbox.checked = true;
@@ -106,11 +107,15 @@ function setupAdditionalRequestStatus() {
   if (current_status.recommendation_code === 'true') {
     recomCodeCheckbox.checked = true;
   }
+  if (current_status.tokenised_output === 'true') {
+    tokenisedCheckbox.checked = true;
+  }
 }
 
 function setupAdditionalRequestListeners() {
   const matchTypeCheckbox = document.querySelector('#match_type');
   const recomCodeCheckbox = document.querySelector('#recommendation_code');
+  const tokenisedCheckbox = document.querySelector('#tokenised_output');
 
   matchTypeCheckbox.addEventListener('change', (e) => {
     const currentSettings = getAdditionalRequestStatus();
@@ -123,6 +128,13 @@ function setupAdditionalRequestListeners() {
     const currentSettings = getAdditionalRequestStatus();
     const recomCodeStatus = recomCodeCheckbox.checked;
     currentSettings.recommendation_code = recomCodeStatus.toString();
+    setAdditionalRequestStatus(currentSettings);
+  });
+
+  tokenisedCheckbox.addEventListener('change', (e) => {
+    const currentSettings = getAdditionalRequestStatus();
+    const tokenisedStatus = tokenisedCheckbox.checked;
+    currentSettings.tokenised_output = tokenisedStatus.toString();
     setAdditionalRequestStatus(currentSettings);
   });
 }

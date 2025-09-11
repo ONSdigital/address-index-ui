@@ -19,7 +19,7 @@ def get_addresses(json_response,
     ]
 
   elif (called_from == 'postcode') or (called_from == 'singlesearch') or (
-      called_from == 'custom_response'):
+      called_from == 'custom_response') or (called_from == 'radiussearch'):
     response = (json_response.get('response'))
     address_json = response.get('addresses')
 
