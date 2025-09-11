@@ -33,21 +33,42 @@ function createUprnResponseContent() {
   return uprnResponseContainer;
 }
 
-function getUprnSearchAndUprnResultsContainer(inputContainer) {
-  const uprnContainer = inputContainer.querySelector('#complete-container-for-uprn');
-  const uprnResultsContainer = inputContainer.querySelector('#complete-container-for-uprnLookupPanel');
-  // Make the panel invisible intially so that it's not implied a user MUST enter a UPRN
-  uprnResultsContainer.classList.add('invisible');
+function createUprnInfoAndErrorContainer(inputContainer) {
+  // First get a handle on info and error panels
+  const uprnResultsContainerInfo = inputContainer.querySelector('#complete-container-for-uprnLookupPanelInfo');
+  const uprnResultsContainerError = inputContainer.querySelector('#complete-container-for-uprnLookupPanelError');
+
+  // Make both invisible to begin with
+  uprnResultsContainerError.classList.add('invisible');
+  uprnResultsContainerInfo.classList.add('invisible');
 
   // Get the inside of the info panel
-  const insideResultsContainer = uprnResultsContainer.querySelector('.ons-panel__body');
+  const internalStructureForBoth = createUprnResponseContent();
+  const insideError = uprnResultsContainerInfo.querySelector('.ons-panel__body');
+  const insideInfo = uprnResultsContainerError.querySelector('.ons-panel__body');
 
-  // Add content to the results container
-  const uprnResultsContent = createUprnResponseContent();
-  insideResultsContainer.append(uprnResultsContent);
+  // Remove the "list" element inside the error panel only
+  const errorList = uprnResultsContainerError.querySelector('#error-list-for-uprnLookupPanelError');
+  if (errorList) { errorList.remove(); }
+
+  // Add the strucutre for both
+  insideError.append(internalStructureForBoth);
+  insideInfo.append(internalStructureForBoth.cloneNode(true));
+
+  // Container for the info and error panel
+  const uprnInfoAndErrorContainer = crEl('div', 'uprn-info-and-error-panel-container');
+  uprnInfoAndErrorContainer.append(uprnResultsContainerInfo, uprnResultsContainerError);
+
+  return uprnInfoAndErrorContainer;
+}
+
+function getUprnSearchAndUprnResultsContainer(inputContainer) {
+  // The search input and button for UPRN
+  const uprnContainer = inputContainer.querySelector('#complete-container-for-uprn');
+  const uprnInfoAndErrorContainer = createUprnInfoAndErrorContainer(inputContainer);
 
   const uprnSearchAndResultsContainer = crEl('div', 'uprn-search-and-results-container', ['left-right-fifty-fifty']);
-  uprnSearchAndResultsContainer.append(uprnContainer, uprnResultsContainer);
+  uprnSearchAndResultsContainer.append(uprnContainer, uprnInfoAndErrorContainer);
 
   return uprnSearchAndResultsContainer;
 }

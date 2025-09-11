@@ -1,28 +1,51 @@
 // JS to manage a clientside UPRN lookup to auto-fill lat/lon fields
 import { updateLatLongSearchValues } from "./interactive_map.mjs";
 
+function makeUprnErrorPanelVisible() {
+  // Make the error panel visible
+  const containerForUprnLookupPanelError = document.querySelector('#complete-container-for-uprnLookupPanelError');
+  containerForUprnLookupPanelError.classList.remove('invisible');
+
+  // Now make the info panel invisible
+  const containerForUprnLookupPanelInfo = document.querySelector('#complete-container-for-uprnLookupPanelInfo');
+  containerForUprnLookupPanelInfo.classList.add('invisible');
+}
+
+function makeUprnInfoPanelVisible() {
+  // Make the info panel visible
+  const containerForUprnLookupPanelInfo = document.querySelector('#complete-container-for-uprnLookupPanelInfo');
+  containerForUprnLookupPanelInfo.classList.remove('invisible');
+
+  // Now make the error panel invisible
+  const containerForUprnLookupPanelError = document.querySelector('#complete-container-for-uprnLookupPanelError');
+  containerForUprnLookupPanelError.classList.add('invisible');
+}
+
 function updateUprnResponse(title, ln1 = '', ln2 = '', uprn = '') {  
-  const containerForUprnLookupPanel = document.querySelector('#complete-container-for-uprnLookupPanel');
-  const uprnTitle = document.querySelector('#uprn-lookup-results-title');
-  const uprnInfoLn1 = document.querySelector('#uprn-lookup-results-info-ln1');
-  const uprnInfoLn2 = document.querySelector('#uprn-lookup-results-info-ln2');
-  uprnTitle.textContent = title;
-  uprnInfoLn1.textContent = ln1;
-  uprnInfoLn2.textContent = ln2;
+  const infoContainer = document.querySelector('#complete-container-for-uprnLookupPanelInfo');
+  const errorContainer = document.querySelector('#complete-container-for-uprnLookupPanelError');
 
-  if (uprn) {
-    const uprnLink = document.createElement('a');
-    uprnLink.href = '/address_info/' + uprn;
-    uprnLink.textContent = 'View Details';
-    uprnInfoLn2.append(uprnLink);
+  for (const container of [infoContainer, errorContainer]) {
+    // Update both container to the full response
+    const uprnTitle = container.querySelector('#uprn-lookup-results-title');
+    const uprnInfoLn1 = container.querySelector('#uprn-lookup-results-info-ln1');
+    const uprnInfoLn2 = container.querySelector('#uprn-lookup-results-info-ln2');
+    uprnTitle.textContent = title;
+    uprnInfoLn1.textContent = ln1;
+    uprnInfoLn2.textContent = ln2;
+
+    if (uprn) {
+      const uprnLink = document.createElement('a');
+      uprnLink.href = '/address_info/' + uprn;
+      uprnLink.textContent = 'View Details';
+      uprnInfoLn2.append(uprnLink);
+    }
   }
-
-  // Make the panel visible now we have results
-  containerForUprnLookupPanel.classList.remove('invisible');
 }
 
 function updateResponseWithError(errorTitle, errorMessage) {
   updateUprnResponse(errorTitle, errorMessage);
+  makeUprnErrorPanelVisible();
 }
 
 function updateResponseWithAddressDetails(response) {
@@ -33,6 +56,7 @@ function updateResponseWithAddressDetails(response) {
   const nameOfAddress = addressDetails?.formattedAddress || 'No formatted address found';
   const uprn = addressDetails?.uprn ? addressDetails.uprn : 'No UPRN provided';
   updateUprnResponse('Address Matched:', nameOfAddress, '', uprn);
+  makeUprnInfoPanelVisible();
 }
 
 function handleUprnErrorFromResponse(response) {
@@ -49,7 +73,6 @@ function handleUprnErrorWithMessage(title, description) {
   console.error(title, description);
   updateResponseWithError(title, description);
 }
-
 
 async function searchForUprn() {
   const uprnInput = document.querySelector('#uprn');

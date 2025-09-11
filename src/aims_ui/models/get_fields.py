@@ -520,10 +520,17 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             description=
             'Enter the search input (e.g. "14 Acacia Avenue, Ruislip, HA4 8RG").'
         ),
+        # Create both panels here and use JS later to switch between them
         Field(
-            'uprnLookupPanel',
+            'uprnLookupPanelInfo',
             search_type='panel',
             display_title='UPRN Lookup',
+            description='',
+        ),
+        Field(
+            'uprnLookupPanelError',
+            search_type='error_panel',
+            display_title='Error',
             description='',
         ),
         common_fields['classification'],
