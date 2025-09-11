@@ -55,7 +55,7 @@ USER_GROUPS = [
         'name': 'default',  # UNSPECIFIED USERS WILL BE IN THIS GROUP
         'description': 'Users that do not fall into another group will be part of this group',
         'usernames': USER_AUTHS.get('default', []),
-        'pages_to_remove': ['custom_response'],
+        'pages_to_remove': ['custom_response', 'radiussearch'],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },
     {
