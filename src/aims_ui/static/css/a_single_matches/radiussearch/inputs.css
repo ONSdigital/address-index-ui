@@ -51,7 +51,7 @@ matches the map (currently there is no design system component for this */
   padding: 1em;
 }
 
-#complete-container-for-uprnLookupPanel {
+#uprn-info-and-error-panel-container {
   margin-top: 0.6em;
 }
 
