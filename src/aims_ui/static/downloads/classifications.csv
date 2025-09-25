@@ -562,3 +562,19 @@ ZW99MT,Minster,Z,W,99,MT,Object of Interest,Place Of Worship,,Minster
 ZW99SU,Stupa,Z,W,99,SU,Object of Interest,Place Of Worship,,Stupa
 ZW99SY,Synagogue,Z,W,99,SY,Object of Interest,Place Of Worship,,Synagogue
 ZW99TP,Temple,Z,W,99,TP,Object of Interest,Place Of Worship,,Temple
+CM06	Pharmacy
+CR02EV	Electric Car Charging Station
+CR06BA	Bar
+CR06NC	Nightclub
+CR06PH	Public House
+CR08CS	Convenience Store
+CR08SM	Supermarket
+CR09BS	Betting Shop
+CR09OL	Off-licence
+CT11CA	Road Bridge Over Canal
+CT11MU	Road Bridge Over Multiple
+CT11NN	Road Bridge Over No Network
+CT11PA	Road Bridge Over Path
+CT11RA	Road Bridge Over Railway
+CT11RO	Road Bridge Over Road
+CT11WA	Road Bridge Over Water
