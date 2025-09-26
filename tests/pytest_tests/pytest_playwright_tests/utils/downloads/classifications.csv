@@ -180,6 +180,7 @@ CM03HP,Hospital,C,M,3,HP,Commercial,Medical,Hospital / Hospice,Hospital
 CM04,Medical / Testing / Research Laboratory,C,M,4,,Commercial,Medical,Medical / Testing / Research Laboratory,
 CM05,Professional Medical Service,C,M,5,,Commercial,Medical,Professional Medical Service,
 CM05ZS,Assessment / Development Services,C,M,5,ZS,Commercial,Medical,Professional Medical Service,Assessment / Development Services
+CM06,Pharmacy,C,M,6,,Commercial,Medical,Pharmacy,
 CN,Animal Centre,C,N,,,Commercial,Animal Centre,,
 CN01,Cattery / Kennel,C,N,1,,Commercial,Animal Centre,Cattery / Kennel,
 CN02,Animal Services,C,N,2,,Commercial,Animal Centre,Animal Services,
@@ -201,6 +202,7 @@ CO02,Broadcasting (TV / Radio),C,O,2,,Commercial,Office,Broadcasting (TV / Radio
 CR,Retail,C,R,,,Commercial,Retail,,
 CR01,Bank / Financial Service,C,R,1,,Commercial,Retail,Bank / Financial Service,
 CR02,Retail Service Agent,C,R,2,,Commercial,Retail,Retail Service Agent,
+CR02EV,Electric Car Charging Station,C,R,2,EV,Commercial,Retail,Retail Service Agent,Electric Car Charging Station
 CR02PO,Post Office,C,R,2,PO,Commercial,Retail,Retail Service Agent,Post Office
 CR04,Market (Indoor / Outdoor),C,R,4,,Commercial,Retail,Market (Indoor / Outdoor),
 CR04FK,Fish Market,C,R,4,FK,Commercial,Retail,Market (Indoor / Outdoor),Fish Market
@@ -208,10 +210,17 @@ CR04FV,Fruit / Vegetable Market,C,R,4,FV,Commercial,Retail,Market (Indoor / Outd
 CR04LV,Livestock Market,C,R,4,LV,Commercial,Retail,Market (Indoor / Outdoor),Livestock Market
 CR05,Petrol Filling Station,C,R,5,,Commercial,Retail,Petrol Filling Station,
 CR06,Public House / Bar / Nightclub,C,R,6,,Commercial,Retail,Public House / Bar / Nightclub,
+CR06BA,Bar,C,R,6,,Commercial,Retail,Public House / Bar / Nightclub,Bar
+CR06NC,Nightclub,C,R,6,,Commercial,Retail,Public House / Bar / Nightclub,Nightclub
+CR06PH,Public House,C,R,6,,Commercial,Retail,Public House / Bar / Nightclub,Public House
 CR07,Restaurant / Cafeteria,C,R,7,,Commercial,Retail,Restaurant / Cafeteria,
 CR08,Shop / Showroom,C,R,8,,Commercial,Retail,Shop / Showroom,
+CR08CS,Convenience Store,C,R,8,CS,Commercial,Retail,Shop / Showroom,Convenience Store
 CR08GC,Garden Centre,C,R,8,GC,Commercial,Retail,Shop / Showroom,Garden Centre
+CR08SM,Supermarket,C,R,8,SM,Commercial,Retail,Shop / Showroom,Supermarket
 CR09,Other Licensed Premise / Vendor,C,R,9,,Commercial,Retail,Other Licensed Premise / Vendor,
+CR09BS,Betting Shop,C,R,9,BS,Commercial,Retail,Other Licensed Premise / Vendor,Betting Shop
+CR09OL,Off-licence,C,R,9,OL,Commercial,Retail,Other Licensed Premise / Vendor,Off-licence
 CR10,Fast Food Outlet / Takeaway (Hot / Cold),C,R,10,,Commercial,Retail,Fast Food Outlet / Takeaway (Hot / Cold),
 CR11,Automated Teller Machine (ATM),C,R,11,,Commercial,Retail,Automated Teller Machine (ATM),
 CS,Storage Land,C,S,,,Commercial,Storage Land,,
@@ -252,7 +261,14 @@ CT10BG,Boat Storage,C,T,10,BG,Commercial,Transport,Vehicle Storage,Boat Storage
 CT10BU,Bus / Coach Depot,C,T,10,BU,Commercial,Transport,Vehicle Storage,Bus / Coach Depot
 CT11,Transport Related Infrastructure,C,T,11,,Commercial,Transport,Transport Related Infrastructure,
 CT11AD,Aqueduct,C,T,11,AD,Commercial,Transport,Transport Related Infrastructure,Aqueduct
+CT11CA,Road Bridge Over Canal,C,T,11,CA,Commercial,Transport,Transport Related Infrastructure,Road Bridge Over Canal
 CT11LK,Lock,C,T,11,LK,Commercial,Transport,Transport Related Infrastructure,Lock
+CT11MU,Road Bridge Over Multiple,C,T,11,MU,Commercial,Transport,Transport Related Infrastructure,Road Bridge Over Multiple
+CT11NN,Road Bridge Over No Network,C,T,11,MN,Commercial,Transport,Transport Related Infrastructure,Road Bridge Over No Network
+CT11PA,Road Bridge Over Path,C,T,11,PA,Commercial,Transport,Transport Related Infrastructure,Road Bridge Over Path
+CT11RA,Road Bridge Over Railway,C,T,11,RA,Commercial,Transport,Transport Related Infrastructure,Road Bridge Over Railway
+CT11RO,Road Bridge Over Road,C,T,11,RO,Commercial,Transport,Transport Related Infrastructure,Road Bridge Over Road
+CT11WA,Road Bridge Over Water,C,T,11,WA,Commercial,Transport,Transport Related Infrastructure,Road Bridge Over Water
 CT11WE,Weir,C,T,11,WE,Commercial,Transport,Transport Related Infrastructure,Weir
 CT11WG,Weighbridge / Load Gauge,C,T,11,WG,Commercial,Transport,Transport Related Infrastructure,Weighbridge / Load Gauge
 CT12,Overnight Lorry Park,C,T,12,,Commercial,Transport,Overnight Lorry Park,
