@@ -59,3 +59,16 @@ matches the map (currently there is no design system component for this */
   display: flex;
   justify-content: flex-end;
 }
+
+/* Make the dropdown for any typeahead component float absolutely */
+.absolute-floating-dropdown {
+  position: absolute;
+  top: 100%; /* Position directly below the input */
+  left: 0;
+  z-index: 1000; /* Ensure it's above other elements */
+  width: 100%; 
+  max-height: 20em; /* Constrain dropdown height */
+  overflow-y: auto;
+  background: white; /* Ensure it's not transparent */
+}
+

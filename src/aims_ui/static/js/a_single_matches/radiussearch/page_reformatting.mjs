@@ -96,9 +96,43 @@ function getLatLonUprnContainer(inputContainer) {
   return latLonUprnContainer;
 }
 
+// We want to make the dropdown elements visible above other elements
+//   however just doing that means it's visible even when users aren't entering text
+//  so we need to add event listeners to the inputs to add/remove the floating dropdown class
+function setupDropdownListeners(classificationContainer) {
+  // Get a handle on the input element (the only one inside the classification container)
+  const classificationInput = classificationContainer.querySelector('input');
+
+  // Get a handle on the results dropdown
+  const classificationDropdownSuggesgions = classificationContainer.querySelector('.ons-autosuggest__results');
+
+  // On focus, add the floating class
+  classificationInput.addEventListener('focus', () => {
+    classificationDropdownSuggesgions.classList.add('absolute-floating-dropdown');
+  });
+
+  // On loss of focus, remove the floating class
+  classificationInput.addEventListener('blur', () => {
+    // Timeout to allow click events to register
+    setTimeout(() => {
+      classificationDropdownSuggesgions.classList.remove('absolute-floating-dropdown');
+    }, 200);
+  });
+
+}
+
+
+function getCompleteClassificationContainerWithIDs(inputContainer) {
+  const classificationContainer = inputContainer.querySelector('#complete-container-for-classificationfilter');
+  setupDropdownListeners(inputContainer);
+
+  return classificationContainer;
+}
+
 function getRangeClassificationContainer(inputContainer) {
   const rangeContainer = inputContainer.querySelector('#complete-container-for-rangekm');
-  const classificationContainer = inputContainer.querySelector('#complete-container-for-classificationfilter');
+  // Add IDs to the classification component so we can style it
+  const classificationContainer = getCompleteClassificationContainerWithIDs(inputContainer);
 
   // Create a new container 50/50 left right
   const rangeClassificationContainer = crEl('div', 'range-classification-container', ['left-right-fifty-fifty']);
