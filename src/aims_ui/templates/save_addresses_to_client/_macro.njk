@@ -1,7 +1,10 @@
 {% macro customAddressInfo(params) %}
-{% from 'components/label/_macro.njk' import onsLabel %}
-{% from 'custom_clerical_data/_macro.njk' import customClericalData %}
-{% from "components/table/_macro.njk" import onsTable %}
+
+{# This macro is designed only to save the address information to local storage, not generate components #}
+
+
+
+
 
 {% if params.compressed_view == True %}
   {# Compressed view only includes the name, geo and "distance" for the radius search page #}

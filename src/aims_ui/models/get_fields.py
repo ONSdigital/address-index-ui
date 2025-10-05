@@ -508,7 +508,6 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             display_title='Range (km)',
             classes='ons-input--w-50 nocache',
             required=True,
-            previous_value='5',
             description=
             'Radius (in km) around the location to search within (e.g. "100").'
         ),
