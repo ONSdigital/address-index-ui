@@ -1,5 +1,6 @@
 import { getGlobalValues } from "../f_helpers/local_storage_page_helpers.mjs";
 import { restoreConfidenceScoreAndUnderlyingScore } from "./populate_confidence_scores.mjs";
+import { changeParentUprnToLink } from "./parent_uprn_restore.mjs";
 
 function updateConfidenceScores() {
   // Get the most recent addresses from local storage, default to blank array if undefined
@@ -7,6 +8,7 @@ function updateConfidenceScores() {
 
   restoreConfidenceScoreAndUnderlyingScore(mostRecentlySearchedAddresses);
 
+  changeParentUprnToLink(mostRecentlySearchedAddresses);
 }
 
 function init() {
