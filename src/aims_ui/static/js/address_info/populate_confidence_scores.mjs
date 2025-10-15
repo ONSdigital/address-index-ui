@@ -1,3 +1,62 @@
+export function restoreConfidenceScoreAndUnderlyingScore(mostRecentlySearchedAddresses) {
+  // Get the confidence score to put in the table
+  const currentAddress = getCurrentAddress(mostRecentlySearchedAddresses);
+  const confidenceScore = currentAddress.confidenceScore;
+  const underlyingScore = currentAddress.underlyingScore;
+
+  updateOverviewTableFormattedConfidenceScore(confidenceScore);
+  updateClericalDataTableWithFormattedConfidenceScoreAndUnderlyingScore(confidenceScore, underlyingScore);
+
+};
+
+function getCurrentUprn() {
+  // Get the UPRN from the URL (... /address_info/1234567890123)
+  const urlParts = window.location.pathname.split('/');
+  const uprn = urlParts[urlParts.length - 1];
+
+  return uprn;
+}
+
+// Get the address json for the UPRN in the URL
+function getCurrentAddress(mostRecentlySearchedAddresses) {
+  const uprn = getCurrentUprn();
+
+  for (const address of mostRecentlySearchedAddresses) {
+    if (String(address.uprn) === String(uprn)) {
+      return address;
+    } 
+  }
+}
+
+function updateOverviewTableFormattedConfidenceScore(confidenceScore) {
+  // Get a handle on the overview table
+  const overviewTable = document.querySelector('#overviewTable');
+
+  const confidenceScoreLabelCell = getCellFromTable(overviewTable, 'formatted_confidence_score');
+  const confidenceScoreValueCell = confidenceScoreLabelCell.nextElementSibling;
+
+  const newConScoreValue = Math.round(confidenceScore * 100) / 100
+  confidenceScoreValueCell.textContent = String(newConScoreValue) + '% Match';
+}
+
+function updateClericalDataTableWithFormattedConfidenceScoreAndUnderlyingScore(confidenceScore, underlyingScore) {
+  // Populate the "Clerical Data" table for confidence and underlying score
+  const clericalDataTable = document.querySelector('#clerical-data-table');
+
+  const confidenceScoreValueCellClericalData = getCellFromTable(clericalDataTable, 'confidence_score');
+  const underlyingScoreValueCellClericalData = getCellFromTable(clericalDataTable, 'underlying_score');
+
+  // Get parent Rows
+  const conScoreClericalData          = confidenceScoreValueCellClericalData.parentNode; 
+  const underlyingScoreClericalData   = underlyingScoreValueCellClericalData.parentNode; 
+
+  const conScoreClericalDataCell        = getSecondCell(conScoreClericalData);
+  const underlyingScoreClericalDataCell = getSecondCell(underlyingScoreClericalData);
+
+  // Replace the cells with the text provided
+  conScoreClericalDataCell.textContent = confidenceScore;
+  underlyingScoreClericalDataCell.textContent = underlyingScore;
+}
 
 function getCellFromTable(table, rowText) {
   const rows = table.getElementsByTagName('tr');
@@ -20,58 +79,3 @@ function getSecondCell(row) {
     return null;
   }
 }
-
-// This function will need updating when all values go through the "Global" local storage attribute
-function getConfidenceList() {
-  const defaultConfidence = [];
-  const confidenceScores = localStorage.getItem('confidenceScores');
-  if (confidenceScores) {
-    return JSON.parse(confidenceScores);
-  } else {
-    localStorage.setItem('confidenceScores', JSON.stringify(defaultConfidence));
-  return [];
-  }
-}
-
-export function replaceOverviewTableConfidenceScoreValues() {
-  const overviewTable = document.querySelector('#overviewTable');
-
-  const confidenceScoreLabelCell = getCellFromTable(overviewTable, 'formatted_confidence_score');
-  const confidenceScoreValueCell = confidenceScoreLabelCell.nextElementSibling;
-
-  const uprnCellLabel = getCellFromTable(overviewTable, 'uprn');
-  const uprnRow = uprnCellLabel.parentNode;
-  const uprnCell = getSecondCell(uprnRow);
-  const uprn = uprnCell.textContent;
-
-  // Populate the "Important information" overview table 
-  const confidenceList = getConfidenceList();
-  for (const score of confidenceList) {
-    if (String(score.uprn) === String(uprn)) {
-      const newConScoreValue = Math.round(score.confidenceScore * 100) / 100
-      confidenceScoreValueCell.textContent = String(newConScoreValue) + '% Match';
-    }
-  }
-
-  // Populate the "Clerical Data" table for confidence and underlying score
-  const clericalDataTable = document.querySelector('#clerical-data-table');
-
-  const confidenceScoreValueCellClericalData = getCellFromTable(clericalDataTable, 'confidence_score');
-  const underlyingScoreValueCellClericalData = getCellFromTable(clericalDataTable, 'underlying_score');
-
-  // Get parent Rows
-  const conScoreClericalData          = confidenceScoreValueCellClericalData.parentNode; 
-  const underlyingScoreClericalData   = underlyingScoreValueCellClericalData.parentNode; 
-
-  const conScoreClericalDataCell        = getSecondCell(conScoreClericalData);
-  const underlyingScoreClericalDataCell = getSecondCell(underlyingScoreClericalData);
-
-  for (const score of confidenceList) {
-    if (String(score.uprn) === String(uprn)) {
-      conScoreClericalDataCell.textContent = score.confidenceScore;
-      underlyingScoreClericalDataCell.textContent = score.underlyingScore;
-    }
-  }
-
-};
-
