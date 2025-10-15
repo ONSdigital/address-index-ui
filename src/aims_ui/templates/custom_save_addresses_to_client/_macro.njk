@@ -27,6 +27,7 @@
         latitude: {{ address.geo.value.latitude  | tojson }},
         confidenceScore: {{ address.confidence_score.value | tojson }},
         underlyingScore: {{ address.underlying_score.value | tojson }},
+        parentUprn: {{ address.parent_uprn.value | tojson }},
       });
     {% endfor %}
 

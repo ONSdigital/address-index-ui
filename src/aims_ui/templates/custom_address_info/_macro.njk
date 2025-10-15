@@ -41,55 +41,6 @@
   {# Script that will populate the "Distance" value #}
   <script type=module src="static/js/macros/custom_address_info/distance_calculator.mjs"></script>
 
-  {# Add the addresses matched into localStorage so they can be accessed by js elsewhere #}
-  {# Only Run this script if it's a results page (i.e there are new results!) #}
-  {% if params.results_page == True %}
-    <script type="module">
-      import { getPageLocalValues, setPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
-
-      const matchedAddresses = []
-      function addAddressToLargeList(addressInfo) {
-        // Given a single address, add it to the array of addresses in js
-        matchedAddresses.push(addressInfo);
-      }
-
-      {% for address in params.matched_addresses %}
-        addAddressToLargeList({
-          uprn: {{ address.uprn.value | tojson }},
-          name: {{ address.formatted_address.value | tojson }},
-          longitude: {{ address.geo.value.longitude | tojson }},
-          latitude: {{ address.geo.value.latitude  | tojson }},
-          confidenceScore: {{ address.confidence_score.value | tojson }},
-          underlyingScore: {{ address.underlying_score.value | tojson }},
-        });
-      {% endfor %}
-
-      setPageLocalValues('radiussearch', {radiusSearchMostRecentAddresses: matchedAddresses} )
-
-      // Temporarily - until entire file is upgraded to use the new local storage method
-      // Add the uprn and confidence score to the "confidenceScores" local storage
-
-      let confidenceScoreList = []
-
-      function addConfidencePairList(address) {
-        // Add to the confidenceScoreList
-        const justUprnAndConfidenceScores = {
-            uprn: address.uprn,
-            confidenceScore: address.confidenceScore,
-            underlyingSCore: address.underlyingScore,
-          }
-        confidenceScoreList.push(justUprnAndConfidenceScores);
-      }
-
-      for (const address of matchedAddresses) {
-        addConfidencePairList(address);
-      }
-
-      localStorage.setItem('confidenceScores', JSON.stringify(confidenceScoreList));
-
-    </script>
-  {% endif %}
-  
 {% else %}
   {# Add the smaller cards, used on the overview when a search is done #}
   {% for address in params.matched_addresses %}

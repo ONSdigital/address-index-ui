@@ -244,7 +244,7 @@ function getMatchedAddressesFromLocalStorage() {
   const localPageValues = getPageLocalValues('radiussearch');
 
   // Default to an empty array if not found
-  const addresses = localPageValues.radiusSearchMostRecentAddresses || [];
+  const addresses = localPageValues.mostRecentlySearchedAddresses || [];
   return addresses;
 }
 

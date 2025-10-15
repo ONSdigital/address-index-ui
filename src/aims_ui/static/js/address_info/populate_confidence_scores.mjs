@@ -1,3 +1,5 @@
+import { getCellFromTable, getCurrentAddress } from '/static/js/address_info/helpers.mjs';
+
 export function restoreConfidenceScoreAndUnderlyingScore(mostRecentlySearchedAddresses) {
   // Get the confidence score to put in the table
   const currentAddress = getCurrentAddress(mostRecentlySearchedAddresses);
@@ -8,25 +10,6 @@ export function restoreConfidenceScoreAndUnderlyingScore(mostRecentlySearchedAdd
   updateClericalDataTableWithFormattedConfidenceScoreAndUnderlyingScore(confidenceScore, underlyingScore);
 
 };
-
-function getCurrentUprn() {
-  // Get the UPRN from the URL (... /address_info/1234567890123)
-  const urlParts = window.location.pathname.split('/');
-  const uprn = urlParts[urlParts.length - 1];
-
-  return uprn;
-}
-
-// Get the address json for the UPRN in the URL
-function getCurrentAddress(mostRecentlySearchedAddresses) {
-  const uprn = getCurrentUprn();
-
-  for (const address of mostRecentlySearchedAddresses) {
-    if (String(address.uprn) === String(uprn)) {
-      return address;
-    } 
-  }
-}
 
 function updateOverviewTableFormattedConfidenceScore(confidenceScore) {
   // Get a handle on the overview table
@@ -58,18 +41,7 @@ function updateClericalDataTableWithFormattedConfidenceScoreAndUnderlyingScore(c
   underlyingScoreClericalDataCell.textContent = underlyingScore;
 }
 
-function getCellFromTable(table, rowText) {
-  const rows = table.getElementsByTagName('tr');
-  for (let i = 0; i < rows.length; i++) {
-    const cells = rows[i].getElementsByTagName('td');
-    for (let j = 0; j < cells.length; j++) {
-      if ( String(cells[j].textContent).includes(rowText) ) {
-        return cells[j];
-      }
-    }
-  }
-  return null;
-}
+
 
 function getSecondCell(row) {
   const cells = row.querySelectorAll('td');
