@@ -1,11 +1,13 @@
 {% extends './aims_ui_pages/0-base_page_settings.html' %}
 
 {% from "components/input/_macro.njk" import onsInput %}
-{% from 'custom_search/_macro.njk' import customSearch %}
 {% from "components/address-input/_macro.njk" import onsAddressInput %}
-{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
 {% from "components/button/_macro.njk" import onsButton %}
 {% from "components/panel/_macro.njk" import onsPanel %}
+
+{% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
+{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+{% from 'custom_search/_macro.njk' import customSearch %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -79,13 +81,21 @@
 	}) }}
 
 {# Add Results under the Typeahead #}
-	{% if results_page %}
-	<h2>We matched {{matched_address_number}}  addresses:</h2>
-	{% endif %}
+{% if results_page %}
+  <h2>We matched {{matched_address_number}}  addresses:</h2>
 
-	{{ customAddressInfo ({
-		'matched_addresses': matched_addresses,
-		}) }}
+  {# Save the results to local storage on the clientside #}
+  {{ customSaveAddressesToClient({
+    "matched_addresses": matched_addresses,
+    "page_name": page_name,
+  }) }}
+
+
+{% endif %}
+
+{{ customAddressInfo ({
+  'matched_addresses': matched_addresses,
+  }) }}
 
 
 </div>

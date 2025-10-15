@@ -36,6 +36,7 @@ def radiussearch():
     delete_input(session)
     return render_template(
         page_location,
+        page_name=page_name,
         beta_banner=True,
         searchable_fields=searchable_fields,
         endpoints=endpoints,
@@ -85,6 +86,7 @@ def radiussearch():
 
   return render_template(
       page_location,
+      page_name=page_name,
       endpoints=endpoints,
       beta_banner=True,
       searchable_fields=searchable_fields,

@@ -30,6 +30,7 @@ def singlesearch():
     delete_input(session)
     return render_template(
         page_location,
+        page_name=page_name,
         searchable_fields=searchable_fields,
         endpoints=endpoints,
     )
@@ -87,6 +88,7 @@ def singlesearch():
 
   return render_template(
       page_location,
+      page_name=page_name,
       endpoints=endpoints,
       searchable_fields=searchable_fields,
       results_page=True,
