@@ -9,6 +9,7 @@
 {% from 'custom_search/_macro.njk' import customSearch %}
 {% from 'custom_address_info/_macro.njk' import customAddressInfo %}
 {% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
+{% from 'custom_we_matched_message/_macro.njk' import weMatchedAddressPreamble %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -74,8 +75,13 @@
 					}) }}
 					<br>
 					<br>
-					<h2>We matched {{matched_address_number}}  addresses:</h2>
-				{% endif %}
+
+  			{% endif %}
+
+				{# Add the "We matched {X} addresses" #}
+				{{ weMatchedAddressPreamble({
+					"page_name": page_name,
+				}) }}
 
 				{{ customAddressInfo ({
 					'matched_addresses': matched_addresses,
