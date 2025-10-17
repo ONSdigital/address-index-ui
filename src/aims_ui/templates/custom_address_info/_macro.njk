@@ -35,7 +35,13 @@
 
   {# Script to populate the table above with previous results ONLY if it's not a results page #}
   {% if params.results_page != True %}
-    <script type=module src="static/js/macros/custom_address_info/load_previous_values.mjs"></script>
+    <script type="module">
+    import { loadPreviousValuesForCompressedTableView } from '/static/js/macros/custom_address_info/load_previous_values.mjs';
+
+    const page_name = '{{ params.page_name }}';
+    loadPreviousValuesForCompressedTableView(page_name);
+    </script>
+
   {% endif %}
 
   {# Script that will populate the "Distance" value #}
