@@ -31,7 +31,6 @@ function setupMapSpecificItems() {
 }
 
 function setupPageSpecificItems() {
-
   // Take the generated Design System components and arrange them horizontally
   setupHorizontalInputs();
 
