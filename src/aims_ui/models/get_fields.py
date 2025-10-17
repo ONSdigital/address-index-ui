@@ -151,8 +151,8 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
       ),
       'classification_help_download':
       Field(
-          'None',
-          display_title='List of Classifications',
+          'classification-download-label',
+          display_title='Download a list of classifications',
           description=
           'This file contains a list of classifications, explained in a universaly recognised "easy to read" csv format.',
           search_type='download',
@@ -533,6 +533,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             description='',
         ),
         common_fields['classification'],
+        common_fields['classification_help_download'],
         common_fields['limit'],
     ])
   elif endpoint_name == 'singlesearch':
