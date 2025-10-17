@@ -3,6 +3,7 @@
 
 // Also uses the new storage layout and is toggleable through the settings page
 
+import { getDefaultValuesForPage } from './setup_defaults.mjs';
 import {
   getGlobalValues,
   getPageLocalValues,
@@ -126,6 +127,12 @@ function getPagePreviouslySearchedValues() {
   // Get the local values for this page
   const pageLocalValues = getPageLocalValues(page_name);
 
+  // Inject default values if the pagePreviouslySearchedValues doesn't exist
+  const defaultValuesForPage = getDefaultValuesForPage(page_name);
+  if (!pageLocalValues.pagePreviouslySearchedValues) {
+    pageLocalValues.pagePreviouslySearchedValues = defaultValuesForPage;
+  }
+
   // Extract the pagePreviouslySearchedValues, default to an empty object if none found
   return pageLocalValues.pagePreviouslySearchedValues || {};
 }
@@ -142,7 +149,7 @@ function init() {
 
   // Now get the page's local values (which actually contain what was last in inputs)
   // {'lat': '51.36935132147893', 'lon':'-2.3361860233264187', 'rangekm': '45'};
-  const pagePreviouslySearchedValues = getPagePreviouslySearchedValues();
+  const pagePreviouslySearchedValues = getPagePreviouslySearchedValues(page_name);
 
   // Load stored values given Ids affected (from global) as a list ['id1','id2']
   // and pagePreviouslySearchedValues (from pageLocalValues) as [{'htmlid':'value'}]
