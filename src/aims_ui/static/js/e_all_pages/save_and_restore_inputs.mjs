@@ -130,10 +130,12 @@ function getPagePreviouslySearchedValues() {
   // Inject default values if the pagePreviouslySearchedValues doesn't exist
   const defaultValuesForPage = getDefaultValuesForPage(page_name);
   if (!pageLocalValues.pagePreviouslySearchedValues) {
+    // If we have to setup the defaults, then we should also save them to local storage as the "previously searched values"
     pageLocalValues.pagePreviouslySearchedValues = defaultValuesForPage;
+    setPreviouslyStoredValuesForThisPage(pageLocalValues.pagePreviouslySearchedValues);
   }
 
-  // Extract the pagePreviouslySearchedValues, default to an empty object if none found
+  // Extract the pagePreviouslySearchedValues, default to an empty object if no defaults defined
   return pageLocalValues.pagePreviouslySearchedValues || {};
 }
 
