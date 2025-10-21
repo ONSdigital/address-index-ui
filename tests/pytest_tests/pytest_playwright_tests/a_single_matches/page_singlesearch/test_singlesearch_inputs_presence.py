@@ -78,7 +78,7 @@ def test_download_classification(page: Page):
 
   with page.expect_download() as download_info:
     page.get_by_text(
-        "Click here to download a list of classifications").click()
+        "Download a list of classifications").click()
 
   download = download_info.value
 
