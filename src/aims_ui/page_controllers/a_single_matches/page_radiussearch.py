@@ -60,6 +60,8 @@ def radiussearch():
   if limit_invalid:
     return page_error_annotation_single(page_name, user_input, limit_invalid)
 
+  print(all_user_input)
+  print('all the user inputs: ' + str(all_user_input))
   try:
     result = api(
         '/addresses',
