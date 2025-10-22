@@ -14,7 +14,7 @@ def check_reverse_classification(classification):
   to_return = classification
   for category in autosuggest_list:
     if classification == category.get('category'):
-      to_return = category.get('en') + '*'
+      to_return = category.get('en')
 
   # Standardise wildcard to all inputs except blank
   if classification == '':
