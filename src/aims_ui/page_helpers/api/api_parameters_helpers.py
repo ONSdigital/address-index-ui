@@ -35,6 +35,11 @@ def adjust_parameter_for_each_page(params, called_from_page_name):
     if not params.get('input'):
       params['input'] = ''
   
+  if (called_from_page_name == 'singlesearch'):
+    # If the input is blank for a singlesearch, remove it completely so that the error is more appropriate
+    if not params.get('input'):
+      params.pop('input', None)
+
   return params
 
 def adjust_params_for_all_pages(params):
@@ -71,8 +76,6 @@ def adjust_params_for_all_pages(params):
 def cleanup_parameters(params, called_from_page_name):
   """ Remove empty parameters add others that might be required"""
 
-  print('Initial parameters: ' + str(params))
-
   # Adjustments for environment
   params = remove_epoch_in_testing_environment(params)
 
@@ -85,7 +88,6 @@ def cleanup_parameters(params, called_from_page_name):
   # Remove any params that the API won't recognise
   params = remove_non_existant_parameters(params) # DO THIS LAST
 
-  print('Cleaned up parameters: ' + str(params))
   return params
 
 
