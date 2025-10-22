@@ -87,7 +87,6 @@ function addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputEleme
     console.log('No suggestion container found for autosuggest component');
     return;
   }
-  console.log('Suggestion container found:', suggestionContainer);
 
   suggestionContainer.addEventListener('click', event => {
     const clickedEl = event.target.closest('li');
@@ -100,6 +99,21 @@ function addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputEleme
       console.log('Saved value from autosuggest:', textFromAutosuggest);
     } else {
       console.log('Clicked outside of a suggestion <li>');
+    }
+  });
+
+  // Add an event listener for keyboard selection (Enter key)
+  completeContainerForClassificationFilter.addEventListener('keydown', event => {
+    if (event.key === 'Enter') {
+      // The suggestion that is currently focused will have ons-autosuggest__option--focused
+      const focusedSuggesgion = suggestionContainer.querySelector('.ons-autosuggest__option--focused');
+      if (focusedSuggesgion) {
+        const textFromAutosuggest= removeMarkupFromInsideElement(focusedSuggesgion);
+
+        // Now save this value
+        saveValueOfInput(inputElement.id, textFromAutosuggest);
+        console.log('Saved value from autosuggest (keyboard):', textFromAutosuggest);
+      }
     }
   });
 }
