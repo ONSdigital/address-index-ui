@@ -16,7 +16,7 @@ function preventUprnButtonSubmittingForm() {
 
 function addListenersForEnterKeyToSubmitForm() {
   // Deffine all the input element ids that should submit the form when "Enter" is pressed
-  const inputIds = ['lat', 'lon', 'rangekm', 'classificationfilter', 'input', 'limit'];
+  const inputIds = ['lat', 'lon', 'rangekm', 'input', 'limit'];
 
   // Get the parent which contains all input elements
   const inputContainer = document.querySelector('#full-match-form-container');
