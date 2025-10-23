@@ -1,5 +1,5 @@
 import { replaceDistancePlaceholderWithSearchValues } from '/static/js/macros/custom_address_info/distance_calculator.mjs';
-import { makePinIcon } from '/static/js/a_single_matches/radiussearch/interactive_map_icons.mjs';
+import { makePinIcon } from '/static/js/a_single_matches/radiussearch/interactive_map/interactive_map_icons.mjs';
 import { getPageLocalValues, setPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
 const defaultStartValues = {
