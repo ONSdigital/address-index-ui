@@ -1,5 +1,5 @@
 // JS to manage a clientside UPRN lookup to auto-fill lat/lon fields
-import { updateLatLongSearchValues } from "./interactive_map.mjs";
+import { updateLatLongSearchValues } from "./interactive_map/interactive_map.mjs";
 
 function makeUprnErrorPanelVisible() {
   // Make the error panel visible
