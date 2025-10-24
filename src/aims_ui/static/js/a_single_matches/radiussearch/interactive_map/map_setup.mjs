@@ -1,11 +1,11 @@
 import { replaceDistancePlaceholderWithSearchValues } from '/static/js/macros/custom_address_info/distance_calculator.mjs';
 import { makePinIcon } from '/static/js/a_single_matches/radiussearch/interactive_map/map_pin_icons.mjs';
-import { setMapZoomInPageStorage, getCurrentSearchLatValue, getCurrentSearchLonValue, getStartLatValue, getStartLonValue, getStartZoomValue } from './input_and_stored_values.mjs';
+import { setMapZoomInPageStorage,  getCurrentSearchLatValue, getCurrentSearchLonValue, getStartLatValue, getStartLonValue, getStartZoomValue } from './input_and_stored_values.mjs';
 
 export const defaultStartValues = {
   // Lat and lon values for ONS HQ
-  'lat': 51.566322,
-  'lng': -3.0272245,
+  'lat': 50.73548,
+  'lng': -3.5332105,
   'zoom': 12,
 }
 
