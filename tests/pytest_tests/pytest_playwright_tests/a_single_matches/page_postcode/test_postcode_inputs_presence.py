@@ -2,11 +2,7 @@ import pytest
 from playwright.sync_api import Page, expect
 
 from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
-    BASE_URL,
-    EPOCH_OPTIONS,
-    get_page_url_from_page_name
-)
-
+    BASE_URL, EPOCH_OPTIONS, get_page_url_from_page_name)
 """ Check that expected inputs are present """
 
 page_name = 'postcode'
@@ -33,10 +29,8 @@ def test_classification_download(page: Page):
   page.goto(page_url)
 
   # Check that a link with the href x is visible
-  expect(
-      page.locator('a',
-                   has_text="Download a list of classifications")
-  ).to_be_visible()
+  expect(page.locator(
+      'a', has_text="Download a list of classifications")).to_be_visible()
 
 
 @pytest.mark.parametrize('epoch', EPOCH_OPTIONS)
