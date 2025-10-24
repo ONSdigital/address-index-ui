@@ -27,6 +27,9 @@ function setupMapSpecificItems() {
 
   // Set map size and resize listeners
   setMapSizeAndResizeListeners(map);
+
+  // Setup zoom level listeners and restore last zoom level
+  //setupZoomListeners(map);
 }
 
 function setupPageSpecificItems() {

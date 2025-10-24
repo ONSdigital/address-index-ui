@@ -1,8 +1,8 @@
 import { replaceDistancePlaceholderWithSearchValues } from '/static/js/macros/custom_address_info/distance_calculator.mjs';
 import { makePinIcon } from '/static/js/a_single_matches/radiussearch/interactive_map/map_pin_icons.mjs';
-import { getPageLocalValues, setPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
+import { setMapZoomInPageStorage, getCurrentSearchLatValue, getCurrentSearchLonValue, getStartLatValue, getStartLonValue, getStartZoomValue } from './input_and_stored_values.mjs';
 
-const defaultStartValues = {
+export const defaultStartValues = {
   // Lat and lon values for ONS HQ
   'lat': 51.566322,
   'lng': -3.0272245,
@@ -60,18 +60,6 @@ export function setupRadiusListeners() {
   });
 }
 
-function setMapZoomInPageStorage(zoomLevel) {
-  setPageLocalValues('radiussearch', { mapZoomLevel: zoomLevel });
-  console.log(getPageLocalValues('radiussearch'));
-}
-
-export function setupZoomListeners() {
-  map.on('zoomend', () => {
-    const zoomLevel = map.getZoom();
-    setMapZoomInPageStorage(zoomLevel);
-  });
-}
-
 function updateSearchCircle() {
   // Get the value of the Range
   const radiusMetres = getRadiusMetres();
@@ -125,39 +113,6 @@ export function updateLatLongSearchValues(lat, lng) {
   lngInput.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
-export function getCurrentSearchLatValue() {
-  const latSearchInput = document.querySelector('#lat');
-  return latSearchInput ? parseFloat(latSearchInput.value) : null;
-}
-
-export function getCurrentSearchLonValue() {
-  const lonSearchInput = document.querySelector('#lon');
-  return lonSearchInput ? parseFloat(lonSearchInput.value) : null;
-}
-
-function getPagePreviouslySearchedValues() {
-  const pageLocalValues = getPageLocalValues('radiussearch');
-  return pageLocalValues.pagePreviouslySearchedValues || {};
-}
-
-function getStartLatValue() {
-  // Get the previously searched values for this page
-  const pagePreviouslySearchedValues = getPagePreviouslySearchedValues();
-  return pagePreviouslySearchedValues.lat || defaultStartValues.lat;
-}
-
-function getStartLonValue() {
-  // Get the previously searched values for this page
-  const pagePreviouslySearchedValues = getPagePreviouslySearchedValues();
-  return pagePreviouslySearchedValues.lon || defaultStartValues.lng;
-}
-
-function getStartZoomValue() {
-  // Get the page local Values
-  const pageLocalValues = getPageLocalValues('radiussearch');
-  return pageLocalValues.mapZoomLevel || defaultStartValues.zoom;
-}
-
 function updateMapFromLatLonChange() {
   // Change location of search marker (triggers circle update too)
   updateSearchMarkerLocation(getCurrentSearchLatValue(), getCurrentSearchLonValue());
@@ -199,4 +154,12 @@ export function setupLatLongFromMapListeners() {
     replaceDistancePlaceholderWithSearchValues();
  });
 }
+
+export function setupZoomListeners(map) {
+  map.on('zoomend', () => {
+    const zoomLevel = map.getZoom();
+    setMapZoomInPageStorage(zoomLevel);
+  });
+}
+
 

@@ -1,4 +1,4 @@
-import { getCurrentSearchLatValue, getCurrentSearchLonValue } from '/static/js/a_single_matches/radiussearch/interactive_map/map_setup.mjs';
+import { getCurrentSearchLatValue, getCurrentSearchLonValue } from '/static/js/a_single_matches/radiussearch/interactive_map/input_and_stored_values.mjs';
 
 // Calculate distance between two lat/long pairs on Earth (haversine, great-circle)
 // All lat/lon in decimal degrees. Returns distance in metres.
