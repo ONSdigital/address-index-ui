@@ -484,7 +484,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             display_title='Latitude',
             classes='ons-input--w-50 nocache',
             required=True,
-            previous_value='51.566322',
+            previous_value='50.73548',
             description='Latitude of the location to search for (e.g. "53.3").'
         ),
         Field(
@@ -492,7 +492,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             display_title='Longitude',
             classes='ons-input--w-50 nocache',
             required=True,
-            previous_value='-3.0272245',
+            previous_value='-3.5332105',
             description='Longitude of the location to search for (e.g. "-2.9").'
         ),
         Field(
