@@ -14,7 +14,6 @@ const INITIAL_LNG  = getStartLonValue();
 const INITIAL_ZOOM = getStartZoomValue(); 
 
 // See https://service-manual.ons.gov.uk/design-system/foundations/colours
-const resultsMarkerIcon = makePinIcon("#a8bd3a");
 const searchMarkerIcon = makePinIcon("#206095");
 
 // Highlight colour for the search radius circle outline and content
@@ -201,23 +200,3 @@ export function setupLatLongFromMapListeners() {
  });
 }
 
-function getMatchedAddressesFromLocalStorage() {
-  // Get the most recent addresses from local storage
-  const localPageValues = getPageLocalValues('radiussearch');
-
-  // Default to an empty array if not found
-  const addresses = localPageValues.mostRecentlySearchedAddresses || [];
-  return addresses;
-}
-
-export function addMatchedAddressMarkersToMap() {
-  const addresses = getMatchedAddressesFromLocalStorage();
-
-  for (const address of addresses) {
-    // Addresses in the format {name: '', uprn: '', longitude: '', latitude: ''}
-    const { name, uprn, longitude: long, latitude: lat } = address;
-
-    // The marker should be ONS colours and link to /address_info/{uprn}
-    L.marker([lat, long], {icon: resultsMarkerIcon} ).addTo(map).bindPopup(`${name} <br> <a href="/address_info/${uprn}">View Details</a>`);
-  }
-}
