@@ -1,4 +1,3 @@
-
 import requests
 
 from aims_ui import app
@@ -17,4 +16,3 @@ def uprn_lookup(uprn):
   )
 
   return r
-

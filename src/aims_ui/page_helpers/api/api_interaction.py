@@ -26,7 +26,8 @@ def api(url, called_from, all_user_input):
 
   if (called_from == 'uprn') or (called_from == 'postcode'):
     url = app.config.get('API_URL') + url + all_user_input.get(called_from, '')
-  elif (called_from == 'singlesearch') or (called_from == 'radiussearch') or (called_from == 'multiple'):
+  elif (called_from == 'singlesearch') or (called_from == 'radiussearch') or (
+      called_from == 'multiple'):
     url = app.config.get('API_URL') + url
 
   cleaned_params = cleanup_parameters(all_user_input, called_from)
@@ -52,7 +53,8 @@ def get_response_attributes(r):
   matchType = res.get('matchtype', 'N/A')
   recommendationCode = res.get('recommendationCode', 'N/A')
 
-  return {'matchType': matchType, 'recommendationCode': recommendationCode} 
+  return {'matchType': matchType, 'recommendationCode': recommendationCode}
+
 
 def get_tokenised_attributes(r):
   """ Return the 'tokens' for a search - this is from the address parser """
@@ -63,6 +65,7 @@ def get_tokenised_attributes(r):
   tokenisedOutput = res.get('tokens', {})
 
   return tokenisedOutput
+
 
 def get_api_auth():
   """Get the auth type for typeahead"""
@@ -158,6 +161,7 @@ def submit_uprn_mm_job(uprns_and_ids, all_user_input):
 
   return r
 
+
 def submit_mm_job(user, addresses, all_user_input, uprn=False):
   """API helper for job endpoints """
   url = app.config.get('BM_API_URL') + '/bulk'
@@ -167,7 +171,7 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
   # Add some header data into parameters (if the API needs it as a param)
   all_user_input['uimetadata'] = header.get('uimetadata')
 
-  cleaned_params= cleanup_parameters(all_user_input, 'multiple')
+  cleaned_params = cleanup_parameters(all_user_input, 'multiple')
   params = format_params_as_string(cleaned_params)
 
   addresses = str(addresses).replace('"', '')  # Remove Quotes from address
@@ -192,6 +196,7 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
                'Request details: ' + str(log_message))
 
   return r
+
 
 def handle_ancillary_duplicates(class_list):
   """ Residential, Commercial, Militaery and Land have duplicate ancillary descriptions"""
@@ -259,6 +264,7 @@ def get_classifications():
     class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
 
   return handle_ancillary_duplicates(class_list)
+
 
 def get_epoch_options():
   """Get the result of the Epoch Endpoint and format for radio button use"""

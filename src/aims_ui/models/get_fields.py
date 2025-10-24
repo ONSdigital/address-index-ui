@@ -565,7 +565,6 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['limit'],
         common_fields['historical'],
     ]
- 
 
     if include_UPRN_redirect != False:
       uprn_search_url = url_for('uprn')
