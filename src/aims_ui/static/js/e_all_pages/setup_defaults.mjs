@@ -4,6 +4,7 @@ export function getDefaultValuesForPage(page_name) {
       'page_name': 'radiussearch',
       'lat': 50.73548,
       'lng': -3.5332105,
+      'zoom': 8,
       'rangekm': '10',
       'limit': '10',
     }
