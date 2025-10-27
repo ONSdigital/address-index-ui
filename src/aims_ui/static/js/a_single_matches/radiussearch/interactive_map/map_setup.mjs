@@ -113,7 +113,11 @@ export function updateLatLongSearchValues(lat, lng) {
   lngInput.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
-function updateMapFromLatLonChange() {
+function updateMapFromLatLonChange(e) {
+  if (!e.isTrusted) {
+    // Ignore programmatic changes
+    return;
+  }
   // Change location of search marker (triggers circle update too)
   updateSearchMarkerLocation(getCurrentSearchLatValue(), getCurrentSearchLonValue());
   // Center the map on the new marker
@@ -136,6 +140,8 @@ export function setupLatLongFromMapListeners() {
 
   // Click handler – logs to console and updates input elements
   map.on('click', (e) => {
+    // add the debugger command to pause execution in browser dev tools
+
     const { lat, lng } = e.latlng;
 
     // Log integration:
@@ -147,8 +153,8 @@ export function setupLatLongFromMapListeners() {
     // Update the values of the inputs 
     updateLatLongSearchValues(lat, lng);
 
-    // Center the map on the new marker
-    map.setView([lat, lng]);
+    // Center the map on the new marker - TODO add a setting for this!
+    //map.setView([lat, lng]);
 
     // Re-calculate distances for addresses already on the screen
     replaceDistancePlaceholderWithSearchValues();
