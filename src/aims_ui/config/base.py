@@ -720,6 +720,9 @@ DEFAULT_CLASSIFICATION_CLASS_LIST = [{
     'label':
     'Assessment / Development Services'
 }, {
+    'code': 'CM06',
+    'label': 'Pharmacy'
+}, {
     'code': 'CN',
     'label': 'Animal Centre'
 }, {
@@ -787,6 +790,9 @@ DEFAULT_CLASSIFICATION_CLASS_LIST = [{
     'code': 'CR02',
     'label': 'Retail Service Agent'
 }, {
+        'code': 'CR02EV',
+        'label': 'Electric Car Charging Station'
+}, {
     'code': 'CR02PO',
     'label': 'Post Office'
 }, {
@@ -808,17 +814,38 @@ DEFAULT_CLASSIFICATION_CLASS_LIST = [{
     'code': 'CR06',
     'label': 'Public House / Bar / Nightclub'
 }, {
+    'code': 'CR06BA',
+    'label': 'Bar'
+}, {
+    'code': 'CR06NC',
+    'label': 'Nightclub'
+}, {
+    'code': 'CR06PH',
+    'label': 'Public House'
+}, {
     'code': 'CR07',
     'label': 'Restaurant / Cafeteria'
 }, {
     'code': 'CR08',
     'label': 'Shop / Showroom'
 }, {
+    'code': 'CR08CS',
+    'label': 'Convenience Store'
+}, {
     'code': 'CR08GC',
     'label': 'Garden Centre'
 }, {
+    'code': 'CR08SM',
+    'label': 'Supermarket'
+}, {
     'code': 'CR09',
     'label': 'Other Licensed Premise / Vendor'
+}, {
+    'code': 'CR09BS',
+    'label': 'Betting Shop'
+}, {
+    'code': 'CR09OL',
+    'label': 'Off-licence'
 }, {
     'code':
     'CR10',
@@ -958,8 +985,29 @@ DEFAULT_CLASSIFICATION_CLASS_LIST = [{
     'code': 'CT11AD',
     'label': 'Aqueduct'
 }, {
+    'code': 'CT11CA',
+    'label': 'Road Bridge Over Canal'
+}, {
     'code': 'CT11LK',
     'label': 'Lock'
+}, {
+    'code': 'CT11MU',
+    'label': 'Road Bridge Over Multiple'
+}, {
+    'code': 'CT11NN',
+    'label': 'Road Bridge Over No Network'
+}, {
+    'code': 'CCT11PA',
+    'label': 'Road Bridge Over Path'
+}, {
+    'code': 'CT11RA',
+    'label': 'Road Bridge Over Railway'
+}, {
+    'code': 'CT11RO',
+    'label': 'Road Bridge Over Road'
+}, {
+    'code': 'CT11WA',
+    'label': 'Road Bridge Over Water'
 }, {
     'code': 'CT11WE',
     'label': 'Weir'
@@ -1960,6 +2008,9 @@ DEFAULT_CLASSIFICATION_CLASS_LIST = [{
     'code': 'ZW99KH',
     'label': 'Kingdom Hall'
 }, {
+    'code': 'ZW99LG',
+    'label': 'Lych Gate'
+}, {
     'code': 'ZW99MQ',
     'label': 'Mosque'
 }, {
@@ -1974,7 +2025,4 @@ DEFAULT_CLASSIFICATION_CLASS_LIST = [{
 }, {
     'code': 'ZW99TP',
     'label': 'Temple'
-}, {
-    'code': 'ZW99LG',
-    'label': 'Lych Gate'
 }]
