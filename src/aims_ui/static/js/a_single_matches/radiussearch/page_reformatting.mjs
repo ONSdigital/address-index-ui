@@ -104,18 +104,18 @@ function setupDropdownListeners(classificationContainer) {
   const classificationInput = classificationContainer.querySelector('input');
 
   // Get a handle on the results dropdown
-  const classificationDropdownSuggesgions = classificationContainer.querySelector('.ons-autosuggest__results');
+  const classificationDropdownSuggestions = classificationContainer.querySelector('.ons-autosuggest__results');
 
   // On focus, add the floating class
   classificationInput.addEventListener('focus', () => {
-    classificationDropdownSuggesgions.classList.add('absolute-floating-dropdown');
+    classificationDropdownSuggestions .classList.add('absolute-floating-dropdown');
   });
 
   // On loss of focus, remove the floating class
   classificationInput.addEventListener('blur', () => {
     // Timeout to allow click events to register
     setTimeout(() => {
-      classificationDropdownSuggesgions.classList.remove('absolute-floating-dropdown');
+      classificationDropdownSuggestions .classList.remove('absolute-floating-dropdown');
     }, 200);
   });
 
