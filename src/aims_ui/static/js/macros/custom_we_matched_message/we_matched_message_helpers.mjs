@@ -33,7 +33,7 @@ function getTitleText(numberOfAddresses) {
 }
 
 export function generateMatchedMessage(page_name) {
-  // calculated from the local storage because then it can be restored with no server inteaction
+  // calculated from the local storage because then it can be restored with no server interaction
   const numberOfAddresses = getNumberOfAddressesMatchedFromLocalStorage(page_name);
 
   // If there are no addresses, then don't add the title
