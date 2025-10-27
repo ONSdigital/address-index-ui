@@ -76,12 +76,12 @@ function removeMarkupFromInsideElement(element) {
 
 function addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputElement) {
   // Given an input element that's an ONS autosuggest component
-  // the event listener must be on the *suggesgions* not the element
+  // the event listener must be on the *Suggestions* not the element
   // as the element itself triggers events like input, change, blur before the value is changed
   const completeContainerForClassificationFilter = document.querySelector('#complete-container-for-classificationfilter');
 
-  const classNameForSuggesgionContainer = "ons-autosuggest__results";
-  const suggestionContainer = completeContainerForClassificationFilter.querySelector('.' + classNameForSuggesgionContainer);
+  const classNameForSuggestionContainer = "ons-autosuggest__results";
+  const suggestionContainer = completeContainerForClassificationFilter.querySelector('.' + classNameForSuggestionContainer);
 
   if (!suggestionContainer) { 
     console.log('No suggestion container found for autosuggest component');
@@ -106,9 +106,9 @@ function addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputEleme
   completeContainerForClassificationFilter.addEventListener('keydown', event => {
     if (event.key === 'Enter') {
       // The suggestion that is currently focused will have ons-autosuggest__option--focused
-      const focusedSuggesgion = suggestionContainer.querySelector('.ons-autosuggest__option--focused');
-      if (focusedSuggesgion) {
-        const textFromAutosuggest= removeMarkupFromInsideElement(focusedSuggesgion);
+      const focusedSuggestion = suggestionContainer.querySelector('.ons-autosuggest__option--focused');
+      if (focusedSuggestion) {
+        const textFromAutosuggest= removeMarkupFromInsideElement(focusedSuggestion);
 
         // Now save this value
         saveValueOfInput(inputElement.id, textFromAutosuggest);
