@@ -138,8 +138,6 @@ export function setupLatLongFromMapListeners() {
 
   // Click handler – logs to console and updates input elements
   map.on('click', (e) => {
-    // add the debugger command to pause execution in browser dev tools
-
     const { lat, lng } = e.latlng;
 
     // Log integration:
