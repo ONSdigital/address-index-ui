@@ -7,7 +7,7 @@ from aims_ui.page_helpers.classification_utilities import check_reverse_classifi
 def remove_non_existant_parameters(params):
   """ Given a dict of params, remove any that the API won't recognise """
 
-  # Deffine the only acceptable parameters (regardless of page) (see https://github.com/ONSdigital/aims-api/blob/main/api-definitions/explore-the-api/readme.md)
+  # Define the only acceptable parameters (regardless of page) (see https://github.com/ONSdigital/aims-api/blob/main/api-definitions/explore-the-api/readme.md)
   acceptable_parameters = [
       'input', 'name', 'offset', 'limit', 'classificationfilter', 'rangekm',
       'lat', 'lon', 'historical', 'matchthreshold', 'verbose', 'epoch',
