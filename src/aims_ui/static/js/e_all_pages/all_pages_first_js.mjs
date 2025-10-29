@@ -6,6 +6,9 @@ import {
   setDefaultJobAgePreferences,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
+import { addMostRecentPageToStorage } from '/static/js/e_all_pages/breadcrumb_helpers/breadcrumbHelpers.mjs';
+
+
 function setDefaultValuesIfUnset() {
   setDefaultTitleChoice();
   setDefaultColumnWidths();
@@ -23,6 +26,7 @@ function removeResubmissionMessage() {
 function init() {
   console.log('all_pages_first loaded');
   setDefaultValuesIfUnset();
+  addMostRecentPageToStorage();
   removeResubmissionMessage();
 }
 

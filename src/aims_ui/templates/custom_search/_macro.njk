@@ -170,7 +170,7 @@
  
 
 	{% elif field.search_type == "download" %}
-		<h4>Unsure? <a href={{field.download_url}}>Click here to download a list of classifications</a>.</h4>
+		<h5><a href={{field.download_url}}>{{ field.display_title }}</a></h5>
 
 	{% elif field.search_type == "error_panel" %}
 		{% call onsPanel({

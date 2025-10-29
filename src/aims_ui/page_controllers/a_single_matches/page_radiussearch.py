@@ -36,6 +36,8 @@ def radiussearch():
     delete_input(session)
     return render_template(
         page_location,
+        page_name=page_name,
+        beta_banner=True,
         searchable_fields=searchable_fields,
         endpoints=endpoints,
         api_auth=api_auth,
@@ -69,7 +71,7 @@ def radiussearch():
   except Exception as e:
     return error_page_api_request(page_name, user_input, e)
 
-   # Errors after sucessful Response
+  # Errors after sucessful Response
   if result.status_code != 200:
     return error_page_api_response(page_name, user_input, result)
 
@@ -78,13 +80,15 @@ def radiussearch():
   # Save a list of UPRNs and their respective confidence scores
   save_epoch_number(session, all_user_input.get('epoch', ''))
 
-   # Get the attributes of the Response a user might want
+  # Get the attributes of the Response a user might want
   responseAttributes = get_response_attributes(result.json())
   tokenisedOutput = get_tokenised_attributes(result.json())
 
   return render_template(
       page_location,
+      page_name=page_name,
       endpoints=endpoints,
+      beta_banner=True,
       searchable_fields=searchable_fields,
       results_page=True,
       matched_addresses=matched_addresses,

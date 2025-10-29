@@ -1,15 +1,15 @@
-from aims_ui import app
-from aims_ui.models.get_endpoints import get_endpoints
-from aims_ui.models.get_addresses import get_addresses
-from aims_ui.page_controllers.f_error_pages.page_error import page_error
-from aims_ui.page_helpers.api.api_interaction import api
-from aims_ui.page_helpers.cookie_utils import load_epoch_number
-from aims_ui.page_helpers.table_utils import create_table, create_hierarchy_table
-from aims_ui.page_helpers.pages_location_utils import get_page_location_non_endpoint
-from aims_ui import get_cached_tooltip_data
 from flask import render_template, session
 from flask_login import login_required
 from requests.exceptions import ConnectionError
+
+from aims_ui import app, get_cached_tooltip_data
+from aims_ui.models.get_addresses import get_addresses
+from aims_ui.models.get_endpoints import get_endpoints
+from aims_ui.page_controllers.f_error_pages.page_error import page_error
+from aims_ui.page_helpers.api.api_interaction import api
+from aims_ui.page_helpers.cookie_utils import load_epoch_number
+from aims_ui.page_helpers.pages_location_utils import get_page_location_non_endpoint
+from aims_ui.page_helpers.table_utils import create_hierarchy_table, create_table
 
 page_name = 'address_info'
 
@@ -40,9 +40,6 @@ def address_info(uprn):
                                       'uprn',
                                       underlying_score=0,
                                       confidence_score=0)
-  elif result.status_code == 404:
-    # No results but the api compelted the call successfully
-    return page_error(result, 'Detailed Information')
   else:
     return page_error(result, 'Detailed Information')
 

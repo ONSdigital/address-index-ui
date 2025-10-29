@@ -30,6 +30,7 @@ def uprn():
     search_uprn = request.args.get('search_uprn')
     return render_template(
         page_location,
+        page_name=page_name,
         searchable_fields=get_fields(page_name,
                                      include_UPRN_redirect=search_uprn),
         endpoints=endpoints,
@@ -77,6 +78,7 @@ def uprn():
 
   return render_template(
       page_location,
+      page_name=page_name,
       endpoints=endpoints,
       searchable_fields=searchable_fields,
       results_page=True,

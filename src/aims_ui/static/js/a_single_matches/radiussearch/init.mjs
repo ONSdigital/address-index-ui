@@ -1,12 +1,14 @@
 import { setupSubmissionFromInputs } from "./form_helpers.mjs";
-import { updateMapToFitCircle, setupLatLongToMapListeners, setSizeOfMapToPreviouslySetSize, setupResizeListeners, addMatchedAddressMarkersToMap, setupMap, setupRadiusListeners, setupLatLongFromMapListeners, setupInitialMarkerLocation } from "./interactive_map.mjs";
+import { updateMapToFitCircle, setupLatLongToMapListeners, setupMap, setupRadiusListeners, setupLatLongFromMapListeners, setupInitialMarkerLocation } from "./interactive_map/map_setup.mjs";
+import { setMapSizeAndResizeListeners } from "./interactive_map/map_size.mjs";
 import { setupHorizontalInputs } from "./page_reformatting.mjs";
 import { setupScrollListeners, setScrollPosition } from "./scroll_helpers.mjs";
 import { setupUprnSearchFunctionality } from "./uprn_helper.mjs";
+import { addMatchedAddressMarkersToMap } from "./interactive_map/result_address_markers.mjs";
 
 function setupMapSpecificItems() {
-  // Setup the interactive map
-  setupMap();
+  // Setup the interactive map and return refference to it
+  const map = setupMap();
 
   // Add Listeners to map to update the lat/long input boxes
   setupLatLongFromMapListeners();
@@ -21,17 +23,16 @@ function setupMapSpecificItems() {
   setupRadiusListeners();
 
   // Add any results that are sat in local storage onto the map!
-  addMatchedAddressMarkersToMap();
+  addMatchedAddressMarkersToMap(map);
 
-  // Setup Resize Listeners, so that when the map is resized manually, it loads correctly
-  setupResizeListeners();
+  // Set map size and resize listeners
+  setMapSizeAndResizeListeners(map);
 
-  // Set the map size to whatever the user previously set it to (Before we start observing it for changes)
-  setSizeOfMapToPreviouslySetSize();
+  // Setup zoom level listeners and restore last zoom level
+  //setupZoomListeners(map);
 }
 
 function setupPageSpecificItems() {
-
   // Take the generated Design System components and arrange them horizontally
   setupHorizontalInputs();
 
