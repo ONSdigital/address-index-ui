@@ -46,7 +46,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           'historical',
           search_type='checkbox',
           display_title='Include historical address data',
-          checkbox_value=True,
+          checkbox_value=False,
           description=
           'Check this box to include historical address data in the search.',
       ),
@@ -151,8 +151,8 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
       ),
       'classification_help_download':
       Field(
-          'None',
-          display_title='List of Classifications',
+          'classification-download-label',
+          display_title='Download a list of classifications',
           description=
           'This file contains a list of classifications, explained in a universaly recognised "easy to read" csv format.',
           search_type='download',
@@ -484,7 +484,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             display_title='Latitude',
             classes='ons-input--w-50 nocache',
             required=True,
-            previous_value='51.566322',
+            previous_value='50.73548',
             description='Latitude of the location to search for (e.g. "53.3").'
         ),
         Field(
@@ -492,7 +492,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             display_title='Longitude',
             classes='ons-input--w-50 nocache',
             required=True,
-            previous_value='-3.0272245',
+            previous_value='-3.5332105',
             description='Longitude of the location to search for (e.g. "-2.9").'
         ),
         Field(
@@ -508,7 +508,6 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             display_title='Range (km)',
             classes='ons-input--w-50 nocache',
             required=True,
-            previous_value='5',
             description=
             'Radius (in km) around the location to search within (e.g. "100").'
         ),
@@ -534,6 +533,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             description='',
         ),
         common_fields['classification'],
+        common_fields['classification_help_download'],
         common_fields['limit'],
     ])
   elif endpoint_name == 'singlesearch':
@@ -565,7 +565,6 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['limit'],
         common_fields['historical'],
     ]
- 
 
     if include_UPRN_redirect != False:
       uprn_search_url = url_for('uprn')

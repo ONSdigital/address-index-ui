@@ -34,12 +34,13 @@ function generateRow(singleAddressObject) {
   return row;
 }
 
-function loadPreviousValuesForCompressedTableView() {
+export function loadPreviousValuesForCompressedTableView(page_name) {
   // For the compressed view (where only Name, lat, long, distance are shown in a table)
 
   // Get the values of the addresses
-  const localPageValues = getPageLocalValues('radiussearch');
-  const previousAddresses = localPageValues.radiusSearchMostRecentAddresses || [];
+  const localPageValues = getPageLocalValues(page_name);
+  const previousAddresses = localPageValues.mostRecentlySearchedAddresses || [];
+  console.log('Loading previous addresses for compressed table view:', previousAddresses);
 
   // Get a handle on the table element that we're to attach rows to
   const tableBody = document.querySelector('.ons-table__body');
@@ -50,5 +51,3 @@ function loadPreviousValuesForCompressedTableView() {
     tableBody.append(row);
   }
 }
-
-loadPreviousValuesForCompressedTableView();

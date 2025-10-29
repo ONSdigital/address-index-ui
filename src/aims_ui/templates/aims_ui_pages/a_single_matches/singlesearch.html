@@ -3,10 +3,11 @@
 {% from "components/card/_macro.njk" import onsCard %}
 {% from 'components/panel/_macro.njk' import onsPanel %}
 {% from 'components/list/_macro.njk' import onsList %}
-{% from 'custom_search/_macro.njk' import customSearch %}
-{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
 {% from "components/panel/_macro.njk" import onsPanel %}
 
+{% from 'custom_search/_macro.njk' import customSearch %}
+{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+{% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -57,11 +58,18 @@
 
 
 	{% if results_page %}
+
+		{# Save the results to local storage on the clientside #}
+		{{ customSaveAddressesToClient({
+			"matched_addresses": matched_addresses,
+			"page_name": page_name,
+		}) }}
+
 	  {{ onsPanel({
-	  "body": "",
-	  "classes": "ons-u-hidden",
-	  "id": "requestOverviewStatsPanel",
-	  "attributes": {'valuesOfrequestAttributes': responseAttributes , 'tokenisedOutput': tokenisedOutput},
+			"body": "",
+			"classes": "ons-u-hidden",
+			"id": "requestOverviewStatsPanel",
+			"attributes": {'valuesOfrequestAttributes': responseAttributes , 'tokenisedOutput': tokenisedOutput},
 	   }) }}
 	  <br>
 	  <br>

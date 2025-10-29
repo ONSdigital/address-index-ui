@@ -5,6 +5,7 @@
 {% from 'custom_address_info/_macro.njk' import customAddressInfo %}
 {% from "components/table/_macro.njk" import onsTable %}
 {% from "components/panel/_macro.njk" import onsPanel %}
+{% from 'custom_clerical_data/_macro.njk' import customClericalData %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -15,13 +16,65 @@
 <div class="ons-grid__col ons-col-10@m">
 
 <br>
-{{ customAddressInfo ({
-	'full_info': True,
-	'matched_addresses': matched_addresses,
-	'clerical_info': clerical_info,
-	'tool_tip_data': tool_tip_data,
-	'link_data': link_data,
-	}) }}
+
+
+  <h1 class="saturn"> {{ matched_addresses[0].formatted_address.value }}</h1>
+
+  <div class="panel panel--info panel--no-title ">
+    <span class="u-vh">Important information: </span>
+    <div class="panel__body">
+      <p>
+
+        
+  <table id="overviewTable"> <tbody>
+  {# For each atribute in the Address Model #} 
+  {% for attribute_name, address_attribute in  matched_addresses[0].__dict__.items() %}
+
+    {% if address_attribute.full_show %}
+      <tr><td class="mars">{{ attribute_name }}</td>
+          <td class="venus">{{ address_attribute.value }}</td>
+      </tr>
+    {% endif %}
+
+    {# If the address is the "NAG" response (contains a NAG Model) #} 
+    {% if attribute_name == 'nag' %}
+      {% for nag_attribute_name, nag_attribute_value in  address_attribute.value.__dict__.items() %}
+      {% if nag_attribute_name in address_attribute.value.full_values_to_show %}
+        <tr><td class="mars">{{nag_attribute_name}}</td>
+            <td class="venus">{{ nag_attribute_value.value }}</td>
+        </tr>
+      {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    {# If the address is the "PAF" response (contains a PAF Model) #} 
+    {% if attribute_name == 'paf' %}
+      {% for paf_attribute_name, paf_attribute_value in  address_attribute.value.__dict__.items() %}
+      {% if paf_attribute_name in address_attribute.value.full_values_to_show %}
+        <tr><td class="mars">{{paf_attribute_name}}</td>
+            <td class="venus">{{ paf_attribute_value.value }}</td>
+        </tr>
+      {% endif %}
+    {% endfor %}
+    {% endif %}
+
+  {% endfor %}
+  <tr>
+      <td class="mars"><a href=" {{ 'https://maps.google.com/?q=' + matched_addresses[0].geo.value.get('latitude') + ',' + matched_addresses[0].geo.value.get('longitude') + '&ll=' + matched_addresses[0].geo.value.get('latitude') + ',' + matched_addresses[0].geo.value.get('longitude') + '&z=18'  }}"
+      >Location Map</a></td>
+  </tr>
+  </tbody> </table>
+
+      </p>
+    </div></div>
+
+  {# Add Custom Clerical Data (almost full result, to be hidden by accordion ) #} 
+  {{ customClericalData({
+    'clerical_info': clerical_info,
+    'tool_tip_data': tool_tip_data,
+    'link_data': link_data,
+    } ) }} 
+
 <br>
 
 {% for t_title, t_table in hierarchy_table.items() %} 
@@ -46,8 +99,13 @@
 
 </div>
 </div>
-<h1 style="visibility: hidden;">More Info</h1>
-<h1 style="visibility: hidden;">More Info</h1>
+<br>
+
+<script type=module src="/static/js/e_all_pages/all_pages_first_js.mjs"></script>
+
+<script type=module src="/static/js/address_info/init.mjs"></script>
+
+<script type=module src="/static/js/e_all_pages/all_pages_last.mjs"></script>
 
 {% endblock %}
 {% endblock %}

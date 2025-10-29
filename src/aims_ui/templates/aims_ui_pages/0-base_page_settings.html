@@ -9,6 +9,10 @@
 	'wide':true,
 	'header': {
 		"title": 'AIMS',
+		'phase': '' if not beta_banner else {
+			"badge": 'BETA',
+			"html": 'This is a new service – your <a href="/help/submit_feedback">feedback</a> will help us improve it.'
+		},
 		"logoHref": '/',
 		"mastheadLogo": '/',
 		"mobileLogo": 'ons-logo-stacked-en',

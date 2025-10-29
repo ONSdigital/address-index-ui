@@ -29,10 +29,8 @@ def test_classification_download(page: Page):
   page.goto(page_url)
 
   # Check that a link with the href x is visible
-  expect(
-      page.locator('a',
-                   has_text="Click here to download a list of classifications")
-  ).to_be_visible()
+  expect(page.locator(
+      'a', has_text="Download a list of classifications")).to_be_visible()
 
 
 @pytest.mark.parametrize('epoch', EPOCH_OPTIONS)

@@ -3,10 +3,13 @@
 {% from "components/card/_macro.njk" import onsCard %}
 {% from 'components/panel/_macro.njk' import onsPanel %}
 {% from 'components/list/_macro.njk' import onsList %}
-{% from 'custom_search/_macro.njk' import customSearch %}
-{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
 {% from "components/table/_macro.njk" import onsTable %}
 {% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
+
+{% from 'custom_search/_macro.njk' import customSearch %}
+{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+{% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
+{% from 'custom_we_matched_message/_macro.njk' import weMatchedAddressPreamble %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -58,19 +61,31 @@
 
 
 				{% if results_page %}
+				  {# Save the results to local storage on the clientside #}
+						{{ customSaveAddressesToClient({
+							"matched_addresses": matched_addresses,
+							"page_name": page_name,
+						}) }}
+
 					{{ onsPanel({
-					"body": "",
-					"classes": "ons-u-hidden",
-					"id": "requestOverviewStatsPanel",
-					"attributes": {'valuesOfrequestAttributes': responseAttributes , 'tokenisedOutput': tokenisedOutput},
+						"body": "",
+						"classes": "ons-u-hidden",
+						"id": "requestOverviewStatsPanel",
+						"attributes": {'valuesOfrequestAttributes': responseAttributes , 'tokenisedOutput': tokenisedOutput},
 					}) }}
 					<br>
 					<br>
-					<h2>We matched {{matched_address_number}}  addresses:</h2>
-				{% endif %}
+
+  			{% endif %}
+
+				{# Add the "We matched {X} addresses" #}
+				{{ weMatchedAddressPreamble({
+					"page_name": page_name,
+				}) }}
 
 				{{ customAddressInfo ({
 					'matched_addresses': matched_addresses,
+					'page_name': page_name,
 					'compressed_view': True,
 					'results_page': results_page,
 					}) }}
@@ -87,13 +102,13 @@
 <script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
 <script type=module src="static/js/e_all_pages/apply_custom_settings.mjs"></script>
 
+<!-- Save and load inputs with the new mechanism -->
+<script type=module src="static/js/e_all_pages/save_and_restore_inputs.mjs"></script>
+
 <!-- Load Leaflet JS before page specific scripts that use the interactive map that relies on leaflet -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script type=module src="static/js/a_single_matches/radiussearch/init.mjs"></script>
 <!-- We do not need custom column widths here as this page's layout is handled by CSS -->
-
-<!-- Save and load inputs with the new mechanism -->
-<script type=module src="static/js/e_all_pages/save_and_restore_inputs.mjs"></script>
 
 <script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
 

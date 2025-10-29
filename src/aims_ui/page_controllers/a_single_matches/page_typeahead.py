@@ -29,6 +29,7 @@ def typeahead():
 
     return render_template(
         page_location,
+        page_name=page_name,
         searchable_fields=searchable_fields,
         endpoints=get_endpoints(called_from=page_name),
         api_auth=get_api_auth(),
@@ -62,6 +63,7 @@ def typeahead():
 
   return render_template(
       page_location,
+      page_name=page_name,
       endpoints=get_endpoints(called_from=page_name),
       searchable_fields=searchable_fields,
       results_page=True,

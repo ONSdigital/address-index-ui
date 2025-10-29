@@ -1,0 +1,42 @@
+{% macro customSaveAddressesToClient(params) %}
+
+{# This macro is designed only to save the address information to local storage, not generate components #}
+{# Provided that the addresses are handed through the nunjucks template as they previously have been #}
+{# This script should only be run on a results page #}
+
+
+{# Add the addresses matched into localStorage so they can be accessed by js elsewhere #}
+
+  <script type="module">
+    import { setGlobalValues, getPageLocalValues, setPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
+
+    const matchedAddresses = []
+    function addAddressToLargeList(addressInfo) {
+      // Given a single address, add it to the array of addresses in js
+      matchedAddresses.push(addressInfo);
+    }
+
+    {# Nunjucks loop calling js #}
+    {% for address in params.matched_addresses %}
+
+      {# js function to save a new address and details in json #}
+      addAddressToLargeList({
+        uprn: {{ address.uprn.value | tojson }},
+        name: {{ address.formatted_address.value | tojson }},
+        longitude: {{ address.geo.value.longitude | tojson }},
+        latitude: {{ address.geo.value.latitude  | tojson }},
+        confidenceScore: {{ address.confidence_score.value | tojson }},
+        underlyingScore: {{ address.underlying_score.value | tojson }},
+        parentUprn: {{ address.parent_uprn.value | tojson }},
+      });
+    {% endfor %}
+
+    // Set the values of the address for this page specifically
+    setPageLocalValues( '{{params.page_name}}', {mostRecentlySearchedAddresses: matchedAddresses} )
+
+    // Set these as the most recently searched addresses for global pages (like carrying the confidence score over to the info page!)
+    setGlobalValues( {mostRecentlySearchedAddresses: matchedAddresses} )
+
+  </script>
+
+{% endmacro %}

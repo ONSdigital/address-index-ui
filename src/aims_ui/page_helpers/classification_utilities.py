@@ -1,18 +1,24 @@
-from aims_ui.page_controllers.d_misc_functionality.download_utils.autosuggest import get_autosuggest_list
-from requests.models import Response
 import json
 
+from requests.models import Response
 
-def check_reverse_classification(value):
-  # Check if the string value has been entered, then swap it for it's classification code
+from aims_ui.page_controllers.d_misc_functionality.download_utils.autosuggest import get_autosuggest_list
+
+
+def check_reverse_classification(classification):
+  """ Given a string classification, return the code version """
+
   autosuggest_list = get_autosuggest_list()
-  to_return = value
+
+  # Default to returning the original classification
+  to_return = classification
   for category in autosuggest_list:
-    if value == category.get('category'):
+    if classification == category.get('category'):
       to_return = category.get('en')
 
-  # Append an Astrisk so that all children classification are included
-  # i.e. 'R' becomes 'R*' meaning all 'Residential' like properties
+  # Standardise wildcard to all inputs except blank
+  if classification == '':
+    return ''
 
   return to_return + '*'
 
