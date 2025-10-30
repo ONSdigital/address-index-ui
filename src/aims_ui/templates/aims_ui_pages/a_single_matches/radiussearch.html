@@ -11,6 +11,13 @@
 {% from 'custom_we_matched_message/_macro.njk' import weMatchedAddressPreamble %}
 {% from 'custom_title_and_description/_macro.njk' import customTitleAndDescription %}
 
+	{# Title and description #}
+	{{ customTitleAndDescription({
+		"endpoints": endpoints,
+	})}}
+
+
+
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
 {% block main %}
