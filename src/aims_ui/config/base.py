@@ -32,6 +32,9 @@ API_JWT_K_VALUE = base64.b64decode(API_JWT_K_VALUE)
 
 FLASK_ENV = str(os.getenv('FLASK_ENV')).upper()
 
+# Current version of local storage, increment when making breaking changes
+LOCAL_STORAGE_VERSION = '1'
+
 # Default usernames for paywall
 USER_AUTHS = json.loads(os.getenv('USER_AUTHS', '{}'))
 
