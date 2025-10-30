@@ -1,0 +1,27 @@
+{% macro customTitleAndDescription(params) %}
+
+{% from "components/card/_macro.njk" import onsCard %}
+
+{# Title and description #}
+{% for endpoint in params.endpoints %}
+  {% if endpoint.selected %}
+  <br>
+  {# Set an ID so that we can get a handle later #}
+  <div id="title-and-description-for-page-in-card-container">
+    {{ onsCard({
+        "id": 	         endpoint.id,
+        "textId": 	     'text',
+        "titleSize":     endpoint.title_size,
+        "titleClasses":  'header__title',
+        "title": 	       endpoint.title,
+        "text": 	       endpoint.description_text,
+    }) }}
+  </div>
+  <br>
+  {% endif %}
+{% endfor %}
+
+{# Script that will remove the link element #}
+<script type=module src="static/js/macros/custom_title_and_description/remove_url.mjs"></script>
+
+{% endmacro %}
