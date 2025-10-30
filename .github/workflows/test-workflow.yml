@@ -1,0 +1,61 @@
+name: Python Build and Deploy to Artifact Registry
+
+on:
+  push:
+    branches: [ "github-action-test-workflow" ]
+  pull_request:
+    branches: [ "github-action-test-workflow" ]
+
+env:
+  IMAGE_NAME: 'my-test-image-aims-ui'
+  PROJECT_ID: 'ons-ci-aims'
+  AR_REPO_LOCATION: 'europe-west2'
+  AR_URL: 'europe-west2-docker.pkg.dev/ons-ci-aims/temp-aims-github-actions'
+  WORKLOAD_IDENTITY_PROVIDER: 'projects/709138365636/locations/global/workloadIdentityPools/github-actions-test/providers/github-act-prov-test-aims-ui'
+  SERVICE_ACCOUNT: 'test-github-actions-sa@ons-ci-aims.iam.gserviceaccount.com'
+
+jobs:
+  build:
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5.0.0
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v3'
+        with:
+          #token_format: 'access_token'
+          project_id: ${{ env.PROJECT_ID }}
+          workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+          #service_account: ${{ env.SERVICE_ACCOUNT }}
+
+      - name: Read value from file
+        id: read_file
+        run: |
+          VALUE=$(cat version.txt)
+          echo "VALUE=$VALUE" >> $GITHUB_ENV
+
+      - name: Use the value
+        run: echo "The value is ${{ env.VALUE }}"
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.9'
+
+
+      - name: Install dependencies
+        run: |
+          ls -la
+          python -m pip install --upgrade pip
+          ./scripts/load_templates.sh
+          export FLASK_APP=aims_ui;
+          export FLASK_ENV=production;
+          export SECRET_KEY=secretkey;
+          pip install -r requirements.txt;
+        
