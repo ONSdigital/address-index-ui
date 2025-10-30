@@ -58,4 +58,16 @@ jobs:
           export FLASK_ENV=production;
           export SECRET_KEY=secretkey;
           pip install -r requirements.txt;
-        
+
+      - name: Configure Docker
+        run: |
+          gcloud auth configure-docker ${{ env.AR_REPO_LOCATION }}-docker.pkg.dev
+
+      - name: Build Docker image
+        run: |
+          docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:${{ env.VALUE }}" .
+          docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest" .
+
+      - name: Push Docker image
+        run: |
+          docker push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}" --all-tags
