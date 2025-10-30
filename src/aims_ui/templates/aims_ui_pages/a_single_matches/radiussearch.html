@@ -1,6 +1,5 @@
 {% extends './aims_ui_pages/0-base_page_settings.html' %}
 
-{% from "components/card/_macro.njk" import onsCard %}
 {% from 'components/panel/_macro.njk' import onsPanel %}
 {% from 'components/list/_macro.njk' import onsList %}
 {% from "components/table/_macro.njk" import onsTable %}
@@ -10,6 +9,12 @@
 {% from 'custom_address_info/_macro.njk' import customAddressInfo %}
 {% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
 {% from 'custom_we_matched_message/_macro.njk' import weMatchedAddressPreamble %}
+{% from 'custom_title_and_description/_macro.njk' import customTitleAndDescription %}
+
+	{# Title and description #}
+	{{ customTitleAndDescription({
+		"endpoints": endpoints,
+	})}}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -29,11 +34,9 @@
 					"endpoints": endpoints,
 					"remove_search_button":False,
 					"invisible": True,
-					"override_search_button_text": "Update Map",
 					"component_wrappers": True,
 					"results_page": results_page, }) }}
 		<br>
-
 
 		<div id="mapAndResultsContainer">
 
@@ -42,23 +45,9 @@
 			</div>
 
 			<div id="resultsContainer">
-				{# Title and description #}
-				{% for endpoint in endpoints %}
-				{% if endpoint.selected %}
-				<br>
-					{{ onsCard({
-							"id": 	endpoint.id,
-							"textId": 	'text',
-							"titleSize":endpoint.title_size,
-							"titleClasses": 'header__title',
-							"title": 	endpoint.title,
-							"url": 	endpoint.url,
-							"text": 	endpoint.description_text,
-					}) }}
-				<br>
-				{% endif %}
-				{% endfor %}
-
+				{{ customTitleAndDescription({
+					"endpoints": endpoints,
+				})}}
 
 				{% if results_page %}
 				  {# Save the results to local storage on the clientside #}

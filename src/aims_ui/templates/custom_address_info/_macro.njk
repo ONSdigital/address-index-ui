@@ -95,37 +95,6 @@
     }
   }
 
-  function getConfidenceList() {
-    const defaultConfidence = [];
-    const confidenceScores = localStorage.getItem('confidenceScores');
-    if (confidenceScores) {
-      return JSON.parse(confidenceScores);
-    } else {
-      localStorage.setItem('confidenceScores', JSON.stringify(defaultConfidence));
-      return [];
-    }
-  }
-
-  function confidenceScoreAlreadyAdded(objectToAdd, confidenceScores) {
-    for (const conScore of confidenceScores) {
-      if (conScore.uprn === objectToAdd.uprn) {
-        return true;
-      } 
-    }
-    return false;
-  }
-
-  function addToConfidenceScore(objectToAdd) {
-    const confidenceScores = getConfidenceList();
-    // Check that it's not already added
-    if (confidenceScoreAlreadyAdded(objectToAdd, confidenceScores)) {
-      const x = 'var';
-    } else {
-      confidenceScores.push(objectToAdd);
-      localStorage.setItem('confidenceScores', JSON.stringify(confidenceScores));
-    }
-  }
-
   const localFavourites = getFavourites();
   function getLocalFav(name) {
     if (localFavourites[name] === true) {
@@ -141,32 +110,11 @@
   let x = {};
 </script>
 
-<script>
-let confidenceScoreList = {};
-localStorage.setItem('confidenceScores', []);
-</script>
-
 {% for address in params.matched_addresses %}
 	{% for attribute_name, address_attribute in address.__dict__.items() %}
     <script> 
       address['{{attribute_name}}'] = {value:`{{address_attribute.value}}`,
                 favourite: getLocalFav('{{attribute_name}}')};
-
-
-      // Add the UPRN and Confidence Score and underlying score to Local Storage
-      if (`{{attribute_name}}` === 'uprn') {
-	confidenceScoreList = {};
-      	confidenceScoreList['uprn'] = `{{address_attribute.value}}` ;
-      }
-      if (`{{attribute_name}}` === 'confidence_score') {
-      	confidenceScoreList['confidenceScore'] = `{{address_attribute.value}}` ;
-      }
-      if (`{{attribute_name}}` === 'underlying_score') {
-      	confidenceScoreList['underlyingScore'] = `{{address_attribute.value}}` ;
-	addToConfidenceScore(confidenceScoreList);
-      }
-
-
     </script>
 
     {# PAF AND NAG EXCEPTIONS #}
