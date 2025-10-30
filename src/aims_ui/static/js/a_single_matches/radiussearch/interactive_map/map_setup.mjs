@@ -8,7 +8,7 @@ export const defaultStartValues = getDefaultValuesForPage('radiussearch');
 // Start the page with values from Local Storage, or if none are saved, use
 // the default values obtained from setup_defaults.mjs
 const INITIAL_LAT  = getStartLatValue(); 
-const INITIAL_LNG  = getStartLonValue(); 
+const INITIAL_LON  = getStartLonValue(); 
 const INITIAL_ZOOM = getStartZoomValue(); 
 
 // See https://service-manual.ons.gov.uk/design-system/foundations/colours
@@ -29,7 +29,7 @@ export function setupMap() {
     zoomControl: true,
     attributionControl: true,
     doubleClickZoom: false
-  }).setView([INITIAL_LAT, INITIAL_LNG], INITIAL_ZOOM);
+  }).setView([INITIAL_LAT, INITIAL_LON], INITIAL_ZOOM);
 
   // OSM tile layer
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -62,17 +62,18 @@ function updateSearchCircle() {
   // Get the value of the Range
   const radiusMetres = getRadiusMetres();
   const lat = searchLocationMarker.getLatLng().lat;
-  const lng = searchLocationMarker.getLatLng().lng;
+  const lon = searchLocationMarker.getLatLng().lng; // has to be lng, lon is standard in the rest of our codebase
 
   // Add/update the circle here
   if (!searchRadiusCircle) {
-    searchRadiusCircle = L.circle([lat, lng], {
+    searchRadiusCircle = L.circle([lat, lon], {
       radius: radiusMetres,
       color: highlightColourOutline,
       fillColor: highlightColourFill,
     }).addTo(map);
   } else {
-    searchRadiusCircle.setLatLng([lat, lng]);
+    // Had ot be lng here
+    searchRadiusCircle.setLatLng([lat, lon]);
     searchRadiusCircle.setRadius(radiusMetres);
   }
 }
@@ -82,12 +83,13 @@ export function updateMapToFitCircle() {
   map.fitBounds(circleBounds, { padding: [30, 30] });
 }
 
-function updateSearchMarkerLocation(lat, lng) {
+function updateSearchMarkerLocation(lat, lon) {
   // Drop or move the search marker
   if (!searchLocationMarker) {
-    searchLocationMarker = L.marker([lat, lng], {icon: searchMarkerIcon} ).addTo(map);
+    searchLocationMarker = L.marker([lat, lon], {icon: searchMarkerIcon} ).addTo(map);
   } else {
-    searchLocationMarker.setLatLng([lat, lng]);
+    // Function has to be "lng" here. "lon" is standard in the rest of our codebase
+    searchLocationMarker.setLatLng([lat, lon]);
   }
 
   // Update the location of the circle showing the radius being searched
@@ -95,20 +97,20 @@ function updateSearchMarkerLocation(lat, lng) {
 }
 
 export function setupInitialMarkerLocation() {
-  // Set the initial search marker to the INITIAL_LAT/LNG
-  updateSearchMarkerLocation(INITIAL_LAT, INITIAL_LNG);
+  // Set the initial search marker to the INITIAL_LAT/LON
+  updateSearchMarkerLocation(INITIAL_LAT, INITIAL_LON);
 }
 
-export function updateLatLongSearchValues(lat, lng) {
+export function updateLatLongSearchValues(lat, lon) {
   const latInput = document.querySelector('#lat');
-  const lngInput = document.querySelector('#lon');
+  const lonInput = document.querySelector('#lon');
 
   latInput.value = lat;
-  lngInput.value = lng;
+  lonInput.value = lon;
 
   // Now create bubbling events so that any listeners on these inputs for changes are triggered
   latInput.dispatchEvent(new Event('input', { bubbles: true }));
-  lngInput.dispatchEvent(new Event('input', { bubbles: true }));
+  lonInput.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
 function updateMapFromLatLonChange(e) {
@@ -138,19 +140,21 @@ export function setupLatLongFromMapListeners() {
 
   // Click handler – logs to console and updates input elements
   map.on('click', (e) => {
-    const { lat, lng } = e.latlng;
+    // Has to be latlng for Leaflet, converted to standard "lon" here
+    const lat = e.latlng.lat;
+    const lon = e.latlng.lng;
 
     // Log integration:
-    console.log('User clicked at:', { lat, lng });
+    console.log('User clicked at:', { lat, lon });
 
     // Update the location of the search marker
-    updateSearchMarkerLocation(lat, lng);
+    updateSearchMarkerLocation(lat, lon);
 
-    // Update the values of the inputs 
-    updateLatLongSearchValues(lat, lng);
+    // Update the values of the inputs
+    updateLatLongSearchValues(lat, lon);
 
     // Center the map on the new marker - TODO add a setting for this!
-    //map.setView([lat, lng]);
+    //map.setView([lat, lon]);
 
     // Re-calculate distances for addresses already on the screen
     replaceDistancePlaceholderWithSearchValues();

@@ -1,19 +1,19 @@
 export function getDefaultValuesForPage(page_name) {
-  const defaultValues = [
-    {
-      'page_name': 'radiussearch',
+  const defaultValues = {
+    'radiussearch': {
       'lat': 50.73548,
-      'lng': -3.5332105,
+      'lon': -3.5332105,
       'zoom': 8,
       'rangekm': '10',
-      'limit': '10',
+      'limit': '50',
+      'classificationfilter': '',
+      'uprn': '',
+      'input': '',
     }
-  ];
+  };
 
-  for (const entry of defaultValues) {
-    if (entry.page_name === page_name) {
-      return entry;
-    }
+  if (page_name in defaultValues) {
+    return defaultValues[page_name];
   }
 
   return {};
