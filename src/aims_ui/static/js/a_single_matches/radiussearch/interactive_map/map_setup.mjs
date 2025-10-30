@@ -61,8 +61,11 @@ export function setupRadiusListeners() {
 function updateSearchCircle() {
   // Get the value of the Range
   const radiusMetres = getRadiusMetres();
+
+  // Note the method getLatLng() is from Leaflet and therefore uses "lng" not "lon"
+  // from now on refer to lng as lon
   const lat = searchLocationMarker.getLatLng().lat;
-  const lon = searchLocationMarker.getLatLng().lng; // has to be lng, lon is standard in the rest of our codebase
+  const lon = searchLocationMarker.getLatLng().lng; 
 
   // Add/update the circle here
   if (!searchRadiusCircle) {
@@ -72,7 +75,7 @@ function updateSearchCircle() {
       fillColor: highlightColourFill,
     }).addTo(map);
   } else {
-    // Had ot be lng here
+    // Had to be "setLatLng" as lng is used by Leaflet
     searchRadiusCircle.setLatLng([lat, lon]);
     searchRadiusCircle.setRadius(radiusMetres);
   }
@@ -88,7 +91,7 @@ function updateSearchMarkerLocation(lat, lon) {
   if (!searchLocationMarker) {
     searchLocationMarker = L.marker([lat, lon], {icon: searchMarkerIcon} ).addTo(map);
   } else {
-    // Function has to be "lng" here. "lon" is standard in the rest of our codebase
+    // Leaflet method here has to use "lng" not "lon"
     searchLocationMarker.setLatLng([lat, lon]);
   }
 
