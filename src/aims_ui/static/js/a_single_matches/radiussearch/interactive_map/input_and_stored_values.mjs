@@ -29,7 +29,7 @@ export function getStartLatValue() {
 export function getStartLonValue() {
   // Get the previously searched values for this page
   const pagePreviouslySearchedValues = getPagePreviouslySearchedValues();
-  return pagePreviouslySearchedValues.lon || defaultStartValues.lng;
+  return pagePreviouslySearchedValues.lon || defaultStartValues.lon;
 }
 
 export function getStartZoomValue() {

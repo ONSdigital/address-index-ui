@@ -8,6 +8,7 @@
 {% from 'custom_search/_macro.njk' import customSearch %}
 {% from 'custom_address_info/_macro.njk' import customAddressInfo %}
 {% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
+{% from 'custom_title_and_description/_macro.njk' import customTitleAndDescription %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -40,22 +41,9 @@
   <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
 
 	{# Title and description #}
-	{% for endpoint in endpoints %}
-	{% if endpoint.selected %}
-	<br>
-		{{ onsCard({
-		    "id": 	endpoint.id,
-		    "textId": 	'text',
-		    "titleSize":endpoint.title_size,
-		    "titleClasses": 'header__title',
-		    "title": 	endpoint.title,
-		    "url": 	endpoint.url,
-		    "text": 	endpoint.description_text,
-		}) }}
-	<br>
-	{% endif %}
-	{% endfor %}
-
+	{{ customTitleAndDescription({
+		"endpoints": endpoints,
+	})}}
 
 	{% if results_page %}
 
