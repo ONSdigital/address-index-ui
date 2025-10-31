@@ -5,8 +5,12 @@ permissions:
 on:
   push:
     branches: [ '**' ]
+    branches-ignore:
+      - 'github-action-test-workflow'
   pull_request:
     branches: [ '**' ]
+    branches-ignore:
+      - 'github-action-test-workflow'
 
 jobs:
   build:
