@@ -1,5 +1,6 @@
 // Manage the clear button functionality on the radius search page
 
+import { syncPageWithCurrentInputs } from '/static/js/a_single_matches/radiussearch/interactive_map/map_setup.mjs';
 import { getDefaultValuesForPage } from '/static/js/e_all_pages/setup_defaults.mjs';
 import { setPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
@@ -36,7 +37,14 @@ function resetValuesToDefaults() {
 
   // Set the 'page previously searched values' in local storage to the default values
   setPageLocalValues('radiussearch', { pagePreviouslySearchedValues: defaultValues });
+
+  // Clear the 'most recently searched addresses' in local storage
+  setPageLocalValues('radiussearch', { mostRecentlySearchedAddresses: [] });
+
+  // Now trigger updates to the map and to search results
+  syncPageWithCurrentInputs();
 }
+
 export function setupClearButtonFunctionality() {
   console.log('Setting up clear button functionality');
   // Get a handle on the clear button

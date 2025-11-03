@@ -2,6 +2,7 @@ import { replaceDistancePlaceholderWithSearchValues } from '/static/js/macros/cu
 import { makePinIcon } from '/static/js/a_single_matches/radiussearch/interactive_map/map_pin_icons.mjs';
 import { setMapZoomInPageStorage,  getCurrentSearchLatValue, getCurrentSearchLonValue, getStartLatValue, getStartLonValue, getStartZoomValue } from './input_and_stored_values.mjs';
 import { getDefaultValuesForPage } from '/static/js/e_all_pages/setup_defaults.mjs';
+import { refreshSearchMarkersFromLocalStorage } from '/static/js/a_single_matches/radiussearch/interactive_map/result_address_markers.mjs';
 
 export const defaultStartValues = getDefaultValuesForPage('radiussearch');
 
@@ -116,15 +117,26 @@ export function updateLatLongSearchValues(lat, lon) {
   lonInput.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
+export function syncPageWithCurrentInputs() {
+  // Change location of search marker (triggers circle update too)
+  updateSearchMarkerLocation(getCurrentSearchLatValue(), getCurrentSearchLonValue());
+
+  // Center the map on the new marker
+  updateMapToFitCircle();
+
+  // Re-calculate distances for addresses already on the screen
+  replaceDistancePlaceholderWithSearchValues();
+
+  // Refresh the search markers from local storage
+  refreshSearchMarkersFromLocalStorage(map);
+}
+
 function updateMapFromLatLonChange(e) {
   if (!e.isTrusted) {
     // Ignore programmatic changes
     return;
   }
-  // Change location of search marker (triggers circle update too)
-  updateSearchMarkerLocation(getCurrentSearchLatValue(), getCurrentSearchLonValue());
-  // Center the map on the new marker
-  updateMapToFitCircle();
+  syncPageWithCurrentInputs();
 }
 
 // Update the MAP with change FROM THE INPUTS
@@ -170,5 +182,4 @@ export function setupZoomListeners(map) {
     setMapZoomInPageStorage(zoomLevel);
   });
 }
-
 
