@@ -11,6 +11,18 @@ function makeUprnErrorPanelVisible() {
   containerForUprnLookupPanelInfo.classList.add('invisible');
 }
 
+export function makeUprnResultsInvisible() {
+  const uprnResultContainer = document.querySelector('#complete-container-for-uprnLookupPanelInfo');
+  const uprnErrorContainer = document.querySelector('#complete-container-for-uprnLookupPanelError');
+
+  if (uprnResultContainer) {
+    uprnResultContainer.classList.add('invisible');
+  }
+  if (uprnErrorContainer) {
+    uprnErrorContainer.classList.add('invisible');
+  }
+}
+
 function makeUprnInfoPanelVisible() {
   // Make the info panel visible
   const containerForUprnLookupPanelInfo = document.querySelector('#complete-container-for-uprnLookupPanelInfo');

@@ -3,6 +3,7 @@
 import { syncPageWithCurrentInputs } from '/static/js/a_single_matches/radiussearch/interactive_map/map_setup.mjs';
 import { getDefaultValuesForPage } from '/static/js/e_all_pages/setup_defaults.mjs';
 import { setPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
+import { makeUprnResultsInvisible } from '/static/js/a_single_matches/radiussearch/uprn_helper.mjs';
 
 export function setupClearButtonFunctionality() {
   console.log('Setting up clear button functionality');
@@ -67,16 +68,3 @@ function clearResultsMessageAndTable() {
   hideMatchedMessage();
   removeResultsFromResultsTable();
 }
-
-function makeUprnResultsInvisible() {
-  const uprnResultContainer = document.querySelector('#complete-container-for-uprnLookupPanelInfo');
-  const uprnErrorContainer = document.querySelector('#complete-container-for-uprnLookupPanelError');
-
-  if (uprnResultContainer) {
-    uprnResultContainer.classList.add('invisible');
-  }
-  if (uprnErrorContainer) {
-    uprnErrorContainer.classList.add('invisible');
-  }
-}
-
