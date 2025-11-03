@@ -14,7 +14,8 @@ from .utils.multiple_match_file_upload_utils import check_valid_upload, validate
 from .utils.multiple_match_utils import get_results_display_type
 from .utils.submit_multiple_match_from_singlesearch import (
     multiple_address_match_from_singlesearch_display,
-    multiple_address_match_from_singlesearch_download)
+    multiple_address_match_from_singlesearch_download
+)
 
 page_name = 'multiple_address_original'
 
@@ -74,6 +75,7 @@ def multiple_address_original():
     try:
       full_results, line_count = multiple_address_match_from_singlesearch_download(
           file, all_user_input)
+
       return send_file(full_results,
                        mimetype='text/csv',
                        download_name=f'result_size_{line_count}.csv',
