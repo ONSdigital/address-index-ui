@@ -1,19 +1,21 @@
 // Manage the clear button functionality on the radius search page
 
+import { syncPageWithCurrentInputs } from '/static/js/a_single_matches/radiussearch/interactive_map/map_setup.mjs';
 import { getDefaultValuesForPage } from '/static/js/e_all_pages/setup_defaults.mjs';
 import { setPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
+import { makeUprnResultsInvisible } from '/static/js/a_single_matches/radiussearch/uprn_helper.mjs';
 
-function makeUprnResultsInvisible() {
-  const uprnResultContainer = document.querySelector('#complete-container-for-uprnLookupPanelInfo');
-  const uprnErrorContainer = document.querySelector('#complete-container-for-uprnLookupPanelError');
+export function setupClearButtonFunctionality() {
+  console.log('Setting up clear button functionality');
+  // Get a handle on the clear button
+  const clearButton = document.querySelector('#clear-form-data-button-id');
 
-  if (uprnResultContainer) {
-    uprnResultContainer.classList.add('invisible');
+  if (clearButton) {
+    clearButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      resetValuesToDefaults();
+    });
   }
-  if (uprnErrorContainer) {
-    uprnErrorContainer.classList.add('invisible');
-  }
-
 }
 
 function resetValuesToDefaults() {
@@ -36,16 +38,33 @@ function resetValuesToDefaults() {
 
   // Set the 'page previously searched values' in local storage to the default values
   setPageLocalValues('radiussearch', { pagePreviouslySearchedValues: defaultValues });
-}
-export function setupClearButtonFunctionality() {
-  console.log('Setting up clear button functionality');
-  // Get a handle on the clear button
-  const clearButton = document.querySelector('#clear-form-data-button-id');
 
-  if (clearButton) {
-    clearButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      resetValuesToDefaults();
-    });
+  // Clear the 'most recently searched addresses' in local storage
+  setPageLocalValues('radiussearch', { mostRecentlySearchedAddresses: [] });
+
+  // Now trigger updates to the map and to search results
+  syncPageWithCurrentInputs();
+
+  // Clear any results message and table
+  clearResultsMessageAndTable();
+}
+
+function hideMatchedMessage() {
+  const matchedMessageElement = document.querySelector('#container-for-we-matched-addresses-title');
+  matchedMessageElement.classList.add('invisible');
+}
+
+function removeResultsFromResultsTable() {
+  const resultsTable = document.querySelector('#address-results-table-short');
+  const resultsTableBody = resultsTable.querySelector('tbody');
+
+  // Remove all child elements from the tbody
+  while (resultsTableBody.firstChild) {
+    resultsTableBody.removeChild(resultsTableBody.firstChild);
   }
+}
+
+function clearResultsMessageAndTable() {
+  hideMatchedMessage();
+  removeResultsFromResultsTable();
 }
