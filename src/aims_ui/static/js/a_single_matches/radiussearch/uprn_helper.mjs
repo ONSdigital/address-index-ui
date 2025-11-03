@@ -1,5 +1,5 @@
 // JS to manage a clientside UPRN lookup to auto-fill lat/lon fields
-import { updateLatLongSearchValues } from "./interactive_map/map_setup.mjs";
+import { syncPageWithCurrentInputs, updateLatLongSearchValues } from "./interactive_map/map_setup.mjs";
 
 function makeUprnErrorPanelVisible() {
   // Make the error panel visible
@@ -133,6 +133,9 @@ export function setupUprnSearchFunctionality() {
     if (lat && lon) {
       console.log('Updating lat/lon inputs with:', lat, lon);
       updateLatLongSearchValues(lat, lon);
+
+      // Now the lat/long have been updated, we need to sync the page with the new inputs
+      syncPageWithCurrentInputs();
     }
   });
 };
