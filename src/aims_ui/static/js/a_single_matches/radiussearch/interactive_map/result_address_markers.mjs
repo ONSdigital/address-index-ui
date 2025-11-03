@@ -7,13 +7,15 @@ import { makePinIcon } from '/static/js/a_single_matches/radiussearch/interactiv
 
 const resultsMarkerIcon = makePinIcon("#a8bd3a");
 
-function getMatchedAddressesFromLocalStorage() {
-  // Get the most recent addresses from local storage
-  const localPageValues = getPageLocalValues('radiussearch');
+// Store the markers so we can remove them if needed
+const searchMarkers = [];
 
-  // Default to an empty array if not found
-  const addresses = localPageValues.mostRecentlySearchedAddresses || [];
-  return addresses;
+export function refreshSearchMarkersFromLocalStorage(map) {
+  // First delete any existing markers
+  deleteSearchMarkers(map);
+
+  // Now add the markers afresh
+  addMatchedAddressMarkersToMap(map);
 }
 
 export function addMatchedAddressMarkersToMap(map) {
@@ -24,6 +26,25 @@ export function addMatchedAddressMarkersToMap(map) {
     const { name, uprn, longitude: long, latitude: lat } = address;
 
     // The marker should be ONS colours and link to /address_info/{uprn}
-    L.marker([lat, long], {icon: resultsMarkerIcon} ).addTo(map).bindPopup(`${name} <br> <a href="/address_info/${uprn}">View Details</a>`);
+    const marker = L.marker([lat, long], {icon: resultsMarkerIcon} ).addTo(map).bindPopup(`${name} <br> <a href="/address_info/${uprn}">View Details</a>`);
+
+    searchMarkers.push(marker);
   }
+}
+
+function getMatchedAddressesFromLocalStorage() {
+  // Get the most recent addresses from local storage
+  const localPageValues = getPageLocalValues('radiussearch');
+
+  // Default to an empty array if not found
+  const addresses = localPageValues.mostRecentlySearchedAddresses || [];
+  return addresses;
+}
+
+function deleteSearchMarkers(map) {
+  for (const marker of searchMarkers) {
+    map.removeLayer(marker);
+  }
+
+  searchMarkers.length = 0;
 }
