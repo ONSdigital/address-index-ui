@@ -4,17 +4,17 @@ import { syncPageWithCurrentInputs } from '/static/js/a_single_matches/radiussea
 import { getDefaultValuesForPage } from '/static/js/e_all_pages/setup_defaults.mjs';
 import { setPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
-function makeUprnResultsInvisible() {
-  const uprnResultContainer = document.querySelector('#complete-container-for-uprnLookupPanelInfo');
-  const uprnErrorContainer = document.querySelector('#complete-container-for-uprnLookupPanelError');
+export function setupClearButtonFunctionality() {
+  console.log('Setting up clear button functionality');
+  // Get a handle on the clear button
+  const clearButton = document.querySelector('#clear-form-data-button-id');
 
-  if (uprnResultContainer) {
-    uprnResultContainer.classList.add('invisible');
+  if (clearButton) {
+    clearButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      resetValuesToDefaults();
+    });
   }
-  if (uprnErrorContainer) {
-    uprnErrorContainer.classList.add('invisible');
-  }
-
 }
 
 function resetValuesToDefaults() {
@@ -43,17 +43,40 @@ function resetValuesToDefaults() {
 
   // Now trigger updates to the map and to search results
   syncPageWithCurrentInputs();
+
+  // Clear any results message and table
+  clearResultsMessageAndTable();
 }
 
-export function setupClearButtonFunctionality() {
-  console.log('Setting up clear button functionality');
-  // Get a handle on the clear button
-  const clearButton = document.querySelector('#clear-form-data-button-id');
+function hideMatchedMessage() {
+  const matchedMessageElement = document.querySelector('#container-for-we-matched-addresses-title');
+  matchedMessageElement.classList.add('invisible');
+}
 
-  if (clearButton) {
-    clearButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      resetValuesToDefaults();
-    });
+function removeResultsFromResultsTable() {
+  const resultsTable = document.querySelector('#address-results-table-short');
+  const resultsTableBody = resultsTable.querySelector('tbody');
+
+  // Remove all child elements from the tbody
+  while (resultsTableBody.firstChild) {
+    resultsTableBody.removeChild(resultsTableBody.firstChild);
   }
 }
+
+function clearResultsMessageAndTable() {
+  hideMatchedMessage();
+  removeResultsFromResultsTable();
+}
+
+function makeUprnResultsInvisible() {
+  const uprnResultContainer = document.querySelector('#complete-container-for-uprnLookupPanelInfo');
+  const uprnErrorContainer = document.querySelector('#complete-container-for-uprnLookupPanelError');
+
+  if (uprnResultContainer) {
+    uprnResultContainer.classList.add('invisible');
+  }
+  if (uprnErrorContainer) {
+    uprnErrorContainer.classList.add('invisible');
+  }
+}
+
