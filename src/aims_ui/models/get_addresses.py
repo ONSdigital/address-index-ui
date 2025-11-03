@@ -11,7 +11,6 @@ def get_addresses(json_response,
 
   if called_from == 'uprn':
     response = json_response.get('response')
-    print('Response for UPRN address:', response)
     addresses = [
         Address(response,
                 include_hierarchy=True,
