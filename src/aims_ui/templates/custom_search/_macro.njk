@@ -223,7 +223,7 @@
     {% if endpoint.selected %}
   	<br>
   	{{ onsButton({
-  		'text': 'Clear  filters',
+		"text": "Clear Filters" if not params.override_clear_filters_button_text else params.override_clear_filters_button_text, 
 		'submitType': "loader",
 		'variants': 'secondary',
 		'url': endpoint.url | replace("_original",""),

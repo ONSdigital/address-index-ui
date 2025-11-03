@@ -1,5 +1,5 @@
 // JS to manage a clientside UPRN lookup to auto-fill lat/lon fields
-import { updateLatLongSearchValues } from "./interactive_map/map_setup.mjs";
+import { syncPageWithCurrentInputs, updateLatLongSearchValues } from "./interactive_map/map_setup.mjs";
 
 function makeUprnErrorPanelVisible() {
   // Make the error panel visible
@@ -9,6 +9,18 @@ function makeUprnErrorPanelVisible() {
   // Now make the info panel invisible
   const containerForUprnLookupPanelInfo = document.querySelector('#complete-container-for-uprnLookupPanelInfo');
   containerForUprnLookupPanelInfo.classList.add('invisible');
+}
+
+export function makeUprnResultsInvisible() {
+  const uprnResultContainer = document.querySelector('#complete-container-for-uprnLookupPanelInfo');
+  const uprnErrorContainer = document.querySelector('#complete-container-for-uprnLookupPanelError');
+
+  if (uprnResultContainer) {
+    uprnResultContainer.classList.add('invisible');
+  }
+  if (uprnErrorContainer) {
+    uprnErrorContainer.classList.add('invisible');
+  }
 }
 
 function makeUprnInfoPanelVisible() {
@@ -133,6 +145,9 @@ export function setupUprnSearchFunctionality() {
     if (lat && lon) {
       console.log('Updating lat/lon inputs with:', lat, lon);
       updateLatLongSearchValues(lat, lon);
+
+      // Now the lat/long have been updated, we need to sync the page with the new inputs
+      syncPageWithCurrentInputs();
     }
   });
 };

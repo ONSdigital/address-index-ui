@@ -58,5 +58,13 @@ we need to use CSS to layout the page correctly */
 #mapContainer {
   width: 50%;
   height: 50%;
+
+  /* Make the map container sticky*/
+  position: sticky;
+  top: 0;
+  align-self: flex-start; /* Don't stretch inside flex */
+  height: fit-content; /* Don't expand automatically */
+  /* End sticky styles */
+
 }
 
