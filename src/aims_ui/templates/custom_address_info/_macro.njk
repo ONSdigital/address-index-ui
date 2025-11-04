@@ -3,85 +3,37 @@
 {% from 'custom_clerical_data/_macro.njk' import customClericalData %}
 {% from "components/table/_macro.njk" import onsTable %}
 
-{% if params.compressed_view == True %}
-  {# Compressed view only includes the name, geo and "distance" for the radius search page #}
+{# Add the smaller cards, used on the overview when a search is done #}
+{% for address in params.matched_addresses %}
 
-  <table id="address-results-table-short" class="address-table ons-table">
-    <thead class="ons-table__head">
-      <tr class="ons-table__row">
-        <th class="ons-table__header"><span class="ons-table__header-text">Name</span></th>
-        <th class="ons-table__header"><span class="ons-table__header-text">Latitude</span></th>
-        <th class="ons-table__header"><span class="ons-table__header-text">Longitude</span></th>
-        <th class="ons-table__header"><span class="ons-table__header-text">Distance</span></th>
-      </tr>
-    </thead>
-    <tbody class="ons-table__body">
-      {% for address in params.matched_addresses %}
-        <tr class="ons-table__row">
-          <td class="ons-table__cell">
-          <a href="/address_info/{{ address.uprn.value }}">
-            {{ address.formatted_address.value }}
-          </a></td>
-          <td class="ons-table__cell">{{ address.geo.value.latitude }}</td>
-          <td class="ons-table__cell">{{ address.geo.value.longitude}}</td>
-          <td class="distance_attribute ons-table__cell" 
-            myLat="{{ address.geo.value.latitude}}"
-            myLon="{{ address.geo.value.longitude}}"
-            >NA</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <article class="result-short-form">
+    <a href={{'/address_info/' + address.uprn.value }}>
 
-  {# Script to populate the table above with previous results ONLY if it's not a results page #}
-  {% if params.results_page != True %}
-    <script type="module">
-    import { loadPreviousValuesForCompressedTableView } from '/static/js/macros/custom_address_info/load_previous_values.mjs';
+    <h2 hidden id="formattedAddress" class="saturn address-titles"> 
+      {{ address.formatted_address.value }} </h2>
 
-    const page_name = '{{ params.page_name }}';
-    loadPreviousValuesForCompressedTableView(page_name);
-    </script>
+    <h2 hidden id="formattedAddressNag" class="saturn address-titles"> 
+      {{ address.formatted_address_nag.value }} </h2>
 
+    <h2 hidden id="formattedAddressPaf" class="saturn address-titles"> 
+      {{ address.formatted_address_paf.value }} </h2>
+    </a>
+        <table class='clerical-data-table'> <tbody id='{{address.uprn.value}}'>
+
+  {% for attribute_name, address_attribute in address.__dict__.items() %}
+  {% if address_attribute.show %}
+    <tr><td class="mars">{{ attribute_name }}</td>
+        <td class="venus">{{ address_attribute.value }}</td>
+    </tr>
   {% endif %}
-
-  {# Script that will populate the "Distance" value #}
-  <script type=module src="static/js/macros/custom_address_info/distance_calculator.mjs"></script>
-
-{% else %}
-  {# Add the smaller cards, used on the overview when a search is done #}
-  {% for address in params.matched_addresses %}
-
-    <article class="result-short-form">
-      <a href={{'/address_info/' + address.uprn.value }}>
-
-      <h2 hidden id="formattedAddress" class="saturn address-titles"> 
-        {{ address.formatted_address.value }} </h2>
-
-      <h2 hidden id="formattedAddressNag" class="saturn address-titles"> 
-        {{ address.formatted_address_nag.value }} </h2>
-
-      <h2 hidden id="formattedAddressPaf" class="saturn address-titles"> 
-        {{ address.formatted_address_paf.value }} </h2>
-      </a>
-          <table class='clerical-data-table'> <tbody id='{{address.uprn.value}}'>
-
-    {% for attribute_name, address_attribute in address.__dict__.items() %}
-    {% if address_attribute.show %}
-      <tr><td class="mars">{{ attribute_name }}</td>
-          <td class="venus">{{ address_attribute.value }}</td>
-      </tr>
-    {% endif %}
-    {% endfor %}
-    <tbody> </table>
-    {#https://stackoverflow.com/questions/32806084/google-map-zoom-parameter-in-url-not-working#}
-        <p class="mars"><a href=" {{ 'https://maps.google.com/?q=' + address.geo.value.get('latitude') + ',' + address.geo.value.get('longitude') + '&ll=' +  address.geo.value.get('latitude') + ',' + address.geo.value.get('longitude') + '&z=18' +'&basemap=satellite' }}"
-        >Location Map</a></p>
-    </article>
-
   {% endfor %}
-{% endif %}
+  <tbody> </table>
+  {#https://stackoverflow.com/questions/32806084/google-map-zoom-parameter-in-url-not-working#}
+      <p class="mars"><a href=" {{ 'https://maps.google.com/?q=' + address.geo.value.get('latitude') + ',' + address.geo.value.get('longitude') + '&ll=' +  address.geo.value.get('latitude') + ',' + address.geo.value.get('longitude') + '&z=18' +'&basemap=satellite' }}"
+      >Location Map</a></p>
+  </article>
 
-
+{% endfor %}
 
 <script>
   function getFavourites() {
