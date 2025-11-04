@@ -36,7 +36,7 @@ def adjust_parameter_for_each_page(params, called_from_page_name):
   # If the page is for multiple addresses, enforce "verbose=False" for speed
   if (called_from_page_name == 'multiple'):
     # Always set verbose to False
-    params['verbose'] = 'False'
+    params['verbose'] = 'false'
 
     # Strip the 'input' parameter of quotes and 's at the start and end
     params['input'] = params.get('input', '').strip('"').strip("'")
