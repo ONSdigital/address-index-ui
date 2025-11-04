@@ -38,6 +38,9 @@ def adjust_parameter_for_each_page(params, called_from_page_name):
     # Always set verbose to False
     params['verbose'] = 'False'
 
+    # Strip the 'input' parameter of quotes and 's at the start and end
+    params['input'] = params.get('input', '').strip('"').strip("'")
+
   if (called_from_page_name == 'radiussearch'):
     # If the input is blank, ensure that a blank input is still sent!
     if not params.get('input'):
