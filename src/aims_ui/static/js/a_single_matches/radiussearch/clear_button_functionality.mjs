@@ -4,6 +4,7 @@ import { syncPageWithCurrentInputs } from '/static/js/a_single_matches/radiussea
 import { getDefaultValuesForPage } from '/static/js/e_all_pages/setup_defaults.mjs';
 import { setPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 import { makeUprnResultsInvisible } from '/static/js/a_single_matches/radiussearch/uprn_helper.mjs';
+import { makeDownloadButtonContainerInvisible } from '/static/js/macros/custom_download_results_from_local_storage/init.mjs';
 
 export function setupClearButtonFunctionality() {
   console.log('Setting up clear button functionality');
@@ -47,6 +48,9 @@ function resetValuesToDefaults() {
 
   // Clear any results message and table
   clearResultsMessageAndTable();
+
+  // Hide the download button container
+  makeDownloadButtonContainerInvisible();
 }
 
 function hideMatchedMessage() {
