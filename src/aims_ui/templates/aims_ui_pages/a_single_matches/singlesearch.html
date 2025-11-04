@@ -9,6 +9,7 @@
 {% from 'custom_address_info/_macro.njk' import customAddressInfo %}
 {% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
 {% from 'custom_title_and_description/_macro.njk' import customTitleAndDescription %}
+{% from 'custom_download_results_from_local_storage/_macro.njk' import customDownloadResultsFromLocalStorage %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -66,6 +67,10 @@
 
 	{{ customAddressInfo ({
 		'matched_addresses': matched_addresses,
+		}) }}
+
+		{{ customDownloadResultsFromLocalStorage({
+			"page_name": page_name,
 		}) }}
 
 </div>
