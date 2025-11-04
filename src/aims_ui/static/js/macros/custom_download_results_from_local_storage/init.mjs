@@ -17,10 +17,16 @@ function setupDownloadButtonListeners(page_name) {
   });
 }
 
-function makeVisibleIfThereAreResults() {
+function makeDownloadButtonContainerVisible() {
   // Get a handle on the container
   const container = document.querySelector('#container-for-download-address-results-button');
   container.classList.remove('invisible');
+}
+
+export function makeDownloadButtonContainerInvisible() {
+  // Get a handle on the container
+  const container = document.querySelector('#container-for-download-address-results-button');
+  container.classList.add('invisible');
 }
 
 export function init(page_name) {
@@ -28,6 +34,6 @@ export function init(page_name) {
   const previousAddresses = localPageValues.mostRecentlySearchedAddresses || [];
   if (previousAddresses.length > 0) {
     setupDownloadButtonListeners(page_name);
-    makeVisibleIfThereAreResults(previousAddresses);
+    makeDownloadButtonContainerVisible(previousAddresses);
   }
 }
