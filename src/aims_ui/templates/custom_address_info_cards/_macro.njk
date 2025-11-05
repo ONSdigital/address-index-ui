@@ -2,112 +2,52 @@
 {% from 'components/label/_macro.njk' import onsLabel %}
 {% from "components/table/_macro.njk" import onsTable %}
 
-<h1>NEW CARDS</h1>
-{# Add the smaller cards, used on the overview when a search is done #}
-{% for address in params.matched_addresses %}
+{# Create a template for address info, and a container for them #}
+{#   then run the scripts to populate the cards #}
 
+
+{# Deffine the container #}
+<div id="container-for-address-cards">
+</div>
+
+{# Deffine the template #}
+<template id='template-for-address-info-card'>
+
+  <!-- Clickable title (title is in the paf/nag format the user chooses) -->
   <article class="result-short-form">
-    <a href={{'/address_info/' + address.uprn.value }}>
-
-    <h2 hidden id="formattedAddress" class="saturn address-titles"> 
-      {{ address.formatted_address.value }} </h2>
-
-    <h2 hidden id="formattedAddressNag" class="saturn address-titles"> 
-      {{ address.formatted_address_nag.value }} </h2>
-
-    <h2 hidden id="formattedAddressPaf" class="saturn address-titles"> 
-      {{ address.formatted_address_paf.value }} </h2>
+    <a id='link-to-address-info-uprn'>
+      <h2 id='name-of-address-user-dictated'></h2>
     </a>
-        <table class='clerical-data-table'> <tbody id='{{address.uprn.value}}'>
 
-  {% for attribute_name, address_attribute in address.__dict__.items() %}
-  {% if address_attribute.show %}
-    <tr><td class="mars">{{ attribute_name }}</td>
-        <td class="venus">{{ address_attribute.value }}</td>
-    </tr>
-  {% endif %}
-  {% endfor %}
-  <tbody> </table>
+  <!-- Table for key/value pairs for each address depending on favourites -->
+   <table class='clerical-data-table'> 
+    <tbody id="table-body-for-address-attributes">
+
+      <tr id="example-table-row"> 
+        <td id='attribute-name-placeholder' class="mars"></td> 
+        <td id='attribute-value-placeholder' class="venus"></td>
+      </tr>
+
+    <tbody>
+  </table>
+  
+  <!-- Link to the location on Google Maps (perhaps to the Radius Search in future?) -->
   {#https://stackoverflow.com/questions/32806084/google-map-zoom-parameter-in-url-not-working#}
-      <p class="mars"><a href=" {{ 'https://maps.google.com/?q=' + address.geo.value.get('latitude') + ',' + address.geo.value.get('longitude') + '&ll=' +  address.geo.value.get('latitude') + ',' + address.geo.value.get('longitude') + '&z=18' +'&basemap=satellite' }}"
-      >Location Map</a></p>
+  <p class="mars">
+    <a id="link-to-address-on-map">Location Map</a>
+  </p>
+
   </article>
 
-{% endfor %}
+</template>
 
-<script>
-  function getFavourites() {
-    const defaultFavs = {"uprn":true,"classification_code":true,"classification_code_list":true,"lpi_logical_status":true};
-    const favs = localStorage.getItem('favourites');
-    if (favs) {
-      return JSON.parse(favs);
-    } else {
-      localStorage.setItem('favourites', JSON.stringify(defaultFavs));
-      return {};
-    }
-  }
+{# Script to fill the details into each template #}
+<script type="module">
+  import { init } from '/static/js/macros/custom_address_info_cards/init.mjs';
 
-  const localFavourites = getFavourites();
-  function getLocalFav(name) {
-    if (localFavourites[name] === true) {
-      return true
-    } else {
-      return false
-    }
-  }
-  const addresses = {};
-  const address = {};
-  const paf = {};
-  const nag = {};
-  let x = {};
+  const page_name = '{{ params.page_name }}';
+  init(page_name);
 </script>
-
-{% for address in params.matched_addresses %}
-	{% for attribute_name, address_attribute in address.__dict__.items() %}
-    <script> 
-      address['{{attribute_name}}'] = {value:`{{address_attribute.value}}`,
-                favourite: getLocalFav('{{attribute_name}}')};
-    </script>
-
-    {# PAF AND NAG EXCEPTIONS #}
-      {% if attribute_name == 'paf'  %}
-        {% for paf_attribute_name, paf_attribute_value in address_attribute.value.__dict__.items() %}
-          <script>
-            address['[paf]{{paf_attribute_name}}'] = {value:`{{paf_attribute_value.value}}`,
-                 favourite: getLocalFav('[paf]{{paf_attribute_name}}')}; 
-          </script>
-         {% endfor %}
-      {% endif %}
-
-      {% if attribute_name == 'nag'  %}
-        {% for nag_attribute_name, nag_attribute_value in address_attribute.value.__dict__.items() %}
-          <script>
-            address['[nag]{{nag_attribute_name}}'] = {value:`{{nag_attribute_value.value}}`,
-                 favourite: getLocalFav('[nag]{{nag_attribute_name}}')}; 
-          </script>
-         {% endfor %}
-      {% endif %}
-
-      <script>
-        if ('{{attribute_name}}' === 'paf') {
-          address['[paf]{{attribute_name}}'] = {...paf};
-        }
-        if ('{{attribute_name}}' === 'nag') {
-          address['[nag]{{attribute_name}}'] = {...nag};
-        }
-      </script>
-    {# END PAF AND NAG EXCEPTIONS #}
-
-  {% endfor %}
-  <script>
-    copyOfAddress = {...address};
-    addresses[`{{address.uprn.value}}`] = copyOfAddress;
-  </script>
-
-{% endfor %}
-
-{# Script to add the favourite attributes below each address #}
-<script type=module src="/static/js/macros/custom_address_info_cards/favourites_star_and_local_storage.mjs"></script>
 
 {# Add styles that create gaps between cards #}
 <link rel="stylesheet" href="/static/css/custom_macros/custom_address_info_cards.css">
