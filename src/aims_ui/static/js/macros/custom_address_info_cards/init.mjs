@@ -16,6 +16,7 @@ function createTemplates(addressObjects) {
 
 export function init(page_name) {
   const pageLocalValues = getPageLocalValues(page_name);
+  const addresses = pageLocalValues.mostRecentlySearchedAddresses || [];
 
-  createTemplates(pageLocalValues.mostRecentlySearchedAddresses);
+  createTemplates(addresses);
 }
