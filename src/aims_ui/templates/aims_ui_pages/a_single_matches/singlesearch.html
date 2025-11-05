@@ -6,7 +6,7 @@
 {% from "components/panel/_macro.njk" import onsPanel %}
 
 {% from 'custom_search/_macro.njk' import customSearch %}
-{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+{% from 'custom_address_info_cards/_macro.njk' import customAddressInfoCards %}
 {% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
 {% from 'custom_title_and_description/_macro.njk' import customTitleAndDescription %}
 {% from 'custom_download_results_from_local_storage/_macro.njk' import customDownloadResultsFromLocalStorage %}
@@ -65,7 +65,7 @@
 	  <h2>We matched {{matched_address_number}}  addresses:</h2>
 	{% endif %}
 
-	{{ customAddressInfo ({
+	{{ customAddressInfoCards ({
 		'matched_addresses': matched_addresses,
 		}) }}
 
