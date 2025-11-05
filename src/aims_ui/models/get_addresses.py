@@ -22,7 +22,6 @@ def get_addresses(json_response,
       called_from == 'custom_response') or (called_from == 'radiussearch'):
     response = (json_response.get('response'))
     address_json = response.get('addresses')
-    print(f'Addresses from the API are: {address_json}')
 
     for address in address_json:
       addresses.append(Address({'address': address}))
