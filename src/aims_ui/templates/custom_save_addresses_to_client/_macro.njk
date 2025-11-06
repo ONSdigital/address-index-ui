@@ -29,23 +29,26 @@
       {# Attributes that generate content (like hirderachey) should be missed here #}
 
       addAddressToLargeList({
-        // High level attributes (common)
+        // High level attributes (in order of clerical information page)
         uprn: {{ address.uprn.value | tojson }},
         formattedAddress: {{ address.formatted_address.value | tojson }},
-        longitude: {{ address.geo.value.longitude | tojson }},
-        latitude: {{ address.geo.value.latitude  | tojson }},
-        confidenceScore: {{ address.confidence_score.value | tojson }},
-        underlyingScore: {{ address.underlying_score.value | tojson }},
         parentUprn: {{ address.parent_uprn.value | tojson }},
-
-        // High level attributes (less vibey)
-        formattedAddressNag: {{ address.formatted_address_nag.value | tojson }},
-        formattedAddressPaf: {{ address.formatted_address_paf.value | tojson }},
         welshFormattedAddressNag: {{ address.welsh_formatted_address_nag.value | tojson }},
         welshFormattedAddressPaf: {{ address.welsh_formatted_address_paf.value | tojson }},
+        formattedAddressNag: {{ address.formatted_address_nag.value | tojson }},
+        formattedAddressPaf: {{ address.formatted_address_paf.value | tojson }},
+
+        // Not "GEO" here but longitude and latitude seperately
+        longitude: {{ address.geo.value.longitude | tojson }},
+        latitude: {{ address.geo.value.latitude  | tojson }},
+
         classificationCode: {{ address.classification_code.value | tojson }},
+        classificationCodeList: {{ address.classification_code_list.value | tojson }},
         countryCode: {{ address.country_code.value | tojson }},
         lpiLogicalStatus: {{ address.lpi_logical_status.value | tojson }},
+
+        confidenceScore: {{ address.confidence_score.value | tojson }},
+        underlyingScore: {{ address.underlying_score.value | tojson }},
 
       });
     {% endfor %}
