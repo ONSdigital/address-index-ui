@@ -1,6 +1,6 @@
 // Scripts to fill the template info for each address
 
-const keysToShow = ['formattedAddress', 'uprn', 'confidenceScore', 'underlyingScore'];
+const keysToShow = ['lpiLogicalStatus', 'formattedAddress', 'uprn', 'confidenceScore', 'underlyingScore'];
 
 function getTitleText(addressObject) {
   // The user might have set a preference for PAF or NAG
