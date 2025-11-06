@@ -89,6 +89,32 @@
           localCustodianGeogCode: {{ address.nag.value.localCustodianGeogCode.value | tojson }},
           lpiEndDate: {{ address.nag.value.lpiEndDate.value | tojson }},
           lpiStartDate: {{ address.nag.value.lpiStartDate.value | tojson }},
+        },
+
+        // Now save the PAF (Postoffice Address Format)
+        paf: {
+          udprn: {{ address.paf.value.udprn.value | tojson }},
+          organisationName: {{ address.paf.value.organisationName.value | tojson }},
+          departmentName: {{ address.paf.value.departmentName.value | tojson }},
+          subBuildingName: {{ address.paf.value.subBuildingName.value | tojson }},
+          buildingName: {{ address.paf.value.buildingName.value | tojson }},
+          buildingNumber: {{ address.paf.value.buildingNumber.value | tojson }},
+          dependentThoroughfare: {{ address.paf.value.dependentThoroughfare.value | tojson }},
+          thoroughfare: {{ address.paf.value.thoroughfare.value | tojson }},
+          doubleDependentLocality: {{ address.paf.value.doubleDependentLocality.value | tojson }},
+          dependentLocality: {{ address.paf.value.dependentLocality.value | tojson }},
+          postTown: {{ address.paf.value.postTown.value | tojson }},
+          postcode: {{ address.paf.value.postcode.value | tojson }},
+          postcodeType: {{ address.paf.value.postcodeType.value | tojson }},
+          deliveryPointSuffix: {{ address.paf.value.deliveryPointSuffix.value | tojson }},
+          welshDependentThoroughfare: {{ address.paf.value.welshDependentThoroughfare.value | tojson }},
+          welshThoroughfare: {{ address.paf.value.welshThoroughfare.value | tojson }},
+          welshDoubleDependentLocality: {{ address.paf.value.welshDoubleDependentLocality.value | tojson }},
+          welshDependentLocality: {{ address.paf.value.welshDependentLocality.value | tojson }},
+          welshPostTown: {{ address.paf.value.welshPostTown.value | tojson }},
+          poBoxNumber: {{ address.paf.value.poBoxNumber.value | tojson }},
+          startDate: {{ address.paf.value.startDate.value | tojson }},
+          endDate: {{ address.paf.value.endDate.value | tojson }},
         }
 
       });
