@@ -218,19 +218,24 @@
 {% endif %}
 
 {% if params.remove_clear_button != True %}
-  {# Add a clear filters button with a url to the currently selected endpoint #}
-  {% for endpoint in params.endpoints %}
-    {% if endpoint.selected %}
-  	<br>
-  	{{ onsButton({
-		"text": "Clear Filters" if not params.override_clear_filters_button_text else params.override_clear_filters_button_text, 
-		'submitType': "loader",
-		'variants': 'secondary',
-		'url': endpoint.url | replace("_original",""),
-		'id': 'clear-form-data-button-id',
+	<br>
+  {# Create the clear button #}
+	{{ onsButton({
+	"text": "Clear Filters" if not params.override_clear_filters_button_text else params.override_clear_filters_button_text, 
+	'submitType': "loader",
+	'variants': 'secondary',
+	'id': 'clear-form-data-button-id',
 	}) }}
-    {% endif %}
-  {% endfor %}
+
+  {# Add functionality to the clear button #}
+	<script type="module">
+  import { setupClearButton } from '/static/js/macros/custom_search/clear_button.mjs';
+
+  const page_name = '{{ params.page_name }}';
+  setupClearButton(page_name);
+  </script>
+
+
 {% endif %}
 
 {% endif %}
