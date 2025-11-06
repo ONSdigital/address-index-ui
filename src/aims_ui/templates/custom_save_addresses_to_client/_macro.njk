@@ -28,6 +28,8 @@
       {# This should only include attributes a user might want to see raw #}
       {# Attributes that generate content (like hirderachey) should be missed here #}
 
+      console.log();
+
       addAddressToLargeList({
         // High level attributes (in order of clerical information page)
         uprn: {{ address.uprn.value | tojson }},
@@ -49,6 +51,45 @@
 
         confidenceScore: {{ address.confidence_score.value | tojson }},
         underlyingScore: {{ address.underlying_score.value | tojson }},
+
+        // Now do the NAG (National Address Gazzetter) attributes for an address
+        nag: {
+          uprn: {{ address.nag.value.uprn.value | tojson }},
+          postcodeLocator: {{ address.nag.value.postcodeLocator.value | tojson }},
+          addressBasePostal: {{ address.nag.value.addressBasePostal.value | tojson }},
+          usrn: {{ address.nag.value.usrn.value | tojson }},
+          lpiKey: {{ address.nag.value.lpiKey.value | tojson }},
+
+          pao: {
+            paoText: {{ address.nag.value.pao.paoText | tojson }},
+            paoStartNumber: {{ address.nag.value.pao.paoStartNumber | tojson }},
+            paoStartSuffix: {{ address.nag.value.pao.paoStartSuffix | tojson }},
+            paoEndNumber: {{ address.nag.value.pao.paoEndNumber | tojson }},
+            paoEndSuffix: {{ address.nag.value.pao.paoEndSuffix | tojson }},
+          },
+
+          sao: {
+            saoText: {{ address.nag.value.sao.saoText | tojson }},
+            saoStartNumber: {{ address.nag.value.sao.saoStartNumber | tojson }},
+            saoStartSuffix: {{ address.nag.value.sao.saoStartSuffix | tojson }},
+            saoEndNumber: {{ address.nag.value.sao.saoEndNumber | tojson }},
+            saoEndSuffix: {{ address.nag.value.sao.saoEndSuffix | tojson }},
+          },
+
+          level: {{ address.nag.value.level.value | tojson }},
+          officialFlag: {{ address.nag.value.officialFlag.value | tojson }},
+          logicalStatus: {{ address.nag.value.logicalStatus.value | tojson }},
+          streetDescriptor: {{ address.nag.value.streetDescriptor.value | tojson }},
+          townName: {{ address.nag.value.townName.value | tojson }},
+          locality: {{ address.nag.value.locality.value | tojson }},
+          organisation: {{ address.nag.value.organisation.value | tojson }},
+          legalName: {{ address.nag.value.legalName.value | tojson }},
+          localCustodianCode: {{ address.nag.value.localCustodianCode.value | tojson }},
+          localCustodianName: {{ address.nag.value.localCustodianName.value | tojson }},
+          localCustodianGeogCode: {{ address.nag.value.localCustodianGeogCode.value | tojson }},
+          lpiEndDate: {{ address.nag.value.lpiEndDate.value | tojson }},
+          lpiStartDate: {{ address.nag.value.lpiStartDate.value | tojson }},
+        }
 
       });
     {% endfor %}
