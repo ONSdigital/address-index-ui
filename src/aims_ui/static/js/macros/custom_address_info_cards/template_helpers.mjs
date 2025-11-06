@@ -35,10 +35,12 @@ function setupAttributesTable(addressCard, addressObject) {
   for (const key of keysToShow) {
     // Clone the example row
     const rowClone = exampleRow.cloneNode(true);
+    // Remove the "rowClone" id to avoid duplicates
+    rowClone.removeAttribute('id');
 
     // Get handles on the name and value cells
-    const nameCell = rowClone.querySelector('#attribute-name-placeholder');
-    const valueCell = rowClone.querySelector('#attribute-value-placeholder');
+    const nameCell = rowClone.querySelector('.attribute-name-placeholder');
+    const valueCell = rowClone.querySelector('.attribute-value-placeholder');
     nameCell.textContent = key;
     // Default to blank if no value
     valueCell.textContent = addressObject[key] || '';
