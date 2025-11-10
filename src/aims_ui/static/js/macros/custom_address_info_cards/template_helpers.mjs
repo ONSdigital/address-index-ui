@@ -54,7 +54,7 @@ function setupAttributesTable(addressCardHtmlObject, addressObject) {
   exampleRow.remove();
 }
 
-export function createATemplate(addressObject) {
+export function createATemplate(addressObject, page_name) {
   // Given a single address object
 
   // Clone the template
@@ -71,7 +71,7 @@ export function createATemplate(addressObject) {
   setupAttributesTable(addressCardHtmlObject, addressObject);
 
   // Setup the dropdown for all info
-  addDropdownAllInfo(addressCardHtmlObject, addressObject);
+  addDropdownAllInfo(addressCardHtmlObject, addressObject, page_name);
 
   return addressCardHtmlObject;
 }
