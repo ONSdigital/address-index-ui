@@ -1,3 +1,5 @@
+import { addDropdownAllInfo } from '/static/js/macros/custom_address_info_cards/template_dropdown_helpers.mjs';
+
 // Scripts to fill the template info for each address
 
 const keysToShow = ['lpiLogicalStatus', 'formattedAddress', 'uprn', 'confidenceScore', 'underlyingScore'];
@@ -8,29 +10,29 @@ function getTitleText(addressObject) {
   return addressObject.formattedAddress;
 }
 
-function setupTitleAndLink(addressCard, addressObject) {
+function setupTitleAndLink(addressCardHtmlObject, addressObject) {
   // Get a handle on the link and add href
-  const link = addressCard.querySelector('#link-to-address-info-uprn');
+  const link = addressCardHtmlObject.querySelector('#link-to-address-info-uprn');
   link.href = '/address_info/' + addressObject.uprn;
 
   // Get a handle on the title and set text
-  const title = addressCard.querySelector('#name-of-address-user-dictated');
+  const title = addressCardHtmlObject.querySelector('#name-of-address-user-dictated');
   title.textContent = getTitleText(addressObject);
 }
 
-function setupMapsLink(addressCard, addressObject) {
+function setupMapsLink(addressCardHtmlObject, addressObject) {
   // Get a handle on the maps link
-  const mapLinkElement = addressCard.querySelector('#link-to-address-on-map');
+  const mapLinkElement = addressCardHtmlObject.querySelector('#link-to-address-on-map');
   const mapUrl = 'https://maps.google.com/?q=' + addressObject.latitude + ',' + addressObject.longitude + '&ll=' +  addressObject.latitude + ',' + addressObject.longitude + '&z=18' +'&basemap=satellite';
   mapLinkElement.href = mapUrl;
 }
 
-function setupAttributesTable(addressCard, addressObject) {
+function setupAttributesTable(addressCardHtmlObject, addressObject) {
   // Get a handle on the table body
-  const tableBody = addressCard.querySelector('#table-body-for-address-attributes');
+  const tableBody = addressCardHtmlObject.querySelector('#table-body-for-address-attributes');
 
   // Copy the example row 
-  const exampleRow = addressCard.querySelector('#example-table-row');
+  const exampleRow = addressCardHtmlObject.querySelector('#example-table-row');
 
   for (const key of keysToShow) {
     // Clone the example row
@@ -57,16 +59,19 @@ export function createATemplate(addressObject) {
 
   // Clone the template
   const template = document.querySelector('#template-for-address-info-card');
-  const addressCard = template.content.cloneNode(true);
+  const addressCardHtmlObject= template.content.cloneNode(true);
 
   // Fill in the static details
-  setupTitleAndLink(addressCard, addressObject);
+  setupTitleAndLink(addressCardHtmlObject, addressObject);
 
   // Setup the maps link
-  setupMapsLink(addressCard, addressObject);
+  setupMapsLink(addressCardHtmlObject, addressObject);
 
   // Setup the attributes values table
-  setupAttributesTable(addressCard, addressObject);
+  setupAttributesTable(addressCardHtmlObject, addressObject);
 
-  return addressCard;
+  // Setup the dropdown for all info
+  addDropdownAllInfo(addressCardHtmlObject, addressObject);
+
+  return addressCardHtmlObject;
 }
