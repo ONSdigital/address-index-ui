@@ -13,6 +13,7 @@
 {% from 'custom_address_info_cards/_macro.njk' import customAddressInfoCards %}
 {% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
 {% from 'custom_download_results_from_local_storage/_macro.njk' import customDownloadResultsFromLocalStorage %}
+{% from 'custom_search/_macro.njk' import customSearch %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -104,15 +105,13 @@
     ] }) }}
 <br>
 
-{{  onsButton({
-	"text": "Search", }) }}
-{{ onsButton({
-	'text': 'Clear  filters',
-	'submitType': "loader",
-	'variants': 'secondary',
-	'url': '/custom_response',
-	'id': 'clear-form-data-button-id',
-}) }}
+{# With no fields, this will just return the search and clear buttons #}
+{{ customSearch ({ "Fields": searchable_fields,
+		   "endpoints": endpoints, 
+		   "page_name": page_name,
+		   "remove_search_button":False,
+       "results_page": results_page, }) }}
+
 
 </form>
 <br>
