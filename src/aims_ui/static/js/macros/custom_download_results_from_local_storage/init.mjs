@@ -29,11 +29,24 @@ export function makeDownloadButtonContainerInvisible() {
   container.classList.add('invisible');
 }
 
-export function init(page_name) {
+function setupDownloadButton(page_name) {
   const localPageValues = getPageLocalValues(page_name);
   const previousAddresses = localPageValues.mostRecentlySearchedAddresses || [];
+
   if (previousAddresses.length > 0) {
     setupDownloadButtonListeners(page_name);
     makeDownloadButtonContainerVisible(previousAddresses);
+  } else {
+    makeDownloadButtonContainerInvisible();
   }
+}
+
+export function init(page_name) {
+  // Setup event listener for 'refreshDownloadButton'
+  document.addEventListener('refreshDownloadButton', () => {
+    setupDownloadButton(page_name);
+  });
+
+  // Initially also run setup of download button
+  setupDownloadButton(page_name);
 }

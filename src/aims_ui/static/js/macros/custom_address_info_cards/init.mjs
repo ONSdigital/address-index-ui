@@ -14,9 +14,28 @@ function createTemplates(addressObjects) {
   }
 }
 
-export function init(page_name) {
+function deleteExistingCards() {
+  const container = document.querySelector('#container-for-address-cards');
+  container.replaceChildren(); // Remove all existing children
+}
+
+function refreshAddressInfoCards(page_name) {
+  // Clear any existing cards
+  deleteExistingCards();
+
+  // Get the addresses from local storage
   const pageLocalValues = getPageLocalValues(page_name);
   const addresses = pageLocalValues.mostRecentlySearchedAddresses || [];
 
   createTemplates(addresses);
+}
+
+export function init(page_name) {
+  // Setup an event listener for the custom event 'refreshAddressInfoCards'
+  document.addEventListener('refreshAddressInfoCards', () => {
+    refreshAddressInfoCards(page_name);
+  });
+
+  // Initially also run the refresh to load any existing cards
+  refreshAddressInfoCards(page_name);
 }
