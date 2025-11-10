@@ -1,15 +1,30 @@
 {% macro customAddressInfoCards(params) %}
 {% from 'components/label/_macro.njk' import onsLabel %}
 {% from "components/table/_macro.njk" import onsTable %}
+{% from "components/details/_macro.njk" import onsDetails %}
 
 {# Create a template for address info, and a container for them #}
 {#   then run the scripts to populate the cards #}
 
 
-{# Deffine the container #}
+{# Deffine the container for all address cards #}
 <div id="container-for-address-cards">
 </div>
 
+
+{# Deffine the dropdown element (rendered here so that it's available later) #}
+<div class="rendered-ons-details-component">
+
+{#  {{ onsDetails({
+        "id": "details-dropdown",
+        "title": "All Address Info",
+        "content": '<div id="content-area-for-dropdown"><h1>CONTENT</h1></div>'
+    }) }}
+#}
+
+</div>
+
+ 
 {# Deffine the template #}
 <template id='template-for-address-info-card'>
 
@@ -46,7 +61,9 @@
 
     <tbody>
   </table>
-  
+
+  <div class="placeholder-for-dropdown-all-info-list"></div>
+ 
   <!-- Link to the location on Google Maps (perhaps to the Radius Search in future?) -->
   {#https://stackoverflow.com/questions/32806084/google-map-zoom-parameter-in-url-not-working#}
   <p class="mars">
