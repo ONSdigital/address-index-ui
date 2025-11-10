@@ -209,22 +209,20 @@
 {% endfor %}
 
 {% if params.remove_search_button == False %}
+<br>
   {# Add a search button on the end of the UI #}
-  <br>
   {% if not params.remove_buttons %}
     {{  onsButton({
 	"text": "Search" if not params.override_search_button_text else params.override_search_button_text , }) }}
-  	<br>
 {% endif %}
 
 {% if params.remove_clear_button != True %}
-	<br>
   {# Create the clear button #}
 	{{ onsButton({
-	"text": "Clear Filters" if not params.override_clear_filters_button_text else params.override_clear_filters_button_text, 
-	'submitType': "loader",
-	'variants': 'secondary',
-	'id': 'clear-form-data-button-id',
+		"text": "Clear Filters" if not params.override_clear_filters_button_text else params.override_clear_filters_button_text, 
+		'submitType': "loader",
+		'variants': 'secondary',
+		'id': 'clear-form-data-button-id',
 	}) }}
 
   {# Add functionality to the clear button #}
