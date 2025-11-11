@@ -1,3 +1,4 @@
+import { getDefaultFavourites } from '/static/js/e_all_pages/setup_defaults.mjs';
 
 // A page should only request the global attributes stored in 
 // localStorage.global_values
@@ -64,4 +65,10 @@ export function setGlobalValues(newValues) {
   const updatedValues = { ...currentValues, ...newValues };
 
   localStorage.setItem('global_values', JSON.stringify(updatedValues));
+}
+
+export function getFavouritesFromLocalStorage() {
+  const globalValues = getGlobalValues();
+  const favourites = globalValues.favouriteAddressAttributes || getDefaultFavourites();
+  return favourites;
 }

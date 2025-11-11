@@ -18,3 +18,13 @@ export function getDefaultValuesForPage(page_name) {
 
   return {};
 }
+
+export function getDefaultFavourites() {
+  return [
+    'uprn',
+    'formattedAddress',
+    'confidenceScore',
+    'pafPostcode',
+    'nagTownName',
+  ];
+}
