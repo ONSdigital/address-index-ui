@@ -1,4 +1,5 @@
 // Generate the favrouties table for each card overview
+import { setGlobalValues } from '../../f_helpers/local_storage_page_helpers.mjs';
 import { getFavouritesFromLocalStorage } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
 const keysToShow = getFavouritesFromLocalStorage();
@@ -74,9 +75,51 @@ function getFavouriteCellIdValuePairs(addressObject) {
 
   ]
 
-
   return valueCellToAddressValueMap.filter(item => keysToShow.includes(item.cellId));
+}
 
+export function addOrRemoveAttributeFromFavourites(cellIdNameOfAttribute) {
+  // Get the current favourites from local storage
+  const currentFavourites = getFavouritesFromLocalStorage();
+
+  let updatedFavourites = [];
+  if (currentFavourites.includes(cellIdNameOfAttribute)) {
+    updatedFavourites = currentFavourites.filter(item => item !== cellIdNameOfAttribute);
+  } else {
+    updatedFavourites = [...currentFavourites, cellIdNameOfAttribute];
+  }
+
+  // Save back to local storage
+  setGlobalValues( { favouriteAddressAttributes: updatedFavourites } );
+}
+
+function generateRowFromTemplate(rowClone, valuePair) {
+  // Remove the "rowClone" id to avoid duplicates
+  rowClone.removeAttribute('id');
+
+  // Get handles on the name and value cells and favourite checkbox
+  const nameCell = rowClone.querySelector('.attribute-name-placeholder');
+  const valueCell = rowClone.querySelector('.attribute-value-placeholder');
+  const favouriteCheckbox = rowClone.querySelector('.favourite-checkbox');
+
+  // Add the class to each row for styling and handles
+  valueCell.classList.add(`attribute-value-${valuePair.cellId}`);
+  nameCell.classList.add(`attribute-name-${valuePair.cellId}`);
+  favouriteCheckbox.classList.add(`favourite-checkbox-${valuePair.cellId}`);
+
+  // Set the name and value for each row
+  nameCell.textContent = valuePair.labelText;
+  valueCell.textContent = valuePair.value || '';
+
+  // Set the HTML attribute "checked" to "true"
+  favouriteCheckbox.setAttribute('checked', 'true');
+
+  // Add an event listener to the checkbox to handle adding/removing from favourites
+  favouriteCheckbox.addEventListener('change', () => {
+    addOrRemoveAttributeFromFavourites(valuePair.cellId);
+  });
+
+  return rowClone;
 }
 
 export function setupAttributesTable(addressCardHtmlObject, addressObject) {
@@ -93,27 +136,11 @@ export function setupAttributesTable(addressCardHtmlObject, addressObject) {
     // Clone the example row
     const rowClone = exampleRow.cloneNode(true);
 
-    // Remove the "rowClone" id to avoid duplicates
-    rowClone.removeAttribute('id');
+    // Generate a new row from the template
+    const newRow = generateRowFromTemplate(rowClone, valuePair);
 
-    // Get handles on the name and value cells and favourite checkbox
-    const nameCell = rowClone.querySelector('.attribute-name-placeholder');
-    const valueCell = rowClone.querySelector('.attribute-value-placeholder');
-    const favouriteCheckbox = rowClone.querySelector('.favourite-checkbox');
-
-    // Add the class to each row for styling and handles
-    valueCell.classList.add(`attribute-value-${valuePair.cellId}`);
-    nameCell.classList.add(`attribute-name-${valuePair.cellId}`);
-    favouriteCheckbox.classList.add(`favourite-checkbox-${valuePair.cellId}`);
-
-    // Set the name and value for each row
-    nameCell.textContent = valuePair.labelText;
-    valueCell.textContent = valuePair.value || '';
-
-    // Set the HTML attribute "checked" to "true"
-    favouriteCheckbox.setAttribute('checked', 'true');
-
-    tableBody.appendChild(rowClone);
+    // Add the row to the table
+    tableBody.appendChild(newRow);
   }
 
   // Remove the example row
