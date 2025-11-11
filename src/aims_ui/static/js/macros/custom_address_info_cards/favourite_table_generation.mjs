@@ -98,17 +98,22 @@ export function setupAttributesTable(addressCardHtmlObject, addressObject) {
     // Remove the "rowClone" id to avoid duplicates
     rowClone.removeAttribute('id');
 
-    // Get handles on the name and value cells
+    // Get handles on the name and value cells and favourite checkbox
     const nameCell = rowClone.querySelector('.attribute-name-placeholder');
     const valueCell = rowClone.querySelector('.attribute-value-placeholder');
+    const favouriteCheckbox = rowClone.querySelector('.favourite-checkbox');
 
     // Add the class to each row for styling and handles
     valueCell.classList.add(`attribute-value-${valuePair.cellId}`);
     nameCell.classList.add(`attribute-name-${valuePair.cellId}`);
+    favouriteCheckbox.classList.add(`favourite-checkbox-${valuePair.cellId}`);
 
     // Set the name and value for each row
     nameCell.textContent = valuePair.labelText;
     valueCell.textContent = valuePair.value || '';
+
+    // Set the HTML attribute "checked" to "true"
+    favouriteCheckbox.setAttribute('checked', 'true');
 
     tableBody.appendChild(rowClone);
   }

@@ -1,7 +1,7 @@
 {% macro customAddressInfoCards(params) %}
 {% from 'components/label/_macro.njk' import onsLabel %}
 {% from "components/table/_macro.njk" import onsTable %}
-{% from "components/details/_macro.njk" import onsDetails %}
+{% from "components/checkboxes/_macro.njk" import onsCheckboxes %}
 
 {# Create a template for address info, and a container for them #}
 {#   then run the scripts to populate the cards #}
@@ -11,20 +11,6 @@
 <div id="container-for-address-cards">
 </div>
 
-
-{# Deffine the dropdown element (rendered here so that it's available later) #}
-<div class="rendered-ons-details-component">
-
-{#  {{ onsDetails({
-        "id": "details-dropdown",
-        "title": "All Address Info",
-        "content": '<div id="content-area-for-dropdown"><h1>CONTENT</h1></div>'
-    }) }}
-#}
-
-</div>
-
- 
 {# Deffine the template #}
 <template id='template-for-address-info-card'>
 
@@ -56,7 +42,24 @@
       <tr id="example-table-row" class="ons-table__row"> 
         <td class="attribute-name-placeholder ons-table__cell"></td> 
         <td class="attribute-value-placeholder ons-table__cell"></td>
-        <td class="attribute-favourite-placeholder ons-table__cell"></td>
+        <td class="attribute-favourite-placeholder ons-table__cell">
+          
+          <span class="ons-checkboxes__item ons-checkboxes__item--no-border">
+            <span class="ons-checkbox ons-checkbox--no-border">
+              <input
+                type="checkbox"
+                class="ons-checkbox__input ons-js-checkbox favourite-checkbox"
+                value="true" />
+              <label
+                class="ons-checkbox__label"
+                for="only-checkbox"
+                id="only-checkbox-label">
+                  &nbsp;
+              </label>
+            </span>
+          </span>
+
+        </td>
       </tr>
 
     <tbody>
