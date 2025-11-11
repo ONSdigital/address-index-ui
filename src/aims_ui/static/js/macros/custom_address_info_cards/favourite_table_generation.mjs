@@ -1,5 +1,7 @@
 // Generate the favrouties table for each card overview
+import { getFavouritesFromLocalStorage } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
+const keysToShow = getFavouritesFromLocalStorage();
 
 function getFavouriteCellIdValuePairs(addressObject) {
   // Return an array of objects mapping with cellId: and value: 
@@ -72,10 +74,6 @@ function getFavouriteCellIdValuePairs(addressObject) {
 
   ]
 
-  const keysToShow = ['lpiLogicalStatus', 'formattedAddress', 'uprn', 'confidenceScore', 'underlyingScore',
-    'pafBuildingName', 'pafBuildingNumber', 'pafPostcode', 'pafThoroughfare',
-    'nagLegalName', 'nagLocality', 'nagTownName', 'nagStreetDescriptor',
-  ];
 
   return valueCellToAddressValueMap.filter(item => keysToShow.includes(item.cellId));
 
