@@ -1,8 +1,6 @@
-import { addDropdownAllInfo } from '/static/js/macros/custom_address_info_cards/template_dropdown_helpers.mjs';
+import { setupAttributesTable } from '/static/js/macros/custom_address_info_cards/favourite_table_generation.mjs';
 
 // Scripts to fill the template info for each address
-
-const keysToShow = ['lpiLogicalStatus', 'formattedAddress', 'uprn', 'confidenceScore', 'underlyingScore'];
 
 function getTitleText(addressObject) {
   // The user might have set a preference for PAF or NAG
@@ -27,34 +25,7 @@ function setupMapsLink(addressCardHtmlObject, addressObject) {
   mapLinkElement.href = mapUrl;
 }
 
-function setupAttributesTable(addressCardHtmlObject, addressObject) {
-  // Get a handle on the table body
-  const tableBody = addressCardHtmlObject.querySelector('#table-body-for-address-attributes');
-
-  // Copy the example row 
-  const exampleRow = addressCardHtmlObject.querySelector('#example-table-row');
-
-  for (const key of keysToShow) {
-    // Clone the example row
-    const rowClone = exampleRow.cloneNode(true);
-    // Remove the "rowClone" id to avoid duplicates
-    rowClone.removeAttribute('id');
-
-    // Get handles on the name and value cells
-    const nameCell = rowClone.querySelector('.attribute-name-placeholder');
-    const valueCell = rowClone.querySelector('.attribute-value-placeholder');
-    nameCell.textContent = key;
-    // Default to blank if no value
-    valueCell.textContent = addressObject[key] || '';
-
-    tableBody.appendChild(rowClone);
-  }
-
-  // Remove the example row
-  exampleRow.remove();
-}
-
-export function createATemplate(addressObject, page_name) {
+export function createATemplate(addressObject) {
   // Given a single address object
 
   // Clone the template
@@ -69,9 +40,6 @@ export function createATemplate(addressObject, page_name) {
 
   // Setup the attributes values table
   setupAttributesTable(addressCardHtmlObject, addressObject);
-
-  // Setup the dropdown for all info
-  addDropdownAllInfo(addressCardHtmlObject, addressObject, page_name);
 
   return addressCardHtmlObject;
 }
