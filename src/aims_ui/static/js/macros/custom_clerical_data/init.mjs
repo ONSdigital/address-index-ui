@@ -1,4 +1,4 @@
-import { getGlobalValues } from "/static/js/f_helpers/local_storage_page_helpers.mjs";
+import { getGlobalValues, getPageLocalValues } from "/static/js/f_helpers/local_storage_page_helpers.mjs";
 import { setupAttributesTable } from "/static/js/macros/custom_address_info_cards/favourite_table_generation.mjs";
 
 // What do we need to know?
@@ -25,29 +25,45 @@ import { setupAttributesTable } from "/static/js/macros/custom_address_info_card
 
 //
 
-function getAddressObjectFromUprn(uprn) {
+function getAddressObjectFromUprn(uprn, addressObjectList) {
   // Get the most recent addresses from local storage, default to blank array if undefined
-  const globalValues = getGlobalValues();
-  const mostRecentlySearchedAddresses = globalValues.mostRecentlySearchedAddresses || [];
 
   // Compare the string UPRNs
-  for (const addressObject of mostRecentlySearchedAddresses) {
+  for (const addressObject of addressObjectList) {
     if (String(addressObject.uprn) === String(uprn)) {
       return addressObject;
     }
   }
 }
 
-function init() {
+function getAddressObjectPrioritisingPreviousPage(uprn, page_name) {
+  // Get global first, local will be the backup
+  const globalValues = getGlobalValues();
+  const localPageValues = getPageLocalValues(page_name);
+
+  const mostRecentlySearchedAddressesGlobal = globalValues.mostRecentlySearchedAddresses || [];
+  const mostRecentlySearchedAddressesLocal = localPageValues.mostRecentlySearchedAddresses || [];
+  console.log('mostRecentlySearchedAddressesLocal', mostRecentlySearchedAddressesLocal);
+
+  // Try to get from global first
+  let addressObject = getAddressObjectFromUprn(uprn, mostRecentlySearchedAddressesGlobal);
+
+  // If not found, try local page values
+  if (!addressObject) {
+    addressObject = getAddressObjectFromUprn(uprn, mostRecentlySearchedAddressesLocal);
+  }
+  return addressObject;
+}
+
+export function init(page_name) {
+  console.log('page_name in custom clerical data init:', page_name);
   // Get the UPRN from the URL (http://127.0.0.1:5000/address_info/1)
   const urlParts = window.location.pathname.split('/');
   const uprn = urlParts[urlParts.length - 1];
 
-  const addressObject = getAddressObjectFromUprn(uprn);
+  const addressObject = getAddressObjectPrioritisingPreviousPage(uprn, page_name);
   const addressCardHtmlObjectAlternative = document.querySelector('.address-card-pseudo-class');
   const showAllAttributes = true;
 
   setupAttributesTable(addressCardHtmlObjectAlternative, addressObject, showAllAttributes);
 }
-
-init();

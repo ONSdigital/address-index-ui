@@ -124,8 +124,12 @@
     // Set the values of the address for this page specifically
     setPageLocalValues( '{{params.page_name}}', {mostRecentlySearchedAddresses: matchedAddresses} )
 
+
     // Set these as the most recently searched addresses for global pages (like carrying the confidence score over to the info page!)
-    setGlobalValues( {mostRecentlySearchedAddresses: matchedAddresses} )
+    // Only if the "do_not_update_most_recently_searched_addresses" is not True
+    {% if not params.do_not_update_most_recently_searched_addresses %}
+      setGlobalValues( {mostRecentlySearchedAddresses: matchedAddresses} )
+    {% endif %}
 
   </script>
 

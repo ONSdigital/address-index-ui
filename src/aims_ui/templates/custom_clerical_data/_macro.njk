@@ -79,6 +79,12 @@
         {{ content | safe }}
     {% endcall %}
 
-<script type=module src="/static/js/macros/custom_clerical_data/init.mjs"></script>
+<script type="module">
+  import { init } from '/static/js/macros/custom_clerical_data/init.mjs';
+
+  const page_name = '{{ params.page_name }}';
+  console.log('PAGE NAME IS', page_name);
+  init(page_name);
+</script>
 
 {% endmacro %}
