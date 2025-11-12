@@ -15,6 +15,7 @@ function getFavouriteCellIdValuePairs(addressObject) {
     { cellId: 'classificationCode', value: addressObject.classificationCode, labelText: 'Classification Code' },
     { cellId: 'classificationCodeList', value: addressObject.classificationCodeList, labelText: 'Classification Code List' },
     { cellId: 'confidenceScore', value: addressObject.confidenceScore, labelText: 'Confidence Score' },
+    { cellId: 'formattedConfidenceScore', value: addressObject.formattedConfidenceScore, labelText: 'Formatted Confidence Score' },
     { cellId: 'countryCode', value: addressObject.countryCode, labelText: 'Country Code' },
     { cellId: 'formattedAddress', value: addressObject.formattedAddress, labelText: 'Formatted Address' },
     { cellId: 'formattedAddressNag', value: addressObject.formattedAddressNag, labelText: 'Formatted Address (NAG)' },
@@ -75,7 +76,9 @@ function getFavouriteCellIdValuePairs(addressObject) {
 
   ]
 
-  return valueCellToAddressValueMap.filter(item => keysToShow.includes(item.cellId));
+  return keysToShow
+    .map(key => valueCellToAddressValueMap.find(item => item.cellId === key))
+    .filter(Boolean); // remove undefined entries
 }
 
 export function addOrRemoveAttributeFromFavourites(cellIdNameOfAttribute) {
@@ -140,7 +143,7 @@ export function setupAttributesTable(addressCardHtmlObject, addressObject) {
     const newRow = generateRowFromTemplate(rowClone, valuePair);
 
     // Add the row to the table
-    tableBody.appendChild(newRow);
+    tableBody.append(newRow);
   }
 
   // Remove the example row
