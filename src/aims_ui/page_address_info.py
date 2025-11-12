@@ -89,6 +89,7 @@ def address_info(uprn):
   return render_template(
       page_location,
       endpoints=endpoints,
+      page_name=page_name,
       matched_addresses=matched_addresses,
       clerical_info=clerical_info,
       hierarchy_table=hierarchy_table,
