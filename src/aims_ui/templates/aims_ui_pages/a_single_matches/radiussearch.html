@@ -6,10 +6,11 @@
 {% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
 
 {% from 'custom_search/_macro.njk' import customSearch %}
-{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+{% from 'custom_address_results_table/_macro.njk' import customAddressResultsTable %}
 {% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
 {% from 'custom_we_matched_message/_macro.njk' import weMatchedAddressPreamble %}
 {% from 'custom_title_and_description/_macro.njk' import customTitleAndDescription %}
+{% from 'custom_download_results_from_local_storage/_macro.njk' import customDownloadResultsFromLocalStorage %}
 
 	{# Title and description #}
 	{{ customTitleAndDescription({
@@ -31,7 +32,8 @@
 <div id="pageContentContainer">
 	<div id="centeredContainer">
 		{{ customSearch ({ "Fields": searchable_fields,
-					"endpoints": endpoints,
+					"endpoints": endpoints,              
+		   		"page_name": page_name,
 					"remove_search_button":False,
 					"invisible": True,
 					"override_clear_filters_button_text": 'Clear All',
@@ -73,12 +75,17 @@
 					"page_name": page_name,
 				}) }}
 
-				{{ customAddressInfo ({
+				{# Generate table with Live addresses - restore from local storage if not a results page #}
+				{{ customAddressResultsTable({
 					'matched_addresses': matched_addresses,
 					'page_name': page_name,
-					'compressed_view': True,
 					'results_page': results_page,
 					}) }}
+
+				{{ customDownloadResultsFromLocalStorage({
+					"page_name": page_name,
+				}) }}
+
 			</div>
 		</div>
 

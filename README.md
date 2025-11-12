@@ -47,7 +47,7 @@ Optional Variables (set them according to your setup)
 | `API_BSC_AUTH_USERNAME` | `[enter_bsc_username]`         | `export API_BSC_AUTH_USERNAME="[enter_bsc_username]"` | `set API_BSC_AUTH_USERNAME=[enter_bsc_username]`     | `$Env:API_BSC_AUTH_USERNAME = "[enter_bsc_username]"` |
 | `API_BSC_AUTH_PASSWORD` | `[enter_bsc_password]`         | `export API_BSC_AUTH_PASSWORD="[enter_bsc_password]"` | `set API_BSC_AUTH_PASSWORD=[enter_bsc_password]`     | `$Env:API_BSC_AUTH_PASSWORD = "[enter_bsc_password]"` |
 | `PROJECT_DOMAIN`        | `[enter_project_domain]`       | `export PROJECT_DOMAIN="[enter_project_domain]"`      | `set PROJECT_DOMAIN=[enter_project_domain]`          | `$Env:PROJECT_DOMAIN = "[enter_project_domain]"`      |
-| `USER_AUTHS`            | `{"developers":["NotLoggedinUser"]}`| `export USER_AUTHS='{"developers":["NotLoggedinUser"]}'`| `set USER_AUTHS={"developers":["NotLoggedinUser"]}`   | `$Env:USER_AUTHS='{"developers":["NotLoggedinUser"]}'` |
+| `USER_AUTHS`            | `{"developers":["UserNotLoggedIn"]}`| `export USER_AUTHS='{"developers":["UserNotLoggedIn"]}'`| `set USER_AUTHS={"developers":["UserNotLoggedIn"]}`   | `$Env:USER_AUTHS='{"developers":["UserNotLoggedIn"]}'` |
 
 *Note: JWT token is exported WITHOUT 'Bearer ' before it*
 

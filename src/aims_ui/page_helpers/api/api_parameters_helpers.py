@@ -51,6 +51,9 @@ def adjust_parameter_for_each_page(params, called_from_page_name):
     if not params.get('input'):
       params.pop('input', None)
 
+    # Enforce verbose to True for singlesearch lookups
+    params['verbose'] = 'true'
+
   if (called_from_page_name == 'uprn'):
     # Enforce verbose to True for UPRN lookups
     params['verbose'] = 'True'

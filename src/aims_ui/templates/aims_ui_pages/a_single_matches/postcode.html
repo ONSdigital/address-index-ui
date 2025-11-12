@@ -5,9 +5,10 @@
 {% from 'components/list/_macro.njk' import onsList %}
 
 {% from 'custom_search/_macro.njk' import customSearch %}
-{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+{% from 'custom_address_info_cards/_macro.njk' import customAddressInfoCards %}
 {% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
 {% from 'custom_title_and_description/_macro.njk' import customTitleAndDescription %}
+{% from 'custom_download_results_from_local_storage/_macro.njk' import customDownloadResultsFromLocalStorage %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -27,8 +28,9 @@
 
 {{ customSearch ({ "Fields": searchable_fields,
 		   "endpoints": endpoints, 
+		   "page_name": page_name,
 		   "remove_search_button":False,
-                   "results_page": results_page, }) }}
+       "results_page": results_page, }) }}
 <br>
 </div> 
 
@@ -57,8 +59,12 @@
 
 {% endif %}
 
-{{ customAddressInfo ({
-	'matched_addresses': matched_addresses,
+{{ customAddressInfoCards ({
+	'page_name': page_name,
+	}) }}
+
+{{ customDownloadResultsFromLocalStorage({
+		"page_name": page_name,
 	}) }}
 
 </div> </div>

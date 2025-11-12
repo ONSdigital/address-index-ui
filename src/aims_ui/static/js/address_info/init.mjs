@@ -13,10 +13,10 @@ function updateConfidenceScores() {
 
 function init() {
   // Firstly update confidence scores
-  updateConfidenceScores();
+  //updateConfidenceScores();
 
 //  replaceOverviewTableConfidenceScoreValues();
-  console.log('address_info init loaded');
+  console.log('address_info init loaded but disabled');
 }
 
 window.addEventListener('load', init);
