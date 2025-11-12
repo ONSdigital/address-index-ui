@@ -38,8 +38,9 @@ export function createATemplate(addressObject) {
   // Setup the maps link
   setupMapsLink(addressCardHtmlObject, addressObject);
 
-  // Setup the attributes values table
-  setupAttributesTable(addressCardHtmlObject, addressObject);
+  // Setup the attributes values table (only show favourites)
+  const showAllAttributes = false;
+  setupAttributesTable(addressCardHtmlObject, addressObject, showAllAttributes);
 
   return addressCardHtmlObject;
 }

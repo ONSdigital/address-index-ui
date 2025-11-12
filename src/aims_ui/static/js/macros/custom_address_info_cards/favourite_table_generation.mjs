@@ -4,7 +4,7 @@ import { getFavouritesFromLocalStorage } from '/static/js/f_helpers/local_storag
 
 const keysToShow = getFavouritesFromLocalStorage();
 
-function getFavouriteCellIdValuePairs(addressObject) {
+function getPopulatedAttributeMap(addressObject) {
   // Return an array of objects mapping with cellId: and value: 
 
   const paf = addressObject.paf || {};
@@ -76,9 +76,7 @@ function getFavouriteCellIdValuePairs(addressObject) {
 
   ]
 
-  return keysToShow
-    .map(key => valueCellToAddressValueMap.find(item => item.cellId === key))
-    .filter(Boolean); // remove undefined entries
+  return valueCellToAddressValueMap 
 }
 
 export function addOrRemoveAttributeFromFavourites(cellIdNameOfAttribute) {
@@ -94,6 +92,17 @@ export function addOrRemoveAttributeFromFavourites(cellIdNameOfAttribute) {
 
   // Save back to local storage
   setGlobalValues( { favouriteAddressAttributes: updatedFavourites } );
+}
+
+function getFavouriteStatusOfAttribute(valuePair) {
+  // Given a value object, return 'true' or 'false' if it is a favourite
+  // Use the initially obtained keysToShow array
+  for (const favouriteKey of keysToShow) {
+    if (favouriteKey === valuePair.cellId) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function generateRowFromTemplate(rowClone, valuePair) {
@@ -114,8 +123,11 @@ function generateRowFromTemplate(rowClone, valuePair) {
   nameCell.textContent = valuePair.labelText;
   valueCell.textContent = valuePair.value || '';
 
-  // Set the HTML attribute "checked" to "true"
-  favouriteCheckbox.setAttribute('checked', 'true');
+  // If the HTML attribute 'checked' is present, the checkbox is ticked
+  const favouriteStatus = getFavouriteStatusOfAttribute(valuePair);
+  if (favouriteStatus) {
+    favouriteCheckbox.setAttribute('checked', 'true');
+  }
 
   // Add an event listener to the checkbox to handle adding/removing from favourites
   favouriteCheckbox.addEventListener('change', () => {
@@ -125,17 +137,27 @@ function generateRowFromTemplate(rowClone, valuePair) {
   return rowClone;
 }
 
-export function setupAttributesTable(addressCardHtmlObject, addressObject) {
+function getAllPairsToShow(populatedAttributeMap, showAllAttributes) {
+  // Given a populated favourite, value array, return all of them or just favourites
+  if (showAllAttributes) { return populatedAttributeMap; }
+
+  return populatedAttributeMap.filter(item => keysToShow.includes(item.cellId));
+}
+
+export function setupAttributesTable(addressCardHtmlObject, addressObject, showAllAttributes=false) {
   // Get a handle on the table body
   const tableBody = addressCardHtmlObject.querySelector('#table-body-for-address-attributes');
 
   // Copy the example row 
   const exampleRow = addressCardHtmlObject.querySelector('#example-table-row');
 
-  // Return { cellId: , value:  } pairs for FAVOURITE KEYS
-  const favouritePairs = getFavouriteCellIdValuePairs(addressObject);
+  // Return { cellId: , value: labelText: } mapped object
+  const populatedAttributeMap = getPopulatedAttributeMap(addressObject);
 
-  for (const valuePair of favouritePairs) {
+  // Filter the full info map to EITHER all attributes or just favourites
+  const allPairsToShow = getAllPairsToShow(populatedAttributeMap, showAllAttributes);
+
+  for (const valuePair of allPairsToShow) {
     // Clone the example row
     const rowClone = exampleRow.cloneNode(true);
 
