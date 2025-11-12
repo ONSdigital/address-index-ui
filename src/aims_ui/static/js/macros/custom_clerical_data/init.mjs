@@ -43,7 +43,6 @@ function getAddressObjectPrioritisingPreviousPage(uprn, page_name) {
 
   const mostRecentlySearchedAddressesGlobal = globalValues.mostRecentlySearchedAddresses || [];
   const mostRecentlySearchedAddressesLocal = localPageValues.mostRecentlySearchedAddresses || [];
-  console.log('mostRecentlySearchedAddressesLocal', mostRecentlySearchedAddressesLocal);
 
   // Try to get from global first
   let addressObject = getAddressObjectFromUprn(uprn, mostRecentlySearchedAddressesGlobal);
