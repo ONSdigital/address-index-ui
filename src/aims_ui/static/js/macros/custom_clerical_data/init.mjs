@@ -55,7 +55,6 @@ function getAddressObjectPrioritisingPreviousPage(uprn, page_name) {
 }
 
 export function init(page_name) {
-  console.log('page_name in custom clerical data init:', page_name);
   // Get the UPRN from the URL (http://127.0.0.1:5000/address_info/1)
   const urlParts = window.location.pathname.split('/');
   const uprn = urlParts[urlParts.length - 1];
