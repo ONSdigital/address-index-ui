@@ -33,6 +33,7 @@
       addAddressToLargeList({
         // High level attributes (in order of clerical information page)
         uprn: {{ address.uprn.value | tojson }},
+        formattedConfidenceScore: {{ address.formatted_confidence_score.value | tojson }},
         formattedAddress: {{ address.formatted_address.value | tojson }},
         parentUprn: {{ address.parent_uprn.value | tojson }},
         welshFormattedAddressNag: {{ address.welsh_formatted_address_nag.value | tojson }},

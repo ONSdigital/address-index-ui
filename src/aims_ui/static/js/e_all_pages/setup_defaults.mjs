@@ -22,9 +22,10 @@ export function getDefaultValuesForPage(page_name) {
 export function getDefaultFavourites() {
   return [
     'uprn',
-    'formattedAddress',
-    'confidenceScore',
-    'pafPostcode',
-    'nagTownName',
+    'parentUprn',
+    'classificationCode',
+    'classificationCodeList',
+    'formattedConfidenceScore',
+    'nagLocalCustodianName',
   ];
 }
