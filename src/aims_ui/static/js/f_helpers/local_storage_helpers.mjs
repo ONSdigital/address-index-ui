@@ -227,8 +227,8 @@ function removeItemFromCustomBulkAttributes(fieldtoremove) {
     let attArray = JSON.parse(localStorage.getItem('custom_bulk_response_attributes'));
     if (attArray != null) {
       if (attArray.includes(fieldtoremove)) {
-        const index = altArray.indexOf(fieldtoremove);
-        const deletedItem = altArray.splice(index, 1);
+        const index = attArray.indexOf(fieldtoremove);
+        const deletedItem = attArray.splice(index, 1);
         localStorage.setItem('custom_bulk_response_attributes', JSON.stringify(attArray));
       }
     }
