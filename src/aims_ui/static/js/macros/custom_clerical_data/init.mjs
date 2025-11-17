@@ -16,8 +16,9 @@ import { setupAttributesTable } from "/static/js/macros/custom_address_info_card
      // we need to still be able to handle this - probably put the "save custom data" into this page too?
      // but then try not to rely on that data! 
   
-  // Perhaps we could actually do with two different pages? Or even just incorperating 
+  // Perhaps we could actually do with two different pages? Or even just adding
    // the info into the original page?
+   // UPDATE here we will be implementing a flag to include all attributes in the settings page
 
 
    // Ok, the first thing we will do is generate it from an assumed existing local storage

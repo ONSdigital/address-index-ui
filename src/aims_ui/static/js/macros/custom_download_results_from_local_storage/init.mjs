@@ -35,7 +35,7 @@ function setupDownloadButton(page_name) {
 
   if (previousAddresses.length > 0) {
     setupDownloadButtonListeners(page_name);
-    makeDownloadButtonContainerVisible(previousAddresses);
+    makeDownloadButtonContainerVisible();
   } else {
     makeDownloadButtonContainerInvisible();
   }
