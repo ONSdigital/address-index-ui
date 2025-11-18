@@ -8,15 +8,19 @@ function getCsvFromAddressObjects(previousAddresses) {
   // Set the fields to wrap in quotes as not to break csv
   const quotedFields = new Set(['name']); 
 
+  // For now remove the paf and nag objcts as they require flattening (functionality is present in the favourites table generation module, but will be made available as a global helper soon)
+  const excluded = new Set(['paf', 'nag']);
+  const filteredHeaders = headers.filter(h => !excluded.has(h));
+
   const csvRows = [
     // First make the header row
-    headers.join(','), 
+    filteredHeaders.join(','), 
 
     // Then make each data row:
     ...previousAddresses.map(obj =>
 
       // For every address, check each key's value
-      headers.map(key => {
+      filteredHeaders.map(key => {
         // Blank string on falsey
         const value = obj[key] ?? '';
 
