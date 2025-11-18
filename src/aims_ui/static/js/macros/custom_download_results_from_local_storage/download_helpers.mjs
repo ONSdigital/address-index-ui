@@ -9,7 +9,7 @@ function getCsvFromAddressObjects(previousAddresses) {
   const quotedFields = new Set(['name']); 
 
   // For now remove the paf and nag objcts as they require flattening (functionality is present in the favourites table generation module, but will be made available as a global helper soon)
-  const excluded = new Set(['paf', 'nag']);
+  const excluded = new Set(['paf', 'nag', 'lpiLogicalStatus']);
   const filteredHeaders = headers.filter(h => !excluded.has(h));
 
   const csvRows = [
