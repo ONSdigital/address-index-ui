@@ -4,3 +4,6 @@ article.result-short-form {
     padding: 20px 0;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
