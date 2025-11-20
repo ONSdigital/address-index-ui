@@ -1,5 +1,9 @@
 article.result-short-form {
-    border-top: 1px solid #dfe0e2;
+    border-top: 4px solid #dfe0e2;
     margin: 20px 0px 0px 0px;
     padding: 20px 0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

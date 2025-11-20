@@ -1,5 +1,4 @@
 import {
-  getAddressTitlePreference,
   getAdditionalRequestStatus,
 } from '../f_helpers/local_storage_helpers.mjs';
 
@@ -111,38 +110,8 @@ export function getAddressTitle(preference, addressTitles) {
   }
 }
 
-function applyTitlePreference(preference) {
-  // Select every result short form
-  const resultCards = document.querySelectorAll('.result-short-form');
-
-  // For every result card, check if the title preference is blank.
-  // If it is blank, show the default one, otherwise show the prefered one
-  for (const card of resultCards) {
-    const currentTitles = card.querySelectorAll('.address-titles');
-    const preferedTitle = getAddressTitle(preference, currentTitles);
-    const preferedTitleTextContent = preferedTitle.textContent.replace(
-      /\s+/g,
-      ''
-    );
-
-    if (preferedTitleTextContent === '') {
-      // Blank prefered title? Show the default format of title
-      const backupTitle = getAddressTitle('def', currentTitles);
-      backupTitle.hidden = false;
-      backupTitle.textContent =
-        backupTitle.textContent + ' (Default Formatting)';
-    } else {
-      preferedTitle.hidden = false;
-      preferedTitle.textContent =
-        preferedTitle.textContent + getUserFriendlyPreference(preference);
-    }
-  }
-}
-
 function init() {
   console.log('apply_custom_settings loaded');
-  const preference = getAddressTitlePreference();
-  applyTitlePreference(preference);
   applyVisibilityOfRequestStatus();
 }
 

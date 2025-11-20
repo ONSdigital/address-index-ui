@@ -2,10 +2,10 @@
 
 {% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
 {% from "components/input/_macro.njk" import onsInput %}
-{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
 {% from "components/table/_macro.njk" import onsTable %}
 {% from "components/panel/_macro.njk" import onsPanel %}
 {% from 'custom_clerical_data/_macro.njk' import customClericalData %}
+{% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -17,6 +17,12 @@
 
 <br>
 
+		{# Save the results to local storage on the clientside #}
+		{{ customSaveAddressesToClient({
+			"matched_addresses": matched_addresses,
+			"page_name": page_name,
+      "do_not_update_most_recently_searched_addresses": True,
+		}) }}
 
   <h1 class="saturn"> {{ matched_addresses[0].formatted_address.value }}</h1>
 
@@ -71,7 +77,7 @@
   {# Add Custom Clerical Data (almost full result, to be hidden by accordion ) #} 
   {{ customClericalData({
     'clerical_info': clerical_info,
-    'tool_tip_data': tool_tip_data,
+    'page_name': page_name,
     'link_data': link_data,
     } ) }} 
 
