@@ -1,5 +1,8 @@
 from tests.pytest_tests.pytest_playwright_tests.utils.constatns_generation import (
-    build_downloads_info, build_user_role_map)
+    build_downloads_info,
+    build_user_role_map
+)
+
 """ Constants for the playwright tests. """
 
 BASE_URL = "http://127.0.0.1:5001/"
@@ -41,14 +44,6 @@ DOWNLOADS = [
         'An example of how multuple addresses in a CSV file should be submitted for the Large Bulk interface',
         'url_modifier': 'downloads/example_multiple_address_big',
         'file_name': 'example_multiple_match_5k_upload.csv',
-        'expected_content': None,
-    },
-    {
-        'download_name': 'Tool Tip Information',
-        'description':
-        'In order to provide the tooltips, this file is provided to give a description for each attribute.',
-        'url_modifier': 'downloads/tool_tip_clerical_information',
-        'file_name': 'tool_tip_clerical_information.csv',
         'expected_content': None,
     },
     {
