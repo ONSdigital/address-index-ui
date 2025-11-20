@@ -86,10 +86,6 @@ def download_handler(file_name):
     f = open(
         f'{root_dir_path}/static/downloads/example_multiple_match_5k_upload.csv',
         'rb')
-  elif file_name == 'tool_tip_clerical_information':
-    f = open(
-        f'{root_dir_path}/static/downloads/tool_tip_clerical_information.csv',
-        'rb')
   elif file_name == 'uprn_example_multiple_address':
     f = open(
         f'{root_dir_path}/static/downloads/uprn_example_multiple_match_upload.csv',
