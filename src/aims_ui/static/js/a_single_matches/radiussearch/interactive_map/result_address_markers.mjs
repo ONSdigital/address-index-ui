@@ -23,10 +23,10 @@ export function addMatchedAddressMarkersToMap(map) {
 
   for (const address of addresses) {
     // Addresses in the format {name: '', uprn: '', longitude: '', latitude: ''}
-    const { name, uprn, longitude: long, latitude: lat } = address;
+    const { formattedAddress, uprn, longitude: long, latitude: lat } = address;
 
     // The marker should be ONS colours and link to /address_info/{uprn}
-    const marker = L.marker([lat, long], {icon: resultsMarkerIcon} ).addTo(map).bindPopup(`${name} <br> <a href="/address_info/${uprn}">View Details</a>`);
+    const marker = L.marker([lat, long], {icon: resultsMarkerIcon} ).addTo(map).bindPopup(`${formattedAddress} <br> <a href="/address_info/${uprn}">View Details</a>`);
 
     searchMarkers.push(marker);
   }
