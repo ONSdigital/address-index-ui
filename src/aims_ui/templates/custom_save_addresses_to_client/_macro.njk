@@ -12,6 +12,11 @@
 
     const matchedAddresses = []
     function addAddressToLargeList(addressInfo) {
+      // Remove any null, blank or "" entries - so that we don't fill up local storage!
+//      addressInfo = Object.fromEntries(
+//        Object.entries(addressInfo).filter(([_, v]) => v !== '' && v != null)
+//      );
+
       // Given a single address, add it to the array of addresses in js
       matchedAddresses.push(addressInfo);
     }
@@ -20,22 +25,111 @@
     {% for address in params.matched_addresses %}
 
       {# js function to save a new address and details in json #}
+      {# This should only include attributes a user might want to see raw #}
+      {# Attributes that generate content (like hirderachey) should be missed here #}
+
+      console.log();
+
       addAddressToLargeList({
+        // High level attributes (in order of clerical information page)
         uprn: {{ address.uprn.value | tojson }},
-        name: {{ address.formatted_address.value | tojson }},
+        formattedConfidenceScore: {{ address.formatted_confidence_score.value | tojson }},
+        formattedAddress: {{ address.formatted_address.value | tojson }},
+        parentUprn: {{ address.parent_uprn.value | tojson }},
+        welshFormattedAddressNag: {{ address.welsh_formatted_address_nag.value | tojson }},
+        welshFormattedAddressPaf: {{ address.welsh_formatted_address_paf.value | tojson }},
+        formattedAddressNag: {{ address.formatted_address_nag.value | tojson }},
+        formattedAddressPaf: {{ address.formatted_address_paf.value | tojson }},
+
+        // Not "GEO" here but longitude and latitude seperately
         longitude: {{ address.geo.value.longitude | tojson }},
         latitude: {{ address.geo.value.latitude  | tojson }},
+
+        classificationCode: {{ address.classification_code.value | tojson }},
+        classificationCodeList: {{ address.classification_code_list.value | tojson }},
+        countryCode: {{ address.country_code.value | tojson }},
+        lpiLogicalStatus: {{ address.lpi_logical_status.value | tojson }},
+
         confidenceScore: {{ address.confidence_score.value | tojson }},
         underlyingScore: {{ address.underlying_score.value | tojson }},
-        parentUprn: {{ address.parent_uprn.value | tojson }},
+
+        // Now do the NAG (National Address Gazzetter) attributes for an address
+        nag: {
+          uprn: {{ address.nag.value.uprn.value | tojson }},
+          postcodeLocator: {{ address.nag.value.postcodeLocator.value | tojson }},
+          addressBasePostal: {{ address.nag.value.addressBasePostal.value | tojson }},
+          usrn: {{ address.nag.value.usrn.value | tojson }},
+          lpiKey: {{ address.nag.value.lpiKey.value | tojson }},
+
+          pao: {
+            paoText: {{ address.nag.value.pao.paoText | tojson }},
+            paoStartNumber: {{ address.nag.value.pao.paoStartNumber | tojson }},
+            paoStartSuffix: {{ address.nag.value.pao.paoStartSuffix | tojson }},
+            paoEndNumber: {{ address.nag.value.pao.paoEndNumber | tojson }},
+            paoEndSuffix: {{ address.nag.value.pao.paoEndSuffix | tojson }},
+          },
+
+          sao: {
+            saoText: {{ address.nag.value.sao.saoText | tojson }},
+            saoStartNumber: {{ address.nag.value.sao.saoStartNumber | tojson }},
+            saoStartSuffix: {{ address.nag.value.sao.saoStartSuffix | tojson }},
+            saoEndNumber: {{ address.nag.value.sao.saoEndNumber | tojson }},
+            saoEndSuffix: {{ address.nag.value.sao.saoEndSuffix | tojson }},
+          },
+
+          level: {{ address.nag.value.level.value | tojson }},
+          officialFlag: {{ address.nag.value.officialFlag.value | tojson }},
+          logicalStatus: {{ address.nag.value.logicalStatus.value | tojson }},
+          streetDescriptor: {{ address.nag.value.streetDescriptor.value | tojson }},
+          townName: {{ address.nag.value.townName.value | tojson }},
+          locality: {{ address.nag.value.locality.value | tojson }},
+          organisation: {{ address.nag.value.organisation.value | tojson }},
+          legalName: {{ address.nag.value.legalName.value | tojson }},
+          localCustodianCode: {{ address.nag.value.localCustodianCode.value | tojson }},
+          localCustodianName: {{ address.nag.value.localCustodianName.value | tojson }},
+          localCustodianGeogCode: {{ address.nag.value.localCustodianGeogCode.value | tojson }},
+          lpiEndDate: {{ address.nag.value.lpiEndDate.value | tojson }},
+          lpiStartDate: {{ address.nag.value.lpiStartDate.value | tojson }},
+        },
+
+        // Now save the PAF (Postoffice Address Format)
+        paf: {
+          udprn: {{ address.paf.value.udprn.value | tojson }},
+          organisationName: {{ address.paf.value.organisationName.value | tojson }},
+          departmentName: {{ address.paf.value.departmentName.value | tojson }},
+          subBuildingName: {{ address.paf.value.subBuildingName.value | tojson }},
+          buildingName: {{ address.paf.value.buildingName.value | tojson }},
+          buildingNumber: {{ address.paf.value.buildingNumber.value | tojson }},
+          dependentThoroughfare: {{ address.paf.value.dependentThoroughfare.value | tojson }},
+          thoroughfare: {{ address.paf.value.thoroughfare.value | tojson }},
+          doubleDependentLocality: {{ address.paf.value.doubleDependentLocality.value | tojson }},
+          dependentLocality: {{ address.paf.value.dependentLocality.value | tojson }},
+          postTown: {{ address.paf.value.postTown.value | tojson }},
+          postcode: {{ address.paf.value.postcode.value | tojson }},
+          postcodeType: {{ address.paf.value.postcodeType.value | tojson }},
+          deliveryPointSuffix: {{ address.paf.value.deliveryPointSuffix.value | tojson }},
+          welshDependentThoroughfare: {{ address.paf.value.welshDependentThoroughfare.value | tojson }},
+          welshThoroughfare: {{ address.paf.value.welshThoroughfare.value | tojson }},
+          welshDoubleDependentLocality: {{ address.paf.value.welshDoubleDependentLocality.value | tojson }},
+          welshDependentLocality: {{ address.paf.value.welshDependentLocality.value | tojson }},
+          welshPostTown: {{ address.paf.value.welshPostTown.value | tojson }},
+          poBoxNumber: {{ address.paf.value.poBoxNumber.value | tojson }},
+          startDate: {{ address.paf.value.startDate.value | tojson }},
+          endDate: {{ address.paf.value.endDate.value | tojson }},
+        }
+
       });
     {% endfor %}
 
     // Set the values of the address for this page specifically
     setPageLocalValues( '{{params.page_name}}', {mostRecentlySearchedAddresses: matchedAddresses} )
 
+
     // Set these as the most recently searched addresses for global pages (like carrying the confidence score over to the info page!)
-    setGlobalValues( {mostRecentlySearchedAddresses: matchedAddresses} )
+    // Only if the "do_not_update_most_recently_searched_addresses" is not True
+    {% if not params.do_not_update_most_recently_searched_addresses %}
+      setGlobalValues( {mostRecentlySearchedAddresses: matchedAddresses} )
+    {% endif %}
 
   </script>
 

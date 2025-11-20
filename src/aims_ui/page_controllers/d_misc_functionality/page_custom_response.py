@@ -1,12 +1,15 @@
-import json, requests
+import json
+
+import requests
 from flask import render_template, request
 from flask_login import login_required
+
 from aims_ui import app
-from aims_ui.page_helpers.api.api_helpers import get_header
-from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
-from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_addresses import get_addresses
+from aims_ui.models.get_endpoints import get_endpoints
+from aims_ui.page_helpers.api.api_helpers import get_header
 from aims_ui.page_helpers.pages_location_utils import get_page_location
+from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 
 page_name = 'custom_response'
 
@@ -20,6 +23,7 @@ def return_error_to_custom_response(error_title, errors_formatted,
       endpoints=endpoints,
       error_title=error_title,
       errors_formatted=errors_formatted,
+      page_name=page_name,
       r_json_readable=r_json_readable,
   )
 
@@ -36,6 +40,7 @@ def custom_response():
   if request.method == 'GET':
     return render_template(
         page_location,
+        page_name=page_name,
         endpoints=endpoints,
     )
 
@@ -113,6 +118,7 @@ def custom_response():
 
   return render_template(
       page_location,
+      page_name=page_name,
       endpoints=get_endpoints(called_from=page_name),
       r_json_readable=r_json_readable,
       matched_addresses=matched_addresses,

@@ -1,22 +1,24 @@
-{% macro customClericalData(params) %}
-
-{% from "components/details/_macro.njk" import onsDetails %}
+{% macro customAddressInfoCards(params) %}
+{% from 'components/label/_macro.njk' import onsLabel %}
 {% from "components/table/_macro.njk" import onsTable %}
-{% from "components/panel/_macro.njk" import onsPanel %}
+{% from "components/checkboxes/_macro.njk" import onsCheckboxes %}
 
-<br>
-{% call onsPanel({
-        "type": 'warn'
-    })
-%}
-   Hover your cursor over the "Name" field to see descriptions
-{% endcall %}
+{# Create a template for address info, and a container for them #}
+{#   then run the scripts to populate the cards #}
 
-{# By setting the content, the onsTable is contained inside onsDetails #}
 
- {% set content %}
-        
-        <div class="address-card-pseudo-class">
+{# Define the container for all address cards #}
+<div id="container-for-address-cards">
+</div>
+
+{# Define the template #}
+<template id='template-for-address-info-card'>
+
+  <!-- Clickable title (title is in the paf/nag format the user chooses) -->
+  <article class="result-short-form">
+    <a id='link-to-address-info-uprn'>
+      <h2 id='name-of-address-user-dictated'></h2>
+    </a>
 
   <!-- Table for key/value pairs for each address depending on favourites -->
    <table class='clerical-data-table ons-table'> 
@@ -62,28 +64,31 @@
 
     <tbody>
   </table>
-</div>
 
-    {% endset %}
+  <div class="placeholder-for-dropdown-all-info-list">
+  </div>
 
-    {% call onsDetails({
-            'id': "collapsible",
-            'title': "Clerical Information",
-            'button': {
-                "close": "Hide this",
-                "contextSuffix": "content"
-            }
-        })
-    %}
-        {{ content | safe }}
-    {% endcall %}
 
+ 
+  <!-- Link to the location on Google Maps (perhaps to the Radius Search in future?) -->
+  {#https://stackoverflow.com/questions/32806084/google-map-zoom-parameter-in-url-not-working#}
+  <p class="mars">
+    <a id="link-to-address-on-map">Location Map</a>
+  </p>
+
+  </article>
+
+</template>
+
+{# Script to fill the details into each template #}
 <script type="module">
-  import { init } from '/static/js/macros/custom_clerical_data/init.mjs';
+  import { init } from '/static/js/macros/custom_address_info_cards/init.mjs';
 
   const page_name = '{{ params.page_name }}';
   init(page_name);
 </script>
 
-<link rel="stylesheet" href="/static/css/custom_macros/custom_clerical_data.css">
+{# Add styles that create gaps between cards #}
+<link rel="stylesheet" href="/static/css/custom_macros/custom_address_info_cards.css">
+
 {% endmacro %}

@@ -1,0 +1,47 @@
+{% macro customAddressResultsTable(params) %}
+{% from "components/table/_macro.njk" import onsTable %}
+
+{# Compressed view only includes the name, geo and "distance" for the radius search page #}
+
+<table id="address-results-table-short" class="address-table ons-table">
+  <thead class="ons-table__head">
+    <tr class="ons-table__row">
+      <th class="ons-table__header"><span class="ons-table__header-text">Name</span></th>
+      <th class="ons-table__header"><span class="ons-table__header-text">Latitude</span></th>
+      <th class="ons-table__header"><span class="ons-table__header-text">Longitude</span></th>
+      <th class="ons-table__header"><span class="ons-table__header-text">Distance</span></th>
+    </tr>
+  </thead>
+  <tbody class="ons-table__body">
+    {% for address in params.matched_addresses %}
+      <tr class="ons-table__row">
+        <td class="ons-table__cell">
+        <a href="/address_info/{{ address.uprn.value }}">
+          {{ address.formatted_address.value }}
+        </a></td>
+        <td class="ons-table__cell">{{ address.geo.value.latitude }}</td>
+        <td class="ons-table__cell">{{ address.geo.value.longitude}}</td>
+        <td class="distance_attribute ons-table__cell" 
+          myLat="{{ address.geo.value.latitude}}"
+          myLon="{{ address.geo.value.longitude}}"
+          >NA</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{# Script to populate the table above with previous results ONLY if it's not a results page #}
+{% if params.results_page != True %}
+  <script type="module">
+  import { loadPreviousValuesForCompressedTableView } from '/static/js/macros/custom_address_results_table/load_previous_values.mjs';
+
+  const page_name = '{{ params.page_name }}';
+  loadPreviousValuesForCompressedTableView(page_name);
+  </script>
+
+{% endif %}
+
+{# Script that will populate the "Distance" value #}
+<script type=module src="static/js/macros/custom_address_results_table/distance_calculator.mjs"></script>
+
+{% endmacro %}

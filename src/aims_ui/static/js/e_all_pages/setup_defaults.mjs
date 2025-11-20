@@ -18,3 +18,14 @@ export function getDefaultValuesForPage(page_name) {
 
   return {};
 }
+
+export function getDefaultFavourites() {
+  return [
+    'uprn',
+    'parentUprn',
+    'classificationCode',
+    'classificationCodeList',
+    'formattedConfidenceScore',
+    'nagLocalCustodianName',
+  ];
+}
