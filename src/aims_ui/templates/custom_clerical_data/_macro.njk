@@ -3,6 +3,7 @@
 {% from "components/details/_macro.njk" import onsDetails %}
 {% from "components/table/_macro.njk" import onsTable %}
 {% from "components/panel/_macro.njk" import onsPanel %}
+{% from "sub_components/sub_custom_attributes_table/_macro.njk" import subCustomAttributesTable %}
 
 <br>
 {% call onsPanel({
@@ -17,52 +18,9 @@
  {% set content %}
         
         <div class="address-card-pseudo-class">
-
-  <!-- Table for key/value pairs for each address depending on favourites -->
-   <table class='clerical-data-table ons-table'> 
-    <tbody id="table-body-for-address-attributes" class="ons-table__body">
-
-    <!-- Table "Header Row", titles for each column -->
-    <thead class="ons-table__head">
-        <tr class="ons-table__row">
-          <th scope="col" class="ons-table__header">
-            <span class="ons-table__header-text">Attribute</span>
-          </th>
-          <th scope="col" class="ons-table__header">
-            <span class="ons-table__header-text">Value</span>
-          </th>
-          <th scope="col" class="ons-table__header">
-            <span class="ons-table__header-text">Favourite</span>
-          </th>
-        </tr>
-      </thead> 
-
-      <tr id="example-table-row" class="ons-table__row"> 
-        <td class="attribute-name-placeholder ons-table__cell"></td> 
-        <td class="attribute-value-placeholder ons-table__cell"></td>
-        <td class="attribute-favourite-placeholder ons-table__cell">
-          
-          <span class="ons-checkboxes__item ons-checkboxes__item--no-border">
-            <span class="ons-checkbox ons-checkbox--no-border">
-              <input
-                type="checkbox"
-                class="ons-checkbox__input ons-js-checkbox favourite-checkbox"
-                value="true" />
-              <label
-                class="ons-checkbox__label"
-                for="only-checkbox"
-                id="only-checkbox-label">
-                  &nbsp;
-              </label>
-            </span>
-          </span>
-
-        </td>
-      </tr>
-
-    <tbody>
-  </table>
-</div>
+          {# Add the table template #}
+          {{ subCustomAttributesTable() }} 
+        </div>
 
     {% endset %}
 
