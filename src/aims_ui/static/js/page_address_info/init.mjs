@@ -1,5 +1,5 @@
 import { getGlobalValues, getPageLocalValues } from "/static/js/f_helpers/local_storage_page_helpers.mjs";
-import { setupAttributesTable } from "/static/js/macros/custom_address_info_cards/favourite_table_generation.mjs";
+import { setupAttributesTable } from '/static/js/macros/sub_components/sub_custom_attributes_table/favourite_table_generation.mjs';
 
 // What do we need to know?
   // We want the "address info" object of the current address (uprn in url)

@@ -4,7 +4,7 @@
 {% from "components/input/_macro.njk" import onsInput %}
 {% from "components/table/_macro.njk" import onsTable %}
 {% from "components/panel/_macro.njk" import onsPanel %}
-{% from 'custom_clerical_data/_macro.njk' import customClericalData %}
+{% from "components/details/_macro.njk" import onsDetails %}
 {% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
 {% from "sub_components/sub_custom_attributes_table/_macro.njk" import subCustomAttributesTable %}
 
@@ -129,13 +129,11 @@
 <script type=module src="/static/js/address_info/init.mjs"></script>
 
 <script type="module">
-  import { init } from '/static/js/macros/custom_clerical_data/init.mjs';
+  import { init } from '/static/js/page_address_info/init.mjs';
 
-  const page_name = '{{ params.page_name }}';
+  const page_name = '{{ page_name }}';
   init(page_name);
 </script>
-
-<link rel="stylesheet" href="/static/css/custom_macros/custom_clerical_data.css">
 
 <script type=module src="/static/js/e_all_pages/all_pages_last.mjs"></script>
 
