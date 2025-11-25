@@ -1,7 +1,7 @@
 // scripts to make the templated address info work
 
 import { getPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
-import { createATemplate } from '/static/js/macros/custom_address_info_cards/template_helpers.mjs';
+import { createATemplate } from '/static/js/macros/sub_components/sub_custom_attributes_table/template_helpers.mjs';
 
 export function createTemplates(addressObjects) {
   // Get a handle on the container

@@ -1,7 +1,6 @@
 // Generate the favrouties table for each card overview
-import { setGlobalValues } from '../../f_helpers/local_storage_page_helpers.mjs';
-import { getFavouritesFromLocalStorage } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
-import { getPopulatedAttributeMap } from '/static/js/macros/custom_address_info_cards/addressAttributeMap.mjs';
+import { setGlobalValues, getFavouritesFromLocalStorage } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
+import { getPopulatedAttributeMap } from '/static/js/f_helpers/address_attribute_map.mjs';
 
 const keysToShow = getFavouritesFromLocalStorage();
 

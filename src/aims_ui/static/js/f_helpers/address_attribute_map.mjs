@@ -1,3 +1,5 @@
+// Map a flattened address object to an array of objects representing
+// the attributes of an address
 
 export function getPopulatedAttributeMap(addressObject) {
   // Return an array of objects mapping with cellId: and value:, labelText:
