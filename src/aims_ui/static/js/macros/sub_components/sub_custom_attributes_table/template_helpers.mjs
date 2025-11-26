@@ -1,4 +1,4 @@
-import { setupAttributesTable } from '/static/js/macros/custom_address_info_cards/favourite_table_generation.mjs';
+import { setupAttributesTable } from '/static/js/macros/sub_components/sub_custom_attributes_table/favourite_table_generation.mjs';
 
 // Scripts to fill the template info for each address
 

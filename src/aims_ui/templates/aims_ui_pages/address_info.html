@@ -4,8 +4,9 @@
 {% from "components/input/_macro.njk" import onsInput %}
 {% from "components/table/_macro.njk" import onsTable %}
 {% from "components/panel/_macro.njk" import onsPanel %}
-{% from 'custom_clerical_data/_macro.njk' import customClericalData %}
+{% from "components/details/_macro.njk" import onsDetails %}
 {% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
+{% from "sub_components/sub_custom_attributes_table/_macro.njk" import subCustomAttributesTable %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -74,12 +75,28 @@
       </p>
     </div></div>
 
-  {# Add Custom Clerical Data (almost full result, to be hidden by accordion ) #} 
-  {{ customClericalData({
-    'clerical_info': clerical_info,
-    'page_name': page_name,
-    'link_data': link_data,
-    } ) }} 
+  {# Add the clerical info panel #}
+  {% call onsPanel( {"type": 'warn' }) %}
+    Hover your cursor over the "Name" field to see descriptions
+  {% endcall %}
+
+  {# Used to be customClericalData #}
+  {% set content %}
+    <div class="address-card-pseudo-class">
+      {# Add the table template #}
+      {{ subCustomAttributesTable() }} 
+    </div>
+  {% endset %}
+
+  {% call onsDetails({
+          'id': "collapsible",
+          'title': "Clerical Information",
+          'button': {
+              "close": "Hide this",
+              "contextSuffix": "content"
+          } })
+    %} {{ content | safe }}
+  {% endcall %}
 
 <br>
 
@@ -110,6 +127,13 @@
 <script type=module src="/static/js/e_all_pages/all_pages_first_js.mjs"></script>
 
 <script type=module src="/static/js/address_info/init.mjs"></script>
+
+<script type="module">
+  import { init } from '/static/js/page_address_info/init.mjs';
+
+  const page_name = '{{ page_name }}';
+  init(page_name);
+</script>
 
 <script type=module src="/static/js/e_all_pages/all_pages_last.mjs"></script>
 
