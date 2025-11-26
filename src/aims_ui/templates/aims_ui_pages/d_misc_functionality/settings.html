@@ -17,6 +17,26 @@ Settings on this page can change or break functionality on other pages. Only adj
 {% endcall %}
 <br>
 
+<div id="download-settings-container"></div>
+<h1>Download results settings</h1>
+{{ onsRadios({
+  "name": "property-type",
+  "dontWrap": true,
+  "radios": [
+       {
+        "id": "download-results-json-radio",
+        "label": { "text": "Download results as JSON",},
+        "value": "true",
+        },
+      {
+        "id": "download-results-csv-radio",
+        "label": { "text": "Download results as CSV",},
+        "value": "true",
+        },
+    ]
+}) }}
+<br>
+
 {# Add a setting for bulk matching, enabling older jobs to be displayed #}
 {% call onsQuestion({
     "title": 'Show Older Jobs',
@@ -158,7 +178,7 @@ Settings on this page can change or break functionality on other pages. Only adj
 
 <script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
 
-<script type=module src="static/js/d_misc_functionality/page_settings.mjs"></script>
+<script type=module src="static/js/d_misc_functionality/page_settings/init.mjs"></script>
 
 <script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
 
