@@ -137,7 +137,8 @@ export function getPopulatedAttributeMap(addressObject) {
     // Now add the paf map
     { 
         cellId: 'pafBuildingName', 
-        value: paf.buildingName, labelText: '[PAF] Building Name', 
+        value: paf.buildingName, 
+        labelText: '[PAF] Building Name', 
         description: 'The building name is a description applied to a single building or a small group of buildings such as Highfield House. This also includes those building numbers that contain non-numeric characters such as 44A. Some descriptive names when included with the rest of the address are sufficient to identify the property uniquely and unambiguously for example MAGISTRATES COURT. Sometimes the building name will be a blend of distinctive and descriptive naming for example RAILWAY TAVERN (PUBLIC HOUSE) or THE COURT ROYAL (HOTEL). Building Name must be present if Organisation Name or Building Number or PO Box Number are all not present.'
     },
     { 
