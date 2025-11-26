@@ -1,44 +1,41 @@
-import { getPageLocalValues } from "/static/js/f_helpers/local_storage_page_helpers.mjs";
+import { getPageLocalValues, getGlobalValues } from "/static/js/f_helpers/local_storage_page_helpers.mjs";
+import { getPopulatedAttributeMapOnlyFavourites } from "/static/js/f_helpers/address_attribute_map.mjs";
+
+function getCsvHeaderRow() {
+  // Get the global favourite keys to use as headers
+  const globalValues = getGlobalValues();
+  const favouriteKeys = globalValues.favouriteAddressAttributes || [];
+
+  // Create header row string
+  const headerRowValues = favouriteKeys.map( (key) => {
+    return `"${key}"`;
+  });
+
+  const headerRowString = headerRowValues.join(',');
+  return headerRowString;
+}
 
 function getCsvFromAddressObjects(previousAddresses) {
   // Given a list of address objects, generate CSV content as a string
 
-  const headers = Object.keys(previousAddresses[0]);
+  // Start by looping over each address, and applying the map
+  const csvRows = [getCsvHeaderRow()];
+  for (const addressObject of previousAddresses) {
+    // Populate the attribute map for this address, only favourites
+    const currentAddress = getPopulatedAttributeMapOnlyFavourites(addressObject);
 
-  // Set the fields to wrap in quotes as not to break csv
-  const quotedFields = new Set(['name']); 
+    const rowValues = currentAddress.map( (valuePair) => {
+      // Escape double quotes in values
+      const safeValue = String(valuePair.value).replace(/"/g, '""');
+      return `"${safeValue}"`;
+    });
 
-  // For now remove the paf and nag objcts as they require flattening (functionality is present in the favourites table generation module, but will be made available as a global helper soon)
-  const excluded = new Set(['paf', 'nag', 'lpiLogicalStatus']);
-  const filteredHeaders = headers.filter(h => !excluded.has(h));
+    // Join as a string and push to csvRows
+    const rowString = rowValues.join(',');
+    csvRows.push(rowString);
+  }
 
-  const csvRows = [
-    // First make the header row
-    filteredHeaders.join(','), 
-
-    // Then make each data row:
-    ...previousAddresses.map(obj =>
-
-      // For every address, check each key's value
-      filteredHeaders.map(key => {
-        // Blank string on falsey
-        const value = obj[key] ?? '';
-
-        // Convert to string
-        const strValue = String(value);
-
-        // Wrap fields in the 'quotedFields' set in quotes
-        if (quotedFields.has(key)) {
-          const escaped = strValue.replace(/"/g, '""');
-          return `"${escaped}"`;
-        }
-
-        return strValue; 
-      }).join(',')
-
-    )
-  ];
-
+  // Join the rows together
   const csvContent = csvRows.join('\r\n');
   return csvContent;
 }

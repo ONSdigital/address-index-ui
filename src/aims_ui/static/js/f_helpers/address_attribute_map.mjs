@@ -1,5 +1,32 @@
+import { getGlobalValues } from "/static/js/f_helpers/local_storage_page_helpers.mjs";
+
 // Map a flattened address object to an array of objects representing
 // the attributes of an address
+
+export function getPopulatedAttributeMapOnlyFavourites(addressObject) {
+  // Return the address map ORDERED by favourites and only including favourites
+
+  // Get the 'cellId's which are favourited
+  const globalValues = getGlobalValues();
+  const favouriteKeys = globalValues.favouriteAddressAttributes || [];
+
+  // Map an address normally
+  const addressMapped = getPopulatedAttributeMap(addressObject);
+
+  // In order of the favourites, save only those attribute objects to a new array
+  const addressMapOnlyFavourites = [];
+  for (const favKey of favouriteKeys) {
+    for (const addressAttribute of addressMapped) {
+        if (addressAttribute.cellId === favKey) {
+          addressMapOnlyFavourites.push(addressAttribute);
+          break;
+        }
+    }
+  }
+
+  // The array is now in the order of the favourites and only includes the favourites
+  return addressMapOnlyFavourites;
+}
 
 export function getPopulatedAttributeMap(addressObject) {
   // Return an array of objects mapping with cellId: and value:, labelText:
@@ -110,8 +137,7 @@ export function getPopulatedAttributeMap(addressObject) {
     // Now add the paf map
     { 
         cellId: 'pafBuildingName', 
-        value: paf.buildingName, 
-        labelText: '[PAF] Building Name', 
+        value: paf.buildingName, labelText: '[PAF] Building Name', 
         description: 'The building name is a description applied to a single building or a small group of buildings such as Highfield House. This also includes those building numbers that contain non-numeric characters such as 44A. Some descriptive names when included with the rest of the address are sufficient to identify the property uniquely and unambiguously for example MAGISTRATES COURT. Sometimes the building name will be a blend of distinctive and descriptive naming for example RAILWAY TAVERN (PUBLIC HOUSE) or THE COURT ROYAL (HOTEL). Building Name must be present if Organisation Name or Building Number or PO Box Number are all not present.'
     },
     { 
