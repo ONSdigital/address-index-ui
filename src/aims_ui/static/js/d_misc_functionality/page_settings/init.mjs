@@ -2,50 +2,12 @@ import { setupDownloadFormatSetting } from './download_format_setting.mjs';
 import { setupDownloadAttributesSetting } from './download_attributes_setting.mjs';
 import { setupJobAgeSetting } from './job_age_setting.mjs';
 import { setupAdditionalRequestSetting } from './additional_request_setting.mjs';
+import { setupPafNagTitleSetting } from './paf_nag_title_setting.mjs';
 
 import {
-  getAddressTitlePreference,
-  updateAddressFormatPreference,
   getCustomColumnWidths,
   setNewColumnWidths,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
-
-function updateAddressTitlePreference(e) {
-  updateAddressFormatPreference(e);
-}
-
-// Paf and Nag Preferences
-function setupNagAndPafStatus() {
-  const current_status = getAddressTitlePreference();
-  if (current_status === 'paf') {
-    const pafRadio = document.querySelector('#paf-radio');
-    pafRadio.checked = true;
-  } else if (current_status === 'nag') {
-    const nagRadio = document.querySelector('#nag-radio');
-    nagRadio.checked = true;
-  } else if (current_status === 'def') {
-    const defRadio = document.querySelector('#default-radio');
-    defRadio.checked = true;
-  }
-}
-
-function setupNagAndPafListeners() {
-  const pafRadio = document.querySelector('#paf-radio');
-  const nagRadio = document.querySelector('#nag-radio');
-  const defRadio = document.querySelector('#default-radio');
-
-  pafRadio.addEventListener('change', (e) => {
-    updateAddressTitlePreference('paf');
-  });
-
-  nagRadio.addEventListener('change', (e) => {
-    updateAddressTitlePreference('nag');
-  });
-
-  defRadio.addEventListener('change', (e) => {
-    updateAddressTitlePreference('def');
-  });
-}
 
 // Column Width Preferences
 function setValuesOfColumnWidthPreferences() {
@@ -77,8 +39,6 @@ function setupColumnWidthCustomiserListeners() {
 function init() {
   console.log('Page Settings Init Running');
 
-  setupNagAndPafListeners();
-  setupNagAndPafStatus();
   setValuesOfColumnWidthPreferences();
   setupColumnWidthCustomiserListeners();
 
@@ -86,6 +46,7 @@ function init() {
   setupDownloadAttributesSetting();
   setupJobAgeSetting();
   setupAdditionalRequestSetting();
+  setupPafNagTitleSetting();
 }
 
 window.addEventListener('load', init);
