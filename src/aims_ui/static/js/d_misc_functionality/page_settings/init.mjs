@@ -1,13 +1,13 @@
 import { setupDownloadFormatSetting } from './download_format_setting.mjs';
 import { setupDownloadAttributesSetting } from './download_attributes_setting.mjs';
 import { setupJobAgeSetting } from './job_age_setting.mjs';
+import { setupAdditionalRequestSetting } from './additional_request_setting.mjs';
+
 import {
   getAddressTitlePreference,
   updateAddressFormatPreference,
   getCustomColumnWidths,
   setNewColumnWidths,
-  getAdditionalRequestStatus,
-  setAdditionalRequestStatus,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 function updateAddressTitlePreference(e) {
@@ -74,52 +74,6 @@ function setupColumnWidthCustomiserListeners() {
   }
 }
 
-// Additional Request Details
-function setupAdditionalRequestStatus() {
-  const current_status = getAdditionalRequestStatus();
-
-  const matchTypeCheckbox = document.querySelector('#match_type');
-  const recomCodeCheckbox = document.querySelector('#recommendation_code');
-  const tokenisedCheckbox = document.querySelector('#tokenised_output');
-
-  if (current_status.match_type === 'true') {
-    matchTypeCheckbox.checked = true;
-  }
-  if (current_status.recommendation_code === 'true') {
-    recomCodeCheckbox.checked = true;
-  }
-  if (current_status.tokenised_output === 'true') {
-    tokenisedCheckbox.checked = true;
-  }
-}
-
-function setupAdditionalRequestListeners() {
-  const matchTypeCheckbox = document.querySelector('#match_type');
-  const recomCodeCheckbox = document.querySelector('#recommendation_code');
-  const tokenisedCheckbox = document.querySelector('#tokenised_output');
-
-  matchTypeCheckbox.addEventListener('change', (e) => {
-    const currentSettings = getAdditionalRequestStatus();
-    const mtStatus = matchTypeCheckbox.checked;
-    currentSettings.match_type = mtStatus.toString();
-    setAdditionalRequestStatus(currentSettings);
-  });
-
-  recomCodeCheckbox.addEventListener('change', (e) => {
-    const currentSettings = getAdditionalRequestStatus();
-    const recomCodeStatus = recomCodeCheckbox.checked;
-    currentSettings.recommendation_code = recomCodeStatus.toString();
-    setAdditionalRequestStatus(currentSettings);
-  });
-
-  tokenisedCheckbox.addEventListener('change', (e) => {
-    const currentSettings = getAdditionalRequestStatus();
-    const tokenisedStatus = tokenisedCheckbox.checked;
-    currentSettings.tokenised_output = tokenisedStatus.toString();
-    setAdditionalRequestStatus(currentSettings);
-  });
-}
-
 function init() {
   console.log('Page Settings Init Running');
 
@@ -127,12 +81,11 @@ function init() {
   setupNagAndPafStatus();
   setValuesOfColumnWidthPreferences();
   setupColumnWidthCustomiserListeners();
-  setupAdditionalRequestStatus();
-  setupAdditionalRequestListeners();
 
   setupDownloadFormatSetting();
   setupDownloadAttributesSetting();
   setupJobAgeSetting();
+  setupAdditionalRequestSetting();
 }
 
 window.addEventListener('load', init);

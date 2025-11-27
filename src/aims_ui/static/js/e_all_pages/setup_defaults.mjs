@@ -38,6 +38,13 @@ export function getDefaultGlobalValues() {
     // Setup the attribute to flag showing older jobs on the large bulk-matching pages
     'showOlderJobsInBulkMatchingPage': false,
 
+    // Setup the default values for Additional Request Details
+    'additionalRequestDetails': {
+      match_type: true,
+      recommendation_code: true,
+      tokenised_output: false,
+    },
+
     // Default address attributes to show (based on original requirements)
     'favouriteAddressAttributes': [
       'uprn',
