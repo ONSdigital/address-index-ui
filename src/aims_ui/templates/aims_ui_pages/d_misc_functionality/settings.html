@@ -98,28 +98,28 @@
             "name": "Request Details",
             "checkboxes": [
                 {
-                    "id": "match_type",
+                    "id": "additional-request-details-match-type",
+                    "value": "true",
                     "label": {
                         "text": "Match Type",
-			"description": "S - Single Match <br> M - Multiple Matches <br> N - No Matches",
-                    },
-                    "value": "true"
+                        "description": "S - Single Match <br> M - Multiple Matches <br> N - No Matches",
+                    }
                 },
                 {
-                    "id": "recommendation_code",
+                    "id": "additional-request-details-recommendation-code",
+                    "value": "true",
                     "label": {
                         "text": "Recommendation Code",
-			"description": "A - Recommend that the top result is accepted (97.5% of the time this was correct during testing but may be different for your dataset) <br> I - Investigate, we recommend investigating further as there's a significant chance the top match might be wrong",
-                    },
-                    "value": "true"
+			            "description": "A - Recommend that the top result is accepted (97.5% of the time this was correct during testing but may be different for your dataset) <br> I - Investigate, we recommend investigating further as there's a significant chance the top match might be wrong",
+                    }
                 },
                 {
-                    "id": "tokenised_output",
+                    "id": "additional-request-details-tokenised-output",
+                    "value": "true",
                     "label": {
                         "text": "Include Breakdown of Address Tokens",
                         "description": 'In singlesearch pages, the parser automatically breaks up a provided string into building number, building name, etc. Enabling this will cause the UI to show this output with the results section of a request.',
-                    },
-                    "value": "true"
+                    }
                 },
  
             ]

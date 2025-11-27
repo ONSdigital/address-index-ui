@@ -73,27 +73,6 @@ export function setNewColumnWidths(values) {
   localStorage.setItem('custom_column_width', newValues);
 }
 
-// AdditionalRequests status
-export function setDefaultAdditionalRequestStatus() {
-  if (!localStorage.getItem('custom_settings_additional_request_info')) {
-    const defaultOptions = { match_type: 'true', recommendation_code: 'true', tokenised_output: 'true'};
-    setAdditionalRequestStatus(defaultOptions);
-  }
-}
-
-export function getAdditionalRequestStatus() {
-  const obj = localStorage.getItem('custom_settings_additional_request_info');
-  return JSON.parse(obj);
-}
-
-export function setAdditionalRequestStatus(settings) {
-  const stringifiedSettings = JSON.stringify(settings);
-  localStorage.setItem(
-    'custom_settings_additional_request_info',
-    stringifiedSettings
-  );
-}
-
 // Getters and setters for Custom Response
 
 export function setParentUprnPreference(preference) {

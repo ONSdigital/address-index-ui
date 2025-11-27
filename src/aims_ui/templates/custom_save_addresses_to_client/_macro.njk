@@ -28,8 +28,6 @@
       {# This should only include attributes a user might want to see raw #}
       {# Attributes that generate content (like hirderachey) should be missed here #}
 
-      console.log();
-
       addAddressToLargeList({
         // High level attributes (in order of clerical information page)
         uprn: {{ address.uprn.value | tojson }},
@@ -124,6 +122,10 @@
     // Set the values of the address for this page specifically
     setPageLocalValues( '{{params.page_name}}', {mostRecentlySearchedAddresses: matchedAddresses} )
 
+    // Add request attributes to local storage too (if available)
+    {% if params.responseAttributes %}
+      setPageLocalValues( '{{params.page_name}}', { responseAttributes: {{ params.responseAttributes | tojson }}} )
+    {% endif %}
 
     // Set these as the most recently searched addresses for global pages (like carrying the confidence score over to the info page!)
     // Only if the "do_not_update_most_recently_searched_addresses" is not True

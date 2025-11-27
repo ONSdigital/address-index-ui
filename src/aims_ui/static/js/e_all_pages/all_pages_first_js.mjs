@@ -1,7 +1,6 @@
 import {
   setDefaultTitleChoice,
   setDefaultColumnWidths,
-  setDefaultAdditionalRequestStatus,
   setDefaultResponseFormatCustomResponse,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
@@ -13,7 +12,6 @@ import { addMostRecentPageToStorage } from '/static/js/e_all_pages/breadcrumb_he
 function setDefaultValuesIfUnset() {
   setDefaultTitleChoice();
   setDefaultColumnWidths();
-  setDefaultAdditionalRequestStatus();
   setDefaultResponseFormatCustomResponse();
 
   setupDefaultGlobalValues();
