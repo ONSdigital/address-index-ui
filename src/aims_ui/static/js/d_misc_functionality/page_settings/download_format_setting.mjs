@@ -14,7 +14,7 @@ function checkRadioButton(documentId) {
   }
 }
 
-export function setupDownloadSettings() {
+export function setupDownloadFormatSetting() {
   // Get the value of the current global download format setting
   const globalValues = getGlobalValues();
   const currentFormat = globalValues.singleJobDownloadFormat || 'csv';

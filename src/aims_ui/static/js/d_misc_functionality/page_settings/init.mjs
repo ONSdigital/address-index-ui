@@ -1,4 +1,5 @@
-import { setupDownloadSettings } from './download_settings.mjs';
+import { setupDownloadFormatSetting } from './download_format_setting.mjs';
+import { setupDownloadAttributesSetting } from './download_attributes_setting.mjs';
 import {
   getAddressTitlePreference,
   updateAddressFormatPreference,
@@ -150,7 +151,8 @@ function init() {
   setupJobAgePreferences();
   setupJobAgePreferencesListeners();
 
-  setupDownloadSettings();
+  setupDownloadFormatSetting();
+  setupDownloadAttributesSetting();
 }
 
 window.addEventListener('load', init);

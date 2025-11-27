@@ -30,6 +30,9 @@ export function getDefaultGlobalValues() {
     // Default download format for single searches
     'singleJobDownloadFormat': 'csv',
 
+    // Setup the attributes to include in downloads by default it will be everything
+    'singleJobDownloadAttributeInclusion': 'all',
+
     // Default address attributes to show (based on original requirements)
     'favouriteAddressAttributes': [
       'uprn',
