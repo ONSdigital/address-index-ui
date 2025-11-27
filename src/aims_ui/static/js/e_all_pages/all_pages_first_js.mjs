@@ -6,6 +6,8 @@ import {
   setDefaultJobAgePreferences,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
+import { setupDefaultGlobalValues } from '/static/js/e_all_pages/setup_defaults.mjs';
+
 import { addMostRecentPageToStorage } from '/static/js/e_all_pages/breadcrumb_helpers/breadcrumbHelpers.mjs';
 
 
@@ -15,6 +17,8 @@ function setDefaultValuesIfUnset() {
   setDefaultAdditionalRequestStatus();
   setDefaultResponseFormatCustomResponse();
   setDefaultJobAgePreferences();
+
+  setupDefaultGlobalValues();
 }
 
 function removeResubmissionMessage() {

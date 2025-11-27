@@ -1,11 +1,39 @@
+import { getGlobalValues } from "/static/js/f_helpers/local_storage_page_helpers.mjs";
+
 // Map a flattened address object to an array of objects representing
 // the attributes of an address
+
+export function getPopulatedAttributeMapOnlyFavourites(addressObject) {
+  // Return the address map ORDERED by favourites and only including favourites
+
+  // Get the 'cellId's which are favourited
+  const globalValues = getGlobalValues();
+  const favouriteKeys = globalValues.favouriteAddressAttributes || [];
+
+  // Map an address normally
+  const addressMapped = getPopulatedAttributeMap(addressObject);
+
+  // In order of the favourites, save only those attribute objects to a new array
+  const addressMapOnlyFavourites = [];
+  for (const favKey of favouriteKeys) {
+    for (const addressAttribute of addressMapped) {
+        if (addressAttribute.cellId === favKey) {
+          addressMapOnlyFavourites.push(addressAttribute);
+          break;
+        }
+    }
+  }
+
+  // The array is now in the order of the favourites and only includes the favourites
+  return addressMapOnlyFavourites;
+}
 
 export function getPopulatedAttributeMap(addressObject) {
   // Return an array of objects mapping with cellId: and value:, labelText:
 
   const paf = addressObject.paf || {};
   const nag = addressObject.nag || {};
+  const lpiLogicalStatus = addressObject.lpiLogicalStatus || {};
 
   const valueCellToAddressValueMap = [
     // Base address fields
@@ -72,7 +100,7 @@ export function getPopulatedAttributeMap(addressObject) {
     },
     { 
         cellId: 'lpiLogicalStatus', 
-        value: addressObject.lpiLogicalStatus.text, 
+        value: lpiLogicalStatus.text, 
         labelText: 'LPI Logical Status', 
         description: 'Logical status of this address record as given by the local custodian. This attribute shows whether the address is currently live provisional or historic. 1 = Approved 3 = Alternative 6 = Provisional 8 = Historical'
     },
