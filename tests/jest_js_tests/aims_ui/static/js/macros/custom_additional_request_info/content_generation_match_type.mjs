@@ -1,32 +1,30 @@
-import { crEl } from '/static/js/f_helpers/element_creation.mjs';
+import { getMatchTypeDescription } from '../../../../../../src/aims_ui/static/js/macros/custom_additional_request_info/content_generation_match_type.mjs';
 
-function getMatchTypeDescription(matchType) {
-  // Expect 'S' 'M' 'N' for single multiple none
-  if (matchType === 'S') {
-    return 'S - Single match with Confidence Score above threshold';
-  } else if (matchType === 'M') {
-    return 'M - Multiple Matches with Confidence Score above threshold';
-  } else if (matchType === 'N') {
-    return 'N - No matches with Confidence Score above threshold';
-  }
-  return matchType;
-}
-
-export function generatePanelContentForMatchType(responseAttributes) {
-  // Given the response attributes, generate the content for match type
-  const matchType = responseAttributes.matchType || 'N/A';
+// Test Match Type Verbose Description
+test('Match Type Verbose Description For Single Match', () => {
+  const matchType = 'S';
   const matchTypeDescription = getMatchTypeDescription(matchType);
 
-  // Create a container, title and description elements
-  const matchTypeContainer = crEl('div', 'match-type-paragraph-container');
-  const matchTypeTitle= crEl('em', 'match-type-paragraph-title');
-  const matchTypeText = crEl('p', 'match-type-paragraph-text');
+  expect(matchTypeDescription).toBe(
+    'S - Single match with Confidence Score above threshold'
+  );
+});
 
-  // Set the content of elements and nest them
-  matchTypeTitle.textContent = 'Match Type: ';
-  matchTypeText.textContent = matchTypeDescription;
-  matchTypeContainer.append(matchTypeTitle, matchTypeText);
+test('Match Type Verbose Description For Multiple Matches', () => {
+  const matchType = 'M';
+  const matchTypeDescription = getMatchTypeDescription(matchType);
 
-  return matchTypeContainer;
-}
+  expect(matchTypeDescription).toBe(
+    'M - Multiple Matches with Confidence Score above threshold'
+  );
+});
+
+test('Match Type Verbose Description For No Matches', () => {
+  const matchType = 'N';
+  const matchTypeDescription = getMatchTypeDescription(matchType);
+
+  expect(matchTypeDescription).toBe(
+    'N - No matches with Confidence Score above threshold'
+  );
+});
 
