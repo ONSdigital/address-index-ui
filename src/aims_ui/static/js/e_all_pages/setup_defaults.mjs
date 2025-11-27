@@ -25,6 +25,8 @@ export function getDefaultValuesForPage(page_name) {
 }
 
 export function getDefaultGlobalValues() {
+  // Values should be GLOBAL if they're accessed across multiple pages
+
   const defaultGlobalValues = {
 
     // Default download format for single searches
@@ -32,6 +34,9 @@ export function getDefaultGlobalValues() {
 
     // Setup the attributes to include in downloads by default it will be everything
     'singleJobDownloadAttributeInclusion': 'all',
+
+    // Setup the attribute to flag showing older jobs on the large bulk-matching pages
+    'showOlderJobsInBulkMatchingPage': false,
 
     // Default address attributes to show (based on original requirements)
     'favouriteAddressAttributes': [

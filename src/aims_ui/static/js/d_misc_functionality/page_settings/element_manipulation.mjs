@@ -6,3 +6,17 @@ export function checkRadioButton(documentId) {
     radioButton.checked = true;
   }
 }
+
+export function checkCheckbox(documentId) {
+  const checkbox = document.querySelector(`#${documentId}`);
+  if (checkbox) {
+    checkbox.checked = true;
+  }
+}
+
+export function uncheckCheckbox(documentId) {
+  const checkbox = document.querySelector(`#${documentId}`);
+  if (checkbox) {
+    checkbox.checked = false;
+  }
+}

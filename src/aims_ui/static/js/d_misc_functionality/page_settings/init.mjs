@@ -1,5 +1,6 @@
 import { setupDownloadFormatSetting } from './download_format_setting.mjs';
 import { setupDownloadAttributesSetting } from './download_attributes_setting.mjs';
+import { setupJobAgeSetting } from './job_age_setting.mjs';
 import {
   getAddressTitlePreference,
   updateAddressFormatPreference,
@@ -7,8 +8,6 @@ import {
   setNewColumnWidths,
   getAdditionalRequestStatus,
   setAdditionalRequestStatus,
-  setJobAgePreference,
-  getJobAgePreference,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 function updateAddressTitlePreference(e) {
@@ -75,26 +74,6 @@ function setupColumnWidthCustomiserListeners() {
   }
 }
 
-// Job Age Preferences
-function setupJobAgePreferences() {
-  const currentStatus = getJobAgePreference();
-
-  const oldJobsCheckbox = document.querySelector('#old_jobs_checkbox');
-
-  if (currentStatus === 'true') {
-    oldJobsCheckbox.checked = true;
-  }
-}
-
-function setupJobAgePreferencesListeners() {
-  const jobAgeCheckbox = document.querySelector('#old_jobs_checkbox');
-
-  jobAgeCheckbox.addEventListener('change', (e) => {
-    const statusOfCheckbox = jobAgeCheckbox.checked;
-    setJobAgePreference(statusOfCheckbox.toString());
-  });
-}
-
 // Additional Request Details
 function setupAdditionalRequestStatus() {
   const current_status = getAdditionalRequestStatus();
@@ -150,11 +129,10 @@ function init() {
   setupColumnWidthCustomiserListeners();
   setupAdditionalRequestStatus();
   setupAdditionalRequestListeners();
-  setupJobAgePreferences();
-  setupJobAgePreferencesListeners();
 
   setupDownloadFormatSetting();
   setupDownloadAttributesSetting();
+  setupJobAgeSetting();
 }
 
 window.addEventListener('load', init);
