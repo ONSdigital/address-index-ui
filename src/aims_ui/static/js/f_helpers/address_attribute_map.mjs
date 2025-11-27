@@ -33,6 +33,7 @@ export function getPopulatedAttributeMap(addressObject) {
 
   const paf = addressObject.paf || {};
   const nag = addressObject.nag || {};
+  const lpiLogicalStatus = addressObject.lpiLogicalStatus || {};
 
   const valueCellToAddressValueMap = [
     // Base address fields
@@ -99,7 +100,7 @@ export function getPopulatedAttributeMap(addressObject) {
     },
     { 
         cellId: 'lpiLogicalStatus', 
-        value: addressObject.lpiLogicalStatus.text, 
+        value: lpiLogicalStatus.text, 
         labelText: 'LPI Logical Status', 
         description: 'Logical status of this address record as given by the local custodian. This attribute shows whether the address is currently live provisional or historic. 1 = Approved 3 = Alternative 6 = Provisional 8 = Historical'
     },
