@@ -9,32 +9,57 @@
 
 {% block main %}
 
-{% call onsPanel({
-        "type": 'warn'
-    })
-%}
-Settings on this page can change or break functionality on other pages. Only adjust settings you're confident you need to.
+{% call onsPanel({"type": 'warn' }) %}
+    Settings on this page can change or break functionality on other pages. Only adjust settings you're confident you need to.
 {% endcall %}
 <br>
 
 <div id="download-settings-container">
-<h1>Download results settings</h1>
-{{ onsRadios({
-  "name": "property-type",
-  "dontWrap": true,
-  "radios": [
-       {
-        "id": "download-results-json-radio",
-        "label": { "text": "Download results as JSON",},
-        "value": "true",
-        },
-      {
-        "id": "download-results-csv-radio",
-        "label": { "text": "Download results as CSV",},
-        "value": "true",
-        },
-    ]
-}) }}
+    {% call onsQuestion({
+        "title": "Select format of results download",
+        "classes": "ons-u-mt-no",
+        "description": "Select the formatting of the results download you would prefer.",
+        "legendIsQuestionTitle": true }) %}
+    {{ onsRadios({
+    "name": "property-type",
+    "dontWrap": true,
+    "radios": [
+        {
+            "id": "download-results-json-radio",
+            "label": { "text": "Download results as JSON",},
+            "value": "true",
+            },
+        {
+            "id": "download-results-csv-radio",
+            "label": { "text": "Download results as CSV",},
+            "value": "true",
+            },
+        ]
+    }) }}
+    {% endcall %}
+    <br>
+    {% call onsQuestion({
+        "classes": "ons-u-mt-no",
+        "title": "Select attributes to include when downloading results",
+        "description": 'When downloading results on single address pages, you can include all attributes for each address or just download the ones that are "favourited"',
+        "legendIsQuestionTitle": true }) %}
+    {{ onsRadios({
+    "name": "property-type",
+    "dontWrap": true,
+    "radios": [
+        {
+            "id": "download-results-full-radio",
+            "label": { "text": "Download all attributes of an address",},
+            "value": "true",
+            },
+        {
+            "id": "download-results-favourites-radio",
+            "label": { "text": "Download only favourite attributes of an address",},
+            "value": "true",
+            },
+        ]
+    }) }}
+    {% endcall %}
 </div>
 <br>
 
