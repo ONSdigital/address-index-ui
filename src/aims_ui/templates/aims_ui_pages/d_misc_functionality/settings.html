@@ -69,19 +69,19 @@
     "description": 'On bulk matching pages, jobs expire after 7 days and you are no longer able to download them. However, if you wish to see the record and information about the submitted jobs, enable this setting.',
     "legendIsQuestionTitle": true }) %}
     {{ onsCheckboxes({
-            "name": "Request Details",
-            "checkboxesLabel": "",
-            "dontWrap": true,
-            "checkboxes": [
-                {
-                    "id": "show-old-jobs-checkbox",
-                    "value": "true",
-                    "label": {
-                        "text": "Show Old Jobs",
-                        "description": "All jobs for your user will be shown in the bulk matching pages",
-                    }
-                },
-            ]
+        "name": "Request Details",
+        "checkboxesLabel": "",
+        "dontWrap": true,
+        "checkboxes": [
+            {
+                "id": "show-old-jobs-checkbox",
+                "value": "true",
+                "label": {
+                    "text": "Show Old Jobs",
+                    "description": "All jobs for your user will be shown in the bulk matching pages",
+                }
+            },
+        ]
         })
     }}
 {% endcall %}
@@ -156,41 +156,53 @@
 {% endcall %}
 
 
-
 {# SET COLUMN WIDTH PREFERENCE#}
 {% call onsQuestion({
     "title": 'Customise Input and Output Widths',
     "description":'You can customise the width of input and output fields below.<br> This is particularly useful for use with a widescreen or large display. Once changed this affects all other results pages. You can reset the changes back to default at any time using the reset button below',
     "legendIsQuestionTitle": true }) %}
 
-
-{{ onsSelect({
-        "id":      "selector_space_col_1", "name": "selector_space_col_1",
+    {{ onsSelect({
+        "id":      "column-width-left-padding-selector", 
+        "name": "column-width-left-padding-selector",
         "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "options": col_options_inc0,
         "label"  : {
-            "text": "Width of Leftside Padding", "inline": true
-        },  "options": col_options_inc0 }) }}
+            "text": "Width of Leftside Padding", 
+            "inline": true},  
+        }
+    ) }}
 
-{{ onsSelect({
-        "id":      "selector_content_col_2", "name": "selector_content_col_2",
+    {{ onsSelect({
+        "id":      "column-width-left-content-selector", 
+        "name": "column-width-left-content-selector",
         "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "options": col_options,
         "label"  : {
-            "text": "Width of Leftside Content (inputs)", "inline": true
-        },  "options": col_options }) }}
+            "text": "Width of Leftside Content (inputs)", 
+            "inline": true
+        }
+    }) }}
 
-{{ onsSelect({
-        "id":      "selector_space_col_3", "name": "selector_space_col_3",
+    {{ onsSelect({
+        "id":      "column-width-middle-gap-selector", 
+        "name": "column-width-middle-gap-selector",
         "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "options": col_options,
         "label"  : {
-            "text": "Width of Gap in middle", "inline": true
-        },  "options": col_options }) }}
+            "text": "Width of Gap in middle", 
+            "inline": true }
+    }) }}
 
-{{ onsSelect({
-        "id":      "selector_content_col_4", "name": "selector_content_col_4",
+    {{ onsSelect({
+        "id":      "column-width-right-side-content-selector", 
+        "name": "column-width-right-side-content-selector",
         "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "options": col_options,
         "label"  : {
-            "text": "Width of Right Side Content ", "inline": true
-        },  "options": col_options }) }}
+            "text": "Width of Right Side Content ", 
+            "inline": true }
+    }) }}
 
 {% endcall %}
 

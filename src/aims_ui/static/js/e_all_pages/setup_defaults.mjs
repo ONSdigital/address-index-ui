@@ -41,6 +41,14 @@ export function getDefaultGlobalValues() {
     // Default type of title the address cards should have
     'addressCardTitleType': 'default',
 
+    // Setup default column widths
+    'columnWidths': {
+      'leftPadding': '1',
+      'leftContent': '4',
+      'gapInMiddle': '1',
+      'rightSideContent': '4',
+    },
+
     // Setup the default values for Additional Request Details
     'additionalRequestDetails': {
       match_type: true,
