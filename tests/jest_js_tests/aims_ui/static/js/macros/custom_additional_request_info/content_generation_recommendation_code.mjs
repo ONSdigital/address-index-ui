@@ -1,28 +1,19 @@
-import { crEl } from '/static/js/f_helpers/element_creation.mjs';
+import { getRecommendationCodeDescription } from '../../../../../../src/aims_ui/static/js/macros/custom_additional_request_info/content_generation_recommendation_code.mjs';
 
-export function getRecommendationCodeDescription(code) {
-  if (code === 'A') {
-    return 'A - Accept the top result';
-  } else if (code === 'I') {
-    return 'I - Investigate results';
-  }
-}
+// Test Recommendation Code Verbose Description
+test('Recommendation Code Verbose Description For Accept', () => {
+  const recommendationCode = 'A';
+  const recommendationCodeDescription =
+    getRecommendationCodeDescription(recommendationCode);
 
-export function generatePanelContentForRecommendationCode(responseAttributes) {
-  // Given the response attributes, generate the content for recommendation code 
-  const recommendationCode = responseAttributes.recommendationCode || 'N/A';
-  const recommendationCodeDescription = getRecommendationCodeDescription(recommendationCode);
+  expect(recommendationCodeDescription).toBe('A - Accept the top result');
+});
 
-  // Create a container, title and description elements
-  const recommendationContainer = crEl('div', 'recommendation-paragraph-container');
-  const recommendationTitle= crEl('em', 'recommendation-paragraph-title');
-  const recommendationText = crEl('p', 'recommendation-paragraph-text');
+test('Recommendation Code Verbose Description For Investigate', () => {
+  const recommendationCode = 'I';
+  const recommendationCodeDescription =
+    getRecommendationCodeDescription(recommendationCode);
 
-   // Set the content of elements and nest them
-  recommendationTitle.textContent = 'Recommendation Code: ';
-  recommendationText.textContent = recommendationCodeDescription;
-  recommendationContainer.append(recommendationTitle, recommendationText);
-
-  return recommendationContainer;
- }
+  expect(recommendationCodeDescription).toBe('I - Investigate results');
+});
 
