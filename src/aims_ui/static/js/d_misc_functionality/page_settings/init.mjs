@@ -1,3 +1,5 @@
+import { setupDownloadFormatSetting } from './download_format_setting.mjs';
+import { setupDownloadAttributesSetting } from './download_attributes_setting.mjs';
 import {
   getAddressTitlePreference,
   updateAddressFormatPreference,
@@ -140,6 +142,8 @@ function setupAdditionalRequestListeners() {
 }
 
 function init() {
+  console.log('Page Settings Init Running');
+
   setupNagAndPafListeners();
   setupNagAndPafStatus();
   setValuesOfColumnWidthPreferences();
@@ -148,6 +152,9 @@ function init() {
   setupAdditionalRequestListeners();
   setupJobAgePreferences();
   setupJobAgePreferencesListeners();
+
+  setupDownloadFormatSetting();
+  setupDownloadAttributesSetting();
 }
 
 window.addEventListener('load', init);

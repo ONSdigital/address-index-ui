@@ -1,3 +1,8 @@
+import {
+  getGlobalValues,
+  setGlobalValues,
+} from '/static/js/f_helpers/local_storage_page_helpers.mjs';
+
 export function getDefaultValuesForPage(page_name) {
   const defaultValues = {
     'radiussearch': {
@@ -19,13 +24,36 @@ export function getDefaultValuesForPage(page_name) {
   return {};
 }
 
-export function getDefaultFavourites() {
-  return [
-    'uprn',
-    'parentUprn',
-    'classificationCode',
-    'classificationCodeList',
-    'formattedConfidenceScore',
-    'nagLocalCustodianName',
-  ];
+export function getDefaultGlobalValues() {
+  const defaultGlobalValues = {
+
+    // Default download format for single searches
+    'singleJobDownloadFormat': 'csv',
+
+    // Setup the attributes to include in downloads by default it will be everything
+    'singleJobDownloadAttributeInclusion': 'all',
+
+    // Default address attributes to show (based on original requirements)
+    'favouriteAddressAttributes': [
+      'uprn',
+      'parentUprn',
+      'classificationCode',
+      'classificationCodeList',
+      'formattedConfidenceScore',
+      'nagLocalCustodianName',
+    ]
+  };
+  return defaultGlobalValues;
 }
+
+export function setupDefaultGlobalValues() {
+  // Set default values for global values if they don't already exist
+  const currentGlobalValues = getGlobalValues();
+
+  const defaultGlobalValues = getDefaultGlobalValues();
+
+  const updatedValues = { ...defaultGlobalValues, ...currentGlobalValues };
+
+  setGlobalValues(updatedValues);
+}
+
