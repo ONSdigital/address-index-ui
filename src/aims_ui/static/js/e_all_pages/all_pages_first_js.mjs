@@ -3,7 +3,6 @@ import {
   setDefaultColumnWidths,
   setDefaultAdditionalRequestStatus,
   setDefaultResponseFormatCustomResponse,
-  setDefaultJobAgePreferences,
 } from '/static/js/f_helpers/local_storage_helpers.mjs';
 
 import { setupDefaultGlobalValues } from '/static/js/e_all_pages/setup_defaults.mjs';
@@ -16,7 +15,6 @@ function setDefaultValuesIfUnset() {
   setDefaultColumnWidths();
   setDefaultAdditionalRequestStatus();
   setDefaultResponseFormatCustomResponse();
-  setDefaultJobAgePreferences();
 
   setupDefaultGlobalValues();
 }

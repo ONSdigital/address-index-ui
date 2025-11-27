@@ -73,23 +73,6 @@ export function setNewColumnWidths(values) {
   localStorage.setItem('custom_column_width', newValues);
 }
 
-// Old job preferences
-export function setDefaultJobAgePreferences() {
-  if (!localStorage.getItem('job_age_preference')) {
-    // By default do not include older jobs
-    const defaultOption = 'false';
-    setJobAgePreference(defaultOption);
-  }
-}
-
-export function setJobAgePreference(preference) {
-  localStorage.setItem('job_age_preference', preference);
-}
-
-export function getJobAgePreference() {
-  return localStorage.getItem('job_age_preference');
-}
-
 // AdditionalRequests status
 export function setDefaultAdditionalRequestStatus() {
   if (!localStorage.getItem('custom_settings_additional_request_info')) {

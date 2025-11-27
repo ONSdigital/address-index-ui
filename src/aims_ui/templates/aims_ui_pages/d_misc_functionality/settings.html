@@ -66,21 +66,20 @@
 {# Add a setting for bulk matching, enabling older jobs to be displayed #}
 {% call onsQuestion({
     "title": 'Show Older Jobs',
-    "description": 'On bulk matching pages, jobs expire after 7 days and you are no longer able to donwload them. However, if you wish to see the record and information about the submitted jobs, enable this setting.',
+    "description": 'On bulk matching pages, jobs expire after 7 days and you are no longer able to download them. However, if you wish to see the record and information about the submitted jobs, enable this setting.',
     "legendIsQuestionTitle": true }) %}
-    {{
-        onsCheckboxes({
+    {{ onsCheckboxes({
+            "name": "Request Details",
             "checkboxesLabel": "",
             "dontWrap": true,
-            "name": "Request Details",
             "checkboxes": [
                 {
-                    "id": "old_jobs_checkbox",
+                    "id": "show-old-jobs-checkbox",
+                    "value": "true",
                     "label": {
                         "text": "Show Old Jobs",
                         "description": "All jobs for your user will be shown in the bulk matching pages",
-                    },
-                    "value": "true"
+                    }
                 },
             ]
         })
