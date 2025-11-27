@@ -2,17 +2,9 @@ import {
   getGlobalValues,
   setGlobalValues,
 } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
+import { checkRadioButton } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
 
 // Setup listeners, handlers and startup for download settings on the preferences page
-
-// Select the radio that matches the current global setting
-
-function checkRadioButton(documentId) {
-  const radioButton = document.querySelector(`#${documentId}`);
-  if (radioButton) {
-    radioButton.checked = true;
-  }
-}
 
 export function setupDownloadFormatSetting() {
   // Get the value of the current global download format setting

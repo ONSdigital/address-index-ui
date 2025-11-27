@@ -2,13 +2,7 @@ import {
   getGlobalValues,
   setGlobalValues,
 } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
-
-function checkRadioButton(documentId) {
-  const radioButton = document.querySelector(`#${documentId}`);
-  if (radioButton) {
-    radioButton.checked = true;
-  }
-}
+import { checkRadioButton } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
 
 export function setupDownloadAttributesSetting() {
   // Get the value of the current global download attribute inclusion setting
