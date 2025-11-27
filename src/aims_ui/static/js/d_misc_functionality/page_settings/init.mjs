@@ -142,6 +142,8 @@ function setupAdditionalRequestListeners() {
 }
 
 function init() {
+  console.log('Page Settings Init Running');
+
   setupNagAndPafListeners();
   setupNagAndPafStatus();
   setValuesOfColumnWidthPreferences();

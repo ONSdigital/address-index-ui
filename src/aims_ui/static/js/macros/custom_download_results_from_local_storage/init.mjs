@@ -50,24 +50,41 @@ function setupDownloadButtonVisibility(page_name) {
 
 function setupDownloadButtonText(downloadButtonSettings) {
   // The user will have a global preference for download format
-  const downloadFormat= downloadButtonSettings.downloadFormat;
+  const downloadFormat = downloadButtonSettings.downloadFormat;
+  const singleJobDownloadAttributeInclusion = downloadButtonSettings.singleJobDownloadAttributeInclusion;
 
   const downloadButton = getTheDownloadButton();
   const textContainerInsideButton = downloadButton.querySelector('.ons-btn__text');
-  if (downloadFormat === 'csv') {
-    textContainerInsideButton.textContent = 'Save results as CSV';
-  } else if (downloadFormat === 'json') {
-    textContainerInsideButton.textContent = 'Save results as JSON';
+
+  let buttonText = 'Download ';
+
+  // Add the text to describe all attributes or just favourites
+  if (singleJobDownloadAttributeInclusion === 'all') {
+    buttonText += ' all attributes ';
+  } else if (singleJobDownloadAttributeInclusion === 'favourites_only') {
+    buttonText += ' only favourite attributes ';
   }
+
+  // Add the file extension text
+  if (downloadFormat === 'csv') {
+    buttonText += ' as CSV';
+  } else if (downloadFormat === 'json') {
+    buttonText += ' as JSON';
+  }
+
+  // Set the text content of the button
+  textContainerInsideButton.textContent = buttonText;
 }
 
 function getDownloadButtonSettings() {
   // Get the globally set preferences of the Download Functionality
   const globalValues = getGlobalValues();
   const downloadFormat = globalValues.singleJobDownloadFormat || 'csv';
+  const singleJobDownloadAttributeInclusion = globalValues.singleJobDownloadAttributeInclusion || 'all';
 
   return {
     downloadFormat: downloadFormat,
+    singleJobDownloadAttributeInclusion: singleJobDownloadAttributeInclusion,
   };
 }
 
