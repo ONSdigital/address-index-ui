@@ -36,20 +36,6 @@ export function setDefaultResponseFormatCustomResponse() {
 }
 // custom response helpers END
 
-export function updateAddressFormatPreference(pafOrNag) {
-  localStorage.setItem('custom_settings_address_preference', pafOrNag);
-}
-
-export function getAddressTitlePreference() {
-  return localStorage.getItem('custom_settings_address_preference');
-}
-
-export function setDefaultTitleChoice() {
-  if (!localStorage.getItem('custom_settings_address_preference')) {
-    localStorage.setItem('custom_settings_address_preference', 'def');
-  }
-}
-
 export function getCustomColumnWidths() {
   const obj = localStorage.getItem('custom_column_width');
   return JSON.parse(obj);

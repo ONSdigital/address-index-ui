@@ -38,6 +38,9 @@ export function getDefaultGlobalValues() {
     // Setup the attribute to flag showing older jobs on the large bulk-matching pages
     'showOlderJobsInBulkMatchingPage': false,
 
+    // Default type of title the address cards should have
+    'addressCardTitleType': 'default',
+
     // Setup the default values for Additional Request Details
     'additionalRequestDetails': {
       match_type: true,
