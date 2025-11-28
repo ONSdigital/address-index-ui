@@ -43,10 +43,10 @@ export function getDefaultGlobalValues() {
 
     // Setup default column widths
     'columnWidths': {
-      'leftPadding': '1',
-      'leftContent': '4',
-      'gapInMiddle': '1',
-      'rightSideContent': '4',
+      'space_col_1': '1',
+      'content_col_2': '4',
+      'space_col_3': '1',
+      'content_col_4': '5',
     },
 
     // Setup the default values for Additional Request Details
