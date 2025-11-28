@@ -1,4 +1,4 @@
-import { getJobAgePreference } from '../f_helpers/local_storage_helpers.mjs';
+import { getGlobalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
 export function getAllLinks() {
   const tableLinks = [];
@@ -213,8 +213,9 @@ function getNameOfJobFromCell(cell, backupName) {
 
 function addJobsFlagToCurrentURL() {
   // Get the current preference
-  const currentJobPreference = getJobAgePreference();
+  const currentJobPreference = getGlobalValues().showOlderJobsInBulkMatchingPage;
   const currentURL = window.location.href;
+
   // Check to see if the flag alredy exists
   if (currentURL.includes('include_old_jobs')) {
     return;
