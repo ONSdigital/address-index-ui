@@ -3,6 +3,8 @@ import base64
 import json
 import os
 
+from aims_ui.app_helpers.get_app_version import get_app_version
+
 # Port that the Flask server will run on
 UI_EXPOSED_PORT = 5000
 
@@ -36,11 +38,7 @@ FLASK_ENV = str(os.getenv('FLASK_ENV')).upper()
 LOCAL_STORAGE_VERSION = '1'
 
 # Get the app version from version.txt in the root directory
-version_path = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..', '..', '..', 'version.txt'))
-
-with open(version_path, 'r') as version_file:
-  APP_VERSION = version_file.read().strip()
+APP_VERSION = get_app_version()
 
 # Default usernames for paywall
 USER_AUTHS = json.loads(os.getenv('USER_AUTHS', '{}'))
