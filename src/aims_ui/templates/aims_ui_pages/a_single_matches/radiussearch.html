@@ -32,6 +32,10 @@
 
 <div id="pageContentContainer">
 	<div id="centeredContainer">
+		{{ customTitleAndDescription({
+			"endpoints": endpoints,
+		})}}
+
 		{{ customSearch ({ "Fields": searchable_fields,
 					"endpoints": endpoints,              
 		   		"page_name": page_name,
@@ -49,10 +53,7 @@
 			</div>
 
 			<div id="resultsContainer">
-				{{ customTitleAndDescription({
-					"endpoints": endpoints,
-				})}}
-
+				<h2>Results:</h2>
 				{% if results_page %}
 				  {# Save the results to local storage on the clientside #}
 						{{ customSaveAddressesToClient({
