@@ -51,7 +51,7 @@ def test_base_classification_list():
       'LOCAL_STORAGE_VERSION',
       'DEBUG',
       'TESTING',
-      'VERSION',
+      'APP_VERSION',
       'PROPAGATE_EXCEPTIONS',
       'SECRET_KEY',
       'SECRET_KEY_FALLBACKS',
