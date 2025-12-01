@@ -21,7 +21,10 @@
     "moduleFileExtensions": [
       "js",
       "mjs"
-    ]
+    ],
+    "moduleNameMapper": {
+    "^/static/(.*)$": "<rootDir>/src/aims_ui/static/$1"
+  }
   },
   "repository": {
     "type": "git",
