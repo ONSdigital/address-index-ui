@@ -1,8 +1,5 @@
 from tests.pytest_tests.pytest_playwright_tests.utils.constatns_generation import (
-    build_downloads_info,
-    build_user_role_map
-)
-
+    build_downloads_info, build_user_role_map)
 """ Constants for the playwright tests. """
 
 BASE_URL = "http://127.0.0.1:5001/"

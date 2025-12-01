@@ -54,9 +54,11 @@ def get_response_attributes(r):
   recommendationCode = res.get('recommendationCode', 'N/A')
   tokenisedOutput = res.get('tokens', {})
 
-  return { 'tokenisedOutput': tokenisedOutput, 
-           'matchType': matchType, 
-           'recommendationCode': recommendationCode }
+  return {
+      'tokenisedOutput': tokenisedOutput,
+      'matchType': matchType,
+      'recommendationCode': recommendationCode
+  }
 
 
 def get_api_auth():
