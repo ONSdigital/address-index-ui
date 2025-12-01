@@ -35,6 +35,13 @@ FLASK_ENV = str(os.getenv('FLASK_ENV')).upper()
 # Current version of local storage, increment when making breaking changes
 LOCAL_STORAGE_VERSION = '1'
 
+# Get the app version from version.txt in the root directory
+version_path = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '..', '..', '..', 'version.txt'))
+
+with open(version_path, 'r') as version_file:
+  APP_VERSION = version_file.read().strip()
+
 # Default usernames for paywall
 USER_AUTHS = json.loads(os.getenv('USER_AUTHS', '{}'))
 
@@ -793,8 +800,8 @@ DEFAULT_CLASSIFICATION_CLASS_LIST = [{
     'code': 'CR02',
     'label': 'Retail Service Agent'
 }, {
-        'code': 'CR02EV',
-        'label': 'Electric Car Charging Station'
+    'code': 'CR02EV',
+    'label': 'Electric Car Charging Station'
 }, {
     'code': 'CR02PO',
     'label': 'Post Office'
