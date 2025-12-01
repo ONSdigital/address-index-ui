@@ -1,11 +1,27 @@
 import { setupAttributesTable } from '/static/js/macros/sub_components/sub_custom_attributes_table/favourite_table_generation.mjs';
+import { getGlobalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
 // Scripts to fill the template info for each address
 
 function getTitleText(addressObject) {
-  // The user might have set a preference for PAF or NAG
-  // For now, just return the formattedAddress
-  return addressObject.formattedAddress;
+  // Check the global value for addressCardTitleType
+  const globalValues = getGlobalValues();
+  const titlePreference = globalValues.addressCardTitleType || 'default';
+
+  const formattedAddressPaf = addressObject.formattedAddressPaf;
+  const formattedAddressNag = addressObject.formattedAddressNag;
+  const formattedAddressDefault = addressObject.formattedAddress;
+
+  if (titlePreference === 'paf' && formattedAddressPaf) {
+    // If the user has selected paf, and the paf version exists, use that
+    return formattedAddressPaf;
+  } else if (titlePreference === 'nag' && formattedAddressNag) {
+    // If the user has selected nag, and the nag version exists, use that
+    return formattedAddressNag;
+  } 
+
+  // If the user has selected default, or the preferred format does not exist, use the formatted address
+  return formattedAddressDefault;
 }
 
 function setupTitleAndLink(addressCardHtmlObject, addressObject) {

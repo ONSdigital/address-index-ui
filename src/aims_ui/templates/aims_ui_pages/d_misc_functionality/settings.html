@@ -66,23 +66,22 @@
 {# Add a setting for bulk matching, enabling older jobs to be displayed #}
 {% call onsQuestion({
     "title": 'Show Older Jobs',
-    "description": 'On bulk matching pages, jobs expire after 7 days and you are no longer able to donwload them. However, if you wish to see the record and information about the submitted jobs, enable this setting.',
+    "description": 'On bulk matching pages, jobs expire after 7 days and you are no longer able to download them. However, if you wish to see the record and information about the submitted jobs, enable this setting.',
     "legendIsQuestionTitle": true }) %}
-    {{
-        onsCheckboxes({
-            "checkboxesLabel": "",
-            "dontWrap": true,
-            "name": "Request Details",
-            "checkboxes": [
-                {
-                    "id": "old_jobs_checkbox",
-                    "label": {
-                        "text": "Show Old Jobs",
-                        "description": "All jobs for your user will be shown in the bulk matching pages",
-                    },
-                    "value": "true"
-                },
-            ]
+    {{ onsCheckboxes({
+        "name": "Request Details",
+        "checkboxesLabel": "",
+        "dontWrap": true,
+        "checkboxes": [
+            {
+                "id": "show-old-jobs-checkbox",
+                "value": "true",
+                "label": {
+                    "text": "Show Old Jobs",
+                    "description": "All jobs for your user will be shown in the bulk matching pages",
+                }
+            },
+        ]
         })
     }}
 {% endcall %}
@@ -99,28 +98,28 @@
             "name": "Request Details",
             "checkboxes": [
                 {
-                    "id": "match_type",
+                    "id": "additional-request-details-match-type",
+                    "value": "true",
                     "label": {
                         "text": "Match Type",
-			"description": "S - Single Match <br> M - Multiple Matches <br> N - No Matches",
-                    },
-                    "value": "true"
+                        "description": "S - Single Match <br> M - Multiple Matches <br> N - No Matches",
+                    }
                 },
                 {
-                    "id": "recommendation_code",
+                    "id": "additional-request-details-recommendation-code",
+                    "value": "true",
                     "label": {
                         "text": "Recommendation Code",
-			"description": "A - Recommend that the top result is accepted (97.5% of the time this was correct during testing but may be different for your dataset) <br> I - Investigate, we recommend investigating further as there's a significant chance the top match might be wrong",
-                    },
-                    "value": "true"
+			            "description": "A - Recommend that the top result is accepted (97.5% of the time this was correct during testing but may be different for your dataset) <br> I - Investigate, we recommend investigating further as there's a significant chance the top match might be wrong",
+                    }
                 },
                 {
-                    "id": "tokenised_output",
+                    "id": "additional-request-details-tokenised-output",
+                    "value": "true",
                     "label": {
                         "text": "Include Breakdown of Address Tokens",
                         "description": 'In singlesearch pages, the parser automatically breaks up a provided string into building number, building name, etc. Enabling this will cause the UI to show this output with the results section of a request.',
-                    },
-                    "value": "true"
+                    }
                 },
  
             ]
@@ -138,30 +137,23 @@
     "dontWrap": true,
     "radios": [
      {
-	"id": 'paf-radio',
-	"label": {
-	"text": 'Prioritise PAF address format'
-	},
-	"value": 'paf'
+        "id": 'address-card-title-paf-radio',
+        "value": "true",
+        "label": {"text": 'Prioritise PAF address format'}
      },
      {
-	"id": 'nag-radio',
-	"label": {
-	"text": 'Prioritise NAG address format'
-	},
-	"value": 'nag'
+        "id": 'address-card-title-nag-radio',
+        "value": "true",
+        "label": { "text": 'Prioritise NAG address format' }
      },
      {
-	"id": 'default-radio',
-	"label": {
-	"text": 'Default Address Format'
-	},
-	"value": 'default'
+        "id": 'address-card-title-default-radio',
+        "value": 'default',
+        "label": { "text": 'Default Address Format'}
      }
-     ]
+    ]
     }) }}
 {% endcall %}
-
 
 
 {# SET COLUMN WIDTH PREFERENCE#}
@@ -170,34 +162,47 @@
     "description":'You can customise the width of input and output fields below.<br> This is particularly useful for use with a widescreen or large display. Once changed this affects all other results pages. You can reset the changes back to default at any time using the reset button below',
     "legendIsQuestionTitle": true }) %}
 
-
-{{ onsSelect({
-        "id":      "selector_space_col_1", "name": "selector_space_col_1",
+    {{ onsSelect({
+        "id":      "column-width-left-padding-selector", 
+        "name": "column-width-left-padding-selector",
         "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "options": col_options_inc0,
         "label"  : {
-            "text": "Width of Leftside Padding", "inline": true
-        },  "options": col_options_inc0 }) }}
+            "text": "Width of Leftside Padding", 
+            "inline": true},  
+        }
+    ) }}
 
-{{ onsSelect({
-        "id":      "selector_content_col_2", "name": "selector_content_col_2",
+    {{ onsSelect({
+        "id":      "column-width-left-content-selector", 
+        "name": "column-width-left-content-selector",
         "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "options": col_options,
         "label"  : {
-            "text": "Width of Leftside Content (inputs)", "inline": true
-        },  "options": col_options }) }}
+            "text": "Width of Leftside Content (inputs)", 
+            "inline": true
+        }
+    }) }}
 
-{{ onsSelect({
-        "id":      "selector_space_col_3", "name": "selector_space_col_3",
+    {{ onsSelect({
+        "id":      "column-width-middle-gap-selector", 
+        "name": "column-width-middle-gap-selector",
         "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "options": col_options,
         "label"  : {
-            "text": "Width of Gap in middle", "inline": true
-        },  "options": col_options }) }}
+            "text": "Width of Gap in middle", 
+            "inline": true }
+    }) }}
 
-{{ onsSelect({
-        "id":      "selector_content_col_4", "name": "selector_content_col_4",
+    {{ onsSelect({
+        "id":      "column-width-right-side-content-selector", 
+        "name": "column-width-right-side-content-selector",
         "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "options": col_options,
         "label"  : {
-            "text": "Width of Right Side Content ", "inline": true
-        },  "options": col_options }) }}
+            "text": "Width of Right Side Content ", 
+            "inline": true }
+    }) }}
 
 {% endcall %}
 

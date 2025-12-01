@@ -1,0 +1,24 @@
+{% macro customAdditionalRequestInfo(params) %}
+
+{% from 'components/panel/_macro.njk' import onsPanel %}
+
+
+{# Add the panel with extra info about a single request, #}
+{# such as the breakdown from the address parser, reccomendation code etc #}
+
+  {{ onsPanel({
+    "body": "",
+    "classes": "ons-u-hidden",
+    "id": "requestOverviewStatsPanel",
+    }) }}
+	
+
+<script type="module">
+  import { init } from '/static/js/macros/custom_additional_request_info/init.mjs';
+
+  const page_name = '{{ params.page_name }}';
+  init(page_name);
+</script>
+
+
+{% endmacro %}
