@@ -25,6 +25,8 @@ export function getDefaultValuesForPage(page_name) {
 }
 
 export function getDefaultGlobalValues() {
+  // Values should be GLOBAL if they're accessed across multiple pages
+
   const defaultGlobalValues = {
 
     // Default download format for single searches
@@ -32,6 +34,27 @@ export function getDefaultGlobalValues() {
 
     // Setup the attributes to include in downloads by default it will be everything
     'singleJobDownloadAttributeInclusion': 'all',
+
+    // Setup the attribute to flag showing older jobs on the large bulk-matching pages
+    'showOlderJobsInBulkMatchingPage': false,
+
+    // Default type of title the address cards should have
+    'addressCardTitleType': 'default',
+
+    // Setup default column widths
+    'columnWidths': {
+      'space_col_1': '1',
+      'content_col_2': '4',
+      'space_col_3': '1',
+      'content_col_4': '5',
+    },
+
+    // Setup the default values for Additional Request Details
+    'additionalRequestDetails': {
+      match_type: true,
+      recommendation_code: true,
+      tokenised_output: false,
+    },
 
     // Default address attributes to show (based on original requirements)
     'favouriteAddressAttributes': [
