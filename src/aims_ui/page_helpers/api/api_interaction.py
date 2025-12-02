@@ -30,7 +30,10 @@ def api(url, called_from, all_user_input):
       called_from == 'multiple'):
     url = app.config.get('API_URL') + url
 
+  # Change and clean parameters based on page
   cleaned_params = cleanup_parameters(all_user_input, called_from)
+
+  # Format parameters as string for requests
   params = format_params_as_string(cleaned_params)
 
   r = requests.get(
