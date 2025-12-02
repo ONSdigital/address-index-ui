@@ -46,6 +46,9 @@ def adjust_parameter_for_each_page(params, called_from_page_name):
     if not params.get('input'):
       params['input'] = ''
 
+    # Enforce verbose to True for radiussearch lookups
+    params['verbose'] = 'true'
+
   if (called_from_page_name == 'singlesearch'):
     # If the input is blank for a singlesearch, remove it completely so that the error is more appropriate
     if not params.get('input'):

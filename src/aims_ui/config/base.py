@@ -3,6 +3,8 @@ import base64
 import json
 import os
 
+from aims_ui.app_helpers.get_app_version import get_app_version
+
 # Port that the Flask server will run on
 UI_EXPOSED_PORT = 5000
 
@@ -34,6 +36,9 @@ FLASK_ENV = str(os.getenv('FLASK_ENV')).upper()
 
 # Current version of local storage, increment when making breaking changes
 LOCAL_STORAGE_VERSION = '1'
+
+# Get the app version from version.txt in the root directory
+APP_VERSION = get_app_version()
 
 # Default usernames for paywall
 USER_AUTHS = json.loads(os.getenv('USER_AUTHS', '{}'))
@@ -793,8 +798,8 @@ DEFAULT_CLASSIFICATION_CLASS_LIST = [{
     'code': 'CR02',
     'label': 'Retail Service Agent'
 }, {
-        'code': 'CR02EV',
-        'label': 'Electric Car Charging Station'
+    'code': 'CR02EV',
+    'label': 'Electric Car Charging Station'
 }, {
     'code': 'CR02PO',
     'label': 'Post Office'

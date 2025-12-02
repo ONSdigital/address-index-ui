@@ -47,10 +47,7 @@ def help(subject='None'):
       },
   ]
 
-  common = {
-      'endpoints': endpoints,
-      'breadcrumbs': breadcrumbs
-  }
+  common = {'endpoints': endpoints, 'breadcrumbs': breadcrumbs}
 
   # Hard code here to avoid security flaws where users could potentially inject unwanted urls
   if subject == 'confidence_score':

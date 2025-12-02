@@ -21,7 +21,8 @@ codes = {
     },
 }
 
+
 # Get additional lpiLogicalStatus information, empty dict if not found
 def getFullLpiLogicalStatusInfo(value):
   code_vals = codes.get(str(value), {})
-  return code_vals 
+  return code_vals
