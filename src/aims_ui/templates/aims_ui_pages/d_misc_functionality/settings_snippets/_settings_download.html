@@ -1,0 +1,47 @@
+{# Template snippet for the download settings #}
+
+{% call onsQuestion({
+    "title": "Select format of results download",
+    "classes": "ons-u-mt-no",
+    "description": "Select the formatting of the results download you would prefer.",
+    "legendIsQuestionTitle": true }) %}
+{{ onsRadios({
+    "name": "download-format",
+    "dontWrap": true,
+    "radios": [
+        {
+            "id": "download-results-json-radio",
+            "label": { "text": "Download results as JSON" },
+            "value": "true"
+        },
+        {
+            "id": "download-results-csv-radio",
+            "label": { "text": "Download results as CSV" },
+            "value": "true"
+        }
+    ]
+}) }}
+{% endcall %}
+<br>
+{% call onsQuestion({
+    "classes": "ons-u-mt-no",
+    "title": "Select attributes to include when downloading results",
+    "description": 'When downloading results on single address pages, you can include all attributes for each address or just download the ones that are "favourited"',
+    "legendIsQuestionTitle": true }) %}
+{{ onsRadios({
+    "name": "download-attribute-selection",
+    "dontWrap": true,
+    "radios": [
+        {
+            "id": "download-results-full-radio",
+            "label": { "text": "Download all attributes of an address" },
+            "value": "true"
+        },
+        {
+            "id": "download-results-favourites-radio",
+            "label": { "text": "Download only favourite attributes of an address" },
+            "value": "true"
+        }
+    ]
+}) }}
+{% endcall %}
