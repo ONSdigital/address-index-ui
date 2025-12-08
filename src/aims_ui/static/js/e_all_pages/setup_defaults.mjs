@@ -54,8 +54,8 @@ export function getDefaultGlobalValues() {
       {
         'page': 'singlesearch', // Page is also the id in the settings table
         'input_persistance_settings': {
-          'input': true,
-          'classification': true,
+          'input': false,
+          'classification': false,
           'region': true,
           'epoch': true,
           'minimummatch': true,
