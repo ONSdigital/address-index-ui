@@ -49,6 +49,48 @@ export function getDefaultGlobalValues() {
       'content_col_4': '5',
     },
 
+    // Setup persistance settings for pages
+    'persistanceSettings': [
+      {
+        'page': 'singlesearch', // Page is also the id in the settings table
+        'input_persistance_settings': {
+          'input': true,
+          'classification': true,
+          'region': true,
+          'epoch': true,
+          'minimummatch': true,
+          'limit': true,
+          'includehistorical': true,
+        }
+      },
+      {
+        'page': 'uprn', 
+        'input_persistance_settings': {
+          'input': true,
+          'epoch': true,
+          'includehistorical': true,
+        }
+      },
+       {
+        'page': 'postcode', 
+        'input_persistance_settings': {
+          'input': true,
+          'classification': true,
+          'epoch': true,
+          'limit': true,
+          'includehistorical': true,
+        }
+      },
+      {
+        'page': 'typeahead', 
+        'input_persistance_settings': {
+          'region': true,
+          'epoch': true,
+          'limit': true,
+        }
+      },
+    ],
+
     // Setup the default values for Additional Request Details
     'additionalRequestDetails': {
       match_type: true,

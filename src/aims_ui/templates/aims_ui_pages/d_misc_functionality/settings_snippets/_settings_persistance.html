@@ -26,7 +26,7 @@
     </thead>
 
     <tbody class="ons-table__body">
-    <tr class="ons-table__row">
+    <tr class="ons-table__row" id="singlesearch-persistance-row">
 
         <td class="ons-table__cell">Single Search</td>
 
@@ -80,7 +80,7 @@
             "label": { "text": "" } }) }} </td>
     </tr>
 
-    <tr class="ons-table__row">
+    <tr class="ons-table__row" id="uprn-persistance-row">
 
         <td class="ons-table__cell">Single UPRN</td>
 
@@ -111,7 +111,6 @@
         {{ onsCheckbox({
             "id": "uprn-epoch-checkbox",
             "value": "true",
-            "disabled": true,
             "hideLabel": true,
             "label": { "text": "" } }) }} </td>
 
@@ -119,6 +118,7 @@
         {{ onsCheckbox({
             "id": "uprn-minimummatch-checkbox",
             "value": "true",
+            "disabled": true,
             "hideLabel": true,
             "label": { "text": "" } }) }} </td>
 
@@ -132,13 +132,13 @@
 
         <td class="ons-table__cell">
         {{ onsCheckbox({
-            "id": "singlesearch-includehistorical-checkbox",
+            "id": "uprn-includehistorical-checkbox",
             "value": "true",
             "hideLabel": true,
             "label": { "text": "" } }) }} </td>
     </tr>
 
-    <tr class="ons-table__row">
+    <tr class="ons-table__row" id="postcode-persistance-row">
 
         <td class="ons-table__cell">Postcode</td>
 
@@ -159,6 +159,7 @@
         <td class="ons-table__cell">
         {{ onsCheckbox({
             "id": "postcode-region-checkbox",
+            "disabled": true,
             "value": "true",
             "hideLabel": true,
             "label": { "text": "" } }) }} </td>
@@ -167,13 +168,13 @@
         {{ onsCheckbox({
             "id": "postcode-epoch-checkbox",
             "value": "true",
-            "disabled": true,
             "hideLabel": true,
             "label": { "text": "" } }) }} </td>
 
         <td class="ons-table__cell">
         {{ onsCheckbox({
             "id": "postcode-minimummatch-checkbox",
+            "disabled": true,
             "value": "true",
             "hideLabel": true,
             "label": { "text": "" } }) }} </td>
@@ -182,7 +183,6 @@
         {{ onsCheckbox({
             "id": "postcode-limit-checkbox",
             "value": "true",
-            "disabled": true,
             "hideLabel": true,
             "label": { "text": "" } }) }} </td>
 
@@ -194,7 +194,7 @@
             "label": { "text": "" } }) }} </td>
     </tr>
 
-    <tr class="ons-table__row">
+    <tr class="ons-table__row" id="typeahead-persistance-row">
 
         <td class="ons-table__cell">Typeahead</td>
 
