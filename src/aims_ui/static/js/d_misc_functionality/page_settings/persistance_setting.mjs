@@ -36,29 +36,23 @@ export function setupPersistanceSetting() {
         if (isPersisted) {
           checkRadioButton(checkboxId);
         }
+
+        // Add a listener to update the global values when changed
+        checkboxElement.addEventListener('change', () => {
+          // Update the relevant value in the global persistance settings
+          const updatedPersistanceSettings = getGlobalValues().persistanceSettings || [];
+
+          // Loop through and find the right page and input to update
+          for (const setting of updatedPersistanceSettings) {
+            if (setting.page === pageName) {
+              setting.input_persistance_settings[inputName] = checkboxElement.checked;
+            }
+          }
+
+          // Save the updated settings back to global values
+          setGlobalValues({ persistanceSettings: updatedPersistanceSettings });
+        });
       }
     }
   }
-  
-  return;
-  // Add listeners to change the global setting 
-  const pafRadio = document.querySelector(`#${pafRadioId}`);
-  const nagRadio = document.querySelector(`#${nagRadioId}`);
-  const defaultRadio = document.querySelector(`#${defaultRadioId}`);
-
-  // Set the preference to 'paf' when the paf radio is clicked
-  pafRadio.addEventListener('change', () => {
-    setGlobalValues({ addressCardTitleType: 'paf' });
-  });
-
-  // Set the preference to 'nag' when the nag radio is clicked
-  nagRadio.addEventListener('change', () => {
-    setGlobalValues({ addressCardTitleType: 'nag' });
-  });
-
-  // Set the preference to 'default' when the default radio is clicked
-  defaultRadio.addEventListener('change', () => {
-    setGlobalValues({ addressCardTitleType: 'default' });
-  });
-
 }
