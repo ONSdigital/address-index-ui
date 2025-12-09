@@ -1,0 +1,13 @@
+{% macro runScriptWithPageName(params) %}
+
+{# Expect a page_name and a script_location - then run the "init" script with the page_name provided #}
+
+
+<script type="module">
+  import { init } from '{{ params.script_location }}';
+
+  const page_name = '{{ params.page_name }}';
+  init(page_name);
+</script>
+
+{% endmacro %}

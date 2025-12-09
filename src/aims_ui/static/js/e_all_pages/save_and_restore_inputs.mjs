@@ -151,6 +151,39 @@ function getPagePreviouslySearchedValues(page_name) {
   return pageLocalValues.pagePreviouslySearchedValues || {};
 }
 
+function getPersistanceSettingsOfPage(page_name) {
+  // Will return an array of input Ids, setup in global storage
+  const globalValues = getGlobalValues();
+  // An array of objects like [ {'page_name':'radiussearch', {object of settings}
+  const persistanceSettings = globalValues['persistanceSettings'] || [];
+
+  // Find the object for this page
+  for (const pageSetting of persistanceSettings) {
+    if (pageSetting.page === page_name) {
+      return pageSetting;
+    }
+  }
+
+  // If not found, log an error
+  console.error('No persistance settings found for page:', page_name);
+}
+
+function getIdsOfInputsToPersist(page_name) {
+  // Get the persistance settings for this page
+  const pagePersistanceSettings = getPersistanceSettingsOfPage(page_name);
+  const inputPersistanceSettings = pagePersistanceSettings.input_persistance_settings || {};
+  
+  // Now extract the Ids of inputs that should be persisted {'inputId': true/false}
+  const idsToPersist = [];
+  for (const [inputId, shouldPersist] of Object.entries(inputPersistanceSettings)) {
+    if (shouldPersist) {
+      idsToPersist.push(inputId);
+    }
+  }
+
+  return idsToPersist;
+}
+
 export function init(page_name) {
   console.log('save_page_inputs loaded');
 
@@ -159,7 +192,7 @@ export function init(page_name) {
 
   // Use just ones expected for radius search for now, future updates will allow all pages to do this
   console.log('Page name for save and restore inputs:', page_name);
-  const temporaryInputIds = ['lat', 'lon', 'rangekm', 'input', 'classificationfilter', 'limit'];
+  const inputIds = getIdsOfInputsToPersist(page_name);
 
   // Now get the page's local values (which actually contain what was last in inputs)
   // {'lat': '51.36935132147893', 'lon':'-2.3361860233264187', 'rangekm': '45'};
@@ -167,8 +200,8 @@ export function init(page_name) {
 
   // Load stored values given Ids affected (from global) as a list ['id1','id2']
   // and pagePreviouslySearchedValues (from pageLocalValues) as [{'htmlid':'value'}]
-  loadStoredValuesIfExist(temporaryInputIds, pagePreviouslySearchedValues);
+  loadStoredValuesIfExist(inputIds, pagePreviouslySearchedValues);
 
   // Now attach event listeners to all the inputs with ids in saveAndRestoreInputIds
-  addEventListenersToTriggerSaveOnChange(temporaryInputIds, page_name);
+  addEventListenersToTriggerSaveOnChange(inputIds, page_name);
 }
