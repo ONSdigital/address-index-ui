@@ -12,6 +12,7 @@
 {% from 'custom_title_and_description/_macro.njk' import customTitleAndDescription %}
 {% from 'custom_download_results_from_local_storage/_macro.njk' import customDownloadResultsFromLocalStorage %}
 {% from 'custom_additional_request_info/_macro.njk' import customAdditionalRequestInfo %}
+{% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName%}
 
 	{# Title and description #}
 	{{ customTitleAndDescription({
@@ -100,12 +101,10 @@
 <script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
 
 <!-- Save and load inputs with the new mechanism -->
-<script type="module">
-  import { init } from '/static/js/e_all_pages/save_and_restore_inputs.mjs';
-
-  const page_name = '{{ page_name }}';
-  init(page_name);
-</script>
+{{ runScriptWithPageName({
+		"page_name": page_name,
+		"script_location": '/static/js/e_all_pages/save_and_restore_inputs.mjs',
+}) }}
 
 <!-- Load Leaflet JS before page specific scripts that use the interactive map that relies on leaflet -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
