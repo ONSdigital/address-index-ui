@@ -10,13 +10,11 @@ import {
   setPageLocalValues
 } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
-let page_name;
-
 function loadStoredValuesIfExist(saveAndRestoreInputIds, pagePreviouslySearchedValues) {
   for (const id of saveAndRestoreInputIds) {
     // Check to see if this id has a previously stored value
     if (pagePreviouslySearchedValues[id]) {
-      const inputElement = document.getElementById(id);
+      const inputElement = document.querySelector('#' + id);
       if (inputElement) {
         inputElement.value = pagePreviouslySearchedValues[id];
       }
@@ -24,20 +22,20 @@ function loadStoredValuesIfExist(saveAndRestoreInputIds, pagePreviouslySearchedV
   }
 }
 
-function getPreviouslyStoredValuesForThisPage() {
+function getPreviouslyStoredValuesForThisPage(page_name) {
   // Get the local values for this page
   const pageLocalValues = getPageLocalValues(page_name);
 
-  // Extract the pagePreviouslySearchedValues, default to an empty array if none found
-  return pageLocalValues.pagePreviouslySearchedValues || [];
+  // Extract the pagePreviouslySearchedValues, default to an empty object if none found
+  return pageLocalValues.pagePreviouslySearchedValues || {};
 }
 
-function setPreviouslyStoredValuesForThisPage(inputValues) {
+function setPreviouslyStoredValuesForThisPage(inputValues, page_name) {
   // Set the pagePreviouslySearchedValues to the new inputValues
   setPageLocalValues(page_name, { pagePreviouslySearchedValues: inputValues });
 }
 
-function saveValueOfInput(inputId, inputValue) {
+function saveValueOfInput(inputId, inputValue, page_name) {
   console.log(`Saving value of input ${inputId}: ${inputValue}`);
 
   // Firstly get the current pages previously stored input values
@@ -50,7 +48,7 @@ function saveValueOfInput(inputId, inputValue) {
   const mergedValues = {...previouslyStoredValues, ...valuesToMerge};
 
   // Now save the new values
-  setPreviouslyStoredValuesForThisPage(mergedValues);
+  setPreviouslyStoredValuesForThisPage(mergedValues, page_name);
 }
 
 // Remove markup from inside an element (i.e for the autosuggest suggestions)
@@ -74,7 +72,7 @@ function removeMarkupFromInsideElement(element) {
   return clone.textContent.trim();
 }
 
-function addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputElement) {
+function addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputElement, page_name) {
   // Given an input element that's an ONS autosuggest component
   // the event listener must be on the *Suggestions* not the element
   // as the element itself triggers events like input, change, blur before the value is changed
@@ -92,10 +90,10 @@ function addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputEleme
     const clickedEl = event.target.closest('li');
 
     if (clickedEl) {
-      const textFromAutosuggest= removeMarkupFromInsideElement(clickedEl);
+      const textFromAutosuggest = removeMarkupFromInsideElement(clickedEl);
 
       // Now save this value
-      saveValueOfInput(inputElement.id, textFromAutosuggest);
+      saveValueOfInput(inputElement.id, textFromAutosuggest, page_name);
       console.log('Saved value from autosuggest:', textFromAutosuggest);
     } else {
       console.log('Clicked outside of a suggestion <li>');
@@ -108,17 +106,17 @@ function addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputEleme
       // The suggestion that is currently focused will have ons-autosuggest__option--focused
       const focusedSuggestion = suggestionContainer.querySelector('.ons-autosuggest__option--focused');
       if (focusedSuggestion) {
-        const textFromAutosuggest= removeMarkupFromInsideElement(focusedSuggestion);
+        const textFromAutosuggest = removeMarkupFromInsideElement(focusedSuggestion);
 
         // Now save this value
-        saveValueOfInput(inputElement.id, textFromAutosuggest);
+        saveValueOfInput(inputElement.id, textFromAutosuggest, page_name);
         console.log('Saved value from autosuggest (keyboard):', textFromAutosuggest);
       }
     }
   });
 }
 
-function addEventListenersToTriggerSaveOnChange(saveAndRestoreInputIds) {
+function addEventListenersToTriggerSaveOnChange(saveAndRestoreInputIds, page_name) {
   // Loop over all the ids
   for (const id of saveAndRestoreInputIds) {
     const inputElement = document.querySelector('#' + id);
@@ -129,15 +127,15 @@ function addEventListenersToTriggerSaveOnChange(saveAndRestoreInputIds) {
     // If it's an autosuggest component, use a different event listener
     if (inputElement.classList.contains('ons-js-autosuggest-input')) {
       // Add an event listener to save from a suggestion - STILL REQUIRES A REGULAR INPUT LISTENER
-      addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputElement);
+      addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputElement, page_name);
     } 
     inputElement.addEventListener('input', () => {
-      saveValueOfInput(inputElement.id, inputElement.value);
+      saveValueOfInput(inputElement.id, inputElement.value, page_name);
     });
   }
 }
 
-function getPagePreviouslySearchedValues() {
+function getPagePreviouslySearchedValues(page_name) {
   // Get the local values for this page
   const pageLocalValues = getPageLocalValues(page_name);
 
@@ -146,21 +144,21 @@ function getPagePreviouslySearchedValues() {
   if (!pageLocalValues.pagePreviouslySearchedValues) {
     // If we have to setup the defaults, then we should also save them to local storage as the "previously searched values"
     pageLocalValues.pagePreviouslySearchedValues = defaultValuesForPage;
-    setPreviouslyStoredValuesForThisPage(pageLocalValues.pagePreviouslySearchedValues);
+    setPreviouslyStoredValuesForThisPage(pageLocalValues.pagePreviouslySearchedValues, page_name);
   }
 
   // Extract the pagePreviouslySearchedValues, default to an empty object if no defaults defined
   return pageLocalValues.pagePreviouslySearchedValues || {};
 }
 
-function init() {
+export function init(page_name) {
   console.log('save_page_inputs loaded');
-  page_name = 'radiussearch';
 
   // Get the object 'save_and_restore_input_ids' from page values - TODO with all page customisation
   // const saveAndRestoreInputIds = globalValues['save_and_restore_input_ids'] || [];
 
   // Use just ones expected for radius search for now, future updates will allow all pages to do this
+  console.log('Page name for save and restore inputs:', page_name);
   const temporaryInputIds = ['lat', 'lon', 'rangekm', 'input', 'classificationfilter', 'limit'];
 
   // Now get the page's local values (which actually contain what was last in inputs)
@@ -172,7 +170,5 @@ function init() {
   loadStoredValuesIfExist(temporaryInputIds, pagePreviouslySearchedValues);
 
   // Now attach event listeners to all the inputs with ids in saveAndRestoreInputIds
-  addEventListenersToTriggerSaveOnChange(temporaryInputIds);
+  addEventListenersToTriggerSaveOnChange(temporaryInputIds, page_name);
 }
-
-init();
