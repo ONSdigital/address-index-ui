@@ -89,6 +89,18 @@ export function getDefaultGlobalValues() {
           'limit': true,
         }
       },
+      {
+        'page': 'radiussearch', 
+        'input_persistance_settings': {
+          'lat': true,
+          'lon': true,
+          'rangekm': true,
+          'input': true,
+          'classificationfilter': true,
+          'limit': true,
+        }
+      },
+ 
     ],
 
     // Setup the default values for Additional Request Details
