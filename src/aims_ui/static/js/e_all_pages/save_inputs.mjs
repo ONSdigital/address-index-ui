@@ -1,3 +1,5 @@
+// DEPRICATED: Use save_and_restore_inputs instead
+
 import {
   saveToLocalStorage,
   wipeLocalStorage,
@@ -56,7 +58,7 @@ function loadStoredValuesIfExist(loc) {
 }
 
 function init() {
-  console.log('save_inputs loaded');
+  console.warn('save_inputs DEPRICATED loaded');
   const loc = window.location.href;
   loadStoredValuesIfExist(loc);
   setupEventListeners(loc);
