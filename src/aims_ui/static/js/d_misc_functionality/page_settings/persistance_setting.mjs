@@ -31,6 +31,12 @@ export function setupPersistanceSetting() {
       const checkboxId = `${pageName}-${inputName}-checkbox`;
       const checkboxElement = persistanceContainer.querySelector(`#${checkboxId}`);
 
+      // If the checkbox element doesn't exist, skip it
+      if (!checkboxElement) {
+        console.warn('No checkbox element found for id:', checkboxId);
+        continue;
+      }
+
       // If the checkbox element is enabled
       if (!checkboxElement.disabled) {
         if (isPersisted) {
