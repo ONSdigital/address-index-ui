@@ -2,6 +2,7 @@ import { getPagePreviouslySearchedValues,
  setPreviouslyStoredValuesForThisPage } from './set_and_get_data.mjs'
 
 import { addEventListenerToTriggerSaveOnChangeForAutosuggestComponent } from './autosuggest_listeners.mjs';
+import { addEventListenerToRegionInputs } from './region_listeners.mjs';
 
 export function saveValueOfInput(inputId, inputValue, page_name) {
   console.log(`Saving value of input ${inputId}: ${inputValue}`);
@@ -23,14 +24,20 @@ export function saveValueOfInput(inputId, inputValue, page_name) {
 export function addEventListenersToTriggerSaveOnChange(saveAndRestoreInputIds, page_name) {
   // Loop over all the ids
   for (const id of saveAndRestoreInputIds) {
-    const inputElement = document.querySelector('#' + id);
+    // Handle geo (which has mutliple IDs per input)
+    if (id === 'region') {
+      addEventListenerToRegionInputs(page_name);
+      continue;
+    } 
 
+    // Not geo, so handle regular input fields
+    const inputElement = document.querySelector('#' + id);
     // If the element not found, skip it
     if (!inputElement) { return; }
 
-    // If it's an autosuggest component, use a different event listener
+    // If it's an autosuggest component, add extra listeners
     if (inputElement.classList.contains('ons-js-autosuggest-input')) {
-      // Add an event listener to save from a suggestion - STILL REQUIRES A REGULAR INPUT LISTENER
+      // Add event listener to save from a suggestion - STILL REQUIRES A REGULAR INPUT LISTENER
       addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputElement, page_name);
     } 
 
@@ -38,6 +45,7 @@ export function addEventListenersToTriggerSaveOnChange(saveAndRestoreInputIds, p
     inputElement.addEventListener('input', () => {
       saveValueOfInput(inputElement.id, inputElement.value, page_name);
     });
+
 
   }
 }

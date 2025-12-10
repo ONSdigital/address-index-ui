@@ -5,9 +5,18 @@
 
 import { getIdsOfInputsToPersist, getPagePreviouslySearchedValues } from './save_and_restore_input_helpers/set_and_get_data.mjs';
 import { addEventListenersToTriggerSaveOnChange } from './save_and_restore_input_helpers/save_input_listeners.mjs';
+import { restoreRegionValuesIfExist } from './save_and_restore_input_helpers/region_restorers.mjs';
 
-function restoreValuesToInputsifExist(saveAndRestoreInputIds, pagePreviouslySearchedValues) {
+function restoreValuesToInputsifExist(page_name, saveAndRestoreInputIds, pagePreviouslySearchedValues) {
   for (const id of saveAndRestoreInputIds) {
+
+    // Check if the id is 'region' and handle specially
+    console.log('Restoring value for input Id:', id);
+    if (id === 'region') {
+      restoreRegionValuesIfExist(page_name, id, pagePreviouslySearchedValues);
+      continue;
+    }
+
     // Check to see if this id has a previously stored value
     if (pagePreviouslySearchedValues[id]) {
       const inputElement = document.querySelector('#' + id);
@@ -30,7 +39,7 @@ export function init(page_name) {
 
   // Load stored values given Ids affected (from global) as a list ['id1','id2']
   // and pagePreviouslySearchedValues (from pageLocalValues) as [{'htmlid':'value'}]
-  restoreValuesToInputsifExist(inputIds, pagePreviouslySearchedValues);
+  restoreValuesToInputsifExist(page_name, inputIds, pagePreviouslySearchedValues);
 
   // Now attach event listeners to all the inputs with ids in saveAndRestoreInputIds
   addEventListenersToTriggerSaveOnChange(inputIds, page_name);
