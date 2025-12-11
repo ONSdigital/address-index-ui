@@ -101,7 +101,6 @@ def add_params_for_splunk(params, called_from_page_name):
   # Less than 5K multiples will have the extra parameter on each search API call
   # Less than 100K multiples will have the extra parameter on the single bulk manager API call
   # For greater accuracy in match counting it could be passed on to the Cloud Function
-  # and possibly then on to the search API calls.
   if (called_from_page_name == 'multiple'):
     # This parameter will be ignored by the API
     params['uimultiple'] = 'true'
