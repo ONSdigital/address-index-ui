@@ -11,7 +11,6 @@ function restoreValuesToInputsifExist(page_name, saveAndRestoreInputIds, pagePre
   for (const id of saveAndRestoreInputIds) {
 
     // Check if the id is 'region' and handle specially
-    console.log('Restoring value for input Id:', id);
     if (id === 'region') {
       restoreRegionValuesIfExist(page_name, id, pagePreviouslySearchedValues);
       continue;

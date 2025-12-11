@@ -4,7 +4,6 @@ import { uncheckCheckbox, checkCheckbox } from '/static/js/d_misc_functionality/
 
 
 export function restoreRegionValuesIfExist(page_name, inputId, pagePreviouslySearchedValues) {
-  console.log(`Restoring region values for input ${inputId} with stored values:`, pagePreviouslySearchedValues);
 
   // Only the suffix is saved to local storage, so use the prefix to create full ids
   // pagePreviouslySearchedValues = {eboost: false, wboost: false, sboost: false}
@@ -33,8 +32,6 @@ export function restoreRegionValuesIfExist(page_name, inputId, pagePreviouslySea
       } else {
         uncheckCheckbox(checkboxElement.id);
       }
-
-      console.log(`Restoring region value for suffix ${suffix}:`, restoreState);
     }
   }
   
