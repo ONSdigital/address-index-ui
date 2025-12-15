@@ -95,6 +95,19 @@ def adjust_params_for_all_pages(params):
   return params
 
 
+def add_params_for_splunk(params, called_from_page_name):
+  """ Add any params needed for splunk report, currently only for multiple """
+
+  # Less than 5K multiples will have the extra parameter on each search API call
+  # Less than 100K multiples will have the extra parameter on the single bulk manager API call
+  # For greater accuracy in match counting it could be passed on to the Cloud Function
+  if (called_from_page_name == 'multiple'):
+    # This parameter will be ignored by the API
+    params['uimultiple'] = 'true'
+
+  return params
+
+
 def cleanup_parameters(params, called_from_page_name):
   """ Remove empty parameters add others that might be required"""
 
@@ -108,7 +121,10 @@ def cleanup_parameters(params, called_from_page_name):
   params = adjust_params_for_all_pages(params)
 
   # Remove any params that the API won't recognise
-  params = remove_non_existant_parameters(params)  # DO THIS LAST
+  params = remove_non_existant_parameters(params)
+
+  # Finally add an extra parameter that the API will ignore but Splunk can look for
+  params = add_params_for_splunk(params, called_from_page_name)
 
   return params
 
