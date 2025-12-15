@@ -258,7 +258,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             previous_value='0',
         ),
         Field(
-            'nboost',
+            'mboost',
             display_title='Isle of Man Boost (1-10)',
             classes='ons-input--w-4',
             description='Boost the results in favour of Isle of Man Addresses',
