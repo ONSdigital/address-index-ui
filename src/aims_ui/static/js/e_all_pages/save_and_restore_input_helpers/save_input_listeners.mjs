@@ -3,6 +3,7 @@ import { getPagePreviouslySearchedValues,
 
 import { addEventListenerToTriggerSaveOnChangeForAutosuggestComponent } from './autosuggest_listeners.mjs';
 import { addEventListenerToRegionInputs } from './region/region_listeners.mjs';
+import { addListenerForDropdown } from './minimummatch/minimummatch_listeners.mjs';
 
 export function saveValueOfInput(inputId, inputValue, page_name) {
   console.log(`Saving value of input ${inputId}: ${inputValue}`);
@@ -41,6 +42,13 @@ export function addEventListenersToTriggerSaveOnChange(saveAndRestoreInputIds, p
       // Add event listener to save from a suggestion - STILL REQUIRES A REGULAR INPUT LISTENER
       addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputElement, page_name);
     } 
+
+    // Handle 'select' dropdowns
+    console.log('id is', id);
+    if (id === 'minimummatch') {
+      console.log('Adding dropdown listener for minimummatch');
+      addListenerForDropdown(inputElement, page_name);
+    }
 
     // Handle regular text 'input's
     inputElement.addEventListener('input', () => {

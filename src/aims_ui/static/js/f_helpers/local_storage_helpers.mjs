@@ -177,13 +177,3 @@ function setCustomBulkAttributePreference(fieldname, preference) {
         removeItemFromCustomBulkAttributes(fieldname)
     }
 }
-
-// save_inputs local storage
-export function saveToLocalStorage(inputObjectValues, loc) {
-  const values = JSON.stringify(inputObjectValues);
-  localStorage.setItem(loc, values);
-}
-
-export function wipeLocalStorage(loc) {
-  localStorage.removeItem(loc);
-}
