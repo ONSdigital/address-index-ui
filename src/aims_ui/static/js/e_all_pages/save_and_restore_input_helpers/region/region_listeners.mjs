@@ -1,7 +1,8 @@
 // Helpers for saving the value of an autosuggest - more duifficult than a regular input,
 // as it needs to save on click, enter selection, change etc
 
-import { saveValueOfInput } from './save_input_listeners.mjs';
+import { getGlobalValues } from '../../../f_helpers/local_storage_page_helpers.mjs';
+import { saveValueOfInput } from '../save_input_listeners.mjs';
 import { returnCurrentPageMap, getFullIdsOfEachRegionContainer } from './region_helpers.mjs';
 
 function addCheckboxListenersToEachcheckbox(regionContainerIds, page_name) {
@@ -29,6 +30,28 @@ function addCheckboxListenersToEachcheckbox(regionContainerIds, page_name) {
 }
 
 function addInputListenersToEachInput(regionContainerIds, page_name) {
+  // Called when the region inputs are text inputs rather than checkboxes
+
+  for (const containerId of regionContainerIds) {
+    const containerElement = document.querySelector('#' + containerId);
+    if (!containerElement) {
+      console.warn('No container element found for region container Id:', containerId);
+      continue;
+    }
+    
+    // Find the text input inside this container
+    const textInput = containerElement.querySelector('input[type="text"]');
+    if (!textInput) {
+      console.warn('No text input found inside container:', containerId);
+      continue;
+    } 
+
+    // Add event listener to save on input
+    textInput.addEventListener('input', () => {
+      const inputValue = textInput.value;
+      saveValueOfInput(textInput.id, inputValue, page_name);
+    });
+  }
 }
 
 export function addEventListenerToRegionInputs(page_name) {

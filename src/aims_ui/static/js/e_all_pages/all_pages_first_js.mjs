@@ -26,4 +26,5 @@ function init() {
   removeResubmissionMessage();
 }
 
-window.addEventListener('load', init);
+// Immedaitely run to enforce first execution
+init();
