@@ -24,6 +24,7 @@ export function saveValueOfInput(inputId, inputValue, page_name) {
 
 export function addEventListenersToTriggerSaveOnChange(saveAndRestoreInputIds, page_name) {
   // Loop over all the ids
+  console.log('HERE ARE THE IDS TO ADD LISTENERS TO:', saveAndRestoreInputIds);
   for (const id of saveAndRestoreInputIds) {
 
     // Handle geo (which has mutliple IDs per input)
@@ -31,6 +32,15 @@ export function addEventListenersToTriggerSaveOnChange(saveAndRestoreInputIds, p
       addEventListenerToRegionInputs(page_name);
       continue;
     } 
+
+    // Handle dropdown inputs 
+    if (id === 'minimummatch') {
+      const dropdownContainer = document.querySelector('#complete-container-for-matchthreshold');
+      const dropdownInput = dropdownContainer.querySelector('select');
+      if (dropdownInput) {
+        addListenerForDropdown(dropdownInput, page_name);
+      } 
+    }
 
     // Not geo, so handle regular input fields
     const inputElement = document.querySelector('#' + id);
@@ -42,13 +52,6 @@ export function addEventListenersToTriggerSaveOnChange(saveAndRestoreInputIds, p
       // Add event listener to save from a suggestion - STILL REQUIRES A REGULAR INPUT LISTENER
       addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputElement, page_name);
     } 
-
-    // Handle 'select' dropdowns
-    console.log('id is', id);
-    if (id === 'minimummatch') {
-      console.log('Adding dropdown listener for minimummatch');
-      addListenerForDropdown(inputElement, page_name);
-    }
 
     // Handle regular text 'input's
     inputElement.addEventListener('input', () => {

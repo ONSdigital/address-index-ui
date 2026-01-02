@@ -6,6 +6,7 @@
 import { getIdsOfInputsToPersist, getPagePreviouslySearchedValues } from './save_and_restore_input_helpers/set_and_get_data.mjs';
 import { addEventListenersToTriggerSaveOnChange } from './save_and_restore_input_helpers/save_input_listeners.mjs';
 import { restoreRegionValuesIfExist } from './save_and_restore_input_helpers/region/region_restorers.mjs';
+import { restoreDropdownValueIfExists } from './save_and_restore_input_helpers/minimummatch/minimummatch_restorers.mjs';
 
 function restoreValuesToInputsifExist(page_name, saveAndRestoreInputIds, pagePreviouslySearchedValues) {
   for (const id of saveAndRestoreInputIds) {
@@ -13,6 +14,12 @@ function restoreValuesToInputsifExist(page_name, saveAndRestoreInputIds, pagePre
     // Check if the id is 'region' and handle specially
     if (id === 'region') {
       restoreRegionValuesIfExist(page_name, id, pagePreviouslySearchedValues);
+      continue;
+    }
+
+    if (id === 'minimummatch') {
+      // Handle dropdowns
+      restoreDropdownValueIfExists(page_name, id, pagePreviouslySearchedValues);
       continue;
     }
 
