@@ -2,7 +2,7 @@ import { getPagePreviouslySearchedValues,
  setPreviouslyStoredValuesForThisPage } from './set_and_get_data.mjs'
 
 import { addEventListenerToTriggerSaveOnChangeForAutosuggestComponent } from './autosuggest_listeners.mjs';
-import { addEventListenerToRegionInputs } from './region_listeners.mjs';
+import { addEventListenerToRegionInputs } from './region/region_listeners.mjs';
 
 export function saveValueOfInput(inputId, inputValue, page_name) {
   console.log(`Saving value of input ${inputId}: ${inputValue}`);
@@ -24,6 +24,7 @@ export function saveValueOfInput(inputId, inputValue, page_name) {
 export function addEventListenersToTriggerSaveOnChange(saveAndRestoreInputIds, page_name) {
   // Loop over all the ids
   for (const id of saveAndRestoreInputIds) {
+
     // Handle geo (which has mutliple IDs per input)
     if (id === 'region') {
       addEventListenerToRegionInputs(page_name);

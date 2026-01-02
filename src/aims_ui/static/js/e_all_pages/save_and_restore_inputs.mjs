@@ -5,7 +5,7 @@
 
 import { getIdsOfInputsToPersist, getPagePreviouslySearchedValues } from './save_and_restore_input_helpers/set_and_get_data.mjs';
 import { addEventListenersToTriggerSaveOnChange } from './save_and_restore_input_helpers/save_input_listeners.mjs';
-import { restoreRegionValuesIfExist } from './save_and_restore_input_helpers/region_restorers.mjs';
+import { restoreRegionValuesIfExist } from './save_and_restore_input_helpers/region/region_restorers.mjs';
 
 function restoreValuesToInputsifExist(page_name, saveAndRestoreInputIds, pagePreviouslySearchedValues) {
   for (const id of saveAndRestoreInputIds) {
@@ -27,10 +27,11 @@ function restoreValuesToInputsifExist(page_name, saveAndRestoreInputIds, pagePre
 }
 
 export function init(page_name) {
-  console.log('save_page_inputs loaded');
+  console.log('save_and_restore_inputs loaded');
 
-  // Get the Ids of inputs to persist for this page
+  // Get the Ids of inputs to persist for this page (removing disabled ones!)
   const inputIds = getIdsOfInputsToPersist(page_name);
+  console.log('Input Ids to persist for page', page_name, ':', inputIds);
 
   // Now get the page's local values (which actually contain what was last in inputs)
   // {'lat': '51.36935132147893', 'lon':'-2.3361860233264187', 'rangekm': '45'};

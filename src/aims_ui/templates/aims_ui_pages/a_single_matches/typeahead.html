@@ -8,6 +8,7 @@
 {% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
 {% from 'custom_address_info_cards/_macro.njk' import customAddressInfoCards %}
 {% from 'custom_search/_macro.njk' import customSearch %}
+{% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -107,8 +108,10 @@
 {# 5 Col FLAGS page #}
   <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
 
-{{ customSearch ({ "Fields": searchable_fields ,
- "remove_search_button":True }) }}
+{{ customSearch ({ 
+  "Fields": searchable_fields ,
+  "component_wrappers": True,
+  "remove_search_button":True }) }}
 
 </div>
 {# End of grid #}
@@ -117,6 +120,12 @@
 <script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
 
 <script type=module src="static/js/a_single_matches/typeahead.mjs"></script>
+
+<!-- Save and load inputs with the new mechanism -->
+{{ runScriptWithPageName({
+		"page_name": page_name,
+		"script_location": '/static/js/e_all_pages/save_and_restore_inputs.mjs',
+}) }}
 
 <script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
 
