@@ -1,7 +1,7 @@
 // Helpers for saving the value of an autosuggest - more duifficult than a regular input,
 // as it needs to save on click, enter selection, change etc
 
-import { saveValueOfInput } from './save_input_listeners.mjs';
+import { saveValueOfInput } from '../save_input_listeners.mjs';
 
 // Remove markup from inside an element (i.e for the autosuggest suggestions)
 function removeMarkupFromInsideElement(element) {
