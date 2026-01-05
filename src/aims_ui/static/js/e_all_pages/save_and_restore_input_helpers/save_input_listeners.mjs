@@ -1,7 +1,7 @@
 import { getPagePreviouslySearchedValues,
  setPreviouslyStoredValuesForThisPage } from './set_and_get_data.mjs'
 
-import { addEventListenerToTriggerSaveOnChangeForAutosuggestComponent } from './autosuggest_listeners.mjs';
+import { addEventListenerToTriggerSaveOnChangeForAutosuggestComponent } from './autosuggest/autosuggest_listeners.mjs';
 import { addEventListenerToRegionInputs } from './region/region_listeners.mjs';
 import { addListenerForDropdown } from './minimummatch/minimummatch_listeners.mjs';
 

@@ -1,7 +1,6 @@
 // Helpers for saving the value of an autosuggest - more duifficult than a regular input,
 // as it needs to save on click, enter selection, change etc
 
-import { getGlobalValues } from '../../../f_helpers/local_storage_page_helpers.mjs';
 import { saveValueOfInput } from '../save_input_listeners.mjs';
 import { returnCurrentPageMap, getFullIdsOfEachRegionContainer } from './region_helpers.mjs';
 
