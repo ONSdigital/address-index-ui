@@ -1,0 +1,25 @@
+{% from "components/button/_macro.njk" import onsButton %}
+
+{% macro customDownloadResultsFromLocalStorage(params) %}
+
+{# Create the "Download" button and add scripts to trigger a download #}
+
+{# Add the container for the download button HIDDEN by default #}
+<div id="container-for-download-address-results-button" class="invisible">
+{{ onsButton({
+        "id": 'download-address-results-button',
+        "text": 'Save results',
+        "variants": ['download', 'small', 'secondary'],
+        "removeDownloadAttribute": true 
+        }) }}
+</div>
+<br>
+
+<script type="module">
+  import { init } from '/static/js/macros/custom_download_results_from_local_storage/init.mjs';
+
+  const page_name = '{{ params.page_name }}';
+  init(page_name);
+</script>
+
+{% endmacro %}

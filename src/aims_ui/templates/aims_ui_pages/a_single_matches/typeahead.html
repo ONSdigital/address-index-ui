@@ -6,7 +6,7 @@
 {% from "components/panel/_macro.njk" import onsPanel %}
 
 {% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
-{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+{% from 'custom_address_info_cards/_macro.njk' import customAddressInfoCards %}
 {% from 'custom_search/_macro.njk' import customSearch %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
@@ -93,8 +93,9 @@
 
 {% endif %}
 
-{{ customAddressInfo ({
-  'matched_addresses': matched_addresses,
+
+{{ customAddressInfoCards ({
+  'page_name': page_name,
   }) }}
 
 
@@ -117,7 +118,6 @@
 
 <script type=module src="static/js/a_single_matches/typeahead.mjs"></script>
 
-<script type=module src="static/js/e_all_pages/apply_custom_settings.mjs"></script>
 <script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
 
 <script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>

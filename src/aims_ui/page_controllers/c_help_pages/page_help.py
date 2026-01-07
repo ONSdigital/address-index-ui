@@ -1,10 +1,10 @@
 from flask import render_template
 from flask_login import login_required
-from aims_ui import get_cached_tooltip_data
+
 from aims_ui import app
-from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 from aims_ui.models.get_endpoints import get_endpoints
-from aims_ui.page_helpers.pages_location_utils import get_page_location, get_nested_page_location
+from aims_ui.page_helpers.pages_location_utils import get_nested_page_location, get_page_location
+from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 
 page_name = 'help'
 
@@ -47,20 +47,7 @@ def help(subject='None'):
       },
   ]
 
-  def get_matching_tooltip(name):
-    for tool_tip in get_cached_tooltip_data():
-      if tool_tip.get('name').lower() == name.lower():
-        return tool_tip.get('description',
-                            'No description available as a tooltip')
-
-  for deffinition in deffinitions:
-    deffinition['description'] = get_matching_tooltip(deffinition.get('name'))
-
-  common = {
-      'endpoints': endpoints,
-      'deffinitions': deffinitions,
-      'breadcrumbs': breadcrumbs
-  }
+  common = {'endpoints': endpoints, 'breadcrumbs': breadcrumbs}
 
   # Hard code here to avoid security flaws where users could potentially inject unwanted urls
   if subject == 'confidence_score':

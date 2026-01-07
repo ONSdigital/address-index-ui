@@ -5,6 +5,7 @@ import { setupHorizontalInputs } from "./page_reformatting.mjs";
 import { setupScrollListeners, setScrollPosition } from "./scroll_helpers.mjs";
 import { setupUprnSearchFunctionality } from "./uprn_helper.mjs";
 import { addMatchedAddressMarkersToMap } from "./interactive_map/result_address_markers.mjs";
+import { setupClearButtonFunctionality } from "/static/js/a_single_matches/radiussearch/clear_button_functionality.mjs";
 
 function setupMapSpecificItems() {
   // Setup the interactive map and return refference to it
@@ -42,7 +43,12 @@ function setupPageSpecificItems() {
   // Listen for scrolling, save last location
   setupScrollListeners();
 
+  // Prevent the enter key from submitting the form to search for UPRN
+  // instead add listeners to handle the enter key 
   setupSubmissionFromInputs();
+
+  // Setup clear filter button functionality
+  setupClearButtonFunctionality();
 }
 
 function init() {

@@ -12,7 +12,7 @@ function generateRow(singleAddressObject) {
   const nameCell = crEl('td', null, ['ons-table__cell']);
   const nameLink = crEl('a');
   nameLink.href = '/address_info/' + singleAddressObject.uprn;
-  nameLink.textContent = singleAddressObject.name;
+  nameLink.textContent = singleAddressObject.formattedAddress;
 
   nameCell.append(nameLink);
 

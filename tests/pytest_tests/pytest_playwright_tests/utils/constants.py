@@ -44,14 +44,6 @@ DOWNLOADS = [
         'expected_content': None,
     },
     {
-        'download_name': 'Tool Tip Information',
-        'description':
-        'In order to provide the tooltips, this file is provided to give a description for each attribute.',
-        'url_modifier': 'downloads/tool_tip_clerical_information',
-        'file_name': 'tool_tip_clerical_information.csv',
-        'expected_content': None,
-    },
-    {
         'download_name': 'UPRN Example Multiple Address',
         'description': 'Example of how to submit multiple UPRNs in a CSV file',
         'url_modifier': 'downloads/uprn_example_multiple_address',

@@ -78,33 +78,6 @@ def get_epoch_options_cached():
       return epoch_options, default_epoch
 
 
-cached_tooltip_data = None
-
-
-# Cache the contents of the tooltip file to prevent excessive reading from disk
-def get_cached_tooltip_data():
-  global cached_tooltip_data
-  if cached_tooltip_data != None:
-    return cached_tooltip_data
-  dir_path = os.path.dirname(os.path.realpath(__file__))
-  f = open(f'{dir_path}/static/downloads/tool_tip_clerical_information.csv',
-           'r')
-  tool_tip_data = []
-  for line in f.readlines():
-    temp = line.split(',')
-    temp = [x.lstrip().rstrip() for x in temp if x.strip()]
-    if temp != []:
-      # Convert temp into an object
-      temp = {
-          'name': temp[1],
-          'description': temp[2],
-      }
-      tool_tip_data.append(temp)
-  cached_tooltip_data = tool_tip_data
-
-  return tool_tip_data
-
-
 # Setup headers for all requests to Flaskapp
 @app.after_request
 def add_header(response):

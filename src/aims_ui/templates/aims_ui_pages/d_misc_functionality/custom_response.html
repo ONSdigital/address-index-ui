@@ -7,9 +7,13 @@
 {% from "components/radios/_macro.njk" import onsRadios %}
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/autosuggest/_macro.njk" import onsAutosuggest %}
-{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
 {% from 'components/panel/_macro.njk' import onsPanel %}
 {% from 'components/list/_macro.njk' import onsList %}
+
+{% from 'custom_address_info_cards/_macro.njk' import customAddressInfoCards %}
+{% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
+{% from 'custom_download_results_from_local_storage/_macro.njk' import customDownloadResultsFromLocalStorage %}
+{% from 'custom_search/_macro.njk' import customSearch %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -101,15 +105,13 @@
     ] }) }}
 <br>
 
-{{  onsButton({
-	"text": "Search", }) }}
-{{ onsButton({
-	'text': 'Clear  filters',
-	'submitType': "loader",
-	'variants': 'secondary',
-	'url': '/custom_response',
-	'id': 'clear-form-data-button-id',
-}) }}
+{# With no fields, this will just return the search and clear buttons #}
+{{ customSearch ({ "Fields": searchable_fields,
+		   "endpoints": endpoints, 
+		   "page_name": page_name,
+		   "remove_search_button":False,
+       "results_page": results_page, }) }}
+
 
 </form>
 <br>
@@ -123,14 +125,25 @@
 <div id='address-object-container' class="ons-u-hidden">
 
 {% if results_page %}
-<h2>We matched {{matched_address_number}}  addresses:</h2>
+		{# Save the results to local storage on the clientside #}
+		{{ customSaveAddressesToClient({
+			"matched_addresses": matched_addresses,
+			"page_name": page_name,
+		}) }}
+
+	<h2>We matched {{matched_address_number}}  addresses:</h2>
 	{% if matched_address_number==0 %}
 		<h5>You may want to try the "plaintext" repsonse</h5>
 	{% endif %}
+
 {% endif %}
 
-{{ customAddressInfo ({
-	'matched_addresses': matched_addresses,
+{{ customAddressInfoCards ({
+	'page_name': page_name,
+	}) }}
+
+	{{ customDownloadResultsFromLocalStorage({
+		"page_name": page_name,
 	}) }}
 
 {# If there's an error, formatt it nicely here #}
@@ -181,7 +194,6 @@ if ( window.history.replaceState ) {
 <script type=module src="static/js/d_misc_functionality/page_custom_response.mjs"></script>
 
 <script type=module src="static/js/e_all_pages/save_inputs.mjs"></script>
-<script type=module src="static/js/e_all_pages/apply_custom_settings.mjs"></script>
 <script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
 
 <script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>

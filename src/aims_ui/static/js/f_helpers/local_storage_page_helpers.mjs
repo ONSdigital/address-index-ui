@@ -1,4 +1,3 @@
-
 // A page should only request the global attributes stored in 
 // localStorage.global_values
 // or from it's own named pages:
@@ -64,4 +63,10 @@ export function setGlobalValues(newValues) {
   const updatedValues = { ...currentValues, ...newValues };
 
   localStorage.setItem('global_values', JSON.stringify(updatedValues));
+}
+
+export function getFavouritesFromLocalStorage() {
+  const globalValues = getGlobalValues();
+  const favourites = globalValues.favouriteAddressAttributes || [];
+  return favourites;
 }
