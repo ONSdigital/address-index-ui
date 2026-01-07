@@ -15,4 +15,4 @@ List the major changes made in this pull request.
 - [ ] I have verified that the new version follows semantic versioning (`MAJOR.MINOR.PATCH`).
 
 ## Additional Notes
-New builds should be made via concourse and follow the internal release guidelines documented on confluence.
+Test images can be created with the manual GitHub Action Workflow `Create a UI test image for AP`. Test images must only be deployed to AP.
