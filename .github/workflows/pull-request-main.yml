@@ -1,23 +1,10 @@
-name: Python Build and Deploy to Artifact Registry
+name: Build, test AIMS-UI
 
 on:
-  push:
-    branches: [ "github-action-test-workflow" ]
   pull_request:
-    branches: [ "github-action-test-workflow" ]
-
-env:
-  IMAGE_NAME: 'my-test-image-aims-ui'
-  PROJECT_ID: 'ons-ci-aims'
-  AR_REPO_LOCATION: 'europe-west2'
-  AR_URL: 'europe-west2-docker.pkg.dev/ons-ci-aims/temp-aims-github-actions'
-  WORKLOAD_IDENTITY_PROVIDER: 'projects/709138365636/locations/global/workloadIdentityPools/github-actions-test/providers/github-act-prov-test-aims-ui'
-
+    branches: [ "main" ]
 permissions:
   contents: read
-  id-token: write
-
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: '3.9'
+          python-version: '3.12.1'
           cache: 'pip'
 
       - name: Build
@@ -45,7 +32,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -74,7 +60,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.9'
+          python-version: '3.12.1'
 
       - name: Install Python dependencies
         run: |
@@ -120,61 +106,3 @@ jobs:
         run: |
           cd api_demo
           docker-compose down
-
-  build-image-push-to-artifact-registry:
-    runs-on: ubuntu-latest
-    needs: test
-
-    #    permissions:
-#      contents: read
-#      id-token: write
-#    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5.0.0
-
-      - name: Google Auth
-        id: auth
-        uses: 'google-github-actions/auth@v3'
-        with:
-          project_id: ${{ env.PROJECT_ID }}
-          workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
-
-      - name: Read value from file
-        id: read_file
-        run: |
-          VALUE=$(cat version.txt)
-          echo "VALUE=$VALUE" >> $GITHUB_ENV
-
-      - name: Use the value
-        run: echo "The value is ${{ env.VALUE }}"
-
-#      - name: Set up Python
-#        uses: actions/setup-python@v6
-#        with:
-#          python-version: '3.9'
-#          cache: 'pip'
-#
-#      - name: Install dependencies
-#        run: |
-#          ls -la
-#          python -m pip install --upgrade pip
-#          ./scripts/load_templates.sh
-#          export FLASK_APP=aims_ui;
-#          export FLASK_ENV=production;
-#          export SECRET_KEY=secretkey;
-#          pip install -r requirements.txt;
-
-      - name: Configure Docker
-        run: |
-          gcloud auth configure-docker ${{ env.AR_REPO_LOCATION }}-docker.pkg.dev
-
-      - name: Build Docker image
-        run: |
-          docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:${{ env.VALUE }}" .
-          docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest" .
-
-      - name: Push Docker image
-        run: |
-          docker push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}" --all-tags

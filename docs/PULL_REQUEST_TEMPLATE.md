@@ -1,5 +1,14 @@
-## Description
-<!-- Explain what changes were made and why -->
+## Summary
+
+Summary of changes and additions.
+
+## Issue Reference
+
+Does the PR have an associated JIRA?
+
+## Changes
+
+List the major changes made in this pull request.
 
 ## Version Bump Checklist
 - [ ] I have updated `version.txt` with a new version number.
