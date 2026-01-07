@@ -5,8 +5,11 @@
 {% from 'components/list/_macro.njk' import onsList %}
 
 {% from 'custom_search/_macro.njk' import customSearch %}
-{% from 'custom_address_info/_macro.njk' import customAddressInfo %}
+{% from 'custom_address_info_cards/_macro.njk' import customAddressInfoCards %}
 {% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
+{% from 'custom_title_and_description/_macro.njk' import customTitleAndDescription %}
+{% from 'custom_download_results_from_local_storage/_macro.njk' import customDownloadResultsFromLocalStorage %}
+{% from 'custom_we_matched_message/_macro.njk' import weMatchedAddressPreamble %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -26,8 +29,9 @@
 
 {{ customSearch ({ "Fields": searchable_fields,
 		   "endpoints": endpoints, 
+		   "page_name": page_name,
 		   "remove_search_button":False,
-                   "results_page": results_page, }) }}
+       "results_page": results_page, }) }}
 <br>
 </div> 
 
@@ -39,37 +43,30 @@
 {# 5 Col results page #}
   <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
 
-{# Title and description #}
-{% for endpoint in endpoints %}
-{% if endpoint.selected %}
-<br>
-	{{ onsCard({
-	    "id": 	endpoint.id,
-	    "textId": 	'text',
-	    "titleSize":endpoint.title_size,
-	    "titleClasses": 'header__title',
-	    "title": 	endpoint.title,
-	    "url": 	endpoint.url,
-	    "text": 	endpoint.description_text,
-	}) }}
-<br>
-{% endif %}
-{% endfor %}
+	{# Title and description #}
+	{{ customTitleAndDescription({
+		"endpoints": endpoints,
+	})}}
 
-{% if results_page %}
-	<h2>We matched {{matched_address_number}}  addresses:</h2>
+	{% if results_page %}
+		{# Save the results to local storage on the clientside #}
+		{{ customSaveAddressesToClient({
+			"matched_addresses": matched_addresses,
+			"page_name": page_name,
+		}) }}
+	{% endif %}
 
-	{# Save the results to local storage on the clientside #}
-	{{ customSaveAddressesToClient({
-		"matched_addresses": matched_addresses,
+	{# Add the "We matched {X} addresses" #}
+	{{ weMatchedAddressPreamble({
 		"page_name": page_name,
 	}) }}
 
+	{{ customAddressInfoCards ({
+	'page_name': page_name,
+	}) }}
 
-{% endif %}
-
-{{ customAddressInfo ({
-	'matched_addresses': matched_addresses,
+	{{ customDownloadResultsFromLocalStorage({
+		"page_name": page_name,
 	}) }}
 
 </div> </div>
@@ -83,7 +80,6 @@
 <script type=module src="static/js/a_single_matches/postcode.mjs"></script>
 
 <script type=module src="static/js/e_all_pages/save_inputs.mjs"></script>
-<script type=module src="static/js/e_all_pages/apply_custom_settings.mjs"></script>
 <script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
 
 <script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>

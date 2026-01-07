@@ -30,7 +30,10 @@ def api(url, called_from, all_user_input):
       called_from == 'multiple'):
     url = app.config.get('API_URL') + url
 
+  # Change and clean parameters based on page
   cleaned_params = cleanup_parameters(all_user_input, called_from)
+
+  # Format parameters as string for requests
   params = format_params_as_string(cleaned_params)
 
   r = requests.get(
@@ -52,19 +55,13 @@ def get_response_attributes(r):
 
   matchType = res.get('matchtype', 'N/A')
   recommendationCode = res.get('recommendationCode', 'N/A')
-
-  return {'matchType': matchType, 'recommendationCode': recommendationCode}
-
-
-def get_tokenised_attributes(r):
-  """ Return the 'tokens' for a search - this is from the address parser """
-
-  # "r" should be result.json() from an API call
-  res = r.get('response')
-
   tokenisedOutput = res.get('tokens', {})
 
-  return tokenisedOutput
+  return {
+      'tokenisedOutput': tokenisedOutput,
+      'matchType': matchType,
+      'recommendationCode': recommendationCode
+  }
 
 
 def get_api_auth():

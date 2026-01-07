@@ -74,6 +74,7 @@ def multiple_address_original():
     try:
       full_results, line_count = multiple_address_match_from_singlesearch_download(
           file, all_user_input)
+
       return send_file(full_results,
                        mimetype='text/csv',
                        download_name=f'result_size_{line_count}.csv',

@@ -48,8 +48,10 @@ def test_base_classification_list():
 
   # Define keys that should always be in the config
   keys_that_should_be_present = [
+      'LOCAL_STORAGE_VERSION',
       'DEBUG',
       'TESTING',
+      'APP_VERSION',
       'PROPAGATE_EXCEPTIONS',
       'SECRET_KEY',
       'SECRET_KEY_FALLBACKS',

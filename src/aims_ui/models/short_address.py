@@ -1,5 +1,5 @@
 from .utilities.classifications import get_classification_list
-from .utilities.logicalStatusUtils import getTextLogicalStatus
+from .utilities.logicalStatusUtils import getFullLpiLogicalStatusInfo
 from .utilities.sibling_lookup import getHierarchy
 
 
@@ -82,8 +82,7 @@ class AddressAttribute():
     if self.name == 'classificationCodeList':
       return get_classification_list(classification_code)
     if self.name == 'lpiLogicalStatus':
-      #return getTextLogicalStatus(self.raw_value)
-      return value
+      return getFullLpiLogicalStatusInfo(self.raw_value)
     if self.name == 'hierarchy':
       return getHierarchy(self.address_data)
     if self.name == 'parentUprn':

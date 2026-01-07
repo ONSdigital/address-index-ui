@@ -1,20 +1,82 @@
+import {
+  getGlobalValues,
+  setGlobalValues,
+} from '/static/js/f_helpers/local_storage_page_helpers.mjs';
+
 export function getDefaultValuesForPage(page_name) {
-  const defaultValues = [
-    {
-      'page_name': 'radiussearch',
+  const defaultValues = {
+    'radiussearch': {
       'lat': 50.73548,
-      'lng': -3.5332105,
+      'lon': -3.5332105,
       'zoom': 8,
       'rangekm': '10',
-      'limit': '10',
+      'limit': '50',
+      'classificationfilter': '',
+      'uprn': '',
+      'input': '',
     }
-  ];
+  };
 
-  for (const entry of defaultValues) {
-    if (entry.page_name === page_name) {
-      return entry;
-    }
+  if (page_name in defaultValues) {
+    return defaultValues[page_name];
   }
 
   return {};
 }
+
+export function getDefaultGlobalValues() {
+  // Values should be GLOBAL if they're accessed across multiple pages
+
+  const defaultGlobalValues = {
+
+    // Default download format for single searches
+    'singleJobDownloadFormat': 'csv',
+
+    // Setup the attributes to include in downloads by default it will be everything
+    'singleJobDownloadAttributeInclusion': 'all',
+
+    // Setup the attribute to flag showing older jobs on the large bulk-matching pages
+    'showOlderJobsInBulkMatchingPage': false,
+
+    // Default type of title the address cards should have
+    'addressCardTitleType': 'default',
+
+    // Setup default column widths
+    'columnWidths': {
+      'space_col_1': '1',
+      'content_col_2': '4',
+      'space_col_3': '1',
+      'content_col_4': '5',
+    },
+
+    // Setup the default values for Additional Request Details
+    'additionalRequestDetails': {
+      match_type: true,
+      recommendation_code: true,
+      tokenised_output: false,
+    },
+
+    // Default address attributes to show (based on original requirements)
+    'favouriteAddressAttributes': [
+      'uprn',
+      'parentUprn',
+      'classificationCode',
+      'classificationCodeList',
+      'formattedConfidenceScore',
+      'nagLocalCustodianName',
+    ]
+  };
+  return defaultGlobalValues;
+}
+
+export function setupDefaultGlobalValues() {
+  // Set default values for global values if they don't already exist
+  const currentGlobalValues = getGlobalValues();
+
+  const defaultGlobalValues = getDefaultGlobalValues();
+
+  const updatedValues = { ...defaultGlobalValues, ...currentGlobalValues };
+
+  setGlobalValues(updatedValues);
+}
+
