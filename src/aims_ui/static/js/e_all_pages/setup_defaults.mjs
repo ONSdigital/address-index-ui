@@ -14,7 +14,15 @@ export function getDefaultValuesForPage(page_name) {
       'classificationfilter': '',
       'uprn': '',
       'input': '',
-    }
+    },
+    'singlesearch': {
+      'input': '',
+      'classificationfilter': '',
+      'epoch': '',
+      'minimummatch': '1%',
+      'limit': '20',
+      'includehistorical': false,
+    },
   };
 
   if (page_name in defaultValues) {
@@ -52,74 +60,161 @@ export function getDefaultGlobalValues() {
     // Setup persistance settings for pages
     'persistanceSettings': [
       {
-        'page': 'singlesearch', // Page is also the id in the settings table
-        'input_persistance_settings': {
-          'input': false,
-          'classificationfilter': true,
-          'region': true,
-          'epoch': true,
-          'minimummatch': true,
-          'limit': true,
-          'includehistorical': true,
+      'page': 'singlesearch', // Page is also the id in the settings table
+      'input_persistance_settings': [
+        {
+          'htmlId': 'input',
+          'persistanceState': true,
+          'typeOfInput': 'text',
+          'defaultValue': '',
+        },
+        {
+          'htmlId': 'classificationfilter',
+          'persistanceState': true,
+          'typeOfInput': 'autosuggest',
+          'defaultValue': '',
+        },
+        {
+          'htmlId': 'region',
+          'persistanceState': true,
+          'typeOfInput': 'checkboxes',
+          'checkboxHtmlIds': ['eboost', 'wboost', 'sboost', 'nboost', 'lboost', 'mboost', 'jboost'],
+          'defaultValue': true, // "Checkboxes" affect all boxes
+        },
+        {
+          'htmlId': 'epoch',
+          'persistanceState': true,
+          'typeOfInput': 'radio',
+          'defaultValue': 'latest',
+        },
+        {
+          'htmlId': 'minimummatch',
+          'persistanceState': true,
+          'typeOfInput': 'dropdown',
+          'defaultValue': '1%',
+        },
+        {
+          'htmlId': 'limit',
+          'persistanceState': true,
+          'typeOfInput': 'text',
+          'defaultValue': '20',
+        },
+        {
+          'htmlId': 'includehistorical',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
         }
-      },
-      {
-        'page': 'uprn', 
-        'input_persistance_settings': {
-          'input': true,
-          'epoch': true,
-          'includehistorical': true,
-        }
-      },
-       {
-        'page': 'postcode', 
-        'input_persistance_settings': {
-          'input': true,
-          'classification': true,
-          'epoch': true,
-          'limit': true,
-          'includehistorical': true,
-        }
-      },
-      {
-        'page': 'typeahead', 
-        'input_persistance_settings': {
-          'region': true,
-          'epoch': true,
-          'limit': true,
-        }
-      },
-      {
-        'page': 'radiussearch', 
-        'input_persistance_settings': {
-          'lat': true,
-          'lon': true,
-          'rangekm': true,
-          'input': true,
-          'classificationfilter': true,
-          'limit': true,
-        }
-      },
- 
-    ],
-
-    // Setup the default values for Additional Request Details
-    'additionalRequestDetails': {
-      match_type: true,
-      recommendation_code: true,
-      tokenised_output: false,
+      ]
     },
-
-    // Default address attributes to show (based on original requirements)
-    'favouriteAddressAttributes': [
-      'uprn',
-      'parentUprn',
-      'classificationCode',
-      'classificationCodeList',
-      'formattedConfidenceScore',
-      'nagLocalCustodianName',
-    ]
+    {
+      'page': 'uprn',
+      'input_persistance_settings': [
+        {
+          'htmlId': 'input',
+          'persistanceState': true,
+          'typeOfInput': ''
+        },
+        {
+          'htmlId': 'epoch',
+          'persistanceState': true,
+          'typeOfInput': ''
+        },
+        {
+          'htmlId': 'includehistorical',
+          'persistanceState': true,
+          'typeOfInput': ''
+        }
+      ]
+    },
+    {
+      'page': 'postcode',
+      'input_persistance_settings': [
+        {
+          'htmlId': 'input',
+          'persistanceState': true,
+          'typeOfInput': ''
+        },
+        {
+          'htmlId': 'classification',
+          'persistanceState': true,
+          'typeOfInput': ''
+        },
+        {
+          'htmlId': 'epoch',
+          'persistanceState': true,
+          'typeOfInput': ''
+        },
+        {
+          'htmlId': 'limit',
+          'persistanceState': true,
+          'typeOfInput': ''
+        },
+        {
+          'htmlId': 'includehistorical',
+          'persistanceState': true,
+          'typeOfInput': ''
+        }
+      ]
+    },
+    {
+      'page': 'typeahead',
+      'input_persistance_settings': [
+        {
+          'htmlId': 'region',
+          'persistanceState': true,
+          'typeOfInput': ''
+        },
+        {
+          'htmlId': 'epoch',
+          'persistanceState': true,
+          'typeOfInput': ''
+        },
+        {
+          'htmlId': 'limit',
+          'persistanceState': true,
+          'typeOfInput': ''
+        }
+      ]
+    },
+    {
+      'page': 'radiussearch',
+      'input_persistance_settings': [
+        {
+          'htmlId': 'lat',
+          'persistanceState': true,
+          'typeOfInput': ''
+        },
+        {
+          'htmlId': 'lon',
+          'persistanceState': true,
+          'typeOfInput': ''
+        },
+        {
+          'htmlId': 'rangekm',
+          'persistanceState': true,
+          'typeOfInput': ''
+        },
+        {
+          'htmlId': 'input',
+          'persistanceState': true,
+          'typeOfInput': ''
+        },
+        {
+          'htmlId': 'classificationfilter',
+          'persistanceState': true,
+          'typeOfInput': ''
+        },
+        {
+          'htmlId': 'limit',
+          'persistanceState': true,
+          'typeOfInput': ''
+        }
+      ]
+    }
+    ],
   };
+
   return defaultGlobalValues;
 }
 
