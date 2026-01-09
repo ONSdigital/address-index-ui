@@ -24,11 +24,13 @@ function removeMarkupFromInsideElement(element) {
   return clone.textContent.trim();
 }
 
-export function addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputElement, page_name) {
-  // Given an input element that's an ONS autosuggest component
+export function addAutosuggestListenersToSaveOnChange(page_name, htmlId) {
+  // Given an id of the autostugget input
   // the event listener must be on the *Suggestions* not the element
   // as the element itself triggers events like input, change, blur before the value is changed
-  const completeContainerForClassificationFilter = document.querySelector('#complete-container-for-classificationfilter');
+
+  const completeContainerForClassificationFilter = document.querySelector('#complete-container-for-' + htmlId);
+  const inputElement = completeContainerForClassificationFilter.querySelector('#' + htmlId);
 
   const classNameForSuggestionContainer = "ons-autosuggest__results";
   const suggestionContainer = completeContainerForClassificationFilter.querySelector('.' + classNameForSuggestionContainer);
@@ -64,6 +66,10 @@ export function addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inp
         saveValueOfInput(inputElement.id, textFromAutosuggest, page_name);
         console.log('Saved value from autosuggest (keyboard):', textFromAutosuggest);
       }
+    }
+    else {
+      // Save the content of the input element on any other key
+      saveValueOfInput(inputElement.id, inputElement.value, page_name);
     }
   });
 }
