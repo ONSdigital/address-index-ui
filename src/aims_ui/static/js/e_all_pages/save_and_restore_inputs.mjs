@@ -15,6 +15,9 @@ import { restoreValuesToTextInput } from './save_and_restore_input_helpers/input
 //import { addEventListenerToTriggerSaveOnChangeForAutosuggestComponent } from './autosuggest/autosuggest_listeners.mjs';
 //import { addListenerForDropdown } from './minimummatch/minimummatch_listeners.mjs';
 
+import { restoreValuesToAutosuggestInput } from './save_and_restore_input_helpers/autosuggest/autosuggest_restorers.mjs';
+import { addAutosuggestListenersToSaveOnChange } from './save_and_restore_input_helpers/autosuggest/autosuggest_listeners.mjs';
+
 
 // Function that handles all restoring of values
 function restoreValuesToInputsifExist(page_name, inputObjects, pagePreviouslySearchedValues) {
@@ -36,6 +39,12 @@ function restoreValuesToInputsifExist(page_name, inputObjects, pagePreviouslySea
     if (typeOfInput === 'text') {
       // For text inputs
       restoreValuesToTextInput(page_name, htmlId, pagePreviouslySearchedValues);
+      continue;
+    }
+
+    if (typeOfInput === 'autosuggest') {
+      // For Autosuggest inputs
+      restoreValuesToAutosuggestInput(page_name, htmlId, pagePreviouslySearchedValues);
       continue;
     }
   }
@@ -67,6 +76,11 @@ function addEventListenersToTriggerSaveOnChange(inputObjects, page_name) {
       continue;
     }
 
+    if (typeOfInput === 'autosuggest') {
+      // For Autosuggest inputs
+      addAutosuggestListenersToSaveOnChange(page_name, htmlId);
+      continue;
+    }
   }
 
   return;
