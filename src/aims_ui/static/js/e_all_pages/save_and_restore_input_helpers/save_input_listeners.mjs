@@ -1,9 +1,6 @@
 import { getPagePreviouslySearchedValues,
  setPreviouslyStoredValuesForThisPage } from './set_and_get_data.mjs'
 
-import { addEventListenerToTriggerSaveOnChangeForAutosuggestComponent } from './autosuggest/autosuggest_listeners.mjs';
-import { addEventListenerToRegionInputs } from './region/region_listeners.mjs';
-import { addListenerForDropdown } from './minimummatch/minimummatch_listeners.mjs';
 
 export function saveValueOfInput(inputId, inputValue, page_name) {
   console.log(`Saving value of input ${inputId}: ${inputValue}`);
@@ -22,42 +19,3 @@ export function saveValueOfInput(inputId, inputValue, page_name) {
   setPreviouslyStoredValuesForThisPage(mergedValues, page_name);
 }
 
-export function addEventListenersToTriggerSaveOnChange(saveAndRestoreInputIds, page_name) {
-  // Loop over all the ids
-  console.log('HERE ARE THE IDS TO ADD LISTENERS TO:', saveAndRestoreInputIds);
-  for (const id of saveAndRestoreInputIds) {
-
-    // Handle geo (which has mutliple IDs per input)
-    if (id === 'region') {
-      addEventListenerToRegionInputs(page_name);
-      continue;
-    } 
-
-    // Handle dropdown inputs 
-    if (id === 'minimummatch') {
-      const dropdownContainer = document.querySelector('#complete-container-for-matchthreshold');
-      const dropdownInput = dropdownContainer.querySelector('select');
-      if (dropdownInput) {
-        addListenerForDropdown(dropdownInput, page_name);
-      } 
-    }
-
-    // Not geo, so handle regular input fields
-    const inputElement = document.querySelector('#' + id);
-    // If the element not found, skip it
-    if (!inputElement) { return; }
-
-    // If it's an autosuggest component, add extra listeners
-    if (inputElement.classList.contains('ons-js-autosuggest-input')) {
-      // Add event listener to save from a suggestion - STILL REQUIRES A REGULAR INPUT LISTENER
-      addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputElement, page_name);
-    } 
-
-    // Handle regular text 'input's
-    inputElement.addEventListener('input', () => {
-      saveValueOfInput(inputElement.id, inputElement.value, page_name);
-    });
-
-
-  }
-}

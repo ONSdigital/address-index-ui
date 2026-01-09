@@ -18,9 +18,12 @@ export function getPagePreviouslySearchedValues(page_name) {
 
   // Inject default values if the pagePreviouslySearchedValues doesn't exist
   const defaultValuesForPage = getDefaultValuesForPage(page_name);
+  console.log('default values are:', defaultValuesForPage);
+
   if (!pageLocalValues.pagePreviouslySearchedValues) {
     // If we have to setup the defaults, then we should also save them to local storage as the "previously searched values"
     pageLocalValues.pagePreviouslySearchedValues = defaultValuesForPage;
+    console.log('Setting up default previously searched values for page:', page_name, 'as:', pageLocalValues.pagePreviouslySearchedValues);
     setPreviouslyStoredValuesForThisPage(pageLocalValues.pagePreviouslySearchedValues, page_name);
   }
 
@@ -29,9 +32,9 @@ export function getPagePreviouslySearchedValues(page_name) {
 }
 
 function getPersistanceSettingsOfPage(page_name) {
-  // Will return an array of input Ids, setup in global storage
   const globalValues = getGlobalValues();
-  // An array of objects like [ {'page_name':'radiussearch', {object of settings}
+
+  // An array of objects like [ {'page_name':'radiussearch', 'persistanceSettings': [ {'htmlId': 'input', 'persistance_state': true}, ... ]}]
   const persistanceSettings = globalValues['persistanceSettings'] || [];
 
   // Find the object for this page
@@ -43,20 +46,15 @@ function getPersistanceSettingsOfPage(page_name) {
 
   // If not found, log an error
   console.error('No persistance settings found for page:', page_name);
+  return [];
 }
 
-export function getIdsOfInputsToPersist(page_name) {
+export function getPageInputObjects(page_name) {
+  // For the page provided, return the locally stored input objects
+
   // Get the persistance settings for this page
   const pagePersistanceSettings = getPersistanceSettingsOfPage(page_name);
-  const inputPersistanceSettings = pagePersistanceSettings.input_persistance_settings || {};
-  
-  // Now extract the Ids of inputs that should be persisted {'inputId': true/false}
-  const idsToPersist = [];
-  for (const [inputId, shouldPersist] of Object.entries(inputPersistanceSettings)) {
-    if (shouldPersist) {
-      idsToPersist.push(inputId);
-    }
-  }
+  const inputObjects = pagePersistanceSettings.input_persistance_settings || {};
 
-  return idsToPersist;
+  return inputObjects;
 }
