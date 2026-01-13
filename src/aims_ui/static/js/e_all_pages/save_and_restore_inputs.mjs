@@ -18,14 +18,12 @@ import { addAutosuggestListenersToSaveOnChange } from './save_and_restore_input_
 import { addRadioListenersToMultipleRadios } from './save_and_restore_input_helpers/radio/radio_listeners.mjs';
 import { restoreRadioValuesIfExist } from './save_and_restore_input_helpers/radio/radio_restorers.mjs';
 
-
-//import { restoreDropdownValueIfExists } from './save_and_restore_input_helpers/minimummatch/minimummatch_restorers.mjs';
-//import { addEventListenerToTriggerSaveOnChangeForAutosuggestComponent } from './autosuggest/autosuggest_listeners.mjs';
-//import { addListenerForDropdown } from './minimummatch/minimummatch_listeners.mjs';
-
+// Dropdown save and restore
+import { addDropdownListenersToSaveOnChange, } from './save_and_restore_input_helpers/dropdown/dropdown_listeners.mjs';
+import { restoreDropdownValuesIfExist } from './save_and_restore_input_helpers/dropdown/dropdown_restorers.mjs';
 
 // Function that handles all restoring of values
-function restoreValuesToInputsifExist(page_name, inputObjects, pagePreviouslySearchedValues) {
+function restoreValuesToInputsIfExist(page_name, inputObjects, pagePreviouslySearchedValues) {
 
   for (const inputObject of inputObjects) {
     // Setup all three variables
@@ -44,6 +42,7 @@ function restoreValuesToInputsifExist(page_name, inputObjects, pagePreviouslySea
     if (typeOfInput === 'radio') {
       // For radio inputs
       restoreRadioValuesIfExist(page_name, inputObject, pagePreviouslySearchedValues);
+      continue;
     }
 
     if (typeOfInput === 'text') {
@@ -57,7 +56,15 @@ function restoreValuesToInputsifExist(page_name, inputObjects, pagePreviouslySea
       restoreValuesToAutosuggestInput(page_name, htmlId, pagePreviouslySearchedValues);
       continue;
     }
+
+    if (typeOfInput === 'dropdown') {
+      // For Dropdown inputs
+      restoreDropdownValuesIfExist(page_name, htmlId, pagePreviouslySearchedValues);
+      continue;
+    }
+
   }
+
 }
 
 function addEventListenersToTriggerSaveOnChange(inputObjects, page_name) {
@@ -99,6 +106,12 @@ function addEventListenersToTriggerSaveOnChange(inputObjects, page_name) {
       addAutosuggestListenersToSaveOnChange(page_name, htmlId);
       continue;
     }
+
+    if (typeOfInput === 'dropdown') {
+      // For Dropdown inputs
+      addDropdownListenersToSaveOnChange(page_name, htmlId);
+      continue;
+    }
   }
 
   return;
@@ -115,7 +128,7 @@ export function init(page_name) {
   // Now get the page's local values (which actually contain what was last in inputs)
   // {'lat': '51.36935132147893', 'lon':'-2.3361860233264187', 'rangekm': '45'};
   const pagePreviouslySearchedValues = getPagePreviouslySearchedValues(page_name);
-  restoreValuesToInputsifExist(page_name, inputObjects, pagePreviouslySearchedValues);
+  restoreValuesToInputsIfExist(page_name, inputObjects, pagePreviouslySearchedValues);
 
   // Now attach event listeners to all the inputs that are set to persist
   addEventListenersToTriggerSaveOnChange(inputObjects, page_name);

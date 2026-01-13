@@ -87,7 +87,7 @@ export function getDefaultGlobalValues() {
           'typeOfInput': 'radio',
         },
         {
-          'htmlId': 'minimummatch',
+          'htmlId': 'matchthreshold',
           'persistanceState': true,
           'typeOfInput': 'dropdown',
           'defaultValue': '1%',
