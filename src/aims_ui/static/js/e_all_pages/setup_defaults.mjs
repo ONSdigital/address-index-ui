@@ -162,19 +162,55 @@ export function getDefaultGlobalValues() {
       'page': 'typeahead',
       'input_persistance_settings': [
         {
-          'htmlId': 'region',
+          'htmlId': 'address',
           'persistanceState': true,
-          'typeOfInput': ''
-        },
-        {
-          'htmlId': 'epoch',
-          'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'text'
         },
         {
           'htmlId': 'limit',
           'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'text'
+        },
+        {
+          'htmlId': 'epoch',
+          'persistanceState': true,
+          'typeOfInput': 'radio',
+        },
+        // Add a type 'text' for eboost, wboost, sboost, nboost, lboost, mboost, jboost
+        {
+          'htmlId': 'eboost',
+          'persistanceState': true,
+          'typeOfInput': 'text',
+        },
+        {
+          'htmlId': 'wboost',
+          'persistanceState': true,
+          'typeOfInput': 'text',
+        },
+        {
+          'htmlId': 'sboost',
+          'persistanceState': true,
+          'typeOfInput': 'text',
+        },
+        {
+          'htmlId': 'nboost',
+          'persistanceState': true,
+          'typeOfInput': 'text',  
+        },
+        {
+          'htmlId': 'lboost',
+          'persistanceState': true,
+          'typeOfInput': 'text',
+        },
+        {
+          'htmlId': 'mboost',
+          'persistanceState': true,
+          'typeOfInput': 'text',
+        },
+        {
+          'htmlId': 'jboost',
+          'persistanceState': true,
+          'typeOfInput': 'text',
         }
       ]
     },
