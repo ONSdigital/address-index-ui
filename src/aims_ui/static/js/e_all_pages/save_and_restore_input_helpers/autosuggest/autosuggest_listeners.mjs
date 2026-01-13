@@ -67,9 +67,13 @@ export function addAutosuggestListenersToSaveOnChange(page_name, htmlId) {
         console.log('Saved value from autosuggest (keyboard):', textFromAutosuggest);
       }
     }
-    else {
+  });
+
+  // Also add a general input event listener to save any other changes
+  inputElement.addEventListener('input', () => {
+    {
       // Save the content of the input element on any other key
       saveValueOfInput(inputElement.id, inputElement.value, page_name);
     }
   });
-}
+} 

@@ -3,8 +3,8 @@
 import { getPageInputObjects, getPagePreviouslySearchedValues } from './save_and_restore_input_helpers/set_and_get_data.mjs';
 
 // Checkbox save and restore
-import { addCheckboxListenersToMultipleCheckboxes } from './save_and_restore_input_helpers/checkbox/checkbox_listeners.mjs';
-import { restoreCheckboxValuesIfExist } from './save_and_restore_input_helpers/checkbox/checkbox_restorers.mjs';
+import { addCheckboxListenersToMultipleCheckboxes, addCheckboxListenersToSaveOnChange } from './save_and_restore_input_helpers/checkbox/checkbox_listeners.mjs';
+import { restoreCheckboxValuesIfExist, restoreMultipleCheckboxValuesIfExist } from './save_and_restore_input_helpers/checkbox/checkbox_restorers.mjs';
 
 // Input save and restore
 import { addInputListenersToSaveOnChange } from './save_and_restore_input_helpers/input/input_listeners.mjs';
@@ -35,13 +35,19 @@ function restoreValuesToInputsIfExist(page_name, inputObjects, pagePreviouslySea
     // Direct to correct restored, based on type of input
     if (typeOfInput === 'checkboxes') {
       // For multiple checkboxes in one object
-      restoreCheckboxValuesIfExist(page_name, inputObject, pagePreviouslySearchedValues);
+      restoreMultipleCheckboxValuesIfExist(page_name, inputObject, pagePreviouslySearchedValues);
       continue;
     }
 
     if (typeOfInput === 'radio') {
       // For radio inputs
       restoreRadioValuesIfExist(page_name, inputObject, pagePreviouslySearchedValues);
+      continue;
+    }
+
+    if (typeOfInput === 'checkbox') {
+      // For SINGLE checkbox inputs
+      restoreCheckboxValuesIfExist(page_name, htmlId, pagePreviouslySearchedValues);
       continue;
     }
 
@@ -83,7 +89,7 @@ function addEventListenersToTriggerSaveOnChange(inputObjects, page_name) {
 
     // Add 'multiple' 'input' listeners (for a single input with multiple elements, like checkboxes or radios)
     if (typeOfInput === 'checkboxes') {
-      // For multiple checkboxes in one object
+      // For MULTIPLE checkboxes in one object
       addCheckboxListenersToMultipleCheckboxes(page_name, inputObject);
       continue;
     }
@@ -95,6 +101,12 @@ function addEventListenersToTriggerSaveOnChange(inputObjects, page_name) {
     }
 
     // Add listeners to individual inputs on a page
+    if (typeOfInput === 'checkbox') {
+      // For SINGLE checkbox inputs
+      addCheckboxListenersToSaveOnChange(page_name, htmlId);
+      continue;
+    }
+
     if (typeOfInput === 'text') {
       // Handle regular text inputs (and numerical ones!)
       addInputListenersToSaveOnChange(page_name, htmlId);

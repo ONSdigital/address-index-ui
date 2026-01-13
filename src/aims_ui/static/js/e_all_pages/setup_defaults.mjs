@@ -99,7 +99,7 @@ export function getDefaultGlobalValues() {
           'defaultValue': '20',
         },
         {
-          'htmlId': 'includehistorical',
+          'htmlId': 'historical',
           'persistanceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
