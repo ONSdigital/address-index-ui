@@ -36,7 +36,7 @@ export function addAutosuggestListenersToSaveOnChange(page_name, htmlId) {
   const suggestionContainer = completeContainerForClassificationFilter.querySelector('.' + classNameForSuggestionContainer);
 
   if (!suggestionContainer) { 
-    console.log('No suggestion container found for autosuggest component');
+    console.warn('No suggestion container found for autosuggest component');
     return;
   }
 
@@ -48,9 +48,9 @@ export function addAutosuggestListenersToSaveOnChange(page_name, htmlId) {
 
       // Now save this value
       saveValueOfInput(inputElement.id, textFromAutosuggest, page_name);
-      console.log('Saved value from autosuggest:', textFromAutosuggest);
+      console.debug('Saved value from autosuggest:', textFromAutosuggest);
     } else {
-      console.log('Clicked outside of a suggestion <li>');
+      console.debug('Clicked outside of a suggestion <li>');
     }
   });
 
@@ -64,7 +64,7 @@ export function addAutosuggestListenersToSaveOnChange(page_name, htmlId) {
 
         // Now save this value
         saveValueOfInput(inputElement.id, textFromAutosuggest, page_name);
-        console.log('Saved value from autosuggest (keyboard):', textFromAutosuggest);
+        console.debug('Saved value from autosuggest (keyboard):', textFromAutosuggest);
       }
     }
   });

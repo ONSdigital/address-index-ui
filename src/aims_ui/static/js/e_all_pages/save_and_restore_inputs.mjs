@@ -135,7 +135,7 @@ export function init(page_name) {
 
   // Get the objects for each input - containing a "toPersist" and "htmlId"
   const inputObjects = getPageInputObjects(page_name);
-  console.log('Input objects', page_name, ':', inputObjects);
+  console.debug('Save and restore inputs: Input objects', page_name, ':', inputObjects);
 
   // Now get the page's local values (which actually contain what was last in inputs)
   // {'lat': '51.36935132147893', 'lon':'-2.3361860233264187', 'rangekm': '45'};

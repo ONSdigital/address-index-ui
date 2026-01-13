@@ -7,7 +7,7 @@ export function addListenerForDropdown(inputElement, page_name) {
   // Add event listener to save on change
 
   inputElement.addEventListener('change', () => {
-    console.log('Dropdown changed, saving value: ', inputElement.value);
+    console.debug('Dropdown changed, saving value: ', inputElement.value);
     const selectedValue = inputElement.value;
     saveValueOfInput(inputElement.id, selectedValue, page_name);
   });
