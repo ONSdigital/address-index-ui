@@ -13,7 +13,7 @@ export function addCheckboxListenersToSaveOnChange(page_name, checkboxHtmlId) {
   // Add event listener to save on change
   checkboxElement.addEventListener('change', () => {
     const isChecked = checkboxElement.checked;
-    console.log(`Checkbox ${checkboxElement.id} changed to: ${isChecked}`);
+    console.debug(`Checkbox ${checkboxElement.id} changed to: ${isChecked}`);
     saveValueOfInput(checkboxHtmlId, isChecked, page_name);
   });
 }

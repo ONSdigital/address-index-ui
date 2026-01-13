@@ -16,9 +16,9 @@ export function restoreValuesToAutosuggestInput(page_name, htmlId, pagePreviousl
   // If previous value exists, set it
   if (previousValue !== undefined) {
     inputElement.value = previousValue;
-    console.log(`Restored value for input ${htmlId} to: ${previousValue}`);
+    console.debug(`Restored value for input ${htmlId} to: ${previousValue}`);
   } else {
-    console.log(`No previously stored value for input ${htmlId}`);
+    console.debug(`No previously stored value for input ${htmlId}`);
   }
 
 }

@@ -110,19 +110,21 @@ export function getDefaultGlobalValues() {
       'page': 'uprn',
       'input_persistance_settings': [
         {
-          'htmlId': 'input',
+          'htmlId': 'uprn',
           'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'text',
+          'defaultValue': '',
         },
         {
           'htmlId': 'epoch',
           'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'radio',
         },
         {
-          'htmlId': 'includehistorical',
+          'htmlId': 'historical',
           'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
         }
       ]
     },
