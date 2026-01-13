@@ -85,7 +85,6 @@ export function getDefaultGlobalValues() {
           'htmlId': 'epoch',
           'persistanceState': true,
           'typeOfInput': 'radio',
-          'defaultValue': 'latest',
         },
         {
           'htmlId': 'minimummatch',

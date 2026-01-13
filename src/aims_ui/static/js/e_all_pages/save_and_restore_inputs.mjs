@@ -1,22 +1,27 @@
-// More complete version of the save inputs which will
-// persist accross sessions
-
 // Persistnace is per page, each togglable on the settings page
 
 import { getPageInputObjects, getPagePreviouslySearchedValues } from './save_and_restore_input_helpers/set_and_get_data.mjs';
 
+// Checkbox save and restore
 import { addCheckboxListenersToMultipleCheckboxes } from './save_and_restore_input_helpers/checkbox/checkbox_listeners.mjs';
 import { restoreCheckboxValuesIfExist } from './save_and_restore_input_helpers/checkbox/checkbox_restorers.mjs';
 
+// Input save and restore
 import { addInputListenersToSaveOnChange } from './save_and_restore_input_helpers/input/input_listeners.mjs';
 import { restoreValuesToTextInput } from './save_and_restore_input_helpers/input/input_restorers.mjs';
+
+// Autosuggest save and restore
+import { restoreValuesToAutosuggestInput } from './save_and_restore_input_helpers/autosuggest/autosuggest_restorers.mjs';
+import { addAutosuggestListenersToSaveOnChange } from './save_and_restore_input_helpers/autosuggest/autosuggest_listeners.mjs';
+
+// Radio save and restore
+import { addRadioListenersToMultipleRadios } from './save_and_restore_input_helpers/radio/radio_listeners.mjs';
+import { restoreRadioValuesIfExist } from './save_and_restore_input_helpers/radio/radio_restorers.mjs';
+
 
 //import { restoreDropdownValueIfExists } from './save_and_restore_input_helpers/minimummatch/minimummatch_restorers.mjs';
 //import { addEventListenerToTriggerSaveOnChangeForAutosuggestComponent } from './autosuggest/autosuggest_listeners.mjs';
 //import { addListenerForDropdown } from './minimummatch/minimummatch_listeners.mjs';
-
-import { restoreValuesToAutosuggestInput } from './save_and_restore_input_helpers/autosuggest/autosuggest_restorers.mjs';
-import { addAutosuggestListenersToSaveOnChange } from './save_and_restore_input_helpers/autosuggest/autosuggest_listeners.mjs';
 
 
 // Function that handles all restoring of values
@@ -34,6 +39,11 @@ function restoreValuesToInputsifExist(page_name, inputObjects, pagePreviouslySea
       // For multiple checkboxes in one object
       restoreCheckboxValuesIfExist(page_name, inputObject, pagePreviouslySearchedValues);
       continue;
+    }
+
+    if (typeOfInput === 'radio') {
+      // For radio inputs
+      restoreRadioValuesIfExist(page_name, inputObject, pagePreviouslySearchedValues);
     }
 
     if (typeOfInput === 'text') {
@@ -64,12 +74,20 @@ function addEventListenersToTriggerSaveOnChange(inputObjects, page_name) {
 
     // Now add the event listener based on type of input
 
+    // Add 'multiple' 'input' listeners (for a single input with multiple elements, like checkboxes or radios)
     if (typeOfInput === 'checkboxes') {
       // For multiple checkboxes in one object
       addCheckboxListenersToMultipleCheckboxes(page_name, inputObject);
       continue;
     }
 
+    if (typeOfInput === 'radio') {
+      // For radio inputs
+      addRadioListenersToMultipleRadios(page_name, inputObject);
+      continue;
+    }
+
+    // Add listeners to individual inputs on a page
     if (typeOfInput === 'text') {
       // Handle regular text inputs (and numerical ones!)
       addInputListenersToSaveOnChange(page_name, htmlId);
