@@ -132,29 +132,29 @@ export function getDefaultGlobalValues() {
       'page': 'postcode',
       'input_persistance_settings': [
         {
-          'htmlId': 'input',
+          'htmlId': 'postcode',
           'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'text'
         },
         {
-          'htmlId': 'classification',
+          'htmlId': 'classificationfilter',
           'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'autosuggest'
         },
         {
           'htmlId': 'epoch',
           'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'radio'
         },
         {
           'htmlId': 'limit',
           'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'text'
         },
         {
-          'htmlId': 'includehistorical',
+          'htmlId': 'historical',
           'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'checkbox'
         }
       ]
     },
