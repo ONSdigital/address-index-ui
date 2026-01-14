@@ -5,7 +5,7 @@ import {
 
 export function getDefaultValuesForPage(page_name) {
   const defaultValues = {
-    'radiussearch': {
+    'r': {
       'lat': 50.73548,
       'lon': -3.5332105,
       'zoom': 8,
@@ -220,32 +220,44 @@ export function getDefaultGlobalValues() {
         {
           'htmlId': 'lat',
           'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'text',
+          'defaultValue': '50.73548',
         },
         {
           'htmlId': 'lon',
           'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'text',
+          'defaultValue': '-3.5332105',
         },
         {
           'htmlId': 'rangekm',
           'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'text',
+          'defaultValue': '10',
         },
         {
           'htmlId': 'input',
           'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'text',
+          'defaultValue': '',
+        },
+        {
+          'htmlId': 'uprn',
+          'persistanceState': true,
+          'typeOfInput': 'text',
+          'defaultValue': '',
         },
         {
           'htmlId': 'classificationfilter',
           'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'autosuggest',
+          'defaultValue': '',
         },
         {
           'htmlId': 'limit',
           'persistanceState': true,
-          'typeOfInput': ''
+          'typeOfInput': 'text',
+          'defaultValue': '10',
         }
       ]
     }
