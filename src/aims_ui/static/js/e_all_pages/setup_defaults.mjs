@@ -4,31 +4,38 @@ import {
 } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
 export function getDefaultValuesForPage(page_name) {
-  const defaultValues = {
-    'r': {
-      'lat': 50.73548,
-      'lon': -3.5332105,
-      'zoom': 8,
-      'rangekm': '10',
-      'limit': '50',
-      'classificationfilter': '',
-      'uprn': '',
-      'input': '',
-    },
-    'singlesearch': {
-      'input': '',
-      'classificationfilter': '',
-      'epoch': '',
-      'minimummatch': '1%',
-      'limit': '20',
-      'includehistorical': false,
-    },
-  };
+  // Return a value/key pair object for 'htmlid': 'defaultValue' for a page 
 
-  if (page_name in defaultValues) {
-    return defaultValues[page_name];
+  const pageInputObjects = getInputObjectsForPage(page_name);
+  const defaultValues = {};
+
+  // Loop over each input object, extract default value and htmlId
+  if (pageInputObjects.inputObjects) {
+    for (const inputObject of pageInputObjects.inputObjects) {
+      if (inputObject.defaultValue !== undefined) {
+        defaultValues[inputObject.htmlId] = inputObject.defaultValue;
+      }
+    }
+  } else {
+    console.warn(`No input objects found for page: ${page_name}`);
   }
 
+  return defaultValues;
+}
+
+export function getInputObjectsForPage(page_name) {
+
+  const globalValues = getGlobalValues();
+  const inputSettings = globalValues.inputSettings || [];
+
+  for (const pageSettings of inputSettings) {
+    // Loop over each pagee's setting object
+    if (pageSettings.page === page_name) {
+      return pageSettings;
+    }
+  }
+
+  console.warn(`No default input settings found for page: ${page_name}`);
   return {};
 }
 
@@ -57,11 +64,12 @@ export function getDefaultGlobalValues() {
       'content_col_4': '5',
     },
 
-    // Setup persistance settings for pages
-    'persistanceSettings': [
+    // Setup input settings for pages, including default persistance, 
+    // default values, types of input etc.
+    'inputSettings': [
       {
       'page': 'singlesearch', // Page is also the id in the settings table
-      'input_persistance_settings': [
+      'inputObjects': [
         {
           'htmlId': 'input',
           'persistanceState': true,
@@ -108,7 +116,7 @@ export function getDefaultGlobalValues() {
     },
     {
       'page': 'uprn',
-      'input_persistance_settings': [
+      'inputObjects': [
         {
           'htmlId': 'uprn',
           'persistanceState': true,
@@ -130,7 +138,7 @@ export function getDefaultGlobalValues() {
     },
     {
       'page': 'postcode',
-      'input_persistance_settings': [
+      'inputObjects': [
         {
           'htmlId': 'postcode',
           'persistanceState': true,
@@ -160,7 +168,7 @@ export function getDefaultGlobalValues() {
     },
     {
       'page': 'typeahead',
-      'input_persistance_settings': [
+      'inputObjects': [
         {
           'htmlId': 'address',
           'persistanceState': true,
@@ -216,7 +224,7 @@ export function getDefaultGlobalValues() {
     },
     {
       'page': 'radiussearch',
-      'input_persistance_settings': [
+      'inputObjects': [
         {
           'htmlId': 'lat',
           'persistanceState': true,

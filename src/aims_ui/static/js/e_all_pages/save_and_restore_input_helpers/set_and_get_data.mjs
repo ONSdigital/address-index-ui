@@ -34,8 +34,8 @@ export function getPagePreviouslySearchedValues(page_name) {
 function getPersistanceSettingsOfPage(page_name) {
   const globalValues = getGlobalValues();
 
-  // An array of objects like [ {'page_name':'radiussearch', 'persistanceSettings': [ {'htmlId': 'input', 'persistance_state': true}, ... ]}]
-  const persistanceSettings = globalValues['persistanceSettings'] || [];
+  // An array of objects like [ {'page_name':'radiussearch', 'inputObjects': [ {'htmlId': 'input', 'persistance_state': true}, ... ]}]
+  const persistanceSettings = globalValues['inputSettings'] || [];
 
   // Find the object for this page
   for (const pageSetting of persistanceSettings) {
@@ -53,8 +53,8 @@ export function getPageInputObjects(page_name) {
   // For the page provided, return the locally stored input objects
 
   // Get the persistance settings for this page
-  const pagePersistanceSettings = getPersistanceSettingsOfPage(page_name);
-  const inputObjects = pagePersistanceSettings.input_persistance_settings || {};
+  const pageInputSettings = getPersistanceSettingsOfPage(page_name);
+  const inputObjects = pageInputSettings.inputObjects || [];
 
   return inputObjects;
 }
