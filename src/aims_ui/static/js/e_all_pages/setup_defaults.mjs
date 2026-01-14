@@ -83,11 +83,46 @@ export function getDefaultGlobalValues() {
           'defaultValue': '',
         },
         {
-          'htmlId': 'region',
+          'htmlId': 'eboost',
           'persistanceState': true,
-          'typeOfInput': 'checkboxes',
-          'checkboxHtmlIds': ['eboost', 'wboost', 'sboost', 'nboost', 'lboost', 'mboost', 'jboost'],
-          'defaultValue': true, // "Checkboxes" affect all boxes
+          'typeOfInput': 'checkbox',
+          'defaultValue': true
+        },
+        {
+          'htmlId': 'wboost',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': true
+        },
+        {
+          'htmlId': 'sboost',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': true
+        },
+        {
+          'htmlId': 'nboost',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': true
+        },
+        {
+          'htmlId': 'lboost',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': true
+        },
+        {
+          'htmlId': 'mboost',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': true
+        },
+        {
+          'htmlId': 'jboost',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': true
         },
         {
           'htmlId': 'epoch',
