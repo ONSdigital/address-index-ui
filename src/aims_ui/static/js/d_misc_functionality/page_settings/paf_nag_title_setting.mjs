@@ -3,7 +3,7 @@ import {
   setGlobalValues,
 } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
-import { checkRadioButton } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
+import { checkRadioButtonById } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
 
 // Setup listeners, handlers and startup for PAF or NAG title setting for address cards
 
@@ -19,11 +19,11 @@ export function setupPafNagTitleSetting() {
 
   // Check the appropriate radio button
   if (currentTitlePreference === 'paf') {
-    checkRadioButton(pafRadioId);
+    checkRadioButtonById(pafRadioId);
   } else if (currentTitlePreference === 'nag') {
-    checkRadioButton(nagRadioId);
+    checkRadioButtonById(nagRadioId);
   } else if (currentTitlePreference === 'default') {
-    checkRadioButton(defaultRadioId);
+    checkRadioButtonById(defaultRadioId);
   }
 
   // Add listeners to change the global setting 

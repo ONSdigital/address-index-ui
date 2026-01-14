@@ -1,5 +1,5 @@
 
-import { checkRadioButton } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
+import { checkRadioButtonByElement } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
 
 export function restoreRadioValuesIfExist(page_name, inputObject, pagePreviouslySearchedValues) {
   // Find the previously saved value for this radio input
@@ -33,7 +33,7 @@ export function restoreRadioValuesIfExist(page_name, inputObject, pagePreviously
     if (radioInput.value === savedValue) {
       // Match found, check this radio
       console.debug(`Restored radio input ${htmlId} to value: ${savedValue}`);
-      checkRadioButton(radioInput);
+      checkRadioButtonByElement(radioInput);
     } 
   }
 }
