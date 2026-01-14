@@ -98,7 +98,7 @@ export function getDefaultGlobalValues() {
           'htmlId': 'matchthreshold',
           'persistanceState': true,
           'typeOfInput': 'dropdown',
-          'defaultValue': '1%',
+          'defaultValue': '5%',
         },
         {
           'htmlId': 'limit',

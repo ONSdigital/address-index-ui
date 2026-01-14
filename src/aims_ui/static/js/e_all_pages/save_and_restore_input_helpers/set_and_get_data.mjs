@@ -45,7 +45,7 @@ function getPersistanceSettingsOfPage(page_name) {
   }
 
   // If not found, log an error
-  console.error('No persistance settings found for page:', page_name);
+  console.error('No persistance settings found for page: "', page_name, '" in global values.');
   return [];
 }
 
