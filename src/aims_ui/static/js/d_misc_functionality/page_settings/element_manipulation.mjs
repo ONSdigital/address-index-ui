@@ -1,8 +1,15 @@
 // Contain standard way to check checkboxes, select radio buttons etc.
 
-export function checkRadioButton(radioElement) {
+export function checkRadioButtonByElement(radioElement) {
   if (radioElement) {
     radioElement.checked = true;
+  }
+}
+
+export function checkRadioButtonById(documentId) {
+  const radioElement = document.querySelector(`#${documentId}`);
+  if (radioElement) {
+    checkRadioButtonByElement(radioElement);
   }
 }
 

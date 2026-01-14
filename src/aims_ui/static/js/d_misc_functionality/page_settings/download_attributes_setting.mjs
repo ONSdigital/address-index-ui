@@ -2,7 +2,7 @@ import {
   getGlobalValues,
   setGlobalValues,
 } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
-import { checkRadioButton } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
+import { checkRadioButtonById } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
 
 export function setupDownloadAttributesSetting() {
   // Get the value of the current global download attribute inclusion setting
@@ -11,9 +11,9 @@ export function setupDownloadAttributesSetting() {
 
   // Check the appropriate radio button
   if (currentFormat === 'all') {
-    checkRadioButton('download-results-full-radio');
+    checkRadioButtonById('download-results-full-radio');
   } else if (currentFormat === 'favourites_only') {
-    checkRadioButton('download-results-favourites-radio');
+    checkRadioButtonById('download-results-favourites-radio');
   }
 
   // Add listeners to change the global setting 

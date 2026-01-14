@@ -2,7 +2,7 @@ import {
   getGlobalValues,
   setGlobalValues,
 } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
-import { checkRadioButton } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
+import { checkRadioButtonById } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
 
 // Setup listeners, handlers and startup for download settings on the preferences page
 
@@ -13,9 +13,9 @@ export function setupDownloadFormatSetting() {
 
   // Check the appropriate radio button
   if (currentFormat === 'csv') {
-    checkRadioButton('download-results-csv-radio');
+    checkRadioButtonById('download-results-csv-radio');
   } else if (currentFormat === 'json') {
-    checkRadioButton('download-results-json-radio');
+    checkRadioButtonById('download-results-json-radio');
   }
 
   // Add listeners to change the global setting 
