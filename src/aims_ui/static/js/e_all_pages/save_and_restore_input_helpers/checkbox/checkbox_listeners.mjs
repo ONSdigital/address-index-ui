@@ -17,12 +17,3 @@ export function addCheckboxListenersToSaveOnChange(page_name, checkboxHtmlId) {
     saveValueOfInput(checkboxHtmlId, isChecked, page_name);
   });
 }
-
-export function addCheckboxListenersToMultipleCheckboxes(page_name, inputObject) {
-  const checkboxIds = inputObject.checkboxHtmlIds || [];
-
-  for (const checkboxId of checkboxIds) {
-    // Add event listener to save on change
-    addCheckboxListenersToSaveOnChange(page_name, checkboxId);
-  }
-}

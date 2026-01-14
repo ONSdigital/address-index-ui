@@ -23,13 +23,3 @@ export function restoreCheckboxValuesIfExist(page_name, htmlId, pagePreviouslySe
     uncheckCheckbox(checkboxElement.id);
   }
 }
-
-export function restoreMultipleCheckboxValuesIfExist(page_name, inputObject, pagePreviouslySearchedValues) {
-  // Given an object containing multiple checkboxes, restore their values
-  const checkboxIds = inputObject.checkboxHtmlIds || [];
-  
-  for (const checkboxId of checkboxIds) {
-    restoreCheckboxValuesIfExist(page_name, checkboxId, pagePreviouslySearchedValues);
-  }
-  
-}

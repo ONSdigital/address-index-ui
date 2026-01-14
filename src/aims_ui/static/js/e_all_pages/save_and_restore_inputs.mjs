@@ -3,8 +3,8 @@
 import { getPageInputObjects, getPagePreviouslySearchedValues } from './save_and_restore_input_helpers/set_and_get_data.mjs';
 
 // Checkbox save and restore
-import { addCheckboxListenersToMultipleCheckboxes, addCheckboxListenersToSaveOnChange } from './save_and_restore_input_helpers/checkbox/checkbox_listeners.mjs';
-import { restoreCheckboxValuesIfExist, restoreMultipleCheckboxValuesIfExist } from './save_and_restore_input_helpers/checkbox/checkbox_restorers.mjs';
+import { addCheckboxListenersToSaveOnChange } from './save_and_restore_input_helpers/checkbox/checkbox_listeners.mjs';
+import { restoreCheckboxValuesIfExist } from './save_and_restore_input_helpers/checkbox/checkbox_restorers.mjs';
 
 // Input save and restore
 import { addInputListenersToSaveOnChange } from './save_and_restore_input_helpers/input/input_listeners.mjs';
@@ -33,12 +33,6 @@ function restoreValuesToInputsIfExist(page_name, inputObjects, pagePreviouslySea
     if (!persistanceState) { continue; }
 
     // Direct to correct restored, based on type of input
-    if (typeOfInput === 'checkboxes') {
-      // For multiple checkboxes in one object
-      restoreMultipleCheckboxValuesIfExist(page_name, inputObject, pagePreviouslySearchedValues);
-      continue;
-    }
-
     if (typeOfInput === 'radio') {
       // For radio inputs
       restoreRadioValuesIfExist(page_name, inputObject, pagePreviouslySearchedValues);
@@ -87,13 +81,7 @@ function addEventListenersToTriggerSaveOnChange(inputObjects, page_name) {
 
     // Now add the event listener based on type of input
 
-    // Add 'multiple' 'input' listeners (for a single input with multiple elements, like checkboxes or radios)
-    if (typeOfInput === 'checkboxes') {
-      // For MULTIPLE checkboxes in one object
-      addCheckboxListenersToMultipleCheckboxes(page_name, inputObject);
-      continue;
-    }
-
+    // Add 'multiple' 'input' listeners (for a single input with multiple elements, like radios)
     if (typeOfInput === 'radio') {
       // For radio inputs
       addRadioListenersToMultipleRadios(page_name, inputObject);
