@@ -6,7 +6,7 @@ import {
 export function getDefaultValuesForPage(page_name) {
   // Return a value/key pair object for 'htmlid': 'defaultValue' for a page 
 
-  const pageInputObjects = getInputObjectsForPage(page_name);
+  const pageInputObjects = getDefaultInputObjectsForPage(page_name);
   const defaultValues = {};
 
   // Loop over each input object, extract default value and htmlId
@@ -23,7 +23,7 @@ export function getDefaultValuesForPage(page_name) {
   return defaultValues;
 }
 
-export function getInputObjectsForPage(page_name) {
+export function getDefaultInputObjectsForPage(page_name) {
 
   const globalValues = getGlobalValues();
   const inputSettings = globalValues.inputSettings || [];
@@ -39,8 +39,16 @@ export function getInputObjectsForPage(page_name) {
   return {};
 }
 
+function getLatestEpochNumber() {
+  const globalValues = getGlobalValues();
+  return globalValues['latestEpochNumber'] || '';
+}
+
 export function getDefaultGlobalValues() {
   // Values should be GLOBAL if they're accessed across multiple pages
+
+  // Get the current Epoch Number from global values
+  const latestEpochNumber = getLatestEpochNumber();
 
   const defaultGlobalValues = {
 
@@ -63,6 +71,23 @@ export function getDefaultGlobalValues() {
       'space_col_3': '1',
       'content_col_4': '5',
     },
+
+    // Setup the default values for Additional Request Details
+    'additionalRequestDetails': {
+      match_type: true,
+      recommendation_code: true,
+      tokenised_output: false,
+    },
+
+    // Default address attributes to show (based on original requirements)
+    'favouriteAddressAttributes': [
+      'uprn',
+      'parentUprn',
+      'classificationCode',
+      'classificationCodeList',
+      'formattedConfidenceScore',
+      'nagLocalCustodianName',
+    ],
 
     // Setup input settings for pages, including default persistance, 
     // default values, types of input etc.
@@ -128,6 +153,7 @@ export function getDefaultGlobalValues() {
           'htmlId': 'epoch',
           'persistanceState': true,
           'typeOfInput': 'radio',
+          'defaultValue': latestEpochNumber,
         },
         {
           'htmlId': 'matchthreshold',
