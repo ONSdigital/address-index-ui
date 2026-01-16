@@ -327,6 +327,11 @@ export function getDefaultGlobalValues() {
           'persistanceState': true,
           'typeOfInput': 'text',
           'defaultValue': '10',
+        },
+        {  
+          'htmlId': 'zoom',
+          'defaultValue': '12',
+          'typeOfInput': 'non-visible',
         }
       ]
     }
