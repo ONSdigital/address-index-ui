@@ -75,7 +75,7 @@ function addEventListenersToTriggerSaveOnChange(inputObjects, page_name) {
 
     // If persistance is off, skip this input
     if (!persistanceState) { 
-      console.log(`Skipping input ${htmlId} as persistance is off`);
+      console.debug(`Skipping input ${htmlId} as persistance is off`);
       continue;
     }
 
@@ -135,16 +135,11 @@ export function init(page_name) {
 
 
   document.addEventListener('refreshInputFiltersFromLocalStorage', event => {
-    console.log('refreshInputFiltersFromLocalStorage event detected in save_and_restore_inputs.mjs');
-    console.log('Event detail (page_name):', event.detail);
     const page_name = event.detail;
-    console.log('Page name for refresh:', page_name);
 
     // Trigger a restore to to the page from local storage
     const inputObjects = getPageInputObjects(page_name);
-    console.log('Input objects for page during refresh:', inputObjects);
     const pagePreviouslySearchedValues = getPagePreviouslySearchedValues(page_name);
-    console.log('Previously searched values for page during refresh:', pagePreviouslySearchedValues);
     restoreValuesToInputsIfExist(page_name, inputObjects, pagePreviouslySearchedValues);
   });
 
