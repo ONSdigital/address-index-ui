@@ -8,8 +8,8 @@ RUN apk add --no-cache gcc musl-dev linux-headers
 RUN pip install --upgrade pip
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-RUN ls -la && chmod +x scripts/load_templates.sh && ./scripts/load_templates.sh && ls -la && ls -la src/aims_ui/templates/
 EXPOSE 5000
 COPY . .
+RUN ls -la && chmod +x scripts/load_templates.sh && ./scripts/load_templates.sh && ls -la && ls -la src/aims_ui/templates/
 RUN pip install -e .
 CMD ["gunicorn", "wsgi:app", "--preload", "--timeout=420", "--config=gconf.py"]
