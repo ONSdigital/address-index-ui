@@ -30,7 +30,7 @@ def test_default_group_access():
   # Check bulk limits for the default group
   bulk_limits = default_group.get('bulk_limits')
 
-  assert bulk_limits.get('limit_mini_bulk') == 10000
+  assert bulk_limits.get('limit_mini_bulk') == 5000
   assert bulk_limits.get('limit_vast_bulk') == 100000
   assert bulk_limits.get('limit_uprn_match') == 5000
 

@@ -52,7 +52,7 @@ ALL_PAGE_NAMES = [
 ]
 
 DEFAULT_BULK_LIMITS = {
-    'limit_mini_bulk': 10000,
+    'limit_mini_bulk': 5000,
     'limit_vast_bulk': 100000,
     'limit_uprn_match': 5000,
 }
