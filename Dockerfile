@@ -13,4 +13,4 @@ COPY . .
 RUN apk add --no-cache bash rsync curl
 RUN ls -la && chmod +x scripts/load_templates.sh && ./scripts/load_templates.sh && ls -la && ls -la src/aims_ui/templates/
 RUN pip install -e .
-CMD ["gunicorn", "wsgi:app", "--preload", "--timeout=420", "--config=gconf.py"]
+CMD ["gunicorn", "wsgi:app", "--preload", "--timeout=600", "--config=gconf.py"]

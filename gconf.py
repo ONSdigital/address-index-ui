@@ -8,7 +8,7 @@ PORT = int(os.getenv("PORT", 5000))
 bind = ":" + str(PORT)
 workers = multiprocessing.cpu_count() * 2 + 1
 threads = 2 * multiprocessing.cpu_count()
-timeout = 420
+timeout = 600
 
 
 # Disable TLSv1.0 and TLSv1.1
