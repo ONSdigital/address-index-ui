@@ -304,7 +304,7 @@ export function getDefaultGlobalValues() {
           'htmlId': 'response-type',
           'persistanceState': true,
           'typeOfInput': 'radio',
-          'defaultValue': 'response-type',
+          'defaultValue': 'plaintext',
         },
         {
           'htmlId': 'request-body-text-area',
