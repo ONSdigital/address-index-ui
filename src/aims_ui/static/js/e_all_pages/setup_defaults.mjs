@@ -305,6 +305,12 @@ export function getDefaultGlobalValues() {
           'persistanceState': true,
           'typeOfInput': 'radio',
           'defaultValue': 'response-type',
+        },
+        {
+          'htmlId': 'request-body-text-area',
+          'persistanceState': true,
+          'typeOfInput': 'text-area',
+          'defaultValue': '{}',
         }
       ]
     },

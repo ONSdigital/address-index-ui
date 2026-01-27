@@ -51,6 +51,12 @@ function restoreValuesToInputsIfExist(page_name, inputObjects, pagePreviouslySea
       continue;
     }
 
+    if (typeOfInput === 'text-area') {
+      // For text-area inputs
+      restoreValuesToTextInput(page_name, htmlId, pagePreviouslySearchedValues);
+      continue;
+    }
+
     if (typeOfInput === 'autosuggest') {
       // For Autosuggest inputs
       restoreValuesToAutosuggestInput(page_name, htmlId, pagePreviouslySearchedValues);
@@ -97,6 +103,12 @@ function addEventListenersToTriggerSaveOnChange(inputObjects, page_name) {
 
     if (typeOfInput === 'text') {
       // Handle regular text inputs (and numerical ones!)
+      addInputListenersToSaveOnChange(page_name, htmlId);
+      continue;
+    }
+
+    if (typeOfInput === 'text-area') {
+      // Handle text-area inputs
       addInputListenersToSaveOnChange(page_name, htmlId);
       continue;
     }
