@@ -12,6 +12,7 @@ function addChangeEventListeners(
   reqBody,
   reqBodyContainer
 ) {
+
   // Radio Listeners
   radioText.addEventListener('change', () => {
     makeAppropriateResponseFormatVisible('response-type-text');
@@ -48,13 +49,7 @@ function addChangeEventListeners(
   observer.observe(reqBody, config);
 }
 
-function setupStatuses(
-  radioText,
-  radioAddObj,
-  reqType,
-  reqBody,
-  reqBodyConatiner
-) {
+function setupPostTextboxVisibility(reqType, reqBody, reqBodyConatiner) {
   // Set style of reqBody
   const bodStyle = getReqBodyStyle();
   reqBody.setAttribute('style', bodStyle);
@@ -96,6 +91,9 @@ function init() {
   const reqBodyContainer = document.querySelector(
     '#text-area-label-and-input-container'
   );
+
+  // Setup the initial visibility of the POST body textbox
+  setupPostTextboxVisibility(reqType, reqBody, reqBodyContainer);
 
   const savedTextStatus = getFormatPreferenceCustomResponse();
 
