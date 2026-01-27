@@ -11,8 +11,8 @@ export function addRadioListenersToMultipleRadios(page_name, inputObject) {
     return;
   }
 
-  // Now get a list of all radio input ids inside container
-  const radioInputs = containerElement.querySelectorAll('input[type="radio"][name="' + inputObject.htmlId + '"]');
+  // Now get a list of all radio elements ids inside container
+  const radioInputs = containerElement.querySelectorAll('input[type="radio"]');
 
   if (radioInputs.length === 0) {
     console.warn('No radio inputs found inside container for Id:', containerId);

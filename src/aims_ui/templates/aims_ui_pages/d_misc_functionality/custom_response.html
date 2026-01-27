@@ -14,6 +14,7 @@
 {% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
 {% from 'custom_download_results_from_local_storage/_macro.njk' import customDownloadResultsFromLocalStorage %}
 {% from 'custom_search/_macro.njk' import customSearch %}
+{% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -30,62 +31,69 @@
 {# Content is the searchboxes, taing up 4 col#}
 <div id="content_col_2" class="ons-grid__col ons-col-4@m ">
 
-{{ onsSelect({
-        "id": "request-type",
-        "name": "request-type",
-        "label": {
-            "text": "Request Type"
-        },
-        "options": [ 
-	        { "value": "GET",
-                  "text": "GET",
-                  "selected": true },
-		{ "value": "POST",
-                  "text": "POST" } 
-		]
-    	})
-}}
-
-<br>
-{{ onsAutosuggest({
-    "id": "url-input",
-    "input": {
-    	"id": "url-input-autosuggest",
-	"name": "url-input-autosuggest",
-	"label": {
-	    "text": "URL",
-	    "description": 'See <a href="https://github.com/ONSdigital/aims-api/blob/main/api-definitions/explore-the-api/readme.md" target="_blank" >Explore the API </a>',
-	    "id": "url-input-label"
-	},
-	"autocomplete": "off"
-    },
-    "autosuggestData": "/autosuggest/api-urls.json",
-    "instructions": "Use up and down keys to navigate suggestions once you\'ve typed more than two characters. Use the enter key to select a suggestion. Touch device users, explore by touch or with swipe gestures.",
-    "ariaYouHaveSelected": "You have selected",
-    "ariaOneResult": "There is one suggestion available.",
-    "ariaNResults": "There are {n} suggestions available.",
-    "moreResults": "Continue entering to improve suggestions",
-    "resultsTitle": "Suggestions",
-    "resultsTitleId": "url-suggesgions",
-    "noResults": "No suggestions found. You can enter your own answer",
-    "minChars": 1,
-    "typeMore": "Continue entering to get suggestions"
-}) }}
-<br>
-
-<div id="text-area-label-and-input-container" class="ons-u-hidden">
-{{ onsLabel({
-        "id": 'request-body-label',
-        "for": "request-body-text-area",
-        "text": 'Request Body' })
-}}
-<textarea id="request-body-text-area"
-	  class="ons-input ons-input--text ons-input-type__input"
-	  name="request-body-text-area"
-	  rows="12" cols="50">{} </textarea>
-<br>
+<div id="complete-container-for-request-type">
+	{{ onsSelect({
+					"id": "request-type",
+					"name": "request-type",
+					"label": {
+							"text": "Request Type"
+					},
+					"options": [ 
+						{ "value": "GET",
+										"text": "GET",
+										"selected": true },
+			{ "value": "POST",
+										"text": "POST" } 
+			]
+				})
+	}}
 </div>
 
+<br>
+<div id="complete-container-for-url-input">
+	{{ onsAutosuggest({
+			"id": "url-input",
+			"input": {
+				"id": "url-input-autosuggest",
+		"name": "url-input-autosuggest",
+		"label": {
+				"text": "URL",
+				"description": 'See <a href="https://github.com/ONSdigital/aims-api/blob/main/api-definitions/explore-the-api/readme.md" target="_blank" >Explore the API </a>',
+				"id": "url-input-label"
+		},
+		"autocomplete": "off"
+			},
+			"autosuggestData": "/autosuggest/api-urls.json",
+			"instructions": "Use up and down keys to navigate suggestions once you\'ve typed more than two characters. Use the enter key to select a suggestion. Touch device users, explore by touch or with swipe gestures.",
+			"ariaYouHaveSelected": "You have selected",
+			"ariaOneResult": "There is one suggestion available.",
+			"ariaNResults": "There are {n} suggestions available.",
+			"moreResults": "Continue entering to improve suggestions",
+			"resultsTitle": "Suggestions",
+			"resultsTitleId": "url-suggesgions",
+			"noResults": "No suggestions found. You can enter your own answer",
+			"minChars": 1,
+			"typeMore": "Continue entering to get suggestions"
+	}) }}
+</div>
+<br>
+
+<div id="complete-container-for-response-type-text">
+	<div id="text-area-label-and-input-container" class="ons-u-hidden">
+	{{ onsLabel({
+					"id": 'request-body-label',
+					"for": "request-body-text-area",
+					"text": 'Request Body' })
+	}}
+	<textarea id="request-body-text-area"
+			class="ons-input ons-input--text ons-input-type__input"
+			name="request-body-text-area"
+			rows="12" cols="50">{} </textarea>
+	<br>
+	</div>
+</div>
+
+<div id="complete-container-for-response-type">
 {{ onsLabel({
         "id": 'response-type-label',
         "for": "response-type",
@@ -104,6 +112,7 @@
 	    "value": "address-object" }
     ] }) }}
 <br>
+</div>
 
 {# With no fields, this will just return the search and clear buttons #}
 {{ customSearch ({ "Fields": searchable_fields,
@@ -192,6 +201,12 @@ if ( window.history.replaceState ) {
 <script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
 
 <script type=module src="static/js/d_misc_functionality/page_custom_response.mjs"></script>
+
+<!-- Save and load inputs from local storage -->
+{{ runScriptWithPageName({
+		"page_name": page_name,
+		"script_location": '/static/js/e_all_pages/save_and_restore_inputs.mjs',
+}) }}
 
 <script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
 
