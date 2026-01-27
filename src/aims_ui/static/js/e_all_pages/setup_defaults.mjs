@@ -188,6 +188,7 @@ export function getDefaultGlobalValues() {
           'htmlId': 'epoch',
           'persistanceState': true,
           'typeOfInput': 'radio',
+          'defaultValue': latestEpochNumber,
         },
         {
           'htmlId': 'historical',
@@ -213,7 +214,8 @@ export function getDefaultGlobalValues() {
         {
           'htmlId': 'epoch',
           'persistanceState': true,
-          'typeOfInput': 'radio'
+          'typeOfInput': 'radio',
+          'defaultValue': latestEpochNumber,
         },
         {
           'htmlId': 'limit',
@@ -244,6 +246,7 @@ export function getDefaultGlobalValues() {
           'htmlId': 'epoch',
           'persistanceState': true,
           'typeOfInput': 'radio',
+          'defaultValue': latestEpochNumber,
         },
         // Add a type 'text' for eboost, wboost, sboost, nboost, lboost, mboost, jboost
         {
@@ -280,6 +283,28 @@ export function getDefaultGlobalValues() {
           'htmlId': 'jboost',
           'persistanceState': true,
           'typeOfInput': 'text',
+        }
+      ]
+    },
+    {
+      'page': 'custom_response',
+      'inputObjects': [
+        {
+          'htmlId': 'request-type',
+          'persistanceState': true,
+          'typeOfInput': 'dropdown',
+          'defaultValue': 'GET',
+        },
+        {
+          'htmlId': 'url-input',
+          'persistanceState': true,
+          'typeOfInput': 'autosuggest',
+        },
+        {
+          'htmlId': 'response-type',
+          'persistanceState': true,
+          'typeOfInput': 'radio',
+          'defaultValue': 'response-type',
         }
       ]
     },

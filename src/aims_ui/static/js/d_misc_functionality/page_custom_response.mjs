@@ -1,6 +1,4 @@
 import {
-  updateCustomResponseFormat,
-  updateCustomResponseRequestType,
   getFormatPreferenceCustomResponse,
   getRequestTypeCustomResponse,
   updateReqBodyStyle,
@@ -16,20 +14,15 @@ function addChangeEventListeners(
 ) {
   // Radio Listeners
   radioText.addEventListener('change', () => {
-    updateCustomResponseFormat('response-type-text');
     makeAppropriateResponseFormatVisible('response-type-text');
   });
   radioAddObj.addEventListener('change', () => {
-    updateCustomResponseFormat('response-type-object');
     makeAppropriateResponseFormatVisible('response-type-object');
   });
 
   // Dropdown (POST/GET) listeners
   reqType.addEventListener('change', (e) => {
-    // Save the state to local storage
-    const requestType = e.target.value;
-    updateCustomResponseRequestType(requestType);
-    // Also show/hide the body input (only required for POSTing)
+    // show/hide the body input (only required for POSTing)
     if (e.target.value === 'POST') {
       reqBodyContainer.classList.remove('ons-u-hidden');
     } else if (e.target.value === 'GET') {
@@ -62,17 +55,10 @@ function setupStatuses(
   reqBody,
   reqBodyConatiner
 ) {
-  // Set status of radio option
-  const savedTextStatus = getFormatPreferenceCustomResponse();
-  const radioToSelect = document.querySelector('#' + savedTextStatus);
-  radioToSelect.checked = true;
-
-  // Set dropdown selected
-  reqType.value = getRequestTypeCustomResponse();
-
   // Set style of reqBody
   const bodStyle = getReqBodyStyle();
   reqBody.setAttribute('style', bodStyle);
+
   // Set visibility of ReqBodyConatiner (hide if GET)
   if (reqType.value === 'GET') {
     reqBodyConatiner.classList.add('ons-u-hidden');
@@ -111,19 +97,8 @@ function init() {
     '#text-area-label-and-input-container'
   );
 
-  // Save status to local storage
-  addChangeEventListeners(
-    radioText,
-    radioAddObj,
-    reqType,
-    reqBody,
-    reqBodyContainer
-  );
-
-  // Load from local storage
-  setupStatuses(radioText, radioAddObj, reqType, reqBody, reqBodyContainer);
-
   const savedTextStatus = getFormatPreferenceCustomResponse();
+
   // Make Appropriate Option Visible
   makeAppropriateResponseFormatVisible(savedTextStatus);
 }
