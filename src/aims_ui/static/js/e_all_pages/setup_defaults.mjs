@@ -311,6 +311,11 @@ export function getDefaultGlobalValues() {
           'persistanceState': true,
           'typeOfInput': 'text-area',
           'defaultValue': '{}',
+        },
+        {
+          'htmlId': 'post-request-body-style',
+          'defaultValue': '',
+          'typeOfInput': 'non-visible',
         }
       ]
     },

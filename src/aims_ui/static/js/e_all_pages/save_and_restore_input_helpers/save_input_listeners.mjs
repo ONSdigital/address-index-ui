@@ -3,7 +3,7 @@ import { getPagePreviouslySearchedValues,
 
 
 export function saveValueOfInput(inputId, inputValue, page_name) {
-  console.log(`Saving value of input ${inputId}: ${inputValue}`);
+  console.debug(`Saving value of input ${inputId}: ${inputValue}`);
 
   // Firstly get the current pages previously stored input values
   // fallback to default values if none found

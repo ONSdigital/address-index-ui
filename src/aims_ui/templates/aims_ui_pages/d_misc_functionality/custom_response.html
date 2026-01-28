@@ -154,21 +154,23 @@
 	{{ customDownloadResultsFromLocalStorage({
 		"page_name": page_name,
 	}) }}
+</div>
 
-{# If there's an error, formatt it nicely here #}
-{% if error_title %}
-	{% call
-	    onsPanel({
-		'title': error_title,
-		'type': 'error'
-	    }) %}
-	{{ onsList({
-		'id': 'no_data_found',
-		'classes': 'list--bare list--errors u-mb-s',
-		'itemsList': errors_formatted,
-	    }) }}
-	{% endcall %}
-{% endif %}
+{# If there's an error, format it nicely here #}
+<div id='error-response-container' class="ons-u-hidden">
+	{% if error_title %}
+		{% call
+				onsPanel({
+			'title': error_title,
+			'type': 'error'
+				}) %}
+		{{ onsList({
+			'id': 'no_data_found',
+			'classes': 'list--bare list--errors u-mb-s',
+			'itemsList': errors_formatted,
+				}) }}
+		{% endcall %}
+	{% endif %}
 </div>
 
 <div id='formatted-text-container' class="ons-u-hidden">
@@ -200,13 +202,13 @@ if ( window.history.replaceState ) {
 
 <script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
 
-<script type=module src="static/js/d_misc_functionality/page_custom_response.mjs"></script>
-
 <!-- Save and load inputs from local storage -->
 {{ runScriptWithPageName({
 		"page_name": page_name,
 		"script_location": '/static/js/e_all_pages/save_and_restore_inputs.mjs',
 }) }}
+
+<script type=module src="static/js/d_misc_functionality/page_custom_settings/init.mjs"></script>
 
 <script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
 
