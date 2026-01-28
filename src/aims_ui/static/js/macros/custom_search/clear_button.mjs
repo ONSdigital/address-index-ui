@@ -46,7 +46,7 @@ export function init(page_name) {
     });
 
     // Dispatch the events to refresh address cards, download button and reset the input filters
-    console.log('Dispatching the refresh events from clear button');
+    console.debug('Dispatching the refresh events from clear button');
     clearButton.dispatchEvent(refreshAddressInfoCardsEvent);
     clearButton.dispatchEvent(refreshDownloadButtonEvent);
     clearButton.dispatchEvent(resetInputFiltersEvent);
