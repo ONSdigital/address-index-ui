@@ -1,4 +1,4 @@
-
+import { restoreToDefaultEpochOption } from './epoch_specific.mjs';
 import { checkRadioButtonByElement } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
 
 export function restoreRadioValuesIfExist(page_name, inputObject, pagePreviouslySearchedValues) {
@@ -21,7 +21,7 @@ export function restoreRadioValuesIfExist(page_name, inputObject, pagePreviously
   }
 
   // Now get a list of all radio input elements inside container
-  const radioInputs = containerElement.querySelectorAll('input[type="radio"][name="' + htmlId + '"]');
+  const radioInputs = containerElement.querySelectorAll('input[type="radio"]');
 
   if (radioInputs.length === 0) {
     console.warn('No radio inputs found inside container for Id:', containerId);
@@ -34,6 +34,15 @@ export function restoreRadioValuesIfExist(page_name, inputObject, pagePreviously
       // Match found, check this radio
       console.debug(`Restored radio input ${htmlId} to value: ${savedValue}`);
       checkRadioButtonByElement(radioInput);
+      return;
     } 
+  }
+
+  // There was no matching radio found
+  console.warn(`No matching radio input found for saved value: ${savedValue} in radio group with Id: ${htmlId}`);
+
+  // If this is an epoch radio, restore to default epoch option
+  if (htmlId === 'epoch') {
+    restoreToDefaultEpochOption(radioInputs);
   }
 }
