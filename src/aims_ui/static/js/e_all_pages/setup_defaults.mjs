@@ -204,12 +204,14 @@ export function getDefaultGlobalValues() {
         {
           'htmlId': 'postcode',
           'persistanceState': true,
-          'typeOfInput': 'text'
+          'typeOfInput': 'text',
+          'defaultValue': '',
         },
         {
           'htmlId': 'classificationfilter',
           'persistanceState': true,
-          'typeOfInput': 'autosuggest'
+          'typeOfInput': 'autosuggest',
+          'defaultValue': '',
         },
         {
           'htmlId': 'epoch',
@@ -220,12 +222,14 @@ export function getDefaultGlobalValues() {
         {
           'htmlId': 'limit',
           'persistanceState': true,
-          'typeOfInput': 'text'
+          'typeOfInput': 'text',
+          'defaultValue': '20',
         },
         {
           'htmlId': 'historical',
           'persistanceState': true,
-          'typeOfInput': 'checkbox'
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
         }
       ]
     },
@@ -235,12 +239,14 @@ export function getDefaultGlobalValues() {
         {
           'htmlId': 'address',
           'persistanceState': true,
-          'typeOfInput': 'text'
+          'typeOfInput': 'text',
+          'defaultValue': '',
         },
         {
           'htmlId': 'limit',
           'persistanceState': true,
-          'typeOfInput': 'text'
+          'typeOfInput': 'text',
+          'defaultValue': '10',
         },
         {
           'htmlId': 'epoch',
@@ -253,36 +259,43 @@ export function getDefaultGlobalValues() {
           'htmlId': 'eboost',
           'persistanceState': true,
           'typeOfInput': 'text',
+          'defaultValue': '0',
         },
         {
           'htmlId': 'wboost',
           'persistanceState': true,
           'typeOfInput': 'text',
+          'defaultValue': '0',
         },
         {
           'htmlId': 'sboost',
           'persistanceState': true,
           'typeOfInput': 'text',
+          'defaultValue': '0',
         },
         {
           'htmlId': 'nboost',
           'persistanceState': true,
           'typeOfInput': 'text',  
+          'defaultValue': '0',
         },
         {
           'htmlId': 'lboost',
           'persistanceState': true,
           'typeOfInput': 'text',
+          'defaultValue': '0',
         },
         {
           'htmlId': 'mboost',
           'persistanceState': true,
           'typeOfInput': 'text',
+          'defaultValue': '0',
         },
         {
           'htmlId': 'jboost',
           'persistanceState': true,
           'typeOfInput': 'text',
+          'defaultValue': '0',
         }
       ]
     },
@@ -299,6 +312,7 @@ export function getDefaultGlobalValues() {
           'htmlId': 'url-input',
           'persistanceState': true,
           'typeOfInput': 'autosuggest',
+          'defaultValue': '',
         },
         {
           'htmlId': 'response-type',
@@ -314,8 +328,8 @@ export function getDefaultGlobalValues() {
         },
         {
           'htmlId': 'post-request-body-style',
-          'defaultValue': '',
           'typeOfInput': 'non-visible',
+          'defaultValue': '',
         }
       ]
     },
@@ -366,8 +380,8 @@ export function getDefaultGlobalValues() {
         },
         {  
           'htmlId': 'zoom',
-          'defaultValue': '12',
           'typeOfInput': 'non-visible',
+          'defaultValue': '12',
         }
       ]
     }
