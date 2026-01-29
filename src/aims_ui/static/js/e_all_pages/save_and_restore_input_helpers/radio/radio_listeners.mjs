@@ -22,7 +22,7 @@ export function addRadioListenersToMultipleRadios(page_name, inputObject) {
   // Now add event listeners to each radio input
   for (const radioInput of radioInputs) {
     console.debug('Adding radio listener to radio Id:', radioInput.id);
-    radioInput.addEventListener('change', () => {
+    radioInput.addEventListener('click', () => {
       if (radioInput.checked) {
         console.debug(`Radio ${radioInput.id} selected with value: ${radioInput.value}`);
         saveValueOfInput(radioInput.name, radioInput.value, page_name);
