@@ -2,6 +2,7 @@
 // as it needs to save on click, enter selection, change etc
 
 import { saveValueOfInput } from '../save_input_listeners.mjs';
+import { selectInputFromHtmlIdUsingContianer } from "../component_selection.mjs";
 
 // Remove markup from inside an element (i.e for the autosuggest suggestions)
 function removeMarkupFromInsideElement(element) {
@@ -30,7 +31,7 @@ export function addAutosuggestListenersToSaveOnChange(page_name, htmlId) {
   // as the element itself triggers events like input, change, blur before the value is changed
 
   const completeContainerForClassificationFilter = document.querySelector('#complete-container-for-' + htmlId);
-  const inputElement = completeContainerForClassificationFilter.querySelector('#' + htmlId);
+  const inputElement = selectInputFromHtmlIdUsingContianer(htmlId);
 
   const classNameForSuggestionContainer = "ons-autosuggest__results";
   const suggestionContainer = completeContainerForClassificationFilter.querySelector('.' + classNameForSuggestionContainer);

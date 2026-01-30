@@ -1,6 +1,6 @@
 
 import { saveValueOfInput } from '../save_input_listeners.mjs';
-import { selectInputFromHtmlIdUsingContianer } from "./input_selection.mjs";
+import { selectInputFromHtmlIdUsingContianer } from "../component_selection.mjs";
 
 export function addInputListenersToSaveOnChange(page_name, inputHtmlId) {
   // Get the input element

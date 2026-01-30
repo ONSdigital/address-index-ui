@@ -1,4 +1,4 @@
-import { selectInputFromHtmlIdUsingContianer } from "./input_selection.mjs";
+import { selectInputFromHtmlIdUsingContianer } from "../component_selection.mjs";
 
 
 export function restoreValuesToTextInput(page_name, htmlId, pagePreviouslySearchedValues) {
