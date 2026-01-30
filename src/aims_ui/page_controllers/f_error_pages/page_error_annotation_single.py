@@ -5,6 +5,7 @@ from flask import render_template
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.page_helpers.pages_location_utils import get_page_location
+
 """ When an error message would be better shown next to an input in the Design System, manage that here """
 
 
@@ -42,6 +43,7 @@ def page_error_annotation_single(
 
   return render_template(
       page_location,
+      page_name=page_name_with_error,
       endpoints=endpoints,
       searchable_fields=searchable_fields,
   )
