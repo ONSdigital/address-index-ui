@@ -35,8 +35,8 @@
   {% set show = False %}
 {% endif %}
 
-{# Wrap each input type into an ID-based specific container if requested #}
-{% if params.component_wrappers %}
+{# Wrap each input type into an ID-based specific container, only remove if remove_component_wrappers is true #}
+{% if not params.remove_component_wrappers %}
 	<div id="complete-container-for-{{field.database_name}}">
 {% endif %}
 
@@ -218,10 +218,9 @@
 {% endif %}
 
 {# End the div for "component wrappers" #}
-{% if params.component_wrappers %}
+{% if not params.remove_component_wrappers %}
 	</div>
 {% endif %}
-
 
 
 {% endfor %}
