@@ -97,7 +97,7 @@ export function getDefaultGlobalValues() {
       'inputObjects': [
         {
           'htmlId': 'input',
-          'persistanceState': true,
+          'persistanceState': false,
           'typeOfInput': 'text',
           'defaultValue': '',
         },
@@ -109,42 +109,49 @@ export function getDefaultGlobalValues() {
         },
         {
           'htmlId': 'eboost',
+          'persistanceCheckboxHtmlId': 'singlesearch-region',
           'persistanceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'wboost',
+          'persistanceCheckboxHtmlId': 'singlesearch-region',
           'persistanceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'sboost',
+          'persistanceCheckboxHtmlId': 'singlesearch-region',
           'persistanceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'nboost',
+          'persistanceCheckboxHtmlId': 'singlesearch-region',
           'persistanceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'lboost',
+          'persistanceCheckboxHtmlId': 'singlesearch-region',
           'persistanceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'mboost',
+          'persistanceCheckboxHtmlId': 'singlesearch-region',
           'persistanceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'jboost',
+          'persistanceCheckboxHtmlId': 'singlesearch-region',
           'persistanceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
@@ -258,42 +265,49 @@ export function getDefaultGlobalValues() {
         {
           'htmlId': 'eboost',
           'persistanceState': true,
+          'persistanceCheckboxHtmlId': 'typeahead-region',
           'typeOfInput': 'text',
           'defaultValue': '0',
         },
         {
           'htmlId': 'wboost',
           'persistanceState': true,
+          'persistanceCheckboxHtmlId': 'typeahead-region',
           'typeOfInput': 'text',
           'defaultValue': '0',
         },
         {
           'htmlId': 'sboost',
           'persistanceState': true,
+          'persistanceCheckboxHtmlId': 'typeahead-region',
           'typeOfInput': 'text',
           'defaultValue': '0',
         },
         {
           'htmlId': 'nboost',
           'persistanceState': true,
+          'persistanceCheckboxHtmlId': 'typeahead-region',
           'typeOfInput': 'text',  
           'defaultValue': '0',
         },
         {
           'htmlId': 'lboost',
           'persistanceState': true,
+          'persistanceCheckboxHtmlId': 'typeahead-region',
           'typeOfInput': 'text',
           'defaultValue': '0',
         },
         {
           'htmlId': 'mboost',
           'persistanceState': true,
+          'persistanceCheckboxHtmlId': 'typeahead-region',
           'typeOfInput': 'text',
           'defaultValue': '0',
         },
         {
           'htmlId': 'jboost',
           'persistanceState': true,
+          'persistanceCheckboxHtmlId': 'typeahead-region',
           'typeOfInput': 'text',
           'defaultValue': '0',
         }
@@ -301,6 +315,7 @@ export function getDefaultGlobalValues() {
     },
     {
       'page': 'custom_response',
+      'persistanceSettingDisabled': true,
       'inputObjects': [
         {
           'htmlId': 'request-type',
@@ -335,6 +350,7 @@ export function getDefaultGlobalValues() {
     },
     {
       'page': 'radiussearch',
+      'persistanceSettingDisabled': true,
       'inputObjects': [
         {
           'htmlId': 'lat',
