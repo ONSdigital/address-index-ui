@@ -26,4 +26,4 @@ function init() {
   console.debug('uprn specific js loaded');
 }
 
-window.addEventListener('load', init);
+init();
