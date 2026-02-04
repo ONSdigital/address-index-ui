@@ -13,9 +13,7 @@ function widenCheckboxes() {
   }
 }
 
-function init() {
+export function allPagesLastInit() {
   console.log('all_pages_last loaded');
   widenCheckboxes();
 }
-
-window.addEventListener('load', init);

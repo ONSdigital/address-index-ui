@@ -4,10 +4,3 @@ export function forceCapsInput() {
     e.target.value = e.target.value.toUpperCase();
   });
 }
-
-function init() {
-  console.log('postcode specific loaded');
-  forceCapsInput();
-}
-
-window.addEventListener('load', init);
