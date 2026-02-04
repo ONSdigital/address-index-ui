@@ -3,7 +3,7 @@ import {
   setGlobalValues,
 } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
-import { checkRadioButtonByElement, checkRadioButtonById } from './element_manipulation.mjs';
+import { checkRadioButtonByElement } from './element_manipulation.mjs';
 
 // Setup listeners, handlers and startup for PAF or NAG title setting for address cards
 
