@@ -1,8 +1,8 @@
-import {
-  getGlobalValues,
-  setGlobalValues,
-} from '/static/js/f_helpers/local_storage_page_helpers.mjs';
-import { getDefaultGlobalValues } from './default_values.mjs';
+import { getGlobalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
+import { getBroadcastLocalStorageVersion } from './get_local_storage_version.mjs';
+
+// Migration imports here
+import { migrateLocalStorageFromVersion0To1 } from './local_storage_migrations/local_storage_migration1.mjs';
 
 export function getDefaultValuesForPage(page_name) {
   // Return a value/key pair object for 'htmlid': 'defaultValue' for a page 
@@ -40,15 +40,30 @@ function getDefaultInputObjectsForPage(page_name) {
   return {};
 }
 
+// Get the broadcast version resolved promise so that code isn't asynchronous and lead to race conditions
+const broadcastVersion = await getBroadcastLocalStorageVersion();
 
 export function setupDefaultGlobalValues() {
-  // Set default values for global values if they don't already exist
+  // Get the current global values
   const currentGlobalValues = getGlobalValues();
 
-  const defaultGlobalValues = getDefaultGlobalValues();
+  // Get the broadcast local storage version
+  const currentLocalStorageVersion = currentGlobalValues.LOCAL_STORAGE_VERSION || null;
 
-  const updatedValues = { ...defaultGlobalValues, ...currentGlobalValues };
-
-  setGlobalValues(updatedValues);
+  if (broadcastVersion !== currentLocalStorageVersion) {
+    console.info(`Local storage version mismatch: broadcast version is ${broadcastVersion}, current local storage version is ${currentLocalStorageVersion}.`);
+    runLocalStorageMigration(currentLocalStorageVersion, broadcastVersion);
+  } else if (broadcastVersion === currentLocalStorageVersion) {
+    console.debug(`Local storage version is up to date at version ${broadcastVersion}. No migration needed.`);
+  }
 }
 
+function runLocalStorageMigration(currentVersion, targetVersion) {
+  // Based on currentVersion and targetVersion, run the correct migration script
+
+  // Currently only one migration exists, more to go here as required
+  if (currentVersion === null && targetVersion === '1') {
+    console.info('Running local storage migration from version 0 to 1. This should only happen once.');
+    migrateLocalStorageFromVersion0To1();
+  }
+}
