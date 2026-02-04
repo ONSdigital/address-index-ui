@@ -1,4 +1,4 @@
-import { setupDefaultGlobalValues } from '/static/js/e_all_pages/setup_defaults.mjs';
+import { setupDefaultGlobalValues } from '/static/js/e_all_pages/default_helpers/setup_defaults.mjs';
 import { addMostRecentPageToStorage } from '/static/js/e_all_pages/breadcrumb_helpers/breadcrumbHelpers.mjs';
 
 function removeResubmissionMessage() {
