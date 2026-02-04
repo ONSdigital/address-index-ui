@@ -84,11 +84,20 @@ export function setupPersistanceSetting() {
           if (inputSetting.page === pageName) {
             // Now the correct input 
             for (const inputObject of inputSetting.inputObjects) {
-              // Now check 1. for the override id, 2. for the default id
+              // Now check 
+              // 1. for the override id 
+              // 2. for the default id
               if (inputObject.persistanceCheckboxHtmlId) {
                 // Set it
                 inputObject.persistanceState = checkboxElement.checked;
-                console.log('Updated persistance state for', inputObject.persistanceCheckboxHtmlId);
+                console.debug('Updated persistance state for', inputObject.persistanceCheckboxHtmlId);
+              }  else {
+                // Check default id
+                const defaultId = `${pageName}-${inputObject.htmlId}`;
+                if (defaultId === checkboxId) {
+                  inputObject.persistanceState = checkboxElement.checked;
+                  console.debug('Updated persistance state for', defaultId);
+                }
               }
             }
           }
@@ -96,7 +105,7 @@ export function setupPersistanceSetting() {
 
         // Save the updated global values
         setGlobalValues({ inputSettings: updatedGlobalValues });
-        console.log('Saving new global values for input persistance settings:', updatedGlobalValues);
+        console.debug('Saving new global values for input persistance settings:', updatedGlobalValues);
       });
 
     }
