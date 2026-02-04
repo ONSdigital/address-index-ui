@@ -84,20 +84,12 @@
 {# End of grid #}
 </div>
 
-<script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
-
-{# Specific page helpers here: (commented out if none required) #}
-{# <script type=module src="static/js/a_single_matches/singlesearch.mjs"></script> #}
-
-<!-- Save and load inputs from local storage -->
+<!-- Single entry point for all page scripts. Add scripts to the main location below -->
 {{ runScriptWithPageName({
 		"page_name": page_name,
-		"script_location": '/static/js/e_all_pages/save_and_restore_inputs.mjs',
+		"script_location": '/static/js/a_single_matches/singlesearch/init.mjs',
 }) }}
 
-<script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
-
-<script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
 
 {% endblock %}
 {% endblock %}

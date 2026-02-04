@@ -130,7 +130,7 @@ function addEventListenersToTriggerSaveOnChange(inputObjects, page_name) {
 
 }
 
-export function init(page_name) {
+export function saveAndRestoreInputsInit(page_name) {
   console.log('save_and_restore_inputs loaded');
 
   // Get the objects for each input - containing a "toPersist" and "htmlId"

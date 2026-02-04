@@ -7,12 +7,9 @@ function removeResubmissionMessage() {
   }
 }
 
-function init() {
+export function allPagesFirstInit() {
   console.log('all_pages_first loaded');
   setupDefaultGlobalValues();
   addMostRecentPageToStorage();
   removeResubmissionMessage();
 }
-
-// Immedaitely run to enforce first execution
-init();

@@ -42,8 +42,3 @@ export function setupEventListeners() {
   }
 }
 
-function init() {
-  setupEventListeners();
-}
-
-window.addEventListener('load', init);

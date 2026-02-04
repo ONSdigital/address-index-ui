@@ -1,5 +1,5 @@
 
-export function uprnPopulateAndRedirect() {
+export function forwardUprnInputFromUrl() {
   // Get the url param search_uprn
   const urlParams = new URLSearchParams(window.location.search);
   const searchUprn = urlParams.get('search_uprn');
@@ -21,7 +21,3 @@ export function uprnPopulateAndRedirect() {
   window.history.replaceState(null, '', newUrl);
 }
 
-export function init(page_name) {
-  uprnPopulateAndRedirect();
-  console.log('uprn specific js loaded');
-}
