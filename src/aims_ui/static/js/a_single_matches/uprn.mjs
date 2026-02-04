@@ -21,9 +21,7 @@ export function uprnPopulateAndRedirect() {
   window.history.replaceState(null, '', newUrl);
 }
 
-function init() {
+export function init(page_name) {
   uprnPopulateAndRedirect();
-  console.debug('uprn specific js loaded');
+  console.log('uprn specific js loaded');
 }
-
-init();
