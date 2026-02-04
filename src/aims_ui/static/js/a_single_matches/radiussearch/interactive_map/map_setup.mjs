@@ -1,7 +1,7 @@
 import { replaceDistancePlaceholderWithSearchValues } from '/static/js/macros/custom_address_results_table/distance_calculator.mjs';
 import { makePinIcon } from '/static/js/a_single_matches/radiussearch/interactive_map/map_pin_icons.mjs';
 import { setMapZoomInPageStorage,  getCurrentSearchLatValue, getCurrentSearchLonValue, getStartLatValue, getStartLonValue, getStartZoomValue } from './input_and_stored_values.mjs';
-import { getDefaultValuesForPage } from '/static/js/e_all_pages/setup_defaults.mjs';
+import { getDefaultValuesForPage } from '/static/js/e_all_pages/default_helpers/setup_defaults.mjs';
 import { refreshSearchMarkersFromLocalStorage } from '/static/js/a_single_matches/radiussearch/interactive_map/result_address_markers.mjs';
 
 export const defaultStartValues = getDefaultValuesForPage('radiussearch');
