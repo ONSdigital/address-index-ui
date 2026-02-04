@@ -1,5 +1,5 @@
 import { getPageLocalValues, setPageLocalValues } from "/static/js/f_helpers/local_storage_page_helpers.mjs";
-import { getDefaultValuesForPage } from "/static/js/e_all_pages/setup_defaults.mjs";
+import { getDefaultValuesForPage } from "/static/js/e_all_pages/default_helpers/setup_defaults.mjs";
 
 function resetInputFiltersToDefaultState(page_name) {
   // Get default input state and values for this page

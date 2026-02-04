@@ -5,7 +5,7 @@ import {
 } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
 
-import { getDefaultValuesForPage } from '../setup_defaults.mjs';
+import { getDefaultValuesForPage } from '../default_helpers/setup_defaults.mjs';
 
 export function setPreviouslyStoredValuesForThisPage(inputValues, page_name) {
   // Set the pagePreviouslySearchedValues to the new inputValues
