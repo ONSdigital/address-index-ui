@@ -19,10 +19,6 @@ export function uprnPopulateAndRedirect() {
   urlParams.delete('search_uprn');
   const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
   window.history.replaceState(null, '', newUrl);
-
-  // Submit the form to trigger the search
-  const searchForm = document.querySelector('form');
-  searchForm.submit();
 }
 
 function init() {
