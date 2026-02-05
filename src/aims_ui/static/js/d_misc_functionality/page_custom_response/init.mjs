@@ -1,9 +1,14 @@
 import { setSizeOfPostBodyTextBoxFromLocalStorage, showResponseAsObject, showResponseAsText, setGetPostTextboxVisibilityBasedOnDropdown, makePostTextBodyHidden, makePostTextBodyVisible, setTextObjectBasedOnRadioButtons } from './visibility_change.mjs';
 import { saveValueOfInput } from '../../e_all_pages/save_and_restore_input_helpers/save_input_listeners.mjs';
 
+import { allPagesFirstInit } from '/static/js/e_all_pages/all_pages_first.mjs';
+import { saveAndRestoreInputsInit } from '/static/js/e_all_pages/save_and_restore_inputs.mjs';
+import { customColumnWidthsInit } from '/static/js/e_all_pages/custom_column_widths.mjs';
+import { allPagesLastInit } from '/static/js/e_all_pages/all_pages_last.mjs';
+
 
 function setupSizeOfPostBodyTextBoxObserver() {
-  const postRequestTextBox = document.querySelector('#request-body-text-area');
+  const postRequestTextBox = document.querySelector('#post-body');
   // Save the size of the body element
   const callback = function (mutationsList, observer) {
     for (let mutation of mutationsList) {
@@ -12,7 +17,7 @@ function setupSizeOfPostBodyTextBoxObserver() {
         mutation.attributeName === 'style'
       ) {
         const newStyle = postRequestTextBox.getAttribute('style');
-        saveValueOfInput('post-request-body-style', newStyle, 'custom_response');
+        saveValueOfInput('post-body-style', newStyle, 'custom_response');
       }
     }
   };
@@ -58,7 +63,7 @@ function setupGetPostDropdownBehaviour(selectHtmlObject) {
 }
 
 
-function init() {
+function setupPageFunctionality() {
   // Get a handle on the GET/POST dropdown
   const containerForDropdown = document.querySelector('#complete-container-for-request-type');
   const selectHtmlObject = containerForDropdown.querySelector('select');
@@ -84,4 +89,21 @@ function init() {
   setupSizeOfPostBodyTextBoxObserver();
 }
 
-window.addEventListener('load', init);
+export function init(page_name) {
+  // All pages first
+  allPagesFirstInit();
+
+  // Setup save and restore inputs
+  saveAndRestoreInputsInit(page_name);
+
+  // Page specific scripts here
+  setupPageFunctionality();
+ 
+  // Apply the custom column widths
+  customColumnWidthsInit();
+
+  // All pages last
+  allPagesLastInit();
+}
+
+

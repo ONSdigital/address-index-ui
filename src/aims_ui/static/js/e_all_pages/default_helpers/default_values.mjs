@@ -266,6 +266,17 @@ export function getDefaultGlobalValues() {
       ],
     },
     {
+      'page': 'uprn_multiple_match',
+      'inputObjects': [
+        {
+          'htmlId': 'header_row_export',
+          'persistanceState': true,
+          'defaultValue': true,
+          'typeOfInput': 'checkbox',
+        }
+      ],
+    },
+    {
       'page': 'singlesearch', // Page is also the id in the settings table
       'inputObjects': [
         {
@@ -509,7 +520,7 @@ export function getDefaultGlobalValues() {
           'defaultValue': 'plaintext',
         },
         {
-          'htmlId': 'request-body-text-area',
+          'htmlId': 'post-body',
           'persistanceState': true,
           'typeOfInput': 'text-area',
           'defaultValue': '{}',

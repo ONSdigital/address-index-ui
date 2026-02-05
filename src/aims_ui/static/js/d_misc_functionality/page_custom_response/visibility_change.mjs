@@ -80,10 +80,10 @@ export function setTextObjectBasedOnRadioButtons() {
 }
 
 export function setSizeOfPostBodyTextBoxFromLocalStorage() {
-  const requestBodyTextArea = document.querySelector('#request-body-text-area');
+  const postBodyTextArea = document.querySelector('#post-body-text-area');
   const savedStyle = getPostBodyTextBoxStyleFromLocalStorage();
   if (savedStyle) {
-    requestBodyTextArea.setAttribute('style', savedStyle);
+    postBodyTextArea.setAttribute('style', savedStyle);
   }
 }
 
