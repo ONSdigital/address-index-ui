@@ -58,6 +58,214 @@ export function getDefaultGlobalValues() {
     // default values, types of input etc.
     'inputSettings': [
       {
+        'page': 'multiple_address_original',
+        'inputObjects': [
+        {
+          'htmlId': 'limit',
+          'persistanceState': true,
+          'typeOfInput': 'text',
+          'defaultValue': '5',
+        },
+        {
+          'htmlId': 'classificationfilter',
+          'persistanceState': true,
+          'typeOfInput': 'autosuggest',
+          'defaultValue': '',
+        },
+        {
+          'htmlId': 'epoch',
+          'persistanceState': true,
+          'typeOfInput': 'radio',
+          'defaultValue': latestEpochNumber,
+        },
+        {
+          'htmlId': 'historical',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
+        },
+        {
+          'htmlId': 'matchthreshold',
+          'persistanceState': true,
+          'typeOfInput': 'dropdown',
+          'defaultValue': '1%',
+        },
+        {
+          'htmlId': 'header_row_export',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': true,
+        },
+        {
+          'htmlId': 'eboost',
+          'persistanceCheckboxHtmlId': 'multiple-address-match-original-region',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': true
+        },
+        {
+          'htmlId': 'wboost',
+          'persistanceCheckboxHtmlId': 'multiple-address-match-original-region',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': true
+        },
+        {
+          'htmlId': 'sboost',
+          'persistanceCheckboxHtmlId': 'multiple-address-match-original-region',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': true
+        },
+        {
+          'htmlId': 'nboost',
+          'persistanceCheckboxHtmlId': 'multiple-address-match-original-region',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': true
+        },
+        {
+          'htmlId': 'lboost',
+          'persistanceCheckboxHtmlId': 'multiple-address-match-original-region',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': true
+        },
+        {
+          'htmlId': 'mboost',
+          'persistanceCheckboxHtmlId': 'multiple-address-match-original-region',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': true
+        },
+        {
+          'htmlId': 'jboost',
+          'persistanceCheckboxHtmlId': 'multiple-address-match-original-region',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': true
+        },
+        {
+          'htmlId': 'display-type',
+          'typeOfInput': 'radio',
+          'defaultValue': 'Download',
+          'persistanceState': true,
+        },
+        {
+          'htmlId': 'paf-nag-preference',
+          'typeOfInput': 'radio',
+          'defaultValue': 'PAF',
+          'persistanceState': true,
+        },
+      ]
+    },
+    {
+      'page': 'multiple_address',
+      'inputObjects': [
+        {
+          'htmlId': 'limitperaddress',
+          'persistanceState': true,
+          'typeOfInput': 'text',
+          'defaultValue': '1',
+        },
+        {
+          'htmlId': 'name',
+          'persistanceState': false,
+          'typeOfInput': 'text',
+          'defaultValue': '',
+        },
+        {
+          'htmlId': 'paf-nag-preference',
+          'typeOfInput': 'radio',
+          'defaultValue': 'PAF',
+          'persistanceState': true,
+        },
+        {
+          'htmlId': 'header_row_export',
+          'typeOfInput': 'checkbox',
+          'persistanceState': true,
+          'defaultValue': true,
+        }
+      ],
+    },
+    {
+      'page': 'multiple_address_attributes',
+      'inputObjects': [
+        {
+          'htmlId': 'parent_uprn',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
+        },
+        {
+          'htmlId': 'latitude',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
+        },
+        {
+          'htmlId': 'longitude',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
+        },
+        {
+          'htmlId': 'easting',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
+        },
+        {
+          'htmlId': 'northing',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
+        },
+        {
+          'htmlId': 'classification_code',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
+        },
+        {
+          'htmlId': 'lpi_logical_status',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
+        },
+        {
+          'htmlId': 'country_code',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
+        },
+        {
+          'htmlId': 'formatted_address_nag',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
+        },
+        {
+          'htmlId': 'formatted_address_paf',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
+        },
+        {
+          'htmlId': 'welsh_formatted_address_nag',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
+        },
+        {
+          'htmlId': 'welsh_formatted_address_paf',
+          'persistanceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
+        },
+      ],
+    },
+    {
       'page': 'singlesearch', // Page is also the id in the settings table
       'inputObjects': [
         {
