@@ -9,8 +9,6 @@ import { setupClearButtonFunctionality } from "/static/js/a_single_matches/radiu
 
 import { allPagesFirstInit } from '/static/js/e_all_pages/all_pages_first.mjs';
 import { saveAndRestoreInputsInit } from '/static/js/e_all_pages/save_and_restore_inputs.mjs';
-import { forwardUprnInputFromUrl } from './forward_uprn_input_from_url.mjs';
-import { customColumnWidthsInit } from '/static/js/e_all_pages/custom_column_widths.mjs';
 import { allPagesLastInit } from '/static/js/e_all_pages/all_pages_last.mjs';
 
 
@@ -60,6 +58,7 @@ function setupPageSpecificItems() {
 
 export function init(page_name) {
   console.log('RADIUS SEARCH specific scripts loaded');
+
   // All pages first
   allPagesFirstInit();
 
@@ -69,10 +68,9 @@ export function init(page_name) {
   // Setup page specific items
   setupPageSpecificItems();
   setupMapSpecificItems();
+
   // Setup UPRN search button
   setupUprnSearchFunctionality();
-
-  // We do not need custom column widths here as this page's layout is handled by CSS
 
   // All pages last
   allPagesLastInit();
