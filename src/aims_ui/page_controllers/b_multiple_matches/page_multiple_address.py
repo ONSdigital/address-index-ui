@@ -38,6 +38,7 @@ def multiple_address():
     delete_input(session)
     return render_template(
         page_location,
+        page_name=page_name,
         searchable_fields=searchable_fields,
         endpoints=endpoints,
         bulk_limits=bulk_limits,

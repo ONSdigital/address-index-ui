@@ -396,7 +396,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
   elif endpoint_name == 'multiple_address_attributes':
     return ([
         Field(
-            'parentuprn',
+            'parent_uprn',
             search_type='checkbox',
             display_title='Include Parent UPRN',
             checkbox_value=False,
@@ -428,43 +428,43 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
             checkbox_value=False,
         ),
         Field(
-            'classificationcode',
+            'classification_code',
             search_type='checkbox',
             display_title='Include Classification Code',
             checkbox_value=False,
         ),
         Field(
-            'lpilogicalstatus',
+            'lpi_logical_status',
             search_type='checkbox',
             display_title='Include Logical Status (historic, etc.)',
             checkbox_value=False,
         ),
         Field(
-            'countrycode',
+            'country_code',
             search_type='checkbox',
             display_title='Include Country Code (e.g. E,S,W)',
             checkbox_value=False,
         ),
         Field(
-            'formattedaddressnag',
+            'formatted_address_nag',
             search_type='checkbox',
             display_title='Include formatted address from NAG',
             checkbox_value=False,
         ),
         Field(
-            'formattedaddresspaf',
+            'formatted_address_paf',
             search_type='checkbox',
             display_title='Include formatted address from PAF',
             checkbox_value=False,
         ),
         Field(
-            'welshformattedaddressnag',
+            'welsh_formatted_address_nag',
             search_type='checkbox',
             display_title='Include Welsh NAG formatted address',
             checkbox_value=False,
         ),
         Field(
-            'welshformattedaddresspaf',
+            'welsh_formatted_address_paf',
             search_type='checkbox',
             display_title='Include Welsh PAF formatted address',
             checkbox_value=False,

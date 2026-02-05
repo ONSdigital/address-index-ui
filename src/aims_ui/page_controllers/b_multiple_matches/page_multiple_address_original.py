@@ -14,7 +14,8 @@ from .utils.multiple_match_file_upload_utils import check_valid_upload, validate
 from .utils.multiple_match_utils import get_results_display_type
 from .utils.submit_multiple_match_from_singlesearch import (
     multiple_address_match_from_singlesearch_display,
-    multiple_address_match_from_singlesearch_download)
+    multiple_address_match_from_singlesearch_download
+)
 
 page_name = 'multiple_address_original'
 
@@ -37,6 +38,7 @@ def multiple_address_original():
     delete_input(session)
     return render_template(
         page_location,
+        page_name=page_name,
         searchable_fields=searchable_fields,
         endpoints=endpoints,
         bulk_limits=bulk_limits,
@@ -90,6 +92,7 @@ def multiple_address_original():
 
       return render_template(
           page_location,
+          page_name=page_name,
           endpoints=endpoints,
           error_description=error_description,
           error_title=error_title,

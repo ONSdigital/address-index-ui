@@ -27,7 +27,7 @@ export function getParamsFromPage() {
   return finalParams;
 }
 
-export function setupEventListeners() {
+export function setupEventListenersToChangeTypeaheadParams() {
   const typeaheadContainer = document.querySelector(
     '#address-autosuggest-container'
   );

@@ -5,11 +5,13 @@
 {% from "components/upload/_macro.njk" import onsUpload %}
 {% from "components/button/_macro.njk" import onsButton %}
 {% from "components/panel/_macro.njk" import onsPanel %}
-{% from 'custom_search/_macro.njk' import customSearch %}
 {% from "components/radios/_macro.njk" import onsRadios %}
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/table/_macro.njk" import onsTable %}
 {% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
+
+{% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName %}
+{% from 'custom_search/_macro.njk' import customSearch %}
 
 {% block main %}
 
@@ -63,8 +65,11 @@
   	"trs": [] if not table_results else table_results.get('trs'),
 }) }}
 
-<script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
+<!-- Single entry point for all page scripts. Add scripts to the main location below -->
+{{ runScriptWithPageName({
+		"page_name": page_name,
+		"script_location": '/static/js/b_multiple_matches/uprn_multiple_match/init.mjs',
+}) }}
 
-<script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
 
 {% endblock %}

@@ -1,6 +1,6 @@
 import { getGlobalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
-function updateResultsUrl() {
+export function addIncludeOldJobsFlagToUrlBasedOnLocalStorageSetting() {
   // Get the current preference
   const current_job_preference = getGlobalValues().showOlderJobsInBulkMatchingPage;
 
@@ -23,10 +23,3 @@ function updateResultsUrl() {
   }
 }
 
-function init() {
-  console.log('update_results_url loaded');
-  // Update the URL to include the flag in the localstorage
-  updateResultsUrl();
-}
-
-window.addEventListener('load', init);

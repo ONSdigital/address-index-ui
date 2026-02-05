@@ -36,6 +36,7 @@ def uprn_multiple_match():
 
     return render_template(
         page_location,
+        page_name=page_name,
         bulk_limits=bulk_limits,
         searchable_fields=searchable_fields,
         endpoints=get_endpoints(called_from=page_name),
@@ -72,4 +73,5 @@ def uprn_multiple_match():
   return send_file(full_results,
                    mimetype='text/csv',
                    download_name=f'result_size_{line_count}.csv',
-                   as_attachment=True)
+                   as_attachment=True,
+                   )
