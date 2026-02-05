@@ -78,16 +78,16 @@
 </div>
 <br>
 
-<div id="complete-container-for-response-type-text">
+<div id="complete-container-for-post-body">
 	<div id="text-area-label-and-input-container" class="ons-u-hidden">
 	{{ onsLabel({
-					"id": 'request-body-label',
-					"for": "request-body-text-area",
+					"id": 'post-body-label',
+					"for": "post-body-text-area",
 					"text": 'Request Body' })
 	}}
-	<textarea id="request-body-text-area"
+	<textarea id="post-body"
 			class="ons-input ons-input--text ons-input-type__input"
-			name="request-body-text-area"
+			name="post-body"
 			rows="12" cols="50">{} </textarea>
 	<br>
 	</div>
@@ -115,7 +115,8 @@
 </div>
 
 {# With no fields, this will just return the search and clear buttons #}
-{{ customSearch ({ "Fields": searchable_fields,
+{{ customSearch ({ 
+	     "Fields": searchable_fields,
 		   "endpoints": endpoints, 
 		   "page_name": page_name,
 		   "remove_search_button":False,
@@ -200,19 +201,12 @@ if ( window.history.replaceState ) {
 }
 </script>
 
-<script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
-
-<!-- Save and load inputs from local storage -->
+<!-- Single entry point for all page scripts. Add scripts to the main location below -->
 {{ runScriptWithPageName({
 		"page_name": page_name,
-		"script_location": '/static/js/e_all_pages/save_and_restore_inputs.mjs',
+		"script_location": '/static/js/d_misc_functionality/page_custom_response/init.mjs',
 }) }}
 
-<script type=module src="static/js/d_misc_functionality/page_custom_settings/init.mjs"></script>
-
-<script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
-
-<script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
 
 {% endblock %}
 {% endblock %}

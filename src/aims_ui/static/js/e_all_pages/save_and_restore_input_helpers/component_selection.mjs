@@ -12,10 +12,16 @@ export function selectInputFromHtmlIdUsingContianer(htmlId) {
 
   // Get the input element
   const inputElement = containerElement.querySelector('input');
+  const textAreaElement = containerElement.querySelector('textarea');
 
-  if (!inputElement) {
-    console.warn('No input element found inside container:"' + containerElement + '"');
+  if (!inputElement && !textAreaElement) {
+    console.warn('No input or text area element found inside container:"' + containerElement + '". Are you sure the input is wrapped inside the container div and not outside?');
     return null;
+  }
+
+  // If there is no input element, return text area element
+  if (!inputElement) {
+    return textAreaElement;
   }
 
   return inputElement;
