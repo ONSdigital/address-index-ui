@@ -1,7 +1,7 @@
 import { test, expect } from '@jest/globals';
 import {
   findIfPafOrNagWasUsed,
-} from '../../../../../../src/aims_ui/static/js/b_multiple_matches/multiple_address_results.mjs';
+} from '../../../../../../src/aims_ui/static/js/b_multiple_matches/multiple_address_results/multiple_address_results.mjs';
 
 test('Paf or Nag Selector tests', () => {
   const pafAddress = {
