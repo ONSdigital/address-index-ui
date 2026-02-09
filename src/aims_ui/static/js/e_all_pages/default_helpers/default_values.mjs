@@ -54,7 +54,7 @@ export function getDefaultGlobalValues() {
       'nagLocalCustodianName',
     ],
 
-    // Setup input settings for pages, including default persistance, 
+    // Setup input settings for pages, including default persistence, 
     // default values, types of input etc.
     'inputSettings': [
       {
@@ -62,86 +62,86 @@ export function getDefaultGlobalValues() {
         'inputObjects': [
         {
           'htmlId': 'limit',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'text',
           'defaultValue': '5',
         },
         {
           'htmlId': 'classificationfilter',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'autosuggest',
           'defaultValue': '',
         },
         {
           'htmlId': 'epoch',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'radio',
           'defaultValue': latestEpochNumber,
         },
         {
           'htmlId': 'historical',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         },
         {
           'htmlId': 'matchthreshold',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'dropdown',
           'defaultValue': '1%',
         },
         {
           'htmlId': 'header_row_export',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true,
         },
         {
           'htmlId': 'eboost',
-          'persistanceCheckboxHtmlId': 'multiple-address-match-original-region',
-          'persistanceState': true,
+          'persistenceCheckboxHtmlId': 'multiple-address-match-original-region',
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'wboost',
-          'persistanceCheckboxHtmlId': 'multiple-address-match-original-region',
-          'persistanceState': true,
+          'persistenceCheckboxHtmlId': 'multiple-address-match-original-region',
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'sboost',
-          'persistanceCheckboxHtmlId': 'multiple-address-match-original-region',
-          'persistanceState': true,
+          'persistenceCheckboxHtmlId': 'multiple-address-match-original-region',
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'nboost',
-          'persistanceCheckboxHtmlId': 'multiple-address-match-original-region',
-          'persistanceState': true,
+          'persistenceCheckboxHtmlId': 'multiple-address-match-original-region',
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'lboost',
-          'persistanceCheckboxHtmlId': 'multiple-address-match-original-region',
-          'persistanceState': true,
+          'persistenceCheckboxHtmlId': 'multiple-address-match-original-region',
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'mboost',
-          'persistanceCheckboxHtmlId': 'multiple-address-match-original-region',
-          'persistanceState': true,
+          'persistenceCheckboxHtmlId': 'multiple-address-match-original-region',
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'jboost',
-          'persistanceCheckboxHtmlId': 'multiple-address-match-original-region',
-          'persistanceState': true,
+          'persistenceCheckboxHtmlId': 'multiple-address-match-original-region',
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
@@ -149,13 +149,13 @@ export function getDefaultGlobalValues() {
           'htmlId': 'display-type',
           'typeOfInput': 'radio',
           'defaultValue': 'Download',
-          'persistanceState': true,
+          'persistenceState': true,
         },
         {
           'htmlId': 'paf-nag-preference',
           'typeOfInput': 'radio',
           'defaultValue': 'PAF',
-          'persistanceState': true,
+          'persistenceState': true,
         },
       ]
     },
@@ -164,13 +164,13 @@ export function getDefaultGlobalValues() {
       'inputObjects': [
         {
           'htmlId': 'limitperaddress',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'text',
           'defaultValue': '1',
         },
         {
           'htmlId': 'name',
-          'persistanceState': false,
+          'persistenceState': false,
           'typeOfInput': 'text',
           'defaultValue': '',
         },
@@ -178,12 +178,12 @@ export function getDefaultGlobalValues() {
           'htmlId': 'paf-nag-preference',
           'typeOfInput': 'radio',
           'defaultValue': 'PAF',
-          'persistanceState': true,
+          'persistenceState': true,
         },
         {
           'htmlId': 'header_row_export',
           'typeOfInput': 'checkbox',
-          'persistanceState': true,
+          'persistenceState': true,
           'defaultValue': true,
         }
       ],
@@ -193,73 +193,73 @@ export function getDefaultGlobalValues() {
       'inputObjects': [
         {
           'htmlId': 'parent_uprn',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         },
         {
           'htmlId': 'latitude',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         },
         {
           'htmlId': 'longitude',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         },
         {
           'htmlId': 'easting',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         },
         {
           'htmlId': 'northing',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         },
         {
           'htmlId': 'classification_code',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         },
         {
           'htmlId': 'lpi_logical_status',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         },
         {
           'htmlId': 'country_code',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         },
         {
           'htmlId': 'formatted_address_nag',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         },
         {
           'htmlId': 'formatted_address_paf',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         },
         {
           'htmlId': 'welsh_formatted_address_nag',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         },
         {
           'htmlId': 'welsh_formatted_address_paf',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         },
@@ -270,7 +270,7 @@ export function getDefaultGlobalValues() {
       'inputObjects': [
         {
           'htmlId': 'header_row_export',
-          'persistanceState': true,
+          'persistenceState': true,
           'defaultValue': true,
           'typeOfInput': 'checkbox',
         }
@@ -281,86 +281,86 @@ export function getDefaultGlobalValues() {
       'inputObjects': [
         {
           'htmlId': 'input',
-          'persistanceState': false,
+          'persistenceState': false,
           'typeOfInput': 'text',
           'defaultValue': '',
         },
         {
           'htmlId': 'classificationfilter',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'autosuggest',
           'defaultValue': '',
         },
         {
           'htmlId': 'eboost',
-          'persistanceCheckboxHtmlId': 'singlesearch-region',
-          'persistanceState': true,
+          'persistenceCheckboxHtmlId': 'singlesearch-region',
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'wboost',
-          'persistanceCheckboxHtmlId': 'singlesearch-region',
-          'persistanceState': true,
+          'persistenceCheckboxHtmlId': 'singlesearch-region',
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'sboost',
-          'persistanceCheckboxHtmlId': 'singlesearch-region',
-          'persistanceState': true,
+          'persistenceCheckboxHtmlId': 'singlesearch-region',
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'nboost',
-          'persistanceCheckboxHtmlId': 'singlesearch-region',
-          'persistanceState': true,
+          'persistenceCheckboxHtmlId': 'singlesearch-region',
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'lboost',
-          'persistanceCheckboxHtmlId': 'singlesearch-region',
-          'persistanceState': true,
+          'persistenceCheckboxHtmlId': 'singlesearch-region',
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'mboost',
-          'persistanceCheckboxHtmlId': 'singlesearch-region',
-          'persistanceState': true,
+          'persistenceCheckboxHtmlId': 'singlesearch-region',
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'jboost',
-          'persistanceCheckboxHtmlId': 'singlesearch-region',
-          'persistanceState': true,
+          'persistenceCheckboxHtmlId': 'singlesearch-region',
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': true
         },
         {
           'htmlId': 'epoch',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'radio',
           'defaultValue': latestEpochNumber,
         },
         {
           'htmlId': 'matchthreshold',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'dropdown',
           'defaultValue': '5%',
         },
         {
           'htmlId': 'limit',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'text',
           'defaultValue': '20',
         },
         {
           'htmlId': 'historical',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         }
@@ -371,19 +371,19 @@ export function getDefaultGlobalValues() {
       'inputObjects': [
         {
           'htmlId': 'uprn',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'text',
           'defaultValue': '',
         },
         {
           'htmlId': 'epoch',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'radio',
           'defaultValue': latestEpochNumber,
         },
         {
           'htmlId': 'historical',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         }
@@ -394,31 +394,31 @@ export function getDefaultGlobalValues() {
       'inputObjects': [
         {
           'htmlId': 'postcode',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'text',
           'defaultValue': '',
         },
         {
           'htmlId': 'classificationfilter',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'autosuggest',
           'defaultValue': '',
         },
         {
           'htmlId': 'epoch',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'radio',
           'defaultValue': latestEpochNumber,
         },
         {
           'htmlId': 'limit',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'text',
           'defaultValue': '20',
         },
         {
           'htmlId': 'historical',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
         }
@@ -429,69 +429,69 @@ export function getDefaultGlobalValues() {
       'inputObjects': [
         {
           'htmlId': 'address',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'text',
           'defaultValue': '',
         },
         {
           'htmlId': 'limit',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'text',
           'defaultValue': '10',
         },
         {
           'htmlId': 'epoch',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'radio',
           'defaultValue': latestEpochNumber,
         },
         // Add a type 'text' for eboost, wboost, sboost, nboost, lboost, mboost, jboost
         {
           'htmlId': 'eboost',
-          'persistanceState': true,
-          'persistanceCheckboxHtmlId': 'typeahead-region',
+          'persistenceState': true,
+          'persistenceCheckboxHtmlId': 'typeahead-region',
           'typeOfInput': 'text',
           'defaultValue': '0',
         },
         {
           'htmlId': 'wboost',
-          'persistanceState': true,
-          'persistanceCheckboxHtmlId': 'typeahead-region',
+          'persistenceState': true,
+          'persistenceCheckboxHtmlId': 'typeahead-region',
           'typeOfInput': 'text',
           'defaultValue': '0',
         },
         {
           'htmlId': 'sboost',
-          'persistanceState': true,
-          'persistanceCheckboxHtmlId': 'typeahead-region',
+          'persistenceState': true,
+          'persistenceCheckboxHtmlId': 'typeahead-region',
           'typeOfInput': 'text',
           'defaultValue': '0',
         },
         {
           'htmlId': 'nboost',
-          'persistanceState': true,
-          'persistanceCheckboxHtmlId': 'typeahead-region',
+          'persistenceState': true,
+          'persistenceCheckboxHtmlId': 'typeahead-region',
           'typeOfInput': 'text',  
           'defaultValue': '0',
         },
         {
           'htmlId': 'lboost',
-          'persistanceState': true,
-          'persistanceCheckboxHtmlId': 'typeahead-region',
+          'persistenceState': true,
+          'persistenceCheckboxHtmlId': 'typeahead-region',
           'typeOfInput': 'text',
           'defaultValue': '0',
         },
         {
           'htmlId': 'mboost',
-          'persistanceState': true,
-          'persistanceCheckboxHtmlId': 'typeahead-region',
+          'persistenceState': true,
+          'persistenceCheckboxHtmlId': 'typeahead-region',
           'typeOfInput': 'text',
           'defaultValue': '0',
         },
         {
           'htmlId': 'jboost',
-          'persistanceState': true,
-          'persistanceCheckboxHtmlId': 'typeahead-region',
+          'persistenceState': true,
+          'persistenceCheckboxHtmlId': 'typeahead-region',
           'typeOfInput': 'text',
           'defaultValue': '0',
         }
@@ -499,29 +499,29 @@ export function getDefaultGlobalValues() {
     },
     {
       'page': 'custom_response',
-      'persistanceSettingDisabled': true,
+      'persistenceSettingDisabled': true,
       'inputObjects': [
         {
           'htmlId': 'request-type',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'dropdown',
           'defaultValue': 'GET',
         },
         {
           'htmlId': 'url-input',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'autosuggest',
           'defaultValue': '',
         },
         {
           'htmlId': 'response-type',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'radio',
           'defaultValue': 'plaintext',
         },
         {
           'htmlId': 'post-body',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'text-area',
           'defaultValue': '{}',
         },
@@ -534,47 +534,47 @@ export function getDefaultGlobalValues() {
     },
     {
       'page': 'radiussearch',
-      'persistanceSettingDisabled': true,
+      'persistenceSettingDisabled': true,
       'inputObjects': [
         {
           'htmlId': 'lat',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'text',
           'defaultValue': '50.73548',
         },
         {
           'htmlId': 'lon',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'text',
           'defaultValue': '-3.5332105',
         },
         {
           'htmlId': 'rangekm',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'text',
           'defaultValue': '10',
         },
         {
           'htmlId': 'input',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'text',
           'defaultValue': '',
         },
         {
           'htmlId': 'uprn',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'text',
           'defaultValue': '',
         },
         {
           'htmlId': 'classificationfilter',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'autosuggest',
           'defaultValue': '',
         },
         {
           'htmlId': 'limit',
-          'persistanceState': true,
+          'persistenceState': true,
           'typeOfInput': 'text',
           'defaultValue': '10',
         },

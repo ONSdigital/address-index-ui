@@ -1,9 +1,9 @@
-{# Template to setup the persistance table #}
+{# Template to setup the persistence table #}
 
 {% from "components/checkboxes/_checkbox-macro.njk" import onsCheckbox %}
 
 {% call onsQuestion({
-    "title": 'Input Persistance Settings',
+    "title": 'Input Persistence Settings',
     "description": 'Choose which inputs are remembered when each of the pages is refreshed or a search is performed.',
     "legendIsQuestionTitle": true }) %}
 
@@ -26,7 +26,7 @@
     </thead>
 
     <tbody class="ons-table__body">
-    <tr class="ons-table__row" id="singlesearch-persistance-row">
+    <tr class="ons-table__row" id="singlesearch-persistence-row">
 
         <td class="ons-table__cell">Single Search</td>
 
@@ -80,7 +80,7 @@
             "label": { "text": "" } }) }} </td>
     </tr>
 
-    <tr class="ons-table__row" id="uprn-persistance-row">
+    <tr class="ons-table__row" id="uprn-persistence-row">
 
         <td class="ons-table__cell">Single UPRN</td>
 
@@ -138,7 +138,7 @@
             "label": { "text": "" } }) }} </td>
     </tr>
 
-    <tr class="ons-table__row" id="postcode-persistance-row">
+    <tr class="ons-table__row" id="postcode-persistence-row">
 
         <td class="ons-table__cell">Postcode</td>
 
@@ -194,7 +194,7 @@
             "label": { "text": "" } }) }} </td>
     </tr>
 
-    <tr class="ons-table__row" id="typeahead-persistance-row">
+    <tr class="ons-table__row" id="typeahead-persistence-row">
 
         <td class="ons-table__cell">Typeahead</td>
 

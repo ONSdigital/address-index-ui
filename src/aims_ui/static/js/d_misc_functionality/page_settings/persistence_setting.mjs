@@ -7,8 +7,8 @@ import { checkCheckboxByElement } from './element_manipulation.mjs';
 
 // Setup listeners, handlers and startup for PAF or NAG title setting for address cards
 
-function getCheckboxByFullId(persistanceContainer, checkboxId) {
-  const checkboxElement = persistanceContainer.querySelector(`#${checkboxId}`);
+function getCheckboxByFullId(persistenceContainer, checkboxId) {
+  const checkboxElement = persistenceContainer.querySelector(`#${checkboxId}`);
 
   if (!checkboxElement) {
     console.warn('No checkbox element found for id:', checkboxId);
@@ -19,10 +19,10 @@ function getCheckboxByFullId(persistanceContainer, checkboxId) {
 
 function getIdToUseForCheckboxSelection(pageName, inputObject) {
   // Given an inputObject as stored in setup_defaults, htmlId and pageName determine 
-  // the id to use to select the persistance checkbox element
+  // the id to use to select the persistence checkbox element
 
   const htmlId = inputObject.htmlId;
-  const checkboxHtmlId = inputObject.persistanceCheckboxHtmlId;
+  const checkboxHtmlId = inputObject.persistenceCheckboxHtmlId;
 
   // Return the override htmlId if it exists
   if (checkboxHtmlId) {
@@ -33,14 +33,14 @@ function getIdToUseForCheckboxSelection(pageName, inputObject) {
   return `${pageName}-${htmlId}`;
 }
 
-export function setupPersistanceSetting() {
-  // Persistance settings are global despite being for all pages. 
+export function setupPersistenceSetting() {
+  // Persistence settings are global despite being for all pages. 
   // Because the values have to be accessed from more than one page
   
   // Get the container for this setting
-  const persistanceContainer = document.querySelector('#input-persistance-settings-container');
+  const persistenceContainer = document.querySelector('#input-persistence-settings-container');
 
-  // Get the value of the current persistance settings
+  // Get the value of the current persistence settings
   const globalValues = getGlobalValues();
   const inputSettings = globalValues.inputSettings || [];
   // Array of objects {page_name, [{inputObject, ...}]}
@@ -50,27 +50,27 @@ export function setupPersistanceSetting() {
     // Get the stored page name and inputs
     const pageName = inputSetting.page;
     const inputObjects = inputSetting.inputObjects;
-    const persistanceSettingDisabled = inputSetting.persistanceSettingDisabled;
+    const persistenceSettingDisabled = inputSetting.persistenceSettingDisabled;
 
-    if (persistanceSettingDisabled) {
-      // Skip this page if persistance setting is not present (currently for restricted pages)
+    if (persistenceSettingDisabled) {
+      // Skip this page if persistence setting is not present (currently for restricted pages)
       continue;
     }
 
     // Loop over each input object
     for (const inputObject of inputObjects) {
-      const persistanceState = inputObject.persistanceState;
+      const persistenceState = inputObject.persistenceState;
 
       const checkboxId = getIdToUseForCheckboxSelection(pageName, inputObject);
-      const checkboxElement = getCheckboxByFullId(persistanceContainer, checkboxId);
+      const checkboxElement = getCheckboxByFullId(persistenceContainer, checkboxId);
 
       // If the checkbox element is disabled, skip it
       if (checkboxElement.disabled) {
         continue;
       }
 
-      // Check the checkbox if persistanceState is true
-      if (persistanceState) {
+      // Check the checkbox if persistenceState is true
+      if (persistenceState) {
         checkCheckboxByElement(checkboxElement);
       }
 
@@ -87,16 +87,16 @@ export function setupPersistanceSetting() {
               // Now check 
               // 1. for the override id 
               // 2. for the default id
-              if (inputObject.persistanceCheckboxHtmlId) {
+              if (inputObject.persistenceCheckboxHtmlId) {
                 // Set it
-                inputObject.persistanceState = checkboxElement.checked;
-                console.debug('Updated persistance state for', inputObject.persistanceCheckboxHtmlId);
+                inputObject.persistenceState = checkboxElement.checked;
+                console.debug('Updated persistence state for', inputObject.persistenceCheckboxHtmlId);
               }  else {
                 // Check default id
                 const defaultId = `${pageName}-${inputObject.htmlId}`;
                 if (defaultId === checkboxId) {
-                  inputObject.persistanceState = checkboxElement.checked;
-                  console.debug('Updated persistance state for', defaultId);
+                  inputObject.persistenceState = checkboxElement.checked;
+                  console.debug('Updated persistence state for', defaultId);
                 }
               }
             }
@@ -105,7 +105,7 @@ export function setupPersistanceSetting() {
 
         // Save the updated global values
         setGlobalValues({ inputSettings: updatedGlobalValues });
-        console.debug('Saving new global values for input persistance settings:', updatedGlobalValues);
+        console.debug('Saving new global values for input persistence settings:', updatedGlobalValues);
       });
 
     }

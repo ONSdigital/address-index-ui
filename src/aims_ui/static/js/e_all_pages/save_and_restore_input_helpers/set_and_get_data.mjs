@@ -31,29 +31,29 @@ export function getPagePreviouslySearchedValues(page_name) {
   return pageLocalValues.pagePreviouslySearchedValues || {};
 }
 
-function getPersistanceSettingsOfPage(page_name) {
+function getPersistenceSettingsOfPage(page_name) {
   const globalValues = getGlobalValues();
 
-  // An array of objects like [ {'page_name':'radiussearch', 'inputObjects': [ {'htmlId': 'input', 'persistance_state': true}, ... ]}]
-  const persistanceSettings = globalValues['inputSettings'] || [];
+  // An array of objects like [ {'page_name':'radiussearch', 'inputObjects': [ {'htmlId': 'input', 'persistence_state': true}, ... ]}]
+  const persistenceSettings = globalValues['inputSettings'] || [];
 
   // Find the object for this page
-  for (const pageSetting of persistanceSettings) {
+  for (const pageSetting of persistenceSettings) {
     if (pageSetting.page === page_name) {
       return pageSetting;
     }
   }
 
   // If not found, log an error
-  console.error('No persistance settings found for page: "', page_name, '" in global values.');
+  console.error('No persistence settings found for page: "', page_name, '" in global values.');
   return [];
 }
 
 export function getPageInputObjects(page_name) {
   // For the page provided, return the locally stored input objects
 
-  // Get the persistance settings for this page
-  const pageInputSettings = getPersistanceSettingsOfPage(page_name);
+  // Get the persistence settings for this page
+  const pageInputSettings = getPersistenceSettingsOfPage(page_name);
   const inputObjects = pageInputSettings.inputObjects || [];
 
   return inputObjects;
