@@ -3,7 +3,7 @@ import {
   setGlobalValues,
 } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
-import { checkRadioButtonByElement } from './element_manipulation.mjs';
+import { checkCheckboxByElement } from './element_manipulation.mjs';
 
 // Setup listeners, handlers and startup for PAF or NAG title setting for address cards
 
@@ -71,7 +71,7 @@ export function setupPersistanceSetting() {
 
       // Check the checkbox if persistanceState is true
       if (persistanceState) {
-        checkRadioButtonByElement(checkboxElement);
+        checkCheckboxByElement(checkboxElement);
       }
 
       // Add a listener to update global values
