@@ -30,6 +30,6 @@ function setBulkAttributes() {
   attributeInput.value = listOfAttributesAsString;
 }
 
-export function loadMultultupleAddressAttributesInit() {
+export function loadMultipleAddressAttributesInit() {
   setBulkAttributes();
 }
