@@ -39,7 +39,7 @@ export function init(page_name) {
       bubbles: true
     });
 
-    // Define new event to resset the input filters to the default values
+    // Define new event to reset the input filters to the default values
     const resetInputFiltersEvent = new CustomEvent('refreshInputFiltersFromLocalStorage', {
       detail: page_name,
       bubbles: true
