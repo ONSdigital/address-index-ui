@@ -59,6 +59,7 @@ export function getDefaultGlobalValues() {
     'inputSettings': [
       {
         'page': 'multiple_address_original',
+        'persistenceSettingDisabled': true,
         'inputObjects': [
         {
           'htmlId': 'limit',
@@ -161,6 +162,7 @@ export function getDefaultGlobalValues() {
     },
     {
       'page': 'multiple_address',
+      'persistenceSettingDisabled': true,
       'inputObjects': [
         {
           'htmlId': 'limitperaddress',
@@ -190,6 +192,7 @@ export function getDefaultGlobalValues() {
     },
     {
       'page': 'multiple_address_attributes',
+      'persistenceSettingDisabled': true,
       'inputObjects': [
         {
           'htmlId': 'parent_uprn',
@@ -267,6 +270,7 @@ export function getDefaultGlobalValues() {
     },
     {
       'page': 'uprn_multiple_match',
+      'persistenceSettingDisabled': true,
       'inputObjects': [
         {
           'htmlId': 'header_row_export',
