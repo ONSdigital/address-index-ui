@@ -2,11 +2,11 @@ import { getPagePreviouslySearchedValues } from "../../e_all_pages/save_and_rest
 
 export function getPostBodyTextBoxStyleFromLocalStorage() {
   const previouslySearchedValues = getPagePreviouslySearchedValues('custom_response');
-  const postBodyTextBoxStle = previouslySearchedValues['post-body-style'];
+  const postBodyTextBoxStyle = previouslySearchedValues['post-body-style'];
 
-  if (!postBodyTextBoxStle) {
+  if (!postBodyTextBoxStyle) {
     console.debug('No previously stored style for post body textbox found in local storage.');
   }
 
-  return postBodyTextBoxStle|| '';
+  return postBodyTextBoxStyle || '';
 }

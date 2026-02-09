@@ -17,7 +17,7 @@ function getCheckboxByFullId(persistanceContainer, checkboxId) {
   return checkboxElement;
 }
 
-function getTheIdToUseForCheckboxSelection(pageName, inputObject) {
+function getIdToUseForCheckboxSelection(pageName, inputObject) {
   // Given an inputObject as stored in setup_defaults, htmlId and pageName determine 
   // the id to use to select the persistance checkbox element
 
@@ -61,7 +61,7 @@ export function setupPersistanceSetting() {
     for (const inputObject of inputObjects) {
       const persistanceState = inputObject.persistanceState;
 
-      const checkboxId = getTheIdToUseForCheckboxSelection(pageName, inputObject);
+      const checkboxId = getIdToUseForCheckboxSelection(pageName, inputObject);
       const checkboxElement = getCheckboxByFullId(persistanceContainer, checkboxId);
 
       // If the checkbox element is disabled, skip it
