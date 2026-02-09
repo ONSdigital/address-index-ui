@@ -4,7 +4,7 @@ import { setupJobAgeSetting } from './job_age_setting.mjs';
 import { setupAdditionalRequestSetting } from './additional_request_setting.mjs';
 import { setupPafNagTitleSetting } from './paf_nag_title_setting.mjs';
 import { setupColumnWidthSetting } from './column_width_setting.mjs';
-import { setupPersistanceSetting } from './persistance_setting.mjs';
+import { setupPersistenceSetting } from './persistence_setting.mjs';
 
 function init() {
   console.log('Page Settings Init Running');
@@ -17,7 +17,7 @@ function init() {
   setupAdditionalRequestSetting();
   setupPafNagTitleSetting();
   setupColumnWidthSetting();
-  setupPersistanceSetting();
+  setupPersistenceSetting();
 }
 
 window.addEventListener('load', init);

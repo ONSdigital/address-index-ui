@@ -1,4 +1,4 @@
-// Persistance is per-page, each togglable on the settings page
+// Persistence is per-page, each togglable on the settings page
 
 import { getPageInputObjects, getPagePreviouslySearchedValues } from './save_and_restore_input_helpers/set_and_get_data.mjs';
 
@@ -27,10 +27,10 @@ function restoreValuesToInputsIfExist(page_name, inputObjects, pagePreviouslySea
 
   for (const inputObject of inputObjects) {
     // Setup all three variables
-    const { htmlId, persistanceState, typeOfInput} = inputObject;
+    const { htmlId, persistenceState, typeOfInput} = inputObject;
 
-    // If persistance is off, skip it
-    if (!persistanceState) { continue; }
+    // If persistence is off, skip it
+    if (!persistenceState) { continue; }
 
     // Direct to correct restored, based on type of input
     if (typeOfInput === 'radio') {
@@ -77,11 +77,11 @@ function addEventListenersToTriggerSaveOnChange(inputObjects, page_name) {
   // Given a list of input objects, add event listeners based on input type and persistence state
 
   for (const inputObject of inputObjects) {
-    const { htmlId, persistanceState, typeOfInput} = inputObject;
+    const { htmlId, persistenceState, typeOfInput} = inputObject;
 
-    // If persistance is off, skip this input
-    if (!persistanceState) { 
-      console.debug(`Skipping input ${htmlId} as persistance is off`);
+    // If persistence is off, skip this input
+    if (!persistenceState) { 
+      console.debug(`Skipping input ${htmlId} as persistence is off`);
       continue;
     }
 
