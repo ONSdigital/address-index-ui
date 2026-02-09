@@ -1,6 +1,6 @@
 
 
-import { uncheckCheckbox, checkCheckbox } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
+import { uncheckCheckboxById, checkCheckboxById } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
 
 export function restoreCheckboxValuesIfExist(page_name, htmlId, pagePreviouslySearchedValues) {
   // Given a single checkbox, restore its value
@@ -18,8 +18,8 @@ export function restoreCheckboxValuesIfExist(page_name, htmlId, pagePreviouslySe
 
   // Set checkbox state
   if (restoreState) {
-    checkCheckbox(checkboxElement.id);
+    checkCheckboxById(checkboxElement.id);
   } else {
-    uncheckCheckbox(checkboxElement.id);
+    uncheckCheckboxById(checkboxElement.id);
   }
 }

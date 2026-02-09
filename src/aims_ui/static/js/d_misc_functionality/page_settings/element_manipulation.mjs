@@ -13,14 +13,14 @@ export function checkRadioButtonById(documentId) {
   }
 }
 
-export function checkCheckbox(documentId) {
+export function checkCheckboxById(documentId) {
   const checkbox = document.querySelector(`#${documentId}`);
   if (checkbox) {
     checkbox.checked = true;
   }
 }
 
-export function uncheckCheckbox(documentId) {
+export function uncheckCheckboxById(documentId) {
   const checkbox = document.querySelector(`#${documentId}`);
   if (checkbox) {
     checkbox.checked = false;

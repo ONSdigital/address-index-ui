@@ -2,7 +2,7 @@ import {
   getGlobalValues,
   setGlobalValues,
 } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
-import { uncheckCheckbox, checkCheckbox } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
+import { uncheckCheckboxById, checkCheckboxById } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
 
 // Setup listeners, handlers and startup for job age setting
 
@@ -14,9 +14,9 @@ export function setupJobAgeSetting() {
   // Check or uncheck the checkbox
   const checkboxId = 'show-old-jobs-checkbox';
   if (currentJobAgeStatus === true) {
-    checkCheckbox(checkboxId);
+    checkCheckboxById(checkboxId);
   } else {
-    uncheckCheckbox(checkboxId);
+    uncheckCheckboxById(checkboxId);
   }
   
 

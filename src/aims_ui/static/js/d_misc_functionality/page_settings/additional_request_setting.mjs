@@ -2,7 +2,7 @@ import {
   getGlobalValues,
   setGlobalValues,
 } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
-import { checkCheckbox } from './element_manipulation.mjs';
+import { checkCheckboxById } from './element_manipulation.mjs';
 
 // Setup listeners, handlers and startup for showing additional request info
 
@@ -29,13 +29,13 @@ export function setupAdditionalRequestSetting() {
   const tokenisedOutputId = 'additional-request-details-tokenised-output';
 
   if (currentDetailSettings.match_type === true) {
-    checkCheckbox(matchTypeId);
+    checkCheckboxById(matchTypeId);
   } 
   if (currentDetailSettings.recommendation_code === true) {
-    checkCheckbox(recommendationCodeId);
+    checkCheckboxById(recommendationCodeId);
   }
   if (currentDetailSettings.tokenised_output === true) {
-    checkCheckbox(tokenisedOutputId);
+    checkCheckboxById(tokenisedOutputId);
   }
 
   // Add listeners to change the global setting 
