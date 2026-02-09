@@ -1,11 +1,10 @@
 
 import { saveValueOfInput } from '../save_input_listeners.mjs';
-import { selectInputFromHtmlIdUsingContianer } from "../component_selection.mjs";
+import { selectInputFromHtmlIdUsingContainer } from "../component_selection.mjs";
 
 export function addInputListenersToSaveOnChange(page_name, inputHtmlId) {
   // Get the input element
-  const inputElement = selectInputFromHtmlIdUsingContianer(inputHtmlId);
-
+  const inputElement = selectInputFromHtmlIdUsingContainer(inputHtmlId);
   // Error if the element is not found
   if (!inputElement) {
     console.warn('No input element found for Id:', inputHtmlId);

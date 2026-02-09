@@ -76,7 +76,7 @@ export function setupPersistanceSetting() {
 
       // Add a listener to update global values
       checkboxElement.addEventListener('change', () => {
-        // Update the global values of inputSettings, inputObjects, object with htmlId/persitanceCheckboxHtmlId
+        // Update the global values of inputSettings, inputObjects, object with htmlId/persistenceCheckboxHtmlId
         const updatedGlobalValues = getGlobalValues().inputSettings || [];
 
         for (const inputSetting of updatedGlobalValues) {

@@ -1,8 +1,8 @@
-// Helpers for saving the value of an autosuggest - more duifficult than a regular input,
+// Helpers for saving the value of an autosuggest - trickier than a regular input,
 // as it needs to save on click, enter selection, change etc
 
 import { saveValueOfInput } from '../save_input_listeners.mjs';
-import { selectInputFromHtmlIdUsingContianer } from "../component_selection.mjs";
+import { selectInputFromHtmlIdUsingContainer } from "../component_selection.mjs";
 
 // Remove markup from inside an element (i.e for the autosuggest suggestions)
 function removeMarkupFromInsideElement(element) {
@@ -26,12 +26,12 @@ function removeMarkupFromInsideElement(element) {
 }
 
 export function addAutosuggestListenersToSaveOnChange(page_name, htmlId) {
-  // Given an id of the autostugget input
+  // Given an id of the autostuggest input
   // the event listener must be on the *Suggestions* not the element
   // as the element itself triggers events like input, change, blur before the value is changed
 
   const completeContainerForClassificationFilter = document.querySelector('#complete-container-for-' + htmlId);
-  const inputElement = selectInputFromHtmlIdUsingContianer(htmlId);
+  const inputElement = selectInputFromHtmlIdUsingContainer(htmlId);
 
   const classNameForSuggestionContainer = "ons-autosuggest__results";
   const suggestionContainer = completeContainerForClassificationFilter.querySelector('.' + classNameForSuggestionContainer);
