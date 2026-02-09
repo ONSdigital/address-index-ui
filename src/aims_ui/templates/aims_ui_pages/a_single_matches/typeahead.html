@@ -8,6 +8,7 @@
 {% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
 {% from 'custom_address_info_cards/_macro.njk' import customAddressInfoCards %}
 {% from 'custom_search/_macro.njk' import customSearch %}
+{% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -25,45 +26,47 @@
   <div id="content_col_2" class="ons-grid__col ons-col-4@m ">
 <br><br>
 
-{{ onsAddressInput({
-    "id": "address",
-    "dontWrap": true,
-    "label": {
-        "text": "Enter address or postcode and select from results",
-        "id": "address-label"
-    },
-    "isEditable": false,
-    'APIManualQueryParams': true,
-    "mandatory": true,
-    "externalInitialiser": true,
-    "autocomplete": "new-password",
-    "APIDomain": api_auth.get('PROJECT_DOMAIN'),
-    'APIDomainBearerToken': api_auth.get('API_JWT_TOKEN'),
-    "instructions": "Use up and down keys to navigate suggestions once you\'ve typed more than two characters. Use the enter key to select a suggestion. Touch device users, explore by touch or with swipe gestures.",
-    "ariaYouHaveSelected": "You have selected",
-    "ariaMinChars": "Enter 3 or more characters for suggestions.",
-    "ariaResultsLabel": "Address suggestions",
-    "ariaOneResult": "There is one suggestion available.",
-    "ariaNResults": "There are {n} suggestions available.",
-    "ariaLimitedResults": "Results have been limited to 10 suggestions. Type more characters to improve your search",
-    "ariaGroupedResults": "There are {n} for {x}",
-    "groupCount": "{n} addresses",
-    "moreResults": "Enter more of the address to improve results",
-    "resultsTitle": "Select an address",
-    "noResults": "No results found. Try entering a different part of the address",
-    "tooManyResults": "{n} results found. Enter more of the address to improve results",
-    "typeMore": "Enter more of the address to get results",
-    "errorTitle": "There is a problem with your answer",
-    "errorMessageEnter": "Enter an address",
-    "errorMessageSelect": "Select an address",
-    "errorMessageAPI": "Sorry, there is a problem. We are working to fix it. Please try again later or",
-    "errorMessageAPILinkText": "contact us for more help",
-    "errorMessageAPILink": "",
-    "options": {
-        "regionCode": "gb-eng",
-        "addressType": "residential",
-    }
-}) }}
+<div id="complete-container-for-address">
+  {{ onsAddressInput({
+      "id": "address",
+      "dontWrap": true,
+      "label": {
+          "text": "Enter address or postcode and select from results",
+          "id": "address-label"
+      },
+      "isEditable": false,
+      'APIManualQueryParams': true,
+      "mandatory": true,
+      "externalInitialiser": true,
+      "autocomplete": "new-password",
+      "APIDomain": api_auth.get('PROJECT_DOMAIN'),
+      'APIDomainBearerToken': api_auth.get('API_JWT_TOKEN'),
+      "instructions": "Use up and down keys to navigate suggestions once you\'ve typed more than two characters. Use the enter key to select a suggestion. Touch device users, explore by touch or with swipe gestures.",
+      "ariaYouHaveSelected": "You have selected",
+      "ariaMinChars": "Enter 3 or more characters for suggestions.",
+      "ariaResultsLabel": "Address suggestions",
+      "ariaOneResult": "There is one suggestion available.",
+      "ariaNResults": "There are {n} suggestions available.",
+      "ariaLimitedResults": "Results have been limited to 10 suggestions. Type more characters to improve your search",
+      "ariaGroupedResults": "There are {n} for {x}",
+      "groupCount": "{n} addresses",
+      "moreResults": "Enter more of the address to improve results",
+      "resultsTitle": "Select an address",
+      "noResults": "No results found. Try entering a different part of the address",
+      "tooManyResults": "{n} results found. Enter more of the address to improve results",
+      "typeMore": "Enter more of the address to get results",
+      "errorTitle": "There is a problem with your answer",
+      "errorMessageEnter": "Enter an address",
+      "errorMessageSelect": "Select an address",
+      "errorMessageAPI": "Sorry, there is a problem. We are working to fix it. Please try again later or",
+      "errorMessageAPILinkText": "contact us for more help",
+      "errorMessageAPILink": "",
+      "options": {
+          "regionCode": "gb-eng",
+          "addressType": "residential",
+      }
+  }) }}
+</div>
 
 <br>
 
@@ -107,20 +110,19 @@
 {# 5 Col FLAGS page #}
   <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
 
-{{ customSearch ({ "Fields": searchable_fields ,
- "remove_search_button":True }) }}
+{{ customSearch ({ 
+  "Fields": searchable_fields ,
+  "remove_search_button":True }) }}
 
 </div>
 {# End of grid #}
 </div>
 
-<script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
-
-<script type=module src="static/js/a_single_matches/typeahead.mjs"></script>
-
-<script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
-
-<script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
+<!-- Single entry point for all page scripts. Add scripts to the main location below -->
+{{ runScriptWithPageName({
+		"page_name": page_name,
+		"script_location": '/static/js/a_single_matches/typeahead/init.mjs',
+}) }}
 
 {% endblock %}
 {% endblock %}

@@ -1,5 +1,5 @@
 import { test, expect } from '@jest/globals';
-import { forceCapsInput } from '../../../../../../src/aims_ui/static/js/a_single_matches/postcode.mjs';
+import { forceCapsInput } from '../../../../../../src/aims_ui/static/js/a_single_matches/postcode/enforce_caps_input.mjs';
 
 // Test for the forceCapsInput function
 test('Check Postcode input is converted to uppercase', () => {

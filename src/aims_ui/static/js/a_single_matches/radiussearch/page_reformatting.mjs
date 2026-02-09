@@ -125,8 +125,8 @@ function getCompleteClassificationContainerWithIDs(inputContainer) {
   const classificationContainer = inputContainer.querySelector('#complete-container-for-classificationfilter');
 
   // Add the 'download' option to the classification container
-  const classificationDownloadListContianer = inputContainer.querySelector('#complete-container-for-classification-download-label');
-  classificationContainer.append(classificationDownloadListContianer);
+  const classificationDownloadListContainer = inputContainer.querySelector('#complete-container-for-classification-download-label');
+  classificationContainer.append(classificationDownloadListContainer);
 
   setupDropdownListeners(inputContainer);
 

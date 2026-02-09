@@ -11,6 +11,7 @@
 {% from "components/panel/_macro.njk" import onsPanel %}
 {% from "components/upload/_macro.njk" import onsUpload %}
 {% from 'components/list/_macro.njk' import onsList %}
+{% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName %}
 
 {% set col = namespace(value=-1) %}
 {% set row = namespace(value=0) %}
@@ -34,8 +35,8 @@
   {% set show = False %}
 {% endif %}
 
-{# Wrap each input type into an ID-based specific container if requested #}
-{% if params.component_wrappers %}
+{# Wrap each input type into an ID-based specific container, only remove if remove_component_wrappers is true #}
+{% if not params.remove_component_wrappers %}
 	<div id="complete-container-for-{{field.database_name}}">
 {% endif %}
 
@@ -95,11 +96,28 @@
      <br>
 
 	{% elif field.search_type == "radio" %}
-	{% call onsQuestion({
+		{# Check to see if the Epoch is being generated #}
+		{% if field.database_name == "epoch" %}
+			<script type="module">
+			import { setGlobalValues } from "/static/js/f_helpers/local_storage_page_helpers.mjs";
+
+			// Get the current epoch number
+			const latestEpochNumber = '{{ field.default_radio_selection }}';
+			
+			if (latestEpochNumber === '') {
+				console.warn('Error getting default epoch number from template generation');
+			}
+
+			// Save it in global values
+			setGlobalValues({'latestEpochNumber': latestEpochNumber})
+			</script>
+			
+		{% endif %}
+	  {% call onsQuestion({
 	    "title": field.display_title,
 	    "classes": field.classes if show else ' '.join([field.only_display_in_results_page,field.classes])  ,
 	    "legendIsQuestionTitle": true }) %}
-	{{ onsRadios({
+	  {{ onsRadios({
             "name": field.database_name,
             "dontWrap": true,
             "radios": field.radio_options,
@@ -200,10 +218,9 @@
 {% endif %}
 
 {# End the div for "component wrappers" #}
-{% if params.component_wrappers %}
+{% if not params.remove_component_wrappers %}
 	</div>
 {% endif %}
-
 
 
 {% endfor %}
@@ -226,13 +243,10 @@
 	}) }}
 
   {# Add functionality to the clear button #}
-	<script type="module">
-  import { setupClearButton } from '/static/js/macros/custom_search/clear_button.mjs';
-
-  const page_name = '{{ params.page_name }}';
-  setupClearButton(page_name);
-  </script>
-
+	{{ runScriptWithPageName({
+		"page_name": params.page_name,
+		"script_location": '/static/js/macros/custom_search/clear_button.mjs',
+	})}}
 
 {% endif %}
 

@@ -1,0 +1,259 @@
+{# Template to setup the persistence table #}
+
+{% from "components/checkboxes/_checkbox-macro.njk" import onsCheckbox %}
+
+{% call onsQuestion({
+    "title": 'Input Persistence Settings',
+    "description": 'Choose which inputs are remembered when each of the pages is refreshed or a search is performed.',
+    "legendIsQuestionTitle": true }) %}
+
+<input type="hidden" name="csrf_token" value="" />
+<section class="ons-u-mt-s">
+<table id="tbl-users" class="ons-table">
+
+    {# A "Header" Row is added with the name of each input as the column #}
+    <thead class="ons-table__head">
+        <tr class="ons-table__row">
+            <th scope="col" class="ons-table__header"><span>Page Name</span></th>
+            <th scope="col" class="ons-table__header"><span>Input</span></th>
+            <th scope="col" class="ons-table__header"><span>Classification</span></th>
+            <th scope="col" class="ons-table__header"><span>Region</span></th>
+            <th scope="col" class="ons-table__header"><span>Epoch</span></th>
+            <th scope="col" class="ons-table__header"><span>Minimum Match</span></th>
+            <th scope="col" class="ons-table__header"><span>Limit</span></th>
+            <th scope="col" class="ons-table__header"><span>Include Historical</span></th>
+        </tr>
+    </thead>
+
+    <tbody class="ons-table__body">
+    <tr class="ons-table__row" id="singlesearch-persistence-row">
+
+        <td class="ons-table__cell">Single Search</td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "singlesearch-input",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "singlesearch-classificationfilter",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "singlesearch-region",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "singlesearch-epoch",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "singlesearch-matchthreshold",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "singlesearch-limit",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "singlesearch-historical",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+    </tr>
+
+    <tr class="ons-table__row" id="uprn-persistence-row">
+
+        <td class="ons-table__cell">Single UPRN</td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "uprn-uprn",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "uprn-classification",
+            "value": "true",
+            "disabled": true,
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "uprn-region",
+            "value": "true",
+            "disabled": true,
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "uprn-epoch",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "uprn-minimummatch",
+            "value": "true",
+            "disabled": true,
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "uprn-limit",
+            "value": "true",
+            "disabled": true,
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "uprn-historical",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+    </tr>
+
+    <tr class="ons-table__row" id="postcode-persistence-row">
+
+        <td class="ons-table__cell">Postcode</td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "postcode-postcode",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "postcode-classificationfilter",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "postcode-region",
+            "disabled": true,
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "postcode-epoch",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "postcode-minimummatch",
+            "disabled": true,
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "postcode-limit",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "postcode-historical",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+    </tr>
+
+    <tr class="ons-table__row" id="typeahead-persistence-row">
+
+        <td class="ons-table__cell">Typeahead</td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "typeahead-address",
+            "value": "true",
+            "disabled": true,
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "typeahead-classification",
+            "value": "true",
+            "disabled": true,
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "typeahead-region",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "typeahead-epoch",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "typeahead-minimummatch",
+            "value": "true",
+            "disabled": true,
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "typeahead-limit",
+            "value": "true",
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+
+        <td class="ons-table__cell">
+        {{ onsCheckbox({
+            "id": "typeahead-includehistorical",
+            "value": "true",
+            "disabled": true,
+            "hideLabel": true,
+            "label": { "text": "" } }) }} </td>
+    </tr>
+
+    </tbody>
+</table>
+</section>
+
+{% endcall %}

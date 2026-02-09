@@ -229,13 +229,16 @@ function addJobsFlagToCurrentURL() {
   }
 }
 
-window.addEventListener('load', async function () {
-  // Check the jobs flag - this is a fallback check as it should already be appended to the URL
-  addJobsFlagToCurrentURL();
+export function setupResultsButtonAndProcessing() {
+  window.addEventListener('load', async function () {
+    // Check the jobs flag - this is a fallback check as it should already be appended to the URL
+    addJobsFlagToCurrentURL();
 
-  // Change all links to "download" buttons
-  const linksAndParents = getAllLinks();
-  for (const l of linksAndParents) {
-    await changeLinkToButton(l);
-  }
-});
+    // Change all links to "download" buttons
+    const linksAndParents = getAllLinks();
+    for (const l of linksAndParents) {
+      await changeLinkToButton(l);
+    }
+  });
+}
+

@@ -30,7 +30,7 @@ function removeRadioWidths() {
   }
 }
 
-function init() {
+export function customColumnWidthsInit() {
   console.log('apply_custom_column_widths loaded');
   const globalValues = getGlobalValues();
   const customColumnWidths = globalValues.columnWidths || {};
@@ -40,5 +40,3 @@ function init() {
   // Remove formatting for radios that would otherwise force them to be too wide
   removeRadioWidths();
 }
-
-window.addEventListener('load', init);

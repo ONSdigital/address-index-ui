@@ -1,7 +1,7 @@
 // Manage the clear button functionality on the radius search page
 
 import { syncPageWithCurrentInputs } from '/static/js/a_single_matches/radiussearch/interactive_map/map_setup.mjs';
-import { getDefaultValuesForPage } from '/static/js/e_all_pages/setup_defaults.mjs';
+import { getDefaultValuesForPage } from '/static/js/e_all_pages/default_helpers/setup_defaults.mjs';
 import { setPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 import { makeUprnResultsInvisible } from '/static/js/a_single_matches/radiussearch/uprn_helper.mjs';
 import { makeDownloadButtonContainerInvisible } from '/static/js/macros/custom_download_results_from_local_storage/init.mjs';

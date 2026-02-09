@@ -6,6 +6,7 @@ from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
+
 """ Manage errors specific to multiple match pages """
 
 
@@ -64,6 +65,7 @@ def page_error_annotation_multiple(
 
   return render_template(
       page_location,
+      page_name=page_name_with_error,
       endpoints=endpoints,
       searchable_fields=searchable_fields,
       bulk_limits=bulk_limits,

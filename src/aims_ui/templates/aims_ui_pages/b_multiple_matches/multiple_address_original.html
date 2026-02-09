@@ -5,11 +5,13 @@
 {% from "components/upload/_macro.njk" import onsUpload %}
 {% from "components/button/_macro.njk" import onsButton %}
 {% from "components/panel/_macro.njk" import onsPanel %}
-{% from "custom_search/_macro.njk" import customSearch %}
 {% from "components/radios/_macro.njk" import onsRadios %}
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/table/_macro.njk" import onsTable %}
+
 {% from "custom_multiple_match_nav/_macro.njk" import customMultipleMatchNav %}
+{% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName %}
+{% from "custom_search/_macro.njk" import customSearch %}
 
 {% block main %}
 
@@ -40,12 +42,13 @@
 
 {# Content is the searchboxes, taking up 4 col#}
   <div id="content_col_2" class="ons-grid__col ons-col-4@m ">
-{{ customSearch ({ "Fields": searchable_fields,
+{{ customSearch ({ 
+	     "Fields": searchable_fields,
 		   "endpoints": endpoints, 
 		   "remove_buttons": True,
 		   "remove_clear_button": True,
 		   "remove_search_button":False,
-           "results_page": results_page, }) }}
+       "results_page": results_page, }) }}
 <br>
 
 {{ onsButton({
@@ -84,13 +87,11 @@
 }) }}
 </div>
 
-<script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
+<!-- Single entry point for all page scripts. Add scripts to the main location below -->
+{{ runScriptWithPageName({
+		"page_name": page_name,
+		"script_location": '/static/js/b_multiple_matches/multiple_address_original/init.mjs',
+}) }}
 
-<script type=module src="static/js/b_multiple_matches/all_multiple_match_pages.mjs"></script>
-
-<script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
-<script type=module src="static/js/b_multiple_matches/utils/page_load_multiple_address_attributes.mjs"></script>
-
-<script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
 
 {% endblock %}
