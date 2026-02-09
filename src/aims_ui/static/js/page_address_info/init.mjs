@@ -1,5 +1,7 @@
 import { getGlobalValues, getPageLocalValues } from "/static/js/f_helpers/local_storage_page_helpers.mjs";
 import { setupAttributesTable } from '/static/js/macros/sub_components/sub_custom_attributes_table/favourite_table_generation.mjs';
+import { allPagesLastInit } from '/static/js/e_all_pages/all_pages_last.mjs';
+import { allPagesFirstInit } from '/static/js/e_all_pages/all_pages_first.mjs';
 
 // What do we need to know?
   // We want the "address info" object of the current address (uprn in url)
@@ -56,6 +58,11 @@ function getAddressObjectPrioritisingPreviousPage(uprn, page_name) {
 }
 
 export function init(page_name) {
+  // All pages first
+  allPagesFirstInit();
+
+  // Custom setup for address info page:
+
   // Get the UPRN from the URL (http://127.0.0.1:5000/address_info/1)
   const urlParts = window.location.pathname.split('/');
   const uprn = urlParts[urlParts.length - 1];
@@ -65,4 +72,7 @@ export function init(page_name) {
   const showAllAttributes = true;
 
   setupAttributesTable(addressCardHtmlObjectAlternative, addressObject, showAllAttributes);
+
+  // All pages last
+  allPagesLastInit();
 }
