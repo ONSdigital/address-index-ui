@@ -1,178 +1,158 @@
-// More agressive version of the save inputs which will
-// persist accross sessions
+// Persistence is per-page, each togglable on the settings page
 
-// Also uses the new storage layout and is toggleable through the settings page
+import { getPageInputObjects, getPagePreviouslySearchedValues } from './save_and_restore_input_helpers/set_and_get_data.mjs';
 
-import { getDefaultValuesForPage } from './setup_defaults.mjs';
-import {
-  getGlobalValues,
-  getPageLocalValues,
-  setPageLocalValues
-} from '/static/js/f_helpers/local_storage_page_helpers.mjs';
+// Checkbox save and restore
+import { addCheckboxListenersToSaveOnChange } from './save_and_restore_input_helpers/checkbox/checkbox_listeners.mjs';
+import { restoreCheckboxValuesIfExist } from './save_and_restore_input_helpers/checkbox/checkbox_restorers.mjs';
 
-let page_name;
+// Input save and restore
+import { addInputListenersToSaveOnChange } from './save_and_restore_input_helpers/input/input_listeners.mjs';
+import { restoreValuesToTextInput } from './save_and_restore_input_helpers/input/input_restorers.mjs';
 
-function loadStoredValuesIfExist(saveAndRestoreInputIds, pagePreviouslySearchedValues) {
-  for (const id of saveAndRestoreInputIds) {
-    // Check to see if this id has a previously stored value
-    if (pagePreviouslySearchedValues[id]) {
-      const inputElement = document.getElementById(id);
-      if (inputElement) {
-        inputElement.value = pagePreviouslySearchedValues[id];
-      }
+// Autosuggest save and restore
+import { restoreValuesToAutosuggestInput } from './save_and_restore_input_helpers/autosuggest/autosuggest_restorers.mjs';
+import { addAutosuggestListenersToSaveOnChange } from './save_and_restore_input_helpers/autosuggest/autosuggest_listeners.mjs';
+
+// Radio save and restore
+import { addRadioListenersToMultipleRadios } from './save_and_restore_input_helpers/radio/radio_listeners.mjs';
+import { restoreRadioValuesIfExist } from './save_and_restore_input_helpers/radio/radio_restorers.mjs';
+
+// Dropdown save and restore
+import { addDropdownListenersToSaveOnChange, } from './save_and_restore_input_helpers/dropdown/dropdown_listeners.mjs';
+import { restoreDropdownValuesIfExist } from './save_and_restore_input_helpers/dropdown/dropdown_restorers.mjs';
+
+// Function that handles all restoring of values
+function restoreValuesToInputsIfExist(page_name, inputObjects, pagePreviouslySearchedValues) {
+
+  for (const inputObject of inputObjects) {
+    // Setup all three variables
+    const { htmlId, persistenceState, typeOfInput} = inputObject;
+
+    // If persistence is off, skip it
+    if (!persistenceState) { continue; }
+
+    // Direct to correct restored, based on type of input
+    if (typeOfInput === 'radio') {
+      // For radio inputs
+      restoreRadioValuesIfExist(page_name, inputObject, pagePreviouslySearchedValues);
+      continue;
+    }
+
+    if (typeOfInput === 'checkbox') {
+      // For SINGLE checkbox inputs
+      restoreCheckboxValuesIfExist(page_name, htmlId, pagePreviouslySearchedValues);
+      continue;
+    }
+
+    if (typeOfInput === 'text') {
+      // For text inputs
+      restoreValuesToTextInput(page_name, htmlId, pagePreviouslySearchedValues);
+      continue;
+    }
+
+    if (typeOfInput === 'text-area') {
+      // For text-area inputs
+      restoreValuesToTextInput(page_name, htmlId, pagePreviouslySearchedValues);
+      continue;
+    }
+
+    if (typeOfInput === 'autosuggest') {
+      // For Autosuggest inputs
+      restoreValuesToAutosuggestInput(page_name, htmlId, pagePreviouslySearchedValues);
+      continue;
+    }
+
+    if (typeOfInput === 'dropdown') {
+      // For Dropdown inputs
+      restoreDropdownValuesIfExist(page_name, htmlId, pagePreviouslySearchedValues);
+      continue;
+    }
+
+  }
+
+}
+
+function addEventListenersToTriggerSaveOnChange(inputObjects, page_name) {
+  // Given a list of input objects, add event listeners based on input type and persistence state
+
+  for (const inputObject of inputObjects) {
+    const { htmlId, persistenceState, typeOfInput} = inputObject;
+
+    // If persistence is off, skip this input
+    if (!persistenceState) { 
+      console.debug(`Skipping input ${htmlId} as persistence is off`);
+      continue;
+    }
+
+    // Now add the event listener based on type of input
+
+    // Add 'multiple' 'input' listeners (for a single input with multiple elements, like radios)
+    if (typeOfInput === 'radio') {
+      // For radio inputs
+      addRadioListenersToMultipleRadios(page_name, inputObject);
+      continue;
+    }
+
+    // Add listeners to individual inputs on a page
+    if (typeOfInput === 'checkbox') {
+      // For SINGLE checkbox inputs
+      addCheckboxListenersToSaveOnChange(page_name, htmlId);
+      continue;
+    }
+
+    if (typeOfInput === 'text') {
+      // Handle regular text inputs (and numerical ones!)
+      addInputListenersToSaveOnChange(page_name, htmlId);
+      continue;
+    }
+
+    if (typeOfInput === 'text-area') {
+      // Handle text-area inputs
+      addInputListenersToSaveOnChange(page_name, htmlId);
+      continue;
+    }
+
+    if (typeOfInput === 'autosuggest') {
+      // For Autosuggest inputs
+      addAutosuggestListenersToSaveOnChange(page_name, htmlId);
+      continue;
+    }
+
+    if (typeOfInput === 'dropdown') {
+      // For Dropdown inputs
+      addDropdownListenersToSaveOnChange(page_name, htmlId);
+      continue;
     }
   }
+
+  return;
+
 }
 
-function getPreviouslyStoredValuesForThisPage() {
-  // Get the local values for this page
-  const pageLocalValues = getPageLocalValues(page_name);
+export function saveAndRestoreInputsInit(page_name) {
+  console.log('save_and_restore_inputs loaded');
 
-  // Extract the pagePreviouslySearchedValues, default to an empty array if none found
-  return pageLocalValues.pagePreviouslySearchedValues || [];
-}
-
-function setPreviouslyStoredValuesForThisPage(inputValues) {
-  // Set the pagePreviouslySearchedValues to the new inputValues
-  setPageLocalValues(page_name, { pagePreviouslySearchedValues: inputValues });
-}
-
-function saveValueOfInput(inputId, inputValue) {
-  console.log(`Saving value of input ${inputId}: ${inputValue}`);
-
-  // Firstly get the current pages previously stored input values
-  const previouslyStoredValues = getPreviouslyStoredValuesForThisPage(page_name);
-
-  // Now create a new object with the inputId and input value
-  const valuesToMerge = {[inputId]: inputValue};
-
-  // Now merge with the previously stored values
-  const mergedValues = {...previouslyStoredValues, ...valuesToMerge};
-
-  // Now save the new values
-  setPreviouslyStoredValuesForThisPage(mergedValues);
-}
-
-// Remove markup from inside an element (i.e for the autosuggest suggestions)
-function removeMarkupFromInsideElement(element) {
-  if (!element) return '';
-
-  const clone = element.cloneNode(true);
-
-  // Replace <strong> with just its text content
-  clone.querySelectorAll('strong').forEach(strongEl => {
-    const textNode = document.createTextNode(strongEl.textContent);
-    strongEl.replaceWith(textNode);
-  });
-
-  // Remove all <span>s entirely
-  clone.querySelectorAll('span').forEach(spanEl => {
-    spanEl.remove();
-  });
-
-  // Return the pure text
-  return clone.textContent.trim();
-}
-
-function addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputElement) {
-  // Given an input element that's an ONS autosuggest component
-  // the event listener must be on the *Suggestions* not the element
-  // as the element itself triggers events like input, change, blur before the value is changed
-  const completeContainerForClassificationFilter = document.querySelector('#complete-container-for-classificationfilter');
-
-  const classNameForSuggestionContainer = "ons-autosuggest__results";
-  const suggestionContainer = completeContainerForClassificationFilter.querySelector('.' + classNameForSuggestionContainer);
-
-  if (!suggestionContainer) { 
-    console.log('No suggestion container found for autosuggest component');
-    return;
-  }
-
-  suggestionContainer.addEventListener('click', event => {
-    const clickedEl = event.target.closest('li');
-
-    if (clickedEl) {
-      const textFromAutosuggest= removeMarkupFromInsideElement(clickedEl);
-
-      // Now save this value
-      saveValueOfInput(inputElement.id, textFromAutosuggest);
-      console.log('Saved value from autosuggest:', textFromAutosuggest);
-    } else {
-      console.log('Clicked outside of a suggestion <li>');
-    }
-  });
-
-  // Add an event listener for keyboard selection (Enter key)
-  completeContainerForClassificationFilter.addEventListener('keydown', event => {
-    if (event.key === 'Enter') {
-      // The suggestion that is currently focused will have ons-autosuggest__option--focused
-      const focusedSuggestion = suggestionContainer.querySelector('.ons-autosuggest__option--focused');
-      if (focusedSuggestion) {
-        const textFromAutosuggest= removeMarkupFromInsideElement(focusedSuggestion);
-
-        // Now save this value
-        saveValueOfInput(inputElement.id, textFromAutosuggest);
-        console.log('Saved value from autosuggest (keyboard):', textFromAutosuggest);
-      }
-    }
-  });
-}
-
-function addEventListenersToTriggerSaveOnChange(saveAndRestoreInputIds) {
-  // Loop over all the ids
-  for (const id of saveAndRestoreInputIds) {
-    const inputElement = document.querySelector('#' + id);
-
-    // If the element not found, skip it
-    if (!inputElement) { return; }
-
-    // If it's an autosuggest component, use a different event listener
-    if (inputElement.classList.contains('ons-js-autosuggest-input')) {
-      // Add an event listener to save from a suggestion - STILL REQUIRES A REGULAR INPUT LISTENER
-      addEventListenerToTriggerSaveOnChangeForAutosuggestComponent(inputElement);
-    } 
-    inputElement.addEventListener('input', () => {
-      saveValueOfInput(inputElement.id, inputElement.value);
-    });
-  }
-}
-
-function getPagePreviouslySearchedValues() {
-  // Get the local values for this page
-  const pageLocalValues = getPageLocalValues(page_name);
-
-  // Inject default values if the pagePreviouslySearchedValues doesn't exist
-  const defaultValuesForPage = getDefaultValuesForPage(page_name);
-  if (!pageLocalValues.pagePreviouslySearchedValues) {
-    // If we have to setup the defaults, then we should also save them to local storage as the "previously searched values"
-    pageLocalValues.pagePreviouslySearchedValues = defaultValuesForPage;
-    setPreviouslyStoredValuesForThisPage(pageLocalValues.pagePreviouslySearchedValues);
-  }
-
-  // Extract the pagePreviouslySearchedValues, default to an empty object if no defaults defined
-  return pageLocalValues.pagePreviouslySearchedValues || {};
-}
-
-function init() {
-  console.log('save_page_inputs loaded');
-  page_name = 'radiussearch';
-
-  // Get the object 'save_and_restore_input_ids' from page values - TODO with all page customisation
-  // const saveAndRestoreInputIds = globalValues['save_and_restore_input_ids'] || [];
-
-  // Use just ones expected for radius search for now, future updates will allow all pages to do this
-  const temporaryInputIds = ['lat', 'lon', 'rangekm', 'input', 'classificationfilter', 'limit'];
+  // Get the objects for each input - containing a "toPersist" and "htmlId"
+  const inputObjects = getPageInputObjects(page_name);
+  console.debug('Save and restore inputs: Input objects', page_name, ':', inputObjects);
 
   // Now get the page's local values (which actually contain what was last in inputs)
   // {'lat': '51.36935132147893', 'lon':'-2.3361860233264187', 'rangekm': '45'};
   const pagePreviouslySearchedValues = getPagePreviouslySearchedValues(page_name);
+  restoreValuesToInputsIfExist(page_name, inputObjects, pagePreviouslySearchedValues);
 
-  // Load stored values given Ids affected (from global) as a list ['id1','id2']
-  // and pagePreviouslySearchedValues (from pageLocalValues) as [{'htmlid':'value'}]
-  loadStoredValuesIfExist(temporaryInputIds, pagePreviouslySearchedValues);
+  // Now attach event listeners to all the inputs that are set to persist
+  addEventListenersToTriggerSaveOnChange(inputObjects, page_name);
 
-  // Now attach event listeners to all the inputs with ids in saveAndRestoreInputIds
-  addEventListenersToTriggerSaveOnChange(temporaryInputIds);
+
+  document.addEventListener('refreshInputFiltersFromLocalStorage', event => {
+    const page_name = event.detail;
+
+    // Trigger a restore to to the page from local storage
+    const inputObjects = getPageInputObjects(page_name);
+    const pagePreviouslySearchedValues = getPagePreviouslySearchedValues(page_name);
+    restoreValuesToInputsIfExist(page_name, inputObjects, pagePreviouslySearchedValues);
+  });
+
 }
-
-init();

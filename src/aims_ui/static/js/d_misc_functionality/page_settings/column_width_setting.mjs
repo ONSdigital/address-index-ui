@@ -2,7 +2,6 @@ import {
   getGlobalValues,
   setGlobalValues,
 } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
-import { checkCheckbox } from '/static/js/d_misc_functionality/page_settings/element_manipulation.mjs';
 
 // Setup listeners, handlers and startup for column width setting
 

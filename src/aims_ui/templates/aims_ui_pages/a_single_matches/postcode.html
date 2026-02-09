@@ -10,6 +10,7 @@
 {% from 'custom_title_and_description/_macro.njk' import customTitleAndDescription %}
 {% from 'custom_download_results_from_local_storage/_macro.njk' import customDownloadResultsFromLocalStorage %}
 {% from 'custom_we_matched_message/_macro.njk' import weMatchedAddressPreamble %}
+{% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -75,14 +76,12 @@
 </div>
 
  
-<script type=module src="static/js/e_all_pages/all_pages_first_js.mjs"></script>
+<!-- Single entry point for all page scripts. Add scripts to the main location below -->
+{{ runScriptWithPageName({
+		"page_name": page_name,
+		"script_location": '/static/js/a_single_matches/postcode/init.mjs',
+}) }}
 
-<script type=module src="static/js/a_single_matches/postcode.mjs"></script>
-
-<script type=module src="static/js/e_all_pages/save_inputs.mjs"></script>
-<script type=module src="static/js/e_all_pages/custom_column_widths.mjs"></script>
-
-<script type=module src="static/js/e_all_pages/all_pages_last.mjs"></script>
 
 {% endblock %}
 {% endblock %}
