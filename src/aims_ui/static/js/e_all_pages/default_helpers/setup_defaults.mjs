@@ -30,7 +30,7 @@ function getDefaultInputObjectsForPage(page_name) {
   const inputSettings = globalValues.inputSettings || [];
 
   for (const pageSettings of inputSettings) {
-    // Loop over each pagee's setting object
+    // Loop over each page's setting object
     if (pageSettings.page === page_name) {
       return pageSettings;
     }

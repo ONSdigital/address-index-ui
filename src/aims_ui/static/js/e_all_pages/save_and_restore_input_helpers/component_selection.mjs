@@ -1,6 +1,6 @@
 // Functions to select components through use of the container divs
 
-export function selectInputFromHtmlIdUsingContianer(htmlId) {
+export function selectInputFromHtmlIdUsingContainer(htmlId) {
   // Get the input container
   const containerQuerySelector = '#complete-container-for-' + htmlId;
   const containerElement = document.querySelector(containerQuerySelector);

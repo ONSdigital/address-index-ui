@@ -1,9 +1,9 @@
-import { selectInputFromHtmlIdUsingContianer } from "../component_selection.mjs";
+import { selectInputFromHtmlIdUsingContainer } from "../component_selection.mjs";
 
 
 export function restoreValuesToTextInput(page_name, htmlId, pagePreviouslySearchedValues) {
   // Get the input element
-  const inputElement = selectInputFromHtmlIdUsingContianer(htmlId);
+  const inputElement = selectInputFromHtmlIdUsingContainer(htmlId);
 
   // Get previous value
   const previousValue = pagePreviouslySearchedValues[htmlId];

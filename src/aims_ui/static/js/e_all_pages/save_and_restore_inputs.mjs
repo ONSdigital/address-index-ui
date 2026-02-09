@@ -1,4 +1,4 @@
-// Persistnace is per page, each togglable on the settings page
+// Persistance is per-page, each togglable on the settings page
 
 import { getPageInputObjects, getPagePreviouslySearchedValues } from './save_and_restore_input_helpers/set_and_get_data.mjs';
 
@@ -74,7 +74,7 @@ function restoreValuesToInputsIfExist(page_name, inputObjects, pagePreviouslySea
 }
 
 function addEventListenersToTriggerSaveOnChange(inputObjects, page_name) {
-  // Given a list of input objects, add event listeners based on input type and persitance state
+  // Given a list of input objects, add event listeners based on input type and persistence state
 
   for (const inputObject of inputObjects) {
     const { htmlId, persistanceState, typeOfInput} = inputObject;
