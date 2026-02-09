@@ -12,9 +12,6 @@ export function init(page_name) {
   addIncludeOldJobsFlagToUrlBasedOnLocalStorageSetting();
   setupResultsButtonAndProcessing();
  
-  // Apply the custom column widths
-  customColumnWidthsInit();
-
   // All pages last
   allPagesLastInit();
 }
