@@ -35,7 +35,7 @@ def adjust_parameter_for_each_page(params, called_from_page_name):
 
   # If the page is for multiple addresses, enforce "verbose=False" for speed
   if (called_from_page_name == 'multiple'):
-    # Always set verbose to False
+    # Always set verbose to False for small multiple match. This might have to change in future for full selection of address attributes, but we want to keep it lean for speed
     params['verbose'] = 'false'
 
     # Strip the 'input' parameter of quotes and 's at the start and end
@@ -59,7 +59,17 @@ def adjust_parameter_for_each_page(params, called_from_page_name):
 
   if (called_from_page_name == 'uprn'):
     # Enforce verbose to True for UPRN lookups
-    params['verbose'] = 'True'
+    params['verbose'] = 'true'
+
+  if (called_from_page_name == 'postcode'):
+    # Enforce verbose to True for postcode lookups
+    params['verbose'] = 'true'
+  
+  if (called_from_page_name == 'typeahead'):
+    # Enforce verbose to True for typeahead lookups for speed
+    params['verbose'] = 'true'
+
+  
 
   return params
 
