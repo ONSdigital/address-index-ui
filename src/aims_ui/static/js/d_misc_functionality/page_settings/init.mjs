@@ -30,4 +30,3 @@ export function init() {
   allPagesLastInit();
 }
 
-window.addEventListener('load', init);
