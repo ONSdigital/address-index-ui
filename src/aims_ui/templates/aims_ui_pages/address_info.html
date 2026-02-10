@@ -5,8 +5,10 @@
 {% from "components/table/_macro.njk" import onsTable %}
 {% from "components/panel/_macro.njk" import onsPanel %}
 {% from "components/details/_macro.njk" import onsDetails %}
-{% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
 {% from "sub_components/sub_custom_attributes_table/_macro.njk" import subCustomAttributesTable %}
+
+{% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
+{% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -124,18 +126,12 @@
 </div>
 <br>
 
-<script type=module src="/static/js/e_all_pages/all_pages_first_js.mjs"></script>
+<!-- Single entry point for all page scripts. Add scripts to the main location below -->
+{{ runScriptWithPageName({
+		"page_name": page_name,
+		"script_location": '/static/js/page_address_info/init.mjs',
+}) }}
 
-<script type=module src="/static/js/address_info/init.mjs"></script>
-
-<script type="module">
-  import { init } from '/static/js/page_address_info/init.mjs';
-
-  const page_name = '{{ page_name }}';
-  init(page_name);
-</script>
-
-<script type=module src="/static/js/e_all_pages/all_pages_last.mjs"></script>
 
 {% endblock %}
 {% endblock %}

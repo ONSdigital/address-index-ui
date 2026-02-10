@@ -3,6 +3,8 @@
 {% from "components/breadcrumbs/_macro.njk" import onsBreadcrumbs %}
 {% from "components/panel/_macro.njk" import onsPanel %}
 
+{% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName %}
+
 {% block main %}
 
 {{ onsBreadcrumbs({
@@ -33,9 +35,11 @@ For a full explanation see section 5 of this paper: <a href='https://www.ons.gov
 
 }) }}
 
-
-<script type=module src="/static/js/e_all_pages/all_pages_first_js.mjs"></script>
-<script type=module src="/static/js/e_all_pages/all_pages_last.mjs"></script>
+<!-- Single entry point for all page scripts. Add scripts to the main location below -->
+{{ runScriptWithPageName({
+		"page_name": page_name,
+		"script_location": '/static/js/c_help_pages/init.mjs',
+}) }}
 
 {% endblock %}
 
