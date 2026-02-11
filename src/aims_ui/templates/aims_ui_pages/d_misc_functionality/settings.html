@@ -26,30 +26,11 @@
     {% include "aims_ui_pages/d_misc_functionality/settings_snippets/_settings_download.html" %}
 </div>
 
-<br>
+{# Include the HTML for showing older jobs in multiple match #}
+<div id="old-jobs-settings-container">
+    {% include "aims_ui_pages/d_misc_functionality/settings_snippets/_settings_old_jobs_multiple_match.html" %}
+</div>
 
-{# Add a setting for bulk matching, enabling older jobs to be displayed #}
-{% call onsQuestion({
-    "title": 'Show Older Jobs',
-    "description": 'On bulk matching pages, jobs expire after 7 days and you are no longer able to download them. However, if you wish to see the record and information about the submitted jobs, enable this setting.',
-    "legendIsQuestionTitle": true }) %}
-    {{ onsCheckboxes({
-        "name": "Request Details",
-        "checkboxesLabel": "",
-        "dontWrap": true,
-        "checkboxes": [
-            {
-                "id": "show-old-jobs-checkbox",
-                "value": "true",
-                "label": {
-                    "text": "Show Old Jobs",
-                    "description": "All jobs for your user will be shown in the bulk matching pages",
-                }
-            },
-        ]
-        })
-    }}
-{% endcall %}
 
 {# SET VISIBILITY OF REQUEST SPECIFIC RESULTS #}
 {% call onsQuestion({
