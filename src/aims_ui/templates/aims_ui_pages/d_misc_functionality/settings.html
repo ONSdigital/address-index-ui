@@ -46,6 +46,12 @@
     {% include "aims_ui_pages/d_misc_functionality/settings_snippets/_settings_column_widths.html" %}
 </div>
 
+{# Include the HTML for reset settings button #}
+<div id="reset-settings-container">
+    {% include "aims_ui_pages/d_misc_functionality/settings_snippets/_settings_reset_button.html" %}
+</div>
+
+
 <!-- Single entry point for all page scripts. Add scripts to the main location below -->
 {{ runScriptWithPageName({
 		"page_name": page_name,
