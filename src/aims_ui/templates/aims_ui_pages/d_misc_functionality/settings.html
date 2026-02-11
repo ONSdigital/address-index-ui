@@ -36,33 +36,11 @@
     {% include "aims_ui_pages/d_misc_functionality/settings_snippets/_settings_additional_request_details.html" %}
 </div>
 
-{# SET PAF OR NAG TITLE PREFERENCE #}
-{% call onsQuestion({
-    "title": 'How would you like PAF or NAG titles prioritised on result cards? (not on multiple match)',
-    "description": 'When examining an address, you can specify whether to prioritize the PAF or NAG version of the address below. If PAF or NAG is chosen, addresses will be labeled as (PAF Formatting) or (NAG Formatting) respectively. However, note that each address always has at least one NAG version, which serves as the default format. Therefore, if PAF is not available, the address will automatically default to (NAG Formatting).',
-    "legendIsQuestionTitle": true }) %}
-{{ onsRadios({
-    "name": 'paf-nag-address-preference',
-    "dontWrap": true,
-    "radios": [
-     {
-        "id": 'address-card-title-paf-radio',
-        "value": "true",
-        "label": {"text": 'Prioritise PAF address format'}
-     },
-     {
-        "id": 'address-card-title-nag-radio',
-        "value": "true",
-        "label": { "text": 'Prioritise NAG address format' }
-     },
-     {
-        "id": 'address-card-title-default-radio',
-        "value": 'default',
-        "label": { "text": 'Default Address Format'}
-     }
-    ]
-    }) }}
-{% endcall %}
+{# Include the HTML for showing PAF or NAG titles as the default in the title card #}
+<div id="paf-or-nag-title-card-settings-container">
+    {% include "aims_ui_pages/d_misc_functionality/settings_snippets/_settings_paf_or_nag_title_card.html" %}
+</div>
+
 
 
 {# SET COLUMN WIDTH PREFERENCE#}
