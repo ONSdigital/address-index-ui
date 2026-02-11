@@ -1,0 +1,24 @@
+{# Template to setup the reset button #}
+
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/input/_macro.njk" import onsInput %}
+
+<link rel="stylesheet" href="/static/css/d_misc_functionality/page_settings/reset_settings.css">
+
+<div id="reset-input-button-container">
+    <div id="complete-container-for-reset-settings-input">
+        {{ onsInput({
+            "id": "reset-settings-confirmation-input",
+            "label": {
+            "text": "Please type 'RESET' to confirm" }
+        }) }}
+    </div>
+
+    <div id="complete-container-for-reset-settings-button">
+        {{ onsButton({
+            "id": 'reset-settings-button',
+            "text": 'Reset Settings',
+            "variants": 'disabled' }) 
+        }}
+    </div>
+</div>
