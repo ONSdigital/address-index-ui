@@ -3,7 +3,7 @@ import { jest, test, expect, describe, beforeAll } from '@jest/globals';
 let helpers;
 
 beforeAll(async () => {
-  helpers = await import('../../../../../../src/aims_ui/static/js/f_helpers/local_storage_page_helpers.mjs');
+  helpers = await import('../../../../../src/aims_ui/static/js/f_helpers/local_storage_page_helpers.mjs');
 
   jest.spyOn(helpers, 'getGlobalValues').mockReturnValue({
     latestEpochNumber: '111',
