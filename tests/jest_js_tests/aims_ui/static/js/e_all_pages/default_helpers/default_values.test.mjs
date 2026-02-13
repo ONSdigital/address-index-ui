@@ -1,18 +1,27 @@
 import { jest, test, expect, describe, beforeAll } from '@jest/globals';
 
-let helpers;
+let getDefaultGlobalValues;
 
 beforeAll(async () => {
-  helpers = await import('../../../../../src/aims_ui/static/js/f_helpers/local_storage_page_helpers.mjs');
+  // Mock the dependency that getLatestEpochNumber uses
+  await jest.unstable_mockModule(
+    '../../../../../../../src/aims_ui/static/js/f_helpers/local_storage_page_helpers.mjs',
+    () => ({
+      getGlobalValues: jest.fn(() => ({
+        latestEpochNumber: '99', // Set value 'getGlobalValues' will be
+      })),
+    }),
+  );
 
-  jest.spyOn(helpers, 'getGlobalValues').mockReturnValue({
-    latestEpochNumber: '111',
-  });
+  // Import the module under test, after the mock is in place
+  ({ getDefaultGlobalValues } = await import(
+    '../../../../../../../src/aims_ui/static/js/e_all_pages/default_helpers/default_values.mjs' // adjust path to your defaults file
+  ));
 });
 
 describe('getDefaultGlobalValues', () => {
   test('has all expected keys and expected contents', () => {
-    const defaults = helpers.getDefaultGlobalValues();
+    const defaults = getDefaultGlobalValues();
 
     // Key presence 
     const expectedTopLevelKeys = [
