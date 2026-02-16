@@ -15,7 +15,7 @@ beforeAll(async () => {
 
   // Import the module under test, after the mock is in place
   ({ getDefaultGlobalValues } = await import(
-    '../../../../../../../src/aims_ui/static/js/e_all_pages/default_helpers/default_values.mjs' // adjust path to your defaults file
+    '../../../../../../../src/aims_ui/static/js/e_all_pages/default_helpers/default_values.mjs'
   ));
 });
 
