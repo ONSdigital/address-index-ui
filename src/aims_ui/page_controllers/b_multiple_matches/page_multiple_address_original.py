@@ -14,8 +14,7 @@ from .utils.multiple_match_file_upload_utils import check_valid_upload, validate
 from .utils.multiple_match_utils import get_results_display_type
 from .utils.submit_multiple_match_from_singlesearch import (
     multiple_address_match_from_singlesearch_display,
-    multiple_address_match_from_singlesearch_download
-)
+    multiple_address_match_from_singlesearch_download)
 
 page_name = 'multiple_address_original'
 
