@@ -1,6 +1,6 @@
 from flask import Flask
 
-from src.aims_ui.config import base as config_base
+from aims_ui.config import base as config_base
 
 
 def get_base_config_dict():
