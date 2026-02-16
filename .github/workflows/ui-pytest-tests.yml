@@ -5,11 +5,11 @@ permissions:
 on:
   push:
     branches:
-      - '/**'
+      - '**'
       - '!github-action-test-workflow'
   pull_request:
     branches:
-      - '/**'
+      - '**'
       - '!github-action-test-workflow'
 
 jobs:
