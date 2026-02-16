@@ -70,8 +70,9 @@ def uprn_multiple_match():
   except ConnectionError as e:
     return error_page_connection(page_name, all_user_input, e)
 
-  return send_file(full_results,
-                   mimetype='text/csv',
-                   download_name=f'result_size_{line_count}.csv',
-                   as_attachment=True,
-                   )
+  return send_file(
+      full_results,
+      mimetype='text/csv',
+      download_name=f'result_size_{line_count}.csv',
+      as_attachment=True,
+  )
