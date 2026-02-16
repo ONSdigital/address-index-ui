@@ -70,8 +70,8 @@ jobs:
       run: |
         python3 wsgi.py &
 
-    # Run Python tests
-    - name: Run Python tests
+    # Run Python Playwright Tests
+    - name: Run Python Playwright Tests
       run: |
         python3 -m pytest tests/pytest_tests -n 4
 
