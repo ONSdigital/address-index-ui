@@ -66,7 +66,8 @@ def adjust_parameter_for_each_page(params, called_from_page_name):
     params['verbose'] = 'true'
   
   if (called_from_page_name == 'typeahead'):
-    # Enforce verbose to True for typeahead lookups for speed
+    # When a typeahead lookup occurs from serverside, this is a UPRN lookup as
+    # the address has already been selected from the typeahead dropdown
     params['verbose'] = 'true'
 
   
