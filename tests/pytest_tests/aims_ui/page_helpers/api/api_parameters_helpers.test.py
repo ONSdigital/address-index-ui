@@ -7,7 +7,7 @@ ACCEPTABLE_PARAMETERS = [
     'lat', 'lon', 'historical', 'matchthreshold', 'verbose', 'epoch', 'eboost',
     'nboost', 'sboost', 'wboost', 'lboost', 'mboost', 'jboost', 'pafdefault',
     'fallback', 'highlight', 'favourpaf', 'favourwelsh',
-    'includeauxiliarysearch', 'limitperaddress', 'groupfullpostcodes'
+    , 'limitperaddress', 'groupfullpostcodes'
 ]
 
 
