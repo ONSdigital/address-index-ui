@@ -32,26 +32,6 @@ except OSError:
 classifications = None
 
 
-def get_classifications_cached():
-  global start_time, classifications, last_pop_time
-  if classifications is None:
-    # Populate classifications list at start of program
-    last_pop_time = time.time()
-    classifications = get_classifications()
-    return classifications
-  else:
-    current_time = time.time()
-    time_since_last_population = current_time - last_pop_time
-    # More than 60 seconds since last API population of classifications
-    if time_since_last_population > 60:
-      classifications = get_classifications()
-      last_pop_time = time.time()
-      return classifications
-    else:
-      # Use previously cached results
-      return classifications
-
-
 # Must import here to avoid circular imports
 from aims_ui.page_helpers.api.api_interaction import get_epoch_options
 
@@ -118,9 +98,6 @@ from aims_ui.page_controllers.c_help_pages.page_help import help
 
 # Setup standalone pages (in root directory)
 from aims_ui.page_address_info import address_info
-
-# Import classifications here to avoid circular import
-from aims_ui.page_helpers.api.api_interaction import get_classifications
 
 # Setup API forwarding routes used to bypass crossorigin issues
 from aims_ui.api_access.routes.uprn_route import uprn_route

@@ -6,12 +6,13 @@ import xml.etree.ElementTree as ET
 
 import jwt
 import requests
+from requests.models import Response
 
 from aims_ui import app
 from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_api_utils import get_multiple_match_api_header
 from aims_ui.page_helpers.api.api_helpers import get_header, job_api
 from aims_ui.page_helpers.api.api_parameters_helpers import cleanup_parameters, format_params_as_string
-from aims_ui.page_helpers.classification_utilities import check_valid_classification
+from aims_ui.app_helpers.classification_utils.validation import classification_is_valid
 from aims_ui.page_helpers.google_utils import get_username
 
 
@@ -42,11 +43,41 @@ def api(url, called_from, all_user_input):
       headers=header,
   )
 
+  print('\n\nResponse details are as follows - \n\n Status Code: ' + str(r.status_code) + ' - \n\n' + r.reason + '\n\n | Request Headers: ' + str(r.request.headers) + '\n\n | Response Headers: ' + str(r.headers) + '\n\n | Response Body: ' + r.text)
+
   # Check classification, simulate HTTP error if it's invalid - otherwise return r
-  r = check_valid_classification(all_user_input, r)
+  user_classification = all_user_input.get('classificationfilter', '')
+  if not classification_is_valid(user_classification):
+    return add_classification_error_to_response_object(r)
 
   return r
 
+def add_classification_error_to_response_object(response):
+  """Given an API response, inject the error state we would expect for an invalid result."""
+  errors_array = [{
+      'code':
+      15,
+      'message':
+      'Invalid classification filter value provided. Filters must exactly match a classification code (see /classifications) or use a pattern match such as RD*. There are also four presets: residential, commercial, workplace, and educational.'
+  }]
+
+  # Get the existing content
+  content = response.json()
+
+  # Update the 'status' and 'errors' fields
+  content['status'] = {'code': 400, 'message': 'Bad Request'}
+  content['errors'] = errors_array
+
+  # Create a new Response object
+  new_response = Response()
+  new_response.status_code = 400
+  new_response.headers = response.headers
+  new_response._content = json.dumps(content).encode('utf-8')
+  new_response.encoding = 'utf-8'
+  new_response.url = response.url
+  new_response.request = response.request
+
+  return new_response
 
 def get_response_attributes(r):
   """ Return high level response attributes """
@@ -193,75 +224,6 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
                'Request details: ' + str(log_message))
 
   return r
-
-
-def handle_ancillary_duplicates(class_list):
-  """ Residential, Commercial, Militaery and Land have duplicate ancillary descriptions"""
-  # Replace the english decriptions with additional hierarchey descriptions
-
-  codes_and_replacemnt_labels = [
-      {
-          'code': 'RB',
-          'label': 'Residential Ancillary Building'
-      },
-      {
-          'code': 'LB',
-          'label': 'Land Ancillary Building'
-      },
-      {
-          'code': 'CB',
-          'label': 'Commercial Ancillary Building'
-      },
-      {
-          'code': 'MB',
-          'label': 'Military Ancillary Building'
-      },
-  ]
-
-  for class_option in class_list:
-    for replacement in codes_and_replacemnt_labels:
-      aquired_code = class_option.get('code', '')
-
-      if replacement.get('code') == aquired_code:
-        class_option['label'] = replacement.get('label')
-
-  return class_list
-
-
-def get_classifications():
-  """Return classification endpoint result as json pairs"""
-  # All classification list aquesition should come through here
-
-  classifications_api_url = app.config.get('API_URL') + '/classifications'
-  header = get_header(username=False)
-
-  if os.getenv("FLASK_ENV") != "testing":
-    try:
-      class_call = requests.get(
-          classifications_api_url,
-          headers=header,
-      )
-    except:
-      logging.warning(
-          'No Class Code endpoint found, falling back to Preset Options')
-      class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
-
-      return handle_ancillary_duplicates(class_list)
-
-    if class_call.status_code != 200:
-      logging.warning(
-          'No Class Code endpoint found, falling back to Preset Options')
-      class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
-
-      return handle_ancillary_duplicates(class_list)
-
-    # If there were no errors reaching the endpoint
-    class_list = json.loads(class_call.text).get('classifications')
-  else:
-    class_list = app.config.get('DEFAULT_CLASSIFICATION_CLASS_LIST')
-
-  return handle_ancillary_duplicates(class_list)
-
 
 def get_epoch_options():
   """Get the result of the Epoch Endpoint and format for radio button use"""

@@ -1,4 +1,4 @@
-from .utilities.classifications import get_classification_list
+from aims_ui.app_helpers.classification_utils.hierarchy import get_classification_list_as_string
 from .utilities.logicalStatusUtils import getFullLpiLogicalStatusInfo
 from .utilities.sibling_lookup import getHierarchy
 
@@ -220,7 +220,7 @@ class AddressAttribute():
         }
       return {'latitude': 'na', 'longitude': 'na'}
     if self.name == 'classificationCodeList':
-      return get_classification_list(classification_code)
+      return get_classification_list_as_string(classification_code)
     if self.name == 'nag':
       return Nag(self.raw_value)
     if self.name == 'paf':
