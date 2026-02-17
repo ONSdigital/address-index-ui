@@ -1,7 +1,7 @@
 import os
 import urllib
 
-from aims_ui.page_helpers.classification_utilities import check_reverse_classification
+from aims_ui.app_helpers.classification_utils.validation import get_full_classification_for_code_or_label
 
 
 def remove_non_existant_parameters(params):
@@ -79,7 +79,7 @@ def adjust_params_for_all_pages(params):
   # Do a reverse classification lookup if the classification filter is present
   if 'classificationfilter' in params:
     entered_classification = params['classificationfilter']
-    classification = check_reverse_classification(entered_classification)
+    classification = get_full_classification_for_code_or_label(entered_classification)
     params['classificationfilter'] = classification
 
   # Ensure historical is never None, default to False
