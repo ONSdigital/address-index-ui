@@ -6,8 +6,8 @@ ACCEPTABLE_PARAMETERS = [
     'input', 'name', 'offset', 'limit', 'classificationfilter', 'rangekm',
     'lat', 'lon', 'historical', 'matchthreshold', 'verbose', 'epoch', 'eboost',
     'nboost', 'sboost', 'wboost', 'lboost', 'mboost', 'jboost', 'pafdefault',
-    'fallback', 'highlight', 'favourpaf', 'favourwelsh',
-    'limitperaddress', 'groupfullpostcodes'
+    'fallback', 'highlight', 'favourpaf', 'favourwelsh', 'limitperaddress',
+    'groupfullpostcodes'
 ]
 
 

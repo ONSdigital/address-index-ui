@@ -33,12 +33,13 @@ def parse_classification_csv_content():
 
 def get_classification_file_content_as_dict():
   """ Get the content of the classifications CSV as a dict """
-  # In the format [{'code': 'C', 'label': 'Commercial'}, ...]
+  # In the format [{'code': 'C', 'label': 'Commercial' ...} ...]
 
   classification_csv_content = parse_classification_csv_content()
 
   # Currently in the format: {'Concatenated': 'ZW99TP', 'Class_Desc': 'Temple', 'Pr...
-  # We want to convert to: {'code': 'ZW99TP', 'label': 'Temple'}
+  # Change the 'concatenated' key to 'code' and 'Class_Desc' to 'label'
+  # Also return with ancillary duplicates handled
 
   classification_dict = []
   for row in classification_csv_content:
