@@ -45,10 +45,19 @@ export function init(page_name) {
       bubbles: true
     });
 
+    // Define new event to refresh the "we matched" title
+    const refreshWeMatchedTitleEvent = new CustomEvent('refreshWeMatchedTitle', {
+      detail: page_name,
+      bubbles: true
+    });
+
+
+
     // Dispatch the events to refresh address cards, download button and reset the input filters
     console.debug('Dispatching the refresh events from clear button');
     clearButton.dispatchEvent(refreshAddressInfoCardsEvent);
     clearButton.dispatchEvent(refreshDownloadButtonEvent);
     clearButton.dispatchEvent(resetInputFiltersEvent);
+    clearButton.dispatchEvent(refreshWeMatchedTitleEvent);
   });
 }
