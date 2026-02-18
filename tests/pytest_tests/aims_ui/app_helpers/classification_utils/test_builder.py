@@ -105,13 +105,7 @@ def test_handle_ancillary_duplicates(code, expected_label):
       f"Expected '{expected_label}' but got '{obj['label']}'")
 
 
-
-
-@pytest.mark.parametrize('list_to_test', [
-    return_expected_csv_content_with_updated_key_names_and_handled_ancillary_values(
-    )
-])
-def test_classification_file_content_as_dict(list_to_test):
+def test_classification_file_content_as_dict():
   """
     Test that the classification file content is correctly transformed into a dict.
     - Each object should have the expected keys
@@ -121,7 +115,7 @@ def test_classification_file_content_as_dict(list_to_test):
     """
 
   known_good_list = get_classification_file_content_as_dict()
-  expected_list = list_to_test
+  expected_list = return_expected_csv_content_with_updated_key_names_and_handled_ancillary_values()
 
   # Convert to dict keyed by 'code' for easier comparison
   actual_by_code = {obj['code']: obj for obj in known_good_list}
