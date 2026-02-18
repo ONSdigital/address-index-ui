@@ -6,14 +6,11 @@ def get_full_classification_for_code_or_label(classification):
 
   classification_dict = get_classification_file_content_as_dict()
 
-  # Standardise the provided classification - remove whitespace and enforce uppercase
-  classification_code_or_label = classification.strip().upper()
-
-  # Check that the classification code is valid
-  if not classification_is_valid(classification_code_or_label):
-    # Classification code is not valid, return original input and log error
-    logging.error(f'Invalid classification code or label provided: {classification}')
-    return classification
+  # Standardise the provided classification:
+  # remove whitespace, enforce uppercase, remove "*"
+  classification_code_or_label = classification.strip()
+  classification_code_or_label = classification_code_or_label.upper()
+  classification_code_or_label = classification_code_or_label.replace('*', '')
 
   code_to_return = classification_code_or_label
   for classification in classification_dict:
@@ -34,22 +31,19 @@ def get_full_classification_for_code_or_label(classification):
 
   return code_to_return
 
-def classification_is_valid(classification_to_check):
-  """ Explicit check against full list of classifications as API only checks strucutre """
-  # Checks codes AND labels, accepts a match as valid (non case sensitive)
+def classification_is_valid(classification_code_or_label):
+  """ Given a clasification code or label, check it's valid """
+  classification_code_to_check = get_full_classification_for_code_or_label(classification_code_or_label)
+  # Now if it was entered with * or without, it will now have one
+  # If the user entered a string version, it will now be the code
 
   # Get the classification dict [{'code': 'C', 'label': 'Commercial'}, ...]
   classifications_dict = get_classification_file_content_as_dict()
 
-  # Append the label and code for each classification into a single, lowercase list
-  full_classifications = [''] # Include blank as valid option
-  for classification_and_label in classifications_dict:
-    full_classifications.append(classification_and_label.get('code', '').lower())
-    full_classifications.append(classification_and_label.get('label', '').lower())
+  # Create full list of classifications
+  full_classifications = [ x.get('code') + '*' for x in classifications_dict ]
+  full_classifications.append('') # Include blank as valid option
   
-  classification_to_check = classification_to_check.lower()
-  
-  if classification_to_check.lower() in full_classifications:
+  if classification_code_to_check in full_classifications:
     return True
   return False
-
