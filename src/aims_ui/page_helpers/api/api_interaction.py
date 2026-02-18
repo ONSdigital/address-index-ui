@@ -43,14 +43,12 @@ def api(url, called_from, all_user_input):
       headers=header,
   )
 
-  print('\n\nResponse details are as follows - \n\n Status Code: ' + str(r.status_code) + ' - \n\n' + r.reason + '\n\n | Request Headers: ' + str(r.request.headers) + '\n\n | Response Headers: ' + str(r.headers) + '\n\n | Response Body: ' + r.text)
-
   # Check classification, simulate HTTP error if it's invalid - otherwise return r
   user_classification = all_user_input.get('classificationfilter', '')
-  if not classification_is_valid(user_classification):
-    return add_classification_error_to_response_object(r)
-
-  return r
+  if classification_is_valid(user_classification):
+    return r
+  
+  return add_classification_error_to_response_object(r)
 
 def add_classification_error_to_response_object(response):
   """Given an API response, inject the error state we would expect for an invalid result."""
