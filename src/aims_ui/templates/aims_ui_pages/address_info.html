@@ -78,12 +78,13 @@
     </div></div>
 
   {# Add the clerical info panel #}
-  {% call onsPanel( {"type": 'warn' }) %}
-    Hover your cursor over the "Name" field to see descriptions
-  {% endcall %}
-
   {# Used to be customClericalData #}
   {% set content %}
+
+    {% call onsPanel( {"type": 'warn' }) %}
+      Hover your cursor over the "Attribute" field to see descriptions
+    {% endcall %}
+
     <div class="address-card-pseudo-class">
       {# Add the table template #}
       {{ subCustomAttributesTable() }} 
