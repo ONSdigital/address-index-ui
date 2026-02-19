@@ -13690,3 +13690,2893 @@ def return_expected_csv_content_with_updated_key_names_and_handled_ancillary_val
   }]
 
   return expected_json
+
+
+# In the format [{'code': 'ZW99TP', 'class_list_string': '[Object of Interest] [Place Of Worship] [Temple]'}, ...]
+def return_classifications_code_and_expected_string_pairs():
+  classification_codes_and_string_pairs = [{
+      'code': 'C',
+      'class_list_string': '[Commercial]'
+  }, {
+      'code':
+      'CA',
+      'class_list_string':
+      '[Commercial] [Agricultural]'
+  }, {
+      'code':
+      'CA01',
+      'class_list_string':
+      '[Commercial] [Agricultural] [Farm / Non-Residential Associated Building]'
+  }, {
+      'code':
+      'CA02',
+      'class_list_string':
+      '[Commercial] [Agricultural] [Fishery]'
+  }, {
+      'code':
+      'CA02FF',
+      'class_list_string':
+      '[Commercial] [Agricultural] [Fishery] [Fish Farming]'
+  }, {
+      'code':
+      'CA02FH',
+      'class_list_string':
+      '[Commercial] [Agricultural] [Fishery] [Fish Hatchery]'
+  }, {
+      'code':
+      'CA02FP',
+      'class_list_string':
+      '[Commercial] [Agricultural] [Fishery] [Fish Processing]'
+  }, {
+      'code':
+      'CA02OY',
+      'class_list_string':
+      '[Commercial] [Agricultural] [Fishery] [Oyster / Mussel Bed]'
+  }, {
+      'code':
+      'CA03',
+      'class_list_string':
+      '[Commercial] [Agricultural] [Horticulture]'
+  }, {
+      'code':
+      'CA03SH',
+      'class_list_string':
+      '[Commercial] [Agricultural] [Horticulture] [Smallholding]'
+  }, {
+      'code':
+      'CA03VY',
+      'class_list_string':
+      '[Commercial] [Agricultural] [Horticulture] [Vineyard]'
+  }, {
+      'code':
+      'CA03WB',
+      'class_list_string':
+      '[Commercial] [Agricultural] [Horticulture] [Watercress Bed]'
+  }, {
+      'code':
+      'CA04',
+      'class_list_string':
+      '[Commercial] [Agricultural] [Slaughter House / Abattoir]'
+  }, {
+      'code':
+      'CB',
+      'class_list_string':
+      '[Commercial] [Ancillary Building]'
+  }, {
+      'code':
+      'CC',
+      'class_list_string':
+      '[Commercial] [Community Services]'
+  }, {
+      'code':
+      'CC02',
+      'class_list_string':
+      '[Commercial] [Community Services] [Law Court]'
+  }, {
+      'code':
+      'CC03',
+      'class_list_string':
+      '[Commercial] [Community Services] [Prison]'
+  }, {
+      'code':
+      'CC03HD',
+      'class_list_string':
+      '[Commercial] [Community Services] [Prison] [HM Detention Centre]'
+  }, {
+      'code':
+      'CC03PR',
+      'class_list_string':
+      '[Commercial] [Community Services] [Prison] [HM Prison Service]'
+  }, {
+      'code':
+      'CC03SC',
+      'class_list_string':
+      '[Commercial] [Community Services] [Prison] [Secure Residential Accommodation]'
+  }, {
+      'code':
+      'CC04',
+      'class_list_string':
+      '[Commercial] [Community Services] [Public / Village Hall / Other Community Facility]'
+  }, {
+      'code':
+      'CC04YR',
+      'class_list_string':
+      '[Commercial] [Community Services] [Public / Village Hall / Other Community Facility] [Youth Recreational / Social Club]'
+  }, {
+      'code':
+      'CC05',
+      'class_list_string':
+      '[Commercial] [Community Services] [Public Convenience]'
+  }, {
+      'code':
+      'CC06',
+      'class_list_string':
+      '[Commercial] [Community Services] [Cemetery / Crematorium / Graveyard. In Current Use.]'
+  }, {
+      'code':
+      'CC06CB',
+      'class_list_string':
+      '[Commercial] [Community Services] [Cemetery / Crematorium / Graveyard. In Current Use.] [Columbarium]'
+  }, {
+      'code':
+      'CC06CN',
+      'class_list_string':
+      '[Commercial] [Community Services] [Cemetery / Crematorium / Graveyard. In Current Use.] [Crematorium]'
+  }, {
+      'code':
+      'CC06CR',
+      'class_list_string':
+      '[Commercial] [Community Services] [Cemetery / Crematorium / Graveyard. In Current Use.] [Chapel Of Rest]'
+  }, {
+      'code':
+      'CC06CY',
+      'class_list_string':
+      '[Commercial] [Community Services] [Cemetery / Crematorium / Graveyard. In Current Use.] [Cemetery]'
+  }, {
+      'code':
+      'CC06MC',
+      'class_list_string':
+      '[Commercial] [Community Services] [Cemetery / Crematorium / Graveyard. In Current Use.] [Military Cemetery]'
+  }, {
+      'code':
+      'CC06MY',
+      'class_list_string':
+      '[Commercial] [Community Services] [Cemetery / Crematorium / Graveyard. In Current Use.] [Mortuary]'
+  }, {
+      'code':
+      'CC07',
+      'class_list_string':
+      '[Commercial] [Community Services] [Church Hall / Religious Meeting Place / Hall]'
+  }, {
+      'code':
+      'CC08',
+      'class_list_string':
+      '[Commercial] [Community Services] [Community Service Centre / Office]'
+  }, {
+      'code':
+      'CC09',
+      'class_list_string':
+      '[Commercial] [Community Services] [Public Household Waste Recycling Centre (HWRC)]'
+  }, {
+      'code':
+      'CC10',
+      'class_list_string':
+      '[Commercial] [Community Services] [Recycling Site]'
+  }, {
+      'code':
+      'CC11',
+      'class_list_string':
+      '[Commercial] [Community Services] [CCTV]'
+  }, {
+      'code':
+      'CC12',
+      'class_list_string':
+      '[Commercial] [Community Services] [Job Centre]'
+  }, {
+      'code':
+      'CE',
+      'class_list_string':
+      '[Commercial] [Education]'
+  }, {
+      'code':
+      'CE01',
+      'class_list_string':
+      '[Commercial] [Education] [College]'
+  }, {
+      'code':
+      'CE01FE',
+      'class_list_string':
+      '[Commercial] [Education] [College] [Further Education]'
+  }, {
+      'code':
+      'CE01HE',
+      'class_list_string':
+      '[Commercial] [Education] [College] [Higher Education]'
+  }, {
+      'code':
+      'CE02',
+      'class_list_string':
+      '[Commercial] [Education] [Children’s Nursery / Crèche]'
+  }, {
+      'code':
+      'CE03',
+      'class_list_string':
+      '[Commercial] [Education] [Preparatory / First / Primary / Infant / Junior / Middle School]'
+  }, {
+      'code':
+      'CE03FS',
+      'class_list_string':
+      '[Commercial] [Education] [Preparatory / First / Primary / Infant / Junior / Middle School] [First School]'
+  }, {
+      'code':
+      'CE03IS',
+      'class_list_string':
+      '[Commercial] [Education] [Preparatory / First / Primary / Infant / Junior / Middle School] [Infant School]'
+  }, {
+      'code':
+      'CE03JS',
+      'class_list_string':
+      '[Commercial] [Education] [Preparatory / First / Primary / Infant / Junior / Middle School] [Junior School]'
+  }, {
+      'code':
+      'CE03MS',
+      'class_list_string':
+      '[Commercial] [Education] [Preparatory / First / Primary / Infant / Junior / Middle School] [Middle School]'
+  }, {
+      'code':
+      'CE03NP',
+      'class_list_string':
+      '[Commercial] [Education] [Preparatory / First / Primary / Infant / Junior / Middle School] [Non State Primary / Preparatory School]'
+  }, {
+      'code':
+      'CE03PS',
+      'class_list_string':
+      '[Commercial] [Education] [Preparatory / First / Primary / Infant / Junior / Middle School] [Primary School]'
+  }, {
+      'code':
+      'CE04',
+      'class_list_string':
+      '[Commercial] [Education] [Secondary / High School]'
+  }, {
+      'code':
+      'CE04NS',
+      'class_list_string':
+      '[Commercial] [Education] [Secondary / High School] [Non State Secondary School]'
+  }, {
+      'code':
+      'CE04SS',
+      'class_list_string':
+      '[Commercial] [Education] [Secondary / High School] [Secondary School]'
+  }, {
+      'code':
+      'CE05',
+      'class_list_string':
+      '[Commercial] [Education] [University]'
+  }, {
+      'code':
+      'CE06',
+      'class_list_string':
+      '[Commercial] [Education] [Special Needs Establishment.]'
+  }, {
+      'code':
+      'CE07',
+      'class_list_string':
+      '[Commercial] [Education] [Other Educational Establishment]'
+  }, {
+      'code':
+      'CH',
+      'class_list_string':
+      '[Commercial] [Hotel / Motel / Boarding / Guest House]'
+  }, {
+      'code':
+      'CH01',
+      'class_list_string':
+      '[Commercial] [Hotel / Motel / Boarding / Guest House] [Boarding / Guest House / Bed And Breakfast / Youth Hostel]'
+  }, {
+      'code':
+      'CH01YH',
+      'class_list_string':
+      '[Commercial] [Hotel / Motel / Boarding / Guest House] [Boarding / Guest House / Bed And Breakfast / Youth Hostel] [Youth Hostel]'
+  }, {
+      'code':
+      'CH02',
+      'class_list_string':
+      '[Commercial] [Hotel / Motel / Boarding / Guest House] [Holiday Let/Accomodation/Short-Term Let Other Than CH01]'
+  }, {
+      'code':
+      'CH03',
+      'class_list_string':
+      '[Commercial] [Hotel / Motel / Boarding / Guest House] [Hotel/Motel]'
+  }, {
+      'code':
+      'CI',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites]'
+  }, {
+      'code':
+      'CI01',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing]'
+  }, {
+      'code':
+      'CI01AW',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Aircraft Works]'
+  }, {
+      'code':
+      'CI01BB',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Boat Building]'
+  }, {
+      'code':
+      'CI01BR',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Brick Works]'
+  }, {
+      'code':
+      'CI01BW',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Brewery]'
+  }, {
+      'code':
+      'CI01CD',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Cider Manufacture]'
+  }, {
+      'code':
+      'CI01CM',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Chemical Works]'
+  }, {
+      'code':
+      'CI01CW',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Cement Works]'
+  }, {
+      'code':
+      'CI01DA',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Dairy Processing]'
+  }, {
+      'code':
+      'CI01DY',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Distillery]'
+  }, {
+      'code':
+      'CI01FL',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Flour Mill]'
+  }, {
+      'code':
+      'CI01FO',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Food Processing]'
+  }, {
+      'code':
+      'CI01GW',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Glassworks]'
+  }, {
+      'code':
+      'CI01MG',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Manufacturing]'
+  }, {
+      'code':
+      'CI01OH',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Oast House]'
+  }, {
+      'code':
+      'CI01OR',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Oil Refining]'
+  }, {
+      'code':
+      'CI01PG',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Pottery Manufacturing]'
+  }, {
+      'code':
+      'CI01PM',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Paper Mill]'
+  }, {
+      'code':
+      'CI01PW',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Printing Works]'
+  }, {
+      'code':
+      'CI01SR',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Sugar Refinery]'
+  }, {
+      'code':
+      'CI01SW',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Steel Works]'
+  }, {
+      'code':
+      'CI01TL',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Timber Mill]'
+  }, {
+      'code':
+      'CI01WN',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Winery]'
+  }, {
+      'code':
+      'CI01YD',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Factory/Manufacturing] [Shipyard]'
+  }, {
+      'code':
+      'CI02',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Mineral / Ore Working / Quarry / Mine]'
+  }, {
+      'code':
+      'CI02MA',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Mineral / Ore Working / Quarry / Mine] [Mineral Mining / Active]'
+  }, {
+      'code':
+      'CI02MD',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Mineral / Ore Working / Quarry / Mine] [Mineral Distribution / Storage]'
+  }, {
+      'code':
+      'CI02MP',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Mineral / Ore Working / Quarry / Mine] [Mineral Processing]'
+  }, {
+      'code':
+      'CI02OA',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Mineral / Ore Working / Quarry / Mine] [Oil / Gas Extraction / Active]'
+  }, {
+      'code':
+      'CI02QA',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Mineral / Ore Working / Quarry / Mine] [Mineral Quarrying / Open Extraction / Active]'
+  }, {
+      'code':
+      'CI03',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Workshop / Light Industrial]'
+  }, {
+      'code':
+      'CI03GA',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Workshop / Light Industrial] [Servicing Garage]'
+  }, {
+      'code':
+      'CI04',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Warehouse / Store / Storage Depot]'
+  }, {
+      'code':
+      'CI04CS',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Warehouse / Store / Storage Depot] [Crop Handling / Storage]'
+  }, {
+      'code':
+      'CI04PL',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Warehouse / Store / Storage Depot] [Postal Sorting / Distribution]'
+  }, {
+      'code':
+      'CI04SO',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Warehouse / Store / Storage Depot] [Solid Fuel Storage]'
+  }, {
+      'code':
+      'CI04TS',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Warehouse / Store / Storage Depot] [Timber Storage]'
+  }, {
+      'code':
+      'CI05',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Wholesale Distribution]'
+  }, {
+      'code':
+      'CI05SF',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Wholesale Distribution] [Solid Fuel Distribution]'
+  }, {
+      'code':
+      'CI05TD',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Wholesale Distribution] [Timber Distribution]'
+  }, {
+      'code':
+      'CI06',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Recycling Plant]'
+  }, {
+      'code':
+      'CI07',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Incinerator / Waste Transfer Station]'
+  }, {
+      'code':
+      'CI08',
+      'class_list_string':
+      '[Commercial] [Industrial Applicable to manufacturing, engineering, maintenance, storage / wholesale distribution and extraction sites] [Maintenance Depot]'
+  }, {
+      'code':
+      'CL',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises]'
+  }, {
+      'code':
+      'CL01',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Amusements]'
+  }, {
+      'code':
+      'CL01LP',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Amusements] [Leisure Pier]'
+  }, {
+      'code':
+      'CL02',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Holiday / Campsite]'
+  }, {
+      'code':
+      'CL02CG',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Holiday / Campsite] [Camping]'
+  }, {
+      'code':
+      'CL02CV',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Holiday / Campsite] [Caravanning]'
+  }, {
+      'code':
+      'CL02HA',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Holiday / Campsite] [Holiday Accommodation]'
+  }, {
+      'code':
+      'CL02HO',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Holiday / Campsite] [Holiday Centre]'
+  }, {
+      'code':
+      'CL02YC',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Holiday / Campsite] [Youth Organisation Camp]'
+  }, {
+      'code':
+      'CL03',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Library]'
+  }, {
+      'code':
+      'CL03RR',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Library] [Reading Room]'
+  }, {
+      'code':
+      'CL04',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Museum / Gallery]'
+  }, {
+      'code':
+      'CL04AC',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Museum / Gallery] [Art Centre / Gallery]'
+  }, {
+      'code':
+      'CL04AM',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Museum / Gallery] [Aviation Museum]'
+  }, {
+      'code':
+      'CL04HG',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Museum / Gallery] [Heritage Centre]'
+  }, {
+      'code':
+      'CL04IM',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Museum / Gallery] [Industrial Museum]'
+  }, {
+      'code':
+      'CL04MM',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Museum / Gallery] [Military Museum]'
+  }, {
+      'code':
+      'CL04NM',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Museum / Gallery] [Maritime Museum]'
+  }, {
+      'code':
+      'CL04SM',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Museum / Gallery] [Science Museum]'
+  }, {
+      'code':
+      'CL04TM',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Museum / Gallery] [Transport Museum]'
+  }, {
+      'code':
+      'CL06',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre]'
+  }, {
+      'code':
+      'CL06AH',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Athletics Facility]'
+  }, {
+      'code':
+      'CL06BF',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Bowls Facility]'
+  }, {
+      'code':
+      'CL06CK',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Cricket Facility]'
+  }, {
+      'code':
+      'CL06CU',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Curling Facility]'
+  }, {
+      'code':
+      'CL06DS',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Diving / Swimming Facility]'
+  }, {
+      'code':
+      'CL06EQ',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Equestrian Sports Facility]'
+  }, {
+      'code':
+      'CL06FB',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Football Facility]'
+  }, {
+      'code':
+      'CL06FI',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Fishing / Angling Facility]'
+  }, {
+      'code':
+      'CL06GF',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Golf Facility]'
+  }, {
+      'code':
+      'CL06GL',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Gliding Facility]'
+  }, {
+      'code':
+      'CL06GR',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Greyhound Racing Facility]'
+  }, {
+      'code':
+      'CL06HF',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Hockey Facility]'
+  }, {
+      'code':
+      'CL06HR',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Horse Racing Facility]'
+  }, {
+      'code':
+      'CL06HV',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Historic Vessel / Aircraft / Vehicle]'
+  }, {
+      'code':
+      'CL06LS',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Activity / Leisure / Sports Centre]'
+  }, {
+      'code':
+      'CL06ME',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Model Sports Facility]'
+  }, {
+      'code':
+      'CL06MF',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Motor Sports Facility]'
+  }, {
+      'code':
+      'CL06PF',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Playing Field]'
+  }, {
+      'code':
+      'CL06QS',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Racquet Sports Facility]'
+  }, {
+      'code':
+      'CL06RF',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Rugby Facility]'
+  }, {
+      'code':
+      'CL06RG',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Recreation Ground]'
+  }, {
+      'code':
+      'CL06SI',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Shinty Facility]'
+  }, {
+      'code':
+      'CL06SK',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Skateboarding Facility]'
+  }, {
+      'code':
+      'CL06SX',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Civilian Firing Facility]'
+  }, {
+      'code':
+      'CL06TB',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Tenpin Bowling Facility]'
+  }, {
+      'code':
+      'CL06TN',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Public Tennis Court]'
+  }, {
+      'code':
+      'CL06WA',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Water Sports Facility]'
+  }, {
+      'code':
+      'CL06WP',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Winter Sports Facility]'
+  }, {
+      'code':
+      'CL06WY',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Wildlife Sports Facility]'
+  }, {
+      'code':
+      'CL06YF',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Indoor / Outdoor Leisure / Sporting Activity / Centre] [Cycling Sports Facility]'
+  }, {
+      'code':
+      'CL07',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Bingo Hall / Cinema / Conference / Exhibition Centre / Theatre / Concert Hall]'
+  }, {
+      'code':
+      'CL07CI',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Bingo Hall / Cinema / Conference / Exhibition Centre / Theatre / Concert Hall] [Cinema]'
+  }, {
+      'code':
+      'CL07EN',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Bingo Hall / Cinema / Conference / Exhibition Centre / Theatre / Concert Hall] [Entertainment Complex]'
+  }, {
+      'code':
+      'CL07EX',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Bingo Hall / Cinema / Conference / Exhibition Centre / Theatre / Concert Hall] [Conference / Exhibition Centre]'
+  }, {
+      'code':
+      'CL07TH',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Bingo Hall / Cinema / Conference / Exhibition Centre / Theatre / Concert Hall] [Theatre]'
+  }, {
+      'code':
+      'CL08',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Zoo / Theme Park]'
+  }, {
+      'code':
+      'CL08AK',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Zoo / Theme Park] [Amusement Park]'
+  }, {
+      'code':
+      'CL08AQ',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Zoo / Theme Park] [Aquatic Attraction]'
+  }, {
+      'code':
+      'CL08MX',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Zoo / Theme Park] [Model Village Site]'
+  }, {
+      'code':
+      'CL08WZ',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Zoo / Theme Park] [Wildlife / Zoological Park]'
+  }, {
+      'code':
+      'CL09',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Beach Hut (Recreational, Non-Residential Use Only)]'
+  }, {
+      'code':
+      'CL10',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Licensed Private Members’ Club]'
+  }, {
+      'code':
+      'CL10RE',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Licensed Private Members’ Club] [Recreational / Social Club]'
+  }, {
+      'code':
+      'CL11',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Arena / Stadium]'
+  }, {
+      'code':
+      'CL11SD',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Arena / Stadium] [Stadium]'
+  }, {
+      'code':
+      'CL11SJ',
+      'class_list_string':
+      '[Commercial] [Leisure - Applicable to recreational sites and enterprises] [Arena / Stadium] [Showground]'
+  }, {
+      'code':
+      'CM',
+      'class_list_string':
+      '[Commercial] [Medical]'
+  }, {
+      'code':
+      'CM01',
+      'class_list_string':
+      '[Commercial] [Medical] [Dentist]'
+  }, {
+      'code':
+      'CM02',
+      'class_list_string':
+      '[Commercial] [Medical] [General Practice Surgery / Clinic]'
+  }, {
+      'code':
+      'CM02HC',
+      'class_list_string':
+      '[Commercial] [Medical] [General Practice Surgery / Clinic] [Health Centre]'
+  }, {
+      'code':
+      'CM02HL',
+      'class_list_string':
+      '[Commercial] [Medical] [General Practice Surgery / Clinic] [Health Care Services]'
+  }, {
+      'code':
+      'CM03',
+      'class_list_string':
+      '[Commercial] [Medical] [Hospital / Hospice]'
+  }, {
+      'code':
+      'CM03HI',
+      'class_list_string':
+      '[Commercial] [Medical] [Hospital / Hospice] [Hospice]'
+  }, {
+      'code':
+      'CM03HP',
+      'class_list_string':
+      '[Commercial] [Medical] [Hospital / Hospice] [Hospital]'
+  }, {
+      'code':
+      'CM04',
+      'class_list_string':
+      '[Commercial] [Medical] [Medical / Testing / Research Laboratory]'
+  }, {
+      'code':
+      'CM05',
+      'class_list_string':
+      '[Commercial] [Medical] [Professional Medical Service]'
+  }, {
+      'code':
+      'CM05ZS',
+      'class_list_string':
+      '[Commercial] [Medical] [Professional Medical Service] [Assessment / Development Services]'
+  }, {
+      'code':
+      'CM06',
+      'class_list_string':
+      '[Commercial] [Medical] [Pharmacy]'
+  }, {
+      'code':
+      'CN',
+      'class_list_string':
+      '[Commercial] [Animal Centre]'
+  }, {
+      'code':
+      'CN01',
+      'class_list_string':
+      '[Commercial] [Animal Centre] [Cattery / Kennel]'
+  }, {
+      'code':
+      'CN02',
+      'class_list_string':
+      '[Commercial] [Animal Centre] [Animal Services]'
+  }, {
+      'code':
+      'CN02AX',
+      'class_list_string':
+      '[Commercial] [Animal Centre] [Animal Services] [Animal Quarantining]'
+  }, {
+      'code':
+      'CN03',
+      'class_list_string':
+      '[Commercial] [Animal Centre] [Equestrian]'
+  }, {
+      'code':
+      'CN03HB',
+      'class_list_string':
+      '[Commercial] [Animal Centre] [Equestrian] [Horse Racing / Breeding Stable]'
+  }, {
+      'code':
+      'CN03SB',
+      'class_list_string':
+      '[Commercial] [Animal Centre] [Equestrian] [Commercial Stabling / Riding]'
+  }, {
+      'code':
+      'CN04',
+      'class_list_string':
+      '[Commercial] [Animal Centre] [Vet / Animal Medical Treatment]'
+  }, {
+      'code':
+      'CN05',
+      'class_list_string':
+      '[Commercial] [Animal Centre] [Animal / Bird / Marine Sanctuary]'
+  }, {
+      'code':
+      'CN05AN',
+      'class_list_string':
+      '[Commercial] [Animal Centre] [Animal / Bird / Marine Sanctuary] [Animal Sanctuary]'
+  }, {
+      'code':
+      'CN05MR',
+      'class_list_string':
+      '[Commercial] [Animal Centre] [Animal / Bird / Marine Sanctuary] [Marine Sanctuary]'
+  }, {
+      'code':
+      'CO',
+      'class_list_string':
+      '[Commercial] [Office]'
+  }, {
+      'code':
+      'CO01',
+      'class_list_string':
+      '[Commercial] [Office] [Office / Work Studio]'
+  }, {
+      'code':
+      'CO01EM',
+      'class_list_string':
+      '[Commercial] [Office] [Office / Work Studio] [Embassy /, High Commission / Consulate]'
+  }, {
+      'code':
+      'CO01FM',
+      'class_list_string':
+      '[Commercial] [Office] [Office / Work Studio] [Film Studio]'
+  }, {
+      'code':
+      'CO01GV',
+      'class_list_string':
+      '[Commercial] [Office] [Office / Work Studio] [Central Government Service]'
+  }, {
+      'code':
+      'CO01LG',
+      'class_list_string':
+      '[Commercial] [Office] [Office / Work Studio] [Local Government Service]'
+  }, {
+      'code':
+      'CO02',
+      'class_list_string':
+      '[Commercial] [Office] [Broadcasting (TV / Radio)]'
+  }, {
+      'code':
+      'CR',
+      'class_list_string':
+      '[Commercial] [Retail]'
+  }, {
+      'code':
+      'CR01',
+      'class_list_string':
+      '[Commercial] [Retail] [Bank / Financial Service]'
+  }, {
+      'code':
+      'CR02',
+      'class_list_string':
+      '[Commercial] [Retail] [Retail Service Agent]'
+  }, {
+      'code':
+      'CR02EV',
+      'class_list_string':
+      '[Commercial] [Retail] [Retail Service Agent] [Electric Car Charging Station]'
+  }, {
+      'code':
+      'CR02PO',
+      'class_list_string':
+      '[Commercial] [Retail] [Retail Service Agent] [Post Office]'
+  }, {
+      'code':
+      'CR04',
+      'class_list_string':
+      '[Commercial] [Retail] [Market (Indoor / Outdoor)]'
+  }, {
+      'code':
+      'CR04FK',
+      'class_list_string':
+      '[Commercial] [Retail] [Market (Indoor / Outdoor)] [Fish Market]'
+  }, {
+      'code':
+      'CR04FV',
+      'class_list_string':
+      '[Commercial] [Retail] [Market (Indoor / Outdoor)] [Fruit / Vegetable Market]'
+  }, {
+      'code':
+      'CR04LV',
+      'class_list_string':
+      '[Commercial] [Retail] [Market (Indoor / Outdoor)] [Livestock Market]'
+  }, {
+      'code':
+      'CR05',
+      'class_list_string':
+      '[Commercial] [Retail] [Petrol Filling Station]'
+  }, {
+      'code':
+      'CR06',
+      'class_list_string':
+      '[Commercial] [Retail] [Public House / Bar / Nightclub]'
+  }, {
+      'code':
+      'CR06BA',
+      'class_list_string':
+      '[Commercial] [Retail] [Public House / Bar / Nightclub] [Bar]'
+  }, {
+      'code':
+      'CR06NC',
+      'class_list_string':
+      '[Commercial] [Retail] [Public House / Bar / Nightclub] [Nightclub]'
+  }, {
+      'code':
+      'CR06PH',
+      'class_list_string':
+      '[Commercial] [Retail] [Public House / Bar / Nightclub] [Public House]'
+  }, {
+      'code':
+      'CR07',
+      'class_list_string':
+      '[Commercial] [Retail] [Restaurant / Cafeteria]'
+  }, {
+      'code':
+      'CR08',
+      'class_list_string':
+      '[Commercial] [Retail] [Shop / Showroom]'
+  }, {
+      'code':
+      'CR08CS',
+      'class_list_string':
+      '[Commercial] [Retail] [Shop / Showroom] [Convenience Store]'
+  }, {
+      'code':
+      'CR08GC',
+      'class_list_string':
+      '[Commercial] [Retail] [Shop / Showroom] [Garden Centre]'
+  }, {
+      'code':
+      'CR08SM',
+      'class_list_string':
+      '[Commercial] [Retail] [Shop / Showroom] [Supermarket]'
+  }, {
+      'code':
+      'CR09',
+      'class_list_string':
+      '[Commercial] [Retail] [Other Licensed Premise / Vendor]'
+  }, {
+      'code':
+      'CR09BS',
+      'class_list_string':
+      '[Commercial] [Retail] [Other Licensed Premise / Vendor] [Betting Shop]'
+  }, {
+      'code':
+      'CR09OL',
+      'class_list_string':
+      '[Commercial] [Retail] [Other Licensed Premise / Vendor] [Off-licence]'
+  }, {
+      'code':
+      'CR10',
+      'class_list_string':
+      '[Commercial] [Retail] [Fast Food Outlet / Takeaway (Hot / Cold)]'
+  }, {
+      'code':
+      'CR11',
+      'class_list_string':
+      '[Commercial] [Retail] [Automated Teller Machine (ATM)]'
+  }, {
+      'code':
+      'CS',
+      'class_list_string':
+      '[Commercial] [Storage Land]'
+  }, {
+      'code':
+      'CS01',
+      'class_list_string':
+      '[Commercial] [Storage Land] [General Storage Land]'
+  }, {
+      'code':
+      'CS02',
+      'class_list_string':
+      '[Commercial] [Storage Land] [Builders’ Yard]'
+  }, {
+      'code':
+      'CT',
+      'class_list_string':
+      '[Commercial] [Transport]'
+  }, {
+      'code':
+      'CT01',
+      'class_list_string':
+      '[Commercial] [Transport] [Airfield / Airstrip / Airport / Air Transport Infrastructure Facility]'
+  }, {
+      'code':
+      'CT01AF',
+      'class_list_string':
+      '[Commercial] [Transport] [Airfield / Airstrip / Airport / Air Transport Infrastructure Facility] [Airfield]'
+  }, {
+      'code':
+      'CT01AI',
+      'class_list_string':
+      '[Commercial] [Transport] [Airfield / Airstrip / Airport / Air Transport Infrastructure Facility] [Air Transport Infrastructure Services]'
+  }, {
+      'code':
+      'CT01AP',
+      'class_list_string':
+      '[Commercial] [Transport] [Airfield / Airstrip / Airport / Air Transport Infrastructure Facility] [Airport]'
+  }, {
+      'code':
+      'CT01AY',
+      'class_list_string':
+      '[Commercial] [Transport] [Airfield / Airstrip / Airport / Air Transport Infrastructure Facility] [Air Passenger Terminal]'
+  }, {
+      'code':
+      'CT01HS',
+      'class_list_string':
+      '[Commercial] [Transport] [Airfield / Airstrip / Airport / Air Transport Infrastructure Facility] [Helicopter Station]'
+  }, {
+      'code':
+      'CT01HT',
+      'class_list_string':
+      '[Commercial] [Transport] [Airfield / Airstrip / Airport / Air Transport Infrastructure Facility] [Heliport / Helipad]'
+  }, {
+      'code':
+      'CT02',
+      'class_list_string':
+      '[Commercial] [Transport] [Bus Shelter]'
+  }, {
+      'code':
+      'CT03',
+      'class_list_string':
+      '[Commercial] [Transport] [Car / Coach / Commercial Vehicle / Taxi Parking / Park And Ride Site]'
+  }, {
+      'code':
+      'CT03PK',
+      'class_list_string':
+      '[Commercial] [Transport] [Car / Coach / Commercial Vehicle / Taxi Parking / Park And Ride Site] [Public Park And Ride]'
+  }, {
+      'code':
+      'CT03PP',
+      'class_list_string':
+      '[Commercial] [Transport] [Car / Coach / Commercial Vehicle / Taxi Parking / Park And Ride Site] [Public Car Parking]'
+  }, {
+      'code':
+      'CT03PU',
+      'class_list_string':
+      '[Commercial] [Transport] [Car / Coach / Commercial Vehicle / Taxi Parking / Park And Ride Site] [Public Coach Parking]'
+  }, {
+      'code':
+      'CT03VP',
+      'class_list_string':
+      '[Commercial] [Transport] [Car / Coach / Commercial Vehicle / Taxi Parking / Park And Ride Site] [Public Commercial Vehicle Parking]'
+  }, {
+      'code':
+      'CT04',
+      'class_list_string':
+      '[Commercial] [Transport] [Goods Freight Handling / Terminal]'
+  }, {
+      'code':
+      'CT04AE',
+      'class_list_string':
+      '[Commercial] [Transport] [Goods Freight Handling / Terminal] [Air Freight Terminal]'
+  }, {
+      'code':
+      'CT04CF',
+      'class_list_string':
+      '[Commercial] [Transport] [Goods Freight Handling / Terminal] [Container Freight]'
+  }, {
+      'code':
+      'CT04RH',
+      'class_list_string':
+      '[Commercial] [Transport] [Goods Freight Handling / Terminal] [Road Freight Transport]'
+  }, {
+      'code':
+      'CT04RT',
+      'class_list_string':
+      '[Commercial] [Transport] [Goods Freight Handling / Terminal] [Rail Freight Transport]'
+  }, {
+      'code':
+      'CT05',
+      'class_list_string':
+      '[Commercial] [Transport] [Marina]'
+  }, {
+      'code':
+      'CT06',
+      'class_list_string':
+      '[Commercial] [Transport] [Mooring]'
+  }, {
+      'code':
+      'CT07',
+      'class_list_string':
+      '[Commercial] [Transport] [Railway Asset]'
+  }, {
+      'code':
+      'CT08',
+      'class_list_string':
+      '[Commercial] [Transport] [Station / Interchange / Terminal / Halt]'
+  }, {
+      'code':
+      'CT08BC',
+      'class_list_string':
+      '[Commercial] [Transport] [Station / Interchange / Terminal / Halt] [Bus / Coach Station]'
+  }, {
+      'code':
+      'CT08RS',
+      'class_list_string':
+      '[Commercial] [Transport] [Station / Interchange / Terminal / Halt] [Railway Station]'
+  }, {
+      'code':
+      'CT08VH',
+      'class_list_string':
+      '[Commercial] [Transport] [Station / Interchange / Terminal / Halt] [Vehicular Rail Terminal]'
+  }, {
+      'code':
+      'CT09',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Track / Way]'
+  }, {
+      'code':
+      'CT09CL',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Track / Way] [Cliff Railway]'
+  }, {
+      'code':
+      'CT09CX',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Track / Way] [Chair Lift / Cable Car / Ski Tow]'
+  }, {
+      'code':
+      'CT09MO',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Track / Way] [Monorail]'
+  }, {
+      'code':
+      'CT10',
+      'class_list_string':
+      '[Commercial] [Transport] [Vehicle Storage]'
+  }, {
+      'code':
+      'CT10BG',
+      'class_list_string':
+      '[Commercial] [Transport] [Vehicle Storage] [Boat Storage]'
+  }, {
+      'code':
+      'CT10BU',
+      'class_list_string':
+      '[Commercial] [Transport] [Vehicle Storage] [Bus / Coach Depot]'
+  }, {
+      'code':
+      'CT11',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Related Infrastructure]'
+  }, {
+      'code':
+      'CT11AD',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Related Infrastructure] [Aqueduct]'
+  }, {
+      'code':
+      'CT11CA',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Related Infrastructure] [Road Bridge Over Canal]'
+  }, {
+      'code':
+      'CT11LK',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Related Infrastructure] [Lock]'
+  }, {
+      'code':
+      'CT11MU',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Related Infrastructure] [Road Bridge Over Multiple]'
+  }, {
+      'code':
+      'CT11NN',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Related Infrastructure] [Road Bridge Over No Network]'
+  }, {
+      'code':
+      'CT11PA',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Related Infrastructure] [Road Bridge Over Path]'
+  }, {
+      'code':
+      'CT11RA',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Related Infrastructure] [Road Bridge Over Railway]'
+  }, {
+      'code':
+      'CT11RO',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Related Infrastructure] [Road Bridge Over Road]'
+  }, {
+      'code':
+      'CT11WA',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Related Infrastructure] [Road Bridge Over Water]'
+  }, {
+      'code':
+      'CT11WE',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Related Infrastructure] [Weir]'
+  }, {
+      'code':
+      'CT11WG',
+      'class_list_string':
+      '[Commercial] [Transport] [Transport Related Infrastructure] [Weighbridge / Load Gauge]'
+  }, {
+      'code':
+      'CT12',
+      'class_list_string':
+      '[Commercial] [Transport] [Overnight Lorry Park]'
+  }, {
+      'code':
+      'CT13',
+      'class_list_string':
+      '[Commercial] [Transport] [Harbour / Port / Dock / Dockyard / Slipway / Landing Stage / Pier / Jetty / Pontoon / Terminal / Berthing / Quay]'
+  }, {
+      'code':
+      'CT13FR',
+      'class_list_string':
+      '[Commercial] [Transport] [Harbour / Port / Dock / Dockyard / Slipway / Landing Stage / Pier / Jetty / Pontoon / Terminal / Berthing / Quay] [Passenger Ferry Terminal]'
+  }, {
+      'code':
+      'CT13NB',
+      'class_list_string':
+      '[Commercial] [Transport] [Harbour / Port / Dock / Dockyard / Slipway / Landing Stage / Pier / Jetty / Pontoon / Terminal / Berthing / Quay] [Non-Tanker Nautical Berthing]'
+  }, {
+      'code':
+      'CT13NF',
+      'class_list_string':
+      '[Commercial] [Transport] [Harbour / Port / Dock / Dockyard / Slipway / Landing Stage / Pier / Jetty / Pontoon / Terminal / Berthing / Quay] [Nautical Refuelling Facility]'
+  }, {
+      'code':
+      'CT13SA',
+      'class_list_string':
+      '[Commercial] [Transport] [Harbour / Port / Dock / Dockyard / Slipway / Landing Stage / Pier / Jetty / Pontoon / Terminal / Berthing / Quay] [Slipway]'
+  }, {
+      'code':
+      'CT13SP',
+      'class_list_string':
+      '[Commercial] [Transport] [Harbour / Port / Dock / Dockyard / Slipway / Landing Stage / Pier / Jetty / Pontoon / Terminal / Berthing / Quay] [Ship Passenger Terminal]'
+  }, {
+      'code':
+      'CT13TK',
+      'class_list_string':
+      '[Commercial] [Transport] [Harbour / Port / Dock / Dockyard / Slipway / Landing Stage / Pier / Jetty / Pontoon / Terminal / Berthing / Quay] [Tanker Berthing]'
+  }, {
+      'code':
+      'CT13VF',
+      'class_list_string':
+      '[Commercial] [Transport] [Harbour / Port / Dock / Dockyard / Slipway / Landing Stage / Pier / Jetty / Pontoon / Terminal / Berthing / Quay] [Vehicular Ferry Terminal]'
+  }, {
+      'code':
+      'CU',
+      'class_list_string':
+      '[Commercial] [Utility]'
+  }, {
+      'code':
+      'CU01',
+      'class_list_string':
+      '[Commercial] [Utility] [Electricity Sub-Station]'
+  }, {
+      'code':
+      'CU02',
+      'class_list_string':
+      '[Commercial] [Utility] [Landfill]'
+  }, {
+      'code':
+      'CU03',
+      'class_list_string':
+      '[Commercial] [Utility] [Power Station / Energy Production]'
+  }, {
+      'code':
+      'CU03ED',
+      'class_list_string':
+      '[Commercial] [Utility] [Power Station / Energy Production] [Electricity Distribution Facility]'
+  }, {
+      'code':
+      'CU03EP',
+      'class_list_string':
+      '[Commercial] [Utility] [Power Station / Energy Production] [Electricity Production Facility]'
+  }, {
+      'code':
+      'CU03WF',
+      'class_list_string':
+      '[Commercial] [Utility] [Power Station / Energy Production] [Wind Farm]'
+  }, {
+      'code':
+      'CU03WU',
+      'class_list_string':
+      '[Commercial] [Utility] [Power Station / Energy Production] [Wind Turbine]'
+  }, {
+      'code':
+      'CU04',
+      'class_list_string':
+      '[Commercial] [Utility] [Pump House / Pumping Station / Water Tower]'
+  }, {
+      'code':
+      'CU04WC',
+      'class_list_string':
+      '[Commercial] [Utility] [Pump House / Pumping Station / Water Tower] [Water Controlling / Pumping]'
+  }, {
+      'code':
+      'CU04WD',
+      'class_list_string':
+      '[Commercial] [Utility] [Pump House / Pumping Station / Water Tower] [Water Distribution / Pumping]'
+  }, {
+      'code':
+      'CU04WM',
+      'class_list_string':
+      '[Commercial] [Utility] [Pump House / Pumping Station / Water Tower] [Water Quality Monitoring]'
+  }, {
+      'code':
+      'CU04WS',
+      'class_list_string':
+      '[Commercial] [Utility] [Pump House / Pumping Station / Water Tower] [Water Storage]'
+  }, {
+      'code':
+      'CU04WW',
+      'class_list_string':
+      '[Commercial] [Utility] [Pump House / Pumping Station / Water Tower] [Waste Water Distribution / Pumping]'
+  }, {
+      'code':
+      'CU06',
+      'class_list_string':
+      '[Commercial] [Utility] [Telecommunication]'
+  }, {
+      'code':
+      'CU06TE',
+      'class_list_string':
+      '[Commercial] [Utility] [Telecommunication] [Telecommunications Mast]'
+  }, {
+      'code':
+      'CU06TX',
+      'class_list_string':
+      '[Commercial] [Utility] [Telecommunication] [Telephone Exchange]'
+  }, {
+      'code':
+      'CU07',
+      'class_list_string':
+      '[Commercial] [Utility] [Water / Waste Water / Sewage Treatment Works]'
+  }, {
+      'code':
+      'CU07WR',
+      'class_list_string':
+      '[Commercial] [Utility] [Water / Waste Water / Sewage Treatment Works] [Waste Water Treatment]'
+  }, {
+      'code':
+      'CU07WT',
+      'class_list_string':
+      '[Commercial] [Utility] [Water / Waste Water / Sewage Treatment Works] [Water Treatment]'
+  }, {
+      'code':
+      'CU08',
+      'class_list_string':
+      '[Commercial] [Utility] [Gas / Oil Storage / Distribution]'
+  }, {
+      'code':
+      'CU08GG',
+      'class_list_string':
+      '[Commercial] [Utility] [Gas / Oil Storage / Distribution] [Gas Governor]'
+  }, {
+      'code':
+      'CU08GH',
+      'class_list_string':
+      '[Commercial] [Utility] [Gas / Oil Storage / Distribution] [Gas Holder]'
+  }, {
+      'code':
+      'CU08OT',
+      'class_list_string':
+      '[Commercial] [Utility] [Gas / Oil Storage / Distribution] [Oil Terminal]'
+  }, {
+      'code':
+      'CU09',
+      'class_list_string':
+      '[Commercial] [Utility] [Other Utility Use]'
+  }, {
+      'code':
+      'CU09CQ',
+      'class_list_string':
+      '[Commercial] [Utility] [Other Utility Use] [Cable Terminal Station]'
+  }, {
+      'code':
+      'CU09OV',
+      'class_list_string':
+      '[Commercial] [Utility] [Other Utility Use] [Observatory]'
+  }, {
+      'code':
+      'CU09RA',
+      'class_list_string':
+      '[Commercial] [Utility] [Other Utility Use] [Radar Station]'
+  }, {
+      'code':
+      'CU09SE',
+      'class_list_string':
+      '[Commercial] [Utility] [Other Utility Use] [Satellite Earth Station]'
+  }, {
+      'code':
+      'CU10',
+      'class_list_string':
+      '[Commercial] [Utility] [Waste Management]'
+  }, {
+      'code':
+      'CU11',
+      'class_list_string':
+      '[Commercial] [Utility] [Telephone Box]'
+  }, {
+      'code':
+      'CU11OP',
+      'class_list_string':
+      '[Commercial] [Utility] [Telephone Box] [Other Public Telephones]'
+  }, {
+      'code':
+      'CU12',
+      'class_list_string':
+      '[Commercial] [Utility] [Dam]'
+  }, {
+      'code':
+      'CX',
+      'class_list_string':
+      '[Commercial] [Emergency / Rescue Service]'
+  }, {
+      'code':
+      'CX01',
+      'class_list_string':
+      '[Commercial] [Emergency / Rescue Service] [Police / Transport Police / Station]'
+  }, {
+      'code':
+      'CX01PT',
+      'class_list_string':
+      '[Commercial] [Emergency / Rescue Service] [Police / Transport Police / Station] [Police Training]'
+  }, {
+      'code':
+      'CX02',
+      'class_list_string':
+      '[Commercial] [Emergency / Rescue Service] [Fire Station]'
+  }, {
+      'code':
+      'CX02FT',
+      'class_list_string':
+      '[Commercial] [Emergency / Rescue Service] [Fire Station] [Fire Service Training]'
+  }, {
+      'code':
+      'CX03',
+      'class_list_string':
+      '[Commercial] [Emergency / Rescue Service] [Ambulance Station]'
+  }, {
+      'code':
+      'CX03AA',
+      'class_list_string':
+      '[Commercial] [Emergency / Rescue Service] [Ambulance Station] [Air Sea Rescue / Air Ambulance]'
+  }, {
+      'code':
+      'CX04',
+      'class_list_string':
+      '[Commercial] [Emergency / Rescue Service] [Lifeboat Services / Station]'
+  }, {
+      'code':
+      'CX05',
+      'class_list_string':
+      '[Commercial] [Emergency / Rescue Service] [Coastguard Rescue / Lookout / Station]'
+  }, {
+      'code':
+      'CX06',
+      'class_list_string':
+      '[Commercial] [Emergency / Rescue Service] [Mountain Rescue Station]'
+  }, {
+      'code':
+      'CX07',
+      'class_list_string':
+      '[Commercial] [Emergency / Rescue Service] [Lighthouse]'
+  }, {
+      'code':
+      'CX08',
+      'class_list_string':
+      '[Commercial] [Emergency / Rescue Service] [Police Box / Kiosk]'
+  }, {
+      'code':
+      'CZ',
+      'class_list_string':
+      '[Commercial] [Information]'
+  }, {
+      'code':
+      'CZ01',
+      'class_list_string':
+      '[Commercial] [Information] [Advertising Hoarding]'
+  }, {
+      'code':
+      'CZ02',
+      'class_list_string':
+      '[Commercial] [Information] [Tourist Information Signage]'
+  }, {
+      'code':
+      'CZ02VI',
+      'class_list_string':
+      '[Commercial] [Information] [Tourist Information Signage] [Visitor Information]'
+  }, {
+      'code':
+      'CZ03',
+      'class_list_string':
+      '[Commercial] [Information] [Traffic Information Signage]'
+  }, {
+      'code': 'L',
+      'class_list_string': '[Land]'
+  }, {
+      'code':
+      'LA',
+      'class_list_string':
+      '[Land] [Agricultural - Applicable to land in farm ownership and not run as a separate business enterprise]'
+  }, {
+      'code':
+      'LA01',
+      'class_list_string':
+      '[Land] [Agricultural - Applicable to land in farm ownership and not run as a separate business enterprise] [Grazing Land]'
+  }, {
+      'code':
+      'LA02',
+      'class_list_string':
+      '[Land] [Agricultural - Applicable to land in farm ownership and not run as a separate business enterprise] [Permanent Crop / Crop Rotation]'
+  }, {
+      'code':
+      'LA02OC',
+      'class_list_string':
+      '[Land] [Agricultural - Applicable to land in farm ownership and not run as a separate business enterprise] [Permanent Crop / Crop Rotation] [Orchard]'
+  }, {
+      'code':
+      'LB',
+      'class_list_string':
+      '[Land] [Ancillary Building]'
+  }, {
+      'code':
+      'LB99AV',
+      'class_list_string':
+      '[Land] [Ancillary Building] [Aviary / Dovecot / Cage]'
+  }, {
+      'code':
+      'LB99BD',
+      'class_list_string':
+      '[Land] [Ancillary Building] [Bandstand]'
+  }, {
+      'code':
+      'LB99PI',
+      'class_list_string':
+      '[Land] [Ancillary Building] [Pavilion / Changing Room]'
+  }, {
+      'code':
+      'LB99SV',
+      'class_list_string':
+      '[Land] [Ancillary Building] [Sports Viewing Structure]'
+  }, {
+      'code':
+      'LC',
+      'class_list_string':
+      '[Land] [Burial Ground]'
+  }, {
+      'code':
+      'LC01',
+      'class_list_string':
+      '[Land] [Burial Ground] [Historic / Disused Cemetery / Graveyard]'
+  }, {
+      'code':
+      'LD',
+      'class_list_string':
+      '[Land] [Development]'
+  }, {
+      'code':
+      'LD01',
+      'class_list_string':
+      '[Land] [Development] [Development Site]'
+  }, {
+      'code':
+      'LD01CC',
+      'class_list_string':
+      '[Land] [Development] [Development Site] [Commercial Construction Site]'
+  }, {
+      'code':
+      'LD01CO',
+      'class_list_string':
+      '[Land] [Development] [Development Site] [Community Construction Site]'
+  }, {
+      'code':
+      'LD01RN',
+      'class_list_string':
+      '[Land] [Development] [Development Site] [Residential Construction Site]'
+  }, {
+      'code':
+      'LD01TC',
+      'class_list_string':
+      '[Land] [Development] [Development Site] [Transport Construction Site]'
+  }, {
+      'code':
+      'LF',
+      'class_list_string':
+      '[Land] [Forestry]'
+  }, {
+      'code':
+      'LF02',
+      'class_list_string':
+      '[Land] [Forestry] [Forest / Arboretum / Pinetum (Managed / Unmanaged)]'
+  }, {
+      'code':
+      'LF02AU',
+      'class_list_string':
+      '[Land] [Forestry] [Forest / Arboretum / Pinetum (Managed / Unmanaged)] [Arboretum]'
+  }, {
+      'code':
+      'LF03',
+      'class_list_string':
+      '[Land] [Forestry] [Woodland]'
+  }, {
+      'code':
+      'LL',
+      'class_list_string':
+      '[Land] [Allotment]'
+  }, {
+      'code':
+      'LM',
+      'class_list_string':
+      '[Land] [Amenity - Open areas not attracting visitors]'
+  }, {
+      'code':
+      'LM01',
+      'class_list_string':
+      '[Land] [Amenity - Open areas not attracting visitors] [Landscaped Roundabout]'
+  }, {
+      'code':
+      'LM02',
+      'class_list_string':
+      '[Land] [Amenity - Open areas not attracting visitors] [Verge / Central Reservation]'
+  }, {
+      'code':
+      'LM02NV',
+      'class_list_string':
+      '[Land] [Amenity - Open areas not attracting visitors] [Verge / Central Reservation] [Natural Central Reservation]'
+  }, {
+      'code':
+      'LM02VE',
+      'class_list_string':
+      '[Land] [Amenity - Open areas not attracting visitors] [Verge / Central Reservation] [Natural Verge]'
+  }, {
+      'code':
+      'LM03',
+      'class_list_string':
+      '[Land] [Amenity - Open areas not attracting visitors] [Maintained Amenity Land]'
+  }, {
+      'code':
+      'LM04',
+      'class_list_string':
+      '[Land] [Amenity - Open areas not attracting visitors] [Maintained Surfaced Area]'
+  }, {
+      'code':
+      'LM04MV',
+      'class_list_string':
+      '[Land] [Amenity - Open areas not attracting visitors] [Maintained Surfaced Area] [Made Central Reservation]'
+  }, {
+      'code':
+      'LM04PV',
+      'class_list_string':
+      '[Land] [Amenity - Open areas not attracting visitors] [Maintained Surfaced Area] [Pavement]'
+  }, {
+      'code':
+      'LO',
+      'class_list_string':
+      '[Land] [Open Space]'
+  }, {
+      'code':
+      'LO01',
+      'class_list_string':
+      '[Land] [Open Space] [Heath / Moorland]'
+  }, {
+      'code': 'LP',
+      'class_list_string': '[Land] [Park]'
+  }, {
+      'code':
+      'LP01',
+      'class_list_string':
+      '[Land] [Park] [Public Park / Garden]'
+  }, {
+      'code':
+      'LP02',
+      'class_list_string':
+      '[Land] [Park] [Public Open Space / Nature Reserve]'
+  }, {
+      'code':
+      'LP03',
+      'class_list_string':
+      '[Land] [Park] [Playground]'
+  }, {
+      'code':
+      'LP03PA',
+      'class_list_string':
+      '[Land] [Park] [Playground] [Play Area]'
+  }, {
+      'code':
+      'LP03PD',
+      'class_list_string':
+      '[Land] [Park] [Playground] [Paddling Pool]'
+  }, {
+      'code':
+      'LP04',
+      'class_list_string':
+      '[Land] [Park] [Private Park / Garden]'
+  }, {
+      'code':
+      'LU',
+      'class_list_string':
+      '[Land] [Unused Land]'
+  }, {
+      'code':
+      'LU01',
+      'class_list_string':
+      '[Land] [Unused Land] [Vacant / Derelict Land]'
+  }, {
+      'code':
+      'LW',
+      'class_list_string':
+      '[Land] [Water]'
+  }, {
+      'code':
+      'LW01',
+      'class_list_string':
+      '[Land] [Water] [Lake / Reservoir]'
+  }, {
+      'code':
+      'LW01BP',
+      'class_list_string':
+      '[Land] [Water] [Lake / Reservoir] [Balancing Pond]'
+  }, {
+      'code':
+      'LW01BV',
+      'class_list_string':
+      '[Land] [Water] [Lake / Reservoir] [Buried Reservoir]'
+  }, {
+      'code':
+      'LW02',
+      'class_list_string':
+      '[Land] [Water] [Named Pond]'
+  }, {
+      'code':
+      'LW02DE',
+      'class_list_string':
+      '[Land] [Water] [Named Pond] [Dew Pond]'
+  }, {
+      'code':
+      'LW02DP',
+      'class_list_string':
+      '[Land] [Water] [Named Pond] [Decoy Pond]'
+  }, {
+      'code':
+      'LW02IW',
+      'class_list_string':
+      '[Land] [Water] [Named Pond] [Static Water]'
+  }, {
+      'code':
+      'LW03',
+      'class_list_string':
+      '[Land] [Water] [Waterway]'
+  }, {
+      'code':
+      'LW03DR',
+      'class_list_string':
+      '[Land] [Water] [Waterway] [Drain]'
+  }, {
+      'code':
+      'LW03LR',
+      'class_list_string':
+      '[Land] [Water] [Waterway] [Leats / Races]'
+  }, {
+      'code': 'M',
+      'class_list_string': '[Military]'
+  }, {
+      'code':
+      'MA',
+      'class_list_string':
+      '[Military] [Army]'
+  }, {
+      'code':
+      'MA99AG',
+      'class_list_string':
+      '[Military] [Army] [Army Military Storage]'
+  }, {
+      'code':
+      'MA99AR',
+      'class_list_string':
+      '[Military] [Army] [Army Military Range]'
+  }, {
+      'code':
+      'MA99AS',
+      'class_list_string':
+      '[Military] [Army] [Army Site]'
+  }, {
+      'code':
+      'MA99AT',
+      'class_list_string':
+      '[Military] [Army] [Army Military Training]'
+  }, {
+      'code':
+      'MB',
+      'class_list_string':
+      '[Military] [Ancillary Building]'
+  }, {
+      'code':
+      'MB99TG',
+      'class_list_string':
+      '[Military] [Ancillary Building] [Military Target]'
+  }, {
+      'code':
+      'MF',
+      'class_list_string':
+      '[Military] [Air Force]'
+  }, {
+      'code':
+      'MF99UG',
+      'class_list_string':
+      '[Military] [Air Force] [Air Force Military Storage]'
+  }, {
+      'code':
+      'MF99UR',
+      'class_list_string':
+      '[Military] [Air Force] [Air Force Military Range]'
+  }, {
+      'code':
+      'MF99US',
+      'class_list_string':
+      '[Military] [Air Force] [Air Force Site]'
+  }, {
+      'code':
+      'MF99UT',
+      'class_list_string':
+      '[Military] [Air Force] [Air Force Military Training]'
+  }, {
+      'code':
+      'MG',
+      'class_list_string':
+      '[Military] [Defence Estates]'
+  }, {
+      'code':
+      'MN',
+      'class_list_string':
+      '[Military] [Navy]'
+  }, {
+      'code':
+      'MN99VG',
+      'class_list_string':
+      '[Military] [Navy] [Naval Military Storage]'
+  }, {
+      'code':
+      'MN99VR',
+      'class_list_string':
+      '[Military] [Navy] [Naval Military Range]'
+  }, {
+      'code':
+      'MN99VS',
+      'class_list_string':
+      '[Military] [Navy] [Naval Site]'
+  }, {
+      'code':
+      'MN99VT',
+      'class_list_string':
+      '[Military] [Navy] [Naval Military Training]'
+  }, {
+      'code':
+      'O',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)]'
+  }, {
+      'code':
+      'OA',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Aid To Navigation]'
+  }, {
+      'code':
+      'OA01',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Aid To Navigation] [Aid To Aeronautical Navigation]'
+  }, {
+      'code':
+      'OA01AL',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Aid To Navigation] [Aid To Aeronautical Navigation] [Aeronautical Navigation Beacon / Light]'
+  }, {
+      'code':
+      'OA01LL',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Aid To Navigation] [Aid To Aeronautical Navigation] [Landing Light]'
+  }, {
+      'code':
+      'OA01SQ',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Aid To Navigation] [Aid To Aeronautical Navigation] [Signal Square]'
+  }, {
+      'code':
+      'OA01WK',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Aid To Navigation] [Aid To Aeronautical Navigation] [Wind Sock / Wind Tee]'
+  }, {
+      'code':
+      'OA02',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Aid To Navigation] [Aid To Nautical Navigation]'
+  }, {
+      'code':
+      'OA02DM',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Aid To Navigation] [Aid To Nautical Navigation] [Daymark]'
+  }, {
+      'code':
+      'OA02FG',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Aid To Navigation] [Aid To Nautical Navigation] [Fog Horn Warning]'
+  }, {
+      'code':
+      'OA02NL',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Aid To Navigation] [Aid To Nautical Navigation] [Nautical Navigation Beacon / Light]'
+  }, {
+      'code':
+      'OA03',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Aid To Navigation] [Aid To Road Navigation]'
+  }, {
+      'code':
+      'OA03GP',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Aid To Navigation] [Aid To Road Navigation] [Guide Post]'
+  }, {
+      'code':
+      'OC',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Coastal Protection / Flood Prevention]'
+  }, {
+      'code':
+      'OC01',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Coastal Protection / Flood Prevention] [Boulder Wall / Sea Wall]'
+  }, {
+      'code':
+      'OC02',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Coastal Protection / Flood Prevention] [Flood Gate / Flood Sluice Gate / Flood Valve]'
+  }, {
+      'code':
+      'OC03',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Coastal Protection / Flood Prevention] [Groyne]'
+  }, {
+      'code':
+      'OC04',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Coastal Protection / Flood Prevention] [Rip-Rap]'
+  }, {
+      'code':
+      'OE',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Emergency Support]'
+  }, {
+      'code':
+      'OE01',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Emergency Support] [Beach Office / First Aid Facility]'
+  }, {
+      'code':
+      'OE02',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Emergency Support] [Emergency Telephone (Non Motorway)]'
+  }, {
+      'code':
+      'OE03',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Emergency Support] [Fire Alarm Structure / Fire Observation Tower / Fire Beater Facility]'
+  }, {
+      'code':
+      'OE04',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Emergency Support] [Emergency Equipment Point / Emergency Siren / Warning Flag]'
+  }, {
+      'code':
+      'OE05',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Emergency Support] [Lifeguard Facility]'
+  }, {
+      'code':
+      'OE06',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Emergency Support] [LIfe / Belt / Buoy / Float / Jacket / Safety Rope]'
+  }, {
+      'code':
+      'OF',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Street Furniture]'
+  }, {
+      'code':
+      'OG',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Agricultural Support Objects]'
+  }, {
+      'code':
+      'OG01',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Agricultural Support Objects] [Fish Ladder / Lock / Pen / Trap]'
+  }, {
+      'code':
+      'OG02',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Agricultural Support Objects] [Livestock Pen / Dip]'
+  }, {
+      'code':
+      'OG03',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Agricultural Support Objects] [Currick]'
+  }, {
+      'code':
+      'OG04',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Agricultural Support Objects] [Slurry Bed / Pit]'
+  }, {
+      'code':
+      'OH',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Historical Site / Object]'
+  }, {
+      'code':
+      'OH01',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Historical Site / Object] [Historic Structure / Object]'
+  }, {
+      'code':
+      'OI',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support]'
+  }, {
+      'code':
+      'OI01',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support] [Adit / Incline / Level]'
+  }, {
+      'code':
+      'OI02',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support] [Caisson / Dry Dock / Grid]'
+  }, {
+      'code':
+      'OI03',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support] [Channel / Conveyor / Conduit / Pipe]'
+  }, {
+      'code':
+      'OI04',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support] [Chimney / Flue]'
+  }, {
+      'code':
+      'OI05',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support] [Crane / Hoist / Winch / Material Elevator]'
+  }, {
+      'code':
+      'OI06',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support] [Flare Stack]'
+  }, {
+      'code':
+      'OI07',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support] [Hopper / Silo / Cistern / Tank]'
+  }, {
+      'code':
+      'OI08',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support] [Grab / Skip / Other Industrial Waste Machinery / Discharging]'
+  }, {
+      'code':
+      'OI09',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support] [Kiln / Oven / Smelter]'
+  }, {
+      'code':
+      'OI10',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support] [Manhole / Shaft]'
+  }, {
+      'code':
+      'OI11',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support] [Industrial Overflow / Sluice / Valve / Valve Housing]'
+  }, {
+      'code':
+      'OI12',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support] [Cooling Tower]'
+  }, {
+      'code':
+      'OI13',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support] [Solar Panel / Waterwheel]'
+  }, {
+      'code':
+      'OI14',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support] [Telephone Pole / Post]'
+  }, {
+      'code':
+      'OI15',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Industrial Support] [Electricity Distribution Pole / Pylon]'
+  }, {
+      'code':
+      'ON',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Significant Natural Object]'
+  }, {
+      'code':
+      'ON01',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Significant Natural Object] [Boundary / Significant / Historic Tree / Pollard]'
+  }, {
+      'code':
+      'ON02',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Significant Natural Object] [Boundary / Significant Rock / Boulder]'
+  }, {
+      'code':
+      'ON03',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Significant Natural Object] [Natural Hole (Blow / Shake / Swallow)]'
+  }, {
+      'code':
+      'OO',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Ornamental / Cultural Object]'
+  }, {
+      'code':
+      'OO02',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Ornamental / Cultural Object] [Mausoleum / Tomb / Grave]'
+  }, {
+      'code':
+      'OO03',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Ornamental / Cultural Object] [Simple Ornamental Object]'
+  }, {
+      'code':
+      'OO04',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Ornamental / Cultural Object] [Maze]'
+  }, {
+      'code':
+      'OP',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Sport / Leisure Support]'
+  }, {
+      'code':
+      'OP01',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Sport / Leisure Support] [Butt / Hide]'
+  }, {
+      'code':
+      'OP02',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Sport / Leisure Support] [Gallop / Ride]'
+  }, {
+      'code':
+      'OP03',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Sport / Leisure Support] [Miniature Railway]'
+  }, {
+      'code':
+      'OR',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Royal Mail Infrastructure]'
+  }, {
+      'code':
+      'OR01',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Royal Mail Infrastructure] [Postal Box]'
+  }, {
+      'code':
+      'OR02',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Royal Mail Infrastructure] [Postal Delivery Box / Pouch]'
+  }, {
+      'code':
+      'OR03',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Royal Mail Infrastructure] [PO Box]'
+  }, {
+      'code':
+      'OR04',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Royal Mail Infrastructure] [Additional Mail / Packet Addressee]'
+  }, {
+      'code':
+      'OS',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Scientific / Observation Support]'
+  }, {
+      'code':
+      'OS01',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Scientific / Observation Support] [Meteorological Station / Equipment]'
+  }, {
+      'code':
+      'OS02',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Scientific / Observation Support] [Radar / Satellite Infrastructure]'
+  }, {
+      'code':
+      'OS03',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Scientific / Observation Support] [Telescope / Observation Infrastructure / Astronomy]'
+  }, {
+      'code':
+      'OT',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support]'
+  }, {
+      'code':
+      'OT01',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Cattle Grid / Ford]'
+  }, {
+      'code':
+      'OT02',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Elevator / Escalator / Steps]'
+  }, {
+      'code':
+      'OT03',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Footbridge / Walkway]'
+  }, {
+      'code':
+      'OT04',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Pole / Post / Bollard (Restricting Vehicular Access)]'
+  }, {
+      'code':
+      'OT05',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Subway / Underpass]'
+  }, {
+      'code':
+      'OT06',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Customs Inspection Facility]'
+  }, {
+      'code':
+      'OT07',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Lay-By]'
+  }, {
+      'code':
+      'OT08',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Level Crossing]'
+  }, {
+      'code':
+      'OT09',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Mail Pick Up]'
+  }, {
+      'code':
+      'OT10',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Railway Pedestrian Crossing]'
+  }, {
+      'code':
+      'OT11',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Railway Buffer]'
+  }, {
+      'code':
+      'OT12',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Rail Drag]'
+  }, {
+      'code':
+      'OT13',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Rail Infrastructure Services]'
+  }, {
+      'code':
+      'OT14',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Rail Kilometre Distance Marker]'
+  }, {
+      'code':
+      'OT15',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Railway Lighting]'
+  }, {
+      'code':
+      'OT16',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Rail Mile Distance Marker]'
+  }, {
+      'code':
+      'OT17',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Railway Turntable]'
+  }, {
+      'code':
+      'OT18',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Rail Weighbridge]'
+  }, {
+      'code':
+      'OT19',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Rail Signalling]'
+  }, {
+      'code':
+      'OT20',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Railway Traverse]'
+  }, {
+      'code':
+      'OT21',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Goods Tramway]'
+  }, {
+      'code':
+      'OT22',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Road Drag]'
+  }, {
+      'code':
+      'OT23',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Vehicle Dip]'
+  }, {
+      'code':
+      'OT24',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Road Turntable]'
+  }, {
+      'code':
+      'OT25',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Road Mile Distance Marker]'
+  }, {
+      'code':
+      'OT26',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Road Kilometre Distance Marker]'
+  }, {
+      'code':
+      'OT27',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Transport Support] [Road Infrastructure Services]'
+  }, {
+      'code':
+      'OU',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Unsupported Site]'
+  }, {
+      'code':
+      'OU01',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Unsupported Site] [Cycle Parking Facility]'
+  }, {
+      'code':
+      'OU04',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Unsupported Site] [Picnic / Barbeque Site]'
+  }, {
+      'code':
+      'OU05',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Unsupported Site] [Travelling Persons Site]'
+  }, {
+      'code':
+      'OU08',
+      'class_list_string':
+      '[Other (Ordnance Survey Only)] [Unsupported Site] [Shelter (Not Including Bus Shelter)]'
+  }, {
+      'code':
+      'P',
+      'class_list_string':
+      '[Parent Shell]'
+  }, {
+      'code':
+      'PP',
+      'class_list_string':
+      '[Parent Shell] [Property Shell]'
+  }, {
+      'code':
+      'PS',
+      'class_list_string':
+      '[Parent Shell] [Street Record]'
+  }, {
+      'code': 'R',
+      'class_list_string': '[Residential]'
+  }, {
+      'code':
+      'RB',
+      'class_list_string':
+      '[Residential] [Ancillary Building]'
+  }, {
+      'code':
+      'RC',
+      'class_list_string':
+      '[Residential] [Car Park Space]'
+  }, {
+      'code':
+      'RC01',
+      'class_list_string':
+      '[Residential] [Car Park Space] [Allocated Parking]'
+  }, {
+      'code':
+      'RD',
+      'class_list_string':
+      '[Residential] [Dwelling]'
+  }, {
+      'code':
+      'RD01',
+      'class_list_string':
+      '[Residential] [Dwelling] [Caravan]'
+  }, {
+      'code':
+      'RD02',
+      'class_list_string':
+      '[Residential] [Dwelling] [Detached]'
+  }, {
+      'code':
+      'RD03',
+      'class_list_string':
+      '[Residential] [Dwelling] [Semi-Detached]'
+  }, {
+      'code':
+      'RD04',
+      'class_list_string':
+      '[Residential] [Dwelling] [Terraced]'
+  }, {
+      'code':
+      'RD06',
+      'class_list_string':
+      '[Residential] [Dwelling] [Self Contained Flat (Includes Maisonette / Apartment)]'
+  }, {
+      'code':
+      'RD07',
+      'class_list_string':
+      '[Residential] [Dwelling] [House Boat]'
+  }, {
+      'code':
+      'RD08',
+      'class_list_string':
+      '[Residential] [Dwelling] [Sheltered Accommodation]'
+  }, {
+      'code':
+      'RD10',
+      'class_list_string':
+      '[Residential] [Dwelling] [Privately Owned Holiday Caravan / Chalet]'
+  }, {
+      'code':
+      'RG',
+      'class_list_string':
+      '[Residential] [Garage]'
+  }, {
+      'code':
+      'RG02',
+      'class_list_string':
+      '[Residential] [Garage] [Lock-Up Garage / Garage Court]'
+  }, {
+      'code':
+      'RH',
+      'class_list_string':
+      '[Residential] [House In Multiple Occupation]'
+  }, {
+      'code':
+      'RH01',
+      'class_list_string':
+      '[Residential] [House In Multiple Occupation] [HMO Parent]'
+  }, {
+      'code':
+      'RH02',
+      'class_list_string':
+      '[Residential] [House In Multiple Occupation] [HMO Bedsit / Other Non Self Contained Accommodation]'
+  }, {
+      'code':
+      'RH03',
+      'class_list_string':
+      '[Residential] [House In Multiple Occupation] [HMO Not Further Divided]'
+  }, {
+      'code':
+      'RI',
+      'class_list_string':
+      '[Residential] [Residential Institution]'
+  }, {
+      'code':
+      'RI01',
+      'class_list_string':
+      '[Residential] [Residential Institution] [Care / Nursing Home]'
+  }, {
+      'code':
+      'RI02',
+      'class_list_string':
+      '[Residential] [Residential Institution] [Communal Residence]'
+  }, {
+      'code':
+      'RI02NC',
+      'class_list_string':
+      '[Residential] [Residential Institution] [Communal Residence] [Non-Commercial Lodgings]'
+  }, {
+      'code':
+      'RI02RC',
+      'class_list_string':
+      '[Residential] [Residential Institution] [Communal Residence] [Religious Community]'
+  }, {
+      'code':
+      'RI03',
+      'class_list_string':
+      '[Residential] [Residential Institution] [Residential Education]'
+  }, {
+      'code':
+      'U',
+      'class_list_string':
+      '[Unclassified]'
+  }, {
+      'code':
+      'UC',
+      'class_list_string':
+      '[Unclassified] [Awaiting Classification]'
+  }, {
+      'code':
+      'UP',
+      'class_list_string':
+      '[Unclassified] [Pending Internal Investigation]'
+  }, {
+      'code': 'X',
+      'class_list_string': '[Dual Use]'
+  }, {
+      'code':
+      'Z',
+      'class_list_string':
+      '[Object of Interest]'
+  }, {
+      'code':
+      'ZA',
+      'class_list_string':
+      '[Object of Interest] [Archaeological Dig Site]'
+  }, {
+      'code':
+      'ZM',
+      'class_list_string':
+      '[Object of Interest] [Monument]'
+  }, {
+      'code':
+      'ZM01',
+      'class_list_string':
+      '[Object of Interest] [Monument] [Obelisk / Milestone / Standing Stone]'
+  }, {
+      'code':
+      'ZM01OB',
+      'class_list_string':
+      '[Object of Interest] [Monument] [Obelisk / Milestone / Standing Stone] [Obelisk]'
+  }, {
+      'code':
+      'ZM01ST',
+      'class_list_string':
+      '[Object of Interest] [Monument] [Obelisk / Milestone / Standing Stone] [Standing Stone]'
+  }, {
+      'code':
+      'ZM02',
+      'class_list_string':
+      '[Object of Interest] [Monument] [Memorial / Market Cross]'
+  }, {
+      'code':
+      'ZM03',
+      'class_list_string':
+      '[Object of Interest] [Monument] [Statue]'
+  }, {
+      'code':
+      'ZM04',
+      'class_list_string':
+      '[Object of Interest] [Monument] [Castle / Historic Ruin]'
+  }, {
+      'code':
+      'ZM05',
+      'class_list_string':
+      '[Object of Interest] [Monument] [Other Structure]'
+  }, {
+      'code':
+      'ZM05BS',
+      'class_list_string':
+      '[Object of Interest] [Monument] [Other Structure] [Boundary Stone]'
+  }, {
+      'code':
+      'ZM05CE',
+      'class_list_string':
+      '[Object of Interest] [Monument] [Other Structure] [Cascade / Fountain]'
+  }, {
+      'code':
+      'ZM05PN',
+      'class_list_string':
+      '[Object of Interest] [Monument] [Other Structure] [Permanent Art Display / Sculpture]'
+  }, {
+      'code':
+      'ZM05WI',
+      'class_list_string':
+      '[Object of Interest] [Monument] [Other Structure] [Windmill (Inactive)]'
+  }, {
+      'code':
+      'ZS',
+      'class_list_string':
+      '[Object of Interest] [Stately Home]'
+  }, {
+      'code':
+      'ZU',
+      'class_list_string':
+      '[Object of Interest] [Underground Feature]'
+  }, {
+      'code':
+      'ZU01',
+      'class_list_string':
+      '[Object of Interest] [Underground Feature] [Cave]'
+  }, {
+      'code':
+      'ZU04',
+      'class_list_string':
+      '[Object of Interest] [Underground Feature] [Pothole / Natural Hole]'
+  }, {
+      'code':
+      'ZV',
+      'class_list_string':
+      '[Object of Interest] [Other Underground Feature]'
+  }, {
+      'code':
+      'ZV01',
+      'class_list_string':
+      '[Object of Interest] [Other Underground Feature] [Cellar]'
+  }, {
+      'code':
+      'ZV02',
+      'class_list_string':
+      '[Object of Interest] [Other Underground Feature] [Disused Mine]'
+  }, {
+      'code':
+      'ZV02MI',
+      'class_list_string':
+      '[Object of Interest] [Other Underground Feature] [Disused Mine] [Mineral Mining / Inactive]'
+  }, {
+      'code':
+      'ZV02OI',
+      'class_list_string':
+      '[Object of Interest] [Other Underground Feature] [Disused Mine] [Oil And / Gas Extraction/ Inactive]'
+  }, {
+      'code':
+      'ZV02QI',
+      'class_list_string':
+      '[Object of Interest] [Other Underground Feature] [Disused Mine] [Mineral Quarrying And / Open Extraction / Inactive]'
+  }, {
+      'code':
+      'ZV03',
+      'class_list_string':
+      '[Object of Interest] [Other Underground Feature] [Well / Spring]'
+  }, {
+      'code':
+      'ZV03SG',
+      'class_list_string':
+      '[Object of Interest] [Other Underground Feature] [Well / Spring] [Spring]'
+  }, {
+      'code':
+      'ZV03WL',
+      'class_list_string':
+      '[Object of Interest] [Other Underground Feature] [Well / Spring] [Well]'
+  }, {
+      'code':
+      'ZW',
+      'class_list_string':
+      '[Object of Interest] [Place Of Worship]'
+  }, {
+      'code':
+      'ZW99AB',
+      'class_list_string':
+      '[Object of Interest] [Place Of Worship] [Abbey]'
+  }, {
+      'code':
+      'ZW99CA',
+      'class_list_string':
+      '[Object of Interest] [Place Of Worship] [Cathedral]'
+  }, {
+      'code':
+      'ZW99CH',
+      'class_list_string':
+      '[Object of Interest] [Place Of Worship] [Church]'
+  }, {
+      'code':
+      'ZW99CP',
+      'class_list_string':
+      '[Object of Interest] [Place Of Worship] [Chapel]'
+  }, {
+      'code':
+      'ZW99GU',
+      'class_list_string':
+      '[Object of Interest] [Place Of Worship] [Gurdwara]'
+  }, {
+      'code':
+      'ZW99KH',
+      'class_list_string':
+      '[Object of Interest] [Place Of Worship] [Kingdom Hall]'
+  }, {
+      'code':
+      'ZW99LG',
+      'class_list_string':
+      '[Object of Interest] [Place Of Worship] [Lych Gate]'
+  }, {
+      'code':
+      'ZW99MQ',
+      'class_list_string':
+      '[Object of Interest] [Place Of Worship] [Mosque]'
+  }, {
+      'code':
+      'ZW99MT',
+      'class_list_string':
+      '[Object of Interest] [Place Of Worship] [Minster]'
+  }, {
+      'code':
+      'ZW99SU',
+      'class_list_string':
+      '[Object of Interest] [Place Of Worship] [Stupa]'
+  }, {
+      'code':
+      'ZW99SY',
+      'class_list_string':
+      '[Object of Interest] [Place Of Worship] [Synagogue]'
+  }, {
+      'code':
+      'ZW99TP',
+      'class_list_string':
+      '[Object of Interest] [Place Of Worship] [Temple]'
+  }]
+
+  return classification_codes_and_string_pairs

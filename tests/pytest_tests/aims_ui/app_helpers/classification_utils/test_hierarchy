@@ -1,5 +1,0 @@
-import pytest
-
-from aims_ui.app_helpers.classification_utils.hierarchy import get_class_info_from_code
-
-
