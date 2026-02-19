@@ -1,0 +1,11 @@
+#reset-input-button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 1em;
+}
+
+#complete-container-for-reset-settings-input,
+#complete-container-for-reset-settings-button {
+  flex: none;
+}

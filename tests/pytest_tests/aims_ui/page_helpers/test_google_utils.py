@@ -1,6 +1,5 @@
-from flask import Flask, request
+from flask import Flask
 
-from src import aims_ui
 from aims_ui.page_helpers.google_utils import get_current_group, get_user_email, get_username
 
 # Setup fake app for testing
