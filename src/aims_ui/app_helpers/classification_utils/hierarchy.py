@@ -15,8 +15,6 @@ def get_class_info_from_code(provided_code):
 
 def get_class_subset(code):
   # Given a classification code, get the full String of Each Subclass
-  class_list = get_classification_file_content_as_dict()
-  # [ {'code': 'ZW99TP', 'label': 'Temple', 'primary_code': 'Z', 'secondary_code': 'W', ...}, ...]
 
   code_info = get_class_info_from_code(code)
 

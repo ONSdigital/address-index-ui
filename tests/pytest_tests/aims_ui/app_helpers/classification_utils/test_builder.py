@@ -115,7 +115,8 @@ def test_classification_file_content_as_dict():
     """
 
   known_good_list = get_classification_file_content_as_dict()
-  expected_list = return_expected_csv_content_with_updated_key_names_and_handled_ancillary_values()
+  expected_list = return_expected_csv_content_with_updated_key_names_and_handled_ancillary_values(
+  )
 
   # Convert to dict keyed by 'code' for easier comparison
   actual_by_code = {obj['code']: obj for obj in known_good_list}
@@ -129,7 +130,7 @@ def test_classification_file_content_as_dict():
           f"The full missing object json is:\n"
           f"'{json.dumps(expected_obj, indent=2)}'")
 
-  # Check for unexpected objects 
+  # Check for unexpected objects
   for code, actual_obj in actual_by_code.items():
     if code not in expected_by_code:
       raise AssertionError(
@@ -137,7 +138,7 @@ def test_classification_file_content_as_dict():
           f"The full extra object json is:\n"
           f"'{json.dumps(actual_obj, indent=2)}'")
 
-  # Check keys and values 
+  # Check keys and values
   for code, expected_obj in expected_by_code.items():
     actual_obj = actual_by_code[code]
 
