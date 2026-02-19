@@ -78,7 +78,6 @@
     </div></div>
 
   {# Add the clerical info panel #}
-  {# Used to be customClericalData #}
   {% set content %}
 
     {% call onsPanel( {"type": 'warn' }) %}
@@ -89,6 +88,13 @@
       {# Add the table template #}
       {{ subCustomAttributesTable() }} 
     </div>
+
+    {% call onsPanel({ "type": 'branded', }) %}
+      <h3>PAF and NAG explained:</h3>
+      <p>The addresses in AIMS come from a product called AddressBase Premium (ABP) and this includes data from the Postcode Address File (PAF) and the National Address Gazetteer (NAG).<br><br> The PAF data comes from Royal Mail and covers about 90% of UK addresses, whilst the NAG comes from local authorities and 100% of entries in ABP have at least one NAG record (there can be approved, historical and provisional records).</p>
+    {% endcall %}
+    <br>
+
   {% endset %}
 
   {% call onsDetails({
@@ -103,6 +109,7 @@
 
 <br>
 
+<h3 class="saturn"> Hierarchy Breakdown </h3>
 {% for t_title, t_table in hierarchy_table.items() %} 
 {# ISSUE: TODO: When the table below has "'variants': 'searchable'" added, 
  then the table breaks, as the title becomes a mess - duplicated header row on the first table #}
@@ -114,14 +121,6 @@
 		}) }}
 
 {% endfor %}
-
-{% call onsPanel({
-        "type": 'branded',
-    })
-%}
-<h3>PAF and NAG explained:</h3>
-<p>The addresses in AIMS come from a product called AddressBase Premium (ABP) and this includes data from the Postcode Address File (PAF) and the National Address Gazetteer (NAG).<br><br> The PAF data comes from Royal Mail and covers about 90% of UK addresses, whilst the NAG comes from local authorities and 100% of entries in ABP have at least one NAG record (there can be approved, historical and provisional records).</p>
-{% endcall %}
 
 </div>
 </div>
