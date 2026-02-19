@@ -1,3 +1,5 @@
+{% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName %}
+
 {% macro weMatchedAddressPreamble(params) %}
 
 {# Generate the "We matched {X} addresses" #}
@@ -7,11 +9,10 @@
 {# Add the container for the title, which is generated with the script below #}
 <div id="container-for-we-matched-addresses-title"></div>
 
-<script type="module">
-  import { generateMatchedMessage } from '/static/js/macros/custom_we_matched_message/we_matched_message_helpers.mjs';
-
-  const page_name = '{{ params.page_name }}';
-  generateMatchedMessage(page_name);
-</script>
+<!-- Single entry point for all page scripts. Add scripts to the main location below -->
+{{ runScriptWithPageName({
+		"page_name": params.page_name,
+		"script_location": '/static/js/macros/custom_we_matched_message/we_matched_message_helpers.mjs'
+}) }}
 
 {% endmacro %}

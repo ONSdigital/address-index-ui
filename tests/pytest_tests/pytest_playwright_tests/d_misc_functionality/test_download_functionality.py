@@ -33,6 +33,7 @@ def test_static_file(page: Page, download_info):
   assert expected_file_content == actual_content_json
 
 
+
 @pytest.mark.parametrize('download_info', DOWNLOADS)
 def test_downloadable_file(page: Page, download_info):
   expected_file_content = download_info.get('expected_content')

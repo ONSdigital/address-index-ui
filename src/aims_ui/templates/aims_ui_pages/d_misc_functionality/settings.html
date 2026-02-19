@@ -26,150 +26,31 @@
     {% include "aims_ui_pages/d_misc_functionality/settings_snippets/_settings_download.html" %}
 </div>
 
-<br>
+{# Include the HTML for showing older jobs in multiple match #}
+<div id="old-jobs-settings-container">
+    {% include "aims_ui_pages/d_misc_functionality/settings_snippets/_settings_old_jobs_multiple_match.html" %}
+</div>
 
-{# Add a setting for bulk matching, enabling older jobs to be displayed #}
-{% call onsQuestion({
-    "title": 'Show Older Jobs',
-    "description": 'On bulk matching pages, jobs expire after 7 days and you are no longer able to download them. However, if you wish to see the record and information about the submitted jobs, enable this setting.',
-    "legendIsQuestionTitle": true }) %}
-    {{ onsCheckboxes({
-        "name": "Request Details",
-        "checkboxesLabel": "",
-        "dontWrap": true,
-        "checkboxes": [
-            {
-                "id": "show-old-jobs-checkbox",
-                "value": "true",
-                "label": {
-                    "text": "Show Old Jobs",
-                    "description": "All jobs for your user will be shown in the bulk matching pages",
-                }
-            },
-        ]
-        })
-    }}
-{% endcall %}
+{# Include the HTML for showing additional request details in the "info" panel #}
+<div id="additional-request-details-settings-container">
+    {% include "aims_ui_pages/d_misc_functionality/settings_snippets/_settings_additional_request_details.html" %}
+</div>
 
-{# SET VISIBILITY OF REQUEST SPECIFIC RESULTS #}
-{% call onsQuestion({
-    "title": 'Show Additional Request Details',
-    "description": 'When a request data is returned, there are additional attributes that may be useful. Here you can select which ones you would like to see (they will be shown above the normal "results" section in an information panel',
-    "legendIsQuestionTitle": true }) %}
-    {{
-        onsCheckboxes({
-            "checkboxesLabel": "Select all you want visible",
-            "dontWrap": true,
-            "name": "Request Details",
-            "checkboxes": [
-                {
-                    "id": "additional-request-details-match-type",
-                    "value": "true",
-                    "label": {
-                        "text": "Match Type",
-                        "description": "S - Single Match <br> M - Multiple Matches <br> N - No Matches",
-                    }
-                },
-                {
-                    "id": "additional-request-details-recommendation-code",
-                    "value": "true",
-                    "label": {
-                        "text": "Recommendation Code",
-			            "description": "A - Recommend that the top result is accepted (97.5% of the time this was correct during testing but may be different for your dataset) <br> I - Investigate, we recommend investigating further as there's a significant chance the top match might be wrong",
-                    }
-                },
-                {
-                    "id": "additional-request-details-tokenised-output",
-                    "value": "true",
-                    "label": {
-                        "text": "Include Breakdown of Address Tokens",
-                        "description": 'In singlesearch pages, the parser automatically breaks up a provided string into building number, building name, etc. Enabling this will cause the UI to show this output with the results section of a request.',
-                    }
-                },
- 
-            ]
-        })
-    }}
-{% endcall %}
+{# Include the HTML for showing PAF or NAG titles as the default in the title card #}
+<div id="paf-or-nag-title-card-settings-container">
+    {% include "aims_ui_pages/d_misc_functionality/settings_snippets/_settings_paf_or_nag_title_card.html" %}
+</div>
 
-{# SET PAF OR NAG TITLE PREFERENCE #}
-{% call onsQuestion({
-    "title": 'How would you like PAF or NAG titles prioritised on result cards? (not on multiple match)',
-    "description": 'When examining an address, you can specify whether to prioritize the PAF or NAG version of the address below. If PAF or NAG is chosen, addresses will be labeled as (PAF Formatting) or (NAG Formatting) respectively. However, note that each address always has at least one NAG version, which serves as the default format. Therefore, if PAF is not available, the address will automatically default to (NAG Formatting).',
-    "legendIsQuestionTitle": true }) %}
-{{ onsRadios({
-    "name": 'paf-nag-address-preference',
-    "dontWrap": true,
-    "radios": [
-     {
-        "id": 'address-card-title-paf-radio',
-        "value": "true",
-        "label": {"text": 'Prioritise PAF address format'}
-     },
-     {
-        "id": 'address-card-title-nag-radio',
-        "value": "true",
-        "label": { "text": 'Prioritise NAG address format' }
-     },
-     {
-        "id": 'address-card-title-default-radio',
-        "value": 'default',
-        "label": { "text": 'Default Address Format'}
-     }
-    ]
-    }) }}
-{% endcall %}
+{# Include the HTML for column width settings #}
+<div id="column-width-settings-container">
+    {% include "aims_ui_pages/d_misc_functionality/settings_snippets/_settings_column_widths.html" %}
+</div>
 
+{# Include the HTML for reset settings button #}
+<div id="reset-settings-container">
+    {% include "aims_ui_pages/d_misc_functionality/settings_snippets/_settings_reset_button.html" %}
+</div>
 
-{# SET COLUMN WIDTH PREFERENCE#}
-{% call onsQuestion({
-    "title": 'Customise Input and Output Widths',
-    "description":'You can customise the width of input and output fields below.<br> This is particularly useful for use with a widescreen or large display. Once changed this affects all other results pages. You can reset the changes back to default at any time using the reset button below',
-    "legendIsQuestionTitle": true }) %}
-
-    {{ onsSelect({
-        "id":      "column-width-left-padding-selector", 
-        "name": "column-width-left-padding-selector",
-        "classes": "ons-u-wa--@xxs columnWidthCustomiser",
-        "options": col_options_inc0,
-        "label"  : {
-            "text": "Width of Leftside Padding", 
-            "inline": true},  
-        }
-    ) }}
-
-    {{ onsSelect({
-        "id":      "column-width-left-content-selector", 
-        "name": "column-width-left-content-selector",
-        "classes": "ons-u-wa--@xxs columnWidthCustomiser",
-        "options": col_options,
-        "label"  : {
-            "text": "Width of Leftside Content (inputs)", 
-            "inline": true
-        }
-    }) }}
-
-    {{ onsSelect({
-        "id":      "column-width-middle-gap-selector", 
-        "name": "column-width-middle-gap-selector",
-        "classes": "ons-u-wa--@xxs columnWidthCustomiser",
-        "options": col_options,
-        "label"  : {
-            "text": "Width of Gap in middle", 
-            "inline": true }
-    }) }}
-
-    {{ onsSelect({
-        "id":      "column-width-right-side-content-selector", 
-        "name": "column-width-right-side-content-selector",
-        "classes": "ons-u-wa--@xxs columnWidthCustomiser",
-        "options": col_options,
-        "label"  : {
-            "text": "Width of Right Side Content ", 
-            "inline": true }
-    }) }}
-
-{% endcall %}
 
 <!-- Single entry point for all page scripts. Add scripts to the main location below -->
 {{ runScriptWithPageName({

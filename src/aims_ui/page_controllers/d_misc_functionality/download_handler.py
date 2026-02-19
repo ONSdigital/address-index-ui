@@ -8,7 +8,8 @@ from flask import send_file
 from flask_login import login_required
 
 import aims_ui
-from aims_ui import app, get_classifications_cached
+from aims_ui import app
+from aims_ui.app_helpers.classification_utils.autosuggest import get_classification_autosuggest_list, get_full_classification_autosuggest, get_classification_autosuggest_list_reversed
 from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_api_utils import job_url_if_authorised
 from aims_ui.page_controllers.f_error_pages.page_error import page_error
 
@@ -21,26 +22,21 @@ page_name = 'download_handler'
 @app.route('/autosuggest/<autosuggest_type>.json', methods=['GET', 'POST'])
 def autosuggest(autosuggest_type):
   """ Autosuggest data for various typeaheads """
-  os.path.dirname(os.path.realpath(__file__))
 
-  if 'classification' in autosuggest_type:
-    formatted_class_list = []
-    class_list = get_classifications_cached()
+  # Full classification (invludes reverse and right way!)
+  if 'full_classification' in autosuggest_type:
+    full_classification_list = get_full_classification_autosuggest()
+    return json.dumps(full_classification_list)
 
-    for classification in class_list:
-      formatted_class_list.append({
-          'en': classification.get('code'),
-          'category': classification.get('label'),
-      })
-    if 'reverse' in autosuggest_type:
-      # Add the reverse so the endpoint can be searched in reverse
-      for classification in class_list:
-        formatted_class_list.append({
-            'en': classification.get('label'),
-            'category': classification.get('code'),
-        })
+  # Check for reverse classification first
+  elif 'reversed_classification' in autosuggest_type:
+    classification_list_reversed = get_classification_autosuggest_list_reversed()
+    return json.dumps(classification_list_reversed)
 
-    return json.dumps(formatted_class_list)
+  # Cover normal classification
+  elif 'classification' in autosuggest_type:
+    classification_list = get_classification_autosuggest_list()
+    return json.dumps(classification_list)
 
   elif 'api-urls' in autosuggest_type:
     formatted_autosuggest_list = []
