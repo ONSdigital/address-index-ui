@@ -19,32 +19,60 @@ function getLimitEnteredFromLocalStorage(page_name) {
   return limitEntered;
 }
 
-function getTitleText(numberOfAddresses) {
-  const limitEntered = getLimitEnteredFromLocalStorage('radiussearch');
+function returnSingluarOrPluralAddress(numberOfAddresses) {
+  if (numberOfAddresses === 1) {
+    return 'address';
+  }
+  return 'addresses';
+}
 
-  const titleTextIfLimitReached = `We matched ${numberOfAddresses} addresses, more may exist beyond your limit.`;
-  const titleTextIfUnderLimit = `We matched ${numberOfAddresses} addresses:`;
-
+function getTitleText(limitEntered, numberOfAddresses, page_name) {
+  const addressOrAddresses = returnSingluarOrPluralAddress(numberOfAddresses);
+  const titleTextIfLimitReached = `We matched ${numberOfAddresses} ${addressOrAddresses}, more may exist beyond your limit.`;
+  const titleTextIfUnderLimit = `We matched ${numberOfAddresses} ${addressOrAddresses}:`;
+  
   if (numberOfAddresses >= limitEntered) {
+    // For the UPRN page (or typeahead), we either match one or no addresses. The message should always be single, ignoring limmit
+    if (page_name === 'uprn' || page_name === 'typeahead') {
+      return titleTextIfUnderLimit;
+    }
     return titleTextIfLimitReached;
   } else {
     return titleTextIfUnderLimit;
   }
 }
 
-export function generateMatchedMessage(page_name) {
+function refreshTitleStatus(page_name) {
+  // Remove all children of the title container
+  const containerDiv = document.querySelector('#container-for-we-matched-addresses-title');
+  while (containerDiv.firstChild) {
+    containerDiv.removeChild(containerDiv.firstChild);
+  }
+
   // calculated from the local storage because then it can be restored with no server interaction
   const numberOfAddresses = getNumberOfAddressesMatchedFromLocalStorage(page_name);
+  const limitEntered = getLimitEnteredFromLocalStorage(page_name);
 
   // If there are no addresses, then don't add the title
   if (numberOfAddresses === 0) { return null; }
 
   // Create the title element
   const weMatchedTitle = crEl('h2', 'we-matched-addresses-title');
-  weMatchedTitle.textContent = getTitleText(numberOfAddresses);
+  const titleText = getTitleText(limitEntered, numberOfAddresses, page_name);
+  weMatchedTitle.textContent = titleText;
+  console.log('Title text set to: ' + titleText);
 
   // Add the title to the container
-  const containerDiv = document.querySelector('#container-for-we-matched-addresses-title');
   containerDiv.append(weMatchedTitle);
+}
+
+export function init(page_name) {
+  // Do the initial refresh of the title
+  refreshTitleStatus(page_name);
+
+  // Setup an event listener for the custom event 'refreshWeMatchedTitle'
+  document.addEventListener('refreshWeMatchedTitle', () => {
+    refreshTitleStatus(page_name);
+  });
 }
 

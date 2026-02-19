@@ -157,8 +157,17 @@ python3 -m pytest tests/pytest_tests -n 4
 python3 -m pytest tests/pytest_tests --browser chromium --slowmo 2000 --headed
 ```
 
+#### Standalone tests ####
+Standalone tests test individual functions, without testing the full stack.
+
 To run the standalone JS tests:
 
 ```sh
 npm run test:jest
+```
+
+To run the standalone Python tests:
+
+```sh
+python3 -m pytest tests/pytest_tests/aims_ui
 ```

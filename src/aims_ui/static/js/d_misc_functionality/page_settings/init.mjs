@@ -5,6 +5,7 @@ import { setupAdditionalRequestSetting } from './additional_request_setting.mjs'
 import { setupPafNagTitleSetting } from './paf_nag_title_setting.mjs';
 import { setupColumnWidthSetting } from './column_width_setting.mjs';
 import { setupPersistenceSetting } from './persistence_setting.mjs';
+import { setupResetSettingsButton } from './reset_settings_button.mjs';
 import { allPagesLastInit } from '/static/js/e_all_pages/all_pages_last.mjs';
 import { allPagesFirstInit } from '/static/js/e_all_pages/all_pages_first.mjs';
 
@@ -24,7 +25,7 @@ export function init() {
   setupPafNagTitleSetting();
   setupColumnWidthSetting();
   setupPersistenceSetting();
-
+  setupResetSettingsButton();
 
   // All pages last
   allPagesLastInit();

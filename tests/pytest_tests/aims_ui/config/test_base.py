@@ -1,6 +1,6 @@
 from flask import Flask
 
-from src.aims_ui.config import base as config_base
+from aims_ui.config import base as config_base
 
 
 def get_base_config_dict():
@@ -92,7 +92,6 @@ def test_base_classification_list():
       'BM_JWT_TOKEN_BEARER',
       'BM_MAX_JOBS',
       'DEFAULT_BULK_LIMITS',
-      'DEFAULT_CLASSIFICATION_CLASS_LIST',
       'DEFAULT_EPOCH_OPTIONS',
       'DEFAULT_EPOCH_SELECTED',
       'JSONIFY_PRETTYPRINT_REGULAR',

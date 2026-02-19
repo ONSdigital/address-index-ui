@@ -1,7 +1,7 @@
 import os
 import urllib
 
-from aims_ui.page_helpers.classification_utilities import check_reverse_classification
+from aims_ui.app_helpers.classification_utils.validation import get_full_classification_for_code_or_label
 
 
 def remove_non_existant_parameters(params):
@@ -35,7 +35,7 @@ def adjust_parameter_for_each_page(params, called_from_page_name):
 
   # If the page is for multiple addresses, enforce "verbose=False" for speed
   if (called_from_page_name == 'multiple'):
-    # Always set verbose to False
+    # Always set verbose to False for small multiple match. This might have to change in future for full selection of address attributes, but we want to keep it lean for speed
     params['verbose'] = 'false'
 
     # Strip the 'input' parameter of quotes and 's at the start and end
@@ -59,7 +59,16 @@ def adjust_parameter_for_each_page(params, called_from_page_name):
 
   if (called_from_page_name == 'uprn'):
     # Enforce verbose to True for UPRN lookups
-    params['verbose'] = 'True'
+    params['verbose'] = 'true'
+
+  if (called_from_page_name == 'postcode'):
+    # Enforce verbose to True for postcode lookups
+    params['verbose'] = 'true'
+
+  if (called_from_page_name == 'typeahead'):
+    # When a typeahead lookup occurs from serverside, this is a UPRN lookup as
+    # the address has already been selected from the typeahead dropdown
+    params['verbose'] = 'true'
 
   return params
 
@@ -70,7 +79,7 @@ def adjust_params_for_all_pages(params):
   # Do a reverse classification lookup if the classification filter is present
   if 'classificationfilter' in params:
     entered_classification = params['classificationfilter']
-    classification = check_reverse_classification(entered_classification)
+    classification = get_full_classification_for_code_or_label(entered_classification)
     params['classificationfilter'] = classification
 
   # Ensure historical is never None, default to False
