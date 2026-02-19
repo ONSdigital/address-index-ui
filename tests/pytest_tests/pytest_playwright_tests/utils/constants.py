@@ -64,6 +64,24 @@ STATIC_FILES = [
         'expected_content': None,
     },
     {
+        'download_name': 'Autosuggest Classifications Reversed',
+        'description':
+        'The label and code values are reversed on this endpoint.',
+        'static_file': True,
+        'url_modifier': 'autosuggest/reversed_classifications.json',
+        'file_name': 'autosuggest_classifications_reversed.json',
+        'expected_content': None,
+    },
+    {
+        'download_name': 'Autosuggest Classifications Full',
+        'description':
+        'Includes the regular and reversed classifications list as one big list.',
+        'static_file': True,
+        'url_modifier': 'autosuggest/full_classifications.json',
+        'file_name': 'autosuggest_classifications_full.json',
+        'expected_content': None,
+    },
+    {
         'download_name': 'Autosuggest API URLs',
         'description':
         'API endpoints for the autosuggest in the developers page',
