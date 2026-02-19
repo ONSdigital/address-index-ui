@@ -1,0 +1,54 @@
+{# Template snippet for the column widths #}
+
+{# SET COLUMN WIDTH PREFERENCE#}
+{% call onsQuestion({
+    "title": 'Customise Input and Output Widths',
+    "description":'You can customise the width of input and output fields below.<br> This is particularly useful for use with a widescreen or large display. Once changed this affects all other results pages. You can reset the changes back to default at any time using the reset button below',
+    "legendIsQuestionTitle": true }) %}
+
+    {{ onsSelect({
+        "id":      "column-width-left-padding-selector", 
+        "name": "column-width-left-padding-selector",
+        "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "options": col_options_inc0,
+        "label"  : {
+            "text": "Width of Leftside Padding", 
+            "inline": true},  
+        }
+    ) }}
+
+    {{ onsSelect({
+        "id":      "column-width-left-content-selector", 
+        "name": "column-width-left-content-selector",
+        "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "options": col_options,
+        "label"  : {
+            "text": "Width of Leftside Content (inputs)", 
+            "inline": true
+        }
+    }) }}
+
+    {{ onsSelect({
+        "id":      "column-width-middle-gap-selector", 
+        "name": "column-width-middle-gap-selector",
+        "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "options": col_options,
+        "label"  : {
+            "text": "Width of Gap in middle", 
+            "inline": true }
+    }) }}
+
+    {{ onsSelect({
+        "id":      "column-width-right-side-content-selector", 
+        "name": "column-width-right-side-content-selector",
+        "classes": "ons-u-wa--@xxs columnWidthCustomiser",
+        "options": col_options,
+        "label"  : {
+            "text": "Width of Right Side Content ", 
+            "inline": true }
+    }) }}
+
+{% endcall %}
+
+
+

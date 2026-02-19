@@ -51,7 +51,7 @@ export function getGlobalValues() {
   globalValues = JSON.parse(globalValues);
   return globalValues;
 }
-
+ 
 // Set global values, merging with existing values 
 // setGlobalValues({'new_key': 'new_value'}) or
 // setGlobalValues({'existing_key': 'new_value'})
