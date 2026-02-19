@@ -73,6 +73,7 @@ def address_info(uprn):
       'nag',
   ]
 
+
   # Remove hierarchy info from clerical data
   final_trs = [x if x[0] not in to_hide else '' for x in trs]
 
