@@ -33,6 +33,8 @@ def get_full_classification_for_code_or_label(classification):
 
 def classification_is_valid(classification_code_or_label):
   """ Given a clasification code or label, check it's valid """
+  # Treat as a string
+  classification_code_or_label = str(classification_code_or_label)
   classification_code_to_check = get_full_classification_for_code_or_label(classification_code_or_label)
   # Now if it was entered with * or without, it will now have one
   # If the user entered a string version, it will now be the code

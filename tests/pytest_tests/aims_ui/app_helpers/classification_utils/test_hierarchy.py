@@ -95,7 +95,9 @@ def test_get_class_info_from_code_valid_codes(classification_object):
 classification_codes_and_matching_full_strings = return_classifications_code_and_expected_string_pairs(
 )
 
-@pytest.mark.parametrize('code_string_pair', classification_codes_and_matching_full_strings)
+
+@pytest.mark.parametrize('code_string_pair',
+                         classification_codes_and_matching_full_strings)
 def test_get_classification_list_as_string_valid_codes(code_string_pair):
   code = code_string_pair.get('code')
   expected_string = code_string_pair.get('class_list_string')
@@ -106,4 +108,5 @@ def test_get_classification_list_as_string_valid_codes(code_string_pair):
   assert string_of_hierarchy_breakdown == expected_string, (
       f"For the code '{code}', we were expecting the string '{expected_string}', "
       f"but instead got '{string_of_hierarchy_breakdown}'.",
-      "Note that output is case, spacing and punctuation sensitive, so check for any discrepancies there.")
+      "Note that output is case, spacing and punctuation sensitive, so check for any discrepancies there."
+  )
