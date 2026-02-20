@@ -33,12 +33,11 @@ def test_page_address_info_download(page: Page):
       f"The downloaded file should have been named 'address_attributes.txt' but was named '{download.suggested_filename}' instead."
   )
 
-   # Get the content of the downloaded file and check it matches the expected content
-  downloaded_file_content = download.text()
+  # Get the temporary file path
+  downloaded_file_path = download.path()
 
-  # With the message the download file is as follows: \n\n'{file}', but we expected: \n\n'{expected_file_content}'
-  assert downloaded_file_content == expected_file_content, (
-    f"The content of the downloaded file did not match the expected content. Please check that the file contains the correct attribute descriptions and that the formatting matches the expected formatting.\n\nDownloaded file content:\n{downloaded_file_content}\n\nExpected file content:\n{expected_file_content}"
-  )
+  # Read the file contents
+  with open(downloaded_file_path, 'r', encoding='utf-8') as f:
+    downloaded_file_content = f.read()
 
-
+  assert downloaded_file_content == expected_file_content
