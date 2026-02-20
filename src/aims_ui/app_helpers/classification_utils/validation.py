@@ -1,6 +1,7 @@
 from .builder import get_classification_file_content_as_dict
 import logging
 
+
 def get_full_classification_for_code_or_label(classification):
   """ Given a classification code, or label - return the code """
 
@@ -31,11 +32,13 @@ def get_full_classification_for_code_or_label(classification):
 
   return code_to_return
 
+
 def classification_is_valid(classification_code_or_label):
   """ Given a clasification code or label, check it's valid """
   # Treat as a string
   classification_code_or_label = str(classification_code_or_label)
-  classification_code_to_check = get_full_classification_for_code_or_label(classification_code_or_label)
+  classification_code_to_check = get_full_classification_for_code_or_label(
+      classification_code_or_label)
   # Now if it was entered with * or without, it will now have one
   # If the user entered a string version, it will now be the code
 
@@ -43,9 +46,9 @@ def classification_is_valid(classification_code_or_label):
   classifications_dict = get_classification_file_content_as_dict()
 
   # Create full list of classifications
-  full_classifications = [ x.get('code') + '*' for x in classifications_dict ]
-  full_classifications.append('') # Include blank as valid option
-  
+  full_classifications = [x.get('code') + '*' for x in classifications_dict]
+  full_classifications.append('')  # Include blank as valid option
+
   if classification_code_to_check in full_classifications:
     return True
   return False
