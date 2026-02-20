@@ -8,14 +8,24 @@
   <br>
   {# Set an ID so that we can get a handle later #}
   <div id="title-and-description-for-page-in-card-container">
-    {{ onsCard({
-        "id": 	         endpoint.id,
-        "textId": 	     'text',
-        "titleSize":     endpoint.title_size,
-        "titleClasses":  'header__title',
-        "title": 	       endpoint.title,
-        "text": 	       endpoint.description_text,
-    }) }}
+
+  {{ onsCard({
+      "id": endpoint.id,
+
+      "title": {
+          "text": endpoint.title,
+          "id": endpoint.id ~ "-title",
+          "classes": "header__title"
+      },
+
+      "body": {
+          "text": endpoint.description_text,
+          "id": endpoint.id ~ "-text"
+      },
+
+      "image": None 
+  }) }}
+
   </div>
   <br>
   {% endif %}
