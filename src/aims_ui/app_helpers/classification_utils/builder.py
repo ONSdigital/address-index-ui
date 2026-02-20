@@ -8,6 +8,7 @@ import csv
 import aims_ui
 from pathlib import Path
 
+
 def parse_classification_csv_content():
   """ Return CSV as a list of dicts, with whitespace stripped """
 
@@ -23,13 +24,14 @@ def parse_classification_csv_content():
     for row in reader:
       # Remove whitespace if it's a string, otherwise leave as is
       cleaned_row = {
-        key: value.strip() if isinstance(value, str) else value
-        for key, value in row.items()
+          key: value.strip() if isinstance(value, str) else value
+          for key, value in row.items()
       }
 
       content.append(cleaned_row)
 
   return content
+
 
 def get_classification_file_content_as_dict():
   """ Get the content of the classifications CSV as a dict """
@@ -56,7 +58,7 @@ def get_classification_file_content_as_dict():
         'quaternary_desc': row.get('Quaternary_Desc', ''),
     }
     classification_dict.append(classification_row)
-  
+
   # Now it's standardised, deal with outlier issues
   classification_dict = handle_ancillary_duplicates(classification_dict)
 
@@ -95,4 +97,3 @@ def handle_ancillary_duplicates(class_list):
         class_option['label'] = replacement.get('label')
 
   return class_list
-
