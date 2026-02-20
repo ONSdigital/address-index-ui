@@ -30,7 +30,8 @@ def autosuggest(autosuggest_type):
 
   # Check for reverse classification first
   elif 'reversed_classification' in autosuggest_type:
-    classification_list_reversed = get_classification_autosuggest_list_reversed()
+    classification_list_reversed = get_classification_autosuggest_list_reversed(
+    )
     return json.dumps(classification_list_reversed)
 
   # Cover normal classification

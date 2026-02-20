@@ -1,5 +1,5 @@
-
 from .builder import get_classification_file_content_as_dict
+
 
 def get_classification_autosuggest_list():
   """ Return the classifications list in the format expected by the autosuggest component """
@@ -14,6 +14,7 @@ def get_classification_autosuggest_list():
 
   return formatted_class_list
 
+
 def get_classification_autosuggest_list_reversed():
   """ Return the classifications list in the format expected by the autosuggest component with the code and label reversed for reverse searching """
   class_list = get_classification_file_content_as_dict()
@@ -26,6 +27,7 @@ def get_classification_autosuggest_list_reversed():
     })
 
   return formatted_class_list
+
 
 def get_full_classification_autosuggest():
   """ Merge of both the reversed and normal list for autosuggest 'surfing' """

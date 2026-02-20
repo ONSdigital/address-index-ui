@@ -47,6 +47,7 @@ jobs:
             echo "# YAPF disable"
             echo "...code..."
             echo "# YAPF enable"
+            echo "For YAPF docs see https://github.com/google/yapf"
             echo ""
             echo "YAPF wanted to make the following changes:"
             echo "--------------------------------------------------------------"
@@ -63,6 +64,7 @@ jobs:
             echo "...code..."
             echo "# YAPF enable"
             echo "See above for the changes YAPF wanted to make."
+            echo "For YAPF docs see https://github.com/google/yapf"
 
 
             exit 1
