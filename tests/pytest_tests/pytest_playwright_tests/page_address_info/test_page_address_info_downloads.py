@@ -1,7 +1,7 @@
 import pytest
 from playwright.sync_api import Page, expect
 
-from tests.pytest_tests.pytest_playwright_tests.utils.constants import BASE_URL , JS_DOWNLOADS
+from tests.pytest_tests.pytest_playwright_tests.utils.constants import BASE_URL, JS_DOWNLOADS
 """ Test that a user can download the attributes data from the Address Info page inside the clerical information section """
 
 
@@ -15,14 +15,18 @@ def test_page_address_info_download(page: Page):
   clerical_info_element.click()
 
   # Expect the phrase "Click here to download a list of attributes and descriptions" to be visible
-  expect(page.get_by_text(
-      'Click here to download a list of attributes and descriptions')).to_be_visible()
-  
+  expect(
+      page.get_by_text(
+          'Click here to download a list of attributes and descriptions')
+  ).to_be_visible()
+
   # Now click on the 'click here to download' link
   download_link = page.get_by_text('Click here')
 
   # Get the expected download content, download_name is "Attribute Descriptions"
-  dynamic_file_info = next((item for item in JS_DOWNLOADS if item["download_name"] == "Attribute Descriptions"), None)
+  dynamic_file_info = next(
+      (item for item in JS_DOWNLOADS
+       if item["download_name"] == "Attribute Descriptions"), None)
   expected_file_content = dynamic_file_info.get('expected_content')
 
   # Expect the download to have started and the file name to be 'address_attributes.txt'

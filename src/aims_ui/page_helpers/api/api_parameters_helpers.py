@@ -79,7 +79,8 @@ def adjust_params_for_all_pages(params):
   # Do a reverse classification lookup if the classification filter is present
   if 'classificationfilter' in params:
     entered_classification = params['classificationfilter']
-    classification = get_full_classification_for_code_or_label(entered_classification)
+    classification = get_full_classification_for_code_or_label(
+        entered_classification)
     params['classificationfilter'] = classification
 
   # Ensure historical is never None, default to False
