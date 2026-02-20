@@ -47,8 +47,9 @@ def api(url, called_from, all_user_input):
   user_classification = all_user_input.get('classificationfilter', '')
   if classification_is_valid(user_classification):
     return r
-  
+
   return add_classification_error_to_response_object(r)
+
 
 def add_classification_error_to_response_object(response):
   """Given an API response, inject the error state we would expect for an invalid result."""
@@ -76,6 +77,7 @@ def add_classification_error_to_response_object(response):
   new_response.request = response.request
 
   return new_response
+
 
 def get_response_attributes(r):
   """ Return high level response attributes """
@@ -222,6 +224,7 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
                'Request details: ' + str(log_message))
 
   return r
+
 
 def get_epoch_options():
   """Get the result of the Epoch Endpoint and format for radio button use"""

@@ -96,9 +96,12 @@ invalid_codes_and_labels = [
     (),
 ]
 
+
 @pytest.mark.parametrize('invalid_code_or_label', invalid_codes_and_labels)
-def test_classification_is_valid_for_invalid_codes_and_labels(invalid_code_or_label):
-  classification_is_valid_result = classification_is_valid(invalid_code_or_label)
+def test_classification_is_valid_for_invalid_codes_and_labels(
+    invalid_code_or_label):
+  classification_is_valid_result = classification_is_valid(
+      invalid_code_or_label)
 
   assert classification_is_valid_result is False, (
       f"The code or label '{invalid_code_or_label}' should have been invalid, but classification_is_valid returned True."

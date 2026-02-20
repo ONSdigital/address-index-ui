@@ -31,7 +31,6 @@ except OSError:
 
 classifications = None
 
-
 # Must import here to avoid circular imports
 from aims_ui.page_helpers.api.api_interaction import get_epoch_options
 

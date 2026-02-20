@@ -2,6 +2,7 @@ import { getGlobalValues, getPageLocalValues } from "/static/js/f_helpers/local_
 import { setupAttributesTable } from '/static/js/macros/sub_components/sub_custom_attributes_table/favourite_table_generation.mjs';
 import { allPagesLastInit } from '/static/js/e_all_pages/all_pages_last.mjs';
 import { allPagesFirstInit } from '/static/js/e_all_pages/all_pages_first.mjs';
+import { setupDownloadAttributesLink } from './setup_link_download.mjs';
 
 // What do we need to know?
   // We want the "address info" object of the current address (uprn in url)
@@ -26,7 +27,6 @@ import { allPagesFirstInit } from '/static/js/e_all_pages/all_pages_first.mjs';
    // Ok, the first thing we will do is generate it from an assumed existing local storage
    // global
 
-//
 
 function getAddressObjectFromUprn(uprn, addressObjectList) {
   // Get the most recent addresses from local storage, default to blank array if undefined
@@ -62,6 +62,7 @@ export function init(page_name) {
   allPagesFirstInit();
 
   // Custom setup for address info page:
+  setupDownloadAttributesLink();
 
   // Get the UPRN from the URL (http://127.0.0.1:5000/address_info/1)
   const urlParts = window.location.pathname.split('/');
