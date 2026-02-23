@@ -12,7 +12,7 @@ export function setupLoadButtonInit() {
     loadButton.classList.add(isLoadingClassName);
 
     // Submit a post request to this url when the button is clicked
-    const response = await fetch('/multiple_address_original', {
+    const response = await fetch('/downloads/small_multiple_match', {
         method: 'POST',
         body: new FormData(document.querySelector('form'))
     });
