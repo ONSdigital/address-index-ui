@@ -41,7 +41,7 @@ def multiple_address_results():
         [
             '22', 'Example', '10,000 of A Jillion', 'bob', 'True', 'PAF'
             'complete',
-            f'<a href="/downloads/googlefiledownload{job_id}">job_id {job_id}</a>'
+            f'<a href="/downloads/large_multiple_match/googlefiledownload{job_id}">job_id {job_id}</a>'
         ],
     ]
 

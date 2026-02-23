@@ -136,7 +136,7 @@ def check_url(url, job_id):
   try:
     response = requests.get(url)
     if response.status_code == 200:
-      buttonUrl = f'<a href="/downloads/googlefiledownload{job_id}">Download Job {job_id} Here</a>'
+      buttonUrl = f'<a href="/downloads/large_multiple_match/{job_id}">Download Job {job_id} Here</a>'
       return buttonUrl
     else:
       # Check if the error message is in XML format

@@ -71,8 +71,11 @@ def add_header(response):
 # Setup 'misc_functionality' page controllers
 from aims_ui.page_controllers.d_misc_functionality.page_info import info
 from aims_ui.page_controllers.d_misc_functionality.page_settings import settings
-from aims_ui.page_controllers.d_misc_functionality.download_handler import download_handler
 from aims_ui.page_controllers.d_misc_functionality.page_custom_response import custom_response
+# Setup download handlers in 'misc_functionality'
+from aims_ui.page_controllers.d_misc_functionality.download_handlers.autosuggest_download import autosuggest_download_handler
+from aims_ui.page_controllers.d_misc_functionality.download_handlers.large_multiple_address_download import large_multiple_address_download_handler
+from aims_ui.page_controllers.d_misc_functionality.download_handlers.static_files_download import static_files_download_handler
 
 # Setup routes that immedaitely redirect elsewhere
 from aims_ui.page_controllers.e_redirect_routes.login import login
