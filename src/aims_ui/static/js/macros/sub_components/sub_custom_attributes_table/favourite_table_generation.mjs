@@ -2,7 +2,11 @@
 import { setGlobalValues, getFavouritesFromLocalStorage } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 import { getPopulatedAttributeMap } from '/static/js/f_helpers/address_attribute_map.mjs';
 
-const keysToShow = getFavouritesFromLocalStorage();
+function getKeysToShow() {
+  // Get the keys to show from local storage, default to empty array if undefined
+  const keysToShow = getFavouritesFromLocalStorage();
+  return keysToShow || [];
+}
 
 export function addOrRemoveAttributeFromFavourites(cellIdNameOfAttribute) {
   // Get the current favourites from local storage
@@ -21,7 +25,7 @@ export function addOrRemoveAttributeFromFavourites(cellIdNameOfAttribute) {
 
 function getFavouriteStatusOfAttribute(valuePair) {
   // Given a value object, return 'true' or 'false' if it is a favourite
-  // Use the initially obtained keysToShow array
+  const keysToShow = getKeysToShow();
   for (const favouriteKey of keysToShow) {
     if (favouriteKey === valuePair.cellId) {
       return true;
@@ -37,12 +41,19 @@ function generateRowFromTemplate(rowClone, valuePair) {
   // Get handles on the name and value cells and favourite checkbox
   const nameCell = rowClone.querySelector('.attribute-name-placeholder');
   const valueCell = rowClone.querySelector('.attribute-value-placeholder');
+  const checkboxLabel = rowClone.querySelector('.favourite-checkbox-label');
   const favouriteCheckbox = rowClone.querySelector('.favourite-checkbox');
 
   // Add the class to each row for styling and handles
   valueCell.classList.add(`attribute-value-${valuePair.cellId}`);
   nameCell.classList.add(`attribute-name-${valuePair.cellId}`);
-  favouriteCheckbox.classList.add(`favourite-checkbox-${valuePair.cellId}`);
+
+  // Generate and link the checkbox and label with an id
+  const uniqueIdCheckbox = `favourite-checkbox-${valuePair.cellId}`;
+  favouriteCheckbox.id = uniqueIdCheckbox;
+  checkboxLabel.setAttribute('for', uniqueIdCheckbox);
+  checkboxLabel.removeAttribute('id');
+  favouriteCheckbox.classList.add(uniqueIdCheckbox);
 
   // Set the name and value for each row
   nameCell.textContent = valuePair.labelText;
@@ -51,7 +62,7 @@ function generateRowFromTemplate(rowClone, valuePair) {
   // If the HTML attribute 'checked' is present, the checkbox is ticked
   const favouriteStatus = getFavouriteStatusOfAttribute(valuePair);
   if (favouriteStatus) {
-    favouriteCheckbox.setAttribute('checked', 'true');
+    favouriteCheckbox.checked = true;
   }
 
   // Add an event listener to the checkbox to handle adding/removing from favourites
@@ -98,6 +109,7 @@ function getAllPairsToShow(populatedAttributeMap, showAllAttributes) {
   // Given a populated favourite, value array, return all of them or just favourites
   if (showAllAttributes) { return populatedAttributeMap; }
 
+  const keysToShow = getKeysToShow();
   return populatedAttributeMap.filter(item => keysToShow.includes(item.cellId));
 }
 
