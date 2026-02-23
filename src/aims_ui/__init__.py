@@ -4,10 +4,12 @@ import time
 from flask import Flask
 from .config import base as config_base
 from aims_ui.app_helpers.logging import setup_logging
+from jinja2 import ChainableUndefined
 
 setup_logging(os.getenv('PLATFORM'))
 
 app = Flask(__name__, instance_relative_config=False)
+app.jinja_env.undefined = ChainableUndefined
 
 ENV = os.getenv('FLASK_ENV', 'testing')
 
