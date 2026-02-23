@@ -3,7 +3,8 @@ from pathlib import Path
 import pytest
 from playwright.sync_api import Page, expect
 
-from tests.pytest_tests.pytest_playwright_tests.utils.constants import (BASE_URL)
+from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
+    BASE_URL)
 
 
 def test_downloading_example_file_and_submitting_it_for_matching(page: Page):
