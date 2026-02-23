@@ -22,7 +22,7 @@ def test_downloading_example_file_and_submitting_it_for_matching(page: Page):
   page.set_input_files('#file_upload', download_path)
 
   with page.expect_download() as matched_download_info:
-    page.get_by_role('button', name='Submit').click()
+    page.get_by_text('Match Addresses').click()
 
   matched_download = matched_download_info.value
   matched_download.save_as(Path.cwd() / 'matched_output.csv')
