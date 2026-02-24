@@ -18,20 +18,16 @@
 
 		{{ onsCard({
 			"id": deffinition.title,
-
 			"title": {
 					"text": deffinition.title,
 					"url": deffinition.url | replace('http', 'https'),
 					"id": deffinition.title ~ "-title",
 					"headingLevel": 1
 			},
-
 			"body": {
 					"text": "Select above link for details",
 					"id": deffinition.title ~ "-text"
 			},
-
-			"image": None
 		}) }}
 
 	<br>
