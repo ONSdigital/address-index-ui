@@ -39,9 +39,8 @@ export function findIfPafOrNagWasUsed(address) {
 function getAddressesFromResponse(apiResponse) {
   // Given an API response (string), extract a list of all matched addresses, confidence score, document score
   // Extract the list of matched addresses
- const customAttributes = getPageLocalValues('multiple_address_attributes').pagePreviouslySearchedValues
- console.log('custom att lat= ', customAttributes['latitude'])
- const matchedAddresses = [];
+  const customAttributes = getPageLocalValues('multiple_address_attributes').pagePreviouslySearchedValues
+  const matchedAddresses = [];
   if (apiResponse.toString() === '') {
     return [];
   }
@@ -72,8 +71,6 @@ function getAddressesFromResponse(apiResponse) {
       airRating,
     ];
 
-    console.log('address', address)
-
     // add any custom attributes that have been selected
     if (customAttributes['classification_code'] == true) {
         addressToAdd.push(address['classificationCode']);
@@ -88,11 +85,9 @@ function getAddressesFromResponse(apiResponse) {
         addressToAdd.push(address['geo']['northing']);
     }
     if (customAttributes['latitude'] == true) {
-        console.log('latitude')
         addressToAdd.push(address['geo']['latitude']);
     }
     if (customAttributes['longitude'] == true) {
-        console.log('longitude')
         addressToAdd.push(address['geo']['longitude']);
     }
     if (customAttributes['parent_uprn'] == true) {
@@ -114,7 +109,6 @@ function getAddressesFromResponse(apiResponse) {
         addressToAdd.push(address['welshFormattedAddressPaf']);
     }
 
-    console.log('addresstoAdd', addressToAdd)
     matchedAddresses.push(addressToAdd);
   }
   return matchedAddresses;
@@ -165,18 +159,6 @@ function processRow(row) {
   const finalMatches = [];
   for (const matchedAddress of matchedAddresses) {
     // Add each address with quotes for csv parsing
-//     const final_row = [
-//       id,
-//       inputAddress,
-//       matchedAddress[0],
-//       matchedAddress[1],
-//       matchedAddress[2],
-//       matchedAddress[3],
-//       matchedAddress[4],
-//       matchedAddress[5],
-//       matchedAddress[6],
-//       matchedAddress[7],
-//     ];
     const final_row = [
       id,
       inputAddress
@@ -194,10 +176,17 @@ function processRow(row) {
 }
 
 async function downloadAndProcess(url, headerStatus) {
+  const customAttributes = getPageLocalValues('multiple_address_attributes').pagePreviouslySearchedValues
   let final_csv = '';
+  let extra_headers = '';
   if (headerStatus.toString() !== 'False') {
+    for (const [key, value] of Object.entries(customAttributes)) {
+      if (value == true) {
+          extra_headers = extra_headers + ',' + key
+      }
+    }
     final_csv =
-      'id,inputAddress,matchedAddress,uprn,matchType,confidenceScore,documentScore,rank,addressType(Paf/Nag),airRating\n';
+      'id,inputAddress,matchedAddress,uprn,matchType,confidenceScore,documentScore,rank,addressType(Paf/Nag),airRating' + extra_headers +'\n';
   }
   const response = await fetch(url);
   const arrayBuffer = await response.arrayBuffer();
@@ -295,7 +284,6 @@ export function setupResultsButtonAndProcessing() {
 
     // Change all links to "download" buttons
     const linksAndParents = getAllLinks();
-    console.log('links ', linksAndParents);
     for (const l of linksAndParents) {
       // await changeLinkToButton(l);
       changeLinkToButton(l);
