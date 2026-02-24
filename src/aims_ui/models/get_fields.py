@@ -149,7 +149,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           description=
           'This file contains a list of classifications, explained in a universaly recognised "easy to read" csv format.',
           search_type='download',
-          download_url='/downloads/classifications_list',
+          download_url='/downloads/static/classifications_list',
       ),
       'multiple_match_paf_nag_preference':
       Field(

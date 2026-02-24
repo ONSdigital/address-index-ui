@@ -23,7 +23,7 @@ DOWNLOADS = [
     {
         'download_name': 'classifications',
         'description': 'A list of all classifications from the API',
-        'url_modifier': 'downloads/classifications_list',
+        'url_modifier': 'downloads/static/classifications_list',
         'file_name': 'classifications.csv',
         'expected_content': None,
     },
@@ -31,7 +31,7 @@ DOWNLOADS = [
         'download_name': 'Example Multiple Address',
         'description':
         'An example of how multuple addresses in a CSV file should be submitted',
-        'url_modifier': 'downloads/example_multiple_address',
+        'url_modifier': 'downloads/static/example_multiple_address',
         'file_name': 'example_multiple_match_upload.csv',
         'expected_content': None,
     },
@@ -39,14 +39,14 @@ DOWNLOADS = [
         'download_name': 'Large Example Multiple Address',
         'description':
         'An example of how multuple addresses in a CSV file should be submitted for the Large Bulk interface',
-        'url_modifier': 'downloads/example_multiple_address_big',
+        'url_modifier': 'downloads/static/example_multiple_address_big',
         'file_name': 'example_multiple_match_5k_upload.csv',
         'expected_content': None,
     },
     {
         'download_name': 'UPRN Example Multiple Address',
         'description': 'Example of how to submit multiple UPRNs in a CSV file',
-        'url_modifier': 'downloads/uprn_example_multiple_address',
+        'url_modifier': 'downloads/static/uprn_example_multiple_address',
         'file_name': 'uprn_example_multiple_match_upload.csv',
         'expected_content': None,
     },

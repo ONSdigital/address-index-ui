@@ -17,7 +17,7 @@ page_name = 'download_handler'
 
 
 @login_required
-@app.route(f'/downloads/<file_name>', methods=['GET', 'POST'])
+@app.route(f'/downloads/static/<file_name>', methods=['GET'])
 def static_files_download_handler(file_name):
   # Create example_csv
 
