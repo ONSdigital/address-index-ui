@@ -1,4 +1,5 @@
 import { getGlobalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
+import { getPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
 export function getAllLinks() {
   const tableLinks = [];
@@ -38,7 +39,9 @@ export function findIfPafOrNagWasUsed(address) {
 function getAddressesFromResponse(apiResponse) {
   // Given an API response (string), extract a list of all matched addresses, confidence score, document score
   // Extract the list of matched addresses
-  const matchedAddresses = [];
+ const customAttributes = getPageLocalValues('multiple_address_attributes').pagePreviouslySearchedValues
+ console.log('custom att lat= ', customAttributes['latitude'])
+ const matchedAddresses = [];
   if (apiResponse.toString() === '') {
     return [];
   }
@@ -57,6 +60,7 @@ function getAddressesFromResponse(apiResponse) {
     const rank = i;
     const addressTypePafNag = findIfPafOrNagWasUsed(address);
     const airRating = address['airRating'];
+
     const addressToAdd = [
       formattedAddress,
       uprn,
@@ -67,6 +71,50 @@ function getAddressesFromResponse(apiResponse) {
       addressTypePafNag,
       airRating,
     ];
+
+    console.log('address', address)
+
+    // add any custom attributes that have been selected
+    if (customAttributes['classification_code'] == true) {
+        addressToAdd.push(address['classificationCode']);
+    }
+    if (customAttributes['country_code'] == true) {
+        addressToAdd.push(address['countryCode']);
+    }
+    if (customAttributes['easting'] == true) {
+        addressToAdd.push(address['geo']['easting']);
+    }
+    if (customAttributes['northing'] == true) {
+        addressToAdd.push(address['geo']['northing']);
+    }
+    if (customAttributes['latitude'] == true) {
+        console.log('latitude')
+        addressToAdd.push(address['geo']['latitude']);
+    }
+    if (customAttributes['longitude'] == true) {
+        console.log('longitude')
+        addressToAdd.push(address['geo']['longitude']);
+    }
+    if (customAttributes['parent_uprn'] == true) {
+        addressToAdd.push(address['parentUprn']);
+    }
+    if (customAttributes['lpi_logical_status'] == true) {
+        addressToAdd.push(address['lpiLogicalStatus']);
+    }
+    if (customAttributes['formatted_address_nag'] == true) {
+        addressToAdd.push(address['formattedAddressNag']);
+    }
+    if (customAttributes['formatted_address_paf'] == true) {
+        addressToAdd.push(address['formattedAddressPaf']);
+    }
+    if (customAttributes['welsh_formatted_address_nag'] == true) {
+        addressToAdd.push(address['welshFormattedAaddressNag']);
+    }
+    if (customAttributes['welsh_formatted_address_paf'] == true) {
+        addressToAdd.push(address['welshFormattedAddressPaf']);
+    }
+
+    console.log('addresstoAdd', addressToAdd)
     matchedAddresses.push(addressToAdd);
   }
   return matchedAddresses;
@@ -160,6 +208,7 @@ async function downloadAndProcess(url, headerStatus) {
 }
 
 async function changeLinkToButton(linkParentMetadata) {
+  console.log('changeLinkToButton')
   // Make the Download Button
   const originalButton = document.querySelector('#downloadButtonTemplate');
   const clonedButton = originalButton.cloneNode(true);
@@ -230,15 +279,19 @@ function addJobsFlagToCurrentURL() {
 }
 
 export function setupResultsButtonAndProcessing() {
-  window.addEventListener('load', async function () {
+  console.log('setupResultsButtonAndProcessing');
+ // window.addEventListener('load', async function () {
+    console.log('in load event');
     // Check the jobs flag - this is a fallback check as it should already be appended to the URL
     addJobsFlagToCurrentURL();
 
     // Change all links to "download" buttons
     const linksAndParents = getAllLinks();
+    console.log('links ', linksAndParents);
     for (const l of linksAndParents) {
-      await changeLinkToButton(l);
+      // await changeLinkToButton(l);
+      changeLinkToButton(l);
     }
-  });
+ // });
 }
 
