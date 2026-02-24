@@ -108,7 +108,7 @@ function getAddressesFromResponse(apiResponse) {
         addressToAdd.push(address['formattedAddressPaf']);
     }
     if (customAttributes['welsh_formatted_address_nag'] == true) {
-        addressToAdd.push(address['welshFormattedAaddressNag']);
+        addressToAdd.push(address['welshFormattedAddressNag']);
     }
     if (customAttributes['welsh_formatted_address_paf'] == true) {
         addressToAdd.push(address['welshFormattedAddressPaf']);
@@ -165,19 +165,27 @@ function processRow(row) {
   const finalMatches = [];
   for (const matchedAddress of matchedAddresses) {
     // Add each address with quotes for csv parsing
+//     const final_row = [
+//       id,
+//       inputAddress,
+//       matchedAddress[0],
+//       matchedAddress[1],
+//       matchedAddress[2],
+//       matchedAddress[3],
+//       matchedAddress[4],
+//       matchedAddress[5],
+//       matchedAddress[6],
+//       matchedAddress[7],
+//     ];
     const final_row = [
       id,
-      inputAddress,
-      matchedAddress[0],
-      matchedAddress[1],
-      matchedAddress[2],
-      matchedAddress[3],
-      matchedAddress[4],
-      matchedAddress[5],
-      matchedAddress[6],
-      matchedAddress[7],
+      inputAddress
     ];
+
+    matchedAddress.forEach(item => final_row.push(item));
+
     finalMatches.push(final_row);
+    console.log('final matches', finalMatches)
   }
 
   // If 5 addresses match, finalMatches contains an array of 5 items, each containing [ id, search address, matched address, confidence score, document score, rank]
