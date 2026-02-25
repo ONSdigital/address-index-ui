@@ -7,9 +7,9 @@ function getListOfAttributesAsStringFromLocalStorage() {
   const pageLocalValues = getPageLocalValues(pageNameWithTogglableAttributes);
   const valuePairOfAttributeEnabled = pageLocalValues['pagePreviouslySearchedValues'] || {};
 
-  console.log('PageName with togglable attributes:', pageNameWithTogglableAttributes, 'Value pair of attribute enabled from local storage:', valuePairOfAttributeEnabled);
-  console.log('pageLocalValues from local storage:', pageLocalValues);
-  console.log('pagePreviouslySearchedValues from local storage:', pageLocalValues.pagePreviouslySearchedValues);
+  console.debug('PageName with togglable attributes:', pageNameWithTogglableAttributes, 'Value pair of attribute enabled from local storage:', valuePairOfAttributeEnabled);
+  console.debug('pageLocalValues from local storage:', pageLocalValues);
+  console.debug('pagePreviouslySearchedValues from local storage:', pageLocalValues.pagePreviouslySearchedValues);
 
   // Create a space seperated list of enabled attributes
   let attributeList = '';
