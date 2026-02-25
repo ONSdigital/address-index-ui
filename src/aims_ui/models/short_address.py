@@ -80,7 +80,7 @@ class AddressAttribute():
     if self.name == 'geo.northing':
       return str(value.get('northing'))
     if self.name == 'classificationCodeList':
-      return get_classification_list(classification_code)
+      return get_classification_list_as_string(classification_code)
     if self.name == 'lpiLogicalStatus':
       return getFullLpiLogicalStatusInfo(self.raw_value)
     if self.name == 'hierarchy':
