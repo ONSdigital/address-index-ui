@@ -68,6 +68,18 @@ function generateRowFromTemplate(rowClone, valuePair) {
   // Add an event listener to the checkbox to handle adding/removing from favourites
   favouriteCheckbox.addEventListener('change', () => {
     addOrRemoveAttributeFromFavourites(valuePair.cellId);
+    // Send a custom event trigggering other checkbxoes with the same id to update
+    const event = new CustomEvent('favouriteStatusChanged', { detail: { cellId: valuePair.cellId } });
+    document.dispatchEvent(event);
+  });
+
+  // Add an event listener to refresh checkbox status across all cards if a change is sent
+  document.addEventListener('favouriteStatusChanged', (event) => {
+    const changedCellId = event.detail.cellId;
+    if (changedCellId === valuePair.cellId) {
+      const isFavourite = getFavouriteStatusOfAttribute(valuePair);
+      favouriteCheckbox.checked = isFavourite;
+    }
   });
 
   // Add a tooltip for the cell name containing a description if available
