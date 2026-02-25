@@ -36,10 +36,10 @@ export function findIfPafOrNagWasUsed(address) {
   }
 }
 
-function getAddressesFromResponse(apiResponse) {
+function getAddressesFromResponse(apiResponse,page) {
   // Given an API response (string), extract a list of all matched addresses, confidence score, document score
   // Extract the list of matched addresses
-  const customAttributes = getPageLocalValues('multiple_address_attributes').pagePreviouslySearchedValues
+  const customAttributes = getPageLocalValues(page).pagePreviouslySearchedValues
   const matchedAddresses = [];
   if (apiResponse.toString() === '') {
     return [];
@@ -71,6 +71,13 @@ function getAddressesFromResponse(apiResponse) {
       airRating,
     ];
 
+    const finalAddressToAdd = addCustomAttributesToResponse(address,customAttributes,addressToAdd);
+    matchedAddresses.push(finalAddressToAdd);
+  }
+  return matchedAddresses;
+}
+
+function addCustomAttributesToResponse(address,customAttributes,addressToAdd) {
     // add any custom attributes that have been selected
     if (customAttributes['classification_code'] == true) {
         addressToAdd.push(address['classificationCode']);
@@ -108,10 +115,7 @@ function getAddressesFromResponse(apiResponse) {
     if (customAttributes['welsh_formatted_address_paf'] == true) {
         addressToAdd.push(address['welshFormattedAddressPaf']);
     }
-
-    matchedAddresses.push(addressToAdd);
-  }
-  return matchedAddresses;
+    return addressToAdd;
 }
 
 function returnNewlineIfNotBlank(testString) {
@@ -137,7 +141,7 @@ function arrayToCSV(data) {
   return csvRows.join('\r\n') + returnNewlineIfNotBlank(csvRows);
 }
 
-function processRow(row) {
+function processRow(row,page) {
   // Process [id, inputAddress, APIresponse]
   // to be in same format as <5k match
 
@@ -152,7 +156,7 @@ function processRow(row) {
   // Get info for a single row
   const id = row[0];
   const inputAddress = row[1];
-  const matchedAddresses = getAddressesFromResponse(row[2]);
+  const matchedAddresses = getAddressesFromResponse(row[2],page);
 
   // Expand (same id and input address for each matched address)
   const finalMatches = [];
@@ -173,8 +177,8 @@ function processRow(row) {
   return csvFormat;
 }
 
-async function downloadAndProcess(url, headerStatus) {
-  const customAttributes = getPageLocalValues('multiple_address_attributes').pagePreviouslySearchedValues
+async function downloadAndProcess(url, headerStatus, page) {
+  const customAttributes = getPageLocalValues(page).pagePreviouslySearchedValues
   let final_csv = '';
   let extra_headers = '';
   if (headerStatus.toString() !== 'False') {
@@ -196,7 +200,7 @@ async function downloadAndProcess(url, headerStatus) {
 
   parsedCSV.forEach((row) => {
     // Row = [id, inputAddress, APIresponse]
-    final_csv = final_csv + processRow(row);
+    final_csv = final_csv + processRow(row,page);
   });
 
   return await final_csv;
@@ -220,10 +224,13 @@ async function changeLinkToButton(linkParentMetadata) {
       .trim()
       .replace(/\s+/g, ' ');
 
+    const page = 'multiple_address_attributes'
+
     // Get CSV content
     const csv = await downloadAndProcess(
       linkParentMetadata.link.href,
-      headerStatus
+      headerStatus,
+      page
     );
 
     // Make a new blob
