@@ -140,7 +140,6 @@ function arrayToCSV(data) {
 function processRow(row) {
   // Process [id, inputAddress, APIresponse]
   // to be in same format as <5k match
-  // console.log(row);['119113', '5 SOWTON EX8 9DD', '{"apiVersion":"1.0.1
 
   // Check not blank or header row
   if (row.length !== 3) {
@@ -167,7 +166,6 @@ function processRow(row) {
     matchedAddress.forEach(item => final_row.push(item));
 
     finalMatches.push(final_row);
-    console.log('final matches', finalMatches)
   }
 
   // If 5 addresses match, finalMatches contains an array of 5 items, each containing [ id, search address, matched address, confidence score, document score, rank]
@@ -205,7 +203,6 @@ async function downloadAndProcess(url, headerStatus) {
 }
 
 async function changeLinkToButton(linkParentMetadata) {
-  console.log('changeLinkToButton')
   // Make the Download Button
   const originalButton = document.querySelector('#downloadButtonTemplate');
   const clonedButton = originalButton.cloneNode(true);
@@ -275,19 +272,14 @@ function addJobsFlagToCurrentURL() {
   }
 }
 
-export function setupResultsButtonAndProcessing() {
-  console.log('setupResultsButtonAndProcessing');
- // window.addEventListener('load', async function () {
-    console.log('in load event');
+export async function setupResultsButtonAndProcessing() {
     // Check the jobs flag - this is a fallback check as it should already be appended to the URL
     addJobsFlagToCurrentURL();
 
     // Change all links to "download" buttons
     const linksAndParents = getAllLinks();
     for (const l of linksAndParents) {
-      // await changeLinkToButton(l);
-      changeLinkToButton(l);
+       await changeLinkToButton(l);
     }
- // });
 }
 
