@@ -1,4 +1,5 @@
 import { getGlobalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
+import { getPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
 export function getAllLinks() {
   const tableLinks = [];
@@ -35,9 +36,10 @@ export function findIfPafOrNagWasUsed(address) {
   }
 }
 
-function getAddressesFromResponse(apiResponse) {
+function getAddressesFromResponse(apiResponse,page) {
   // Given an API response (string), extract a list of all matched addresses, confidence score, document score
   // Extract the list of matched addresses
+  const customAttributes = getPageLocalValues(page).pagePreviouslySearchedValues
   const matchedAddresses = [];
   if (apiResponse.toString() === '') {
     return [];
@@ -57,6 +59,7 @@ function getAddressesFromResponse(apiResponse) {
     const rank = i;
     const addressTypePafNag = findIfPafOrNagWasUsed(address);
     const airRating = address['airRating'];
+
     const addressToAdd = [
       formattedAddress,
       uprn,
@@ -67,9 +70,52 @@ function getAddressesFromResponse(apiResponse) {
       addressTypePafNag,
       airRating,
     ];
-    matchedAddresses.push(addressToAdd);
+
+    const finalAddressToAdd = addCustomAttributesToResponse(address,customAttributes,addressToAdd);
+    matchedAddresses.push(finalAddressToAdd);
   }
   return matchedAddresses;
+}
+
+function addCustomAttributesToResponse(address,customAttributes,addressToAdd) {
+    // add any custom attributes that have been selected
+    if (customAttributes['classification_code'] == true) {
+        addressToAdd.push(address['classificationCode']);
+    }
+    if (customAttributes['country_code'] == true) {
+        addressToAdd.push(address['countryCode']);
+    }
+    if (customAttributes['easting'] == true) {
+        addressToAdd.push(address['geo']['easting']);
+    }
+    if (customAttributes['northing'] == true) {
+        addressToAdd.push(address['geo']['northing']);
+    }
+    if (customAttributes['latitude'] == true) {
+        addressToAdd.push(address['geo']['latitude']);
+    }
+    if (customAttributes['longitude'] == true) {
+        addressToAdd.push(address['geo']['longitude']);
+    }
+    if (customAttributes['parent_uprn'] == true) {
+        addressToAdd.push(address['parentUprn']);
+    }
+    if (customAttributes['lpi_logical_status'] == true) {
+        addressToAdd.push(address['lpiLogicalStatus']);
+    }
+    if (customAttributes['formatted_address_nag'] == true) {
+        addressToAdd.push(address['formattedAddressNag']);
+    }
+    if (customAttributes['formatted_address_paf'] == true) {
+        addressToAdd.push(address['formattedAddressPaf']);
+    }
+    if (customAttributes['welsh_formatted_address_nag'] == true) {
+        addressToAdd.push(address['welshFormattedAddressNag']);
+    }
+    if (customAttributes['welsh_formatted_address_paf'] == true) {
+        addressToAdd.push(address['welshFormattedAddressPaf']);
+    }
+    return addressToAdd;
 }
 
 function returnNewlineIfNotBlank(testString) {
@@ -95,10 +141,9 @@ function arrayToCSV(data) {
   return csvRows.join('\r\n') + returnNewlineIfNotBlank(csvRows);
 }
 
-function processRow(row) {
+function processRow(row,page) {
   // Process [id, inputAddress, APIresponse]
   // to be in same format as <5k match
-  // console.log(row);['119113', '5 SOWTON EX8 9DD', '{"apiVersion":"1.0.1
 
   // Check not blank or header row
   if (row.length !== 3) {
@@ -111,7 +156,7 @@ function processRow(row) {
   // Get info for a single row
   const id = row[0];
   const inputAddress = row[1];
-  const matchedAddresses = getAddressesFromResponse(row[2]);
+  const matchedAddresses = getAddressesFromResponse(row[2],page);
 
   // Expand (same id and input address for each matched address)
   const finalMatches = [];
@@ -119,16 +164,11 @@ function processRow(row) {
     // Add each address with quotes for csv parsing
     const final_row = [
       id,
-      inputAddress,
-      matchedAddress[0],
-      matchedAddress[1],
-      matchedAddress[2],
-      matchedAddress[3],
-      matchedAddress[4],
-      matchedAddress[5],
-      matchedAddress[6],
-      matchedAddress[7],
+      inputAddress
     ];
+
+    matchedAddress.forEach(item => final_row.push(item));
+
     finalMatches.push(final_row);
   }
 
@@ -137,11 +177,18 @@ function processRow(row) {
   return csvFormat;
 }
 
-async function downloadAndProcess(url, headerStatus) {
+async function downloadAndProcess(url, headerStatus, page) {
+  const customAttributes = getPageLocalValues(page).pagePreviouslySearchedValues
   let final_csv = '';
+  let extra_headers = '';
   if (headerStatus.toString() !== 'False') {
+    for (const [key, value] of Object.entries(customAttributes)) {
+      if (value == true) {
+          extra_headers = extra_headers + ',' + key
+      }
+    }
     final_csv =
-      'id,inputAddress,matchedAddress,uprn,matchType,confidenceScore,documentScore,rank,addressType(Paf/Nag),airRating\n';
+      'id,inputAddress,matchedAddress,uprn,matchType,confidenceScore,documentScore,rank,addressType(Paf/Nag),airRating' + extra_headers +'\n';
   }
   const response = await fetch(url);
   const arrayBuffer = await response.arrayBuffer();
@@ -153,7 +200,7 @@ async function downloadAndProcess(url, headerStatus) {
 
   parsedCSV.forEach((row) => {
     // Row = [id, inputAddress, APIresponse]
-    final_csv = final_csv + processRow(row);
+    final_csv = final_csv + processRow(row,page);
   });
 
   return await final_csv;
@@ -177,10 +224,13 @@ async function changeLinkToButton(linkParentMetadata) {
       .trim()
       .replace(/\s+/g, ' ');
 
+    const page = 'multiple_address_attributes'
+
     // Get CSV content
     const csv = await downloadAndProcess(
       linkParentMetadata.link.href,
-      headerStatus
+      headerStatus,
+      page
     );
 
     // Make a new blob
@@ -229,16 +279,14 @@ function addJobsFlagToCurrentURL() {
   }
 }
 
-export function setupResultsButtonAndProcessing() {
-  window.addEventListener('load', async function () {
+export async function setupResultsButtonAndProcessing() {
     // Check the jobs flag - this is a fallback check as it should already be appended to the URL
     addJobsFlagToCurrentURL();
 
     // Change all links to "download" buttons
     const linksAndParents = getAllLinks();
     for (const l of linksAndParents) {
-      await changeLinkToButton(l);
+       await changeLinkToButton(l);
     }
-  });
 }
 
