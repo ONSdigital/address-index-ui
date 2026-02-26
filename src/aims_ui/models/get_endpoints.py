@@ -7,9 +7,9 @@ from .endpoint import Endpoint
 
 def get_current_selected_endpoint(endpoints, called_from):
   # Adjust multiple_address / multiple_address_results pages to
-  # multiple_address_original so that Header Highlights Work
+  # multiple_address_small_submit so that Header Highlights Work
   if 'multiple_address' in called_from:
-    called_from = 'multiple_address_original'
+    called_from = 'multiple_address_small_submit'
 
   for endpoint in endpoints:
     if endpoint.page_name == called_from:
@@ -47,15 +47,15 @@ def get_endpoints(called_from=None):
       ),
       Endpoint(
           'Multiple Address',
-          'multiple_address_original',
+          'multiple_address_small_submit',
           "Search for not just  one address. Several. Get lots of results you can look through. This service completes many single searches from a file.",
-          'b_multiple_matches',
+          'b_multiple_matches/small_multiple_match',
       ),
       Endpoint(
           'Multiple UPRN',
           'uprn_multiple_match',
           "Search for multiple addresses providing mulitple UPRNs (Unique Property Reference Numbers)",
-          'b_multiple_matches',
+          'b_multiple_matches/uprn_multiple_match',
       ),
       Endpoint(
           'API',

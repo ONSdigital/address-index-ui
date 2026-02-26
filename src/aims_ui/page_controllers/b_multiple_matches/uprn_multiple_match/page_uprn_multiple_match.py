@@ -6,7 +6,7 @@ from aims_ui import app
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_file_upload_utils import check_valid_upload
-from aims_ui.page_controllers.b_multiple_matches.utils.submit_multiple_match_uprn import uprn_multiple_address_match
+from aims_ui.page_controllers.b_multiple_matches.uprn_multiple_match.utils.submit_multiple_match_uprn import uprn_multiple_address_match
 from aims_ui.page_controllers.f_error_pages.page_error_annotation_multiple import page_error_annotation_multiple
 from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs
 from aims_ui.page_helpers.error.error_utils import error_page_connection

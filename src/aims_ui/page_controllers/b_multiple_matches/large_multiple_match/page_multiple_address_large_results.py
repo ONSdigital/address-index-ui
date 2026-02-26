@@ -3,7 +3,7 @@ from flask_login import login_required
 
 from aims_ui import app
 from aims_ui.models.get_endpoints import get_endpoints
-from aims_ui.page_controllers.b_multiple_matches.utils.multiple_address_results import get_results_plus_metadata
+from aims_ui.page_controllers.b_multiple_matches.large_multiple_match.utils.multiple_address_results import get_results_plus_metadata
 from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
@@ -16,7 +16,7 @@ page_name = 'multiple_address_results'
 
 @login_required
 @app.route(f'/multiple_address_results', methods=['GET', 'POST'])
-def multiple_address_results():
+def multiple_address_large_results():
   endpoints = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:

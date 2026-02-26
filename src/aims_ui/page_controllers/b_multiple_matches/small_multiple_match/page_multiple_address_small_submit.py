@@ -1,7 +1,3 @@
-
-from flask import request, send_file
-from flask_login import login_required
-
 from flask import render_template, request, send_file, session
 from flask_login import login_required
 
@@ -14,19 +10,18 @@ from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 
-from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_file_upload_utils import check_valid_upload, validate_limit_parameter
-from aims_ui.page_controllers.b_multiple_matches.utils.submit_multiple_match_from_singlesearch import (
+from ..utils.multiple_match_file_upload_utils import check_valid_upload, validate_limit_parameter
+from ..utils.multiple_match_utils import get_results_display_type
+from .utils.submit_multiple_match_from_singlesearch import (
     multiple_address_match_from_singlesearch_display,
     multiple_address_match_from_singlesearch_download)
-from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_utils import get_results_display_type
 
-
-page_name = 'multiple_address_original'
+page_name = 'multiple_address_small_submit'
 
 
 @login_required
-@app.route(f'/downloads/small_multiple_match', methods=['POST'])
-def small_multiple_address_download_handler():
+@app.route(f'/{page_name}', methods=['GET', 'POST'])
+def multiple_address_small_submit():
   endpoints = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
@@ -37,6 +32,16 @@ def small_multiple_address_download_handler():
   bulk_limits = current_group.get('bulk_limits')
   limit_mini_bulk = bulk_limits.get('limit_mini_bulk')
   searchable_fields = get_fields(page_name)
+
+  if request.method == 'GET':
+    delete_input(session)
+    return render_template(
+        page_location,
+        page_name=page_name,
+        searchable_fields=searchable_fields,
+        endpoints=endpoints,
+        bulk_limits=bulk_limits,
+    )
 
   try:
     all_user_input = load_save_store_inputs(

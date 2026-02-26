@@ -1,4 +1,4 @@
-from aims_ui.page_controllers.b_multiple_matches.utils.multiple_address_results import (
+from aims_ui.page_controllers.b_multiple_matches.large_multiple_match.utils.multiple_address_results import (
     get_recs_so_far_message, get_friendly_header_row_export, format_single_job)
 
 

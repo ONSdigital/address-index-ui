@@ -184,7 +184,7 @@ ALL_PAGE_NAMES = [
     'uprn',
     'postcode',
     'typeahead',
-    'multiple_address_original',
+    'multiple_address_small_submit',
     'multiple_address_results',
     'multiple_address_attributes',
     'multiple_address',
@@ -232,8 +232,8 @@ ENDPOINTS = [{
     'page_description': 'This search types ahead. Autosuggest on steroids basically. Useful if you quickly want a user to find an address.',
 }, {
     'page_name': 'Multiple Address',
-    'page_name_test': 'multiple_address_original',
-    'url': 'multiple_address_original',
+    'page_name_test': 'multiple_address_small_submit',
+    'url': 'multiple_address_small_submit',
     'nav_link_in_header': True,
     'page_description':'Search for not just  one address. Several. Get lots of results you can look through. This service completes many single searches from a file.',
 }, {
@@ -337,7 +337,7 @@ USER_ROLE_MAP = [{
       'role': 'bulk_removed',
       'username': 'testBulkRemovedExplicit',
        'pages_to_remove': [
-            'multiple_address_original', 'uprn_multiple_match',
+            'multiple_address_small_submit', 'uprn_multiple_match',
             'multiple_address', 'multiple_address_results'
         ],
       'default_bulk_limits': DEFAULT_BULK_LIMITS,
