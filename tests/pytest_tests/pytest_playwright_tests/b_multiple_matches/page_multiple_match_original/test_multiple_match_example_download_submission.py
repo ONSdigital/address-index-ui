@@ -8,7 +8,7 @@ from tests.pytest_tests.pytest_playwright_tests.utils.constants import (
 
 
 def test_downloading_example_file_and_submitting_it_for_matching(page: Page):
-  url_extension = '/multiple_address_original'
+  url_extension = '/multiple_address_small_submit'
   page.goto(f'{BASE_URL}{url_extension}')
 
   download_path = Path.cwd() / 'multiple_match_example_file.csv'

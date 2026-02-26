@@ -6,7 +6,7 @@ from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_utils impo
     get_preffered_format_of_address, remove_header_row)
 from aims_ui.page_helpers.api.api_interaction import api, get_response_attributes
 
-from .multiple_match_file_upload_utils import remove_script_and_html_from_str
+from ...utils.multiple_match_file_upload_utils import remove_script_and_html_from_str
 
 page_name = 'multiple_match_submit'
 

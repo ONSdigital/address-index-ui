@@ -58,7 +58,7 @@ export function getDefaultGlobalValues() {
     // default values, types of input etc.
     'inputSettings': [
       {
-        'page': 'multiple_address_original',
+        'page': 'multiple_address_small_submit',
         'persistenceSettingDisabled': true,
         'inputObjects': [
         {

@@ -103,7 +103,7 @@ describe('getDefaultGlobalValues', () => {
     const pagesByName = new Map(defaults.inputSettings.map((p) => [p.page, p]));
 
     const expectedPages = [
-      'multiple_address_original',
+      'multiple_address_small_submit',
       'multiple_address',
       'multiple_address_attributes',
       'uprn_multiple_match',
@@ -143,20 +143,20 @@ describe('getDefaultGlobalValues', () => {
       }
     };
 
-    // multiple_address_original
-    assertInputObject('multiple_address_original', 'limit', {
+    // multiple_address_small_submit
+    assertInputObject('multiple_address_small_submit', 'limit', {
       persistenceState: true,
       typeOfInput: 'text',
       defaultValue: '5',
     });
 
-    assertInputObject('multiple_address_original', 'matchthreshold', {
+    assertInputObject('multiple_address_small_submit', 'matchthreshold', {
       persistenceState: true,
       typeOfInput: 'dropdown',
       defaultValue: '1%',
     });
 
-    assertInputObject('multiple_address_original', 'historical', {
+    assertInputObject('multiple_address_small_submit', 'historical', {
       persistenceState: true,
       typeOfInput: 'checkbox',
       defaultValue: false,

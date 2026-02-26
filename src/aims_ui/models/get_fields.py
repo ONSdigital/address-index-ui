@@ -282,7 +282,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         ),
     ])
 
-  elif endpoint_name == 'multiple_address_original':
+  elif endpoint_name == 'multiple_address_small_submit':
     return ([
         Field(
             'limit',
