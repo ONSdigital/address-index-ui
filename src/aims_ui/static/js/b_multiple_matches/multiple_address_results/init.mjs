@@ -10,7 +10,7 @@ export function init(page_name) {
   // Page specific scripts here
   addIncludeOldJobsFlagToUrlBasedOnLocalStorageSetting();
   setupResultsButtonAndProcessing();
- 
+
   // All pages last
   allPagesLastInit();
 }
