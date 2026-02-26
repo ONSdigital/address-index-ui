@@ -15,14 +15,21 @@
 
 {% for deffinition in deffinitions %}
 	<br>
-	{{ onsCard({
-	    "id": 	deffinition.title,
-	    "textId": 	'text',
-	    "titleSize":1,
-	    "title": 	deffinition.title,
-	    "url": 	deffinition.url.replace('http','https'),
-	    "text": 	'Select above link for details',
-	}) }}
+
+		{{ onsCard({
+			"id": deffinition.title,
+			"title": {
+					"text": deffinition.title,
+					"url": deffinition.url | replace('http', 'https'),
+					"id": deffinition.title ~ "-title",
+					"headingLevel": 1
+			},
+			"body": {
+					"text": "Select above link for details",
+					"id": deffinition.title ~ "-text"
+			},
+		}) }}
+
 	<br>
 {% endfor %}
 
