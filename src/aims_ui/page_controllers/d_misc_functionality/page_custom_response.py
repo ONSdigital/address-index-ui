@@ -88,24 +88,22 @@ def custom_response():
   except requests.exceptions.HTTPError as http_err:
     errors_formatted = [{'text': 'Error in HTTP response'}]
     return return_error_to_custom_response('HTTP error occured',
-                                           errors_formatted,
-                                           'No Response from Server')
+                                           errors_formatted, r_json_readable)
   except requests.exceptions.ConnectionError as conn_err:
     errors_formatted = [{'text': 'Error Connecting to Server'}]
     return return_error_to_custom_response('Connection Error',
-                                           errors_formatted,
-                                           'No Response from Server')
+                                           errors_formatted, r_json_readable)
   except requests.exceptions.Timeout as timeout_err:
     errors_formatted = [{
         'text':
         'A timeout has occured. Retrying might fix this'
     }]
     return return_error_to_custom_response('Timeout Error', errors_formatted,
-                                           'No Response from Server')
+                                           r_json_readable)
   except requests.exceptions.RequestException as req_err:
     errors_formatted = [{'text': str(req_err)}]
     return return_error_to_custom_response('Unknown Error', errors_formatted,
-                                           'No Response from Server')
+                                           r_json_readable)
 
   # Check to see if response actually contains addresses:
   matched_addresses = []
