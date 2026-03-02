@@ -12,7 +12,7 @@ def get_class_info_from_code(provided_code):
     if class_info.get('code') == provided_code:
       return class_info
 
-  return None
+  return {}
 
 
 def get_class_subset(code):
