@@ -5,8 +5,9 @@
 
 {{ onsSectionNavigation({
   "id": "section-menu",
-  "currentPath": params.current_path, 
+  "currentPath": params.current_path,
   "headingLevel": 2,
+<<<<<<< HEAD
   "sections": [{
     "title": "",
     "itemsList": [
@@ -29,6 +30,27 @@
       }
     ])
   }]
+=======
+  "itemsList": [
+    {
+      "text": "Under " ~ params.bulk_limits.limit_mini_bulk ~ " Addresses",
+      "url": "multiple_address_original"
+    }
+  ] + ([] if params.reduced else [
+    {
+      "text": "Up To " ~ params.bulk_limits.limit_vast_bulk ~ " Addresses",
+      "url": url_for('multiple_address')
+    },
+    {
+      "text": "Monitor Up To " ~ params.bulk_limits.limit_vast_bulk ~ " Jobs",
+      "url": url_for('multiple_address_results')
+    },
+    {
+      "text": "Customise Response",
+      "url": url_for('multiple_address_attributes')
+    }
+  ])
+>>>>>>> main
 }) }}
 
 <br>

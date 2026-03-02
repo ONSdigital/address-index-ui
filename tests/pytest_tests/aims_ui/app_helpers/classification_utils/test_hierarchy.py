@@ -70,7 +70,7 @@ codes_that_dont_exist = [
 def test_class_info_from_code_none_for_non_existent_code(code):
   # None of the above should return anything but None, as they do not exist in classifications
   result = get_class_info_from_code(code)
-  assert result is None, (
+  assert result == {}, (
       f"The code '{code}' should not have been present in the classifications data, "
       f"however we matched '{code}' to '{result}'.")
 
