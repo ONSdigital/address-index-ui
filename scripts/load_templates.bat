@@ -4,7 +4,7 @@ pushd "%~dp0\.."
 set "BASE_DIR=%CD%"
 
 REM Design system version
-set "DESIGN_SYSTEM_VERSION=70.0.2"
+set "DESIGN_SYSTEM_VERSION=73.1.1"
 
 REM Create a temporary directory
 for /f "usebackq delims=" %%G in (`powershell -NoProfile -Command ^
