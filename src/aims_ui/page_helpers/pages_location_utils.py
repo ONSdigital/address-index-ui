@@ -10,7 +10,6 @@ def get_file_location_of_current_endpoint(endpoints):
       selected_endpoint = e
 
   file_location = selected_endpoint.file_location
-  print(f'All attributes of selected endpoint: {selected_endpoint.__dict__}')
 
   return file_location
 
