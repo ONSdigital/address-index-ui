@@ -44,12 +44,26 @@ APP_VERSION = get_app_version()
 USER_AUTHS = json.loads(os.getenv('USER_AUTHS', '{}'))
 
 # Define order of pages on header and Paywall Limitations
-ALL_PAGE_NAMES = [
-    'singlesearch', 'uprn', 'postcode', 'typeahead',
-    'multiple_address_small_submit', 'multiple_address_results',
-    'multiple_address_attributes', 'multiple_address', 'uprn_multiple_match',
-    'radiussearch', 'custom_response', 'help', 'settings'
+ALL_PAGE_NAMES = [  # YAPF: disable
+    # Individual Search Pages
+    'singlesearch',
+    'uprn',
+    'postcode',
+    'typeahead',
+    'radiussearch',
+    'custom_response',
+    # Misc pages
+    'help',
+    'settings',
+    # Multiple Match Pages
+    'multiple_address_small_submit',
+    'multiple_address_small_results',
+    'multiple_address_large_submit',
+    'multiple_address_large_results',
+    'multiple_address_attributes',
+    'uprn_multiple_match',
 ]
+# YAPF: enable
 
 DEFAULT_BULK_LIMITS = {
     'limit_mini_bulk': 5000,
@@ -78,8 +92,12 @@ USER_GROUPS = [
         'description': 'Completely remove access to the bulk match pages',
         'usernames': USER_AUTHS.get('bulk_removed', []),
         'pages_to_remove': [
-            'multiple_address_small_submit', 'uprn_multiple_match',
-            'multiple_address', 'multiple_address_results', 'multiple_address_attributes'
+            'uprn_multiple_match',
+            'multiple_address_small_submit', 
+            'multiple_address_small_results', 
+            'multiple_address_large_submit', 
+            'multiple_address_large_results',
+            'multiple_address_attributes', 
         ],
         'bulk_limits': DEFAULT_BULK_LIMITS,
     },

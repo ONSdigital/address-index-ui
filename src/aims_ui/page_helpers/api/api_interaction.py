@@ -16,7 +16,6 @@ from aims_ui.app_helpers.classification_utils.validation import classification_i
 from aims_ui.page_helpers.google_utils import get_username
 
 
-
 def api(url, called_from, all_user_input):
   """API helper for individual API lookups"""
   header = get_header()

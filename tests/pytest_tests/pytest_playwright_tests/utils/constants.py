@@ -1,5 +1,9 @@
 from tests.pytest_tests.pytest_playwright_tests.utils.constatns_generation import (
-    build_downloads_info, build_user_role_map, build_js_downloads)
+    build_downloads_info,
+    build_js_downloads,
+    build_user_role_map
+)
+
 """ Constants for the playwright tests. """
 
 BASE_URL = "http://127.0.0.1:5001/"
@@ -185,9 +189,10 @@ ALL_PAGE_NAMES = [
     'postcode',
     'typeahead',
     'multiple_address_small_submit',
-    'multiple_address_results',
+    'multiple_address_small_results',
+    'multiple_address_large_submit',
+    'multiple_address_large_results',
     'multiple_address_attributes',
-    'multiple_address',
     'uprn_multiple_match',
     'custom_response',
     'help',
@@ -238,14 +243,14 @@ ENDPOINTS = [{
     'page_description':'Search for not just  one address. Several. Get lots of results you can look through. This service completes many single searches from a file.',
 }, {
     'page_name': 'Multiple Address',
-    'page_name_test': 'multiple_address',
-    'url': 'multiple_address',
+    'page_name_test': 'multiple_address_large_submit',
+    'url': 'multiple_address_large_submit',
     'nav_link_in_header': False,
     'page_description':'Used to submit a large multiple match request with a file to an asynchronous job manager.',
 }, {
     'page_name': 'Multiple Address',
-    'page_name_test': 'multiple_address_results',
-    'url': 'multiple_address_results',
+    'page_name_test': 'multiple_address_large_results',
+    'url': 'multiple_address_large_results',
     'nav_link_in_header': False,
     'page_description':'Used to submit a large multiple match request with a file to an asynchronous job manager.',
 }, {
@@ -337,8 +342,11 @@ USER_ROLE_MAP = [{
       'role': 'bulk_removed',
       'username': 'testBulkRemovedExplicit',
        'pages_to_remove': [
-            'multiple_address_small_submit', 'uprn_multiple_match',
-            'multiple_address', 'multiple_address_results'
+            'multiple_address_small_submit',
+            'multiple_address_small_results',
+            'multiple_address_large_submit',
+            'multiple_address_large_results',
+            'uprn_multiple_match',
         ],
       'default_bulk_limits': DEFAULT_BULK_LIMITS,
   }, {

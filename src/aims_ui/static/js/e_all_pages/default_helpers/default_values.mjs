@@ -161,7 +161,7 @@ export function getDefaultGlobalValues() {
       ]
     },
     {
-      'page': 'multiple_address',
+      'page': 'multiple_address_large_submit',
       'persistenceSettingDisabled': true,
       'inputObjects': [
         {

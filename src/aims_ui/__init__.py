@@ -90,7 +90,7 @@ from aims_ui.page_controllers.a_single_matches.page_typeahead import typeahead
 from aims_ui.page_controllers.a_single_matches.page_singlesearch import singlesearch
 from aims_ui.page_controllers.a_single_matches.page_radiussearch import radiussearch
 
-# Setup 'mutiple_matches' large 
+# Setup 'mutiple_matches' large
 from aims_ui.page_controllers.b_multiple_matches.large_multiple_match.page_multiple_address_large_results import multiple_address_large_results
 from aims_ui.page_controllers.b_multiple_matches.large_multiple_match.page_multiple_address_large_submit import multiple_address_large_submit
 
