@@ -6,11 +6,13 @@ from .endpoint import Endpoint
 
 
 def get_current_selected_endpoint(endpoints, called_from):
-  # Adjust multiple_address / multiple_address_results pages to
-  # multiple_address_small_submit so that Header Highlights Work
-  if 'multiple_address' in called_from:
+  # Group multiple address pages so that large and small are subcategorised
+  if 'multiple_address_small' in called_from:
     called_from = 'multiple_address_small_submit'
+  elif 'multiple_address_large' in called_from:
+    called_from = 'multiple_address_large_submit'
 
+  # Get the endpoint that matches the page 'called_from'
   for endpoint in endpoints:
     if endpoint.page_name == called_from:
       endpoint.selected = True
@@ -46,10 +48,16 @@ def get_endpoints(called_from=None):
           'a_single_matches',
       ),
       Endpoint(
-          'Multiple Address',
+          'Small Multiple Match',
           'multiple_address_small_submit',
-          "Search for not just  one address. Several. Get lots of results you can look through. This service completes many single searches from a file.",
+          "Submit a small file to match addresses. This uses the singlesearch endpoint controlled by the UI instead of the bulk matching solution provided by the 'Large Multiple Match'",
           'b_multiple_matches/small_multiple_match',
+      ),
+      Endpoint(
+          'Large Multiple Match',
+          'multiple_address_large_submit',
+          "Submit a large file to match addresses. This uses the bulk matching solution and therefore has a much larger capacity - however due to current cloud limitations the results will take a minumum of one hour to be ready after matching is completed. Therefore for small files we reccommend using the 'Small Multiple Match' facility.",
+          'b_multiple_matches/large_multiple_match',
       ),
       Endpoint(
           'Multiple UPRN',

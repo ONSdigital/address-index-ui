@@ -104,7 +104,9 @@ describe('getDefaultGlobalValues', () => {
 
     const expectedPages = [
       'multiple_address_small_submit',
-      'multiple_address',
+      'multiple_address_small_results',
+      'multiple_address_large_submit',
+      'multiple_address_large_results',
       'multiple_address_attributes',
       'uprn_multiple_match',
       'singlesearch',
@@ -162,8 +164,8 @@ describe('getDefaultGlobalValues', () => {
       defaultValue: false,
     });
 
-    // multiple_address
-    assertInputObject('multiple_address', 'limitperaddress', {
+    // multiple_address large submit
+    assertInputObject('multiple_address_large_submit', 'limitperaddress', {
       persistenceState: true,
       typeOfInput: 'text',
       defaultValue: '1',

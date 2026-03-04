@@ -11,11 +11,11 @@ from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 
-from .utils.multiple_match_api_utils import count_active_jobs
 from ..utils.multiple_match_file_upload_utils import check_valid_upload, validate_job_name, validate_limit_parameter
+from .utils.multiple_match_api_utils import count_active_jobs
 from .utils.submit_multiple_match_api import multiple_address_match
 
-page_name = 'multiple_address'
+page_name = 'multiple_address_large_submit'
 
 max_jobs = app.config.get('BM_MAX_JOBS')
 
@@ -80,4 +80,4 @@ def multiple_address_large_submit():
   if result.status_code != 200:
     return error_page_bm_response(page_name, all_user_input, result)
   return redirect(
-      url_for('multiple_address_results').replace('http', 'https', 1))
+      url_for('multiple_address_large_results').replace('http', 'https', 1))
