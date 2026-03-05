@@ -10,27 +10,27 @@
 {% from "components/table/_macro.njk" import onsTable %}
 {% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
 
-{% from "custom_multiple_match_nav/_macro.njk" import customMultipleMatchNav %}
 {% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName %}
 {% from "custom_search/_macro.njk" import customSearch %}
 
 {% block main %}
  
-<h1>Small Multiple Match</h1>
-<br>
+<h1>Results of Small Multiple Matches</h1>
 
-{# Include the HTML for Sub Navigation #}
+{# Include the HTML for persistence settings #}
 <div id="container-for-sub-navigation">
     {% include "aims_ui_pages/b_multiple_matches/small_multiple_match/small_multiple_match_snippets/_navigation.html" %}
 </div>
 
-<br>
-{{ onsPanel({
-    "body": "<p>'Under " + (bulk_limits.limit_mini_bulk|string) + " Addresses' will execute the matches while you wait, and is only suitable for small jobs. For larger ones go to 'Up To " + (bulk_limits.limit_vast_bulk|string) + " Addresses'.</p>"
-    + "<p>To get started, upload a CSV file of up to " + (bulk_limits.limit_mini_bulk|string) + " addresses to be matched. The file must have only two columns, id and address.</p>"
-    + "<p>Download a <a href='/downloads/static/example_multiple_address'>sample file</a><br><br>"
-    + "You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>"
-}) }} <br>
+{% if not results_page %}
+	<br>
+	{{ onsPanel({
+	    "body": "<p>'Under " + (bulk_limits.limit_mini_bulk|string) + " Addresses' will execute the matches while you wait, and is only suitable for small jobs. For larger ones go to 'Up To " + (bulk_limits.limit_vast_bulk|string) + " Addresses'.</p>"
+	    + "<p>To get started, upload a CSV file of up to " + (bulk_limits.limit_mini_bulk|string) + " addresses to be matched. The file must have only two columns, id and address.</p>"
+	    + "<p>Download a <a href='/downloads/static/example_multiple_address'>sample file</a><br><br>"
+	    + "You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>"
+	}) }} <br>
+{% endif %}
 
 <form method=post enctype=multipart/form-data>
 
