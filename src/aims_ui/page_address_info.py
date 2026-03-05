@@ -18,7 +18,7 @@ page_name = 'address_info'
 @app.route('/address_info/<uprn>')
 def address_info(uprn):
   """Show all info about an address given the UPRN"""
-  endpoints = get_endpoints(called_from=page_name)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   epoch_version_number = load_epoch_number(session)
   page_location = get_page_location_non_endpoint(page_name)
 
@@ -88,6 +88,7 @@ def address_info(uprn):
   return render_template(
       page_location,
       endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
       page_name=page_name,
       matched_addresses=matched_addresses,
       clerical_info=clerical_info,

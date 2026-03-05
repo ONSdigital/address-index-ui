@@ -22,7 +22,7 @@ def page_error_annotation_multiple(
   primary_error_message = convert_exception_to_error_message(
       primary_error_message)
 
-  endpoints = get_endpoints(called_from=page_name_with_error)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name_with_error)
   page_location = get_page_location(endpoints, page_name_with_error)
 
   # Get the bulk limits info
@@ -67,6 +67,7 @@ def page_error_annotation_multiple(
       page_location,
       page_name=page_name_with_error,
       endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
       searchable_fields=searchable_fields,
       bulk_limits=bulk_limits,
       uprn_bulk_limit=400,

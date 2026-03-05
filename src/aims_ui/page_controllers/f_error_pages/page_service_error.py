@@ -10,7 +10,7 @@ def page_service_error(
     error_title,
     error_description,
 ):
-  endpoints = get_endpoints(called_from=called_from_page_name)
+  endpoints, selected_endpoint = get_endpoints(called_from=called_from_page_name)
   page_location = get_error_page_location('service_error')
 
   # Error description is an array of bulletpoints - convert to expected format for nunjucks
@@ -21,4 +21,5 @@ def page_service_error(
       error_title=error_title,
       error_description=error_description,
       endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
   ))

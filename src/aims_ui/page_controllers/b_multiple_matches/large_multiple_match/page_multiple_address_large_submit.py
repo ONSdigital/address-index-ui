@@ -23,7 +23,7 @@ max_jobs = app.config.get('BM_MAX_JOBS')
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def multiple_address_large_submit():
-  endpoints = get_endpoints(called_from=page_name)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
@@ -41,6 +41,7 @@ def multiple_address_large_submit():
         page_name=page_name,
         searchable_fields=searchable_fields,
         endpoints=endpoints,
+        selected_endpoint=selected_endpoint,
         bulk_limits=bulk_limits,
     )
 

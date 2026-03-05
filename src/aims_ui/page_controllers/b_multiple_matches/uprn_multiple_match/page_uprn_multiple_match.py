@@ -20,7 +20,7 @@ page_name = 'uprn_multiple_match'
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def uprn_multiple_match():
-  endpoints = get_endpoints(called_from=page_name)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
@@ -30,7 +30,7 @@ def uprn_multiple_match():
   bulk_limits = current_group.get('bulk_limits')
 
   searchable_fields = get_fields(page_name)
-
+  
   if request.method == 'GET':
     delete_input(session)
 
@@ -39,7 +39,8 @@ def uprn_multiple_match():
         page_name=page_name,
         bulk_limits=bulk_limits,
         searchable_fields=searchable_fields,
-        endpoints=get_endpoints(called_from=page_name),
+        endpoints=endpoints,
+        selected_endpoint=selected_endpoint,
     )
 
   try:

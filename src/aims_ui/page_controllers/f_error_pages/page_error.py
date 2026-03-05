@@ -15,9 +15,11 @@ def page_error(
   # Error description is an array of bulletpoints - convert to expected format for nunjucks
   error_description = [{'text': desc} for desc in error_description]
 
+  endpoints, selected_endpoint = get_endpoints(called_from=called_from_page_name)
   return (render_template(
       page_location,
       error_title=error_title,
       error_description=error_description,
-      endpoints=get_endpoints(called_from=called_from_page_name),
+      endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
   ))

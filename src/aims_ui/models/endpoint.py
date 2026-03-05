@@ -13,6 +13,7 @@ class Endpoint():
   # Optional fields
   title_size: int = 3
   nav_info: list = field(default_factory=lambda: [])
+  sub_nav_info: list = field(default_factory=lambda: [])
   selected: bool = False
   name_id: str = ''
   current_selected_endpoint: str = ''

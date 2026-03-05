@@ -16,11 +16,12 @@ page_name = 'custom_response'
 
 def return_error_to_custom_response(error_title, errors_formatted,
                                     r_json_readable):
-  endpoints = get_endpoints(called_from=page_name)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   page_location = get_page_location(endpoints, page_name)
   return render_template(
       page_location,
       endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
       error_title=error_title,
       errors_formatted=errors_formatted,
       page_name=page_name,
@@ -31,7 +32,7 @@ def return_error_to_custom_response(error_title, errors_formatted,
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def custom_response():
-  endpoints = get_endpoints(called_from=page_name)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
@@ -42,6 +43,7 @@ def custom_response():
         page_location,
         page_name=page_name,
         endpoints=endpoints,
+        selected_endpoint=selected_endpoint,
     )
 
   base_url = app.config.get('API_URL')
@@ -117,7 +119,8 @@ def custom_response():
   return render_template(
       page_location,
       page_name=page_name,
-      endpoints=get_endpoints(called_from=page_name),
+      endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
       r_json_readable=r_json_readable,
       matched_addresses=matched_addresses,
       matched_address_number=len(matched_addresses),

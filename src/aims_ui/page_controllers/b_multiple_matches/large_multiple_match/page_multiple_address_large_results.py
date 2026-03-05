@@ -17,7 +17,7 @@ page_name = 'multiple_address_results'
 @login_required
 @app.route(f'/multiple_address_results', methods=['GET', 'POST'])
 def multiple_address_large_results():
-  endpoints = get_endpoints(called_from=page_name)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
@@ -30,8 +30,6 @@ def multiple_address_large_results():
       'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'PAF OR NAG',
       'RECS PROCESSED', 'DOWNLOAD LINK'
   ]
-
-  endpoints = get_endpoints(called_from=page_name)
 
   # Load testing values for testing mode
   if app.config.get('FLASK_ENV') == 'TESTING':
@@ -52,6 +50,7 @@ def multiple_address_large_results():
         page_location,
         page_name=page_name,
         endpoints=endpoints,
+        selected_endpoint=selected_endpoint,
         jobs=jobs,
         bulk_limits=bulk_limits,
     )
@@ -89,6 +88,7 @@ def multiple_address_large_results():
       page_location,
       page_name=page_name,
       endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
       jobs=jobs_table,
       bulk_limits=bulk_limits,
   )

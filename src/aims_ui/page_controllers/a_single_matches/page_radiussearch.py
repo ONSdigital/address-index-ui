@@ -19,7 +19,7 @@ page_name = 'radiussearch'
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def radiussearch():
-  endpoints = get_endpoints(called_from=page_name)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
@@ -35,6 +35,7 @@ def radiussearch():
         beta_banner=True,
         searchable_fields=searchable_fields,
         endpoints=endpoints,
+        selected_endpoint=selected_endpoint,
         api_auth=api_auth,
     )
 
@@ -82,6 +83,7 @@ def radiussearch():
       page_location,
       page_name=page_name,
       endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
       beta_banner=True,
       searchable_fields=searchable_fields,
       results_page=True,

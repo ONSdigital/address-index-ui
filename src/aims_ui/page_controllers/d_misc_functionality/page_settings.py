@@ -11,7 +11,7 @@ page_name = 'settings'
 @login_required
 @app.route('/settings')
 def settings():
-  endpoints = get_endpoints(called_from=page_name)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
@@ -22,5 +22,6 @@ def settings():
 
   return render_template(page_location,
                          endpoints=endpoints,
+                         selected_endpoint=selected_endpoint,
                          col_options=col_options,
                          col_options_inc0=col_options_inc0)

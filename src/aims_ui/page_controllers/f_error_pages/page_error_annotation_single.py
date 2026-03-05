@@ -14,7 +14,7 @@ def page_error_annotation_single(
     primary_error_message,
     override_input_name=None,
 ):
-  endpoints = get_endpoints(called_from=page_name_with_error)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name_with_error)
   page_location = get_page_location(endpoints, page_name_with_error)
   # Get the fields that are on the page with the error
   searchable_fields = get_fields(page_name_with_error)
@@ -44,6 +44,7 @@ def page_error_annotation_single(
       page_location,
       page_name=page_name_with_error,
       endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
       searchable_fields=searchable_fields,
   )
 
