@@ -1,0 +1,25 @@
+{# Navigation element for the small multiple match #}
+
+{{ onsSectionNavigation({
+  "id": "section-menu",
+  "currentPath": current_path,
+  "headingLevel": 2,
+  "itemsList": [
+    {
+      "text": "Submit File",
+      "url": "multiple_address_small_submit"
+    },
+    {
+      "text": "Results",
+      "url": "multiple_address_small_results"
+    },
+    {
+      "text": "Customise Response",
+      "url": url_for('multiple_address_attributes')
+    }
+	] }) }}
+
+<br>
+
+
+

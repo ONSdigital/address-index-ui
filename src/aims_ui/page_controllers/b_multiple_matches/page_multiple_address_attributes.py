@@ -14,7 +14,7 @@ page_name = 'multiple_address_attributes'
 @login_required
 @app.route(f'/multiple_address_attributes', methods=['GET', 'POST'])
 def multiple_address_attributes():
-  endpoints = get_endpoints(called_from=page_name)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
@@ -23,13 +23,13 @@ def multiple_address_attributes():
   current_group = get_current_group()
   bulk_limits = current_group.get('bulk_limits')
 
-  endpoints = get_endpoints(called_from=page_name)
   searchable_fields = get_fields(page_name)
 
   return render_template(
       page_location,
       page_name=page_name,
       endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
       searchable_fields=searchable_fields,
       bulk_limits=bulk_limits,
   )

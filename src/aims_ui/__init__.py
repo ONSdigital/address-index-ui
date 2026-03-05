@@ -73,8 +73,11 @@ def add_header(response):
 # Setup 'misc_functionality' page controllers
 from aims_ui.page_controllers.d_misc_functionality.page_info import info
 from aims_ui.page_controllers.d_misc_functionality.page_settings import settings
-from aims_ui.page_controllers.d_misc_functionality.download_handler import download_handler
 from aims_ui.page_controllers.d_misc_functionality.page_custom_response import custom_response
+# Setup download handlers in 'misc_functionality'
+from aims_ui.page_controllers.d_misc_functionality.download_handlers.autosuggest_download import autosuggest_download_handler
+from aims_ui.page_controllers.d_misc_functionality.download_handlers.large_multiple_address_download import large_multiple_address_download_handler
+from aims_ui.page_controllers.d_misc_functionality.download_handlers.static_files_download import static_files_download_handler
 
 # Setup routes that immedaitely redirect elsewhere
 from aims_ui.page_controllers.e_redirect_routes.login import login
@@ -87,12 +90,19 @@ from aims_ui.page_controllers.a_single_matches.page_typeahead import typeahead
 from aims_ui.page_controllers.a_single_matches.page_singlesearch import singlesearch
 from aims_ui.page_controllers.a_single_matches.page_radiussearch import radiussearch
 
-# Setup 'multiple_matches' page controllers
-from aims_ui.page_controllers.b_multiple_matches.page_multiple_address import multiple_address
-from aims_ui.page_controllers.b_multiple_matches.page_multiple_address_results import multiple_address_results
-from aims_ui.page_controllers.b_multiple_matches.page_multiple_address_original import multiple_address_original
+# Setup 'mutiple_matches' large
+from aims_ui.page_controllers.b_multiple_matches.large_multiple_match.page_multiple_address_large_submit import multiple_address_large_submit
+from aims_ui.page_controllers.b_multiple_matches.large_multiple_match.page_multiple_address_large_results import multiple_address_large_results
+
+# Setup 'mutiple_matches' small
+from aims_ui.page_controllers.b_multiple_matches.small_multiple_match.page_multiple_address_small_submit import multiple_address_small_submit
+from aims_ui.page_controllers.b_multiple_matches.small_multiple_match.page_multiple_address_small_results import multiple_address_small_results
+
+# Setup 'mutiple_matches' UPRN
+from aims_ui.page_controllers.b_multiple_matches.uprn_multiple_match.page_uprn_multiple_match import uprn_multiple_match
+
+# Setup 'mutiple_matches' attributes customisation page
 from aims_ui.page_controllers.b_multiple_matches.page_multiple_address_attributes import multiple_address_attributes
-from aims_ui.page_controllers.b_multiple_matches.page_uprn_multiple_match import uprn_multiple_match
 
 # Setup 'help' page controller
 from aims_ui.page_controllers.c_help_pages.page_help import help

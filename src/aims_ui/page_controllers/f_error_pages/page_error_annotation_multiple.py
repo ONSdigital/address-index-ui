@@ -6,6 +6,7 @@ from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
 from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
+
 """ Manage errors specific to multiple match pages """
 
 
@@ -21,7 +22,7 @@ def page_error_annotation_multiple(
   primary_error_message = convert_exception_to_error_message(
       primary_error_message)
 
-  endpoints = get_endpoints(called_from=page_name_with_error)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name_with_error)
   page_location = get_page_location(endpoints, page_name_with_error)
 
   # Get the bulk limits info
@@ -66,6 +67,7 @@ def page_error_annotation_multiple(
       page_location,
       page_name=page_name_with_error,
       endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
       searchable_fields=searchable_fields,
       bulk_limits=bulk_limits,
       uprn_bulk_limit=400,
@@ -112,7 +114,7 @@ def match_api_error_message_to_name_of_field(primary_error_message,
   if 'job name' in primary_error_message:
     return 'name'
 
-  if page_name_with_error != 'multiple_address':
+  if page_name_with_error != 'multiple_address_large_submit':
     if 'limit' in primary_error_message:
       return 'limit'
 

@@ -1,0 +1,96 @@
+{% extends './aims_ui_pages/0-base_page_settings.html' %}
+
+{% from "components/phase-banner/_macro.njk" import onsPhaseBanner %}
+{% from "components/input/_macro.njk" import onsInput %}
+{% from "components/upload/_macro.njk" import onsUpload %}
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+{% from "components/radios/_macro.njk" import onsRadios %}
+{% from "components/question/_macro.njk" import onsQuestion %}
+{% from "components/table/_macro.njk" import onsTable %}
+{% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
+
+{% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName %}
+{% from "custom_search/_macro.njk" import customSearch %}
+
+{% block main %}
+ 
+<h1>Results of Small Multiple Matches</h1>
+
+{# Include the HTML for persistence settings #}
+<div id="container-for-sub-navigation">
+    {% include "aims_ui_pages/b_multiple_matches/small_multiple_match/small_multiple_match_snippets/_navigation.html" %}
+</div>
+
+{% if not results_page %}
+	<br>
+	{{ onsPanel({
+	    "body": "<p>'Under " + (bulk_limits.limit_mini_bulk|string) + " Addresses' will execute the matches while you wait, and is only suitable for small jobs. For larger ones go to 'Up To " + (bulk_limits.limit_vast_bulk|string) + " Addresses'.</p>"
+	    + "<p>To get started, upload a CSV file of up to " + (bulk_limits.limit_mini_bulk|string) + " addresses to be matched. The file must have only two columns, id and address.</p>"
+	    + "<p>Download a <a href='/downloads/static/example_multiple_address'>sample file</a><br><br>"
+	    + "You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>"
+	}) }} <br>
+{% endif %}
+
+<form method=post enctype=multipart/form-data>
+
+	{# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
+<div class="ons-grid">
+
+{# 1Column boarder#}
+  <div id="space_col_1" class="ons-grid__col ons-col-1@m "></div>
+
+{# Content is the searchboxes, taking up 4 col#}
+  <div id="content_col_2" class="ons-grid__col ons-col-4@m ">
+{{ customSearch ({ 
+	     "Fields": searchable_fields,
+		   "endpoints": endpoints, 
+		   "remove_buttons": True,
+		   "remove_clear_button": True,
+		   "remove_search_button":False,
+       "results_page": results_page, }) }}
+<br>
+
+{{ onsButton({
+        "id": "downloadButtonMultipleMatch",
+        "text": "Match Addresses",
+        "value": "Download",
+	      "variants": "loader",
+        "classes": "btn",  })  }}
+
+</form>
+
+</div>
+
+{# 1 Col boarder between filters and results #}
+<div id="space_col_3" class="ons-grid__col ons-col-1@m "></div>
+
+{# 5 Col results page #}
+  <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
+{# Escape the main page contents, create wider grid so that the table can have max width #}
+</div></div>
+<div class="ons-grid__col ons-col-1@m"></div>
+<div class="ons-grid__col ons-col-10@m">
+<br>
+{{ onsTable({
+	"id": "basic-table 2",
+        "ths":  [] if not table_results else results_summary_table.get('ths') ,
+  	"trs": [] if not table_results else results_summary_table.get('trs'),
+}) }}
+
+<br>
+{{ onsTable({
+	"id": "basic-table",
+        "ths":  [] if not table_results else table_results.get('ths') ,
+  	"trs": [] if not table_results else table_results.get('trs'),
+}) }}
+</div>
+
+<!-- Single entry point for all page scripts. Add scripts to the main location below -->
+{{ runScriptWithPageName({
+		"page_name": page_name,
+		"script_location": '/static/js/b_multiple_matches/multiple_address_small_submit/init.mjs',
+}) }}
+
+
+{% endblock %}

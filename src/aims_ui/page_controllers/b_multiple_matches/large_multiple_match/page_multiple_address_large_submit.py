@@ -1,26 +1,29 @@
-from flask import render_template, request, send_file, session
+from flask import redirect, render_template, request, session, url_for
 from flask_login import login_required
-from requests.exceptions import ConnectionError
 
 from aims_ui import app
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
-from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_file_upload_utils import check_valid_upload
-from aims_ui.page_controllers.b_multiple_matches.utils.submit_multiple_match_uprn import uprn_multiple_address_match
 from aims_ui.page_controllers.f_error_pages.page_error_annotation_multiple import page_error_annotation_multiple
 from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs
-from aims_ui.page_helpers.error.error_utils import error_page_connection
+from aims_ui.page_helpers.error.error_utils import error_page_bm_response, error_page_too_many_jobs
 from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 
-page_name = 'uprn_multiple_match'
+from ..utils.multiple_match_file_upload_utils import check_valid_upload, validate_job_name, validate_limit_parameter
+from .utils.multiple_match_api_utils import count_active_jobs
+from .utils.submit_multiple_match_api import multiple_address_match
+
+page_name = 'multiple_address_large_submit'
+
+max_jobs = app.config.get('BM_MAX_JOBS')
 
 
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
-def uprn_multiple_match():
-  endpoints = get_endpoints(called_from=page_name)
+def multiple_address_large_submit():
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
@@ -33,13 +36,13 @@ def uprn_multiple_match():
 
   if request.method == 'GET':
     delete_input(session)
-
     return render_template(
         page_location,
         page_name=page_name,
-        bulk_limits=bulk_limits,
         searchable_fields=searchable_fields,
-        endpoints=get_endpoints(called_from=page_name),
+        endpoints=endpoints,
+        selected_endpoint=selected_endpoint,
+        bulk_limits=bulk_limits,
     )
 
   try:
@@ -48,6 +51,9 @@ def uprn_multiple_match():
         request,
         session,
     )
+    # Manual Validation of parameters
+    validate_limit_parameter(all_user_input, limit_name='limitperaddress')
+    validate_job_name(all_user_input)
   except Exception as e:
     return page_error_annotation_multiple(page_name, {}, e)
 
@@ -55,24 +61,24 @@ def uprn_multiple_match():
 
   try:
     file_valid, error_description, error_title = check_valid_upload(
-        file, bulk_limits.get('limit_uprn_match'), called_from='uprn')
+        file, bulk_limits.get('limit_vast_bulk'))
   except Exception as e:
     return page_error_annotation_multiple(page_name, all_user_input,
                                           e.error_description)
 
   if not file_valid:
     return page_error_annotation_multiple(page_name, all_user_input,
-                                          e.error_description)
+                                          error_description)
 
-  try:
-    full_results, line_count = uprn_multiple_address_match(
-        file, all_user_input)
-  except ConnectionError as e:
-    return error_page_connection(page_name, all_user_input, e)
+  job_count = count_active_jobs()
+  if job_count > max_jobs:
+    return error_page_too_many_jobs(page_name, all_user_input, job_count,
+                                    max_jobs)
 
-  return send_file(
-      full_results,
-      mimetype='text/csv',
-      download_name=f'result_size_{line_count}.csv',
-      as_attachment=True,
-  )
+  result = multiple_address_match(file, all_user_input, download=True)
+  # Using url for get the location of the results page and forward the user
+
+  if result.status_code != 200:
+    return error_page_bm_response(page_name, all_user_input, result)
+  return redirect(
+      url_for('multiple_address_large_results').replace('http', 'https', 1))

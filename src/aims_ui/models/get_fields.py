@@ -149,7 +149,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
           description=
           'This file contains a list of classifications, explained in a universaly recognised "easy to read" csv format.',
           search_type='download',
-          download_url='/downloads/classifications_list',
+          download_url='/downloads/static/classifications_list',
       ),
       'multiple_match_paf_nag_preference':
       Field(
@@ -282,7 +282,11 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         ),
     ])
 
-  elif endpoint_name == 'multiple_address_original':
+  elif endpoint_name == 'multiple_address_small_results':
+    return ([
+      Field('limit', search_type='hidden', previous_value='5'),
+    ])
+  elif endpoint_name == 'multiple_address_small_submit':
     return ([
         Field(
             'limit',
@@ -341,7 +345,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['file_upload'],
     ])
 
-  elif endpoint_name == 'multiple_address':
+  elif endpoint_name == 'multiple_address_large_submit':
     max_char_limit = app.config.get('BM_JOB_NAME_CHAR_LIMIT')
     return ([
         Field(

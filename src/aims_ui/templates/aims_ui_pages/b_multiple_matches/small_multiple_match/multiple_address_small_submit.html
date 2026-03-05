@@ -8,6 +8,7 @@
 {% from "components/radios/_macro.njk" import onsRadios %}
 {% from "components/question/_macro.njk" import onsQuestion %}
 {% from "components/table/_macro.njk" import onsTable %}
+{% from "components/section-navigation/_macro.njk" import onsSectionNavigation %}
 
 {% from "custom_multiple_match_nav/_macro.njk" import customMultipleMatchNav %}
 {% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName %}
@@ -15,22 +16,21 @@
 
 {% block main %}
  
-<h1>Match Multiple Addresses</h1>
+<h1>Small Multiple Match</h1>
+<br>
 
-{{ customMultipleMatchNav ({
-	'current_path': 'multiple_address_original',
-	'bulk_limits': bulk_limits,
-	}) }}
+{# Include the HTML for Sub Navigation #}
+<div id="container-for-sub-navigation">
+    {% include "aims_ui_pages/b_multiple_matches/small_multiple_match/small_multiple_match_snippets/_navigation.html" %}
+</div>
 
-{% if not results_page %}
-	<br>
-	{{ onsPanel({
-	    "body": "<p>'Under " + (bulk_limits.limit_mini_bulk|string) + " Addresses' will execute the matches while you wait, and is only suitable for small jobs. For larger ones go to 'Up To " + (bulk_limits.limit_vast_bulk|string) + " Addresses'.</p>"
-	    + "<p>To get started, upload a CSV file of up to " + (bulk_limits.limit_mini_bulk|string) + " addresses to be matched. The file must have only two columns, id and address.</p>"
-	    + "<p>Download a <a href='/downloads/example_multiple_address'>sample file</a><br><br>"
-	    + "You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>"
-	}) }} <br>
-{% endif %}
+<br>
+{{ onsPanel({
+    "body": "<p>'Under " + (bulk_limits.limit_mini_bulk|string) + " Addresses' will execute the matches while you wait, and is only suitable for small jobs. For larger ones go to 'Up To " + (bulk_limits.limit_vast_bulk|string) + " Addresses'.</p>"
+    + "<p>To get started, upload a CSV file of up to " + (bulk_limits.limit_mini_bulk|string) + " addresses to be matched. The file must have only two columns, id and address.</p>"
+    + "<p>Download a <a href='/downloads/static/example_multiple_address'>sample file</a><br><br>"
+    + "You can download your results as a CSV file or preview them in your browser. Your results will include a match accuracy score.</p>"
+}) }} <br>
 
 <form method=post enctype=multipart/form-data>
 
@@ -54,7 +54,6 @@
 {{ onsButton({
         "id": "downloadButtonMultipleMatch",
         "text": "Match Addresses",
-        "type": "submit",
         "value": "Download",
 	      "variants": "loader",
         "classes": "btn",  })  }}
@@ -90,7 +89,7 @@
 <!-- Single entry point for all page scripts. Add scripts to the main location below -->
 {{ runScriptWithPageName({
 		"page_name": page_name,
-		"script_location": '/static/js/b_multiple_matches/multiple_address_original/init.mjs',
+		"script_location": '/static/js/b_multiple_matches/multiple_address_small_submit/init.mjs',
 }) }}
 
 

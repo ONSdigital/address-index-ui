@@ -9,7 +9,7 @@ import requests
 from requests.models import Response
 
 from aims_ui import app
-from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_api_utils import get_multiple_match_api_header
+from aims_ui.page_controllers.b_multiple_matches.large_multiple_match.utils.multiple_match_api_utils import get_multiple_match_api_header
 from aims_ui.page_helpers.api.api_helpers import get_header, job_api
 from aims_ui.page_helpers.api.api_parameters_helpers import cleanup_parameters, format_params_as_string
 from aims_ui.app_helpers.classification_utils.validation import classification_is_valid
@@ -136,7 +136,7 @@ def check_url(url, job_id):
   try:
     response = requests.get(url)
     if response.status_code == 200:
-      buttonUrl = f'<a href="/downloads/googlefiledownload{job_id}">Download Job {job_id} Here</a>'
+      buttonUrl = f'<a href="/downloads/large_multiple_match/{job_id}">Download Job {job_id} Here</a>'
       return buttonUrl
     else:
       # Check if the error message is in XML format

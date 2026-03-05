@@ -10,19 +10,19 @@ from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 
-from .utils.multiple_match_file_upload_utils import check_valid_upload, validate_limit_parameter
-from .utils.multiple_match_utils import get_results_display_type
+from ..utils.multiple_match_file_upload_utils import check_valid_upload, validate_limit_parameter
+from ..utils.multiple_match_utils import get_results_display_type
 from .utils.submit_multiple_match_from_singlesearch import (
     multiple_address_match_from_singlesearch_display,
     multiple_address_match_from_singlesearch_download)
 
-page_name = 'multiple_address_original'
+page_name = 'multiple_address_small_results'
 
 
 @login_required
-@app.route(f'/{page_name}', methods=['GET', 'POST'])
-def multiple_address_original():
-  endpoints = get_endpoints(called_from=page_name)
+@app.route(f'/{page_name}', methods=['GET'])
+def multiple_address_small_results():
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
@@ -40,6 +40,7 @@ def multiple_address_original():
         page_name=page_name,
         searchable_fields=searchable_fields,
         endpoints=endpoints,
+        selected_endpoint=selected_endpoint,
         bulk_limits=bulk_limits,
     )
 
@@ -93,6 +94,7 @@ def multiple_address_original():
           page_location,
           page_name=page_name,
           endpoints=endpoints,
+          selected_endpoint=selected_endpoint,
           error_description=error_description,
           error_title=error_title,
           searchable_fields=searchable_fields,

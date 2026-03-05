@@ -3,7 +3,7 @@ from flask_login import login_required
 
 from aims_ui import app
 from aims_ui.models.get_endpoints import get_endpoints
-from aims_ui.page_controllers.b_multiple_matches.utils.multiple_address_results import get_results_plus_metadata
+from aims_ui.page_controllers.b_multiple_matches.large_multiple_match.utils.multiple_address_results import get_results_plus_metadata
 from aims_ui.page_helpers.google_utils import get_current_group
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
@@ -16,8 +16,8 @@ page_name = 'multiple_address_results'
 
 @login_required
 @app.route(f'/multiple_address_results', methods=['GET', 'POST'])
-def multiple_address_results():
-  endpoints = get_endpoints(called_from=page_name)
+def multiple_address_large_results():
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
@@ -31,8 +31,6 @@ def multiple_address_results():
       'RECS PROCESSED', 'DOWNLOAD LINK'
   ]
 
-  endpoints = get_endpoints(called_from=page_name)
-
   # Load testing values for testing mode
   if app.config.get('FLASK_ENV') == 'TESTING':
     job_id = 6
@@ -41,7 +39,7 @@ def multiple_address_results():
         [
             '22', 'Example', '10,000 of A Jillion', 'bob', 'True', 'PAF'
             'complete',
-            f'<a href="/downloads/googlefiledownload{job_id}">job_id {job_id}</a>'
+            f'<a href="/downloads/large_multiple_match/googlefiledownload{job_id}">job_id {job_id}</a>'
         ],
     ]
 
@@ -52,6 +50,7 @@ def multiple_address_results():
         page_location,
         page_name=page_name,
         endpoints=endpoints,
+        selected_endpoint=selected_endpoint,
         jobs=jobs,
         bulk_limits=bulk_limits,
     )
@@ -89,6 +88,7 @@ def multiple_address_results():
       page_location,
       page_name=page_name,
       endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
       jobs=jobs_table,
       bulk_limits=bulk_limits,
   )

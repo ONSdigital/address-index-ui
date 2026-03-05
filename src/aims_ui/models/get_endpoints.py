@@ -6,11 +6,13 @@ from .endpoint import Endpoint
 
 
 def get_current_selected_endpoint(endpoints, called_from):
-  # Adjust multiple_address / multiple_address_results pages to
-  # multiple_address_original so that Header Highlights Work
-  if 'multiple_address' in called_from:
-    called_from = 'multiple_address_original'
+  # Match all multiple addresses to the 'multiple address small submit' page,
+  # as this is the default landing page of the subsection
 
+  if 'multiple_address' in called_from:
+    called_from = 'multiple_address_small_submit'
+
+  # Get the endpoint that matches the page 'called_from'
   for endpoint in endpoints:
     if endpoint.page_name == called_from:
       endpoint.selected = True
@@ -45,17 +47,38 @@ def get_endpoints(called_from=None):
           "This search types ahead. Autosuggest on steroids basically. Useful if you quickly want a user to find an address.",
           'a_single_matches',
       ),
+      # Multiple matches includes sub-menu
       Endpoint(
-          'Multiple Address',
-          'multiple_address_original',
-          "Search for not just  one address. Several. Get lots of results you can look through. This service completes many single searches from a file.",
-          'b_multiple_matches',
+          'Multiple Matches',
+          'multiple_address_small_submit',
+          "Submit a small file to match addresses. This uses the singlesearch endpoint controlled by the UI instead of the bulk matching solution provided by the 'Large Multiple Match'",
+          'b_multiple_matches/small_multiple_match',
+          sub_nav_info=[
+            Endpoint(
+              'Small Multiple Match',
+              'multiple_address_small_submit',
+              "Submit small",
+              'b_multiple_matches/small_multiple_match',
+            ),
+            Endpoint(
+              'Large Multiple Match',
+              'multiple_address_large_submit',
+              "Submit large multiple",
+              'b_multiple_matches/large_multiple_match',
+            ),
+            Endpoint(
+              'UPRN Multiple Match',
+              'uprn_multiple_match',
+              "Submit UPRN",
+              'b_multiple_matches/uprn_multiple_match',
+            )
+          ],
       ),
       Endpoint(
           'Multiple UPRN',
           'uprn_multiple_match',
           "Search for multiple addresses providing mulitple UPRNs (Unique Property Reference Numbers)",
-          'b_multiple_matches',
+          'b_multiple_matches/uprn_multiple_match',
       ),
       Endpoint(
           'API',
@@ -84,8 +107,6 @@ def get_endpoints(called_from=None):
           url=url_for('settings')),
   ]
 
-  get_username()
-
   called_from = '' if called_from == None else called_from
   current_selected_endpoint = get_current_selected_endpoint(
       endpoints, called_from)
@@ -106,9 +127,10 @@ def get_endpoints(called_from=None):
       'url': endpoint.url
   } for endpoint in secure_endpoints]
 
+
   # Add a copy of the navigation info to each Endpoint
   for endpoint in secure_endpoints:
     endpoint.nav_info = nav_info
     endpoint.current_selected_endpoint = current_selected_endpoint
 
-  return secure_endpoints
+  return secure_endpoints, current_selected_endpoint

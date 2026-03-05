@@ -1,4 +1,5 @@
 import logging
+
 from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_utils import jsonify_address, remove_header_row
 from aims_ui.page_controllers.f_error_pages.page_error import page_error
 from aims_ui.page_helpers.api.api_interaction import submit_mm_job
@@ -27,4 +28,4 @@ def multiple_address_match(file, all_user_input, download=False):
     return result
   except Exception as e:
     logging.error('Unexpected error on a multiple match API call')
-    return page_error(None, e, 'multiple_address')
+    return page_error(None, e, 'multiple_address_large_submit')

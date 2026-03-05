@@ -1,5 +1,9 @@
 from tests.pytest_tests.pytest_playwright_tests.utils.constatns_generation import (
-    build_downloads_info, build_user_role_map, build_js_downloads)
+    build_downloads_info,
+    build_js_downloads,
+    build_user_role_map
+)
+
 """ Constants for the playwright tests. """
 
 BASE_URL = "http://127.0.0.1:5001/"
@@ -23,7 +27,7 @@ DOWNLOADS = [
     {
         'download_name': 'classifications',
         'description': 'A list of all classifications from the API',
-        'url_modifier': 'downloads/classifications_list',
+        'url_modifier': 'downloads/static/classifications_list',
         'file_name': 'classifications.csv',
         'expected_content': None,
     },
@@ -31,7 +35,7 @@ DOWNLOADS = [
         'download_name': 'Example Multiple Address',
         'description':
         'An example of how multuple addresses in a CSV file should be submitted',
-        'url_modifier': 'downloads/example_multiple_address',
+        'url_modifier': 'downloads/static/example_multiple_address',
         'file_name': 'example_multiple_match_upload.csv',
         'expected_content': None,
     },
@@ -39,14 +43,14 @@ DOWNLOADS = [
         'download_name': 'Large Example Multiple Address',
         'description':
         'An example of how multuple addresses in a CSV file should be submitted for the Large Bulk interface',
-        'url_modifier': 'downloads/example_multiple_address_big',
+        'url_modifier': 'downloads/static/example_multiple_address_big',
         'file_name': 'example_multiple_match_5k_upload.csv',
         'expected_content': None,
     },
     {
         'download_name': 'UPRN Example Multiple Address',
         'description': 'Example of how to submit multiple UPRNs in a CSV file',
-        'url_modifier': 'downloads/uprn_example_multiple_address',
+        'url_modifier': 'downloads/static/uprn_example_multiple_address',
         'file_name': 'uprn_example_multiple_match_upload.csv',
         'expected_content': None,
     },
@@ -184,10 +188,11 @@ ALL_PAGE_NAMES = [
     'uprn',
     'postcode',
     'typeahead',
-    'multiple_address_original',
-    'multiple_address_results',
+    'multiple_address_small_submit',
+    'multiple_address_small_results',
+    'multiple_address_large_submit',
+    'multiple_address_large_results',
     'multiple_address_attributes',
-    'multiple_address',
     'uprn_multiple_match',
     'custom_response',
     'help',
@@ -232,20 +237,20 @@ ENDPOINTS = [{
     'page_description': 'This search types ahead. Autosuggest on steroids basically. Useful if you quickly want a user to find an address.',
 }, {
     'page_name': 'Multiple Address',
-    'page_name_test': 'multiple_address_original',
-    'url': 'multiple_address_original',
+    'page_name_test': 'multiple_address_small_submit',
+    'url': 'multiple_address_small_submit',
     'nav_link_in_header': True,
     'page_description':'Search for not just  one address. Several. Get lots of results you can look through. This service completes many single searches from a file.',
 }, {
     'page_name': 'Multiple Address',
-    'page_name_test': 'multiple_address',
-    'url': 'multiple_address',
+    'page_name_test': 'multiple_address_large_submit',
+    'url': 'multiple_address_large_submit',
     'nav_link_in_header': False,
     'page_description':'Used to submit a large multiple match request with a file to an asynchronous job manager.',
 }, {
     'page_name': 'Multiple Address',
-    'page_name_test': 'multiple_address_results',
-    'url': 'multiple_address_results',
+    'page_name_test': 'multiple_address_large_results',
+    'url': 'multiple_address_large_results',
     'nav_link_in_header': False,
     'page_description':'Used to submit a large multiple match request with a file to an asynchronous job manager.',
 }, {
@@ -337,8 +342,11 @@ USER_ROLE_MAP = [{
       'role': 'bulk_removed',
       'username': 'testBulkRemovedExplicit',
        'pages_to_remove': [
-            'multiple_address_original', 'uprn_multiple_match',
-            'multiple_address', 'multiple_address_results'
+            'multiple_address_small_submit',
+            'multiple_address_small_results',
+            'multiple_address_large_submit',
+            'multiple_address_large_results',
+            'uprn_multiple_match',
         ],
       'default_bulk_limits': DEFAULT_BULK_LIMITS,
   }, {
