@@ -12,7 +12,7 @@ page_name = 'help'
 @login_required
 @app.route('/help/<subject>')
 def help(subject='None'):
-  endpoints = get_endpoints(called_from=page_name)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
@@ -47,7 +47,7 @@ def help(subject='None'):
       },
   ]
 
-  common = {'endpoints': endpoints, 'breadcrumbs': breadcrumbs}
+  common = {'endpoints': endpoints, 'selected_endpoint': selected_endpoint, 'breadcrumbs': breadcrumbs}
 
   # Hard code here to avoid security flaws where users could potentially inject unwanted urls
   if subject == 'confidence_score':
@@ -60,6 +60,7 @@ def help(subject='None'):
   return render_template(
       page_location,
       endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
       deffinitions=deffinitions,
   )
 
@@ -75,6 +76,7 @@ def return_specific_help_page(page_html_name, common):
   return render_template(
       nested_page_location,
       endpoints=endpoints,
+      selected_endpoint=common.get('selected_endpoint'),
       deffinitions=common.get('deffinitions'),
       breadcrumbs=common.get('breadcrumbs'),
   )

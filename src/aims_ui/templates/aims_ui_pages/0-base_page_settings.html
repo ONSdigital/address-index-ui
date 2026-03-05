@@ -24,6 +24,19 @@
 			"ariaListLabel": 'Navigation menu',
 			"currentPath": endpoints[0].current_selected_endpoint,
 			"itemsList": item_list,
+			"subNavigation": None if not endpoints[0].sub_nav_info else endpoint{
+				"id": 'sub-nav',
+				"itemsList": [
+					{
+						"text": 'Small Bulk',
+						"url": '/documentation'
+					},
+					{
+						"text": 'Large Bulk',
+						"url": '/status'
+					},
+				]
+			}
 		},
 		"serviceLinks": {
 		    "id": "service-links",

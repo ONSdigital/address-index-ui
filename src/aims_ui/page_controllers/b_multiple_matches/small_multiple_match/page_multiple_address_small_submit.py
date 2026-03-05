@@ -22,7 +22,7 @@ page_name = 'multiple_address_small_submit'
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def multiple_address_small_submit():
-  endpoints = get_endpoints(called_from=page_name)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
@@ -40,6 +40,7 @@ def multiple_address_small_submit():
         page_name=page_name,
         searchable_fields=searchable_fields,
         endpoints=endpoints,
+        selected_endpoint=selected_endpoint,
         bulk_limits=bulk_limits,
     )
 
@@ -93,6 +94,7 @@ def multiple_address_small_submit():
           page_location,
           page_name=page_name,
           endpoints=endpoints,
+          selected_endpoint=selected_endpoint,
           error_description=error_description,
           error_title=error_title,
           searchable_fields=searchable_fields,

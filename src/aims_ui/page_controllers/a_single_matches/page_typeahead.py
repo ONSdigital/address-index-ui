@@ -17,7 +17,7 @@ page_name = 'typeahead'
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def typeahead():
-  endpoints = get_endpoints(called_from=page_name)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
@@ -31,7 +31,8 @@ def typeahead():
         page_location,
         page_name=page_name,
         searchable_fields=searchable_fields,
-        endpoints=get_endpoints(called_from=page_name),
+        endpoints=endpoints,
+        selected_endpoint=selected_endpoint,
         api_auth=get_api_auth(),
     )
 
@@ -64,7 +65,8 @@ def typeahead():
   return render_template(
       page_location,
       page_name=page_name,
-      endpoints=get_endpoints(called_from=page_name),
+      endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
       searchable_fields=searchable_fields,
       results_page=True,
       matched_addresses=matched_addresses,

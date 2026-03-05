@@ -19,7 +19,7 @@ page_name = 'postcode'
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
 def postcode():
-  endpoints = get_endpoints(called_from=page_name)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
@@ -32,6 +32,7 @@ def postcode():
         page_name=page_name,
         searchable_fields=get_fields(page_name),
         endpoints=endpoints,
+        selected_endpoint=selected_endpoint,
     )
 
   searchable_fields = get_fields(page_name)
@@ -76,6 +77,7 @@ def postcode():
       page_location,
       page_name=page_name,
       endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
       searchable_fields=searchable_fields,
       results_page=True,
       matched_addresses=matched_addresses,

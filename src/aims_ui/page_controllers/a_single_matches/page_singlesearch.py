@@ -19,7 +19,7 @@ page_name = 'singlesearch'
 @login_required
 @app.route(f'/', methods=['GET', 'POST'])
 def singlesearch():
-  endpoints = get_endpoints(called_from=page_name)
+  endpoints, selected_endpoint = get_endpoints(called_from=page_name)
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
@@ -33,6 +33,7 @@ def singlesearch():
         page_name=page_name,
         searchable_fields=searchable_fields,
         endpoints=endpoints,
+        selected_endpoint=selected_endpoint,
     )
 
   all_user_input = load_save_store_inputs(
@@ -89,6 +90,7 @@ def singlesearch():
       page_location,
       page_name=page_name,
       endpoints=endpoints,
+      selected_endpoint=selected_endpoint,
       searchable_fields=searchable_fields,
       results_page=True,
       matched_addresses=matched_addresses,
