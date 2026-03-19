@@ -1,3 +1,4 @@
+
 from aims_ui import app
 
 all_pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
@@ -5,11 +6,18 @@ all_pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 def get_file_location_of_current_endpoint(endpoints):
   # Get the selected endpoint
-  for e in endpoints:
-    if (e.current_selected_endpoint == e.url):
-      selected_endpoint = e
+  for endpoint in endpoints:
+    if (endpoint.selected):
+      selected_endpoint = endpoint
 
   file_location = selected_endpoint.file_location
+
+  print()
+  print(f'the current endpoint is: {selected_endpoint}')
+
+  print()
+  print(f'file location: {file_location}')
+  print()
 
   return file_location
 
