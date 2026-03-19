@@ -1,26 +1,38 @@
+import logging
+
 from flask import url_for
 
-from aims_ui.page_helpers.google_utils import get_current_group, get_username
+from aims_ui.page_helpers.google_utils import get_current_group
 
 from .endpoint import Endpoint
 
 
 def get_current_selected_endpoint(endpoints, called_from):
-  # Match all multiple addresses to the 'multiple address small submit' page,
-  # as this is the default landing page of the subsection
-
-  if 'multiple_address' in called_from:
-    called_from = 'multiple_address_small_submit'
-
   # Get the endpoint that matches the page 'called_from'
   for endpoint in endpoints:
     if endpoint.page_name == called_from:
       endpoint.selected = True
-      return endpoint.url
-  return ''
+      return endpoint
+  
+  logging.error(f'No endpoint found for page {called_from}. Check get_endpoints.py to ensure the page is added as an Endpoint')
 
 
 def get_endpoints(called_from=None):
+  sub_nav_for_multiple_matches = [
+    {
+      'title': 'Small Multiple Match',
+      'url': url_for('multiple_address_small_submit'),
+    },
+    {
+      'title': 'Large Multiple Match',
+      'url': url_for('multiple_address_large_submit'),
+    },
+    {
+      'title': 'UPRN Multiple Match',
+      'url': url_for('uprn_multiple_match'),
+    }
+  ]
+ 
   # Add new endpoints here for auto-creation on all pages
   endpoints = [
       Endpoint(
@@ -53,32 +65,15 @@ def get_endpoints(called_from=None):
           'multiple_address_small_submit',
           "Submit a small file to match addresses. This uses the singlesearch endpoint controlled by the UI instead of the bulk matching solution provided by the 'Large Multiple Match'",
           'b_multiple_matches/small_multiple_match',
-          sub_nav_info=[
-            Endpoint(
-              'Small Multiple Match',
-              'multiple_address_small_submit',
-              "Submit small",
-              'b_multiple_matches/small_multiple_match',
-            ),
-            Endpoint(
-              'Large Multiple Match',
-              'multiple_address_large_submit',
-              "Submit large multiple",
-              'b_multiple_matches/large_multiple_match',
-            ),
-            Endpoint(
-              'UPRN Multiple Match',
-              'uprn_multiple_match',
-              "Submit UPRN",
-              'b_multiple_matches/uprn_multiple_match',
-            )
-          ],
-      ),
+          sub_nav_endpoints=sub_nav_for_multiple_matches,
+     ),
       Endpoint(
           'Multiple UPRN',
           'uprn_multiple_match',
           "Search for multiple addresses providing mulitple UPRNs (Unique Property Reference Numbers)",
           'b_multiple_matches/uprn_multiple_match',
+          sub_nav_endpoints=sub_nav_for_multiple_matches,
+          visible_in_main_nav=False,
       ),
       Endpoint(
           'API',
@@ -122,15 +117,16 @@ def get_endpoints(called_from=None):
       secure_endpoints.append(endpoint)
 
   # Create dict for ons-navigation component
-  nav_info = [{
-      'title': endpoint.title,
-      'url': endpoint.url
-  } for endpoint in secure_endpoints]
-
-
-  # Add a copy of the navigation info to each Endpoint
+  nav_info = []
   for endpoint in secure_endpoints:
-    endpoint.nav_info = nav_info
-    endpoint.current_selected_endpoint = current_selected_endpoint
+    if endpoint.visible_in_main_nav:
+      nav_info.append({
+          'title': endpoint.title,
+          'url': endpoint.url
+      })
+
+  # Add a copy of the navigation info to the current endpoint
+  current_selected_endpoint.nav_info = nav_info
+  current_selected_endpoint.current_selected_endpoint = current_selected_endpoint
 
   return secure_endpoints, current_selected_endpoint

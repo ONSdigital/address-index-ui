@@ -2,7 +2,11 @@
 
 {% from "components/header/_macro.njk" import onsHeader %}
 
-{% set item_list = endpoints[0].nav_info  %}
+
+{% set navigation_info = selected_endpoint.nav_info  %}
+{% set sub_nav_info = selected_endpoint.sub_nav_info %}
+{% set page_name_to_match_to_main_header = selected_endpoint.page_name_to_match_to_main_header %}
+
 
 {% set pageConfig = {
 	'title': "Address Index",
@@ -22,20 +26,12 @@
 			"id": 'main-nav',
 			"ariaLabel": 'Main menu',
 			"ariaListLabel": 'Navigation menu',
-			"currentPath": endpoints[0].current_selected_endpoint,
-			"itemsList": item_list,
-			"subNavigation": None if not endpoints[0].sub_nav_info else endpoint{
+			"currentPath": ['/multiple_address_small_submit', '/uprn_multiple_match'],
+			"itemsList": navigation_info,
+			"subNavigation":  {
 				"id": 'sub-nav',
-				"itemsList": [
-					{
-						"text": 'Small Bulk',
-						"url": '/documentation'
-					},
-					{
-						"text": 'Large Bulk',
-						"url": '/status'
-					},
-				]
+				"currentPath": '/large',
+				"itemsList": sub_nav_info,
 			}
 		},
 		"serviceLinks": {
