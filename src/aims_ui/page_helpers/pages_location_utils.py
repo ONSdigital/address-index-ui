@@ -4,27 +4,10 @@ from aims_ui import app
 all_pages_location = app.config.get('AIMS_UI_PAGES_LOCATION', '')
 
 
-def get_file_location_of_current_endpoint(endpoints):
-  # Get the selected endpoint
-  for endpoint in endpoints:
-    if (endpoint.selected):
-      selected_endpoint = endpoint
-
-  file_location = selected_endpoint.file_location
-
-  print()
-  print(f'the current endpoint is: {selected_endpoint}')
-
-  print()
-  print(f'file location: {file_location}')
-  print()
-
-  return file_location
-
-
-def get_page_location(endpoints, page_name):
+def get_page_location(selected_endpoint):
   # The folder that this page is stored in (inside pages_location)
-  file_location = get_file_location_of_current_endpoint(endpoints)
+  file_location = selected_endpoint.get('file_location')
+  page_name = selected_endpoint.get('page_name')
 
   # page_name should match the '.html' file in the above dir
   return f'{all_pages_location}/{file_location}/{page_name}.html'

@@ -14,7 +14,8 @@ from ..utils.multiple_match_file_upload_utils import check_valid_upload, validat
 from ..utils.multiple_match_utils import get_results_display_type
 from .utils.submit_multiple_match_from_singlesearch import (
     multiple_address_match_from_singlesearch_display,
-    multiple_address_match_from_singlesearch_download)
+    multiple_address_match_from_singlesearch_download
+)
 
 page_name = 'multiple_address_small_submit'
 
@@ -26,7 +27,7 @@ def multiple_address_small_submit():
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
-  page_location = get_page_location(endpoints, page_name)
+  page_location = get_page_location(selected_endpoint)
 
   current_group = get_current_group()
   bulk_limits = current_group.get('bulk_limits')
