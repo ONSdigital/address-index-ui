@@ -5,7 +5,7 @@
 
 {% set navigation_info = selected_endpoint.nav_info  %}
 {% set sub_nav_info = selected_endpoint.sub_nav_info %}
-{% set page_name_to_match_to_main_header = selected_endpoint.page_name_to_match_to_main_header %}
+{% set current_path_array = selected_endpoint.url %}
 
 
 {% set pageConfig = {
@@ -26,7 +26,7 @@
 			"id": 'main-nav',
 			"ariaLabel": 'Main menu',
 			"ariaListLabel": 'Navigation menu',
-			"currentPath": ['/multiple_address_small_submit', '/uprn_multiple_match'],
+			"currentPath": current_path_array,
 			"itemsList": navigation_info,
 			"subNavigation":  {
 				"id": 'sub-nav',

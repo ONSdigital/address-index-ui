@@ -23,7 +23,7 @@ def singlesearch():
   access = check_user_has_access_to_page(page_name)
   if access != True:
     return access
-  page_location = get_page_location(endpoints, page_name)
+  page_location = get_page_location(selected_endpoint)
   searchable_fields = get_fields(page_name)
 
   if request.method == 'GET':
