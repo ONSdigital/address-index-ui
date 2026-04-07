@@ -4,7 +4,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd "${DIR}"/.. || exit
 
-DESIGN_SYSTEM_VERSION="73.1.1"
+# Read the design system version from design_system_version.txt, removing any whitespace
+DESIGN_SYSTEM_VERSION="$(tr -d '[:space:]' < "${DIR}/design_system_version.txt")"
 
 TEMP_DIR=$(mktemp -d)
 
