@@ -4,6 +4,7 @@ import json
 import os
 
 from aims_ui.app_helpers.get_app_version import get_app_version
+from aims_ui.app_helpers.get_design_system_version import get_design_system_version
 
 # Port that the Flask server will run on
 UI_EXPOSED_PORT = 5000
@@ -39,6 +40,9 @@ LOCAL_STORAGE_VERSION = '1'
 
 # Get the app version from version.txt in the root directory
 APP_VERSION = get_app_version()
+
+# Get the design system version from the txt file in the scripts folder
+DESIGN_SYSTEM_VERSION = get_design_system_version()
 
 # Default usernames for paywall
 USER_AUTHS = json.loads(os.getenv('USER_AUTHS', '{}'))
