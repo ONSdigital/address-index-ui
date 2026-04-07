@@ -3,8 +3,15 @@
 pushd "%~dp0\.."
 set "BASE_DIR=%CD%"
 
-REM Design system version
-set "DESIGN_SYSTEM_VERSION=70.0.2"
+REM Get the design system version from file in the same folder as this script
+set "VERSION_FILE=%~dp0design_system_version.txt"
+
+if not exist "%VERSION_FILE%" (
+    echo Error: %VERSION_FILE% not found.
+    exit /b 1
+)
+
+set /p DESIGN_SYSTEM_VERSION=<"%VERSION_FILE%"
 
 REM Create a temporary directory
 for /f "usebackq delims=" %%G in (`powershell -NoProfile -Command ^
