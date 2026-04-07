@@ -10,7 +10,8 @@ def get_design_system_version() -> str:
         str: Design system version string, or "Unknown" if reading fails.
     """
   version_path = os.path.abspath(
-      os.path.join(os.path.dirname(__file__), '..', '..', '..', 'scripts', 'design_system_version.txt'))
+      os.path.join(os.path.dirname(__file__), '..', '..', '..', 'scripts',
+                   'design_system_version.txt'))
 
   try:
     with open(version_path, 'r', encoding='utf-8') as version_file:
@@ -21,7 +22,8 @@ def get_design_system_version() -> str:
     logging.error(f'Permission denied when accessing {version_path}')
   except Exception as e:
     logging.exception(
-        f'Unexpected error while reading design system version from {version_path}: {e}')
+        f'Unexpected error while reading design system version from {version_path}: {e}'
+    )
 
   # If any error occurs, return "Unknown"
   return 'Unknown'
