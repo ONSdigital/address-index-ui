@@ -12,5 +12,6 @@ def info():
   key_info['PLATFORM'] = os.getenv('PLATFORM')
   key_info['VERSION'] = app.config.get('APP_VERSION')
   key_info['LOCAL_STORAGE_VERSION'] = app.config.get('LOCAL_STORAGE_VERSION')
+  key_info['DESIGN_SYSTEM_VERSION'] = app.config.get('DESIGN_SYSTEM_VERSION')
 
   return jsonify(key_info)
