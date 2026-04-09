@@ -187,6 +187,12 @@ export function getDefaultGlobalValues() {
           'typeOfInput': 'checkbox',
           'persistenceState': true,
           'defaultValue': true,
+        },
+        {
+          'htmlId': 'historical',
+          'persistenceState': true,
+          'typeOfInput': 'checkbox',
+          'defaultValue': false,
         }
       ],
     },
