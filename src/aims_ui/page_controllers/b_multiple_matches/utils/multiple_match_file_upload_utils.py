@@ -1,6 +1,7 @@
 import logging
 
 from aims_ui import app
+from aims_ui.app_helpers.classification_utils.validation import classification_is_valid
 from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_utils import remove_header_row
 
 ALLOWED_EXTENSIONS = {'csv'}
@@ -26,6 +27,17 @@ def validate_limit_parameter(all_user_input, limit_name='limit'):
     raise Exception(
         'Limit Parameter Error',
         'Limit parameter must be a positive integer between 1 and 10')
+
+def validate_classification_input(all_user_input):
+  """ Check user input for classification """
+  classification_input = all_user_input.get('classificationfilter', '')
+
+  # Check if the classification is valid, raise an error if not
+  if classification_is_valid(classification_input) == False:
+    raise Exception(
+        'Classification Input Error',
+        'The classification you entered does not appear to be valid. Please check your input and try again.'
+    )
 
 
 def validate_job_name(all_user_input):
