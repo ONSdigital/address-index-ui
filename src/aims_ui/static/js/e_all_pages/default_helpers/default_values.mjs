@@ -193,7 +193,13 @@ export function getDefaultGlobalValues() {
           'persistenceState': true,
           'typeOfInput': 'checkbox',
           'defaultValue': false,
-        }
+        },
+        {
+          'htmlId': 'classificationfilter',
+          'persistenceState': true,
+          'typeOfInput': 'autosuggest',
+          'defaultValue': '',
+        },
       ],
     },
     {
