@@ -1,5 +1,6 @@
-from aims_ui.page_helpers.api.api_interaction import job_result_formatter
 import json
+
+from aims_ui.page_helpers.api.api_interaction import job_result_formatter
 
 
 def get_recs_so_far_message(single_job_data):
@@ -37,6 +38,8 @@ def format_single_job(job_data):
       'recssofar': job_data.get('recssofar'),
       'totalrecs': job_data.get('totalrecs'),
       'username': job_data.get('username'),
+      'classification': job_data.get('classification', 'NA'),
+      'historical': job_data.get('historical', 'NA'),
   }
 
   # Now add artificially created data

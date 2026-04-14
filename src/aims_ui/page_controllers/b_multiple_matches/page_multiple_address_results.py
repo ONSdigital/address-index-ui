@@ -40,7 +40,7 @@ def multiple_address_results():
     formatted_results = [
         [
             '22', 'Example', '10,000 of A Jillion', 'bob', 'True', 'PAF'
-            'complete',
+            'complete', '1 of 10,000',
             f'<a href="/downloads/googlefiledownload{job_id}">job_id {job_id}</a>'
         ],
     ]
