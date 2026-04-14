@@ -36,7 +36,7 @@ API_JWT_K_VALUE = base64.b64decode(API_JWT_K_VALUE)
 FLASK_ENV = str(os.getenv('FLASK_ENV')).upper()
 
 # Current version of local storage, increment when making breaking changes
-LOCAL_STORAGE_VERSION = '1'
+LOCAL_STORAGE_VERSION = '2'
 
 # Get the app version from version.txt in the root directory
 APP_VERSION = get_app_version()

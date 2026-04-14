@@ -369,6 +369,8 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['multiple_match_paf_nag_preference'],
         common_fields['header_row_export'],
         common_fields['historical'],
+        common_fields['classification'],
+        common_fields['classification_help_download'],
         common_fields['file_upload'],
     ])
   elif endpoint_name == 'postcode':

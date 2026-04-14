@@ -2,7 +2,8 @@ import { getGlobalValues } from '/static/js/f_helpers/local_storage_page_helpers
 import { getBroadcastLocalStorageVersion } from './get_local_storage_version.mjs';
 
 // Migration imports here
-import { migrateLocalStorageFromVersion0To1 } from './local_storage_migrations/local_storage_migration1.mjs';
+import { migrateLocalStorageFromVersionNullToLatest } from './local_storage_migrations/local_storage_migration1.mjs';
+import { migrateLocalStorageFromVersion1To2 } from './local_storage_migrations/local_storage_migration2.mjs';
 
 export function getDefaultValuesForPage(page_name) {
   // Return a value/key pair object for 'htmlid': 'defaultValue' for a page 
@@ -65,7 +66,7 @@ function runLocalStorageMigration(currentVersion, targetVersion) {
   // Skips other migrations as the first migration should always setup the latest defaults
   if (currentVersion === null) {
     console.info(`Running local storage migration from null or undefined version to Latest Version (${targetVersion}). This should only happen once.`);
-    migrateLocalStorageFromVersion0To1(targetVersion);
+    migrateLocalStorageFromVersionNullToLatest(targetVersion);
   } 
 
   // Increimental Migrations go here
