@@ -28,6 +28,7 @@ def validate_limit_parameter(all_user_input, limit_name='limit'):
         'Limit Parameter Error',
         'Limit parameter must be a positive integer between 1 and 10')
 
+
 def validate_classification_input(all_user_input):
   """ Check user input for classification """
   classification_input = all_user_input.get('classificationfilter', '')

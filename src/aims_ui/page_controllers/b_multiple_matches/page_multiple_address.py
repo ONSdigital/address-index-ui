@@ -13,11 +13,8 @@ from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
 
 from .utils.multiple_match_api_utils import count_active_jobs
 from .utils.multiple_match_file_upload_utils import (
-    check_valid_upload,
-    validate_classification_input,
-    validate_job_name,
-    validate_limit_parameter
-)
+    check_valid_upload, validate_classification_input, validate_job_name,
+    validate_limit_parameter)
 from .utils.submit_multiple_match_api import multiple_address_match
 
 page_name = 'multiple_address'
