@@ -9,10 +9,10 @@ import requests
 from requests.models import Response
 
 from aims_ui import app
+from aims_ui.app_helpers.classification_utils.validation import classification_is_valid
 from aims_ui.page_controllers.b_multiple_matches.utils.multiple_match_api_utils import get_multiple_match_api_header
 from aims_ui.page_helpers.api.api_helpers import get_header, job_api
 from aims_ui.page_helpers.api.api_parameters_helpers import cleanup_parameters, format_params_as_string
-from aims_ui.app_helpers.classification_utils.validation import classification_is_valid
 from aims_ui.page_helpers.google_utils import get_username
 
 
@@ -199,7 +199,7 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
   # Add some header data into parameters (if the API needs it as a param)
   all_user_input['uimetadata'] = header.get('uimetadata')
 
-  cleaned_params = cleanup_parameters(all_user_input, 'multiple')
+  cleaned_params = cleanup_parameters(all_user_input, 'multiple_address')
   params = format_params_as_string(cleaned_params)
 
   addresses = str(addresses).replace('"', '')  # Remove Quotes from address

@@ -1,52 +1,23 @@
-import { getGlobalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
-import { getPageLocalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
+import { getAddressAttributesSelectedByUserFromMultipleAddressAttributesPage, 
+  findIfPafOrNagWasUsed,
+  returnNewlineIfNotBlank
+} from './helpers.mjs';
 
-export function getAllLinks() {
-  const tableLinks = [];
-  const table = document.querySelector('#adjustLinksTable');
-  const links = table.querySelectorAll('a');
-  for (const link of links) {
-    const linkElement = link;
-    const linkParent = link.parentNode;
 
-    const headerCellIndex = linkParent.cellIndex - 2;
-    const row = linkParent.parentNode;
-    const headerRowCell = row.cells[headerCellIndex];
-
-    tableLinks.push({
-      link: linkElement,
-      parent: linkParent,
-      headerRowCell: headerRowCell,
-    });
-  }
-  return tableLinks;
-}
-
-export function findIfPafOrNagWasUsed(address) {
-  // Receiving a single "address" from a response, return PAF or NAG
-  const formattedAddress = address['formattedAddress'];
-  const pafAddress = address['formattedAddressPaf'];
-  const nagAddress = address['formattedAddressNag'];
-  if (formattedAddress === pafAddress) {
-    return 'PAF';
-  } else if (formattedAddress === nagAddress) {
-    return 'NAG';
-  } else {
-    return 'N/A';
-  }
-}
-
-function getAddressesFromResponse(apiResponse,page) {
+function getAddressesFromResponse(apiResponse) {
   // Given an API response (string), extract a list of all matched addresses, confidence score, document score
   // Extract the list of matched addresses
-  const customAttributes = getPageLocalValues(page).pagePreviouslySearchedValues
+  const customAttributesSelectedByUser = getAddressAttributesSelectedByUserFromMultipleAddressAttributesPage();
   const matchedAddresses = [];
+
   if (apiResponse.toString() === '') {
     return [];
   }
+
   const jsonResponse = JSON.parse(apiResponse);
   const response = jsonResponse['response'];
   const addresses = response['addresses'];
+
   // Get the values needed for each address (each address comes from one submitted address)
   let i = 0;
   for (const address of addresses) {
@@ -71,7 +42,7 @@ function getAddressesFromResponse(apiResponse,page) {
       airRating,
     ];
 
-    const finalAddressToAdd = addCustomAttributesToResponse(address,customAttributes,addressToAdd);
+    const finalAddressToAdd = addCustomAttributesToResponse(address,customAttributesSelectedByUser,addressToAdd);
     matchedAddresses.push(finalAddressToAdd);
   }
   return matchedAddresses;
@@ -118,14 +89,6 @@ function addCustomAttributesToResponse(address,customAttributes,addressToAdd) {
     return addressToAdd;
 }
 
-function returnNewlineIfNotBlank(testString) {
-  if (/^[\s\n]*$/.test(testString)) {
-    return '';
-  } else {
-    return '\n';
-  }
-}
-
 function arrayToCSV(data) {
   const csvRows = data.map((row) =>
     row
@@ -141,7 +104,7 @@ function arrayToCSV(data) {
   return csvRows.join('\r\n') + returnNewlineIfNotBlank(csvRows);
 }
 
-function processRow(row,page) {
+export function processRow(row,page) {
   // Process [id, inputAddress, APIresponse]
   // to be in same format as <5k match
 
@@ -156,7 +119,7 @@ function processRow(row,page) {
   // Get info for a single row
   const id = row[0];
   const inputAddress = row[1];
-  const matchedAddresses = getAddressesFromResponse(row[2],page);
+  const matchedAddresses = getAddressesFromResponse(row[2]);
 
   // Expand (same id and input address for each matched address)
   const finalMatches = [];
@@ -177,12 +140,14 @@ function processRow(row,page) {
   return csvFormat;
 }
 
-async function downloadAndProcess(url, headerStatus, page) {
-  const customAttributes = getPageLocalValues(page).pagePreviouslySearchedValues
+export async function downloadAndProcess(url, headerStatus) {
+  // Get the attributes selected locally on the 'mutliple_address_attributes' page
+  const attributesSelectedByUser = getAddressAttributesSelectedByUserFromMultipleAddressAttributesPage();
   let final_csv = '';
   let extra_headers = '';
+
   if (headerStatus.toString() !== 'False') {
-    for (const [key, value] of Object.entries(customAttributes)) {
+    for (const [key, value] of Object.entries(attributesSelectedByUser)) {
       if (value == true) {
           extra_headers = extra_headers + ',' + key
       }
@@ -190,6 +155,7 @@ async function downloadAndProcess(url, headerStatus, page) {
     final_csv =
       'id,inputAddress,matchedAddress,uprn,matchType,confidenceScore,documentScore,rank,addressType(Paf/Nag),airRating' + extra_headers +'\n';
   }
+
   const response = await fetch(url);
   const arrayBuffer = await response.arrayBuffer();
   // eslint-disable-next-line no-undef
@@ -200,93 +166,8 @@ async function downloadAndProcess(url, headerStatus, page) {
 
   parsedCSV.forEach((row) => {
     // Row = [id, inputAddress, APIresponse]
-    final_csv = final_csv + processRow(row,page);
+    final_csv = final_csv + processRow(row);
   });
 
   return await final_csv;
 }
-
-async function changeLinkToButton(linkParentMetadata) {
-  // Make the Download Button
-  const originalButton = document.querySelector('#downloadButtonTemplate');
-  const clonedButton = originalButton.cloneNode(true);
-
-  const cell = linkParentMetadata.parent;
-
-  linkParentMetadata.parent.append(clonedButton);
-
-  clonedButton.addEventListener('click', async function () {
-    // Make Spin Load
-    clonedButton.classList.add('ons-is-loading');
-
-    // Get header option status
-    const headerStatus = linkParentMetadata.headerRowCell.textContent
-      .trim()
-      .replace(/\s+/g, ' ');
-
-    const page = 'multiple_address_attributes'
-
-    // Get CSV content
-    const csv = await downloadAndProcess(
-      linkParentMetadata.link.href,
-      headerStatus,
-      page
-    );
-
-    // Make a new blob
-    const blob = new Blob([csv], { type: 'text/csv' });
-
-    // Make 'a' with link to finalised csv content, then download
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    const fileName = getNameOfJobFromCell(
-      cell,
-      linkParentMetadata.link.textContent
-    );
-    a.download = fileName + '.csv';
-    a.click();
-    clonedButton.classList.remove('ons-is-loading');
-  });
-  linkParentMetadata.link.remove();
-}
-
-function getNameOfJobFromCell(cell, backupName) {
-  const row = cell.closest('tr');
-  const cells = row.querySelectorAll('td');
-  const secondCellText = cells[1].textContent;
-  const strippedText = secondCellText.trim();
-  const result = strippedText === '' ? backupName : strippedText;
-
-  return result;
-}
-
-function addJobsFlagToCurrentURL() {
-  // Get the current preference
-  const currentJobPreference = getGlobalValues().showOlderJobsInBulkMatchingPage;
-  const currentURL = window.location.href;
-
-  // Check to see if the flag alredy exists
-  if (currentURL.includes('include_old_jobs')) {
-    return;
-  } else {
-    const url = new URL(currentURL);
-    url.searchParams.set('include_old_jobs', currentJobPreference);
-    // Forward user to the new URL
-    window.history.pushState({}, '', url);
-    // Trigger new page load
-    window.location.reload();
-  }
-}
-
-export async function setupResultsButtonAndProcessing() {
-    // Check the jobs flag - this is a fallback check as it should already be appended to the URL
-    addJobsFlagToCurrentURL();
-
-    // Change all links to "download" buttons
-    const linksAndParents = getAllLinks();
-    for (const l of linksAndParents) {
-       await changeLinkToButton(l);
-    }
-}
-

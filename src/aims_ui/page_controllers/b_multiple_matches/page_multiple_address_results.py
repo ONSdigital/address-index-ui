@@ -28,7 +28,7 @@ def multiple_address_results():
 
   headers = [
       'JOBID', 'NAME', 'STATUS', 'USER ID', 'HEADER ROW', 'PAF OR NAG',
-      'RECS PROCESSED', 'DOWNLOAD LINK'
+      'RECS PROCESSED', 'HISTORICAL', 'CLASSIFICATION', 'DOWNLOAD LINK'
   ]
 
   endpoints = get_endpoints(called_from=page_name)
@@ -40,7 +40,7 @@ def multiple_address_results():
     formatted_results = [
         [
             '22', 'Example', '10,000 of A Jillion', 'bob', 'True', 'PAF'
-            'complete', '1 of 10,000',
+            'complete', '1 of 10,000', 'True', 'Residential',
             f'<a href="/downloads/googlefiledownload{job_id}">job_id {job_id}</a>'
         ],
     ]
@@ -74,13 +74,15 @@ def multiple_address_results():
       job.get('header_row_export'),
       job.get('paf_nag_preference'),
       job.get('recssofarmessage'),
+      job.get('historical'),
+      job.get('classification'),
       job.get('downloadlink'),
   ] for job in jobs_data_plus_metadata]
 
   # EXAMPLE results format
   # results = [
-  #   ['200', 'da', 'progress', USER ID, HEADER ROW, PAF OR NAG, RECS PROCESSED, DOWNLOAD LINK]
-  #   [JOBID, NAME, STATUS, USER ID, HEADER ROW, PAF OR NAG, RECS PROCESSED, DOWNLOAD LINK]
+  #   ['200', 'da', 'progress', USER ID, HEADER ROW, PAF OR NAG, RECS PROCESSED, HISTORICAL, CLASSIFICATION, DOWNLOAD LINK]
+  #   [JOBID, NAME, STATUS, USER ID, HEADER ROW, PAF OR NAG, RECS PROCESSED, HISTORICAL, CLASSIFICATION, DOWNLOAD LINK]
 
   jobs_table = []
   jobs_table = create_table(headers, jobs_data_plus_metadata_table_rows)

@@ -2,9 +2,8 @@ import datetime
 import json
 import logging
 
-from aims_ui.page_helpers.api.api_helpers import job_api
+from aims_ui.page_helpers.api.api_helpers import get_header, job_api
 from aims_ui.page_helpers.google_utils import get_username
-from aims_ui.page_helpers.api.api_helpers import get_header
 
 
 def null_or_undefined_to_False(var):
@@ -27,15 +26,29 @@ def get_paf_nag_preference_selection(all_user_input):
   return pafdefault
 
 
+def get_historical_selection(all_user_input):
+  historical = all_user_input.get('historical', 'false')
+  historical = null_or_undefined_to_False(historical)
+
+  return historical
+
+
+def get_classification_selection(all_user_input):
+  classification = all_user_input.get('classificationfilter', '')
+  # Reverse classification if it's a string (so it's always the CODE version)
+
+  return classification
+
+
 def get_multiple_match_api_header(all_user_input):
   """ Add additional headers for bulk API requests """
   header = get_header(username=True, bulk=True)
 
-  # Get user's header row export choice, if none assume False
+  # Get data from the form for uimetadata - stored with a job as json
   header_row_export = get_header_row_export_selection(all_user_input)
-
-  # Get user's paf_nag_preference
   pafdefault = get_paf_nag_preference_selection(all_user_input)
+  historical = get_historical_selection(all_user_input)
+  classification = get_classification_selection(all_user_input)
 
   # Bulk manager now has 'topic' header for the user's "name" (for the job) field
   header['topic'] = str(all_user_input.get('name', '')[:25])
@@ -43,7 +56,9 @@ def get_multiple_match_api_header(all_user_input):
   # Additional Metadata can be stored in 'uiMetadata' header
   uiMetadata = {
       'header_row_export': header_row_export,
-      'pafdefault': pafdefault
+      'pafdefault': pafdefault,
+      'historical': historical,
+      'classification': classification
   }
   header['uimetadata'] = json.dumps(uiMetadata)
 
