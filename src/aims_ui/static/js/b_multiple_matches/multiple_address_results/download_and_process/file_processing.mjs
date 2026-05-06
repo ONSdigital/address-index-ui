@@ -104,7 +104,7 @@ function arrayToCSV(data) {
   return csvRows.join('\r\n') + returnNewlineIfNotBlank(csvRows);
 }
 
-export function processRow(row,page) {
+export function processRow(row) {
   // Process [id, inputAddress, APIresponse]
   // to be in same format as <5k match
 
