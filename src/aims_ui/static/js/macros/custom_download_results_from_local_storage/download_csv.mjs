@@ -1,6 +1,6 @@
 import { getPageLocalValues, getGlobalValues } from "/static/js/f_helpers/local_storage_page_helpers.mjs";
 import { getPopulatedAttributeMap, getPopulatedAttributeMapOnlyFavourites } from "/static/js/f_helpers/address_attribute_map.mjs";
-import { triggerDownloadOfFile } from "/static/js/macros/custom_download_results_from_local_storage/download_helpers.mjs";
+import { triggerDownloadOfFile } from "/static/js/f_helpers/download_helpers.mjs";
 
 function getKeysToBecomeHeader(attributeInclusionSetting) {
   const globalValues = getGlobalValues();

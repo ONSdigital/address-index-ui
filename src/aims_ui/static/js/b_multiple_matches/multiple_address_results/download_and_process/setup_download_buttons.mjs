@@ -1,5 +1,6 @@
 import { getAllLinksAndParents, getNameOfJobFromCell } from './helpers.mjs';
 import { downloadAndProcess } from './file_processing.mjs';
+import { triggerDownloadOfFile } from "/static/js/f_helpers/download_helpers.mjs";
 
 async function changeLinkToButton(linkParentHeaderRowCellObject) {
   // Make the Download Button
@@ -11,7 +12,7 @@ async function changeLinkToButton(linkParentHeaderRowCellObject) {
   linkParentHeaderRowCellObject.parent.append(clonedButton);
 
   clonedButton.addEventListener('click', async function () {
-    // Make Spin Load
+    // Make ONS Button Spin Load
     clonedButton.classList.add('ons-is-loading');
 
     // Get header option status from the same row as link
@@ -20,24 +21,22 @@ async function changeLinkToButton(linkParentHeaderRowCellObject) {
       .replace(/\s+/g, ' ');
 
     // Get CSV content
-    const csv = await downloadAndProcess(
+    const csvContent = await downloadAndProcess(
       linkParentHeaderRowCellObject.link.href,
       headerStatus,
     );
 
-    // Make a new blob
-    const blob = new Blob([csv], { type: 'text/csv' });
-
-    // Make 'a' with link to finalised csv content, then download
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    const fileName = getNameOfJobFromCell(
+    // Get the file name for the download
+    const fileNameBase = getNameOfJobFromCell(
       cell,
       linkParentHeaderRowCellObject.link.textContent
     );
-    a.download = fileName + '.csv';
-    a.click();
+    const fileName = `${fileNameBase}.csv`;
+
+    // Trigger download using shared helper function 
+    triggerDownloadOfFile(fileName, 'csv', csvContent);
+
+    // Remove the loading class as the download should now have triggered
     clonedButton.classList.remove('ons-is-loading');
   });
   linkParentHeaderRowCellObject.link.remove();
