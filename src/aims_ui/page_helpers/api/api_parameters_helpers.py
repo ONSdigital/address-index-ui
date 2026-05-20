@@ -89,7 +89,7 @@ def adjust_params_for_all_pages(params, called_from_page_name):
     # If 'None' set to false
     if historical_value == 'None':
       params['historical'] = 'false'
-    
+
     # Convert 'True' and 'False' to lowercase
     if historical_value == 'False':
       params['historical'] = 'false'
@@ -124,12 +124,14 @@ def add_params_for_splunk(params, called_from_page_name):
 
   return params
 
+
 def format_params_as_string(cleaned_user_input):
   """Return a list of parameters formatted for API header, from class list of inputs"""
 
   # Standard URL encoding
   return urllib.parse.urlencode(cleaned_user_input,
                                 quote_via=urllib.parse.quote_plus)
+
 
 def cleanup_parameters(params, called_from_page_name):
   """ Remove empty parameters add others that might be required"""
@@ -151,5 +153,3 @@ def cleanup_parameters(params, called_from_page_name):
 
   print(f'Final cleaned parameters: {params}\n\n')
   return params
-
-
