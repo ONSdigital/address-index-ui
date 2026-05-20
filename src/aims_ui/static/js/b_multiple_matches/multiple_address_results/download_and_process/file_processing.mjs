@@ -104,6 +104,38 @@ function arrayToCSV(data) {
   return csvRows.join('\r\n') + returnNewlineIfNotBlank(csvRows);
 }
 
+export function getFullHeaderRowIncludingCustomAttributes(headerStatus) {
+  let extra_headers = '';
+
+  if (headerStatus.toString() !== 'False') {
+    const attributesSelectedByUser = getAddressAttributesSelectedByUserFromMultipleAddressAttributesPage();
+    const customAttributeOrder = [
+      'classification_code',
+      'country_code',
+      'easting',
+      'northing',
+      'latitude',
+      'longitude',
+      'parent_uprn',
+      'lpi_logical_status',
+      'formatted_address_nag',
+      'formatted_address_paf',
+      'welsh_formatted_address_nag',
+      'welsh_formatted_address_paf',
+    ];
+
+    for (const key of customAttributeOrder) {
+      if (attributesSelectedByUser[key] == true) {
+        extra_headers = extra_headers + ',' + key;
+      }
+    }
+
+    return 'id,inputAddress,matchedAddress,uprn,matchType,confidenceScore,documentScore,rank,addressType(Paf/Nag),airRating' + extra_headers + '\n';
+  }
+
+  return '';
+}
+
 export function processRow(row) {
   // Process [id, inputAddress, APIresponse]
   // to be in same format as <5k match
@@ -142,18 +174,11 @@ export function processRow(row) {
 
 export async function downloadAndProcess(url, headerStatus) {
   // Get the attributes selected locally on the 'mutliple_address_attributes' page
-  const attributesSelectedByUser = getAddressAttributesSelectedByUserFromMultipleAddressAttributesPage();
   let final_csv = '';
-  let extra_headers = '';
 
   if (headerStatus.toString() !== 'False') {
-    for (const [key, value] of Object.entries(attributesSelectedByUser)) {
-      if (value == true) {
-          extra_headers = extra_headers + ',' + key
-      }
-    }
-    final_csv =
-      'id,inputAddress,matchedAddress,uprn,matchType,confidenceScore,documentScore,rank,addressType(Paf/Nag),airRating' + extra_headers +'\n';
+    // Start the csv with header row
+    final_csv = getFullHeaderRowIncludingCustomAttributes(headerStatus);
   }
 
   const response = await fetch(url);
