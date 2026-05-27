@@ -151,5 +151,4 @@ def cleanup_parameters(params, called_from_page_name):
   # Finally add an extra parameter that the API will ignore but Splunk can look for
   params = add_params_for_splunk(params, called_from_page_name)
 
-  print(f'Final cleaned parameters: {params}\n\n')
   return params
