@@ -1,7 +1,8 @@
 name: Enforce Version Bump
+
 permissions:
   contents: read
-  pull-requests: read
+
 on:
   pull_request:
     branches:
@@ -10,17 +11,22 @@ on:
 jobs:
   check-version-bump:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v46.0.1
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Check if version.txt was modified
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          if ! echo "${{ steps.changed-files.outputs.all_changed_files }}" | grep -q "version.txt"; then
-            echo "Error: version.txt was not modified in this PR. Please bump the version number."
+          if git diff --quiet "$BASE_SHA" "$HEAD_SHA" -- version.txt; then
+            echo '::error file=version.txt::version.txt was not modified in this pull request. Please bump the version number.'
             exit 1
           fi
+
+          echo 'version.txt was modified in this pull request.'
