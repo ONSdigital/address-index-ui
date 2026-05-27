@@ -148,3 +148,4 @@ jobs:
       - name: Push Docker image
         run: |
           docker push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}" --all-tags
+
