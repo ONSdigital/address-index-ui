@@ -5,6 +5,7 @@ permissions:
   pull-requests: read
 
 on:
+  workflow_call:
   push:
     branches:
       - '**'
