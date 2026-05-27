@@ -1,39 +1,32 @@
-name: Build, test and push AIMS-UI Docker image to Artifact Registry
+name: Build and Push Docker Image
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_call:
+    inputs:
+      image-name:
+        description: 'Name of the Docker image'
+        required: true
+        type: string
+      image-tag:
+        description: 'Version tag to assign to the Docker image. Leave empty to use version.txt.'
+        required: false
+        default: ''
+        type: string
+
 env:
-  IMAGE_NAME: 'address-index-ui'
   PROJECT_ID: 'ons-ci-aims'
   AR_REPO_LOCATION: 'europe-west2'
   AR_URL: 'europe-west2-docker.pkg.dev/ons-ci-aims/aims-ui-repository'
   WORKLOAD_IDENTITY_PROVIDER: 'projects/709138365636/locations/global/workloadIdentityPools/github-actions-aims-pool/providers/aims-ui-provider'
+
 permissions:
   contents: read
   id-token: write
+
 jobs:
-  test-js-unit-tests:
-      name: Run JavaScript unit tests
-      if: github.ref != 'refs/heads/main'
-      uses: ./.github/workflows/test-js-jest-unit-tests.yml
-
-  test-python-playwright-against-api-demo:
-    name: Run Python Playwright tests against API Demo
-    if: github.ref != 'refs/heads/main'
-    uses: ./.github/workflows/test-python-playwright-against-api-demo.yml
-
-  test-python-unit-tests:
-    name: Run Python unit tests
-    if: github.ref != 'refs/heads/main'
-    uses: ./.github/workflows/test-python-unit-tests.yml
-
   push-image:
     runs-on: ubuntu-latest
-    needs:
-      - test-js-unit-tests
-      - test-python-playwright-against-api-demo
-      - test-python-unit-tests
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -49,7 +42,7 @@ jobs:
         id: read_file
         run: |
           VALUE=$(cat version.txt)
-          echo "VALUE=$VALUE" >> $GITHUB_ENV
+          echo "VALUE=$VALUE" >> "$GITHUB_ENV"
 
       - name: Use the value
         run: echo "The value is ${{ env.VALUE }}"
@@ -59,10 +52,18 @@ jobs:
           gcloud auth configure-docker ${{ env.AR_REPO_LOCATION }}-docker.pkg.dev
 
       - name: Build Docker image
+        env:
+          IMAGE_TAG: ${{ inputs.image-tag }}
         run: |
-          docker build -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:${{ env.VALUE }}" -t "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}:latest" .
+          if [ -z "$IMAGE_TAG" ]; then
+            IMAGE_TAG="$VALUE"
+          fi
+
+          docker build \
+            -t "${{ env.AR_URL }}/${{ inputs.image-name }}:${IMAGE_TAG}" \
+            -t "${{ env.AR_URL }}/${{ inputs.image-name }}:latest" \
+            .
 
       - name: Push Docker image
         run: |
-          docker push "${{ env.AR_URL }}/${{ env.IMAGE_NAME }}" --all-tags
-
+          docker push "${{ env.AR_URL }}/${{ inputs.image-name }}" --all-tags
