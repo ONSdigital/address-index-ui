@@ -37,7 +37,8 @@ def get_historical_selection(all_user_input):
 def get_classification_selection(all_user_input):
   classification = all_user_input.get('classificationfilter', '')
   # Ensure the classification is in CODE format (e.g. C*)
-  classification_code = get_full_classification_for_code_or_label(classification)
+  classification_code = get_full_classification_for_code_or_label(
+      classification)
 
   return classification_code
 
