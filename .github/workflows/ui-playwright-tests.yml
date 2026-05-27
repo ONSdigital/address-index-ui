@@ -1,7 +1,9 @@
 name: Python and JS tests run against API demo
+
 permissions:
   contents: read
   pull-requests: read
+
 on:
   push:
     branches:
@@ -19,7 +21,7 @@ jobs:
     # Check out the AIMS UI repository
     - name: Checkout repository
       uses: actions/checkout@v2
-  
+
     # Install Docker Compose for deploying the API
     - name: Install Docker Compose
       run: |
@@ -41,7 +43,7 @@ jobs:
       run: |
         scripts/load_templates.sh
 
-    # Set up Python environment 
+    # Set up Python environment
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -71,7 +73,19 @@ jobs:
     # Run Python Playwright Tests
     - name: Run Python Playwright Tests
       run: |
-        python3 -m pytest tests/pytest_tests -n 4
+        python3 -m pytest tests/pytest_tests -n 4 \
+          --output=test-results \
+          --screenshot=only-on-failure
+
+    # Upload screenshots created when Playwright tests fail
+    - name: Upload Python Playwright failure screenshots
+      if: ${{ !cancelled() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: python-playwright-failure-screenshots
+        path: test-results/
+        if-no-files-found: ignore
+        retention-days: 7
 
     # Set up Node.js environment
     - name: Set up Node.js
@@ -91,4 +105,3 @@ jobs:
       run: |
         cd api_demo
         docker-compose down
-
