@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: '3.12.1'
+          python-version-file: '.python-version'
           cache: 'pip'
 
       - name: Build
@@ -60,7 +60,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: '3.12.1'
+          python-version-file: '.python-version'
 
       - name: Install Python dependencies
         run: |
