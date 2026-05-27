@@ -1,0 +1,41 @@
+name: Create a UI test image for AP
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag to assign to the Docker image'
+        required: true
+        default: '0.0.1'
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  test-js-unit-tests:
+    name: Run JavaScript unit tests
+    if: github.ref != 'refs/heads/main'
+    uses: ./.github/workflows/test-js-jest-unit-tests.yml
+
+  test-python-playwright-against-api-demo:
+    name: Run Python Playwright tests against API Demo
+    if: github.ref != 'refs/heads/main'
+    uses: ./.github/workflows/test-python-playwright-against-api-demo.yml
+
+  test-python-unit-tests:
+    name: Run Python unit tests
+    if: github.ref != 'refs/heads/main'
+    uses: ./.github/workflows/test-python-unit-tests.yml
+
+  push-image:
+    if: github.ref != 'refs/heads/main'
+    needs:
+      - test-js-unit-tests
+      - test-python-playwright-against-api-demo
+      - test-python-unit-tests
+    uses: ./.github/workflows/build-and-push-image.yml
+    with:
+      image-name: 'address-index-ui-test'
+      image-tag: ${{ github.event.inputs.version }}
