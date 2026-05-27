@@ -1,4 +1,4 @@
-name: Python Standalone Tests
+name: Test Python Unit Tests with Pytest
 permissions:
   contents: read
   pull-requests: read
