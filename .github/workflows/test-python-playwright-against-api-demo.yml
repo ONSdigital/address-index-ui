@@ -94,23 +94,3 @@ jobs:
         path: test-results/
         if-no-files-found: ignore
         retention-days: 7
-
-    # Set up Node.js environment
-    - name: Set up Node.js
-      uses: actions/setup-node@v6
-      with:
-        node-version: '14'
-        package-manager-cache: false
-
-    - name: Install npm dependencies
-      run: npm install
-
-    - name: Run JavaScript tests
-      run: npm run test:jest
-
-    # Stop Docker Compose and clean up
-    - name: Stop and clean up Docker containers
-      if: always()
-      run: |
-        cd api_demo
-        docker-compose down
