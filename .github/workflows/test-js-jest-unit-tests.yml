@@ -1,4 +1,4 @@
-name: Test Python Playwright against API Demo
+name: Test JS Jest Unit Tests
 
 permissions:
   contents: read
@@ -58,10 +58,6 @@ jobs:
       run: |
         pip install -e .
 
-    - name: Install Playwright Browsers
-      run: |
-        python3 -m playwright install --with-deps
-
     # Run flask server in testing environment
     - name: Run Flask Server
       env:
@@ -69,28 +65,22 @@ jobs:
       run: |
         python3 wsgi.py &
 
-    # Run Python Playwright Tests
-    - name: Run Python Playwright Tests
-      run: |
-        python3 -m pytest tests/pytest_tests -n 4 \
-          --output=test-results \
-          --screenshot=only-on-failure
-
-    # Diagnostic step: confirm whether screenshots were actually generated
-    - name: Show generated Playwright test artefacts
-      if: ${{ !cancelled() }}
-      run: |
-        echo "Current working directory:"
-        pwd
-        echo "Files under test-results:"
-        find test-results -maxdepth 5 -type f -print 2>/dev/null || echo "No test-results directory found"
-
-    # Upload Playwright failure screenshots
-    - name: Upload Python Playwright failure screenshots
-      if: ${{ !cancelled() }}
-      uses: actions/upload-artifact@v7
+    # Set up Node.js environment
+    - name: Set up Node.js
+      uses: actions/setup-node@v6
       with:
-        name: python-playwright-failure-screenshots
-        path: test-results/
-        if-no-files-found: ignore
-        retention-days: 7
+        node-version: '14'
+        package-manager-cache: false
+
+    - name: Install npm dependencies
+      run: npm install
+
+    - name: Run JavaScript tests
+      run: npm run test:jest
+
+    # Stop Docker Compose and clean up
+    - name: Stop and clean up Docker containers
+      if: always()
+      run: |
+        cd api_demo
+        docker-compose down
