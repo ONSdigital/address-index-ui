@@ -1,4 +1,4 @@
-name: Python and JS tests run against API demo
+name: Test Python Playwright against API Demo
 
 permissions:
   contents: read

@@ -1,4 +1,4 @@
-name: Python Formatting (YAPF)
+name: YAPF Linting Check
 
 permissions:
   contents: read

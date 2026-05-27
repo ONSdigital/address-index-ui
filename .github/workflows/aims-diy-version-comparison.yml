@@ -1,4 +1,4 @@
-name: AIMS-DIY Version Check
+name: AIMS-DIY Version Comparison
 
 permissions:
   contents: write
