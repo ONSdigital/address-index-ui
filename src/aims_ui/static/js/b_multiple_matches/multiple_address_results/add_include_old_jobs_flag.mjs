@@ -1,46 +1,38 @@
-import { getGlobalValues } from '/static/js/f_helpers/local_storage_page_helpers.mjs';
-
-function addJobsFlagToCurrentURL() {
-  // Get the current preference
-  const currentJobPreference = getGlobalValues().showOlderJobsInBulkMatchingPage;
-  const currentURL = window.location.href;
-
-  // Check to see if the flag alredy exists
-  if (currentURL.includes('include_old_jobs')) {
-    return;
-  } else {
-    const url = new URL(currentURL);
-    url.searchParams.set('include_old_jobs', currentJobPreference);
-    // Forward user to the new URL
-    window.history.pushState({}, '', url);
-    // Trigger new page load
-    window.location.reload();
-  }
-}
+import {
+  getGlobalValues,
+  setGlobalValues,
+} from '/static/js/f_helpers/local_storage_page_helpers.mjs';
 
 export function addIncludeOldJobsFlagToUrlBasedOnLocalStorageSetting() {
-  // Get the current preference
-  const currentJobPreference = getGlobalValues().showOlderJobsInBulkMatchingPage;
-  const currentURL = window.location.href;
+  const url = new URL(window.location.href);
+  const parameterName = 'include_old_jobs';
+  const storedPreference = getGlobalValues().showOlderJobsInBulkMatchingPage;
 
-  // The order of priority is:
-    // 1. If the URL has parameter, honour it and update local storage to match
-    // 2. If the URL does not have parameter and local storage does, then match the URL to local storage
-    // 3. If the URL does not have parameter, add included_old_jobs to false (default)
-  
-  if (currentURL.includes('include_old_jobs')) {
-    //
+  // If the URL has the parameter, honour it and update local storage.
+  if (url.searchParams.has(parameterName)) {
+    const urlPreference = url.searchParams.get(parameterName) === 'true';
 
-  if (currentURL.includes('include_old_jobs')) {
+    setGlobalValues({
+      ...getGlobalValues(),
+      showOlderJobsInBulkMatchingPage: urlPreference,
+    });
+
     return;
-  } else {
-    const url = new URL(currentURL);
-    url.searchParams.set('include_old_jobs', currentJobPreference);
-    // Forward user to the new URL
-    window.history.pushState({}, '', url);
-    // Trigger new page load
-    window.location.reload();
   }
+
+  let preferenceToUse = false;
+
+  // If local storage has a preference, use it for the URL parameter.
+  if (typeof storedPreference === 'boolean') {
+    preferenceToUse = storedPreference;
+  }
+
+  // If local storage does not have a preference, use false as the default.
+  url.searchParams.set(parameterName, String(preferenceToUse));
+
+  // Forward the user to the updated URL.
+  window.history.pushState({}, '', url);
+
+  // Trigger a page reload using the updated URL.
+  window.location.reload();
 }
-
-

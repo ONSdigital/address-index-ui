@@ -3,6 +3,7 @@ import { downloadAndProcess } from './file_processing.mjs';
 import { triggerDownloadOfFile } from "/static/js/f_helpers/download_helpers.mjs";
 
 async function changeLinkToButton(linkParentHeaderRowCellObject) {
+
   // Make the Download Button
   const originalButton = document.querySelector('#downloadButtonTemplate');
   const clonedButton = originalButton.cloneNode(true);
