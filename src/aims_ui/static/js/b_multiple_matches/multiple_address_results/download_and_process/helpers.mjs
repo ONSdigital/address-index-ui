@@ -8,7 +8,7 @@ export function getAllLinksAndParents() {
     const linkElement = link;
     const linkParent = link.parentNode;
 
-    const headerCellIndex = linkParent.cellIndex - 2;
+    const headerCellIndex = linkParent.cellIndex - 4;
     const row = linkParent.parentNode;
     const headerRowCell = row.cells[headerCellIndex];
 

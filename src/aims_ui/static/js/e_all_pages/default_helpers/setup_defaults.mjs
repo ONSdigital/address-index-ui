@@ -69,7 +69,7 @@ function runLocalStorageMigration(currentVersion, targetVersion) {
     migrateLocalStorageFromVersionNullToLatest(targetVersion);
   } 
 
-  // Increimental Migrations go here
+  // Incremental Migrations go here
   if (currentVersion === '1' && targetVersion === '2') {
     console.info('Running local storage migration from version 1 to 2. This should only happen once.');
     console.debug('This migration should add historical checkbox and classification to the local storage defaults for the multiple_address page.');

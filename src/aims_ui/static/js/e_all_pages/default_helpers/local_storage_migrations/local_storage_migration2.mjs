@@ -50,7 +50,7 @@ export function migrateLocalStorageFromVersion1To2() {
     },
   ]
 
-  // Merge the objects to add with cluentMultipleAddressInputObjects, ensuring we don't overwrite any existing keys
+  // Merge the objects to add with clientMultipleAddressInputObjects, ensuring we don't overwrite any existing keys
   for (const potentiallyNewObject of inputObjectsToAdd) {
     // Search for an object with htmlId that matches the potentiallyNewObject
     const existingObjectIndex = clientMultipleAddressInputObjects.findIndex(obj => obj.htmlId === potentiallyNewObject.htmlId);

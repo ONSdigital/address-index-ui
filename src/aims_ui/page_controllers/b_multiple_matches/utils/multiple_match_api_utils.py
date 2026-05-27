@@ -2,6 +2,7 @@ import datetime
 import json
 import logging
 
+from aims_ui.app_helpers.classification_utils.validation import get_full_classification_for_code_or_label
 from aims_ui.page_helpers.api.api_helpers import get_header, job_api
 from aims_ui.page_helpers.google_utils import get_username
 
@@ -35,9 +36,10 @@ def get_historical_selection(all_user_input):
 
 def get_classification_selection(all_user_input):
   classification = all_user_input.get('classificationfilter', '')
-  # Reverse classification if it's a string (so it's always the CODE version)
+  # Ensure the classification is in CODE format (e.g. C*)
+  classification_code = get_full_classification_for_code_or_label(classification)
 
-  return classification
+  return classification_code
 
 
 def get_multiple_match_api_header(all_user_input):
