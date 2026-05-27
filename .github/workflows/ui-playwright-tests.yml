@@ -14,13 +14,12 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     # Check out the AIMS UI repository
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v5
 
     # Install Docker Compose for deploying the API
     - name: Install Docker Compose
@@ -31,9 +30,9 @@ jobs:
     - name: Start the API via Docker Compose
       run: |
         docker-compose -f api_demo/docker-compose.yml up -d
-        docker ps -a  # for debugging - shows running containers
+        docker ps -a
 
-    # Wait for API to be ready (checking port 9001) (will return 'hello world' when ready)
+    # Wait for API to be ready
     - name: Wait for API to be ready
       run: |
         timeout 340s bash -c 'until curl -s http://localhost:9001; do sleep 5; done'
@@ -45,7 +44,7 @@ jobs:
 
     # Set up Python environment
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v6
       with:
         python-version: '3.9'
 
@@ -63,7 +62,7 @@ jobs:
       run: |
         python3 -m playwright install --with-deps
 
-    # Run flask server in "testing" environment
+    # Run flask server in testing environment
     - name: Run Flask Server
       env:
         FLASK_ENV: testing
@@ -77,21 +76,31 @@ jobs:
           --output=test-results \
           --screenshot=only-on-failure
 
-    # Upload screenshots created when Playwright tests fail
+    # Diagnostic step: confirm whether screenshots were actually generated
+    - name: Show generated Playwright test artefacts
+      if: ${{ !cancelled() }}
+      run: |
+        echo "Current working directory:"
+        pwd
+        echo "Files under test-results:"
+        find test-results -maxdepth 5 -type f -print 2>/dev/null || echo "No test-results directory found"
+
+    # Upload Playwright failure screenshots
     - name: Upload Python Playwright failure screenshots
       if: ${{ !cancelled() }}
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: python-playwright-failure-screenshots
         path: test-results/
-        if-no-files-found: ignore
+        if-no-files-found: error
         retention-days: 7
 
     # Set up Node.js environment
     - name: Set up Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v5
       with:
-        node-version: '14'  # Replace with the Node.js version you need
+        node-version: '14'
+        package-manager-cache: false
 
     - name: Install npm dependencies
       run: npm install
