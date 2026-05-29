@@ -39,7 +39,6 @@ export function getAddressAttributesSelectedByUserFromMultipleAddressAttributesP
   const customAttributesPageData = getPageLocalValues('multiple_address_attributes')
   const attributesSelectedByUser = customAttributesPageData.pagePreviouslySearchedValues;
 
-  console.debug('User selected custom attributes from multiple_address_attributes page:', attributesSelectedByUser);
   return attributesSelectedByUser;
 }
 

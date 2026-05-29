@@ -8,6 +8,8 @@ function getAddressesFromResponse(apiResponse) {
   // Given an API response (string), extract a list of all matched addresses, confidence score, document score
   // Extract the list of matched addresses
   const customAttributesSelectedByUser = getAddressAttributesSelectedByUserFromMultipleAddressAttributesPage();
+  console.debug('User selected custom attributes from multiple_address_attributes page:', customAttributesSelectedByUser);
+
   const matchedAddresses = [];
 
   if (apiResponse.toString() === '') {
