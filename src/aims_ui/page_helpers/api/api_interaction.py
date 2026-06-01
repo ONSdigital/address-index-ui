@@ -199,7 +199,7 @@ def submit_mm_job(user, addresses, all_user_input, uprn=False):
   # Add some header data into parameters (if the API needs it as a param)
   all_user_input['uimetadata'] = header.get('uimetadata')
 
-  cleaned_params = cleanup_parameters(all_user_input, 'multiple_address')
+  cleaned_params = cleanup_parameters(all_user_input, 'large_mutltiple_match')
   params = format_params_as_string(cleaned_params)
 
   addresses = str(addresses).replace('"', '')  # Remove Quotes from address
