@@ -175,7 +175,7 @@ export function processRow(row) {
 }
 
 export async function downloadAndProcess(url, headerStatus) {
-  // Get the attributes selected locally on the 'mutliple_address_attributes' page
+  // Get the attributes selected locally on the 'multiple_address_attributes' page
   let final_csv = '';
 
   if (headerStatus.toString() !== 'False') {
