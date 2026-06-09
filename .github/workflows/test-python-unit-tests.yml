@@ -1,8 +1,9 @@
-name: Python Standalone Tests
+name: Test Python Unit Tests with Pytest
 permissions:
   contents: read
   pull-requests: read
 on:
+  workflow_call:
   push:
     branches:
       - '**'
@@ -20,13 +21,13 @@ jobs:
     steps:
     # Check out the AIMS UI repository
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v6
   
     # Set up Python environment 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v6
       with:
-        python-version: '3.9'
+        python-version-file: '.python-version'
 
     - name: Install Python dependencies
       run: |

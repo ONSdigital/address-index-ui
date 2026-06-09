@@ -119,4 +119,7 @@ def match_api_error_message_to_name_of_field(primary_error_message,
   if 'limit' in primary_error_message:
     return 'limitperaddress'
 
+  if 'classification' in primary_error_message:
+    return 'classificationfilter'
+
   return default_element_for_error_message

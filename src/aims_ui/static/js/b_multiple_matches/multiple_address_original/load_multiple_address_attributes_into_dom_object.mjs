@@ -2,7 +2,7 @@ import { getPageLocalValues } from '/static/js/f_helpers/local_storage_page_help
 
 
 function getListOfAttributesAsStringFromLocalStorage() {
-  // Get the attributes stored in the mutliple_address_attributes page
+  // Get the attributes stored in the multiple_address_attributes page
   const pageNameWithTogglableAttributes = 'multiple_address_attributes';
   const pageLocalValues = getPageLocalValues(pageNameWithTogglableAttributes);
   const valuePairOfAttributeEnabled = pageLocalValues['pagePreviouslySearchedValues'] || {};
@@ -11,7 +11,7 @@ function getListOfAttributesAsStringFromLocalStorage() {
   console.debug('pageLocalValues from local storage:', pageLocalValues);
   console.debug('pagePreviouslySearchedValues from local storage:', pageLocalValues.pagePreviouslySearchedValues);
 
-  // Create a space seperated list of enabled attributes
+  // Create a space separated list of enabled attributes
   let attributeList = '';
 
   for (const [attribute, isEnabled] of Object.entries(valuePairOfAttributeEnabled)) {

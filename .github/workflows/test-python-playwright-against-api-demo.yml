@@ -1,27 +1,27 @@
-name: Python and JS tests run against API demo
+name: Test Python Playwright against API Demo
+
 permissions:
   contents: read
   pull-requests: read
+
 on:
+  workflow_call:
   push:
     branches:
-      - '/**'
-      - '!github-action-test-workflow'
+      - '**'
   pull_request:
     branches:
-      - '/**'
-      - '!github-action-test-workflow'
+      - '**'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     # Check out the AIMS UI repository
     - name: Checkout repository
-      uses: actions/checkout@v2
-  
+      uses: actions/checkout@v6
+
     # Install Docker Compose for deploying the API
     - name: Install Docker Compose
       run: |
@@ -31,9 +31,9 @@ jobs:
     - name: Start the API via Docker Compose
       run: |
         docker-compose -f api_demo/docker-compose.yml up -d
-        docker ps -a  # for debugging - shows running containers
+        docker ps -a
 
-    # Wait for API to be ready (checking port 9001) (will return 'hello world' when ready)
+    # Wait for API to be ready
     - name: Wait for API to be ready
       run: |
         timeout 340s bash -c 'until curl -s http://localhost:9001; do sleep 5; done'
@@ -43,9 +43,9 @@ jobs:
       run: |
         scripts/load_templates.sh
 
-    # Set up Python environment 
+    # Set up Python environment
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v6
       with:
         python-version: '3.9'
 
@@ -63,7 +63,7 @@ jobs:
       run: |
         python3 -m playwright install --with-deps
 
-    # Run flask server in "testing" environment
+    # Run flask server in testing environment
     - name: Run Flask Server
       env:
         FLASK_ENV: testing
@@ -73,24 +73,25 @@ jobs:
     # Run Python Playwright Tests
     - name: Run Python Playwright Tests
       run: |
-        python3 -m pytest tests/pytest_tests -n 4
+        python3 -m pytest tests/pytest_tests -n 4 \
+          --output=test-results \
+          --screenshot=only-on-failure
 
-    # Set up Node.js environment
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'  # Replace with the Node.js version you need
-
-    - name: Install npm dependencies
-      run: npm install
-
-    - name: Run JavaScript tests
-      run: npm run test:jest
-
-    # Stop Docker Compose and clean up
-    - name: Stop and clean up Docker containers
-      if: always()
+    # Diagnostic step: confirm whether screenshots were actually generated
+    - name: Show generated Playwright test artefacts
+      if: ${{ !cancelled() }}
       run: |
-        cd api_demo
-        docker-compose down
+        echo "Current working directory:"
+        pwd
+        echo "Files under test-results:"
+        find test-results -maxdepth 5 -type f -print 2>/dev/null || echo "No test-results directory found"
 
+    # Upload Playwright failure screenshots
+    - name: Upload Python Playwright failure screenshots
+      if: ${{ !cancelled() }}
+      uses: actions/upload-artifact@v7
+      with:
+        name: python-playwright-failure-screenshots
+        path: test-results/
+        if-no-files-found: ignore
+        retention-days: 7

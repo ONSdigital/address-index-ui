@@ -1,0 +1,31 @@
+name: Build and push AIMS-UI Docker image to Artifact Registry
+
+on:
+  push:
+    branches: ['main']
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  test-js-unit-tests:
+    name: Run JavaScript unit tests
+    uses: ./.github/workflows/test-js-jest-unit-tests.yml
+
+  test-python-playwright-against-api-demo:
+    name: Run Python Playwright tests against API Demo
+    uses: ./.github/workflows/test-python-playwright-against-api-demo.yml
+
+  test-python-unit-tests:
+    name: Run Python unit tests
+    uses: ./.github/workflows/test-python-unit-tests.yml
+
+  push-image:
+    needs:
+      - test-js-unit-tests
+      - test-python-playwright-against-api-demo
+      - test-python-unit-tests
+    uses: ./.github/workflows/build-and-push-image.yml
+    with:
+      image-name: 'address-index-ui'
