@@ -1,0 +1,32 @@
+name: Version Bump Check
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-version-bump:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Check if version.txt was modified
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if git diff --quiet "$BASE_SHA" "$HEAD_SHA" -- version.txt; then
+            echo '::error file=version.txt::version.txt was not modified in this pull request. Please bump the version number.'
+            exit 1
+          fi
+
+          echo 'version.txt was modified in this pull request.'

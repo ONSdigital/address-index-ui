@@ -2,7 +2,8 @@ import { getGlobalValues } from '/static/js/f_helpers/local_storage_page_helpers
 import { getBroadcastLocalStorageVersion } from './get_local_storage_version.mjs';
 
 // Migration imports here
-import { migrateLocalStorageFromVersion0To1 } from './local_storage_migrations/local_storage_migration1.mjs';
+import { migrateLocalStorageFromVersionNullToLatest } from './local_storage_migrations/local_storage_migration1.mjs';
+import { migrateLocalStorageFromVersion1To2 } from './local_storage_migrations/local_storage_migration2.mjs';
 
 export function getDefaultValuesForPage(page_name) {
   // Return a value/key pair object for 'htmlid': 'defaultValue' for a page 
@@ -61,9 +62,17 @@ export function setupDefaultGlobalValues() {
 function runLocalStorageMigration(currentVersion, targetVersion) {
   // Based on currentVersion and targetVersion, run the correct migration script
 
-  // Currently only one migration exists, more to go here as required
-  if (currentVersion === null && targetVersion === '1') {
-    console.info('Running local storage migration from version 0 to 1. This should only happen once.');
-    migrateLocalStorageFromVersion0To1();
+  // If there's no version (null), then perform the first migration
+  // Skips other migrations as the first migration should always setup the latest defaults
+  if (currentVersion === null) {
+    console.info(`Running local storage migration from null or undefined version to Latest Version (${targetVersion}). This should only happen once.`);
+    migrateLocalStorageFromVersionNullToLatest(targetVersion);
+  } 
+
+  // Incremental Migrations go here
+  if (currentVersion === '1' && targetVersion === '2') {
+    console.info('Running local storage migration from version 1 to 2. This should only happen once.');
+    console.debug('This migration should add historical checkbox and classification to the local storage defaults for the multiple_address page.');
+    migrateLocalStorageFromVersion1To2();
   }
 }

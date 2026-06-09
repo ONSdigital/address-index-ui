@@ -33,7 +33,7 @@ def remove_epoch_in_testing_environment(params):
 def adjust_parameter_for_each_page(params, called_from_page_name):
   """ Make page specific adjustments to parameters """
 
-  # If the page is for multiple addresses, enforce "verbose=False" for speed
+  # If the page is for multiple addresses (the small one), enforce "verbose=False" for speed
   if (called_from_page_name == 'multiple'):
     # Always set verbose to False for small multiple match. This might have to change in future for full selection of address attributes, but we want to keep it lean for speed
     params['verbose'] = 'false'
@@ -73,7 +73,7 @@ def adjust_parameter_for_each_page(params, called_from_page_name):
   return params
 
 
-def adjust_params_for_all_pages(params):
+def adjust_params_for_all_pages(params, called_from_page_name):
   """ Make parameter adjustments that apply to all pages """
 
   # Do a reverse classification lookup if the classification filter is present
@@ -85,9 +85,16 @@ def adjust_params_for_all_pages(params):
 
   # Ensure historical is never None, default to False
   if 'historical' in params:
-    historical_value = str(params['historical'])
+    historical_value = str(params.get('historical', ''))
+    # If 'None' set to false
     if historical_value == 'None':
-      params['historical'] = 'False'
+      params['historical'] = 'false'
+
+    # Convert 'True' and 'False' to lowercase
+    if historical_value == 'False':
+      params['historical'] = 'false'
+    if historical_value == 'True':
+      params['historical'] = 'true'
 
   # Replace the paf-nag preference with pafdefault
   if 'paf-nag-preference' in params:
@@ -111,11 +118,20 @@ def add_params_for_splunk(params, called_from_page_name):
   # Less than 5K multiples will have the extra parameter on each search API call
   # Less than 100K multiples will have the extra parameter on the single bulk manager API call
   # For greater accuracy in match counting it could be passed on to the Cloud Function
-  if (called_from_page_name == 'multiple'):
+  if (called_from_page_name == 'multiple') or (called_from_page_name
+                                               == 'large_mutltiple_match'):
     # This parameter will be ignored by the API
     params['uimultiple'] = 'true'
 
   return params
+
+
+def format_params_as_string(cleaned_user_input):
+  """Return a list of parameters formatted for API header, from class list of inputs"""
+
+  # Standard URL encoding
+  return urllib.parse.urlencode(cleaned_user_input,
+                                quote_via=urllib.parse.quote_plus)
 
 
 def cleanup_parameters(params, called_from_page_name):
@@ -127,8 +143,8 @@ def cleanup_parameters(params, called_from_page_name):
   # Now do page specific adjustments
   params = adjust_parameter_for_each_page(params, called_from_page_name)
 
-  # Now do changes for all pages
-  params = adjust_params_for_all_pages(params)
+  # Adjustments that apply to all pages
+  params = adjust_params_for_all_pages(params, called_from_page_name)
 
   # Remove any params that the API won't recognise
   params = remove_non_existant_parameters(params)
@@ -137,11 +153,3 @@ def cleanup_parameters(params, called_from_page_name):
   params = add_params_for_splunk(params, called_from_page_name)
 
   return params
-
-
-def format_params_as_string(cleaned_user_input):
-  """Return a list of parameters formatted for API header, from class list of inputs"""
-
-  # Standard URL encoding
-  return urllib.parse.urlencode(cleaned_user_input,
-                                quote_via=urllib.parse.quote_plus)

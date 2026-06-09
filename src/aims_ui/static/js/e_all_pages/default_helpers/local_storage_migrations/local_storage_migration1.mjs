@@ -5,8 +5,8 @@ import {
 
 
 // First migration
-export function migrateLocalStorageFromVersion0To1() {
-  // For a null/undefined/0 version, to current version, wipe all values and set defaults
+export function migrateLocalStorageFromVersionNullToLatest(targetVersion) {
+  // For a null/undefined/0 version, to the most recent version - sets all defaults to default values 
   localStorage.clear();
 
   // Then set the default values defined in default_values.mjs
@@ -14,7 +14,7 @@ export function migrateLocalStorageFromVersion0To1() {
   setGlobalValues(defaultGlobalValues);
 
   // Providing there have been no errors, set the version number to 1
-  setGlobalValues({ LOCAL_STORAGE_VERSION: '1' });
+  setGlobalValues({ LOCAL_STORAGE_VERSION: targetVersion });
 
-  console.info('Local storage migration to version 1 completed. With default global values set to:', defaultGlobalValues);
+  console.info(`Local storage migration to version ${targetVersion} completed. With default global values set to:`, defaultGlobalValues);
 }

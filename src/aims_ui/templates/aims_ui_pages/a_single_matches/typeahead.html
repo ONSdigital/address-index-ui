@@ -9,6 +9,7 @@
 {% from 'custom_address_info_cards/_macro.njk' import customAddressInfoCards %}
 {% from 'custom_search/_macro.njk' import customSearch %}
 {% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName %}
+{% from 'custom_download_results_from_local_storage/_macro.njk' import customDownloadResultsFromLocalStorage %}
 
 {# In order to specify wider than usual components, page must be in "pageContent" #}
 {% block pageContent %}
@@ -92,8 +93,11 @@
 		'id': 'clear-form-data-button-id',
 	}) }}
 
+
 {# Add Results under the Typeahead #}
 {% if results_page %}
+  <br>
+  <br>
   <h2>We matched {{matched_address_number}}  addresses:</h2>
 
   {# Save the results to local storage on the clientside #}
@@ -110,6 +114,9 @@
   'page_name': page_name,
   }) }}
 
+	{{ customDownloadResultsFromLocalStorage({
+		"page_name": page_name,
+	}) }}
 
 </div>
 
