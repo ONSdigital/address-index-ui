@@ -12,6 +12,7 @@ on:
 permissions:
   contents: read
   id-token: write
+  pull-requests: read
 
 jobs:
   test-js-unit-tests:
