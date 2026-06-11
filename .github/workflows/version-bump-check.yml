@@ -24,8 +24,28 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
+
+          # If version.txt changed, unless only exempt files were changed, then version bump required
           if git diff --quiet "$BASE_SHA" "$HEAD_SHA" -- version.txt; then
+
+            # Get all files changed in PR
+            changed_files="$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")"
+
+            # Ignore changes under .github/ as these files are not involved in the build of the app
+            non_exempt_changes="$(
+              printf '%s\n' "$changed_files" | grep -vE '^\.github/' || true
+            )"
+
+            # If only .github/ files changed - no version bump is required
+            if [ -z "$non_exempt_changes" ]; then
+              echo 'Only .github/ files were modified. version.txt bump not required.'
+              exit 0
+            fi
+
+            # If there are any files changed not exempt, bump required
             echo '::error file=version.txt::version.txt was not modified in this pull request. Please bump the version number.'
+            echo 'Files requiring a version bump were changed:'
+            printf '%s\n' "$non_exempt_changes"
             exit 1
           fi
 
