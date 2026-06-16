@@ -21,6 +21,24 @@ TESTS = [
             },
        ]
     },
+    {
+        'test_name': 'no_results_search',
+        'user_role': 'default',
+        'test_inputs': [
+          set_input_content(GENERIC_TEST_INPUTS['searchable_address'], 'THISWILLNOTYEILDANDADDRESS!'),
+          GENERIC_TEST_INPUTS['available_epoch'],
+        ],
+        'test_outputs': [
+            {
+              'type': 'text',
+              'visible_text': 'Changing parameters such as classification or area may yield more results.',
+            },
+            {
+              'type': 'text',
+              'visible_text': 'Your search returned no addresses',
+            },
+       ]
+    },
 ]
 # yapf: enable
 
