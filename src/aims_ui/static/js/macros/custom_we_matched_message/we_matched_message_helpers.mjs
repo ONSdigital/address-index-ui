@@ -30,7 +30,12 @@ function getTitleText(limitEntered, numberOfAddresses, page_name) {
   const addressOrAddresses = returnSingluarOrPluralAddress(numberOfAddresses);
   const titleTextIfLimitReached = `We matched ${numberOfAddresses} ${addressOrAddresses}, more may exist beyond your limit.`;
   const titleTextIfUnderLimit = `We matched ${numberOfAddresses} ${addressOrAddresses}:`;
+  const titleTextIfNoAddresses = `Your search returned no addresses.`;
   
+  if (numberOfAddresses === 0) {
+    return titleTextIfNoAddresses;
+  }
+
   if (numberOfAddresses >= limitEntered) {
     // For the UPRN page (or typeahead), we either match one or no addresses. The message should always be single, ignoring limmit
     if (page_name === 'uprn' || page_name === 'typeahead') {
@@ -42,28 +47,48 @@ function getTitleText(limitEntered, numberOfAddresses, page_name) {
   }
 }
 
+function generateTitle(limitEntered, numberOfAddresses, page_name) {
+  // Create title
+  const weMatchedTitle = crEl('h2', 'we-matched-addresses-title');
+
+  // Get the text the title should have
+  const titleText = getTitleText(limitEntered, numberOfAddresses, page_name);
+  // Set the title text and log change
+  weMatchedTitle.textContent = titleText;
+  console.debug('Title text set to: ' + titleText);
+
+  return weMatchedTitle;
+}
+
+function generateSuplimentaryText(limitEntered, numberOfAddresses) {
+  // Create supplementary text for 0 matches
+  const weMatchedSuplimentaryText = crEl('h3', 'we-matched-addresses-suplimentary-text');
+
+  // Set text for supplementry text for 0 matches
+  if (numberOfAddresses === 0) {
+    weMatchedSuplimentaryText.textContent = 'Changing parameters such as classification or area may yield more results.';
+  }
+
+  return weMatchedSuplimentaryText;
+}
+
 function refreshTitleStatus(page_name) {
   // Remove all children of the title container
-  const containerDiv = document.querySelector('#container-for-we-matched-addresses-title');
-  while (containerDiv.firstChild) {
-    containerDiv.removeChild(containerDiv.firstChild);
+  const containerForWeMatchedMessage= document.querySelector('#container-for-we-matched-addresses-title');
+  while (containerForWeMatchedMessage.firstChild) {
+    containerForWeMatchedMessage.removeChild(containerForWeMatchedMessage.firstChild);
   }
 
   // calculated from the local storage because then it can be restored with no server interaction
   const numberOfAddresses = getNumberOfAddressesMatchedFromLocalStorage(page_name);
   const limitEntered = getLimitEnteredFromLocalStorage(page_name);
 
-  // If there are no addresses, then don't add the title
-  if (numberOfAddresses === 0) { return null; }
-
-  // Create the title element
-  const weMatchedTitle = crEl('h2', 'we-matched-addresses-title');
-  const titleText = getTitleText(limitEntered, numberOfAddresses, page_name);
-  weMatchedTitle.textContent = titleText;
-  console.log('Title text set to: ' + titleText);
+  // Create title for addresses if more than 0 have been matched:
+  const weMatchedTitle = generateTitle(limitEntered, numberOfAddresses, page_name);
+  const weMatchedSuplimentaryText = generateSuplimentaryText(limitEntered, numberOfAddresses);
 
   // Add the title to the container
-  containerDiv.append(weMatchedTitle);
+  containerForWeMatchedMessage.append(weMatchedTitle, weMatchedSuplimentaryText);
 }
 
 export function init(page_name) {
