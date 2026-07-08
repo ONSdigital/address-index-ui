@@ -15,4 +15,4 @@ List the major changes made in this pull request.
 - [ ] I have verified that the new version follows semantic versioning (`MAJOR.MINOR.PATCH`).
 
 ## Additional Notes
-Test images can be created with the manual GitHub Action Workflow `Create a UI test image for AP`. Test images must only be deployed to AP.
+Test images can be created with the manual Cloud Build Trigger `aims-ui-test-image-build`. Test images must only be deployed to AP.
