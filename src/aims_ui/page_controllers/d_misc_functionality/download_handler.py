@@ -29,7 +29,12 @@ def autosuggest(autosuggest_type):
     return json.dumps(full_classification_list)
 
   elif 'test_for_typeahead_case' in autosuggest_type:
-    return json.dumps([{'en': 'Test 1', 'value': '1'}, {'en': 'Test 2', 'value': '2'}])
+    # Load the latest test_for_typeahead_child_addresses.json
+    project_root = os.path.dirname(os.path.abspath(aims_ui.__file__))
+    file_path = f'{project_root}/static/downloads/test_for_typeahead_child_addresses.json'
+    with open(file_path, 'r', encoding='utf-8') as f:
+      addresses_in_typeahead_format = json.load(f)
+    return json.dumps(addresses_in_typeahead_format)
 
   # Check for reverse classification first
   elif 'reversed_classification' in autosuggest_type:

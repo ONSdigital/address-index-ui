@@ -1,5 +1,8 @@
 from flask import render_template, request, session
 from flask_login import login_required
+import os
+
+import json
 
 from aims_ui import app
 from aims_ui.models.get_endpoints import get_endpoints
@@ -47,6 +50,11 @@ def typeahead2():
 
     addresses_in_typeahead_format = format_addresses_for_sub_typeahead(child_addresses_info)
     print(f'\nAddresses in typeahead format: {addresses_in_typeahead_format}\n\n\n\n')
+
+    # Write the formatted addresses into test_for_typeahead_child_addresses.json
+    file_path = os.path.join(app.static_folder, 'downloads', 'test_for_typeahead_child_addresses.json')
+    with open(file_path, 'w', encoding='utf-8') as f:
+      json.dump(addresses_in_typeahead_format, f)
 
     delete_input(session)
   else:
