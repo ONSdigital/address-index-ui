@@ -107,6 +107,11 @@ def get_api_auth():
     token = jwt.encode(payload,
                        app.config.get('API_JWT_K_VALUE'),
                        algorithm="HS256")
+
+    # Override if a JWT is provided 
+    if app.config.get('TYPEAHEAD_API_JWT_TOKEN'):
+      token = app.config.get('TYPEAHEAD_API_JWT_TOKEN')
+
     api_auth['API_JWT_TOKEN'] = token
 
   elif app.config.get('API_AUTH_TYPE') == 'BASIC_AUTH':

@@ -47,12 +47,12 @@ DESIGN_SYSTEM_VERSION = get_design_system_version()
 # Default usernames for paywall
 USER_AUTHS = json.loads(os.getenv('USER_AUTHS', '{}'))
 
+# Override JWT for the typeahead
+TYPEAHEAD_API_JWT_TOKEN = os.getenv('TYPEAHEAD_API_JWT_TOKEN', '')
+
 # Define order of pages on header and Paywall Limitations
 ALL_PAGE_NAMES = [
-    'singlesearch', 'uprn', 'postcode', 'typeahead',
-    'multiple_address_original', 'multiple_address_results',
-    'multiple_address_attributes', 'multiple_address', 'uprn_multiple_match',
-    'radiussearch', 'custom_response', 'help', 'settings'
+    'typeahead',
 ]
 
 DEFAULT_BULK_LIMITS = {
