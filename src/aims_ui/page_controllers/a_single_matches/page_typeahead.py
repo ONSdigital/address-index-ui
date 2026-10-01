@@ -1,10 +1,11 @@
-from flask import render_template, request, session
+from flask import render_template, request, session, redirect, url_for
 from flask_login import login_required
 
 from aims_ui import app
 from aims_ui.models.get_addresses import get_addresses
 from aims_ui.models.get_endpoints import get_endpoints
 from aims_ui.models.get_fields import get_fields
+from aims_ui.models.utilities.sibling_lookup import get_level_2_siblings
 from aims_ui.page_helpers.api.api_interaction import api, get_api_auth
 from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inputs, save_epoch_number
 from aims_ui.page_helpers.error.error_utils import error_page_api_request, error_page_api_response
@@ -61,6 +62,14 @@ def typeahead():
 
   matched_addresses = get_addresses(result.json(), 'uprn')
 
+  level2_siblings = get_level_2_siblings(result.json())
+
+  if level2_siblings:
+    # This address has children. Save them in the session, then send the user to the next typeahead page
+    session['level2_siblings'] = level2_siblings
+    return redirect('/typeahead2')
+
+
   return render_template(
       page_location,
       page_name=page_name,
@@ -71,3 +80,5 @@ def typeahead():
       matched_address_number=len(matched_addresses),
       api_auth=get_api_auth(),
   )
+
+

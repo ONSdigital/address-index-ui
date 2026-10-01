@@ -6,6 +6,22 @@ from aims_ui import app
 from aims_ui.page_helpers.api.api_helpers import get_header
 
 
+def get_siblings(address_response, level):
+  address = address_response.get('response', {}).get('address') or {}
+  for relative in address.get('relatives') or []:
+    if relative.get('level') == level:
+      return relative.get('siblings') or []
+  return []
+
+
+def get_level_1_siblings(address_response):
+  return get_siblings(address_response, 1)
+
+
+def get_level_2_siblings(address_response):
+  return get_siblings(address_response, 2)
+
+
 def multiple_uprn_lookup(siblings):
   header = get_header()
 

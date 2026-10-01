@@ -28,6 +28,9 @@ def autosuggest(autosuggest_type):
     full_classification_list = get_full_classification_autosuggest()
     return json.dumps(full_classification_list)
 
+  elif 'test_for_typeahead_case' in autosuggest_type:
+    return json.dumps([{'en': 'Test 1', 'value': '1'}, {'en': 'Test 2', 'value': '2'}])
+
   # Check for reverse classification first
   elif 'reversed_classification' in autosuggest_type:
     classification_list_reversed = get_classification_autosuggest_list_reversed(

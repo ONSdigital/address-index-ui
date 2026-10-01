@@ -1,5 +1,6 @@
 from flask import render_template, request, session
 from flask_login import login_required
+import json
 
 from aims_ui import app
 from aims_ui.models.get_addresses import get_addresses
@@ -10,6 +11,7 @@ from aims_ui.page_helpers.cookie_utils import delete_input, load_save_store_inpu
 from aims_ui.page_helpers.error.error_utils import error_page_api_request, error_page_api_response
 from aims_ui.page_helpers.pages_location_utils import get_page_location
 from aims_ui.page_helpers.security_utils import check_user_has_access_to_page
+from aims_ui.models.utilities.sibling_lookup import multiple_uprn_lookup
 
 page_name = 'typeahead2'
 
@@ -24,8 +26,25 @@ def typeahead2():
   page_location = get_page_location(endpoints, page_name)
   searchable_fields = get_fields(page_name)
 
+
+  # We are expecting to be handed a list of level2 siblings from session:
+  level2_siblings = session.get('level2_siblings', [])
+  print('\n\n\n\n The following sibling UPRNS have been handed:')
+  print(level2_siblings)
+  print('\n\n\n\n\n\n\n')
+
+  # Use the list of endpoints to get address info. Use the multi-uprn endpoint:
+  child_addresses_response = multiple_uprn_lookup(level2_siblings)
+  print('Child addresses retrieved from multiple UPRN lookup:')
+  child_addresses_info = child_addresses_response.json().get('response').get('addresses')
+  print(child_addresses_info)
+
+  # Current limitation is you have to point the autosuggest at a js file, however this could be hosted on an endpoint. More work tho. 
+  # Could potentially request a change to be able to override this by handing a json directly. 
+
   if request.method == 'GET':
     delete_input(session)
+
 
     return render_template(
         page_location,
