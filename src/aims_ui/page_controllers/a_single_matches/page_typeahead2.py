@@ -12,6 +12,16 @@ from aims_ui.models.utilities.sibling_lookup import multiple_uprn_lookup
 
 page_name = 'typeahead2'
 
+def format_addresses_for_sub_typeahead(address_info):
+  # Take just the name and the uprn and format into objects like this: 
+  # { 'en': Address Name, 'uprn': UPRN } 
+  formatted_addresses = []
+  for address in address_info:
+    formatted_addresses.append({
+        'en': address.get('formattedAddress'),
+        'uprn': address.get('uprn')
+    })
+  return formatted_addresses
 
 @login_required
 @app.route(f'/{page_name}', methods=['GET', 'POST'])
@@ -33,9 +43,10 @@ def typeahead2():
 
     # Use the list of endpoints to get address info. Use the multi-uprn endpoint:
     child_addresses_response = multiple_uprn_lookup(level2_siblings)
-    print('Child addresses retrieved from multiple UPRN lookup:')
     child_addresses_info = child_addresses_response.json().get('response').get('addresses')
-    print(child_addresses_info)
+
+    addresses_in_typeahead_format = format_addresses_for_sub_typeahead(child_addresses_info)
+    print(f'\nAddresses in typeahead format: {addresses_in_typeahead_format}\n\n\n\n')
 
     delete_input(session)
   else:
