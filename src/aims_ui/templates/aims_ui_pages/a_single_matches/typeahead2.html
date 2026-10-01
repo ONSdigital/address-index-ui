@@ -16,8 +16,6 @@
 {% block pageContent %}
 {% block main %}
 
-<form method="POST" id="searchform">
-
 {# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
 <div class="ons-grid">
 
@@ -30,6 +28,7 @@
 
 <h2> Please Select your Sub-Address from below <h2></h2>
 
+<form method="POST" id="searchform">
 <div id="complete-container-for-address">
 
 	{{ onsAutosuggest({
@@ -61,10 +60,10 @@
 
 <br>
 
-</form>
-
 {{  onsButton({
-	"text": "Search", }) }}
+	"text": "Search",
+}) }}
+</form>
 
 	{{ onsButton({
 		'text': 'Clear  filters',
