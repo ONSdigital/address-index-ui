@@ -53,6 +53,7 @@ TYPEAHEAD_API_JWT_TOKEN = os.getenv('TYPEAHEAD_API_JWT_TOKEN', '')
 # Define order of pages on header and Paywall Limitations
 ALL_PAGE_NAMES = [
     'typeahead',
+    'typeahead2',
 ]
 
 DEFAULT_BULK_LIMITS = {

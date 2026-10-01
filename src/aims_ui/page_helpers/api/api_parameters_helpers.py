@@ -65,7 +65,7 @@ def adjust_parameter_for_each_page(params, called_from_page_name):
     # Enforce verbose to True for postcode lookups
     params['verbose'] = 'true'
 
-  if (called_from_page_name == 'typeahead'):
+  if (called_from_page_name in ('typeahead', 'typeahead2')):
     # When a typeahead lookup occurs from serverside, this is a UPRN lookup as
     # the address has already been selected from the typeahead dropdown
     params['verbose'] = 'true'

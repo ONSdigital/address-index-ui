@@ -198,7 +198,7 @@ def get_fields(endpoint_name, include_UPRN_redirect=False):
         common_fields['historical'],
     ])
 
-  elif endpoint_name == 'typeahead':
+  elif endpoint_name in ('typeahead', 'typeahead2'):
     return ([
         Field(
             'None',

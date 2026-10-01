@@ -84,6 +84,7 @@ from aims_ui.page_controllers.e_redirect_routes.signout import logout
 from aims_ui.page_controllers.a_single_matches.page_uprn import uprn
 from aims_ui.page_controllers.a_single_matches.page_postcode import postcode
 from aims_ui.page_controllers.a_single_matches.page_typeahead import typeahead
+from aims_ui.page_controllers.a_single_matches.page_typeahead2 import typeahead2
 from aims_ui.page_controllers.a_single_matches.page_singlesearch import singlesearch
 from aims_ui.page_controllers.a_single_matches.page_radiussearch import radiussearch
 

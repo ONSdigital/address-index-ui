@@ -231,6 +231,12 @@ ENDPOINTS = [{
     'nav_link_in_header': True,
     'page_description': 'This search types ahead. Autosuggest on steroids basically. Useful if you quickly want a user to find an address.',
 }, {
+    'page_name': 'Typeahead 2',
+    'page_name_test': 'typeahead2',
+    'url': 'typeahead2',
+    'nav_link_in_header': True,
+    'page_description': 'This search types ahead. Autosuggest on steroids basically. Useful if you quickly want a user to find an address.',
+}, {
     'page_name': 'Multiple Address',
     'page_name_test': 'multiple_address_original',
     'url': 'multiple_address_original',

@@ -33,7 +33,7 @@ function getTitleText(limitEntered, numberOfAddresses, page_name) {
   
   if (numberOfAddresses >= limitEntered) {
     // For the UPRN page (or typeahead), we either match one or no addresses. The message should always be single, ignoring limmit
-    if (page_name === 'uprn' || page_name === 'typeahead') {
+    if (page_name === 'uprn' || page_name === 'typeahead' || page_name === 'typeahead2') {
       return titleTextIfUnderLimit;
     }
     return titleTextIfLimitReached;

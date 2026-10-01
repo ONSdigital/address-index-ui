@@ -29,10 +29,11 @@ function getDefaultInputObjectsForPage(page_name) {
 
   const globalValues = getGlobalValues();
   const inputSettings = globalValues.inputSettings || [];
+  const settingsPageName = page_name === 'typeahead2' ? 'typeahead' : page_name;
 
   for (const pageSettings of inputSettings) {
     // Loop over each page's setting object
-    if (pageSettings.page === page_name) {
+    if (pageSettings.page === settingsPageName) {
       return pageSettings;
     }
   }

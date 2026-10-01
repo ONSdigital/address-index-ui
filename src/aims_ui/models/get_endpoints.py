@@ -46,6 +46,12 @@ def get_endpoints(called_from=None):
           'a_single_matches',
       ),
       Endpoint(
+          'Typeahead 2',
+          'typeahead2',
+          "This search types ahead. Autosuggest on steroids basically. Useful if you quickly want a user to find an address.",
+          'a_single_matches',
+      ),
+      Endpoint(
           'Multiple Address',
           'multiple_address_original',
           "Search for not just  one address. Several. Get lots of results you can look through. This service completes many single searches from a file.",
