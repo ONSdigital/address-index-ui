@@ -27,6 +27,9 @@
   <div id="content_col_2" class="ons-grid__col ons-col-4@m ">
 <br><br>
 
+<h2> Please select your address from the dropdown </h2>
+<h3> Select the lowest level of address </h3>
+
 <div id="complete-container-for-address">
 
   {{ onsAddressInput({
@@ -110,9 +113,7 @@
 {% endif %}
 
 
-{{ customAddressInfoCards ({
-  'page_name': page_name,
-  }) }}
+
 
 
 </div>
@@ -122,9 +123,10 @@
 
 {# 5 Col FLAGS page #}
   <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
+{{ customAddressInfoCards ({
+  'page_name': page_name,
+  }) }}
 
-<h2> Please select your address from the dropdown </h2>
-<h3> Select the lowest level of address </h3>
 </div>
 {# End of grid #}
 </div>

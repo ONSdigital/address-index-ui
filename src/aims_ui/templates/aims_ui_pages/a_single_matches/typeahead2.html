@@ -1,1 +1,119 @@
-{% extends './aims_ui_pages/a_single_matches/typeahead.html' %}
+{% extends './aims_ui_pages/0-base_page_settings.html' %}
+
+{% from "components/input/_macro.njk" import onsInput %}
+{% from "components/address-input/_macro.njk" import onsAddressInput %}
+{% from "components/autosuggest/_macro.njk" import onsAutosuggest %}
+{% from "components/button/_macro.njk" import onsButton %}
+{% from "components/panel/_macro.njk" import onsPanel %}
+
+{% from 'custom_save_addresses_to_client/_macro.njk' import customSaveAddressesToClient %}
+{% from 'custom_address_info_cards/_macro.njk' import customAddressInfoCards %}
+{% from 'custom_search/_macro.njk' import customSearch %}
+{% from 'custom_run_script_with_page_name/_macro.njk' import runScriptWithPageName %}
+{% from 'custom_download_results_from_local_storage/_macro.njk' import customDownloadResultsFromLocalStorage %}
+
+{# In order to specify wider than usual components, page must be in "pageContent" #}
+{% block pageContent %}
+{% block main %}
+
+<form method="POST" id="searchform">
+
+{# Add a grid (this is normally done automatically but this overrides the current system to make the box wider) #}
+<div class="ons-grid">
+
+{# 1Column boarder#}
+  <div id="space_col_1" class="ons-grid__col ons-col-1@m "></div>
+
+{# Show the typeahead on left side of the page as not to obscure filters #}
+  <div id="content_col_2" class="ons-grid__col ons-col-4@m ">
+<br><br>
+
+<h2> Please Select your Sub-Address from below <h2></h2>
+
+<div id="complete-container-for-address">
+
+	{{ onsAutosuggest({
+			"id": "url-input",
+			"input": {
+				"id": "url-input-autosuggest",
+				"name": "url-input-autosuggest",
+			"label": {
+				"text": "Enter your address",
+				"description": 'Please select your address',
+				"id": "url-input-label"
+		},
+		"autocomplete": "off"
+			},
+			"autosuggestData": "/autosuggest/api-urls.json",
+			"instructions": "Use up and down keys to navigate suggestions once you\'ve typed more than two characters. Use the enter key to select a suggestion. Touch device users, explore by touch or with swipe gestures.",
+			"ariaYouHaveSelected": "You have selected",
+			"ariaOneResult": "There is one suggestion available.",
+			"ariaNResults": "There are {n} suggestions available.",
+			"moreResults": "Continue entering to improve suggestions",
+			"resultsTitle": "Suggestions",
+			"resultsTitleId": "url-suggesgions",
+			"noResults": "No suggestions found. You can enter your own answer",
+			"minChars": 1,
+			"typeMore": "Continue entering to get suggestions"
+	}) }}
+
+</div>
+
+<br>
+
+</form>
+
+{{  onsButton({
+	"text": "Search", }) }}
+
+	{{ onsButton({
+		'text': 'Clear  filters',
+		'variants': 'secondary',
+		'submitType': "loader",
+    'url': url_for(page_name),
+		'id': 'clear-form-data-button-id',
+	}) }}
+
+
+{# Add Results under the Typeahead #}
+{% if results_page %}
+  <br>
+  <br>
+  <h2>We matched {{matched_address_number}}  addresses:</h2>
+
+  {# Save the results to local storage on the clientside #}
+  {{ customSaveAddressesToClient({
+    "matched_addresses": matched_addresses,
+    "page_name": page_name,
+  }) }}
+
+
+{% endif %}
+
+
+{{ customAddressInfoCards ({
+  'page_name': page_name,
+  }) }}
+
+
+</div>
+
+{# 1 Col boarder between filters and results #}
+<div id="space_col_3" class="ons-grid__col ons-col-1@m "></div>
+
+{# 5 Col FLAGS page #}
+  <div id="content_col_4" class="ons-grid__col ons-col-5@m ">
+
+</div>
+{# End of grid #}
+</div>
+
+<!-- Single entry point for all page scripts. Add scripts to the main location below -->
+{{ runScriptWithPageName({
+		"page_name": page_name,
+		"script_location": '/static/js/a_single_matches/typeahead/init.mjs',
+}) }}
+
+{% endblock %}
+{% endblock %}
+
